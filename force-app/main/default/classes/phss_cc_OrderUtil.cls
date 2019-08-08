@@ -31,15 +31,17 @@ public with sharing class phss_cc_OrderUtil {
     private static final String PAYMENT_TOKEN_KEY = 'token';
     private static final String EXPIRATION_MONTH_KEY = 'expirationMonth';
     private static final String EXPIRATION_YEAR_KEY = 'expirationYear';
+    private static final String CREDIT_AMOUNT_KEY = 'creditAmount';
     private static final String ACCOUNT_TYPE_KEY = 'accountType';
+    private static final String ACCOUNT_TYPE_CREDIT_BALANCE = 'cb';
     private static final String ACCOUNT_TYPE_CREDIT_CARD = 'cc';
     private static final String ACCOUNT_TYPE_PURCHASE_ORDER = 'po';
-    private static final String ACCOUNT_TYPE_ON_ACCOUNT_BALANCE = 'cb';
     @TestVisible private static final String SUCCESS_KEY = 'success';
 
+    //
+    private static final String DEFAULT_APPLIED_CREDIT_REASON = 'Using on balance amount';
+
     //Stored payments
-    @TestVisible private static final String STORED_PAYMENT_LIST_KEY = 'storedPaymentList';
-    @TestVisible private static final String STORED_PAYMENT_MAP_KEY = 'storedPaymentMap';
     private static final String STORED_PAYMENT_SFID = 'sfid';
     private static final String STORED_PAYMENT_NAME_KEY = 'name';
     private static final String STORED_PAYMENT_ORIGINAL_PO_AMOUNT = 'originalPOAmount';
@@ -67,13 +69,13 @@ public with sharing class phss_cc_OrderUtil {
     // No PO Details from the front end
     @TestVisible private static final String CART_AMOUNT_KEY = 'cartAmount';
 
+    private static final String FAILED_TO_APPLY_CREDIT = 'Failed to apply credit.';
     private static final String FAILED_TO_PROCESS_PAYMENT_DATA = 'Failed to process payment data.';
-    private static final String FAILED_TO_PLACE_ORDER_CC = 'Failed to place order using credit card.';
+    private static final String FAILED_TO_PLACE_ORDER_CB = 'Failed to place order using on account balance.';
     private static final String FAILED_TO_PLACE_ORDER_PO = 'Failed to place order using PO.';
     private static final String FAILED_TO_DETECT_REASON_OF_PAYMENT_FAILURE = 'Failed to detect reason of payment failure.';
     private static final String SUCCESSFULLY_CREATED_AN_ORDER = 'Successfully created an Order.';
     private static final String FAILED_TO_CREATE_A_TRANSACTION_RECORD_ON_THE_ORDER = 'Failed to create a transaction record on the order.';
-    private static final String FAILED_TO_FETCH_STORED_PAYMENTS = 'Failed to fetch stored payments.';
     private static final String FAILED_TO_PARSE_PAYMENT_DATA = 'Failed to parse payment data.';
     private static final String FAILED_TO_FETCH_STORED_PAYMENT = 'Failed to fetch stored payment.';
     private static final String FAILED_TO_UPDATE_STORED_PAYMENT = 'Failed to update stored payment.';
@@ -106,6 +108,12 @@ public with sharing class phss_cc_OrderUtil {
                         EXPIRATION_YEAR_KEY => expYear,
                         ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_CARD
                 };
+            } else if (inputData.containsKey(ACCOUNT_TYPE_KEY) && inputData.get(ACCOUNT_TYPE_KEY) == ACCOUNT_TYPE_CREDIT_BALANCE) {
+                paymentDataMap = new Map<String, Object>{
+                        ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_BALANCE,
+                        STORED_PAYMENT_SAVE_AS_STORED_PAYMENT => false
+                };
+
             } else if (inputData.containsKey(CART_AMOUNT_KEY)) {
                 paymentDataMap = new Map<String, Object>();
                 paymentDataMap.put(STORED_PAYMENT_ACCOUNT_TYPE, STORED_PAYMENT_TYPE_PO);
@@ -150,10 +158,11 @@ public with sharing class phss_cc_OrderUtil {
 
             //Fetch current cart.
             Map<String, Object> cartFetchResponse = phss_cc_CartUtil.cartFetch(encryptedCartId, true);
-            List<ccrz__E_Cart__c> outputCartList = (List<ccrz__E_Cart__c>) cartFetchResponse.get(ccrz.ccAPICart.CART_OBJLIST);
+            List<ccrz__E_Cart__c> outputCartList = (List<ccrz__E_Cart__c>) cartFetchResponse.get(ccrz.ccApiCart.CART_OBJLIST);
             if (outputCartList != null && !outputCartList.isEmpty()) {
                 cart = outputCartList[0];
             }
+
             if (cart != null) {
                 Map<String, Object> paymentRequest = new Map<String, Object>{
                         ccrz.cc_hk_Payment.PARAM_TRANSACTION_DATA => paymentData,
@@ -163,6 +172,7 @@ public with sharing class phss_cc_OrderUtil {
                 ccrz.cc_hk_Payment paymentHook = ccrz.cc_hk_Payment.getInstance(null);
                 processPaymentResponse = paymentHook.processPayment(paymentRequest);
             }
+
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_PROCESS_PAYMENT_DATA);
         }
@@ -196,6 +206,19 @@ public with sharing class phss_cc_OrderUtil {
                     ccrz.cc_hk_Payment.PARAM_PAYMENT_CTX => ccrz.cc_hk_Payment.PARAM_PAYMENT_CTX_CHECKOUT,
                     ccrz.cc_hk_Payment.PARAM_SUCCESS => true
             };
+
+            System.debug('JASON: registerTransactionOnOrder()');
+            for (String key : postProcessRequest.keySet()) {
+                System.debug(key + ': ' + postProcessRequest.get(key));
+                Object obj = postProcessRequest.get(key);
+                if (obj instanceof Map<String, Object>) {
+                    Map<String, Object> m = (Map<String, Object>) obj;
+                    for (String k : m.keySet()) {
+                        System.debug('---> ' + k + ': ' + m.get(k));
+                    }
+                }
+            }
+
             if (payProcessor != null) {
                 payProcessor.postProcess(postProcessRequest);
             }
@@ -248,18 +271,27 @@ public with sharing class phss_cc_OrderUtil {
      *
      * @return
      */
-    public static Map<String, Object> placeOrderOnCartCC(String opportunitySfid, String encryptedCartId, String cyberSourcePaymentResponse) {
+    public static Map<String, Object> placeOrderOnCartCC(String opportunitySfid, String encryptedCartId, String cyberSourcePaymentResponse, List<String> storedPayments) {
+
         phss_cc_Context.setContext(opportunitySfid);
         Map<String, Object> response;
         try {
             if (cyberSourcePaymentResponse != null) {
-                Map<String, Object> cyberSourceResponseMap = (Map<String, Object>) JSON.deserializeUntyped(cybersourcePaymentResponse);
+                Map<String, Object> cyberSourceResponseMap = (Map<String, Object>) JSON.deserializeUntyped(cyberSourcePaymentResponse);
                 String transactionDecision = (String) cyberSourceResponseMap.get(CYBER_SOURCE_TRANSACTION_DECISION_KEY);
 
                 if (transactionDecision == CYBER_SOURCE_DECISION_ACCEPT) {
                     String paymentData = getPaymentDataJSONString(cyberSourceResponseMap);
+                    Map<String, Object> creditResult = applyCredit(encryptedCartId, storedPayments);
                     Map<String, Object> paymentResult = processPayment(encryptedCartId, paymentData);
                     Object transactionPaymentData = paymentResult.get(ccrz.cc_hk_Payment.PARAM_TRANSACTION_PROCESSED_DATA);
+
+                    if (storedPayments != null && storedPayments.size() > 0 && creditResult.containsKey(CREDIT_AMOUNT_KEY)) {
+                        for (String storedPaymentId : storedPayments) {
+                            updateRemainingPOAmount(storedPaymentId, '0');
+                        }
+                    }
+
                     Map<String, Object> placeOrderResponse = cartPlace(encryptedCartId, paymentResult, transactionPaymentData, paymentData);
                     registerTransactionOnOrder(placeOrderResponse, paymentResult, transactionPaymentData, paymentData);
                     response = placeOrderResponse;
@@ -287,6 +319,7 @@ public with sharing class phss_cc_OrderUtil {
                 if (POSfid != null && !String.isEmpty(POSfid)) {
                     Boolean shouldUpdatePOAmount = (Boolean) PODetailsMap.get(UPDATE_PO_KEY);
                     String updatedPOAmount = (String) PODetailsMap.get(UPDATED_PO_AMOUNT_KEY);
+                    System.debug('shouldUpdatePOAmount ' + shouldUpdatePOAmount);
                     if (shouldUpdatePOAmount) {
                         updateRemainingPOAmount(POSfid, updatedPOAmount);
                     }
@@ -297,13 +330,11 @@ public with sharing class phss_cc_OrderUtil {
                 if (!purchaseOrderHasSufficientFunds(PODetailsMap, encryptedCartId)) {
                     throw new phss_cc_Exception(PO_INSUFFICIENT_FUNDS_AVAILABLE);
                 }
-            }
-            else {
+            } else {
                 PODetailsMap = createDataForNoPurchaseOrder(encryptedCartId);
             }
 
             String paymentData = getPaymentDataJSONString(PODetailsMap);
-            System.debug('JASON: paymentData: ' + paymentData);
             Map<String, Object> paymentResult = processPayment(encryptedCartId, paymentData);
             Object transactionPaymentData = paymentResult.get(ccrz.cc_hk_Payment.PARAM_TRANSACTION_PROCESSED_DATA);
             Map<String, Object> placeOrderResponse = cartPlace(encryptedCartId, paymentResult, transactionPaymentData, paymentData);
@@ -319,7 +350,71 @@ public with sharing class phss_cc_OrderUtil {
         }
         return response;
     }
-    
+
+    /**
+     * @description Places an order using on account balance for payment.
+     *
+     * @param opportunitySfid
+     * @param encryptedCartId
+     * @param storedPayments
+     *
+     * @return
+     */
+    public static Map<String, Object> placeOrderOnCartCB(String opportunitySfid, String encryptedCartId, List<String> storedPayments) {
+        phss_cc_Context.setContext(opportunitySfid);
+        Map<String, Object> response;
+
+        try {
+            Map<String, Object> creditResult = applyCredit(encryptedCartId, storedPayments);
+            if (storedPayments != null && storedPayments.size() > 0 && creditResult.containsKey(CREDIT_AMOUNT_KEY)) {
+                for (String storedPaymentId : storedPayments) {
+                    updateRemainingPOAmount(storedPaymentId, '0');
+                }
+            }
+
+            Map<String, Object> paymentInputData = new Map<String, Object>{ ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_BALANCE };
+            String paymentData = getPaymentDataJSONString(paymentInputData);
+            Map<String, Object> paymentResult = processPayment(encryptedCartId, paymentData);
+            Object transactionPaymentData = paymentResult.get(ccrz.cc_hk_Payment.PARAM_TRANSACTION_PROCESSED_DATA);
+            Map<String, Object> placeOrderResponse = cartPlace(encryptedCartId, paymentResult, transactionPaymentData, paymentData);
+            registerTransactionOnOrder(placeOrderResponse, paymentResult, transactionPaymentData, paymentData);
+            response = placeOrderResponse;
+
+        } catch (Exception e) {
+            System.debug('Exception caught: message=' + e.getMessage() + ' lineNumber=' + e.getLineNumber() + ' stackTrace=' + e.getStackTraceString());
+            throw new phss_cc_Exception(FAILED_TO_PLACE_ORDER_CB, e);
+        }
+
+        return response;
+    }
+
+    private static Map<String, Object> applyCredit(String encryptedCartId, List<String> storedPayments) {
+        Map<String, Object> result = new Map<String, Object>();
+
+        try {
+            Decimal creditAmount = phss_cc_StoredPaymentUtil.getRemainingCreditAmount(storedPayments);
+            if (creditAmount > 0) {
+                ccrz__E_Cart__c cart = phss_cc_CartUtil.fetchCart(encryptedCartId);
+                if (cart != null) {
+                    if (creditAmount > cart.ccrz__TotalAmount__c) {
+                        creditAmount = cart.ccrz__TotalAmount__c;
+                    }
+
+                    cart.ccrz__AdjustmentAmount__c = creditAmount * -1;
+                    cart.ccrz__AdjustmentReason__c = DEFAULT_APPLIED_CREDIT_REASON;
+                    update cart;
+
+                    result.put(CREDIT_AMOUNT_KEY, creditAmount);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_APPLY_CREDIT, e);
+        }
+
+        return result;
+    }
+
     /**
      * @description Creates the necessary data for the No-PO option
      *
@@ -356,7 +451,7 @@ public with sharing class phss_cc_OrderUtil {
     private static Boolean purchaseOrderHasSufficientFunds(Map<String, Object> PODetailsMap, String encryptedCartId) {
 
         Map<String, Object> cartFetchResponse = phss_cc_CartUtil.cartFetch(encryptedCartId, true);
-        List<ccrz__E_Cart__c> outputCartList = (List<ccrz__E_Cart__c>) cartFetchResponse.get(ccrz.ccAPICart.CART_OBJLIST);
+        List<ccrz__E_Cart__c> outputCartList = (List<ccrz__E_Cart__c>) cartFetchResponse.get(ccrz.ccApiCart.CART_OBJLIST);
 
         if (outputCartList != null && !outputCartList.isEmpty()) {
             ccrz__E_Cart__c cart = outputCartList[0];
@@ -406,98 +501,6 @@ public with sharing class phss_cc_OrderUtil {
         }
         return response;
     }
-
-    /**
-     * @description Retrieves the stored payments for the account.
-     *
-     * @param opportunitySfid
-     *
-     * @return
-     */
-    public static Map<String, Object> fetchStoredPayments(String opportunitySfid) {
-        Map<String, Object> fetchStoredPaymentsResponse = new Map<String, Object>();
-        try {
-            phss_cc_Context.setContext(opportunitySfid);
-
-            List<ccrz__E_StoredPayment__c> listStoredPayments = [
-                    SELECT Id, ccrz__DisplayName__c, Original_PO_Amount__c, Remaining_PO_Amount__c, ccrz__StartDate__c, ccrz__EndDate__c
-                    FROM ccrz__E_StoredPayment__c
-                    WHERE ccrz__Enabled__c = TRUE
-                    AND ccrz__AccountType__c = :STORED_PAYMENT_TYPE_PO
-                    AND ccrz__Account__c = :phss_cc_Context.currAccountId
-                    AND (ccrz__StartDate__c = NULL OR ccrz__StartDate__c <= :Date.today())
-                    AND (ccrz__EndDate__c = NULL OR ccrz__EndDate__c >= :Date.today())
-                    AND Remaining_PO_Amount__c > 0
-            ];
-
-            Map<String, Object> storedPaymentsMap = new Map<String, Object>();
-            for (ccrz__E_StoredPayment__c sp : listStoredPayments) {
-                Map<String, Object> mapSP = new Map<String, Object>();
-                mapSP.put(STORED_PAYMENT_SFID, sp.Id);
-                mapSP.put(STORED_PAYMENT_NAME_KEY, sp.ccrz__DisplayName__c);
-                mapSP.put(STORED_PAYMENT_ORIGINAL_PO_AMOUNT, sp.Original_PO_Amount__c);
-                mapSP.put(STORED_PAYMENT_REMAINING_PO_AMOUNT, sp.Remaining_PO_Amount__c);
-                mapSP.put(STORED_PAYMENT_PO_START_DATE, sp.ccrz__StartDate__c);
-                mapSP.put(STORED_PAYMENT_PO_END_DATE, sp.ccrz__EndDate__c);
-
-                storedPaymentsMap.put(sp.Id, mapSP);
-            }
-
-            fetchStoredPaymentsResponse = new Map<String, Object>{
-                    STORED_PAYMENT_LIST_KEY => storedPaymentsMap.keySet(),
-                    STORED_PAYMENT_MAP_KEY => storedPaymentsMap
-            };
-        } catch (Exception e) {
-            throw new phss_cc_Exception(FAILED_TO_FETCH_STORED_PAYMENTS);
-        }
-        return fetchStoredPaymentsResponse;
-    }
-    
-    //US1511 - START
-    
-    //public static Map<String, Object> fetchOnAccountPayments(String opportunitySfid) {
-    public static List<ccrz__E_StoredPayment__c> fetchOnAccountPayments(String opportunitySfid) {
-        Map<String, Object> fetchStoredPaymentsResponse = new Map<String, Object>();
-        List<ccrz__E_StoredPayment__c> listStoredPayments;
-        try {
-            phss_cc_Context.setContext(opportunitySfid);
-
-             listStoredPayments = [
-                    SELECT Id, ccrz__DisplayName__c, Original_PO_Amount__c, Remaining_PO_Amount__c, ccrz__StartDate__c, ccrz__EndDate__c
-                    FROM ccrz__E_StoredPayment__c
-                    WHERE ccrz__Enabled__c = TRUE
-                    AND ccrz__AccountType__c = :ACCOUNT_TYPE_ON_ACCOUNT_BALANCE
-                    AND ccrz__Account__c = :phss_cc_Context.currAccountId
-                    AND (ccrz__StartDate__c = NULL OR ccrz__StartDate__c <= :Date.today())
-                    AND (ccrz__EndDate__c = NULL OR ccrz__EndDate__c >= :Date.today())
-                    AND Remaining_PO_Amount__c > 0
-            ];
-            /*
-
-            Map<String, Object> storedPaymentsMap = new Map<String, Object>();
-            for (ccrz__E_StoredPayment__c sp : listStoredPayments) {
-                Map<String, Object> mapSP = new Map<String, Object>();
-                mapSP.put(STORED_PAYMENT_SFID, sp.Id);
-                mapSP.put(STORED_PAYMENT_NAME_KEY, sp.ccrz__DisplayName__c);
-                mapSP.put(STORED_PAYMENT_ORIGINAL_PO_AMOUNT, sp.Original_PO_Amount__c);
-                mapSP.put(STORED_PAYMENT_REMAINING_PO_AMOUNT, sp.Remaining_PO_Amount__c);
-                mapSP.put(STORED_PAYMENT_PO_START_DATE, sp.ccrz__StartDate__c);
-                mapSP.put(STORED_PAYMENT_PO_END_DATE, sp.ccrz__EndDate__c);
-
-                storedPaymentsMap.put(sp.Id, mapSP);
-            }
-
-            fetchStoredPaymentsResponse = new Map<String, Object>{
-                    STORED_PAYMENT_LIST_KEY => storedPaymentsMap.keySet(),
-                    STORED_PAYMENT_MAP_KEY => storedPaymentsMap
-            };*/
-        } catch (Exception e) {
-            throw new phss_cc_Exception(FAILED_TO_FETCH_STORED_PAYMENTS);
-        }
-        return listStoredPayments;
-        //return fetchStoredPaymentsResponse;
-    }
-    //US1511 - END
 
     /**
      * @description Fetches the stored payment details and returns a map.
@@ -579,10 +582,16 @@ public with sharing class phss_cc_OrderUtil {
 
         try {
             ccrz__E_StoredPayment__c storedPayment = [
-                    SELECT Id, ccrz__Account__c,ccrz__AccountType__c,ccrz__DisplayName__c,ccrz__PaymentType__c, Original_PO_Amount__c,Remaining_PO_Amount__c
-                    FROM ccrz__E_StoredPayment__c
-                    WHERE Id = :POSfid
-                    LIMIT 1
+                    SELECT  Id,
+                            ccrz__Account__c,
+                            ccrz__AccountType__c,
+                            ccrz__DisplayName__c,
+                            ccrz__PaymentType__c,
+                            Original_PO_Amount__c,
+                            Remaining_PO_Amount__c
+                    FROM    ccrz__E_StoredPayment__c
+                    WHERE   Id = :POSfid
+                    LIMIT   1
             ];
 
             if (storedPayment != null) {

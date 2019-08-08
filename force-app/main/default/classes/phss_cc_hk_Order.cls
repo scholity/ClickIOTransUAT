@@ -42,7 +42,7 @@ global with sharing class phss_cc_hk_Order extends ccrz.cc_hk_Order {
         // build map of SKU => Cart Item
         final Map<String,ccrz__E_CartItem__c> cartItemsMap = new Map<String, ccrz__E_CartItem__c>();
         List<ccrz__E_CartItem__c> cartItems = [
-                SELECT ccrz__Product__r.ccrz__SKU__c, ILT_Class__c
+                SELECT ccrz__Product__r.ccrz__SKU__c, ILT_Class__c, Coupon__c
                   FROM ccrz__E_CartItem__c
                  WHERE Id IN :cartItemIds
         ];
@@ -81,6 +81,11 @@ global with sharing class phss_cc_hk_Order extends ccrz.cc_hk_Order {
 
         for (ccrz__E_OrderItem__c orderItem : orderItems) {
             ccrz__E_CartItem__c cartItem = cartItemsMap.get(orderItem.ccrz__Product__r.ccrz__SKU__c);
+            
+            if (cartItem != null && cartItem.Coupon__c != null) {
+            	orderItem.Coupon__c	   = cartItem.Coupon__c;
+            }
+            
             if (cartItem != null && cartItem.ILT_Class__c != null) {
                 orderItem.ILT_Class__c = cartItem.ILT_Class__c;
 

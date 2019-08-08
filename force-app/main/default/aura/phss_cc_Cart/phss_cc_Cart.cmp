@@ -20,6 +20,7 @@
     <aura:attribute name="productList" type="List"/>
     <aura:attribute name="productsMap" type="Map"/>
     <aura:attribute name="cartTotal" type="Decimal" default="0.00"/>
+    <aura:attribute name="storedPayments" type="List"/>
 
     <!--Variables to maintain a cart on the front end-->
     <aura:attribute name="encryptedCartId" type="String" default=""/>
@@ -46,7 +47,7 @@
     <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
     <aura:registerEvent name="showPriceOverrideModal" type="c:phss_cc_ShowPriceOverrideModalEvent"/>
 
-    <!--Handler-->
+    <!--Handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdate"
                   action="{!c.productCountIncrement}"/>
@@ -56,10 +57,16 @@
                   action="{!c.handleCyberSourceResponse}"/>
     <aura:handler name="sendPOToCart" event="c:phss_cc_POToCartEvent"
                   action="{!c.handlePOPayment}"/>
-    <!--aura:handler name="sendCBToCart" event="c:phss_cc_CBToCartEvent"
-                  action="{!c.handleCBPayment}"/-->
-    <aura:handler event="c:phss_cc_RefreshComponentEvent" action="{!c.handleRefreshComponentEvent}"/>
-    <aura:handler name="showPriceOverrideModal" event="c:phss_cc_ShowPriceOverrideModalEvent" action="{!c.handleShowPriceOverrideModal}"/>
+    <aura:handler name="sendCBToCart" event="c:phss_cc_CBToCartEvent"
+                  action="{! c.handleCBPayment }"/>
+    <aura:handler name="showPriceOverrideModal" event="c:phss_cc_ShowPriceOverrideModalEvent"
+                  action="{!c.handleShowPriceOverrideModal}"/>
+    <aura:handler name="toggleStoredPayment" event="c:phss_cc_StoredPaymentSelectionEvent"
+                  action="{! c.handleToggleStoredPaymentSelection }"/>
+    <aura:handler event="c:phss_cc_RefreshComponentEvent"
+                  action="{!c.handleRefreshComponentEvent}"/>
+    <aura:handler name="paymentTabSelected" event="c:phss_cc_CartPaymentNavigationEvent"
+                  action="{! c.handleCartPaymentNavigationEvent }"/>
 
     <!--Spinner when page loads-->
     <aura:if isTrue="{!v.showSpinner}">
@@ -136,20 +143,18 @@
             <div class="slds-border--bottom">
                 <div class="slds-m-top--medium slds-m-bottom--medium slds-text-heading--medium">Payment Details:
                 </div>
-                <lightning:tabset class="slds-m-top--medium slds-m-bottom--medium">
-                    <lightning:tab label="Credit Card">
+                <lightning:tabset aura:id="paymentTabset" class="slds-m-top--medium slds-m-bottom--medium">
+                    <lightning:tab label="Credit Card" id="1">
                         <c:phss_cc_CyberSourceCCProcessor currOpportunitySfid="{!v.recordId}" allowPaymentSubmission="{! v.allowPaymentSubmission }"/>
                     </lightning:tab>
                     <aura:if isTrue="{!v.allowPaymentByInvoice}">
-                        <lightning:tab label="Invoice">
+                        <lightning:tab label="Invoice" id="2">
                             <c:phss_cc_PurchaseOrder currOpportunitySfid="{!v.recordId}" allowPaymentSubmission="{! v.allowPaymentSubmission }"/>
                         </lightning:tab>
                     </aura:if>
-                    <!-- <aura:if isTrue="{!v.allowPaymentByInvoice}"> -->
-                        <lightning:tab label="Account Balance">
-                            <c:phss_cc_OnAccountBalance currOpportunitySfid="{!v.recordId}" TotalCartAmount="{!v.cartTotal}"/>
-                        </lightning:tab>
-                    <!-- </aura:if> -->
+                    <lightning:tab aura:id="onAccountBalanceTab" label="Account Balance" id="3">
+                        <c:phss_cc_OnAccountBalance opportunityId="{!v.recordId}" cartTotal="{!v.cartTotal}"/>
+                    </lightning:tab>
                 </lightning:tabset>
             </div>
         </aura:if>

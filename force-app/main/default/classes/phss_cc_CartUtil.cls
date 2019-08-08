@@ -82,7 +82,8 @@ public with sharing class phss_cc_CartUtil {
      * @return
      */
     public static Map<String, Object> cartFetch(String encryptedCartId, Boolean ccApiSizeSkip) {
-        Map<String, Object> cartFetchResponse;
+       // Map<String, Object> cartFetchResponse;
+       Map<String, Object> cartFetchResponse = new Map<String, Object>();
         try {
             Map<String, Object> cartFetchRequest = new Map<String, Object>{
                     ccrz.ccApi.API_VERSION => ccrz.ccApi.CURRENT_VERSION,
@@ -99,6 +100,25 @@ public with sharing class phss_cc_CartUtil {
             throw new phss_cc_Exception(FAILED_TO_FETCH_CART);
         }
         return cartFetchResponse;
+    }
+
+    /**
+     * @description Fetches the first cart identified by the specified encrypted cart ID
+     *
+     * @param encryptedCartId
+     *
+     * @return
+     */
+    public static ccrz__E_Cart__c fetchCart(String encryptedCartId) {
+        ccrz__E_Cart__c cart;
+
+        Map<String, Object> result = phss_cc_CartUtil.cartFetch(encryptedCartId, true);
+        List<ccrz__E_Cart__c> carts = (List<ccrz__E_Cart__c>) result.get(ccrz.ccApiCart.CART_OBJLIST);
+        if (carts != null && carts.size() > 0) {
+            cart = carts[0];
+        }
+
+        return cart;
     }
 
     /**
@@ -154,7 +174,6 @@ public with sharing class phss_cc_CartUtil {
                             }
                     }
             };
-                System.debug('JASON: storefront=' + phss_cc_Context.STOREFRONT_NAME + '   ccrz.ccApiCart.addTo()');
             return ccrz.ccApiCart.addTo(inputData);
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_ADD_ITEMS_TO_CART);
@@ -169,7 +188,6 @@ public with sharing class phss_cc_CartUtil {
     public static Map<String, Object> addProductsToCart(String opportunitySfid, Map<String, Object> productQuantityMap, Boolean fetchMinorItems) {
         try {
             phss_cc_Context.setContext(opportunitySfid);
-            System.debug('JASON: addProductsToCart() -- opportunitySfid=' + opportunitySfid);
             
             Map<String, Object> addProductsToCartResponse;
 
@@ -188,7 +206,6 @@ public with sharing class phss_cc_CartUtil {
             }
 
             List<Map<String, Object>> lineData = createLineItems(productQuantityMap);
-            System.debug('JASON: lineData: ' + lineData);
             Map<String, Object> addToResult = cartAddTo(lineData, encryptedCartId);
             System.debug('JASON: addToResult: ' + addToResult);
             for (String key : addToResult.keySet()) {
@@ -343,6 +360,8 @@ public with sharing class phss_cc_CartUtil {
      */
     public static Map<String, Object> retrieveLineItemsAndTotalAmountFromCart(Map<String, Object> cartDetails, Boolean fetchMinorItems) {
         try {
+			system.debug(fetchMinorItems+'@@@@@'+cartDetails);
+            System.debug('Inside ta>>>');
             Decimal cartTotal = 0.00;
             Map<String, Object> productMap = new Map<String, Object>();
             List<String> productListMajorItems = new List<String>();
@@ -351,20 +370,23 @@ public with sharing class phss_cc_CartUtil {
             Map<String, Object> productQuantityMapFromCart = new Map<String, Object>();
 
             if (cartDetails.get(ccrz.ccAPICart.CART_OBJLIST) != null) {
+                System.debug('CART_OBJLIST not null');
                 List<Map<String, Object>> returnedCart = (List<Map<String, Object>>) cartDetails.get(ccrz.ccAPICart.CART_OBJLIST);
                 Map<String, Object> currCart = (Map<String, Object>) returnedCart[0];
                 if (currCart != null) {
+                    System.debug('Cart not null');
                     cartTotal = (Decimal) currCart.get(CART_TOTAL_AMOUNT_KEY);
                     productQuantityMapFromCart = getProductQuantitiesMapFromCart(currCart, majorCartItemToProductSfid, productListMajorItems, fullProductList);
                     productMap = phss_cc_ProductUtil.getProductDetailsKeyedToSfidMap(new Set<String>(fullProductList));
                     addCartItemDetailsToProductMap(currCart, productMap);
-
+					System.debug('addcartitemdetailstoproductmap>>'+productMap+cartTotal+productQuantityMapFromCart);
                     if (fetchMinorItems) {
+                        System.debug('Inside fetch minor items');
                         getMinorLinesFromCart(currCart, productMap, majorCartItemToProductSfid);
                         fetchProductPriceFromCart(currCart, productMap);
                     }
                 }
-
+				
             }
             return new Map<String, Object>{
                     CART_ENCRYPTED_ID_KEY => phss_cc_Context.currCart.ccrz__EncryptedId__c,
@@ -392,10 +414,11 @@ public with sharing class phss_cc_CartUtil {
             Map<String, Object> fetchCartResponse;
 
             ccrz__E_Cart__c cart = phss_cc_Context.currCart;
-
+			system.debug(phss_cc_Context.currCart + 'This is the current cart');
             if (cart != null && !String.isEmpty(cart.ccrz__EncryptedId__c)) {
                 String currCartEncId = cart.ccrz__EncryptedId__c;
                 Map<String, Object> cartDetails = cartFetch(currCartEncId, false);
+                system.debug('This is cart details'+cartDetails);
                 fetchCartResponse = retrieveLineItemsAndTotalAmountFromCart(cartDetails, fetchMinorItems);
             }
             return fetchCartResponse;
