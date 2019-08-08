@@ -376,14 +376,14 @@
             <visibilityRule>
                 <booleanFilter>1 AND 2</booleanFilter>
                 <criteria>
-                    <leftValue>{!Record.ccrz__Order__r.ccrz__OrderStatus__c}</leftValue>
-                    <operator>EQUAL</operator>
-                    <rightValue>Returned</rightValue>
-                </criteria>
-                <criteria>
                     <leftValue>{!Record.Is_Submitted__c}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>false</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.ccrz__OrderStatus__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Returned</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>

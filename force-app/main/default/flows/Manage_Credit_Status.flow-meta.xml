@@ -158,10 +158,10 @@
         <locationX>869</locationX>
         <locationY>240</locationY>
         <assignmentItems>
-            <assignToReference>vOtherTransID</assignToReference>
+            <assignToReference>vccpoTransID</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>sTransactionPayment.ccrz__Amount__c</elementReference>
+                <elementReference>sTransactionPayment.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>

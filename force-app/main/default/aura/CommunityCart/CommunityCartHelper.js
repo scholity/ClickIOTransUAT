@@ -118,7 +118,8 @@
         action.setParams({
             opportunitySfid: opportunitySfid,
             encryptedCartId: encryptedCartId,
-            cyberSourceResponse:cyberSourceResponse
+            cyberSourceResponse: cyberSourceResponse,
+            storedPayments: null
         });
         action.setCallback(this, function (response) {
             var state = response.getState();
@@ -165,7 +166,8 @@
         action.setParams({
             opportunitySfid: opportunitySfid,
             encryptedCartId: encryptedCartId,
-            PODetailsMap:PODetailsMap
+            PODetailsMap: PODetailsMap,
+            storedPayments: null
         });
         action.setCallback(this, function (response) {
             var state = response.getState();

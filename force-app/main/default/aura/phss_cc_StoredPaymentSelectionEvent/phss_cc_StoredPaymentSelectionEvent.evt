@@ -1,0 +1,7 @@
+<!--
+ - Created by jbarker on 2019-07-25.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_StoredPaymentSelectionEvent">
+    <aura:attribute name="storedPayments" type="List" />
+</aura:event>
