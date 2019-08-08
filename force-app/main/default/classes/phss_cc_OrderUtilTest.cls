@@ -1,7 +1,7 @@
 /**
  * Created by dgajwani on 10/2/18.
  */
-@isTest
+@IsTest
 public with sharing class phss_cc_OrderUtilTest {
 
     private static final String cyberSourceResponseDecline = '{"utf8":"✓","transaction_id":"5374710283216712204006","signed_field_names":"transaction_id,decision,req_access_key,req_profile_id,req_transaction_uuid,req_transaction_type,req_reference_number,req_amount,req_currency,req_locale,req_payment_method,req_ignore_avs,req_override_custom_receipt_page,req_bill_to_forename,req_bill_to_surname,req_bill_to_email,req_bill_to_address_line1,req_bill_to_address_city,req_bill_to_address_state,req_bill_to_address_country,req_bill_to_address_postal_code,req_card_number,req_card_type,req_card_expiry_date,req_merchant_defined_data1,message,reason_code,auth_avs_code,auth_avs_code_raw,auth_response,request_token,signed_field_names,signed_date_time","signed_date_time":"2018-09-20T19:17:08Z","signature":"KdlTzWH+zm8S7Jl4Ej+7Xp/1aMwUd8eJPQCu5Ls1+NM=","request_token":"Ahj77wSTI10WviZrRX7mEUt9XwnFEBS31fCcUdIJe5WQI6ZekmXoxXbmQgJyZGui18TNaK/cwAAA8gpT","req_transaction_uuid":"1537471022972","req_transaction_type":"authorization,create_payment_token","req_reference_number":"1537471022972","req_profile_id":"A462C345-9818-4803-84E6-37794D8B3F81","req_payment_method":"card","req_override_custom_receipt_page":"https://arc-phss--TransDev1--c.cs52.visual.force.com/apex/cc_lx_cybersourceccprocessorpostback","req_merchant_defined_data1":"a4O5B0000004ObiUAE","req_locale":"en-us","req_ignore_avs":"true","req_currency":"USD","req_card_type":"001","req_card_number":"xxxxxxxxxxxx1111","req_card_expiry_date":"12-2019","req_bill_to_surname":"Inc","req_bill_to_forename":"Hilton","req_bill_to_email":"NA@NA.com","req_bill_to_address_state":"MA","req_bill_to_address_postal_code":"02154","req_bill_to_address_line1":"1 Main St","req_bill_to_address_country":"US","req_bill_to_address_city":"Boston","req_amount":"2531.00","req_access_key":"2f9eac4dfdfc3bb5917f9dd1c68f381b","reason_code":"211","message":"We encountered a Paymentech problem: Reason: CVV2/VAK Failure.","decision":"DECLINE","auth_response":"531","auth_avs_code_raw":"I1","auth_avs_code":"X"}';
@@ -11,10 +11,17 @@ public with sharing class phss_cc_OrderUtilTest {
     public static Map<String, Object> testData;
     public static ccrz__E_Cart__c testCart;
     public static Account testAccount;
+    public static List<ccrz__E_StoredPayment__c> testStoredPayments;
+
+
     /**
      * @description Creates the basic testdata.
      */
     public static void setupTestData() {
+        setupTestData(phss_cc_StoredPaymentUtil.STORED_PAYMENT_TYPE_PO);
+    }
+
+    public static void setupTestData(String accountType) {
 
         //Validation rule
         Validation_Rules__c valRule = Validation_Rules__c.getOrgDefaults();
@@ -23,7 +30,7 @@ public with sharing class phss_cc_OrderUtilTest {
 
         Switch__c cohstest = new Switch__c();
         cohstest.Switch__c = false;
-        cohstest.name = 'CaseOwnerHistorySwitch';
+        cohstest.Name = 'CaseOwnerHistorySwitch';
         insert cohstest;
 
         testData = phss_cc_TestDataFactory.setupAccountAndProducts();
@@ -31,17 +38,17 @@ public with sharing class phss_cc_OrderUtilTest {
         testOpportunity = phss_cc_TestDataFactory.createInsertTestOpportunity(testAccount);
         List<ccrz__E_Cart__c> testCarts = phss_cc_TestDataFactory.createInsertCartAndCartItems(1, testData, testOpportunity.Id);
         testCart = testCarts[0];
-        phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
+        testStoredPayments = phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity, accountType);
     }
 
-    @isTest
+    @IsTest
     public static void testPlaceOrderOnCartCCAccept() {
 
         setupTestData();
 
         Test.startTest();
 
-        Map<String, Object> placeOrderResultAccept = phss_cc_OrderUtil.placeOrderOnCartCC(testOpportunity.Id, testCart.ccrz__EncryptedId__c, cyberSourceResponseAccept);
+        Map<String, Object> placeOrderResultAccept = phss_cc_OrderUtil.placeOrderOnCartCC(testOpportunity.Id, testCart.ccrz__EncryptedId__c, cyberSourceResponseAccept, null);
 
         Test.stopTest();
 
@@ -52,14 +59,14 @@ public with sharing class phss_cc_OrderUtilTest {
         System.assertNotEquals(null, placeOrderResultAccept.get(phss_cc_OrderUtil.RETURN_MESSAGE));
     }
 
-    @isTest
+    @IsTest
     public static void testPlaceOrderOnCartCCDecline() {
 
         setupTestData();
 
         Test.startTest();
 
-        Map<String, Object> placeOrderResultDecline = phss_cc_OrderUtil.placeOrderOnCartCC(testOpportunity.Id, testCart.ccrz__EncryptedId__c, cyberSourceResponseDecline);
+        Map<String, Object> placeOrderResultDecline = phss_cc_OrderUtil.placeOrderOnCartCC(testOpportunity.Id, testCart.ccrz__EncryptedId__c, cyberSourceResponseDecline, null);
 
         Test.stopTest();
 
@@ -70,7 +77,7 @@ public with sharing class phss_cc_OrderUtilTest {
         System.assertNotEquals(null, placeOrderResultDecline.get(phss_cc_OrderUtil.RETURN_MESSAGE));
     }
 
-    @isTest
+    @IsTest
     public static void testPlaceOrderOnCartPOExisting() {
         setupTestData();
         List<ccrz__E_StoredPayment__c> createPOs = phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
@@ -94,7 +101,7 @@ public with sharing class phss_cc_OrderUtilTest {
         System.assertNotEquals(null, placeOrderResultExistingPO.get(phss_cc_OrderUtil.RETURN_MESSAGE));
     }
 
-    @isTest
+    @IsTest
     public static void testPlaceOrderOnCartPONew() {
         setupTestData();
 
@@ -124,24 +131,7 @@ public with sharing class phss_cc_OrderUtilTest {
         System.assertEquals(2,countOfStoredPayments.size());
     }
 
-    @isTest
-    public static void testFetchStoredPayments() {
-
-        setupTestData();
-
-        Test.startTest();
-
-        Map<String, Object> fetchStoredPaymentsResponse = phss_cc_OrderUtil.fetchStoredPayments(testOpportunity.Id);
-        Test.stopTest();
-
-        System.assertNotEquals(null, fetchStoredPaymentsResponse);
-        System.assert(fetchStoredPaymentsResponse.containsKey(phss_cc_OrderUtil.STORED_PAYMENT_LIST_KEY));
-        System.assert(fetchStoredPaymentsResponse.containsKey(phss_cc_OrderUtil.STORED_PAYMENT_MAP_KEY));
-        Map<String, Object> storedPaymentMap = (Map<String, Object>) fetchStoredPaymentsResponse.get(phss_cc_OrderUtil.STORED_PAYMENT_MAP_KEY);
-        System.assertNotEquals(0, storedPaymentMap.size());
-    }
-
-    @isTest
+    @IsTest
     public static void testPlaceOrderOnCartPOUpdatePO() {
         setupTestData();
         List<ccrz__E_StoredPayment__c> createPOs = phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
@@ -165,23 +155,27 @@ public with sharing class phss_cc_OrderUtilTest {
 
     }
 
-    @isTest
-    public static void testFetchOnAccountPayments() {
+    @IsTest
+    public static void testPlaceOrderOnCartCB() {
+        setupTestData(phss_cc_StoredPaymentUtil.STORED_PAYMENT_TYPE_CB);
 
-        setupTestData();
-        List<ccrz__E_StoredPayment__c> createPOs = phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
-        ccrz__E_StoredPayment__c myPO = createPOs[0];
+        List<String> storedPaymentIDs = new List<String>();
+        for (ccrz__E_StoredPayment__c storedPayment : testStoredPayments) {
+            storedPaymentIDs.add(storedPayment.Id);
+        }
 
         Test.startTest();
-
-        List<ccrz__E_StoredPayment__c> result = phss_cc_OrderUtil.fetchOnAccountPayments(testOpportunity.Id);
+        Map<String, Object> result = phss_cc_OrderUtil.placeOrderOnCartCB(testOpportunity.Id, testCart.ccrz__EncryptedId__c, storedPaymentIDs);
         Test.stopTest();
 
-        System.debug('' + System.JSON.serialize(result));
         System.assertNotEquals(null, result);
+        System.assert(result.containsKey(phss_cc_OrderUtil.ORDER_ID));
+        System.assertNotEquals(null, result.get(phss_cc_OrderUtil.ORDER_ID));
+        System.assert(result.containsKey(phss_cc_OrderUtil.RETURN_MESSAGE));
+        System.assertNotEquals(null, result.get(phss_cc_OrderUtil.RETURN_MESSAGE));
     }
 
-    @isTest
+    @IsTest
     public static void testCreateDataForNoPurchaseOrder() {
 
         setupTestData();
@@ -198,7 +192,7 @@ public with sharing class phss_cc_OrderUtilTest {
         System.assertEquals(false, result.get(phss_cc_OrderUtil.STORED_PAYMENT_SAVE_AS_STORED_PAYMENT));
     }
 
-    @isTest
+    @IsTest
     public static void testFindPaymentDeclineReason() {
 
         setupTestData();
@@ -223,7 +217,7 @@ public with sharing class phss_cc_OrderUtilTest {
         System.assertNotEquals(null, result.get(phss_cc_OrderUtil.RETURN_MESSAGE));
     }
 
-    @isTest
+    @IsTest
     public static void testCreateNoPOTransactionPaymentForOrder() {
         setupTestData();
         String orderId = '123456';

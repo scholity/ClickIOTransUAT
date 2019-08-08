@@ -1,0 +1,7 @@
+<!--
+ - Created by jbarker on 2019-08-05.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_CartPaymentNavigationEvent">
+    <aura:attribute name="selectedTab" type="String"/>
+</aura:event>

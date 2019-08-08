@@ -1,6 +1,7 @@
 /**
  * Created by dgajwani on 9/20/18.
  */
+ 
 @isTest
 public with sharing class phss_cc_TestDataFactory {
 
@@ -327,15 +328,28 @@ public with sharing class phss_cc_TestDataFactory {
      * @param pricelist
      */
     public static List<ccrz__E_StoredPayment__c> createInsertStoredPayment(Integer count, Opportunity testOpportunity) {
+        return createInsertStoredPayment(count, testOpportunity, phss_cc_StoredPaymentUtil.STORED_PAYMENT_TYPE_PO);
+    }
+
+    /**
+     * @description Creates 'count' stored payments on the account of the opportunity with the specified account type.
+     *
+     * @param count
+     * @param testOpportunity
+     * @param accountType
+     *
+     * @return
+     */
+    public static List<ccrz__E_StoredPayment__c> createInsertStoredPayment(Integer count, Opportunity testOpportunity, String accountType) {
 
         List<ccrz__E_StoredPayment__c> sps = new List<ccrz__E_StoredPayment__c>();
 
         for (Integer i = 0; i < count; i++) {
             ccrz__E_StoredPayment__c sp = new ccrz__E_StoredPayment__c();
-            sp.ccrz__AccountType__c = 'po';
+            sp.ccrz__AccountType__c = accountType;
             sp.Original_PO_Amount__c = 1000;
             sp.Remaining_PO_Amount__c = 1000;
-            sp.ccrz__DisplayName__c = 'Test PO ' + i;
+            sp.ccrz__DisplayName__c = 'Test ' + accountType.toUpperCase() + ' ' + i;
             sp.ccrz__Account__c = testOpportunity.AccountId;
             sp.ccrz__Enabled__c = true;
             sp.ccrz__Storefront__c = TEST_STOREFRONT;

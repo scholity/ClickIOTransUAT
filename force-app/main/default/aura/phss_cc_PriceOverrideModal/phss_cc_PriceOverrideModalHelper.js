@@ -4,26 +4,53 @@
 ({
     getCartItemForProduct: function (component, productSfid, opportunitySfid) {
         var action = component.get('c.getCartItem');
+        console.log("Test1");
         action.setParams({
             'productSfid': productSfid,
             'opportunitySfid': opportunitySfid
         });
         action.setCallback(this, function (response) {
             if ('SUCCESS' === response.getState()) {
-                var value = response.getReturnValue();
+                
+                var options = [];
+                var value   = response.getReturnValue();
+                
                 if (value) {
                     var cartItem = value.cartItem;
                     if (cartItem) {
                         component.set('v.cartItem', cartItem);
+                        component.set("v.priceOld",cartItem.price);
+                        
+                        if(cartItem.Coupon !== undefined)
+                        {
+                        	component.set("v.fieldDisable",true);
+                            component.set("v.buttonSwitch",false);
+                            options.push({
+                                label: cartItem.CouponName,
+                                value: cartItem.Coupon
+                            });
+                            
+                            component.set("v.options", options);
+                        }
+                        else
+                        {
+                            component.set("v.fieldDisable",false);
+                            component.set("v.buttonSwitch",true);
+                            this.getCouponInfo(component, event);
+                        }
                     }
                     else {
-                        console.log('No cart item was returned.');
+                        this.showToast('info', 'No cart item was found', 'Try reloading the page and attempt to override the price again.');
                     }
                 }
                 else {
-                    console.log('No value was returned.');
+                    this.showToast('info', 'No cart item was found', 'Try reloading the page and attempt to override the price again.');
                 }
             }
+            else {
+                this.showToast('error', 'Could not get cart item', 'Try reloading the page and attempt this action again.');
+            }
+            
             component.set('v.showSpinner', false);
         });
         $A.enqueueAction(action);
@@ -37,12 +64,15 @@
 
     savePriceOverride: function (component) {
         var result = this.validatePriceOverride(component);
+        var couponId = component.get("v.CouponId");
+        
         if (result.success) {
             var action = component.get('c.overridePriceForCartItem');
             action.setParams({
                 'cartItemSfid': result.cartItemSfid,
                 'overrideType': result.overrideType,
-                'overrideValue': result.overrideValue.toString()
+                'overrideValue': result.overrideValue.toString(),
+                'couponId':couponId
             });
             action.setCallback(this, function (response) {
                 if ('SUCCESS' === response.getState()) {
@@ -74,6 +104,44 @@
         else {
             this.showToast('error', 'Cannot override price', result.error);
         }
+    },
+    
+    removeCouponHelper :  function (component) {
+        var cartItemSfid = component.get('v.cartItem.cartItemSfid');
+        var couponId = component.get("v.CouponId");
+        
+        var action = component.get('c.processRemoveCoupon');
+        action.setParams({
+            'cartItemSfid': cartItemSfid,
+            'couponId':couponId
+        });
+        action.setCallback(this, function (response) {
+            if ('SUCCESS' === response.getState()) {
+                var returnValue = response.getReturnValue();
+                if (typeof returnValue !== 'undefined') {
+                    var cartItem = returnValue.cartItem;
+                    if (typeof cartItem !== 'undefined') {
+                        component.set('v.isShown', false);
+                        this.showToast('success', 'Coupon emoved successfully');
+                        var updateEvent = $A.get('e.c:phss_cc_RefreshComponentEvent');
+                        updateEvent.fire();
+                    }
+                    else {
+                        this.showToast('info', 'There was no cart item to update', 'Try reloading the page and attempt to override the price again.');
+                    }
+                }
+                else {
+                    this.showToast('error', 'An unknown error occurred.', 'Please report this error for further assistance.');
+                }
+            }
+            else {
+                this.showToast('error', 'Could not remove Coupon.', 'Failed to remove Coupon for this cart item: ' + response.getState());
+            }
+            component.set('v.showSpinner', false);
+        });
+        $A.enqueueAction(action);
+        component.set('v.showSpinner', true);
+        
     },
 
     showToast : function(type, title, message) {
@@ -142,9 +210,35 @@
             result.error = 'No cart item identifier was found.';
         }
 
-        console.log('result: ');
-        console.log(result);
-
         return result;
-    }
+    },
+    
+    getCouponInfo : function(component)
+    {
+        var action = component.get("c.getCoupons");
+        
+        var options = [];
+        
+        action.setCallback(this, function(response) {
+            if (response.getState() === "SUCCESS") {
+                var receivedValues = response.getReturnValue();
+                if (receivedValues != undefined && receivedValues.length > 0) {
+                    options.push({
+                        label: "-- None --",
+                        value: ""
+                    });
+                }
+                
+                for (var i = 0; i < receivedValues.length; i++) {
+                    options.push({
+                        label: receivedValues[i].Display_Name__c,
+                        value: receivedValues[i].Id
+                    });
+                }
+                component.set("v.options", options);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    
 })

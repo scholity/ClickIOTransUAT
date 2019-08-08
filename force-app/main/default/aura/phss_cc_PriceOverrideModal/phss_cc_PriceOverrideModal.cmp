@@ -1,9 +1,9 @@
 <aura:component controller="phss_cc_PriceOverrideModalController">
 
     <!--variables-->
-    <aura:attribute name="isShown" type="Boolean" default="false"/>
-    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
-    <aura:attribute name="cartItem" type="Map"/>
+    <aura:attribute name="isShown" 		type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" 	type="Boolean" default="false"/>
+    <aura:attribute name="cartItem" 	type="Map"/>
     <aura:attribute name="overrideType" type="String"/>
 
     <!--register event-->
@@ -11,6 +11,17 @@
 
     <!--event handlers-->
 	<aura:handler event="c:phss_cc_ShowPriceOverrideModalEvent" action="{!c.show}"/>
+    
+    <aura:handler 	name="init" 		value="{!this}" 	action="{!c.doInit}"/>
+    
+    <aura:attribute name="options" 		type="String[]" />
+    <aura:attribute name="couponMap" 	type="Map"/>
+    <aura:attribute name="priceOld" 	type="string"/>
+    <aura:attribute name="fieldDisable" type="Boolean" 	default="false"/>
+    <aura:attribute name="buttonSwitch" type="Boolean" 	default="true"/>
+    <aura:attribute name="CouponId" 	type="string"/>
+    <aura:attribute name="CouponType" 	type="string"/>
+    <aura:attribute name="CouponValue" 	type="string"/>
 
     <aura:if isTrue="{!v.isShown}">
 
@@ -39,52 +50,85 @@
                     <aura:if isTrue="{!v.cartItem}">
                         <div class="slds-p-horizontal_xx-large slds-p-vertical_medium slds-align_absolute-center">
                             <div>
-                                <div class="slds-p-bottom_medium">
+                                <div class="slds-p-bottom_medium slds-p-top_medium">
                                     <div class="slds-text-heading_medium">{!v.cartItem.productName}</div>
                                     <div class="slds-text-title"><b>{!v.cartItem.productSKU}</b></div>
                                 </div>
+                                
+                                <div class="slds-p-bottom_medium slds-p-top_medium">
+                                    <lightning:select aura:id="select" label="Select Coupon" onchange="{!c.onChange}" >
+                                        <aura:iteration items="{!v.options}" var="item">
+                                            <option text="{!item.label}" value="{!item.value}"/>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                                
                                 <fieldset class="slds-form-element">
                                     <div class="slds-grid slds-form-element__control">
+                                        <aura:if isTrue="{!!v.fieldDisable}">
                                         <div class="slds-col slds-p-top_xxx-small">
                                                 <span class="slds-radio">
                                                     <lightning:input aura:id="percentDiscountRadio"
                                                                      type="radio"
                                                                      name="overrideOptions"
+                                                                     label=""
                                                                      value="percentDiscount"
                                                                      onclick="{!c.overrideSelected}"
-                                                                     checked="{!if(equals(v.overrideType, 'percentDiscount'), true, false)}"/>
+                                                                     checked="{!if(equals(v.overrideType, 'percentDiscount'), true, false)}"
+                                                                     disabled = "{!v.fieldDisable}"/>
                                                 </span>
                                         </div>
+                                        </aura:if>
                                         <div class="slds-col">
                                             <lightning:input aura:id="percentDiscountField"
                                                              name="percentDiscount"
                                                              label="Percent Discount"
                                                              value="{!v.cartItem.percentDiscount}"
-                                                             onchange="{!c.valueFieldChanged}"/>
+                                                             onchange="{!c.valueFieldChanged}"
+                                                             disabled = "{!v.fieldDisable}"/>
                                         </div>
                                         <div class="slds-col slds-p-horizontal_x-large slds-align_absolute-center">
                                             <div><b>OR</b></div>
                                         </div>
+                                        <aura:if isTrue="{!!v.fieldDisable}">
                                         <div class="slds-col slds-p-top_xxx-small">
                                                 <span class="slds-radio">
                                                     <lightning:input aura:id="unitPriceRadio"
                                                                      type="radio"
                                                                      name="overrideOptions"
+                                                                     label=""
                                                                      value="unitPrice"
                                                                      onclick="{!c.overrideSelected}"
-                                                                     checked="{!if(equals(v.overrideType, 'unitPrice'), true, false)}"/>
+                                                                     checked="{!if(equals(v.overrideType, 'unitPrice'), true, false)}"
+                                                                     disabled = "{!v.fieldDisable}"/>
                                                 </span>
 
                                         </div>
+                                        </aura:if>
                                         <div class="slds-col">
                                             <lightning:input aura:id="unitPriceField"
                                                              name="unitPrice"
                                                              label="Unit Price"
                                                              value="{!v.cartItem.price}"
-                                                             onchange="{!c.valueFieldChanged}"/>
+                                                             onchange="{!c.valueFieldChanged}"
+                                                             disabled = "{!v.fieldDisable}"/>
                                         </div>
                                     </div>
                                 </fieldset>
+                                <aura:if isTrue="{!v.fieldDisable}">
+                                         <div class="slds-grid slds-gutters slds-wrap slds-p-top_medium" style="color:red;">
+                                            <div class="slds-col">
+                                                <lightning:input label ="Coupon Type" value = "{!v.CouponType}" readonly = "true"/>
+                                            </div>
+                                             <div class="slds-col slds-p-horizontal_x-large slds-align_absolute-center">
+                                            <div><b>  </b></div>
+                                        	</div>
+                                            <div class="slds-col" style = "margin-left: 5%;">
+                                                <lightning:input label ="Coupon Value" value = "{!v.CouponValue}" readonly = "true"/>
+                                            </div>
+                                        </div>
+                                </aura:if>
+                                
                             </div>
                         </div>
                     </aura:if>
@@ -92,7 +136,12 @@
 
                 <footer class="slds-modal__footer">
                     <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{!c.hide}"/>
-                    <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
+                    <aura:if isTrue="{!v.buttonSwitch}">
+                        	<lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
+                        <aura:set attribute="else">
+                            <lightning:button variant="brand" label="Remove Coupon" title="Remove Coupon" onclick="{!c.removeCoupon}"/>
+                        </aura:set>
+                    </aura:if>
                 </footer>
             </div>
             </section>

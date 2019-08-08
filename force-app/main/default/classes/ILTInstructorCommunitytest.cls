@@ -53,11 +53,9 @@ private without sharing class ILTInstructorCommunitytest {
         */
 
         User runAsUser = [Select Id,FirstName,LastName,Alias,Email,Username,ProfileId,UserRoleId,TimeZoneSidKey,
-                EmailEncodingKey,LanguageLocaleKey,LocaleSidKey from User 
-                Where IsActive = True And Name != 'Salesforce Automation Account' And UserRoleId != NULL
+                EmailEncodingKey,LanguageLocaleKey,LocaleSidKey from User Where IsActive = True And
+                Name != 'Salesforce Automation Account' And UserRoleId != NULL
                 And Profile.Name = 'System Administrator' Limit 1];
-        
-        //  	  Where Id = '0050V000006m443' Limit 1];        
 
         System.RunAs(runAsUser) {
 
@@ -193,11 +191,19 @@ private without sharing class ILTInstructorCommunitytest {
             insert ilEvent;
 
             sked__Location__c objLocation = new sked__Location__c();
-
             objLocation.Name = 'Test';
             objLocation.sked__Type__c = 'Community';
             objLocation.sked__Address__c = '401 S Monroe St, Little Rock, AR, 72206';
             insert objLocation;
+
+            redwing__ILT_Location__c rdwngLocation = new redwing__ILT_Location__c();
+            rdwngLocation.Skedulo_Location__c = objLocation.Id;
+            rdwngLocation.Account__c = a.Id;
+            rdwngLocation.redwing__Address_1__c = '401 S Monroe St';
+            rdwngLocation.redwing__City__c = 'Little Rock';
+            rdwngLocation.redwing__Postal_Code__c = '72206';
+            rdwngLocation.redwing__State__c = 'AR';
+            insert rdwngLocation;
 
             redwing__Training_Plan__c lPlan = new redwing__Training_Plan__c();
             lPlan.Name = 'Test Plan';
@@ -221,10 +227,11 @@ private without sharing class ILTInstructorCommunitytest {
             //Create ILT Class Record
             Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
             clsRecord.Skedulo_Account__c = a.id;
-            clsRecord.redwing__End_Date__c = Date.Today().addDays(1); //Date.Parse('12/19/2018');
-            clsRecord.redwing__End_Time__c = '13:00';
-            clsRecord.redwing__Start_Date__c = Date.Today().addDays(1); //Date.Parse('12/19/2018');// Assuming Start date = End date
-            clsRecord.redwing__Start_Time__c = '12:00';
+//            clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
+            clsRecord.redwing__End_Date__c = Date.today().addDays(1);
+            clsRecord.redwing__End_Time__c = '23:00';
+            clsRecord.redwing__Start_Date__c = Date.today().addDays(1);// Assuming Start date = End date
+            clsRecord.redwing__Start_Time__c = '00:00';
             clsRecord.Name = 'Test';
             clsRecord.redwing__Learning__c = learning.Id;
             insert clsRecord;
@@ -237,7 +244,7 @@ private without sharing class ILTInstructorCommunitytest {
             sessionRecord.Skedulo_Address__c = objLocation.id;
             //End Time is defaulted to "20:00"
             sessionRecord.redwing__End_Time__c = '20:00';
-            sessionRecord.redwing__Date__c = Date.Today().addDays(1); // Date.Parse('12/19/2018');
+            sessionRecord.redwing__Date__c = Date.today().addDays(1);
             //Start Time is defaulted to "08:00"
             sessionRecord.redwing__Start_Time__c = '08:00';
             insert sessionRecord;
@@ -355,15 +362,15 @@ private without sharing class ILTInstructorCommunitytest {
 
             v = [select Id, Voucher_Claim__c from Voucher__c where id = :v.id];
             /*Student Test Data*/
-			DateTime dtStartDate = Date.Today().addDays(2);
-            DateTime dtEndDate = Date.Today().addDays(4);
-            
+
+            String stringDate = ((DateTime) Date.today().addDays(1)).format('MM/dd/yyyy');
+
             String json = '{' +
                     '   "ClassDetails": {' +
                     '   "Account": "' + a.id + '",' +
                     '   "Course": "' + lPlan.Id + '",' +
-                    '   "StartDate": "' + dtStartDate.format('MM/dd/yyyy') + '",' +  // 03/18/2020",' +
-                    '   "EndDate": "' + dtEndDate.format('MM/dd/yyyy') + '",' + // 03/20/2020",' +
+                    '   "StartDate": "' + stringDate + '",' +
+                    '   "EndDate": "'+ stringDate +'",' +
                     '   "Students": "10",' +
                     '   "Voucher": "2",' +
                     '   "Address1": "no 4",' +
@@ -376,7 +383,7 @@ private without sharing class ILTInstructorCommunitytest {
                     '   "CloudCrazeProdId": "' + product1.id + '",' +
                     '   "Instructor1": "' + UserInfo.getUserId() + '",' +
                     '   "Instructor2": "",' +
-                    '   "Location": "' + objLocation.id + '"' +
+                    '   "Location": "' + rdwngLocation.id + '"' +
                     '    }' +
                     '}';
 
@@ -424,7 +431,11 @@ private without sharing class ILTInstructorCommunitytest {
             // test isLTSClass method
             ILTInstructorCommunity.isLTSClass(clsRecord.Id);
 
-            ILTInstructorCommunity.invokeMethodswithboolean(json, json1, true);
+            // initialize cspWrapper
+//            RBCWrapper wrapper = ILTInstructorCommunity.initWrapper();
+            RBCWrapper wrapper = populateRBCWrapper(clsRecord.redwing__Start_Date__c, lPlan.Id );
+
+            ILTInstructorCommunity.invokeMethodswithboolean(json, json1, true, wrapper);
 
             List<redwing__Learning_Assignment__c> LearningAssignmenttest = [Select id, name, Learning_Record_Type__c, redwing__Learning__r.RecordType.Name from redwing__Learning_Assignment__c where redwing__User__r.name = 'Rajii R'];
             System.debug(LearningAssignmenttest);
@@ -453,11 +464,18 @@ private without sharing class ILTInstructorCommunitytest {
                 ILTInstructorCommunity.fetchLookupValues('Raji', 'Account');
                 ILTInstructorCommunity.fetchLookupValues('Priya', 'Course');
 
-
                 //}catch (Exception e){}
             }
             Test.stopTest();
         }
+    }
+
+    private static RBCWrapper populateRBCWrapper(Date classDate, Id lPlanId ) {
+        String sessionDate = ( (DateTime) classDate).format('yyyy-MM-dd');
+        String wrapperStr = '{"address1":"","address2":"","city":"","classFormat":"","courseName":"Lifeguarding","regType":"","sessionList":[{"classDate":"' + sessionDate + '","endTime":"10:30:00.000","startTime":"09:30:00.000","timeZone":"US/Mountain","formattedStartTime":"12:30 AM","formattedEndTime":"01:30 AM"}],"siteName":"","state":"","timeZoneList":{"US/Eastern":"America/New_York","US/Central":"America/Chicago","US/Mountain":"America/Denver","US/Pacific":"America/Los_Angeles","US/Alaska":"America/Anchorage","US/Arizona":"America/Phoenix","US/Hawaii":"Pacific/Honolulu","America/Puerto_Rico":"America/Puerto_Rico"},"zip":"","courseId":"' + lPlanId + '"}';
+//        String wrapperStr = '{"address1":"","address2":"","city":"","classFormat":"","courseName":"Lifeguarding","regType":"","sessionList":[{"classDate":"2019-08-12","endTime":"01:30:00.000","startTime":"00:30:00.000","timeZone":"US/Mountain","formattedStartTime":"12:30 AM","formattedEndTime":"01:30 AM"}],"siteName":"","state":"","timeZoneList":{"US/Eastern":"America/New_York","US/Central":"America/Chicago","US/Mountain":"America/Denver","US/Pacific":"America/Los_Angeles","US/Alaska":"America/Anchorage","US/Arizona":"America/Phoenix","US/Hawaii":"Pacific/Honolulu","America/Puerto_Rico":"America/Puerto_Rico"},"zip":"","courseId":"a3r5B000000AfWdQAK"}';
+        RBCWrapper wrapper = (RBCWrapper) JSON.deserialize(wrapperStr, RBCWrapper.class);
+        return wrapper;
     }
 
     static testMethod void addstudentstest() {
@@ -484,10 +502,11 @@ private without sharing class ILTInstructorCommunitytest {
 
         User runAsUser = [Select Id,FirstName,LastName,Alias,Email,Username,ProfileId,UserRoleId,TimeZoneSidKey,
                 EmailEncodingKey,LanguageLocaleKey,LocaleSidKey from User
-                Where IsActive = True And Name != 'Salesforce Automation Account' And UserRoleId != Null
-                And Profile.Name = 'System Administrator' Limit 1];
+                Where IsActive = True And
+                    Name != 'Salesforce Automation Account' And UserRoleId != Null
+                    And Profile.Name = 'System Administrator' Limit 1];
 
-        //          Where Id = '0050V000006m443' Limit 1];
+        //      Where Id = '0050V000006m443' Limit 1];
 
         System.RunAs(runAsUser) {
 
@@ -610,9 +629,9 @@ private without sharing class ILTInstructorCommunitytest {
             //Create ILT Class Record
             Redwing__ILT_Class__c clsRecord2 = new Redwing__ILT_Class__c();
             clsRecord2.Skedulo_Account__c = a2.id;
-            clsRecord2.redwing__End_Date__c = Date.Today().addDays(1); //Date.Parse('12/19/2218');
+            clsRecord2.redwing__End_Date__c = Date.Parse('12/19/2018');
             clsRecord2.redwing__End_Time__c = '13:00';
-            clsRecord2.redwing__Start_Date__c = Date.Today().addDays(1); //Date.Parse('12/19/2218');// Assuming Start date = End date
+            clsRecord2.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
             clsRecord2.redwing__Start_Time__c = '12:00';
             clsRecord2.Name = 'Test';
             clsRecord2.Request_Type__c = 'Community';
@@ -624,7 +643,7 @@ private without sharing class ILTInstructorCommunitytest {
             sessionRecord2.Skedulo_Account__c = a2.id;
             //End Time is defaulted to "20:00"
             sessionRecord2.redwing__End_Time__c = '13:00';
-            sessionRecord2.redwing__Date__c = Date.Today().addDays(1); //Date.Parse('12/19/2218');
+            sessionRecord2.redwing__Date__c = Date.Parse('12/19/2018');
             //Start Time is defaulted to "08:00"
             sessionRecord2.redwing__Start_Time__c = '12:00';
             insert sessionRecord2;
@@ -791,9 +810,9 @@ private without sharing class ILTInstructorCommunitytest {
 
         Redwing__ILT_Class__c clsRecord3 = new Redwing__ILT_Class__c();
         clsRecord3.Skedulo_Account__c = a3.id;
-        clsRecord3.redwing__End_Date__c = Date.Today().addDays(1); //Date.Parse('12/19/2018');
+        clsRecord3.redwing__End_Date__c = Date.Parse('12/19/2018');
         clsRecord3.redwing__End_Time__c= '13:00';
-        clsRecord3.redwing__Start_Date__c = Date.Today().addDays(1); //Date.Parse('12/19/2018');// Assuming Start date = End date
+        clsRecord3.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
         clsRecord3.redwing__Start_Time__c = '12:00';
         clsRecord3.Name = 'Test';
         clsRecord3.redwing__Learning__c = learning3.Id;
@@ -1123,9 +1142,33 @@ private without sharing class ILTInstructorCommunitytest {
         System.debug(u);
     }
     
-    static testMethod void test_isILTClass() {
-        
+    static testMethod void test_createILTLocation() {
+
+        Account a = new Account(Name='Test Account');
+        insert a;
+
+        String name = 'Site0';
+        String address1 = '30 John Court';
+        String address2 = '';
+        String postcode = '33428';
+        String state = 'FL';
+        String city = 'Boca Raton';
+
         // ILTInstructorCommunity.isLTSClass(String classId);
+        Test.startTest();
+        Id locationId = ILTInstructorCommunity.createIltLocation(a.Id, name, address1, address2, postcode, state, city);
+        Test.stopTest();
+        System.assertNotEquals(null, locationId);
+
+        // calling the method with the same address data, should not create new record but return Id of the existing one
+        Id locationId2 = ILTInstructorCommunity.createIltLocation(a.Id, 'Other name for the site', address1, address2, postcode, state, city);
+        System.assertEquals(locationId, locationId2);
     }
 
+    static testMethod void test_initWrapper() {
+
+        Test.startTest();
+        RBCWrapper wrapper = ILTInstructorCommunity.initWrapper();
+        Test.stopTest();
+    }
 }

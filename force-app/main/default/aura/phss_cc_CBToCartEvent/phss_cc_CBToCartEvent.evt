@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="phss_cc_CBToCartEvent">
+    <aura:attribute name="storedPayments" type="List"/>
+</aura:event>

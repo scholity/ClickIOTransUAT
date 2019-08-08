@@ -101,6 +101,8 @@
         
         var orderItemId = component.get("v.recordId");
         
+        component.set("v.oId",orderItemId);
+        
         action.setParams({ orderItemId : orderItemId });
         
         action.setCallback(this, function(response) 
@@ -128,6 +130,7 @@
         var action = component.get('c.getCreditedOrderItemCount');
         
         var orderItemId = component.get("v.recordId");
+        
         
         action.setParams({ orderItemId : orderItemId });
         
