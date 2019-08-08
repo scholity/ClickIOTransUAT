@@ -15,7 +15,7 @@ public with sharing class phss_cc_PurchaseOrderController {
     public static Map<String, Object> fetchStoredPayments(String opportunitySfid){
         Map<String, Object> fetchStoredPaymentsResponse = new Map<String, Object> ();
         try {
-            fetchStoredPaymentsResponse = phss_cc_OrderUtil.fetchStoredPayments(opportunitySfid);
+            fetchStoredPaymentsResponse = phss_cc_StoredPaymentUtil.fetchStoredPayments(opportunitySfid);
         } catch (Exception e) {
             fetchStoredPaymentsResponse = phss_cc_Exception.getErrorMessageMap(e.getMessage());
         }

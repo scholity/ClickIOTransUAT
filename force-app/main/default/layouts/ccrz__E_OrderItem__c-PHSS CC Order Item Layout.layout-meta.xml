@@ -91,6 +91,10 @@
                 <behavior>Edit</behavior>
                 <field>Error_Message__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Coupon__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -303,11 +307,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -321,6 +320,11 @@
             <actionName>FeedItem.LinkPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>FeedItem.PollPost</actionName>
@@ -366,9 +370,11 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ccrz__Product__c</fields>
-        <fields>ccrz__Price__c</fields>
+        <fields>ccrz__OrderItemStatus__c</fields>
         <fields>ccrz__Quantity__c</fields>
+        <fields>ccrz__Price__c</fields>
         <fields>ccrz__SubAmount__c</fields>
+        <fields>Is_Return__c</fields>
         <relatedList>ccrz__E_OrderItem__c.ccrz__ParentOrderItem__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -414,7 +420,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ccrz__Invoice__c</fields>
+        <fields>Fulfillment_Item__c</fields>
         <fields>Quantity__c</fields>
+        <fields>Total_Amount__c</fields>
         <relatedList>ccrz__E_InvoiceItem__c.ccrz__CCOrderItem__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -461,7 +469,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h21000000S90d</masterLabel>
+        <masterLabel>00h5B000000HaKR</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

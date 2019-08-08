@@ -21,6 +21,7 @@
     <aura:attribute name = "originalQty"			type = "String"/>
     <aura:attribute name = "maxQty"					type = "String"/>    
     <aura:attribute name = "price"					type = "String"/>
+    <aura:attribute name = "oId"					type = "String"/>
     <aura:attribute name = "percentDiscount"		type = "String"/>
     <aura:attribute name = "adjPercentDiscount"		type = "String"/>
     <aura:attribute name = "subAmount"				type = "String"/>
@@ -126,10 +127,10 @@
                         <div class="slds-align_absolute-center">
                                     <c:ApplyAdjustmentOnDropLerner adjPercentDiscount 	 = "{!v.price}"
                                                                    qty					 = "{!v.qty}"
-                                                                   isDisabled			 = "{!v.buttonDisable}"
                                                                    method				 = "{!c.processAdj}"
                                                                    maxDisAllowed		 = "{!v.maxPrice}"
-                                                                   aura:id				 = "adj"/>
+                                                                   aura:id				 = "adj"
+                                                                   oId					 = "{!v.oId}"/>
                         </div>
                         
                         <br/><br/>
