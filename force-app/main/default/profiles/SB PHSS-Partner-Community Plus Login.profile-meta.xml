@@ -171,18 +171,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>phss_cc_OnAccountBalanceControllerTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>phss_cc_StoredPaymentUtil</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>phss_cc_StoredPaymentUtilTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AccountPricingAgreementCleanUpBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1879,21 +1867,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Coupon__c.Active__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ccrz__E_CartItem__c.Coupon__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>ccrz__E_OrderItem__c.Coupon__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.AP_Territory_Owner__c</field>
@@ -13905,12 +13878,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>Coupon__c-Coupon Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ccrz__E_CartItem__c-PHSS CC Cart Item Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Account-Household Account</layout>
         <recordType>Account.Household_Account</recordType>
     </layoutAssignments>
@@ -15517,10 +15484,6 @@
         <recordType>Training_Events__c.Training_Event</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
-    <tabVisibilities>
-        <tab>Coupon__c</tab>
-        <visibility>DefaultOff</visibility>
-    </tabVisibilities>
     <tabVisibilities>
         <tab>Associated_Orders__c</tab>
         <visibility>DefaultOn</visibility>

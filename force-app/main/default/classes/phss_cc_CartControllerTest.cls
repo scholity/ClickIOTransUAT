@@ -10,7 +10,6 @@ public with sharing class phss_cc_CartControllerTest {
     public static Map<String, Object> testData;
     public static List<ccrz__E_Product__c> products;
     public static ccrz__E_Cart__c testCart;
-    public static List<ccrz__E_StoredPayment__c> testStoredPayments;
     public static Map<String, Object> productQuantityMap;
 
     /**
@@ -30,7 +29,7 @@ public with sharing class phss_cc_CartControllerTest {
         }
 
         testCart = testCarts[0];
-        testStoredPayments = phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
+        phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
     }
 
     @isTest
@@ -60,14 +59,13 @@ public with sharing class phss_cc_CartControllerTest {
     @isTest
     public static void placeOrderOnCartCC() {
         setupTestData();
-        /*
-
+        
         Test.startTest();
         Map<String, Object> placeOrderResult = phss_cc_CartController.placeOrderOnCartCC(null, null, null);
         placeOrderResult = phss_cc_CartController.placeOrderOnCartCC(testOpportunity.Id, testCart.ccrz__EncryptedId__c, cyberSourceResponseAccept);
         Test.stopTest();
 
-        System.assertNotEquals(null, placeOrderResult);*/
+        System.assertNotEquals(null, placeOrderResult);
     }
 
     @isTest
@@ -100,24 +98,7 @@ public with sharing class phss_cc_CartControllerTest {
 
         System.assertNotEquals(null, placeOrderResult);
     }
-
-    @isTest
-    public static void placeOrderOnCartCB() {
-        setupTestData();
-
-        List<String> storedPaymentIDs = new List<String>();
-        for (ccrz__E_StoredPayment__c storedPayment : testStoredPayments) {
-            storedPaymentIDs.add(storedPayment.Id);
-        }
-
-        Test.startTest();
-        Map<String, Object> placeOrderResult = phss_cc_CartController.placeOrderOnCartCB(null, null, null);
-        placeOrderResult = phss_cc_CartController.placeOrderOnCartCB(testOpportunity.Id, testCart.ccrz__EncryptedId__c, storedPaymentIDs);
-        Test.stopTest();
-
-        System.assertNotEquals(null, placeOrderResult);
-    }
-
+    
     @isTest
     public static void testGetOpportunityApprovalStatus() {
         setupTestData();

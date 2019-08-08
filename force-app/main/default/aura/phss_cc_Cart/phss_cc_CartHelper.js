@@ -111,19 +111,17 @@
      * @param event
      * @param helper
      */
-    doPlaceOrderCC: function (component, event, helper, cyberSourceResponse) {
+    doPlaceOrderCC: function (component, event, helper,cyberSourceResponse) {
         component.set('v.renderComplete', false);
         if (cyberSourceResponse === undefined)
             cyberSourceResponse = null;
         var opportunitySfid = component.get('v.recordId');
         var encryptedCartId = component.get('v.encryptedCartId');
-        var storedPaymentIDs = helper.getStoredPaymentIDs(component);
         var action = component.get('c.placeOrderOnCartCC');
         action.setParams({
             opportunitySfid: opportunitySfid,
             encryptedCartId: encryptedCartId,
-            cyberSourceResponse: cyberSourceResponse,
-            storedPayments: storedPaymentIDs
+            cyberSourceResponse:cyberSourceResponse
         });
         action.setCallback(this, function (response) {
             var state = response.getState();
@@ -162,18 +160,15 @@
      * @param event
      * @param helper
      */
-    doPlaceOrderPO: function (component, event, helper, PODetailsMap) {
+    doPlaceOrderPO: function (component, event, helper,PODetailsMap) {
         component.set('v.renderComplete', false);
         var opportunitySfid = component.get('v.recordId');
         var encryptedCartId = component.get('v.encryptedCartId');
-        var storedPayments = helper.getStoredPaymentIDs(component);
-
         var action = component.get('c.placeOrderOnCartPO');
         action.setParams({
             opportunitySfid: opportunitySfid,
             encryptedCartId: encryptedCartId,
-            PODetailsMap: PODetailsMap,
-            storedPayments: storedPayments
+            PODetailsMap:PODetailsMap
         });
         action.setCallback(this, function (response) {
             var state = response.getState();
@@ -213,6 +208,7 @@
                         allowPaymentSubmission = true;
                     }
                     component.set('v.allowPaymentSubmission', allowPaymentSubmission);
+                    console.log('allowPaymentSubmission: ' + allowPaymentSubmission);
                 } else {
                     var errorMessage = returnValue.Error;
                     this.showToastMessage('Error Fetching Data', errorMessage, 'Error');
@@ -224,16 +220,7 @@
         $A.enqueueAction(action);
     },
 
-    /**
-     * @description Converts the cart to an order using ONLY stored payments.
-     * @param component
-     * @param event
-     * @param helper
-     * @param PODetailsMap
-     */
-    doPlaceOrderCB: function (component, event, helper, storedPayments) {
-        console.log('phss_cc_Cart.doPlaceOrderCB()');
-
+    doPlaceOrderCB: function (component, event, helper,PODetailsMap) {
         component.set('v.renderComplete', false);
         var opportunitySfid = component.get('v.recordId');
         var encryptedCartId = component.get('v.encryptedCartId');
@@ -241,7 +228,7 @@
         action.setParams({
             opportunitySfid: opportunitySfid,
             encryptedCartId: encryptedCartId,
-            storedPayments: storedPayments
+            PODetailsMap:PODetailsMap
         });
         action.setCallback(this, function (response) {
             var state = response.getState();
@@ -299,17 +286,5 @@
             }
         });
         $A.enqueueAction(action);
-    },
-
-    getStoredPaymentIDs: function (component) {
-        var storedPayments = component.get('v.storedPayments');
-        if (storedPayments != null) {
-            var identifiers = [];
-            storedPayments.forEach(function(payment) {
-                identifiers.push(payment.sfid);
-            });
-            return identifiers;
-        }
-        return null;
     }
 })

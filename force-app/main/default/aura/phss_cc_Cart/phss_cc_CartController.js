@@ -104,7 +104,7 @@
      */
     handleCyberSourceResponse: function (component, event, helper) {
         var cyberSourceResponse = event.getParam('responseString');
-        helper.doPlaceOrderCC(component, event, helper, cyberSourceResponse);
+        helper.doPlaceOrderCC(component,event,helper,cyberSourceResponse);
     },
 
     /**
@@ -123,8 +123,6 @@
         var updatePO = event.getParam('updatePO');
         var updatedPOAmount = event.getParam('updatedPOAmount');
 
-        var storedPayments = helper.getStoredPaymentIDs(component);
-
         if (POSfid === 'NoPORequired') {
             helper.doPlaceOrderPO(component,event,helper,null);
         }
@@ -142,36 +140,13 @@
                 PODetailsMap['newPODoSave'] = newPODoSave;
             }
 
-            helper.doPlaceOrderPO(component, event, helper, PODetailsMap);
+            helper.doPlaceOrderPO(component,event,helper,PODetailsMap);
         }
     },
-
-    /**
-     * @description Receive the response from the On Account Balance component with the selected stored payments
-     * @param component
-     * @param event
-     * @param helper
-     */
+    
     handleCBPayment: function (component, event, helper) {
-        console.log("phss_cc_Cart.handleCBPayment()");
-        var storedPayments = event.getParam('storedPayments');
-        helper.doPlaceOrderCB(component, event, helper, storedPayments);
-    },
-
-    handleCartPaymentNavigationEvent: function (component, event, helper) {
-        var selectedTabName = event.getParam('selectedTab');
-        var tabset = component.find('paymentTabset');
-        if (selectedTabName != null && tabset != null) {
-            if (selectedTabName == 'Credit Card') {
-                tabset.set('v.selectedTabId', '1');
-            } else if (selectedTabName == 'Invoice') {
-                tabset.set('v.selectedTabId', '2');
-            } else if (selectedTabName == 'Account Balance') {
-                tabset.set('v.selectedTabId', '3');
-            } else {
-                console.log('Unknown tab [name=' + selectedTabName + ']');
-            }
-        }
+        console.log("$$$handleCBPayment$$$");
+        helper.doPlaceOrderCB(component,event,helper,null);
     },
 
     /**
@@ -190,29 +165,5 @@
             });
             showEvent.fire();
         }
-    },
-
-    handleToggleStoredPaymentSelection: function (component, event, helper) {
-        var storedPayments = event.getParam('storedPayments');
-        if (storedPayments != null) {
-
-            // sum up amounts
-            var totalAmount = 0.0;
-            storedPayments.forEach(function (payment) {
-                totalAmount += payment.remainingPOAmount;
-            });
-
-            // format label text
-            var labelText = 'Account Balance';
-            if (totalAmount > 0.0) {
-                labelText += ':  $' + totalAmount + ' to be applied';
-            }
-
-            // set label text for Account Balance tab
-            var label = component.find('onAccountBalanceTab').get('v.label');
-            label[0].set('v.value', labelText);
-        }
-
-        component.set('v.storedPayments', storedPayments);
     }
 })

@@ -1,12 +1,14 @@
 public class phss_cc_OnAccountBalanceController 
 {
+    
     @AuraEnabled
-    public static List<WrapperToDisplayAccountBalanceRecords> fetchStoredPayments(String opportunitySfid) {
-        
+     public static List<WrapperToDisplayAccountBalanceRecords> fetchStoredPayments(String opportunitySfid)
+     {
          List<ccrz__E_StoredPayment__c> fetchStoredPaymentsResponse = new List<ccrz__E_StoredPayment__c> ();
-         try {
-             fetchStoredPaymentsResponse = phss_cc_StoredPaymentUtil.fetchOnAccountPayments(opportunitySfid);
-
+         
+         try
+         {
+             fetchStoredPaymentsResponse = phss_cc_OrderUtil.fetchOnAccountPayments(opportunitySfid);
          } catch (Exception e) {
              //fetchStoredPaymentsResponse = phss_cc_Exception.getErrorMessageMap(e.getMessage());
          }
@@ -29,7 +31,7 @@ public class phss_cc_OnAccountBalanceController
              lstCBRecords.add(abRecords);
          }
          return lstCBRecords;
-    }
+     }
     
     public class WrapperToDisplayAccountBalanceRecords
     {
@@ -53,4 +55,27 @@ public class phss_cc_OnAccountBalanceController
             sfid 			  = '';
         }
     }
+    
+    @AuraEnabled
+    public static decimal performAction(string prodRecords)
+    {   
+        decimal selectedCreditAmount = 0;
+        
+        if(!string.isBlank(prodRecords))
+        {   
+            List<WrapperToDisplayAccountBalanceRecords> lstProdRecords = (List<WrapperToDisplayAccountBalanceRecords>)
+                
+            System.JSON.deserialize(prodRecords,List<WrapperToDisplayAccountBalanceRecords>.class);
+            
+            for(WrapperToDisplayAccountBalanceRecords objProdRecords : lstProdRecords)
+            {
+                if(objProdRecords.isSelected)
+                {
+                    selectedCreditAmount += objProdRecords.remainingPOAmount;
+                }
+            }
+        }
+        return selectedCreditAmount;
+    }
+
 }

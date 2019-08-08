@@ -51,11 +51,10 @@ public with sharing class phss_cc_CartController {
      * @return
      */
     @AuraEnabled
-    public static Map<String, Object> placeOrderOnCartCC(String opportunitySfid, String encryptedCartId, String cyberSourceResponse, List<String> storedPayments) {
-        
+    public static Map<String, Object> placeOrderOnCartCC(String opportunitySfid, String encryptedCartId,String cyberSourceResponse) {
         Map<String, Object> placeOrderResult;
         try {
-            placeOrderResult = phss_cc_OrderUtil.placeOrderOnCartCC(opportunitySfid, encryptedCartId, cyberSourceResponse, storedPayments);
+            placeOrderResult = phss_cc_OrderUtil.placeOrderOnCartCC(opportunitySfid,encryptedCartId,cyberSourceResponse);
         } catch (Exception e) {
             placeOrderResult = phss_cc_Exception.getErrorMessageMap(e.getMessage());
         }
@@ -71,35 +70,30 @@ public with sharing class phss_cc_CartController {
      * @return
      */
     @AuraEnabled
-    public static Map<String, Object> placeOrderOnCartPO(String opportunitySfid, String encryptedCartId, Map<String, Object> PODetailsMap) {
+    public static Map<String, Object> placeOrderOnCartPO(String opportunitySfid, String encryptedCartId,Map<String, Object> PODetailsMap) {
         Map<String, Object> placeOrderResult;
         try {
-            placeOrderResult = phss_cc_OrderUtil.placeOrderOnCartPO(opportunitySfid, encryptedCartId, PODetailsMap);
+            placeOrderResult = phss_cc_OrderUtil.placeOrderOnCartPO(opportunitySfid,encryptedCartId,PODetailsMap);
         } catch (Exception e) {
             placeOrderResult = phss_cc_Exception.getErrorMessageMap(e.getMessage());
         }
         return placeOrderResult;
     }
-
-    /**
-     * @description Places an order using ONLY stored payments.
-     *
-     * @param opportunitySfid
-     * @param encryptedCartId
-     * @param storedPayments
-     *
-     * @return
-     */
-    @AuraEnabled
-    public static Map<String, Object> placeOrderOnCartCB(String opportunitySfid, String encryptedCartId, List<String> storedPayments) {
+    
+    /*
+    //US1512 - Start 
+    @AuraEnabled 
+    public static Map<String, Object> placeOrderOnCartCB(String opportunitySfid, String encryptedCartId,Map<String, Object> PODetailsMap) {
         Map<String, Object> placeOrderResult;
         try {
-            placeOrderResult = phss_cc_OrderUtil.placeOrderOnCartCB(opportunitySfid, encryptedCartId, storedPayments);
+            placeOrderResult = phss_cc_OrderUtil.placeOrderOnCartCB(opportunitySfid,encryptedCartId,PODetailsMap);
         } catch (Exception e) {
             placeOrderResult = phss_cc_Exception.getErrorMessageMap(e.getMessage());
         }
         return placeOrderResult;
     }
+    */
+    //US1512 - End
 
     @AuraEnabled
     public static Map<String, Object> fetchPaymentTabsetPermissions(String opportunityId) {
