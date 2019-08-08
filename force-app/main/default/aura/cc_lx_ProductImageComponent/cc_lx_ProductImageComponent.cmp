@@ -1,0 +1,24 @@
+<aura:component extensible="true" access="global">
+  <aura:attribute name="renderDefaultComponent" type="Boolean" default="true" />
+  <aura:attribute name="product" type="Object" access="global" />
+  <aura:attribute name="type" type="String" default="Product Image" access="global" />
+  <aura:attribute name="imageUrl" type="String" />
+<!--
+  <ltng:require
+      styles="{!$Resource.CC_Lightning + '/css/lx.min.css'}"
+      scripts="{!join(',',$Resource.CC_Lightning + '/js/jquery-3.3.1.min.js',
+                          $Resource.CC_Lightning + '/js/spin.min.js',
+                          $Resource.CC_Lightning + '/js/underscore-min.js')}"
+      afterScriptsLoaded="{!c.doInit}" />
+-->
+  <aura:if isTrue="{!v.renderDefaultComponent}">
+  <span>
+    <img src="{!v.imageUrl}" class="product-image"/>
+  </span>
+  {!v.body}
+  <aura:set attribute="else">
+    {!v.body}
+  </aura:set>
+  </aura:if>
+
+</aura:component>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Other_Root_Cause</fullName>
+    <active>true</active>
+    <description>The Other Root Cause field is required when the Root Cause is Other</description>
+    <errorConditionFormula>AND( 
+RecordType.DeveloperName = &#39;Invoicing&#39;, 
+ISPICKVAL( Type , &#39;Invoicing&#39;), 
+ISPICKVAL( Root_Cause__c , &#39;Other&#39;), 
+ISBLANK( Other_Root_Cause__c ), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Other_Root_Cause__c</errorDisplayField>
+    <errorMessage>Please Provide Other Root Cause</errorMessage>
+</ValidationRule>

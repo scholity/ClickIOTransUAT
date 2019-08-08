@@ -1,0 +1,94 @@
+<aura:component description="phss_cc_ProductListComponent" implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="phss_cc_ProductListCmpControllerClone">
+
+    <!--Retrieved from Server-->
+    <aura:attribute name="productList" type="List"/>
+    <aura:attribute name="productsMap" type="Map"/>
+    
+    <aura:attribute name="oppId" type="String"/>
+    <aura:attribute name="storeFront" type="String"/>
+    <aura:attribute name="productSpecs" type="Map"/>
+    
+    <aura:attribute name = "CCProductName"			type = "String"  	default = ""/>
+
+    <!--Variables to maintain a cart on the front end-->
+    <aura:attribute name="encryptedCartId" type="String" default=""/>
+    <aura:attribute name="productQuantityMap" type="Map" default="{}"/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
+    <!--Error message handling-->
+    <aura:attribute name="errorMessage" type="String" default=""/>
+    <aura:handler name="change" value="{!v.errorMessage}" action="{!c.handleErrorMessage}"/>
+
+    <!--Event Handlers-->
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
+    <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdateClone" action="{!c.productCountIncrement}"/>
+    <aura:handler name="decrementProductCount" event="c:phss_cc_ProductCountUpdate" action="{!c.productCountDecrement}"/>
+    <aura:handler event="c:phss_cc_RefreshComponentEvent" action="{!c.handleRefreshComponentEvent}"/>
+    
+    <!--Register Event-->
+    <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
+
+    <!--Component Attributes-->
+    <aura:attribute type="String" name="searchQuery"/>
+
+    <!--Spinner when page loads-->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="{!$Label.c.Spinner_Alternate_Text}"/>
+    </aura:if>
+
+    <!--Product Search Input-->
+    
+
+
+    <div class="slds-grid slds-wrap slds-m-bottom--large">
+        <div class="slds-col slds-size_2-of-6 slds-m-right--small">
+            <ui:inputText aura:id="searchTextField" value="{!v.searchQuery}"/>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <lightning:button label="Search" name="searchButton" onclick="{!c.onSearch}" variant="brand"/>
+        </div>
+    </div>
+
+    <!--Render Product Table-->
+    <aura:if isTrue="{!v.renderComplete}">
+        <h1 class="slds-text-heading--medium slds-m-bottom--small">
+			<lightning:formattedText class="slds-m-right--xx-small" value="Storefront:"/>             
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!v.storeFront}"/><br/>           
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.ProductSearch_Table_Header}"/>
+            <lightning:formattedNumber class="slds-m-right--xx-small" value="{!v.productList.length}"/>
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.ProductSearch_Table_Header_Value_Type}"/>
+        </h1>
+        <div class="slds-grid slds-border--top slds-border--bottom slds-m-bottom--small">
+            <div class="slds-size_2-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_SKU}</div>
+            <div class="slds-size_4-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_Name}</div>
+            <!-- <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_UOM}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Price}</div> 
+            <div class="slds-size_3-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>-->
+            <div class="slds-size_3-of-12 slds-align_absolute-center columnHeaders">Select</div>
+        </div>
+        <div class="slds-scrollable--y slds-m-bottom--large" style="max-height: 20rem; height: auto;">
+            <aura:iteration items="{!v.productList}" var="product">
+                <c:phss_cc_ProductDetail_Clone productSfid="{!product}"
+                                       		   productMap="{!v.productsMap}"
+                                               showDiscountPricing = "false"
+                                               showPayment = "false"/>
+            </aura:iteration>
+        </div>
+
+        <!--Add to cart button-->
+         <!--
+        <lightning:button iconName="utility:add" class="slds-align_absolute-center slds-m-top**x-large" label="{!$Label.c.ProductSearch_Button_AddToCart}" name="addToCartButton" variant="brand" onclick="{!c.addProdsToCart}"/>
+		-->
+        
+        <aura:set attribute="else">
+            <!-- <div class="slds-border**top slds-border**bottom"> -->
+            <div>
+               <lightning:formattedText class="slds-align_absolute-center slds-text-heading--small"
+                                         value=""/>
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

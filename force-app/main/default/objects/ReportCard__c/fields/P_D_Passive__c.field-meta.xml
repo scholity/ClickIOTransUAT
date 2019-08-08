@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>P_D_Passive__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(AND(P_D__c  &gt; 6, P_D__c  &lt; 9), 1, 0)</formula>
+    <inlineHelpText>Used to count passive (greater than 6 and less than 9)</inlineHelpText>
+    <label>P-D Passive</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

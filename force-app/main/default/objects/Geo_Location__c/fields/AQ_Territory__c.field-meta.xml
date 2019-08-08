@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AQ_Territory__c</fullName>
+    <description>Aquatics Territory used for commissions on the Territory Revenue records</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Aquatics Territory used for commissions on the Territory Revenue records</inlineHelpText>
+    <label>AQ Territory</label>
+    <length>6</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

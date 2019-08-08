@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Description__c</fullName>
+    <description>After choosing from the Product multi picklist, provide any additional information regarding the clients interest in a particular category.</description>
+    <externalId>false</externalId>
+    <label>Product Description</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>TextArea</type>
+</CustomField>

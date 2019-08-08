@@ -1,0 +1,34 @@
+<design:component>
+    <design:attribute name="cssfontfamily" label="Font Family" datasource="Serif,Sans-serif,Monospace" default="Sans-serif" description="CSS Font family"/>
+    <design:attribute name="cssfontsize" label="Font Size" datasource="10px,12px,14px,16px,18px,20px" default="10px" description="CSS Font size"/>
+    <design:attribute name="cssfontweight" label="Font Weight" datasource="normal,bold,bolder" default="normal" description="CSS Font weight"/>
+    <design:attribute name="csspaddinghorz" label="Horizontal padding" description="CSS Horizontal padding (ex. 10px)"/>
+    <design:attribute name="csspaddingvert" label="Vertical padding" description="CSS Vertical padding (ex. 10px)" />    
+    <design:attribute name="copyrighttext" label="Copyright Text" description="Copyright text" />
+	<design:attribute name="copyrighturl" label="Copyright URL" description="Copyright url" />    
+	<design:attribute name="copyrightshow" label="Copyright Visible" description="Display Copyright" />
+    <design:attribute name="termstext" label="Terms Text" description="Terms text" />
+	<design:attribute name="termsurl" label="Terms URL" description="Terms url" />    
+	<design:attribute name="termsshow" label="Terms Visible" description="Display Terms" />
+	<design:attribute name="privacytext" label="Privacy Text" description="Privacy text" />
+	<design:attribute name="privacyurl" label="Privacy URL" description="Privacy url" />
+	<design:attribute name="privacyshow" label="Privacy Visible" description="Display Privacy" />
+	<design:attribute name="contacttext" label="Contact Text" description="Contact text" />
+	<design:attribute name="contacturl" label="Contact URL" description="Contact url" />
+	<design:attribute name="contactshow" label="Contact Visible" description="Display Contact" />
+	<design:attribute name="faqtext" label="FAQ Text" description="FAQ text" />
+	<design:attribute name="faqurl" label="FAQ URL" description="FAQ url" />
+	<design:attribute name="faqshow" label="FAQ Visible" description="Display FAQ" />
+
+	<design:attribute name="fburl" label="Facebook URL" description="Facebook url"/>    
+	<design:attribute name="fbshow" label="Facebook Visible" description="Display Facebook"/>
+	<design:attribute name="twurl" label="Twitter URL" description="Twitter url"/>
+	<design:attribute name="twshow" label="Twitter Visible" description="Display Twitter"/>
+	<design:attribute name="yturl" label="You Tube URL" description="You Tube url"/>
+	<design:attribute name="ytshow" label="You Tube Visible" description="Display You Tube"/>
+	<design:attribute name="fkurl" label="Flikr URL" description="Flikr url"/>
+	<design:attribute name="fkshow" label="Flikr Visible" description="Display Flikr"/>
+	<design:attribute name="igurl" label="Instagram URL" description="Instagram url"/>
+	<design:attribute name="igshow" label="Instagram Visible" description="Display Instagram"/>
+
+</design:component>

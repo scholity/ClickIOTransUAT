@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CFS_Account_number_Validation</fullName>
+    <active>true</active>
+    <description>Validate CFS Number before going to CFS.</description>
+    <errorConditionFormula>AND(OR((MID(CFS_Account_Number__c,0,2) &lt;&gt; &#39;PR&#39;), NOT(ISNUMBER(MID(CFS_Account_Number__c,3,LEN(CFS_Account_Number__c)))), LEN(CFS_Account_Number__c) &lt;&gt; 8, CONTAINS(CFS_Account_Number__c,&#39;.&#39;)), !ISBLANK(CFS_Account_Number__c), ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;), RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE)</errorConditionFormula>
+    <errorMessage>CFS Account Number must read PRXXXXXX (PR plus 6 numeric characters)</errorMessage>
+</ValidationRule>

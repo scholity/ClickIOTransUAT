@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <description>Set Grant Claims to Rejected -</description>
+        <name>Allow_Grant_Request_Revoke</name>
+        <label>Allow Grant Request Revoke</label>
+        <locationX>359</locationX>
+        <locationY>368</locationY>
+        <assignmentItems>
+            <assignToReference>sGrantClaims.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Grant_Claims</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Grant_Request</name>
+        <label>Set Grant Request</label>
+        <locationX>881</locationX>
+        <locationY>373</locationY>
+        <assignmentItems>
+            <assignToReference>sGrantRequest.Approved__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sGrantRequest.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Grant_Claims</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Paid claims do not allow request rejection</description>
+        <name>Stop_Grant_Request_Rejection</name>
+        <label>Stop Grant Request Rejection</label>
+        <locationX>678</locationX>
+        <locationY>362</locationY>
+        <assignmentItems>
+            <assignToReference>vPaidGrantClaimsExist</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_Grant_Claims</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Set variables in Grant Claims if needed</description>
+        <name>Grant_Claims_Path</name>
+        <label>Grant Claims Path</label>
+        <locationX>505</locationX>
+        <locationY>375</locationY>
+        <defaultConnector>
+            <targetReference>Allow_Grant_Request_Revoke</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Unpaid Claims</defaultConnectorLabel>
+        <rules>
+            <name>Paid_Grant_Claim</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sGrantClaims.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Paid</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stop_Grant_Request_Rejection</targetReference>
+            </connector>
+            <label>Paid Grant Claim</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check to see how to proceed</description>
+        <name>Grant_Claims_Status</name>
+        <label>Grant Claims Status</label>
+        <locationX>753</locationX>
+        <locationY>215</locationY>
+        <defaultConnector>
+            <targetReference>Set_Grant_Request</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Grant_Claims_Exist_Decision</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>vPaidGrantClaimsExist</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Grant_Claims_Exist</targetReference>
+            </connector>
+            <label>Grant Claims Exist Decision</label>
+        </rules>
+        <rules>
+            <name>Rejected_Grant</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sGrantRequest.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>RejectGrant</targetReference>
+            </connector>
+            <label>Rejected Grant</label>
+        </rules>
+    </decisions>
+    <description>Revokes Grant Request if Grant Claims have not been paid</description>
+    <formulas>
+        <description>Get Account Name</description>
+        <name>forAccount</name>
+        <dataType>String</dataType>
+        <expression>{!sGrantRequest.Account__r.Name}</expression>
+    </formulas>
+    <formulas>
+        <description>Get Budget Name</description>
+        <name>forBudget</name>
+        <dataType>String</dataType>
+        <expression>{!sGrantRequest.Budget__r.Name}</expression>
+    </formulas>
+    <formulas>
+        <description>Learner Name</description>
+        <name>forLearner</name>
+        <dataType>String</dataType>
+        <expression>{!sGrantRequest.Learner__r.Name}</expression>
+    </formulas>
+    <interviewLabel>Revoke Grant Request {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Revoke Grant Request</label>
+    <loops>
+        <description>Loop through grant claims</description>
+        <name>Loop_Grant_Claims</name>
+        <label>Loop Grant Claims</label>
+        <locationX>511</locationX>
+        <locationY>233</locationY>
+        <assignNextValueToReference>sGrantClaims</assignNextValueToReference>
+        <collectionReference>colGrantClaims</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Grant_Claims_Path</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Grant_Claims_Status</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get all grant claims associated to the Grant Request</description>
+        <name>Get_Grant_Claims</name>
+        <label>Get Grant Claims</label>
+        <locationX>511</locationX>
+        <locationY>58</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_Grant_Claims</targetReference>
+        </connector>
+        <filters>
+            <field>Fund_Request__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sGrantRequest.Id</elementReference>
+            </value>
+        </filters>
+        <object>SFDC_MDF_Claim__c</object>
+        <outputReference>colGrantClaims</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Approved__c</queriedFields>
+        <sortField>Status__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </recordLookups>
+    <recordLookups>
+        <description>Retrieve Grant Request Information</description>
+        <name>Get_Grant_Request</name>
+        <label>Get Grant Request</label>
+        <locationX>176</locationX>
+        <locationY>56</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Revoke_Grant_Request</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>frmGrantRequestID</elementReference>
+            </value>
+        </filters>
+        <object>SFDC_MDF__c</object>
+        <outputReference>sGrantRequest</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Account__c</queriedFields>
+        <queriedFields>Amount__c</queriedFields>
+        <queriedFields>Budget__c</queriedFields>
+        <queriedFields>Approved__c</queriedFields>
+        <queriedFields>Approved_Date__c</queriedFields>
+        <queriedFields>Learner__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Request_Details__c</queriedFields>
+        <queriedFields>Request_ID__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Unpaid Grant Claims</description>
+        <name>Update_Grant_Claims</name>
+        <label>Update Grant Claims</label>
+        <locationX>1011</locationX>
+        <locationY>356</locationY>
+        <connector>
+            <targetReference>Update_Grant_Request</targetReference>
+        </connector>
+        <inputReference>colGrantClaims</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Revoke Grant Request</description>
+        <name>Update_Grant_Request</name>
+        <label>Update Grant Request</label>
+        <locationX>1164</locationX>
+        <locationY>358</locationY>
+        <connector>
+            <targetReference>Grant_Request_Reject_Confirm</targetReference>
+        </connector>
+        <inputReference>sGrantRequest</inputReference>
+    </recordUpdates>
+    <screens>
+        <description>Paid Grant Claims Exist</description>
+        <name>Grant_Claims_Exist</name>
+        <label>Grant Claims Exist</label>
+        <locationX>1002</locationX>
+        <locationY>209</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Grant_Claim_Exist</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;You are not able to revoke this Grant Request.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;There are PAID Grant Claims associated to this request.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Please check to see if the PAID Grant Claims have been used and can be revoked.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Confirm Grant Claims have been rejected</description>
+        <name>Grant_Request_Reject_Confirm</name>
+        <label>Grant Request Reject Confirm</label>
+        <locationX>1309</locationX>
+        <locationY>362</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>GrantRequestConfirm</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Grant Request has been rejected.&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>RejectGrant</name>
+        <label>RejectGrant</label>
+        <locationX>766</locationX>
+        <locationY>500</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>RejectedNote</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Grant has previously been rejected&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Revokes Grant Requests</description>
+        <name>Revoke_Grant_Request</name>
+        <label>Revoke Grant Request</label>
+        <locationX>344</locationX>
+        <locationY>58</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Get_Grant_Claims</targetReference>
+        </connector>
+        <fields>
+            <name>GrantName</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Are you sure you would like to revoke the following Grant Request?&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!sGrantRequest.Name}&lt;/p&gt;&lt;p&gt;{!sGrantRequest.Request_Details__c}&lt;/p&gt;&lt;p&gt;{!forBudget}&lt;/p&gt;&lt;p&gt;{!forAccount}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;{!sGrantRequest.Status__c}&lt;/p&gt;&lt;p&gt;{!sGrantRequest.Approved_Date__c}&lt;/p&gt;&lt;p&gt;{!sGrantRequest.Amount__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>Get_Grant_Request</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>colGrantClaims</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SFDC_MDF_Claim__c</objectType>
+    </variables>
+    <variables>
+        <name>frmGrantRequestID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sGrantClaims</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SFDC_MDF_Claim__c</objectType>
+    </variables>
+    <variables>
+        <name>sGrantRequest</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SFDC_MDF__c</objectType>
+    </variables>
+    <variables>
+        <name>vPaidGrantClaimsExist</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+</Flow>

@@ -1,0 +1,36 @@
+.THIS input.cclx-search-input {
+    text-align: left;
+}
+.THIS td.cclx-checkbox-column, .THIS th.cclx-checkbox-column {
+    width: 60px;
+}
+.THIS td.cclx-quantity-column, .THIS th.cclx-quantity-column {
+    width: 100px;
+}
+.THIS td.cclx-button-column {
+    width: 160px;
+}
+.THIS .cc-lightButton {
+  min-height: calc(2.125rem + 2px)
+}
+.THIS .button-container, .THIS .no-results-row {
+  display: flex;
+  justify-content: space-between;
+  background-color: t(colorBackgroundAlt);
+  border-bottom: 1px solid #d8dde6;
+  border-top: 1px solid #d8dde6;
+}
+.THIS .button-container>.flex-right-align {
+  margin-left: auto;
+}
+@media all and (min-width: 480px) {
+    .THIS .mobile-only {
+      display: none;
+    }
+}
+
+@media all and (max-width: 479px) {
+  .THIS .button-container {
+    display: none;
+  }
+}

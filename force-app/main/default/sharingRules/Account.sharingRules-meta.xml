@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>PHSS_B2B_Guest_Access</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>PHSS B2B Guest Access</label>
+        <sharedTo>
+            <group>PHSS_B2B_Guest_User</group>
+        </sharedTo>
+        <booleanFilter>1 OR 2</booleanFilter>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>equals</operation>
+            <value>CCAnonymous</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Name</field>
+            <operation>equals</operation>
+            <value>PortalAccount</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingOwnerRules>
+        <fullName>BGST_Sales_Admin</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <description>Gives BGST Sales Admin the capability to merge documents when Account owner is someone else.</description>
+        <label>BGST Sales Admin</label>
+        <sharedTo>
+            <role>BGST_Sales_Admin</role>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinates>BGST_Sales_Admin</roleAndSubordinates>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Sales_to_BGST</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>Edit</opportunityAccessLevel>
+        </accountSettings>
+        <label>Sales to BGST</label>
+        <sharedTo>
+            <group>BGST_Mgmt</group>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinatesInternal>PHSS_Sales_Management</roleAndSubordinatesInternal>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

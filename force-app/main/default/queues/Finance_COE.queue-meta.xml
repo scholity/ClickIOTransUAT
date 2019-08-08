@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>FIN AR Mgmt</name>
+    <queueMembers>
+        <users>
+            <user>amy.huddleston@redcross.org</user>
+            <user>amy.peterson@redcross.org</user>
+            <user>brenda.kraus@redcross.org</user>
+            <user>chiuyoon.koo@redcross.org</user>
+            <user>darnice.person@redcross.org</user>
+            <user>franklin.miller@redcross.org</user>
+            <user>mary.barber@redcross.org</user>
+            <user>kimberly.coon@redcross.org</user>
+            <user>laura.ormandy@redcross.org</user>
+            <user>linda.trommer@redcross.org</user>
+            <user>loretta.vaughan@redcross.org</user>
+            <user>mary.dolde@redcross.org</user>
+            <user>maryjo.vadasz@redcross.org</user>
+            <user>michael.pickett@redcross.org</user>
+            <user>renda.trammell@redcross.org</user>
+            <user>tonya.williams@redcross.org</user>
+            <user>trey.walton@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Number_Length</fullName>
+    <active>true</active>
+    <description>Validates that the Account Number is exactly eight digits (if it is not blank). The
+number eight is simply illustrative. You can change this to any number you like.</description>
+    <errorConditionFormula>AND(
+LEN(AccountNumber) &gt; 0,
+LEN(AccountNumber) &lt;&gt; 8, $Setup.Validation_Rules__c.Bypass_Rules__c = false
+
+)</errorConditionFormula>
+    <errorDisplayField>AccountNumber</errorDisplayField>
+    <errorMessage>Account Number must be eight digits</errorMessage>
+</ValidationRule>

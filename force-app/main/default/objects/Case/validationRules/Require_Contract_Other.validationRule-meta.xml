@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Contract_Other</fullName>
+    <active>true</active>
+    <description>The Contract Other field is required when the Cotnract field is Other</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(  Contract__c , &#39;Other&#39;),
+ISBLANK( Contract_Other__c )
+)</errorConditionFormula>
+    <errorDisplayField>Contract_Other__c</errorDisplayField>
+    <errorMessage>Please provide the Other Contract</errorMessage>
+</ValidationRule>

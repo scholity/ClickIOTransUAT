@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Legacy_Role__c</fullName>
+    <description>This field is used for old role mapping which are used in call conversation report for Pam Malena</description>
+    <externalId>false</externalId>
+    <formula>CASE( UserRole.Name, 
+
+&quot;ASG (Aquatics)&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;CCO&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;CERT&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;CST&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;ISG&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;RDC&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;Trainer&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;PRT Group&quot;, &quot;Back Office Agent Role&quot;, 
+
+&quot;Front Office At Home Agent Role&quot;, &quot;At Home Agent Role&quot;,
+
+&quot;TSC Management&quot;, &quot;Training Support Center&quot;,
+
+&quot;Training Support QA&quot;, &quot;Training Support Center&quot;,
+
+&quot;Font Office Uniontown - ATG&quot;, &quot;Front Office Uniontown Agent Role&quot;,
+
+&quot;Front Office - Chat Agent&quot;, &quot;Chat Agent Role&quot;,
+
+
+UserRole.Name)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Legacy Role</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

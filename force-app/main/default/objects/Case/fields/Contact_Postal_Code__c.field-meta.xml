@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Postal_Code__c</fullName>
+    <description>This field is being used as a way to capture the postal code during the web to case process. It is over written as soon as a contact is added by a workflow update.</description>
+    <externalId>false</externalId>
+    <label>Contact Postal Code</label>
+    <length>20</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

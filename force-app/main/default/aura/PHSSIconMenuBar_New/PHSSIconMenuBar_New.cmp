@@ -1,0 +1,284 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="myURL" type="String" default="administration"/>
+    
+    <aura:attribute name="title" type="String" default="Popular actions"/>
+    <aura:attribute name="MenuBarNumber" type="String" default="3" access="global" /> 
+    <aura:attribute name="hideChevronIcon" type="String" default="no" access="global" /> 
+    
+    
+    <aura:attribute name="label1" type="String" default="Course Materials"/>
+    <aura:attribute name="url1" type="String" default="phss_program/PHSS_Program__c/00Bq0000000xnzS"/>
+    <aura:attribute name="image1" type="String" default=""/>
+    <aura:attribute name="fontSize1" type="String" default="small"/>
+    <aura:attribute name="description1" type="String" default="description1"/>
+    
+    <aura:attribute name="label2" type="String" default="Course Records Submission"/>
+    <aura:attribute name="url2" type="String" default="https://classes.redcross.org/instructor/authentication/login.html"/>
+    <aura:attribute name="image2" type="String" default=""/>
+    <aura:attribute name="fontSize2" type="String" default="small"/>
+    <aura:attribute name="description2" type="String" default="description2"/>
+    
+    <aura:attribute name="label3" type="String" default="Setup Blended Learning/ Instructor Course"/>
+    <aura:attribute name="url3" type="String" default="administration?tabset-c771e=2"/>
+    <aura:attribute name="image3" type="String" default=""/>
+    <aura:attribute name="fontSize3" type="String" default="small"/>
+    <aura:attribute name="description3" type="String" default="description3"/>
+    
+    <aura:attribute name="label4" type="String" default="For New Instructors"/>
+    <aura:attribute name="url4" type="String" default="onboarding"/>
+    <aura:attribute name="image4" type="String" default=""/>
+    <aura:attribute name="fontSize4" type="String" default="small"/>
+    <aura:attribute name="description4" type="String" default="description4"/>
+    
+    <aura:attribute name="label5" type="String" default="Site Orientation"/>
+    <aura:attribute name="url5" type="String" default="onboarding"/>
+    <aura:attribute name="image5" type="String" default=""/>
+    <aura:attribute name="fontSize5" type="String" default="small"/>
+    <aura:attribute name="description5" type="String" default="description5"/>
+    
+    <aura:attribute name="label6" type="String" default="Latest News"/>
+    <aura:attribute name="url6" type="String" default="recent-news"/>
+    <aura:attribute name="image6" type="String" default=""/>
+    <aura:attribute name="fontSize6" type="String" default="small"/>
+    <aura:attribute name="description6" type="String" default="description6"/>
+	
+	<aura:attribute name="label7" type="String" default="Latest News"/>
+    <aura:attribute name="url7" type="String" default="recent-news"/>
+    <aura:attribute name="image7" type="String" default=""/>
+    <aura:attribute name="fontSize7" type="String" default="small"/>
+    <aura:attribute name="description7" type="String" default="description7"/>
+	
+	<aura:attribute name="label8" type="String" default="Latest News"/>
+    <aura:attribute name="url8" type="String" default="recent-news"/>
+    <aura:attribute name="image8" type="String" default=""/>
+    <aura:attribute name="fontSize8" type="String" default="small"/>
+    <aura:attribute name="description8" type="String" default="description8"/>
+	
+	<aura:attribute name="label9" type="String" default="Latest News"/>
+    <aura:attribute name="url9" type="String" default="recent-news"/>
+    <aura:attribute name="image9" type="String" default=""/>
+    <aura:attribute name="fontSize9" type="String" default="small"/>
+    <aura:attribute name="description9" type="String" default="description9"/>
+	
+	<aura:attribute name="label10" type="String" default="Latest News"/>
+    <aura:attribute name="url10" type="String" default="recent-news"/>
+    <aura:attribute name="image10" type="String" default=""/>
+    <aura:attribute name="fontSize10" type="String" default="small"/>
+    <aura:attribute name="description10" type="String" default="description10"/>
+	
+	<aura:attribute name="label11" type="String" default="Latest News"/>
+    <aura:attribute name="url11" type="String" default="recent-news"/>
+    <aura:attribute name="image11" type="String" default=""/>
+    <aura:attribute name="fontSize11" type="String" default="small"/>
+    <aura:attribute name="description11" type="String" default="description11"/>
+	
+	<aura:attribute name="label12" type="String" default="Latest News"/>
+    <aura:attribute name="url12" type="String" default="recent-news"/>
+    <aura:attribute name="image12" type="String" default=""/>
+    <aura:attribute name="fontSize12" type="String" default="small"/>
+    <aura:attribute name="description12" type="String" default="description12"/>
+    <!--<aura:handler name="init" value="{!this}" action="{!c.doinit}"/>-->
+    
+    <table align="center" border="0">
+        <tr>
+            <td colspan="6">
+                <div class="forceCommunityRecordListCompact forceCommunityObjectHome">
+                    <div class="filterListPlaceholder">
+                        <div class="dark uiAbstractList forceRecordLayout forceFilterListDeprecated">
+                            <div class="listTitleContainer uiBlock">
+                                <div class="bBody">
+                                    <h2 class="listTitle truncate">{#v.title}</h2>
+                                </div>
+                            </div>                                
+                        </div>
+                    </div>        
+                </div>
+            </td>
+        </tr>
+        
+        <tr aura:id="content1">			
+            <td>
+                <!-- Get course materials (This is what we want provided there aren’t too many clicks underneath.) -->
+                <div class="col">
+                    <a href="{#v.url1}">
+                        <!--<div class="menu-cpr menu lr">{#v.label1}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image1 + '); font-size: ' + v.fontSize1 + ';'}">{#v.label1}
+                            
+                        </div>
+                        
+                    </a>
+                    <span>{!v.description1}</span>
+                </div>
+                <!-- Submit course records - go to course-admin page ( eventually lead to CRE ) -->
+                <div class="col">
+                    <a href="{#v.url2}">
+                        <!--<div class="menu-emr menu lr">{#v.label2}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image2 + '); font-size: ' + v.fontSize2 + ';'}">{#v.label2}
+                            
+                        </div>
+                        
+                    </a>
+                    <span>{!v.description2}</span>
+                </div>
+                <!-- Set up a Blended Learning/Instructor course - go  to course-admin page -->
+                <div class="col">
+                    <a href="{#v.url3}">
+                        <!--<div class="menu-wsi menu lr">{#v.label3}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image3 + '); font-size: ' + v.fontSize3 + ';'}">{#v.label3}
+                            
+                        </div>
+                        
+                    </a>
+                    <span>{!v.description3}</span>
+                </div>
+                <!-- INSERT TR HERE TO MAKE 2 ROWS OF 3 -->
+            </td>
+        </tr>
+        
+        <tr class="slds-hide" aura:id="content2">
+            <td>
+                <!-- Start teaching as a new instructor (onboarding) - go to onboarding page -->
+                <div class="col">
+                    <a href="{#v.url4}">
+                        <!--<div class="menu-lg menu lr">{#v.label4}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image4 + '); font-size: ' + v.fontSize4 + ';'}">{#v.label4}</div>
+                    </a>
+                    <span>{!v.description4}</span>
+                </div>
+                <!-- Watch a video orientation to Instructor’s Corner - go to content wrapper page for specific video -->
+                <div class="col">
+                    <a href="{#v.url5}">
+                        <!--<div class="menu-bls menu lr">{#v.label5}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image5 + '); font-size: ' + v.fontSize5 + ';'}">{#v.label5}</div>
+                    </a>
+                    <span>{!v.description5}</span>
+                </div>
+                <!-- Get the latest news - go to news page -->
+                <div class="col">
+                    <a href="{#v.url6}">
+                        <!--<div class="menu-cprpro menu lr">{#v.label6}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image6 + '); font-size: ' + v.fontSize6 + ';'}">{#v.label6}</div>
+                    </a>
+                    <span>{!v.description6}</span>
+                </div>
+            </td>			
+        </tr>
+        
+		<tr class="slds-hide" aura:id="content3">
+            <td>
+                <!-- Start teaching as a new instructor (onboarding) - go to onboarding page -->
+                <div class="col">
+                    <a href="{#v.url7}">
+                        <!--<div class="menu-lg menu lr">{#v.label4}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image7 + '); font-size: ' + v.fontSize7 + ';'}">{#v.label7}</div>
+                    </a>
+                    <span>{!v.description7}</span>
+                </div>
+                <!-- Watch a video orientation to Instructor’s Corner - go to content wrapper page for specific video -->
+                <div class="col">
+                    <a href="{#v.url8}">
+                        <!--<div class="menu-bls menu lr">{#v.label5}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image8 + '); font-size: ' + v.fontSize8 + ';'}">{#v.label8}</div>
+                    </a>
+                    <span>{!v.description8}</span>
+                </div>
+                <!-- Get the latest news - go to news page -->
+                <div class="col">
+                    <a href="{#v.url9}">
+                        <!--<div class="menu-cprpro menu lr">{#v.label6}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image9 + '); font-size: ' + v.fontSize9 + ';'}">{#v.label9}</div>
+                    </a>
+                    <span>{!v.description9}</span>
+                </div>
+            </td>			
+        </tr>
+        
+        <tr class="slds-hide" aura:id="content4">
+            <td>
+                <!-- Start teaching as a new instructor (onboarding) - go to onboarding page -->
+                <div class="col">
+                    <a href="{#v.url10}">
+                        <!--<div class="menu-lg menu lr">{#v.label4}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image10 + '); font-size: ' + v.fontSize10 + ';'}">{#v.label10}</div>
+                    </a>
+                    <span>{!v.description10}</span>
+                </div>
+                <!-- Watch a video orientation to Instructor’s Corner - go to content wrapper page for specific video -->
+                <div class="col">
+                    <a href="{#v.url11}">
+                        <!--<div class="menu-bls menu lr">{#v.label5}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image11 + '); font-size: ' + v.fontSize11 + ';'}">{#v.label11}</div>
+                    </a>
+                    <span>{!v.description11}</span>
+                </div>
+                <!-- Get the latest news - go to news page -->
+                <div class="col">
+                    <a href="{#v.url12}">
+                        <!--<div class="menu-cprpro menu lr">{#v.label6}</div>-->
+                        <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image12 + '); font-size: ' + v.fontSize12 + ';'}">{#v.label12}</div>
+                    </a>
+                    <span>{!v.description12}</span>
+                </div>
+            </td>			
+        </tr>
+        
+        
+        
+    </table>
+    <div style="position: relative;top: -168px;z-index: 1;">      
+		<aura:if isTrue="{!v.MenuBarNumber == '3'}">
+		</aura:if>
+        
+        <aura:if isTrue="{!v.MenuBarNumber == '6'}"> 
+			<div aura:id="chevronContent6_1">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon6_1a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon6_1b}" />
+			</div> 
+			
+			<div aura:id="chevronContent6_2" class="slds-hide">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon6_2a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon6_2b}" />
+			</div> 		
+		</aura:if>
+			
+		<aura:if isTrue="{!v.MenuBarNumber == '9'}">
+			<div aura:id="chevronContent9_1">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon9_1a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon9_1b}" />
+			</div> 
+			
+			<div aura:id="chevronContent9_2" class="slds-hide">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon9_2a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon9_2b}" />
+			</div>
+			
+			<div aura:id="chevronContent9_3" class="slds-hide">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon9_3a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon9_3b}" />
+			</div>	
+		</aura:if>
+		
+		<aura:if isTrue="{!v.MenuBarNumber == '12'}">
+			<div aura:id="chevronContent12_1">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon12_1a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon12_1b}" />
+			</div> 
+			
+			<div aura:id="chevronContent12_2" class="slds-hide">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon12_2a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon12_2b}" />
+			</div>
+			
+			<div aura:id="chevronContent12_3" class="slds-hide">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon12_3a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon12_3b}" />
+			</div>
+			
+			<div aura:id="chevronContent12_4" class="slds-hide">
+			<lightning:button variant="neutral" class="btn btnLeft" label="" iconName="utility:chevronleft" iconPosition="left"  onclick="{!c.chevronicon12_4a}" />
+			<lightning:button variant="neutral" class="btn btnRight" label="" iconName="utility:chevronright" iconPosition="left"  onclick="{!c.chevronicon12_4b}" />
+			</div>
+		</aura:if>
+                 
+    </div>
+</aura:component>

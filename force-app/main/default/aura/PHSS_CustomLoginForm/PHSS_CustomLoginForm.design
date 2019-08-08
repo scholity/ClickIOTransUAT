@@ -1,0 +1,13 @@
+<design:component label="Custom Login Form">
+    <design:attribute name="startUrl"/>
+    <design:attribute name="usernameLabel" default="Username (Email)"/>
+    <design:attribute name="passwordLabel" default="Password"/>
+    <design:attribute name="loginButtonLabel" default="LOGIN"/>
+    <design:attribute name="voucherButtonLabel" default="CLAIM VOUCHER" />
+    <design:attribute name="claimVoucherUrl" />
+    <design:attribute name="employeesUrl" />
+    <design:attribute name="forgotPasswordUrl"/>
+    <design:attribute name="selfRegisterLabel" default="Sign Me Up"/>
+    <design:attribute name="selfRegisterUrl"/>
+    <design:attribute name="learningCenterUrl" />
+</design:component>

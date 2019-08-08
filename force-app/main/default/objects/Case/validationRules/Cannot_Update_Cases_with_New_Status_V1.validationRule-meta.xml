@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Update_Cases_with_New_Status_V1</fullName>
+    <active>true</active>
+    <description>Change new status, when the case is edited.</description>
+    <errorConditionFormula>AND( 
+(ISPICKVAL(Status,&quot;New&quot;)), 
+(RecordType.DeveloperName = &quot;Invoicing&quot;) , 
+(Change_Invoice_New_Status__c) == true, 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE ,
+ISCHANGED( OwnerId ) = false
+)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>&quot;Invoicing&quot; type service cases with &quot;New&quot; status cannot be saved without updating the case status. Please change the case Status field.</errorMessage>
+</ValidationRule>

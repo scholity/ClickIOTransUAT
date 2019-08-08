@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Question_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>true</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Aquatics</fullName>
+                <default>false</default>
+                <label>Aquatics</label>
+            </value>
+            <value>
+                <fullName>Instructors</fullName>
+                <default>false</default>
+                <label>Instructors</label>
+            </value>
+            <value>
+                <fullName>Certificates</fullName>
+                <default>false</default>
+                <label>Certificates</label>
+            </value>
+            <value>
+                <fullName>Invoicing</fullName>
+                <default>false</default>
+                <label>Invoicing</label>
+            </value>
+            <value>
+                <fullName>List classes on RedCross.org</fullName>
+                <default>false</default>
+                <label>List classes on RedCross.org</label>
+            </value>
+            <value>
+                <fullName>Technical Issues</fullName>
+                <default>false</default>
+                <label>Technical Issues</label>
+            </value>
+            <value>
+                <fullName>Program Information</fullName>
+                <default>false</default>
+                <label>Program Information</label>
+            </value>
+            <value>
+                <fullName>Blended Learning</fullName>
+                <default>false</default>
+                <label>Blended Learning</label>
+            </value>
+            <value>
+                <fullName>Class Support</fullName>
+                <default>false</default>
+                <label>Class Support</label>
+            </value>
+            <value>
+                <fullName>Concerns/Kuddos</fullName>
+                <default>false</default>
+                <label>Concerns/Kuddos</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>First Aid and CPR</fullName>
+                <default>false</default>
+                <label>First Aid and CPR</label>
+            </value>
+            <value>
+                <fullName>Instructor Certification</fullName>
+                <default>false</default>
+                <label>Instructor Certification</label>
+            </value>
+            <value>
+                <fullName>Online Completion Report and Roster</fullName>
+                <default>false</default>
+                <label>Online Completion Report and Roster</label>
+            </value>
+            <value>
+                <fullName>Submission of Class Paperwork</fullName>
+                <default>false</default>
+                <label>Submission of Class Paperwork</label>
+            </value>
+            <value>
+                <fullName>Troubleshooting</fullName>
+                <default>false</default>
+                <label>Troubleshooting</label>
+            </value>
+            <value>
+                <fullName>Customer Feedback</fullName>
+                <default>false</default>
+                <label>Customer Feedback</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Owner</field>
+        <field>Content</field>
+        <field>Parent</field>
+        <field>Approval_Type__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>Social_Manager_Approval_Queue</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Offensive Words</label>
+        <name>Offensive_Words</name>
+    </approvalStep>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>AND(IsOutbound =TRUE,
+ISPICKVAL(Provider,&quot;Facebook&quot;),
+OR(
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;jizz&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;kike&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;kock&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;kum&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;kummer&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;kumming&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;kums&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;kunilingus&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;lesbo&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;merde&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafuck&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafucka&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafuckas&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafuckaz&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafucked&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafucker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafuckers&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafuckin&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafucking&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafuckings&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;mothafucks&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfuck&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfucked&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfucker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfuckers&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfuckin&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfucking&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfuckings&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;motherfucks&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;muff&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;nazi&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;nigger&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;niggers&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;orgasim&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;orgasims&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;orgasm&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;orgasms&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pecker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;penis&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;phuk&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;phuked&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;phuking&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;phukked&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;phukking&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;phuks&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;phuq&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pimp&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;piss&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pissed&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pissrr&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pissers&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pisses&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pissin&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pissing&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pissoff&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;prick&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pricks&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pussies&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pussy&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;pussys&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;queer&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;schlong&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;screw&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;sheister&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;shit&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;shitfull&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;shiting&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;shitings&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;shits&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;shitted&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;shitter&quot;)))</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Social_Approved</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Social_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Social_Rejected_Post_Email</name>
+            <type>Alert</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Social_In_Approval</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Social_Offensive_words_approval_type</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Social- Offensive words 3</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>false</showApprovalHistory>
+</ApprovalProcess>

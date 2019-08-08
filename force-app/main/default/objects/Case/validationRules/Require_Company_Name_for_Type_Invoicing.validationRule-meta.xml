@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Company_Name_for_Type_Invoicing</fullName>
+    <active>false</active>
+    <description>The Company Name field is required when the case type is Invoicing</description>
+    <errorConditionFormula>AND(OR(
+ISPICKVAL( Dispute_Issue__c , &#39;Customer Service Credit&#39;),
+AND( 
+ISPICKVAL( Type , &#39;Invoicing&#39;), 
+NOT(ISPICKVAL( Origin ,&quot;Email&quot;)),
+NOT(ISPICKVAL(Origin, &quot;Voicemail&quot;)))),
+ISBLANK(  Company_Name__c  ),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Company_Name__c</errorDisplayField>
+    <errorMessage>Please provide the Company Name</errorMessage>
+</ValidationRule>

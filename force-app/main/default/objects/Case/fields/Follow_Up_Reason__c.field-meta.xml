@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Follow_Up_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Follow Up Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Status</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Credit Card not handy</fullName>
+                <default>false</default>
+                <label>Credit Card not handy</label>
+            </value>
+            <value>
+                <fullName>Funds not available</fullName>
+                <default>false</default>
+                <label>Funds not available</label>
+            </value>
+            <value>
+                <fullName>Need approval (employer, family mbr, other)</fullName>
+                <default>false</default>
+                <label>Need approval (employer, family mbr, other)</label>
+            </value>
+            <value>
+                <fullName>Need to check schedule</fullName>
+                <default>false</default>
+                <label>Need to check schedule</label>
+            </value>
+            <value>
+                <fullName>Need to verify type of class cancedlled</fullName>
+                <default>false</default>
+                <label>Need to verify type of class cancedlled</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Unable to Reach Contact</fullName>
+                <default>false</default>
+                <label>Unable to Reach Contact</label>
+            </value>
+            <value>
+                <fullName>Window shopping - Not ready to buy</fullName>
+                <default>false</default>
+                <label>Window shopping - Not ready to buy</label>
+            </value>
+            <value>
+                <fullName>Group Sales Follow Up</fullName>
+                <default>false</default>
+                <label>Group Sales Follow Up</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Credit Card not handy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Funds not available</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Need approval (employer, family mbr, other)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Need to check schedule</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Need to verify type of class cancedlled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Unable to Reach Contact</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Window shopping - Not ready to buy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Agent Follow Up</controllingFieldValue>
+            <valueName>Group Sales Follow Up</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

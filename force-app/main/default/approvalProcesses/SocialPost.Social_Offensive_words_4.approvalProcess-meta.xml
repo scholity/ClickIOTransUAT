@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Owner</field>
+        <field>Content</field>
+        <field>Parent</field>
+        <field>Approval_Type__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>Social_Manager_Approval_Queue</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Offensive Words</label>
+        <name>Offensive_Words</name>
+    </approvalStep>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>AND(IsOutbound =TRUE,
+ISPICKVAL(Provider,&quot;Facebook&quot;),
+OR(
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;twats&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dummy&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dummies&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;stupid&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;hell&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;WTF&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;WTH&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;idiot&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;retard&quot;)))</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Social_Approved</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Social_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Social_Rejected_Post_Email</name>
+            <type>Alert</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Social_In_Approval</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Social_Offensive_words_approval_type</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Social- Offensive words 4</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>false</showApprovalHistory>
+</ApprovalProcess>

@@ -1,0 +1,223 @@
+<!--
+ - Created by dgajwani on 10/28/18.
+ -->
+
+<aura:component description="phss_cc_BillToShipToAddressSelector" implements="force:hasRecordId"
+                controller="phss_cc_BillToShipToAddressSelectorCtrl">
+
+    <!--Component Attributes-->
+    <aura:attribute name="currOpportunitySfid" type="String"/>
+    <aura:attribute name="selectedAddressSfid" type="String"/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="showModal" type="Boolean" default="false"/>
+
+    <!--Selected Addresses-->
+    <aura:attribute name="selectedAddressList" type="List"/>
+    <aura:attribute name="selectedAddressMap" type="Map"/>
+    <aura:attribute name="cartBillToSfid" type="String" default=""/>
+    <aura:attribute name="cartShipToSfid" type="String" default=""/>
+
+    <!--Retrieved from Server-->
+    <aura:attribute name="addressType" type="String"/>
+    <aura:attribute name="addressList" type="List"/>
+    <aura:attribute name="addressMap" type="Map"/>
+
+    <aura:attribute name="isShowNewAddrForm" type="Boolean" default="false" />
+    <aura:attribute name="isShowNewAddrBtn" type="Boolean" default="true" />
+    <aura:attribute name="formWrap" type="Object" />
+
+    <!--Event handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="addressSelected" event="c:phss_cc_AddressSelectedEvent" action="{!c.handleSelectedAddress}"/>
+
+    <!--Spinner when page loads-->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="{!$Label.c.Spinner_Alternate_Text}"/>
+    </aura:if>
+
+    <!--Bill-To/ Ship-To On Cart-->
+    <aura:if isTrue="{!v.renderComplete}">
+        <div class="slds-grid slds-wrap slds-border--top slds-border--bottom">
+            <div class="slds-m-top--medium slds-m-bottom--medium slds-size--1-of-1 slds-text-heading--medium">
+                Bill To | Ship To
+            </div>
+
+            <div class="slds-m-bottom--small slds-size--1-of-8 slds-text-heading--small">Billing Address:</div>
+
+            <div class="slds-size--3-of-8">
+                <!--No Billing Address on Cart-->
+                <aura:if isTrue="{!v.cartBillToSfid == ''}">
+                    <div class="slds-text-heading--small slds-m-bottom--medium" style="color: red">
+                        <lightning:formattedText class="slds-align--absolute-center" value="None"/>
+                    </div>
+                </aura:if>
+
+                <!--Billing Address on Cart-->
+                <aura:if isTrue="{!v.cartBillToSfid != ''}">
+                    <div class="slds-align--absolute-center">
+                        <c:phss_cc_AddressDetail addressMap="{!v.selectedAddressMap}" addressSfid="{!v.cartBillToSfid}"
+                                                 isSelected="true" skipModalStyling="true"/>
+                    </div>
+                </aura:if>
+                <!--<lightning:button iconName="utility:company" variant="brand"-->
+                                  <!--class="slds-m-top&#45;&#45;medium slds-m-bottom&#45;&#45;medium slds-align&#45;&#45;absolute-center"-->
+                                  <!--label="Choose" onclick="{!c.handleBillingAddressModal}"/>-->
+            </div>
+
+            <div class="slds-size--1-of-8 slds-text-heading--small">Shipping Address:</div>
+
+            <div class="slds-size--3-of-8">
+                <!--No Shipping Address on cart-->
+                <aura:if isTrue="{!v.cartShipToSfid == ''}">
+                    <div class="slds-text-heading--small slds-m-bottom--medium" style="color: red">
+                        <lightning:formattedText class="slds-align--absolute-center" value="None"/>
+                    </div>
+                </aura:if>
+
+                <!--Shipping Address on Cart-->
+                <aura:if isTrue="{!v.cartShipToSfid != ''}">
+                    <div class="slds-align--absolute-center">
+                        <c:phss_cc_AddressDetail addressMap="{!v.selectedAddressMap}" addressSfid="{!v.cartShipToSfid}"
+                                                 isSelected="true" skipModalStyling="true"/>
+                    </div>
+                </aura:if>
+                <lightning:button iconName="utility:home" variant="brand"
+                                  class="slds-m-top--medium slds-m-bottom--medium slds-align--absolute-center"
+                                  label="Choose" onclick="{!c.handleShippingAddressModal}"/>
+            </div>
+        </div>
+    </aura:if>
+
+    <!--Address Select Modal-->
+    <aura:if isTrue="{!v.showModal}">
+        <div style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-slide-up-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01"
+                            class="slds-text-heading_medium slds-hyphenate"> {!'Choose a ' + v.addressType + ' address'}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around--x-small" id="modal-content-id-1">
+                        <div class="slds-scrollable--y" style="max-height: 15rem; height: auto;">
+
+
+                            <!-- New Address -->
+                            <div class="slds-grid slds-wrap slds-align_absolute-center">
+                                <aura:if isTrue="{!v.isShowNewAddrBtn}">
+                                    <lightning:button variant="brand"
+                                                      class="slds-m-top--medium slds-m-bottom--medium slds-align--right"
+                                                      label="New Address" onclick="{!c.handleNewAddress}"/>
+                                </aura:if>
+
+                                <aura:if isTrue="{!v.isShowNewAddrForm}">
+                                    <div class="slds-col slds-size_2-of-3">
+                                        <lightning:input aura:id="field"
+                                                         value="{!v.formWrap.firstName}"
+                                                         label = "First Name"
+                                                         placeholder="First Name"
+                                                         required="true" /><br/>
+
+                                        <lightning:input aura:id="field"
+                                                         value="{!v.formWrap.lastName}"
+                                                         label = "Last Name"
+                                                         placeholder="Last Name"
+                                                         required="true" /><br/>
+
+                                        <lightning:input type="email"
+                                                         value="{!v.formWrap.email}"
+                                                         label = "Email"
+                                                         aura:id="field"
+                                                         placeholder="Email"
+                                                         required="true"
+                                                         pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*[a-zA-Z_]+?\.[a-zA-Z]{2,3}"
+                                                         messageWhenPatternMismatch="Must be a valid email address"/><br/>
+
+                                        <lightning:input type="tel"
+                                                         value="{!v.formWrap.phone}"
+                                                         label = "Phone"
+                                                         aura:id="field"
+                                                         placeholder="Phone"
+                                                         pattern="\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})"
+                                                         messageWhenPatternMismatch="Must be a valid phone number"
+                                                         required="true"/><br/>
+
+                                        <lightning:input value="{!v.formWrap.addressFirstLine}"
+                                                         aura:id="field"
+                                                         label="Address Line 1"
+                                                         placeholder="Address First Line"
+                                                         required="true"/><br/>
+
+                                        <lightning:input value="{!v.formWrap.addressSecondLine}"
+                                                         aura:id="field"
+                                                         placeholder="Address Second Line"
+                                                         label = "Address Line 2"/><br/>
+
+                                        <lightning:input value="{!v.formWrap.city}"
+                                                         label = "City"
+                                                         aura:id="field"
+                                                         placeholder="City"
+                                                         required="true"/><br/>
+
+                                        <lightning:input value="{!v.formWrap.state}"
+                                                         label="State"
+                                                         aura:id="field"
+                                                         placeholder="State"
+                                                         required="true"
+                                                         pattern="[A-Z]{2}"
+                                                         messageWhenPatternMismatch= "Enter State in ## and all caps format"/><br/>
+
+                                        <lightning:input value="{!v.formWrap.country}"
+                                                         label = "Country"
+                                                         aura:id="field"
+                                                         placeholder="Country"
+                                                         required="true"/><br/>
+
+                                        <lightning:input value="{!v.formWrap.postalCode}"
+                                                         label="Postal Code"
+                                                         pattern="[0-9]{5}"
+                                                         messageWhenPatternMismatch= "Enter Zip in ##### format"
+                                                         required	=	"true"
+                                                         aura:id	=	"field"/><br/>
+
+                                        <lightning:button variant="neutral"
+                                                          class="slds-m-top--medium"
+                                                          label="Cancel" onclick="{!c.handleNewAddress}"/>
+                                        <lightning:button variant="brand"
+                                                          class="slds-m-top--medium"
+                                                          label="Add New" onclick="{!c.saveNewAddress}"/>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <!-- End fo New Address -->
+
+                            <aura:if isTrue="{!v.renderComplete}">
+                                <div class="slds-grid slds-wrap slds-align_absolute-center">
+                                    <aura:iteration items="{!v.addressList}" var="addressSfid">
+                                        <c:phss_cc_AddressDetail addressMap="{!v.addressMap}" addressType="{!v.addressType}"
+                                                                 addressSfid="{!addressSfid}"
+                                                                 isSelected="{!v.selectedAddressSfid == addressSfid ? true : false}"/>
+                                    </aura:iteration>
+                                </div>
+                            </aura:if>
+                            
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral"
+                                          class="slds-m-top--medium"
+                                          label="Cancel" onclick="{!c.hideAddressModal}"/>
+                        <lightning:button variant="brand"
+                                          class="slds-m-top--medium"
+                                          label="Save" onclick="{!c.saveAddressOnCart}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+
+</aura:component>

@@ -1,0 +1,18 @@
+.THIS .cmp-spinner-container {
+  position: relative;
+  height: 8rem;
+}
+.THIS .learning-total-items {
+  background-color: #767676;
+  font-weight: bold;
+  color: white;
+  height: 1.25rem;
+}
+.THIS .cmp-header-line {
+  height: 1px;
+  background-color: #cccccc;
+}
+.THIS .cmp-header {
+  display: -webkit-box;
+  -webkit-box-align: center;
+}

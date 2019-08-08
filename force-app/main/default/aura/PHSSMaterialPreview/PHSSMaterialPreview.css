@@ -1,0 +1,21 @@
+.THIS.pdf-preview{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.THIS.pdf-preview .pdf-controls{
+    display: flex;
+    align-items: baseline;
+}
+
+.THIS.img-preview {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.THIS.document-preview {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}

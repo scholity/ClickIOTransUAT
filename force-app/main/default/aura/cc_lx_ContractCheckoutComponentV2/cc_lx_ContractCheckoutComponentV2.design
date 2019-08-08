@@ -1,0 +1,13 @@
+<design:component label="CC Quick Contract Checkout V2">
+    <design:attribute name="componentOnObject" label="Component Added On Object" description="Select the object on which the component is added." datasource="Account,Opportunity"  />
+    <design:attribute name="allowContract" label="Allow Contract Payment" description="Allow the Contract Payment Option" />
+	<design:attribute name="allowPO" label="Allow PO Payment" description="Allow the PO Payment Option" />
+	<!-- <design:attribute name="allowCreditCard" label="Allow Credit Card Payment" description="Allow the Credit Card Payment Option" /> -->
+	<design:attribute name="showTerms" label="Show Terms" description="Show Terms checkbox" />
+	<design:attribute name="showDeliveryDate" label="Show Delivery Date" description="Show Delivery Date selection" />
+    <design:attribute name="termsTextLabel" label="Terms" description="Terms label to display" />
+    <design:attribute name="showShipping" label="Show Shipping Rate" description="Show/Hide the Shipping and Handling" />
+    <design:attribute name="showImage" label="Show Product Images" description="Show/Hide the product images" />
+    <design:attribute name="showSKU" label="Show Product SKU" description="Show/Hide product SKU" />
+    <design:attribute name="showUOM" label="Show Units of Measure" description="Show/Hide the Units of Measure on the price" />
+</design:component>

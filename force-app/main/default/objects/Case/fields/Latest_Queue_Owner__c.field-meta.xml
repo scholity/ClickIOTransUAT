@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Latest_Queue_Owner__c</fullName>
+    <description>This field is used only for Case Email Routing Logic &quot;EmailMessageServices&quot;. It is specifically used in the Update Queue Owner WF rule, which is then used in Apex. This field is used when a customer replies back to a case but the email they send to is not billing, or collections. If a customer replies to a case and sends to an email that is not Billing or Collections, then assign to the latest Queue, and if no Queue assign to user.</description>
+    <externalId>false</externalId>
+    <label>Latest Queue Owner</label>
+    <length>100</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

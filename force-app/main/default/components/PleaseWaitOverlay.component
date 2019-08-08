@@ -1,0 +1,51 @@
+<apex:component >
+
+<apex:attribute name="message" type="String" description="message to display" required="false"></apex:attribute>
+
+
+<style>
+.search-panel-background {
+	background: rgba( 255, 255, 255, .8);
+	width: 100%;
+	height:100%;
+	top: 0;
+	left: 0;
+	position:absolute;
+	z-index: 998;	
+	
+}
+.search-panel {
+	background: white;
+	z-index: 999;
+	position: fixed;
+	left: 45%;
+	top: 45%;
+}
+</style>
+
+<!--[if IE 8]>
+<style>
+.search-panel-background {
+	background: white;
+	 -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=79)";
+}
+</style>
+<![endif]-->
+
+
+
+<apex:actionStatus id="pleaseWaitOverlay" stopText="">
+	<apex:facet name="start">
+		<div>
+			<div class="search-panel-background"></div>
+			<div class="search-panel">
+				
+				<img src="{!URLFOR( $Resource.CTIScreenPopResources, 'ajax-loader-round.gif'  )}" width="70px" height="70px"/>
+				{!message}
+			</div>
+		
+		</div>
+	</apex:facet>
+</apex:actionStatus>
+
+</apex:component>

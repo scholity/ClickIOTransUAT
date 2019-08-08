@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_LMS_Org_ID</fullName>
+    <active>false</active>
+    <description>When an Invoice Case Sub Type is selected , ORG ID is required</description>
+    <errorConditionFormula>AND( 
+NOT( ISBLANK( TEXT(Dispute_Issue__c )) ), 
+NOT( ISPICKVAL(Invoice_Case_Sub_Type__c, &#39;RCS Product&#39;)), 
+NOT( ISPICKVAL(Sales_Channel__c, &#39;RSG&#39;)), 
+ISBLANK( Customer_ID__c ) , 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Customer_ID__c</errorDisplayField>
+    <errorMessage>Please provide the Org ID</errorMessage>
+</ValidationRule>

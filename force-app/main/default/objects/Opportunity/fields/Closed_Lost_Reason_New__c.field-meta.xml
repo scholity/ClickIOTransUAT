@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Lost_Reason_New__c</fullName>
+    <externalId>false</externalId>
+    <label>Closed Lost Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Budget Cycle</fullName>
+                <default>false</default>
+                <label>Budget Cycle</label>
+            </value>
+            <value>
+                <fullName>Client Ceased to Communicate</fullName>
+                <default>false</default>
+                <label>Client Ceased to Communicate</label>
+            </value>
+            <value>
+                <fullName>Contract Requirements</fullName>
+                <default>false</default>
+                <label>Contract Requirements</label>
+            </value>
+            <value>
+                <fullName>Delivery Timeline unavailable</fullName>
+                <default>false</default>
+                <label>Delivery Timeline unavailable</label>
+            </value>
+            <value>
+                <fullName>Expired Opportunity</fullName>
+                <default>false</default>
+                <label>Expired Opportunity</label>
+            </value>
+            <value>
+                <fullName>Insufficient number of Participants</fullName>
+                <default>false</default>
+                <label>Insufficient number of Participants</label>
+            </value>
+            <value>
+                <fullName>Non standard course not available</fullName>
+                <default>false</default>
+                <label>Non standard course not available</label>
+            </value>
+            <value>
+                <fullName>Previous Service Issues</fullName>
+                <default>false</default>
+                <label>Previous Service Issues</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Pricing Agreement</fullName>
+                <default>false</default>
+                <label>Pricing Agreement</label>
+            </value>
+            <value>
+                <fullName>Product Features</fullName>
+                <default>false</default>
+                <label>Product Features</label>
+            </value>
+            <value>
+                <fullName>Recently trained with competitor</fullName>
+                <default>false</default>
+                <label>Recently trained with competitor</label>
+            </value>
+            <value>
+                <fullName>Recently trained with Red Cross</fullName>
+                <default>false</default>
+                <label>Recently trained with Red Cross</label>
+            </value>
+            <value>
+                <fullName>Referred to Counsilman-Hunsacker</fullName>
+                <default>false</default>
+                <label>Referred to Counsilman-Hunsaker</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

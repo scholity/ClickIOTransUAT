@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowHomePage>false</allowHomePage>
+    <allowStandardAnswersPages>false</allowStandardAnswersPages>
+    <allowStandardIdeasPages>false</allowStandardIdeasPages>
+    <allowStandardLookups>false</allowStandardLookups>
+    <allowStandardPortalPages>true</allowStandardPortalPages>
+    <allowStandardSearch>false</allowStandardSearch>
+    <authorizationRequiredPage>CommunitiesLogin</authorizationRequiredPage>
+    <bandwidthExceededPage>BandwidthExceeded</bandwidthExceededPage>
+    <browserXssProtection>false</browserXssProtection>
+    <changePasswordPage>PHSS_ChangePasswordCommunity</changePasswordPage>
+    <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
+    <contentSniffingProtection>false</contentSniffingProtection>
+    <cspUpgradeInsecureRequests>false</cspUpgradeInsecureRequests>
+    <customWebAddresses>
+        <certificate>www_instructorscorner_org</certificate>
+        <domainName>www.instructorscorner.org</domainName>
+        <primary>true</primary>
+    </customWebAddresses>
+    <enableAuraRequests>false</enableAuraRequests>
+    <fileNotFoundPage>CommunitiesLogin</fileNotFoundPage>
+    <genericErrorPage>Exception</genericErrorPage>
+    <inMaintenancePage>CommunitiesLogin</inMaintenancePage>
+    <inactiveIndexPage>PHSS_InMaintenanceCommunity</inactiveIndexPage>
+    <indexPage>CommunitiesLanding</indexPage>
+    <masterLabel>Instructor&#39;s Corner</masterLabel>
+    <referrerPolicyOriginWhenCrossOrigin>false</referrerPolicyOriginWhenCrossOrigin>
+    <requireHttps>true</requireHttps>
+    <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
+    <selfRegPage>CommunitiesSelfReg</selfRegPage>
+    <serverIsDown>PHSS_ServiceNotAvailable</serverIsDown>
+    <siteAdmin>shweta.kohli@redcross.org</siteAdmin>
+    <siteType>ChatterNetwork</siteType>
+    <subdomain>americanredcross</subdomain>
+    <urlPathPrefix>instructorscorner</urlPathPrefix>
+</CustomSite>

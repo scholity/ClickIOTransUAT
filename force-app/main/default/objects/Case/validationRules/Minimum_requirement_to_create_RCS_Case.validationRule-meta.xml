@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Minimum_requirement_to_create_RCS_Case</fullName>
+    <active>true</active>
+    <description>minimum requirement in order to save RCS PO Record</description>
+    <errorConditionFormula>AND((RecordType.Name = &quot;RCS PO&quot;),
+!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE, 
+ISPICKVAL( Origin , &quot;Web to Case&quot;),OR(ISPICKVAL(Case_Sub_Type__c,&quot;RCS PO&quot;),ISPICKVAL(Case_Sub_Type__c,&quot;RCS Blanket PO&quot;)),
+OR(ISBLANK(TEXT(Status)),
+ISBLANK(TEXT(Origin)),
+ISBLANK(TEXT(Channel__c)),
+ISBLANK(AccountId),
+ISBLANK(ContactId),
+ISBLANK(Billing_Address_1__c),
+ISBLANK(Billing_City__c),
+ISBLANK(TEXT(Billing_State__c)),
+ISBLANK(Billing_Zip__c),
+ISBLANK(TEXT(Billing_Country_Name__c)),
+ISBLANK(TEXT(Billing_Country_Code__c)),
+ISBLANK(Billing_Contact_First_Name__c),
+ISBLANK(Billing_Contact_Last_Name__c))
+)</errorConditionFormula>
+    <errorMessage>Fill minimum details of Status, case origin, Channel, All billing information, Account and contact before saving a record.</errorMessage>
+</ValidationRule>

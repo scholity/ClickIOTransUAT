@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Why_No_Proof_of_Payment_Attached__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Explain why customer could not supply proof of pmt.</inlineHelpText>
+    <label>Why? (No Proof of Payment Attached)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>TextArea</type>
+</CustomField>

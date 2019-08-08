@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AED_Device_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>AED Device Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Philips</fullName>
+                <default>false</default>
+                <label>Philips</label>
+            </value>
+            <value>
+                <fullName>Zoll Medical</fullName>
+                <default>false</default>
+                <label>Zoll Medical</label>
+            </value>
+            <value>
+                <fullName>EnPro</fullName>
+                <default>false</default>
+                <label>EnPro</label>
+            </value>
+            <value>
+                <fullName>Physio-Control</fullName>
+                <default>false</default>
+                <label>Physio-Control</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

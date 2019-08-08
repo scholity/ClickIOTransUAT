@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>REPORT_AR_0_30_Days__c</fullName>
+    <description>Used only for Data upload to populate AR 0-30 Days</description>
+    <externalId>false</externalId>
+    <label>REPORT AR 0-30 Days</label>
+    <precision>15</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

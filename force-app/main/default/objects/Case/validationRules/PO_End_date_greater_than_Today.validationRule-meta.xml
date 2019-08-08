@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PO_End_date_greater_than_Today</fullName>
+    <active>true</active>
+    <description>PO End date must be greater than Today while creating RCSPO Case.</description>
+    <errorConditionFormula>If(
+		AND(((DATEVALUE(PO_End_Date__c)) &lt;= TODAY()), 
+		RecordType.Name= &quot;RCS PO&quot;,
+		(ISPICKVAL(Status,&#39;PO On-Hold CFS&#39;)),
+		!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE
+		), true, false)</errorConditionFormula>
+    <errorDisplayField>PO_End_Date__c</errorDisplayField>
+    <errorMessage>PO End date must be greater than Today.</errorMessage>
+</ValidationRule>

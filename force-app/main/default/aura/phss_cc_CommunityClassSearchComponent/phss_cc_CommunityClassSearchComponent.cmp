@@ -1,0 +1,75 @@
+<aura:component description="phss_cc_CommunityClassSearchComponent" implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="phss_cc_CommunityClassSearchController">
+
+    <!--Variables-->
+    <aura:attribute name="classes" type="Map" default="{}"/>
+    <aura:attribute name="cart" type="Map" default="{}"/>
+    <aura:attribute name="inventory" type="Map" default="{}"/>
+    <aura:attribute name="ranges" type="List" default=""/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
+    <!--Initializer-->
+    <aura:handler name="init" action="{! c.doInit }" value="{! this }"/>
+
+    <!--Register Event Handlers-->
+    <aura:handler name="cartUpdate" event="c:phss_cc_CommunityClassCartUpdate" action="{! c.updateCart }"/>
+
+    <aura:if isTrue="{! v.showSpinner }">
+        <lightning:spinner variant="brand" size="large" alternativeText="{! $Label.c.Spinner_Alternate_Text }"/>
+    </aura:if>
+
+    <div>
+        <article class="slds-card">
+
+            <!--Class Search Form-->
+            <div class="slds-p-vertical_medium search-form">
+                <div class="slds-grid slds-gutters_small">
+                    <div class="slds-col slds-size_4-of-12"><lightning:input aura:id="searchTermField" name="searchTerm" label="Search Term" value=""/></div>
+                    <div class="slds-col slds-size_2-of-12"><lightning:input aura:id="startDateField" type="date" name="input1" label="Start date"/></div>
+                    <div class="slds-col slds-size_2-of-12"><lightning:input aura:id="endDateField" type="date" name="input2" label="End date"/></div>
+                </div>
+                <div class="slds-grid slds-gutters_small slds-p-top_small">
+                    <div class="slds-col slds-size_3-of-12"><lightning:input aura:id="cityField" name="city" label="City" value=""/></div>
+                    <div class="slds-col slds-size_1-of-12"><lightning:input aura:id="stateField" name="state" maxlength="2" label="State" value=""/></div>
+                    <div class="slds-col slds-size_2-of-12"><lightning:input aura:id="postalCodeField" name="zipCode" maxlength="5" label="Zip Code"/></div>
+                    <div class="slds-col slds-size_2-of-12"><lightning:combobox aura:id="range" name="range" label="Range" value="25" options="{! v.ranges }"/></div>
+                    <div class="slds-col slds-size_2-of-12 slds-align-bottom">
+                        <button class="slds-button slds-button_brand" onclick="{! c.searchButtonPressed }">{!$Label.c.CommunityClassSearch_Button_Search}</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--Community Classes Table-->
+            <aura:if isTrue="{! and(not(empty(v.classes)), v.classes.length > 0) }">
+                <div class="slds-scrollable_y slds-m-bottom_large slds-border_top slds-border_bottom" style="height: 340px;">
+                    <aura:iteration items="{! v.classes }" var="communityClass" indexVar="idx">
+                        <c:phss_cc_CommunityClassCourseDetail course="{! communityClass.course }" class="{! communityClass }" rowIdx="{! idx }"/>
+                    </aura:iteration>
+                </div>
+                <aura:set attribute="else">
+
+                    <!--No Results Message-->
+                    <div class="slds-align_absolute-center" style="height: 150px;">
+                        <div class="slds-text-heading_medium">No results</div>
+                    </div>
+
+                </aura:set>
+            </aura:if>
+
+            <footer class="slds-card__footer">
+                <aura:if isTrue="{! not(empty(v.classes)) }">
+
+                    <!--Cancel and Add To Cart buttons-->
+                    <div class="slds-grid">
+                        <div class="slds-col slds-text-align_center">
+                            <button class="slds-button slds-button_brand" onclick="{! c.addToCartButtonPressed }">{!$Label.c.CommunityClassSearch_Button_AddToCart}</button>
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <span style="padding: 15px;"> </span>
+                    </aura:set>
+                </aura:if>
+            </footer>
+        </article>
+    </div>
+
+</aura:component>

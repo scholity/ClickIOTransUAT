@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ghost_Call__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Was this case created by an agent logging a ghost call via the &quot;log ghost call&quot; button on the &quot;Search For A Customer&quot; page?</description>
+    <externalId>false</externalId>
+    <label>Ghost Call</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

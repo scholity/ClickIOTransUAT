@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Enter_correct_organization_before_close</fullName>
+    <active>false</active>
+    <description>If case is type invoicing and sub type invoicing is Wrong Organization. The case should not be closed unless it has the correct org field populated by user.</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Dispute_Issue__c, &#39;Wrong Organization&#39;),
+ISBLANK(Correct_Organization__c),
+CONTAINS(TEXT( Status ), &quot;Closed&quot;), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Correct_Organization__c</errorDisplayField>
+    <errorMessage>Please enter correct organization.</errorMessage>
+</ValidationRule>

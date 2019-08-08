@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_case_score__c</fullName>
+    <externalId>false</externalId>
+    <formula>(CASE(  Time_to_resolve__c  , &quot;A&quot;, 5, &quot;B&quot;, 4,&quot;C&quot;,3, &quot;D&quot;,2,&quot;F&quot;,1,0) + CASE(  Time_to_respond__c  , &quot;A&quot;, 5, &quot;B&quot;, 4,&quot;C&quot;,3, &quot;D&quot;,2,&quot;F&quot;,1,0)  + CASE(   Quality_of_on_line_help__c   , &quot;A&quot;, 5, &quot;B&quot;, 4,&quot;C&quot;,3, &quot;D&quot;,2,&quot;F&quot;,1,0))
+/
+(CASE( Time_to_resolve__c , &quot;A&quot;, 5, &quot;B&quot;, 5,&quot;C&quot;,5, &quot;D&quot;,5,&quot;F&quot;,5,0) + CASE( Time_to_respond__c , &quot;A&quot;, 5, &quot;B&quot;, 5,&quot;C&quot;,5, &quot;D&quot;,5,&quot;F&quot;,5,0) + CASE(   Quality_of_on_line_help__c   , &quot;A&quot;, 5, &quot;B&quot;,5,&quot;C&quot;,5, &quot;D&quot;,5,&quot;F&quot;,5,0))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Closed case score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Internal Red Cross portal</description>
+    <frameHeight>600</frameHeight>
+    <hasSidebar>true</hasSidebar>
+    <label>The Exchange</label>
+    <motif>Custom64: Compass</motif>
+    <url>https://intranet.redcross.org/</url>
+    <urlEncodingKey>UTF-8</urlEncodingKey>
+</CustomTab>

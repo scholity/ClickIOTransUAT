@@ -1,0 +1,195 @@
+<apex:page controller="AgentCommandCenterCtlr" >
+    <apex:includeScript value="/support/console/28.0/integration.js"/>
+        
+    <style>
+        #application{
+            font-size: 1.2em;
+             margin-top: 1em;
+            margin-bottom: 1em;
+            color: grey;
+        }
+        
+        #application h1 {
+            color: #2E94B9;
+        }
+        #application a {
+            color: grey;
+        }
+    </style>
+    
+    
+    <!--[if IE 8]>
+    <style>
+    </style>
+    <![endif]-->
+
+   
+    <script type="text/javascript">
+    /*
+        var eventHandler = function (result) {
+            alert("The Custom Console Component button is clicked.");       
+        };
+        sforce.console.onCustomConsoleComponentButtonClicked(eventHandler);
+    */
+        
+    
+        
+        function openSaba() {
+            sforce.console.setCustomConsoleComponentWindowVisible(false);
+            
+        
+            sforce.console.getFocusedPrimaryTabObjectId(function(result) {
+                if (result.id.substring(0,3) == "500") {
+                    sforce.console.getFocusedPrimaryTabId( function(result) {  
+                        // sforce.console.openSubtab(result.id, 'http://sabatrain.classes.redcross.org/Saba/Web/Main', true, 'Learning Center');
+                        sforce.console.openSubtab(result.id, 'https://classes.redcross.org/Saba/Web/Main', true, 'Learning Center');
+                    
+                    });     
+                } else {
+                    // sforce.console.openPrimaryTab(null, 'http://sabatrain.classes.redcross.org/Saba/Web/Main', true, 'Learning Center', null, 'Learning Center');
+                    sforce.console.openPrimaryTab(null, 'https://classes.redcross.org/Saba/Web/Main', true, 'Learning Center', null, 'Learning Center');
+        
+                }
+            }); 
+        }
+            
+        // Information Station
+        function openIris() {
+             sforce.console.setCustomConsoleComponentWindowVisible(false);
+        
+             //Open a new primary tab with the salesforce.com home page in it
+             //sforce.console.openPrimaryTab(null, 'https://iris.teletech.com/community/clients/american_red_cross/american-red-cross-information-station', true, 'IRIS', null, 'IRIS');
+             //UPDATE: Sonny Le <sonny.le@bluewolfgroup.com> 22 July 2013 - Switch Information Station to the new Social Knowledge Engine URL 
+             //sforce.console.openPrimaryTab(null, 'https://social.teletech.com/community/clients/american_red_cross/american-red-cross-information-station', true, 'IRIS', null, 'IRIS');
+             //Update: Nate Bullock <nate.bullock@ttec.com> 31 Jan 2018 - Switch Information Station to the new Social Knowledge Engine URL
+             sforce.console.openPrimaryTab(null, 'https://redcross.jiveon.com/community/american-red-cross/american-information-station', true, 'IRIS', null, 'IRIS');              
+         }
+ 
+        function openWebi() {
+                sforce.console.setCustomConsoleComponentWindowVisible(false);
+        
+             //Open a new primary tab with the salesforce.com home page in it
+             //sforce.console.openPrimaryTab(null, 'https://webi.redcross.org/InfoViewApp/logon.jsp', true, 'Webi', null, 'Webi');
+             sforce.console.openPrimaryTab(null, 'https://webi.redcross.org', true, 'Webi', null, 'Webi');
+        }
+    
+       function openInstructorsCorner() {
+              sforce.console.setCustomConsoleComponentWindowVisible(false);
+      
+           //Open a new primary tab with the salesforce.com home page in it
+           sforce.console.openPrimaryTab(null, 'http://www.instructorscorner.org', true, "Instructors Corner", null, 'Instructors Corner');
+       }   
+  
+        function openRedcrossClasses() {
+           //Open a new primary tab with the salesforce.com home page in it
+           
+           sforce.console.setCustomConsoleComponentWindowVisible(false);
+      
+           // sforce.console.openPrimaryTab(null, 'http://classes.redcross.org', true, 'Red Cross Classes', null, 'Red Cross Classes');
+           sforce.console.openPrimaryTab(null, 'https://www.redcross.org/take-a-class', true, 'Red Cross Classes', null, 'Red Cross Classes');
+           
+
+       }
+       
+       
+       function openCustomerDataSearch() {
+           //Open a new primary tab with the salesforce.com home page in it
+     
+           sforce.console.setCustomConsoleComponentWindowVisible(false);
+      
+           sforce.console.openPrimaryTab(null, '/apex/CTIScreenPop', true, 'Customer Data Search', null, 'Customer Data Search');
+      
+           
+       }
+
+        function openCTIScreenPop() {
+           //Open a new primary tab with the salesforce.com home page in it
+              sforce.console.setCustomConsoleComponentWindowVisible(false);
+      
+           sforce.console.openPrimaryTab(null, '/apex/CTIScreenPop?ANI=3367711057', true, 'New Caller', null, 'New Caller');
+        }
+        
+        function openShopStayWell() {
+           //Open a new primary tab with the salesforce.com home page in it
+              sforce.console.setCustomConsoleComponentWindowVisible(false);
+      
+           sforce.console.openPrimaryTab(null, 'https://www.shopstaywell.com', true, 'ShopStayWell', null, 'ShopStayWell');
+        }
+        
+        function openRedCross() {
+           //Open a new primary tab with the salesforce.com home page in it
+           sforce.console.setCustomConsoleComponentWindowVisible(false);
+      
+           sforce.console.openPrimaryTab(null, 'http://www.redcross.org', true, 'RedCross', null, 'RedCross');
+        }
+         
+          
+        function openGlobalGhostContact() {
+            //Open a new primary tab with the salesforce.com home page in it
+            sforce.console.setCustomConsoleComponentWindowVisible(false);
+            
+            sforce.console.openPrimaryTab(null, 'https://arc-phss.my.salesforce.com/003d000001giA46', true, 'Global Ghost Contact', null, 'Global Ghost Contact');
+        }
+           
+       var openSuccess = function openSabaSuccess(result) {
+           //Report whether opening the new tab was successful
+           if (result.success == true) {
+               alert('Primary tab successfully opened');
+           } else {
+               alert('Primary tab cannot be opened');
+           }
+       };           
+            
+        function clickedAcceptNextCase() {
+            AgentCommandCenterCtlr.acceptNextCase( function (result, event) {           
+                if ( result.didCaseOwnershipChange && !result.hasException) {
+                    var caseId = result.caseId;
+                    var redirectURL = '/' + caseId;
+                    var caseNumber = result.caseNumber;
+                            
+                    sforce.console.openPrimaryTab(null, redirectURL, true, caseNumber , null, caseNumber);  
+                                    
+                }else if (result.hasException) {
+                    alert('System Error, please contact your administrator providing the following error message: ' + result.exceptionMessage);
+                }else {             
+                    alert('There are no Cases available.');
+                }
+               
+            });    
+        }                   
+        
+    </script>
+    
+    <div id="application">
+        <apex:form >                        
+            <h1>TSC Agent Command Center</h1>        
+            <div style="margin-top: 1em;">       
+                 <div><A HREF="#" onClick="openSaba();return false">Learning Center</A></div>               
+                 <!-- <div  style="margin-top: 1em;"><A HREF=" https://iris.teletech.com/community/clients/american_red_cross/american-red-cross-information-station" target="_blank">Information Station</A></div> -->         
+                 <!-- UPDATE: Sonny Le <sonny.le@bluewolfgroup.com> 22 July 2013 - Switch Information Station to the new Social Knowledge Engine URL -->
+                 <div  style="margin-top: 1em;"><A HREF="https://redcross.jiveon.com/community/american-red-cross/american-information-station" target="_blank">Information Station</A></div>                  
+         
+                 <div  style="margin-top: 1em;"><A HREF="https://webi.redcross.org"  target ="_blank" >Webi</A></div>
+         
+                 <div  style="margin-top: 1em;"><A HREF="#" onClick="openInstructorsCorner();return false">Instructors Corner</A></div> 
+        
+                 <div  style="margin-top: 1em;display:none;"><A HREF="#" onClick="openRedcrossClasses();return false">Red Cross Classes</A></div> 
+        
+                 <div  style="margin-top: 1em;"><A HREF="#" onClick="openCustomerDataSearch();return false">Customer Data Search</A></div> 
+        
+                 <div  style="margin-top: 1em;"><A HREF="#" onClick="openShopStayWell();return false">Shop Stay Well</A></div> 
+        
+                 <div  style="margin-top: 1em;"><A HREF="#" onClick="openRedCross();return false">Red Cross</A></div> 
+                 
+                 <div  style="margin-top: 1em;"><A HREF="#" onClick="openGlobalGhostContact();return false">Global Ghost Contact</A></div> 
+        
+                 <div  style="margin-top: 1em;">                     
+                     <button onClick="clickedAcceptNextCase(); return false;">Accept Next Case</button>
+                 </div> 
+                 
+                 <div  style="margin-top: 1em;display:none;"><A HREF="#" onClick="openCTIScreenPop();return false">CTIScreenPop</A></div>                 
+            </div>
+        </apex:form>
+    </div>
+
+</apex:page>

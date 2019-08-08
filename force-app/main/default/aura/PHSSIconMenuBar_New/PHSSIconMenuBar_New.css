@@ -1,0 +1,155 @@
+.THIS {
+    
+}
+.THIS .menu {
+    border-radius: 10px;
+    background-size: cover;
+    /*width: 90px;*/
+    /*height: 90px;*/
+    /*width: 113px;*/
+    /*height: 113px;*/
+    width: 230px;
+    height: 230px;
+    margin: 10px 0 0 10px;
+    position: relative;
+    float: left;
+    color: white;
+    padding: 5px;
+    font-size: small;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+.THIS .col
+{
+    display: block;
+    width: 240px;
+    float: left;
+}
+.THIS .col span
+{
+    text-align: justify;
+    display: block;
+    margin: auto;
+    padding: 0 1px 10px 12px;
+}
+.THIS .lr p a {
+    font-family: 'Arial', sans-serif;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    margin: 0;
+}
+
+.THIS .menu-cpr {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(cpr-menu-583873.jpg);
+    background-size: 90px 90px;    
+}
+
+.THIS .menu-emr {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(emr-menu-573751.jpg);
+    background-size: 90px 90px;    
+}
+
+.THIS .menu-wsi {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(wsi-menu-129690.jpg);
+    background-size: 90px 90px;    
+}
+
+.THIS .menu-lg {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(lg-menu-488083.jpg);
+    background-size: 90px 90px;
+}
+
+.THIS .menu-bls {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(bls-menu-854860.jpg);
+    background-size: 90px 90px;    
+}
+
+.THIS .menu-cprpro {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(cprpro-menu-247878.jpg);
+    background-size: 90px 90px;    
+}
+
+.THIS .menu-care {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(care-menu-814569.jpg);
+    background-size: 90px 90px;    
+}
+
+.THIS .menu-prep {
+    background: 
+        linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+            ),
+        url(prep-menu-309532.jpg);
+    background-size: 90px 90px;
+}
+.THIS .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.THIS .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.THIS .tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.THIS .btn{    
+    position: relative;
+     padding: 4px;
+    border-radius: 30px;
+}
+.THIS .btnLeft{float:left;}
+.THIS .btnRight{float:right;}

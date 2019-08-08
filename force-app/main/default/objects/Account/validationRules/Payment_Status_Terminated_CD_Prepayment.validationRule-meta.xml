@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Status_Terminated_CD_Prepayment</fullName>
+    <active>false</active>
+    <description>If Payment Status &quot;Terminated&quot;, Preferred Payment Type can only be &quot;Credit/Debit Card&quot; or &quot;Prepayment&quot;</description>
+    <errorConditionFormula>And(AND(
+ISBLANK(Red_Cross_PO_expiration_Date__c), 
+ISPICKVAL( Payment_Status__c , &quot;Terminated&quot;)),
+ OR(
+ISPICKVAL( Preferred_Payment_type__c , &quot;ACH/Electronic Payment&quot;),
+ISPICKVAL(Preferred_Payment_type__c, &quot;Invoice&quot;)),
+$Setup.Validation_Rules__c.Bypass_Rules__c = false )</errorConditionFormula>
+    <errorDisplayField>Preferred_Payment_type__c</errorDisplayField>
+    <errorMessage>If Payment Status = &quot;Terminated&quot;, you can only select Preferred Payment Type as &quot;Credit/Debit Card&quot; or &quot; Prepayment&quot;.</errorMessage>
+</ValidationRule>

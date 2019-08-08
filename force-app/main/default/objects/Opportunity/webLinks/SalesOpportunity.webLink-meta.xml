@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SalesOpportunity</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>SalesOpportunity</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>/{!Opportunity.Id}/e?RecordType=0125B0000003O8ZQAU&amp;clone=1</url>
+</WebLink>

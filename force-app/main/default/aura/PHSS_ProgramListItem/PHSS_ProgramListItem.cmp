@@ -1,0 +1,19 @@
+<aura:component >
+	<aura:attribute name="program" type="PHSS_Program__c" required="true" access="public"/>
+	<aura:attribute name="bulletinLabel" type="String" required="true" access="public"/>
+
+	<aura:registerEvent name="navigateToURL" type="force:navigateToURL"/>
+
+	<tr>
+		<td scope="row">
+			<div class="slds-truncate"><a onclick="{!c.goToProgram}">{!v.program.Program_Long_Name__c}</a></div>
+		</td>
+		<td>
+			<aura:if isTrue="{!v.program.Instructor_Bulletin__c}">
+				<div class="slds-truncate">
+					<a href="{!v.program.Instructor_Bulletin__c}" tager="_BLANK">{#v.bulletinLabel}</a>
+				</div>
+			</aura:if>
+		</td>
+	</tr>
+</aura:component>

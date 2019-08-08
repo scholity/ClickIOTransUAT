@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SABA_Username__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>For DEACTIVATION requests please only enter the Saba UN if &#39;Saba LMS&#39; is selected in User Access.
+For CREATION requests please enter the new hire&#39;s newly created Saba UN so that roles and permissions are added to the correct Saba record.</inlineHelpText>
+    <label>SABA Username</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

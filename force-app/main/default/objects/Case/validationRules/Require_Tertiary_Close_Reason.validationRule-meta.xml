@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Tertiary_Close_Reason</fullName>
+    <active>true</active>
+    <description>The  Tertiary Close Reason picklist field is requried when the Secondary Close Reason is populated with Price, Privileges Granted Exception Category, Privileges Granted Special Exception, Privileges Denied</description>
+    <errorConditionFormula>AND(OR( 
+ISPICKVAL ( Secondary_Close_Reason__c ,&#39;Price&#39;), 
+ISPICKVAL ( Secondary_Close_Reason__c ,&#39;Privileges Granted Exception Category&#39;), 
+ISPICKVAL ( Secondary_Close_Reason__c , &#39;Privileges Granted Special Exception&#39;),
+ISPICKVAL ( Secondary_Close_Reason__c , &#39;Privileges Denied&#39;)  
+), 
+ISPICKVAL (  Tertiary_Close_Reason__c , &#39;&#39;) 
+)</errorConditionFormula>
+    <errorDisplayField>Tertiary_Close_Reason__c</errorDisplayField>
+    <errorMessage>Please provide a Tertiary Close Reason</errorMessage>
+</ValidationRule>

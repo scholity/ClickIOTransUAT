@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Specify where to send errors when the garbage account batch fails</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Error Emails</label>
+    <visibility>Protected</visibility>
+</CustomObject>

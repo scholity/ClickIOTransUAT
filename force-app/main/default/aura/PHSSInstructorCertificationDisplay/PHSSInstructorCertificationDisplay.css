@@ -1,0 +1,21 @@
+.THIS td {
+    font-size: small;
+}
+.THIS .certheader {
+    font-size: small;
+    font-weight: bold;
+}
+.THIS .certbody {
+    font-size: small;
+    font-weight: normal;
+}
+.THIS .renew {
+    text-align: center;
+}
+.THIS table {
+	table-layout:fixed;
+}
+.THIS td > div {
+	white-space: pre-wrap;
+    word-break: break-word;
+}

@@ -1,0 +1,71 @@
+<aura:component >
+	<ltng:require scripts="{!$Resource.PDFjs + '/pdf.js'}" afterScriptsLoaded="{!c.scriptsLoaded}"></ltng:require>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:handler name="destroy" value="{!this}" action="{!c.doCleanup}"/>
+    <aura:attribute name="url" type="String"/>
+
+	<aura:attribute name="materialObject" type="PHSS_Material__C"/>
+   	<aura:attribute name="previewAvailable" type="Boolean" default="true"/>   
+
+   	<aura:attribute name="VideoType" type="String" default="video/mp4" access="global" />   
+    <aura:attribute name="VideoSize" type="String" default="640" access="global" /> 
+    <aura:attribute name="VideoShowControls" type="Boolean" default="true" access="global" /> 
+    <aura:attribute name="VideoAutoStart" type="Boolean" default="false" access="global" /> 
+
+    <aura:attribute name="iconName" type="String" default="unknown" access="private"/>
+
+    <aura:attribute name="PdfPageNum" type="Integer"/> 
+    <aura:attribute name="PdfPages" type="Integer"/> 
+    <aura:attribute name="PdfStatus" type="String"/>
+
+    <aura:attribute name="unavailablePreviewMessage" type="String" access="public" required="true"/>
+
+    <aura:attribute name="pdfVars" type="Object"/>
+
+	<aura:if isTrue="{#!v.materialObject.Disable_Community_Preview__c}">		
+	    <aura:if isTrue="{#v.materialObject.Type__c == 'Video' &amp;&amp; v.previewAvailable}">
+		    <div align="center">
+		        <div class="video-preview">
+		            <video width="{#v.VideoSize}" controls="{#v.VideoShowControls ? 'controls' : ''}" autoplay="{#v.VideoAutoStart ? 'autoplay' : ''}">
+		                <source src="{#v.materialObject.ContentVersionLink__c}" type="{#v.VideoType}">
+		                    Your browser does not support HTML5 video.</source>
+		            </video>
+		        </div>
+			</div>
+			<aura:set attribute="else">
+				<aura:if isTrue="{#v.materialObject.Type__c == 'Document' &amp;&amp; v.previewAvailable}">
+					<aura:if isTrue="{#v.materialObject.ContentVersionFileType__c == 'PDF'}">
+						<div class="pdf-preview">
+							<div class="pdf-controls slds-m-bottom--small">
+								<aura:if isTrue="{!v.PdfStatus == 'Done'}">
+									<lightning:button variant="neutral" label="Prev" iconName="utility:chevronleft" iconPosition="left" onclick="{! c.prevPdfPage }" class="slds-m-top--small" disabled="{!v.PdfPageNum == 1}"/>
+									<div>{!v.PdfPageNum}/{!v.PdfPages}</div>
+									<lightning:button variant="neutral" label="Next" iconName="utility:chevronright" iconPosition="right" onclick="{! c.nextPdfPage }" class="slds-m-top--small" disabled="{!v.PdfPageNum == v.PdfPages}"/>
+									<aura:set attribute="else">
+										<div>{!v.PdfStatus}</div>
+									</aura:set>
+								</aura:if>
+							</div>
+							<canvas aura:id="pdf-canvas" style="border:1px solid black"></canvas>
+						</div>
+						<aura:set attribute="else">
+							<aura:if isTrue="{#v.materialObject.ContentVersionFileType__c == 'PNG' || v.materialObject.ContentVersionFileType__c == 'JPG'}">
+								<div class="img-preview">
+									<img src="{#v.materialObject.ContentVersionLink__c}"/>
+								</div>
+								<aura:set attribute="else">
+									<div class="document-preview">
+										<lightning:icon iconName="{#'doctype:' + v.iconName}" size="large"/>
+									</div>
+								</aura:set>
+							</aura:if>
+						</aura:set>
+					</aura:if>
+				</aura:if>
+			</aura:set>
+	    </aura:if>
+	    <aura:set attribute="else">
+			<div class="slds-text-align--center slds-m-around--medium">{#v.unavailablePreviewMessage}</div>
+		</aura:set>
+	</aura:if>
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proof_of_Payment_Not_Attached_Reason</fullName>
+    <active>false</active>
+    <description>When &quot;Proof of Payment Attached&quot; is No require text feild Why.</description>
+    <errorConditionFormula>AND(  
+ISPICKVAL(Proof_Of_Payment_Attached__c , &quot;No&quot;),  ISBLANK(Why_No_Proof_of_Payment_Attached__c),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Why_No_Proof_of_Payment_Attached__c</errorDisplayField>
+    <errorMessage>Please specify a reason for not having attachment for proof of payment!</errorMessage>
+</ValidationRule>

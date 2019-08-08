@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission set is for the Live Agent chat manager who will need the ability to see the Live Agent Functionality.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Live Agent Manager Permission Set</label>
+    <license>Salesforce</license>
+    <tabSettings>
+        <tab>Chat_Supervisor_Console</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>standard-LiveAgentSupervisor</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>AllowViewKnowledge</name>
+    </userPermissions>
+</PermissionSet>

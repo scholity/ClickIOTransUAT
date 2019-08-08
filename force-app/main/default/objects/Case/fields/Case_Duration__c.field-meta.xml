@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Duration__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF ( 
+NOT(IsClosed),
+TEXT(FLOOR( D2_sub_D1__c)) &amp; &quot; Days &quot; &amp;
+TEXT( FLOOR( 24 * ( D2_sub_D1__c - FLOOR(D2_sub_D1__c) ))) &amp; &quot; Hours &quot; &amp;
+TEXT( ROUND(60 * (ROUND( 24 * ( D2_sub_D1__c - FLOOR(D2_sub_D1__c) ),8) - FLOOR(
+ROUND( 24 * ( D2_sub_D1__c - FLOOR(D2_sub_D1__c) ),8)) ),0)) &amp; &quot; Min&quot;
+, &quot;Case is Closed&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Case Duration</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

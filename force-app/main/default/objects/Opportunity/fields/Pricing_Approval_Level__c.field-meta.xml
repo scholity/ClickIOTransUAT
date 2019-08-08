@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pricing_Approval_Level__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Because of a discount given on a line item, this opportunity will need approval to be Closed-Won at this level.</inlineHelpText>
+    <label>Pricing Approval Level</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No Approval Needed</fullName>
+                <default>true</default>
+                <label>No Approval Needed</label>
+            </value>
+            <value>
+                <fullName>Manager</fullName>
+                <default>false</default>
+                <label>Manager</label>
+            </value>
+            <value>
+                <fullName>Sales Director</fullName>
+                <default>false</default>
+                <label>Sales Director</label>
+            </value>
+            <value>
+                <fullName>Executive Director</fullName>
+                <default>false</default>
+                <label>Executive Director</label>
+            </value>
+            <value>
+                <fullName>MOM</fullName>
+                <default>false</default>
+                <label>MOM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Greater_than_a_Day</fullName>
+    <active>true</active>
+    <description>Minutes greater than 1440</description>
+    <errorConditionFormula>Number_of_Minutes__c &gt; 1440</errorConditionFormula>
+    <errorDisplayField>Number_of_Minutes__c</errorDisplayField>
+    <errorMessage>Number of minutes between events must be less than 1440</errorMessage>
+</ValidationRule>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Delivery_Territory__c</fullName>
+    <externalId>false</externalId>
+    <label>Service Delivery Territory</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Central Mid-West</fullName>
+                <default>false</default>
+                <label>Central Mid-West</label>
+            </value>
+            <value>
+                <fullName>Great Lakes</fullName>
+                <default>false</default>
+                <label>Great Lakes</label>
+            </value>
+            <value>
+                <fullName>Keystone</fullName>
+                <default>false</default>
+                <label>Keystone</label>
+            </value>
+            <value>
+                <fullName>Lone Star</fullName>
+                <default>false</default>
+                <label>Lone Star</label>
+            </value>
+            <value>
+                <fullName>Mid-Atlantic</fullName>
+                <default>false</default>
+                <label>Mid-Atlantic</label>
+            </value>
+            <value>
+                <fullName>Mid-South</fullName>
+                <default>false</default>
+                <label>Mid-South</label>
+            </value>
+            <value>
+                <fullName>New England</fullName>
+                <default>false</default>
+                <label>New England</label>
+            </value>
+            <value>
+                <fullName>NY Metro</fullName>
+                <default>false</default>
+                <label>NY Metro</label>
+            </value>
+            <value>
+                <fullName>Pacific Northwest</fullName>
+                <default>false</default>
+                <label>Pacific Northwest</label>
+            </value>
+            <value>
+                <fullName>Pacific South</fullName>
+                <default>false</default>
+                <label>Pacific South</label>
+            </value>
+            <value>
+                <fullName>South</fullName>
+                <default>false</default>
+                <label>South</label>
+            </value>
+            <value>
+                <fullName>Upper Mid-West</fullName>
+                <default>false</default>
+                <label>Upper Mid-West</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

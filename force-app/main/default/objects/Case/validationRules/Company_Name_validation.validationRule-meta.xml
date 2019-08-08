@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Company_Name_validation</fullName>
+    <active>true</active>
+    <description>Check Account name and company name matching.</description>
+    <errorConditionFormula>AND( ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE,
+LOWER(Company_Name__c) &lt;&gt; LOWER(Account.Name)
+)</errorConditionFormula>
+    <errorDisplayField>Company_Name__c</errorDisplayField>
+    <errorMessage>Company name in case and Account name is not matching.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,17 @@
+/**
+ * Created by dgajwani on 9/25/18.
+ */
+.THIS .attentionIcon {
+    height: 22px;
+    width: 22px;
+    margin-left: 8px;
+}
+
+.THIS .cellProperties{
+    font-size: 14px;
+}
+
+.THIS .priceOverrideLink {
+    display: inline;
+    white-space: nowrap;
+}

@@ -1,0 +1,10 @@
+<design:component>
+    <design:attribute name="CommunityURL" label="Community URL" description="URL of the Community" />
+    <design:attribute name="ContentVideoRecordID" label="Content Video Record ID" description="Content Video Record ID" />    
+    <design:attribute name="VideoSize" description="Video Width (ex. 640)" datasource="320,480,640,960,1280" />           
+    <design:attribute name="VideoType" label="Video Type" datasource="video/mp4,video/webm,video/ogg" />
+    <design:attribute name="VideoTitle" label="Video Title" description="Title of the Video" />
+    <design:attribute name="VideoDescription" label="Video Description" description="Description of the Video" />    
+    <design:attribute name="VideoShowControls" label="Video Show Controls" />
+    <design:attribute name="VideoAutoStart" label="Video Auto Start" />    
+</design:component>

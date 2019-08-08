@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Div__c</fullName>
+    <externalId>false</externalId>
+    <label>Division</label>
+    <required>false</required>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Division 1</fullName>
+                <default>false</default>
+                <label>Division 1</label>
+            </value>
+            <value>
+                <fullName>Division 2</fullName>
+                <default>false</default>
+                <label>Division 2</label>
+            </value>
+            <value>
+                <fullName>Division 3</fullName>
+                <default>false</default>
+                <label>Division 3</label>
+            </value>
+            <value>
+                <fullName>Division 5</fullName>
+                <default>false</default>
+                <label>Division 5</label>
+            </value>
+            <value>
+                <fullName>Division 6</fullName>
+                <default>false</default>
+                <label>Division 6</label>
+            </value>
+            <value>
+                <fullName>Division 7</fullName>
+                <default>false</default>
+                <label>Division 7</label>
+            </value>
+            <value>
+                <fullName>Division 8</fullName>
+                <default>false</default>
+                <label>Division 8</label>
+            </value>
+            <value>
+                <fullName>Division 10</fullName>
+                <default>false</default>
+                <label>Division 10</label>
+            </value>
+            <value>
+                <fullName>National Level</fullName>
+                <default>false</default>
+                <label>National Level</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Follow_Up_Timestamp__c</fullName>
+    <description>Social Care: Date/Time that the customer responds and status is set to &#39;Customer Follow Up&#39;</description>
+    <externalId>false</externalId>
+    <label>Customer Follow Up Timestamp</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Preferred_Location__c</fullName>
+    <externalId>false</externalId>
+    <label>Preferred Location</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Case_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Within 10 miles</fullName>
+                <default>false</default>
+                <label>Within 10 miles</label>
+            </value>
+            <value>
+                <fullName>Within 25 miles</fullName>
+                <default>false</default>
+                <label>Within 25 miles</label>
+            </value>
+            <value>
+                <fullName>Within 50 miles</fullName>
+                <default>false</default>
+                <label>Within 50 miles</label>
+            </value>
+            <value>
+                <fullName>Over 50 miles</fullName>
+                <default>false</default>
+                <label>Over 50 miles</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Within 10 miles</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Within 25 miles</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Within 50 miles</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Over 50 miles</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

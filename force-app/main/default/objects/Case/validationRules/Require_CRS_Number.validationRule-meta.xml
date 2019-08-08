@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_CRS_Number</fullName>
+    <active>false</active>
+    <description>Require &quot;CRS Number&quot; on &quot;Invoice Case Sub Type&quot; Duplicate Invoice, Grants, Price, Why Bill to Chapter, Wrong Organization, Other</description>
+    <errorConditionFormula>AND(
+    OR(
+       ISPICKVAL(Dispute_Issue__c, &quot;Duplicate Invoice&quot;),
+       ISPICKVAL( Dispute_Issue__c , &#39;Customer Service Credit&#39;), 
+       ISPICKVAL(Dispute_Issue__c, &quot;Grants&quot;),
+       ISPICKVAL(Dispute_Issue__c, &quot;Price&quot;),
+       ISPICKVAL(Dispute_Issue__c, &quot;Why Bill to Chapter&quot;),
+       ISPICKVAL(Dispute_Issue__c, &quot;Wrong Organization&quot;),
+       ISPICKVAL(Dispute_Issue__c, &quot;Other&quot;)
+      ),
+    ISBLANK(CRS__c),
+
+    (RecordTypeId &lt;&gt; &quot;012d000000097TC&quot;), 
+    (RecordTypeId &lt;&gt; &quot;012d000000097TB&quot;),
+ $Setup.Validation_Rules__c.Bypass_Rules__c = false
+)</errorConditionFormula>
+    <errorDisplayField>CRS__c</errorDisplayField>
+    <errorMessage>Please provide the CRS Number</errorMessage>
+</ValidationRule>

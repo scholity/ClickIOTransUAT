@@ -1,0 +1,9 @@
+<!--
+ - Created by jbarker on 9/29/18.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_CommunityClassCartUpdate">
+    <aura:attribute name="courseId" type="String" required="true"/>
+    <aura:attribute name="classId" type="String" required="true"/>
+    <aura:attribute name="count" type="Integer" required="true"/>
+</aura:event>

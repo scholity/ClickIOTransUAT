@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fund_Request_Standard</fullName>
+    <fields>Name</fields>
+    <fields>Budget__c</fields>
+    <fields>Account__c</fields>
+    <fields>Learner__c</fields>
+    <fields>Age_Days__c</fields>
+    <fields>Status__c</fields>
+    <fields>Amount__c</fields>
+    <label>Fund Request Standard</label>
+</CompactLayout>

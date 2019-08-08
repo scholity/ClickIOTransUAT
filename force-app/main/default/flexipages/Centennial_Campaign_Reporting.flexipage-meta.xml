@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>collapsed</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>numVisibleActions</name>
+                <value>3</value>
+            </componentInstanceProperties>
+            <componentName>force:highlightsPanel</componentName>
+        </componentInstances>
+        <name>header</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <componentInstances>
+            <componentName>force:detailPanel</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>decorate</name>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>richTextValue</name>
+                <value>&lt;ul style=&quot;margin: 0px; padding: 0px; list-style-type: none; color: rgb(0, 0, 0); font-family: Verdana; font-size: 13px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;
+	&lt;li class=&quot;emf-li-field emf-field-section_break&quot; id=&quot;emf-li-38&quot; style=&quot;margin: 5px 0px; padding: 5px 0px; list-style: none; overflow-x: hidden; width: 604px; vertical-align: top; clear: both;&quot;&gt;
+	&lt;div class=&quot;emf-div-field-section&quot; style=&quot;margin: 0px; padding: 0px;&quot;&gt;
+	&lt;div class=&quot;emf-section-text&quot; style=&quot;margin: 0px; padding: 2px 0px; clear: both; font-size: 13px; font-family: Georgia;&quot;&gt;&lt;span style=&quot;font-size:14px;&quot;&gt;&lt;span style=&quot;font-family:arial,helvetica,sans-serif;&quot;&gt;Reminder: Please also remember to officially report your course activity through normal processes, such as through www.redcross.org/courserecords or by submitting course records to the Training Support Center.&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;
+	&lt;/div&gt;
+
+	&lt;div class=&quot;emf-clear&quot; style=&quot;margin: 0px; padding: 0px; clear: both;&quot;&gt;&amp;nbsp;&lt;/div&gt;
+	&lt;/li&gt;
+&lt;/ul&gt;</value>
+            </componentInstanceProperties>
+            <componentName>flexipage:richText</componentName>
+        </componentInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Centennial Campaign Reporting</masterLabel>
+    <sobjectType>Centennial_Campaign__c</sobjectType>
+    <template>
+        <name>flexipage:recordHomeSingleColTemplateDesktop</name>
+    </template>
+    <type>RecordPage</type>
+</FlexiPage>

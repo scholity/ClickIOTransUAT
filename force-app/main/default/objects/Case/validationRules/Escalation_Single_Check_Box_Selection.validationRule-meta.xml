@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Escalation_Single_Check_Box_Selection</fullName>
+    <active>true</active>
+    <description>The purpose of this rule to allow the user to only be able to select one of the two check boxes (Escalate to SDD OR Escalate to Sales Director)</description>
+    <errorConditionFormula>AND( Escalate_to_SDD__c,  Escalate_To_Sales_Director__c )</errorConditionFormula>
+    <errorMessage>You can only escalate to either &quot;Escalate to SDD&quot; or &quot;Escalate to Sales Director&quot;. You cannot select both check boxes.</errorMessage>
+</ValidationRule>

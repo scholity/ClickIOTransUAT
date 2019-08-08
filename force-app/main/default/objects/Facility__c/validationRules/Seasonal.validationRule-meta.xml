@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Seasonal</fullName>
+    <active>true</active>
+    <description>When &#39;Seasonal?&#39; is set to &#39;Seasonal&#39;, you must populate the &#39;Dates of Operation&#39;.</description>
+    <errorConditionFormula>AND(ISPICKVAL( Seasonal__c , &quot;Seasonal&quot;), 
+ISBLANK( Dates_of_Operation__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>Dates_of_Operation__c</errorDisplayField>
+    <errorMessage>You must provide Dates of Operation when Seasonal is selected in &#39;Seasonal?</errorMessage>
+</ValidationRule>

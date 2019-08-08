@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>REPORT_AR_180_Days__c</fullName>
+    <description>This field is used for data load and updates field AR &gt;180 Days</description>
+    <externalId>false</externalId>
+    <label>REPORT AR &gt;180 Days</label>
+    <precision>15</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

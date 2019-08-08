@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Root_Cause__c</fullName>
+    <description>Used in Invoice Cases</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select the most likely reason the issue occurred.</inlineHelpText>
+    <label>Root Cause</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>2018 Price Increase</fullName>
+                <default>false</default>
+                <label>2018 Price Increase</label>
+            </value>
+            <value>
+                <fullName>Annual Price Increase</fullName>
+                <default>false</default>
+                <label>Annual Price Increase</label>
+            </value>
+            <value>
+                <fullName>AP/LTP Annual Price Increase</fullName>
+                <default>false</default>
+                <label>AP/LTP Annual Price Increase</label>
+            </value>
+            <value>
+                <fullName>Applied to Different LOB</fullName>
+                <default>false</default>
+                <label>Applied to Different LOB</label>
+            </value>
+            <value>
+                <fullName>Contract Expired</fullName>
+                <default>false</default>
+                <label>Contract Expired</label>
+            </value>
+            <value>
+                <fullName>Contract Not Accurate</fullName>
+                <default>false</default>
+                <label>Contract Not Accurate</label>
+            </value>
+            <value>
+                <fullName>Coupon Expired</fullName>
+                <default>false</default>
+                <label>Coupon Expired</label>
+            </value>
+            <value>
+                <fullName>Coupon Not Applied</fullName>
+                <default>false</default>
+                <label>Coupon Not Applied</label>
+            </value>
+            <value>
+                <fullName>Coupon Not Created</fullName>
+                <default>false</default>
+                <label>Coupon Not Created</label>
+            </value>
+            <value>
+                <fullName>Customer Account/ORG Information Not Accurate</fullName>
+                <default>false</default>
+                <label>Customer Account/ORG Information Not Accurate</label>
+            </value>
+            <value>
+                <fullName>Customer Not Aware of Coupon</fullName>
+                <default>false</default>
+                <label>Customer Not Aware of Coupon</label>
+            </value>
+            <value>
+                <fullName>Data Entry Error - Customer</fullName>
+                <default>false</default>
+                <label>Data Entry Error - Customer</label>
+            </value>
+            <value>
+                <fullName>Data Entry Error - Field Staff</fullName>
+                <default>false</default>
+                <label>Data Entry Error - Field Staff</label>
+            </value>
+            <value>
+                <fullName>Data Entry Error – Internal</fullName>
+                <default>false</default>
+                <label>Data Entry Error – Internal</label>
+            </value>
+            <value>
+                <fullName>Data Entry Error - TSC</fullName>
+                <default>false</default>
+                <label>Data Entry Error - TSC</label>
+            </value>
+            <value>
+                <fullName>Instructor Affiliation</fullName>
+                <default>false</default>
+                <label>Instructor Affiliation</label>
+            </value>
+            <value>
+                <fullName>Org Info Inaccurate</fullName>
+                <default>false</default>
+                <label>Org Info Inaccurate</label>
+            </value>
+            <value>
+                <fullName>Pymt Sent to Wrong Address</fullName>
+                <default>false</default>
+                <label>Pymt Sent to Wrong Address</label>
+            </value>
+            <value>
+                <fullName>Sales Misinformation</fullName>
+                <default>false</default>
+                <label>Sales Misinformation</label>
+            </value>
+            <value>
+                <fullName>Undocumented Pricing Agreement</fullName>
+                <default>false</default>
+                <label>Undocumented Pricing Agreement</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

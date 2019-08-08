@@ -1,0 +1,93 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="myURL" type="String" default="administration"/>
+
+    <aura:attribute name="title" type="String" default="Popular actions"/>
+    
+    <aura:attribute name="label1" type="String" default="Course Materials"/>
+    <aura:attribute name="url1" type="String" default="phss_program/PHSS_Program__c/00Bq0000000xnzS"/>
+    <aura:attribute name="image1" type="String" default=""/>
+    <aura:attribute name="fontSize1" type="String" default="small"/>
+    
+    <aura:attribute name="label2" type="String" default="Course Records Submission"/>
+    <aura:attribute name="url2" type="String" default="https://classes.redcross.org/instructor/authentication/login.html"/>
+    <aura:attribute name="image2" type="String" default=""/>
+    <aura:attribute name="fontSize2" type="String" default="small"/>
+
+    <aura:attribute name="label3" type="String" default="Setup Blended Learning/ Instructor Course"/>
+    <aura:attribute name="url3" type="String" default="administration?tabset-c771e=2"/>
+    <aura:attribute name="image3" type="String" default=""/>
+    <aura:attribute name="fontSize3" type="String" default="small"/>
+
+    <aura:attribute name="label4" type="String" default="For New Instructors"/>
+    <aura:attribute name="url4" type="String" default="onboarding"/>
+    <aura:attribute name="image4" type="String" default=""/>
+    <aura:attribute name="fontSize4" type="String" default="small"/>
+
+    <aura:attribute name="label5" type="String" default="Site Orientation"/>
+    <aura:attribute name="url5" type="String" default="onboarding"/>
+    <aura:attribute name="image5" type="String" default=""/>
+    <aura:attribute name="fontSize5" type="String" default="small"/>
+
+    <aura:attribute name="label6" type="String" default="Lastest News"/>
+    <aura:attribute name="url6" type="String" default="recent-news"/>
+    <aura:attribute name="image6" type="String" default=""/>
+    <aura:attribute name="fontSize6" type="String" default="small"/>
+
+
+    <table align="center" border="0">
+        <tr>
+            <td colspan="6">
+                <div class="forceCommunityRecordListCompact forceCommunityObjectHome">
+                    <div class="filterListPlaceholder">
+                        <div class="dark uiAbstractList forceRecordLayout forceFilterListDeprecated">
+                            <div class="listTitleContainer uiBlock">
+                                <div class="bBody">
+                                        <h2 class="listTitle truncate">{#v.title}</h2>
+                                </div>
+                            </div>                                
+                        </div>
+                    </div>        
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- Get course materials (This is what we want provided there aren’t too many clicks underneath.) -->
+                <a href="{#v.url1}">
+                    <!--<div class="menu-cpr menu lr">{#v.label1}</div>-->
+                    <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image1 + '); font-size: ' + v.fontSize1 + ';'}">{#v.label1}</div>
+                </a>
+                <!-- Submit course records - go to course-admin page ( eventually lead to CRE ) -->
+                <a href="{#v.url2}">
+                    <!--<div class="menu-emr menu lr">{#v.label2}</div>-->
+                    <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image2 + '); font-size: ' + v.fontSize2 + ';'}">{#v.label2}</div>
+                </a>
+                <!-- Set up a Blended Learning/Instructor course - go  to course-admin page -->
+                <a href="{#v.url3}">
+                    <!--<div class="menu-wsi menu lr">{#v.label3}</div>-->
+                    <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image3 + '); font-size: ' + v.fontSize3 + ';'}">{#v.label3}</div>
+                </a>
+<!-- INSERT TR HERE TO MAKE 2 ROWS OF 3 -->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- Start teaching as a new instructor (onboarding) - go to onboarding page -->
+                <a href="{#v.url4}">
+                    <!--<div class="menu-lg menu lr">{#v.label4}</div>-->
+                    <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image4 + '); font-size: ' + v.fontSize4 + ';'}">{#v.label4}</div>
+                </a>
+                <!-- Watch a video orientation to Instructor’s Corner - go to content wrapper page for specific video -->
+                <a href="{#v.url5}">
+                    <!--<div class="menu-bls menu lr">{#v.label5}</div>-->
+                    <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image5 + '); font-size: ' + v.fontSize5 + ';'}">{#v.label5}</div>
+                </a>
+                <!-- Get the latest news - go to news page -->
+                <a href="{#v.url6}">
+                    <!--<div class="menu-cprpro menu lr">{#v.label6}</div>-->
+                    <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image6 + '); font-size: ' + v.fontSize6 + ';'}">{#v.label6}</div>
+                </a>
+            </td>
+        </tr>
+    </table>
+</aura:component>

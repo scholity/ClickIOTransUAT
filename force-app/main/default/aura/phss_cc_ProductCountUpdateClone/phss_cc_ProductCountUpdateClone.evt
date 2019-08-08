@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="phss_cc_ProductCountUpdateClone">
+    <aura:attribute name="productSfid" type="String" required="true"/>
+    <aura:attribute name="productName" type="String" required="true"/>
+</aura:event>

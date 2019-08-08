@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manage_Resource</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Manage Resource</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>{!REQUIRESCRIPT(&#39;/resource/sked_ARC_Dist/scripts/sked-modal-helper.js&#39;)}
+
+var iframe_url = &#39;{!URLFOR(&quot;/apex/skedScheduleAllocation&quot;)}&#39;; 
+
+var modalHelper = new skedUtil.ModalHelper(&#39;/resource/sked_ARC_Vendors&#39;);
+
+// show modal
+var modalController = modalHelper.loadIframeModal(iframe_url, {
+	rootRecordId: &#39;{!Training_Events__c.Id}&#39; 
+});
+
+// Listen to message from child IFrame window 
+modalController.registerModalEvent(function (event) { 
+	var data = event.data,
+		message = data.message;
+
+	if (message === &#39;cancel&#39;) {
+		modalController.closeModal();
+	} else if (message === &#39;loaded&#39;) {
+		modalController.hideIframeLoading();
+	} else if (message === &#39;done&#39;) {
+		modalController.showIframeLoading();
+		window.location.reload();
+		//modalController.closeModal();
+	}
+});</url>
+</WebLink>

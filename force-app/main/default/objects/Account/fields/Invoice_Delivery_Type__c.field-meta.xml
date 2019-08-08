@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invoice_Delivery_Type__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>The default invoice delivery method is Postal Mail.  In order to change method customer must meet approval criteria.</inlineHelpText>
+    <label>Invoice Delivery Method</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Postal Mail</fullName>
+                <default>false</default>
+                <label>Postal Mail</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>true</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Portal Billing</fullName>
+                <default>false</default>
+                <label>Portal Billing</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

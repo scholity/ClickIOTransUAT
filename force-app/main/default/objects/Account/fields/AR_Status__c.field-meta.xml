@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AR_Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL( Payment_Status__c , &quot;Terminated&quot;), IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykO&quot;,&quot;Payment Status = Terminated&quot;),
+IF(   AR_180_Days__c &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykO&quot;,&quot;AR&gt;180&quot;),
+IF(   AR_121_180_Days__c  &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykO&quot;,&quot;AR 121-180 Days&quot;),
+IF(  AR_121_150_Days__c &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykQ&quot;,&quot;AR 121-150 Days&quot;),
+IF(  AR_91_120_Days__c &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykQ&quot;,&quot;AR 91-120 Days&quot;),
+IF(  AR_61_90_Days__c &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykR&quot;,&quot;AR 61-90 Days&quot;),
+IF(   AR_31_60_Days__c  &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykP&quot;,&quot;AR 31-60 Days&quot;),
+IF(  AR_0_30_Days__c &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykP&quot;,&quot;AR 0-30 Days&quot;),
+IF( AR_Current__c &gt; 0.00, IMAGE(&quot;/servlet/servlet.FileDownload?file=015d00000005ykP&quot;,&quot;AR Current&quot;), 
+IF( NOT(ISBLANK( AR_Last_Report__c )), IMAGE(&quot;/servlet/servlet.FileDownload?file=015d0000003XtD2&quot;,&quot;No open invoices/Credit balance&quot;),
+IMAGE (&quot;/servlet/servlet.FileDownload?file=015d0000003XuPx&quot;,&quot;No data has been loaded&quot;)))))))))))</formula>
+    <inlineHelpText>AR ages from Invoice Due Date &amp; status flag triggered by oldest AR
+Green Check-No Open Invoice/Credit Balance
+Green Flag-Current,1-30 days past due
+Yellow Flag-31-60 days past due
+Red Flag-61-90 &amp; 91-120 days past due
+Attn Sign-121-180+ days past due</inlineHelpText>
+    <label>AR Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

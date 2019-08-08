@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Billing_Type_validation</fullName>
+    <active>true</active>
+    <description>check billing contact&#39;s contact type is &quot;RCS Billing&quot;</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),
+!ISBLANK(Account.Billing_Contact__c),
+!(INCLUDES(Account.Billing_Contact__r.Contact_Type__c,&quot;RCS Billing&quot;)),
+RecordType.Name= &quot;RCS PO&quot;,
+!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE
+)</errorConditionFormula>
+    <errorDisplayField>AccountId</errorDisplayField>
+    <errorMessage>Contact type of Billing contact associated with this Account is not of type &quot;RCS Billing&quot;.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Update_Restriction_on_Invoice_del_Fields</fullName>
+    <active>true</active>
+    <description>Prevents Updating Invoice delivery fields, while Updating Account if the user does not have permission.</description>
+    <errorConditionFormula>AND(!ISNEW(),
+!$Permission.Permission_for_three_fields_in_Account, 
+OR(ISCHANGED(Invoice_Delivery_Type__c), ISCHANGED(Inv_Del_Assign_Date__c), ISCHANGED(Invoice_delivery_Email__c)), $Profile.Name != &quot;System Administrator&quot;)</errorConditionFormula>
+    <errorMessage>You do not have permission to Update Invoice Delivery Method, Inv Del Assign Date or Invoice Delivery Email.</errorMessage>
+</ValidationRule>

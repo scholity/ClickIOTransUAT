@@ -1,0 +1,4 @@
+<design:component >
+    <design:attribute name="recordId" label="PHSS Program Record ID" />
+    <design:attribute name="isCandidateMaterial" label="Is Candidate Material" />   
+</design:component>

@@ -1,0 +1,166 @@
+<apex:component >
+<script type="text/ng-template" id="arc/skedResourceReportTableTemplate">
+	<table class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover" ng-if="item.jobs !== null && item.jobs.length > 0">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Job Name">Job Name</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Job Description">Job Description</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Account">Account</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Job Date">Job Date</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Start Time">Start Time</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="End Time">End Time</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Job Location">Job Location</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Job Type">Job Type</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Job Status">Job Status</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="job in item.jobs">
+                <td data-label="Job Name" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.name}}"><a href="/{{job.id}}" target="_blank">{{job.name}}</a></div>
+                </td>
+                <td data-label="Job Description" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.description}}">{{job.description}}</div>
+                </td>
+                <td data-label="Account" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.accountName}}">{{job.accountName}}</div>
+                </td>
+                <td data-label="Job Date" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.dateStr}}">{{job.dateStr}}</div>
+                </td>
+                <td data-label="Start Time" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.startTimeStr}}">{{job.startTimeStr}}</div>
+                </td>
+                <td data-label="End Time" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.endTimeStr}}">{{job.endTimeStr}}</div>
+                </td>
+                <td data-label="Job Location" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.jobLocation}}">{{job.jobLocation}}</div>
+                </td>
+                <td data-label="Job Type" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.jobType}}">{{job.jobType}}</div>
+                </td>
+                <td data-label="Job Status" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{job.status}}">{{job.status}}</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover slds-m-top--medium" ng-if="item.availabilities !== null && item.availabilities.length > 0">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Availability Name">Availability Name</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Availability Date">Availability Date</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Start Time">Start Time</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="End Time">End Time</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Availability Type">Availability Type</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Status">Status</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap slds-text-align_center">
+                    <div class="slds-truncate" title="Is Available">Is Available</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="availability in item.availabilities">
+                <td data-label="Availability Name" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{availability.name}}"><a href="https://new.skedulo.com/availability/calendar" target="_blank">{{availability.name}}</a></div>
+                </td>
+                <td data-label="Availability Date" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{availability.dateStr}}">{{availability.dateStr}}</div>
+                </td>
+                <td data-label="Start Time" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{availability.startTimeStr}}">{{availability.startTimeStr}}</div>
+                </td>
+                <td data-label="End Time" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{availability.endTimeStr}}">{{availability.endTimeStr}}</div>
+                </td>
+                <td data-label="Availability Type" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{availability.availabilityType}}">{{availability.availabilityType}}</div>
+                </td>
+                <td data-label="Status" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{availability.status}}">{{availability.status}}</div>
+                </td>
+                <td data-label="Is Available" class="slds-cell-wrap slds-text-align_center">
+                    <span class="slds-icon_container null slds-icon__svg--default" ng-if="availability.isAvailable === true">
+                        <svg class="slds-icon slds-icon_small slds-icon-text-default" aria-hidden="true">
+                            <use href="{!URLFOR($Resource.sked_ARC_Vendors, '/slds/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                        </svg>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-no-row-hover slds-m-top--medium" ng-if="item.activities !== null && item.activities.length > 0">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Activity Name">Activity Name</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Activity Date">Activity Date</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Start Time">Start Time</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="End Time">End Time</div>
+                </th>
+                <th scope="col" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="Activity Type">Activity Type</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="activity in item.activities">
+                <td data-label="Activity Name" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{activity.name}}"><a href="/{{activity.id}}" target="_blank">{{activity.name}}</a></div>
+                </td>
+                <td data-label="Activity Date" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{activity.dateStr}}">{{activity.dateStr}}</div>
+                </td>
+                <td data-label="Start Time" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{activity.startTimeStr}}">{{activity.startTimeStr}}</div>
+                </td>
+                <td data-label="End Time" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{activity.endTimeStr}}">{{activity.endTimeStr}}</div>
+                </td>
+                <td data-label="Activity Type" class="slds-cell-wrap">
+                    <div class="slds-truncate" title="{{activity.activityType}}">{{activity.activityType}}</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</script>
+</apex:component>

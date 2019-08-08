@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Document_Origin__c</fullName>
+    <externalId>false</externalId>
+    <label>Document Origin</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Facebook</fullName>
+                <default>false</default>
+                <label>Facebook</label>
+            </value>
+            <value>
+                <fullName>TSC</fullName>
+                <default>false</default>
+                <label>TSC</label>
+            </value>
+            <value>
+                <fullName>IConnection</fullName>
+                <default>false</default>
+                <label>IConnection</label>
+            </value>
+            <value>
+                <fullName>Instructors Corner</fullName>
+                <default>false</default>
+                <label>Instructors Corner</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TE_Owner__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>This is a lookup field for the owner of the Training Event. It will be used to connect the other TE Owner-related fields, such as TE Owner Email, TE Owner Phone, etc.</description>
+    <externalId>false</externalId>
+    <label>TE Owner</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Training_Event</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

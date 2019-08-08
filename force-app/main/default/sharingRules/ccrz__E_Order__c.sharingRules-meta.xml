@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>CC_Order_Service_Share</fullName>
+        <accessLevel>Edit</accessLevel>
+        <label>CC Order Service Share</label>
+        <sharedTo>
+            <group>Training_Specialists</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>ccrz__OrderStatus__c</field>
+            <operation>notEqual</operation>
+            <value>Bill Of Material</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

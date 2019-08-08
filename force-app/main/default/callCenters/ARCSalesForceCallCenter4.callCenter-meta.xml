@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CallCenter xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <adapterUrl>http://localhost:11000</adapterUrl>
+    <displayName>Legacy_ARC Salesforce Call Center Adapter</displayName>
+    <displayNameLabel>Display Name</displayNameLabel>
+    <internalNameLabel>Internal Name</internalNameLabel>
+    <sections>
+        <items>
+            <label>Description</label>
+            <name>reqDescription</name>
+            <value>ARC Salesforce Call Center Adapter</value>
+        </items>
+        <items>
+            <label>CTI Connector ProgId</label>
+            <name>reqProgId</name>
+            <value>AMCCTIAdapter.AMCCTIAdapter.1</value>
+        </items>
+        <items>
+            <label>Version</label>
+            <name>reqVersion</name>
+            <value>4.03</value>
+        </items>
+        <items>
+            <label>CTI Adapter URL</label>
+            <name>reqAdapterUrl</name>
+            <value>http://localhost:11000</value>
+        </items>
+        <label>General Information</label>
+        <name>reqGeneralInfo</name>
+    </sections>
+    <sections>
+        <items>
+            <label>CRM Connector Server</label>
+            <name>Server</name>
+            <value>170.65.232.205</value>
+        </items>
+        <items>
+            <label>Remote Port</label>
+            <name>RemotePort</name>
+            <value>5623</value>
+        </items>
+        <items>
+            <label>Event Port</label>
+            <name>EventPort</name>
+            <value>5558</value>
+        </items>
+        <items>
+            <label>ChannelID</label>
+            <name>ChannelID</name>
+            <value>CTI1</value>
+        </items>
+        <items>
+            <label>Queue</label>
+            <name>Queue</name>
+            <value>9999</value>
+        </items>
+        <items>
+            <label>LOGO</label>
+            <name>LOGO</name>
+            <value xsi:nil="true"/>
+        </items>
+        <label>AMC CRM Connector Information</label>
+        <name>MCISInfo</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Using AMC Log</label>
+            <name>UsingTrace</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Trace Path</label>
+            <name>TracePath</name>
+            <value>C:\\Program Files\\AMC Technology\\Application Adapters\\Salesforce.com Adapter\\logs\\</value>
+        </items>
+        <items>
+            <label>Trace Level</label>
+            <name>TraceLevel</name>
+            <value>5</value>
+        </items>
+        <label>AMC Trace Information</label>
+        <name>AMCTrace</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Prefix settings</label>
+            <name>EnablePrefix</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Length of Outside Prefix</label>
+            <name>lenOutsidePrefix</name>
+            <value>7</value>
+        </items>
+        <items>
+            <label>Length of Long Distance Prefix</label>
+            <name>lenLongDistPrefix</name>
+            <value>10</value>
+        </items>
+        <items>
+            <label>Length of International Prefix</label>
+            <name>lenInternationalPrefix</name>
+            <value>12</value>
+        </items>
+        <items>
+            <label>Outside Prefix</label>
+            <name>reqOutsidePrefix</name>
+            <value>9</value>
+        </items>
+        <items>
+            <label>Long Distance Prefix</label>
+            <name>reqLongDistPrefix</name>
+            <value>1</value>
+        </items>
+        <items>
+            <label>International Prefix</label>
+            <name>reqInternationalPrefix</name>
+            <value>011</value>
+        </items>
+        <label>Define Dial Prefix</label>
+        <name>DefinePrefix</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Mode Type</label>
+            <name>ModeType</name>
+            <value>NORMAL</value>
+        </items>
+        <items>
+            <label>Enable Visualization</label>
+            <name>EnableVisualization</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Enable ACW</label>
+            <name>EnableACW</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Show ACW in Drop Down</label>
+            <name>ShowACW</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Ignore Login</label>
+            <name>IgnoreLogin</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>After Call Not Ready Reason Code</label>
+            <name>CfgACWReason</name>
+            <value>0</value>
+        </items>
+        <items>
+            <label>Enable Custom Not Ready Visualization</label>
+            <name>EnableCustomNRVisualization</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Custom Not Ready Display After Login</label>
+            <name>CustomNotReadyDisplayAfterLogin</name>
+            <value>After Login</value>
+        </items>
+        <items>
+            <label>Custom Not Ready Display After Ready</label>
+            <name>CustomNotReadyDisplayAfterReady</name>
+            <value>Default AUX</value>
+        </items>
+        <items>
+            <label>Custom Not Ready Display After Wrap Up</label>
+            <name>CustomNotReadyDisplayAfterWrapUp</name>
+            <value>After Call Work</value>
+        </items>
+        <items>
+            <label>Enable Reserved</label>
+            <name>EnableReserved</name>
+            <value>FALSE</value>
+        </items>
+        <label>CustomizeWorkMode</label>
+        <name>CustomizeWorkMode</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Display Call Attach</label>
+            <name>EnableCADDisplay</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Display Key List</label>
+            <name>DisplayKeyList</name>
+            <value>VAR_1=DNIS</value>
+        </items>
+        <items>
+            <label>Display Key List for Dialer Outbound</label>
+            <name>DisplayKeyListforDialerOutbound</name>
+            <value>VAR_1=DNIS</value>
+        </items>
+        <label>CADDisplay</label>
+        <name>CADDisplay</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Send Specific Data To VF</label>
+            <name>EnableSendSpecificDataToVF</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Display Key List</label>
+            <name>DisplayKeyList</name>
+            <value>OwnExtension=Own;</value>
+        </items>
+        <label>Send Specific Data To VF</label>
+        <name>SendSpecificDataToVF</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Call Attach Popup</label>
+            <name>EnableCADPop</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Popup Key</label>
+            <name>PopupKeyList</name>
+            <value>VAR_2=Account.AccountNumber</value>
+        </items>
+        <items>
+            <label>Mapping for Object Search</label>
+            <name>ObjectPopMap</name>
+            <value>001=Account;003=Contact</value>
+        </items>
+        <items>
+            <label>Key for Object Pop</label>
+            <name>ObjectPopKeyList</name>
+            <value>VAR_3</value>
+        </items>
+        <label>CADPopup</label>
+        <name>CADPopup</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Not Ready Reason Code</label>
+            <name>EnableNotReady</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Enable Logout Reason Code</label>
+            <name>EnableLogout</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Display NOTREADY Reasons in Dropdown</label>
+            <name>EnableDropdownNotReadyReason</name>
+            <value>TRUE</value>
+        </items>
+        <label>Setting for Reason Codes</label>
+        <name>ReasonSetting</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Number of Reason Codes</label>
+            <name>Number</name>
+            <value>10</value>
+        </items>
+        <items>
+            <label>1</label>
+            <name>Reason1</name>
+            <value>Break</value>
+        </items>
+        <items>
+            <label>2</label>
+            <name>Reason2</name>
+            <value>Lunch</value>
+        </items>
+        <items>
+            <label>3</label>
+            <name>Reason3</name>
+            <value>Training - Non-Billable</value>
+        </items>
+        <items>
+            <label>4</label>
+            <name>Reason4</name>
+            <value>Training - Billable</value>
+        </items>
+        <items>
+            <label>5</label>
+            <name>Reason5</name>
+            <value>Project</value>
+        </items>
+        <items>
+            <label>6</label>
+            <name>Reason6</name>
+            <value>Personal</value>
+        </items>
+        <items>
+            <label>7</label>
+            <name>Reason7</name>
+            <value>Coaching</value>
+        </items>
+        <items>
+            <label>8</label>
+            <name>Reason8</name>
+            <value>Systems</value>
+        </items>
+        <items>
+            <label>9</label>
+            <name>Reason9</name>
+            <value>Admin</value>
+        </items>
+        <label>List of Not Ready Reason Codes</label>
+        <name>ReasonCodes</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Number of wrapup Codes</label>
+            <name>Number</name>
+            <value>2</value>
+        </items>
+        <items>
+            <label>0</label>
+            <name>Code0</name>
+            <value>Shift</value>
+        </items>
+        <items>
+            <label>1</label>
+            <name>Code1</name>
+            <value>Finished Work</value>
+        </items>
+        <label>List of Logout Reason Codes</label>
+        <name>LogoutCodes</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable AutoAnswer</label>
+            <name>EnableAutoAnswer</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Delay</label>
+            <name>Delay</name>
+            <value>500</value>
+        </items>
+        <label>AutoAnswer</label>
+        <name>AutoAnswer</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Open New Line</label>
+            <name>EnableOpenNewLine</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Disable Strip characters from outbound dial</label>
+            <name>NoStripOnDN</name>
+            <value>TRUE</value>
+        </items>
+        <label>Customize Call Line</label>
+        <name>CustomizeLine</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Auto In</label>
+            <name>EnableAutoIn</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Pending WorkMode</label>
+            <name>EnablePendingWorkMode</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Default WorkMode</label>
+            <name>DefaultWorkMode</name>
+            <value>NOT_READY</value>
+        </items>
+        <label>AutoIn</label>
+        <name>AutoIn</name>
+    </sections>
+    <sections>
+        <items>
+            <label>BT_PrimaryLineAttachLog</label>
+            <name>BTPrimaryLineAttachLog</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>WT_PrimaryLineAttachLog</label>
+            <name>WTPrimaryLineAttachLog</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>CONF_PrimaryLineAttachLog</label>
+            <name>CONFPrimaryLineAttachLog</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>OUTBound BT_PrimaryLineAttachLog</label>
+            <name>OUTBTPrimaryLineAttachLog</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>OUTBound WT_PrimaryLineAttachLog</label>
+            <name>OUTWTPrimaryLineAttachLog</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>OUTBound CONF_PrimaryLineAttachLog</label>
+            <name>OUTCONFPrimaryLineAttachLog</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Enable Generate Comments From CAD</label>
+            <name>EnableGenCommentFromCAD</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>AutoFillCADList</label>
+            <name>AutoFillCADList</name>
+            <value>VAR_2=AccountNumber;VAR_3=VALIDATION</value>
+        </items>
+        <items>
+            <label>Allow Edit Log After Call</label>
+            <name>AllowEditLogAfterCall</name>
+            <value>TRUE</value>
+        </items>
+        <label>CustomizeComments</label>
+        <name>CustomizeComments</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Drop Party</label>
+            <name>EnableDropParty</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Enable OneStep Transfer</label>
+            <name>EnableOneStepTransfer</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Enable Reconnect</label>
+            <name>EnableReconnect</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Blind Transfer PostRoute</label>
+            <name>EnableBlindTransferPostRoute</name>
+            <value>FALSE</value>
+        </items>
+        <label>Transfer Conference Parameters</label>
+        <name>TranConfPara</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Call Log for Inbound</label>
+            <name>EnableInboundCallLog</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Call Log for Outbound Call</label>
+            <name>EnableOutboundCallLog</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Call Log for Internal Call</label>
+            <name>EnableInternalCallLog</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Inbound Wrapup Reason Codes</label>
+            <name>EnableInboundWrapupReasonCodes</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Outbound Wrapup Reason Codes</label>
+            <name>EnableOutboundWrapupReasonCodes</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Enable Internal Wrapup Reason Codes</label>
+            <name>EnableInternalWrapupReasonCodes</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Hide Inbound Call Log During Call</label>
+            <name>EnableHideInboundCallLogs</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Hide Outbound Call Log During Call</label>
+            <name>EnableHideOutboundCallLogs</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Hide Inbound Call Log During Wrap-Up</label>
+            <name>EnableHideInboundCallLogsWrapUp</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Hide Outbound Call Log During Wrap-Up</label>
+            <name>EnableHideOutboundCallLogsWrapUp</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Enable Wrap up</label>
+            <name>EnableUpdateWrapup</name>
+            <value>FALSE</value>
+        </items>
+        <label>CustomizeWrapup</label>
+        <name>CustomizeWrapup</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Mapping CAD to (call log) Activity-Task fields</label>
+            <name>EnableCADToTask</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>KeyList</label>
+            <name>CADTASKList</name>
+            <value>DNIS=AMCCustomTask__c;</value>
+        </items>
+        <label>Customize Wrapup Task</label>
+        <name>CustomizeWrapupTask</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Number of Inbound Wrapup Codes</label>
+            <name>Number</name>
+            <value>4</value>
+        </items>
+        <items>
+            <label>1</label>
+            <name>Code1</name>
+            <value>Information Given</value>
+        </items>
+        <items>
+            <label>2</label>
+            <name>Code2</name>
+            <value>Task Completed</value>
+        </items>
+        <items>
+            <label>3</label>
+            <name>Code3</name>
+            <value>Hang Up/Transfer</value>
+        </items>
+        <items>
+            <label>4</label>
+            <name>Code4</name>
+            <value>Other</value>
+        </items>
+        <label>List of Inbound Wrapup Reason Codes</label>
+        <name>InboundWrapupCodes</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Number of Outbound Wrapup Codes</label>
+            <name>Number</name>
+            <value>4</value>
+        </items>
+        <items>
+            <label>1</label>
+            <name>Code1</name>
+            <value>Contacted</value>
+        </items>
+        <items>
+            <label>2</label>
+            <name>Code2</name>
+            <value>Left Message</value>
+        </items>
+        <items>
+            <label>3</label>
+            <name>Code3</name>
+            <value>Unable to Contact</value>
+        </items>
+        <items>
+            <label>4</label>
+            <name>Code4</name>
+            <value>Other</value>
+        </items>
+        <label>List of Outbound Wrapup Reason Codes</label>
+        <name>OutboundWrapupCodes</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Number of Internal Wrapup Codes</label>
+            <name>Number</name>
+            <value>4</value>
+        </items>
+        <items>
+            <label>1</label>
+            <name>Code1</name>
+            <value>Consult</value>
+        </items>
+        <items>
+            <label>2</label>
+            <name>Code2</name>
+            <value>No Answer</value>
+        </items>
+        <items>
+            <label>3</label>
+            <name>Code3</name>
+            <value>Left Voicemail</value>
+        </items>
+        <items>
+            <label>4</label>
+            <name>Code4</name>
+            <value>Other</value>
+        </items>
+        <label>List of Internal Wrapup Reason Codes</label>
+        <name>InternalWrapupCodes</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Screen Popup when Status is Not Ready</label>
+            <name>EnableScreenPopWhenNotReady</name>
+            <value>TRUE</value>
+        </items>
+        <items>
+            <label>Enable SecondLine Popup</label>
+            <name>DisableSecondLinePopup</name>
+            <value>FALSE</value>
+        </items>
+        <label>ScreenPop</label>
+        <name>ScreenPop</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Length of Internal Number</label>
+            <name>Length</name>
+            <value>6</value>
+        </items>
+        <label>InternalNumber</label>
+        <name>InternalNumber</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Caching</label>
+            <name>EnableCaching</name>
+            <value>TRUE</value>
+        </items>
+        <label>Caching</label>
+        <name>Caching</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Add CAD</label>
+            <name>EnableAddCAD</name>
+            <value>FALSE</value>
+        </items>
+        <items>
+            <label>Display CAD to CTI Key List</label>
+            <name>CADToCTIKeyList</name>
+            <value>CADTOCTI2=CallVariable4</value>
+        </items>
+        <label>Send CAD to CTI</label>
+        <name>CustomizeCADtoCTI</name>
+    </sections>
+    <sections>
+        <items>
+            <label>Enable Ringtone for Mobile Agents</label>
+            <name>MobileAgentRingtone</name>
+            <value>FALSE</value>
+        </items>
+        <label>Mobile Agent Parameters</label>
+        <name>MobileAgent</name>
+    </sections>
+    <version>4.03</version>
+</CallCenter>

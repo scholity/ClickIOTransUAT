@@ -1,0 +1,123 @@
+<aura:component controller = "CancelOrderItemController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name = "isPrompt" 				type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "isDisabled" 			type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "hasGraterDiscount" 		type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "hasGraterPercent" 		type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "stepNumber"				type = "String" 				default = "Zero" />
+    <aura:attribute name = "oId"					type = "String"/>
+    <aura:attribute name = "percentDiscount"		type = "String"/>
+    <aura:attribute name = "adjPercentDiscount"		type = "String"/>
+    <aura:attribute name = "adjPercentDiscountOld"	type = "String"/>
+    <aura:attribute name = "overrideType"			type = "String"/>
+    <aura:attribute name = "qty"					type = "String"/>
+    <aura:attribute name = "maxDisAllowed"			type = "String"/>
+    <aura:attribute name = "pMsg"					type = "String"/>
+    <aura:attribute name = "prMsg"					type = "String"/>
+    <aura:attribute name = "method"					type = "Aura.action"/>
+    <aura:attribute name = "newPrice"				type = "String" 				access="public"/>
+    
+    <aura:handler 	name = "init" 			   value = "{!this}" 				    action = "{!c.doInit}"/> 
+	
+    <aura:if isTrue = "{!v.stepNumber == 'Zero'}" >
+        <lightning:button label		= "Apply Adjustment"
+                          title		= "Apply Adjustment"
+                          onclick	= "{!c.showPrompt}"
+                          class		= "slds-button_brand"
+                          disabled 	= "{!v.isDisabled}"/>
+    </aura:if>
+    
+    <aura:if isTrue = "{!v.isPrompt}" >
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-align_absolute-center" style = "width: 50% !important;">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" onclick="{!c.showStep2}" alternativeText="close" variant="bare-inverse" class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Apply Adjustment</h2>
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <fieldset class="slds-form-element">
+                            <div class="slds-grid slds-form-element__control">
+                                
+                                <div class="slds-col slds-p-top_xxx-small">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id = "percentDiscountRadio"
+                                                         type	 = "radio"
+                                                         name	 = "overrideOptions"
+                                                         label	 = ""
+                                                         value	 = "percentDiscount"
+                                                         onclick = "{!c.overrideSelected}"
+                                                         checked = "{!if(equals(v.overrideType, 'percentDiscount'), true, false)}"/>
+                                    </span>
+                                </div>
+                                
+                                <div class="slds-col">
+                                    <lightning:input aura:id	= "percentDiscountField"
+                                                     name		= "percentDiscount"
+                                                     label		= "Percent Fee"
+                                                     type		= "number"
+                                                     value		= "{!v.percentDiscount}"
+                                                     onchange	= "{!c.valueFieldChanged}"/>
+                                    
+                                    <aura:if isTrue = "{!v.hasGraterPercent}">
+                                        <div style = "color:red;">
+                                            {!v.pMsg}
+                                        </div>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-col slds-p-horizontal_x-large slds-align_absolute-center">
+                                    <div><b>OR</b></div>
+                                </div>
+                                <div class="slds-col slds-p-top_xxx-small">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id = "unitPriceRadio"
+                                                         type	 = "radio"
+                                                         name	 = "overrideOptions"
+                                                         label	 = ""
+                                                         value	 = "unitPrice"
+                                                         onclick = "{!c.overrideSelected}"
+                                                         checked = "{!if(equals(v.overrideType, 'unitPrice'), true, false)}"/>
+                                    </span>
+                                    
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:input aura:id	= "unitPriceField"
+                                                     name		= "unitPrice"
+                                                     label		= "Price"
+                                                     value		= "{!v.adjPercentDiscount}"
+                                                     onchange	= "{!c.valueFieldChanged}"
+                                                     type		= "number"
+                                                     formatter	= "currency"
+                                                     step		= "0.01"/>
+                                    <aura:if isTrue = "{!v.hasGraterDiscount}">
+                                        <div style = "color:red;">
+                                            {!v.prMsg}
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+                    </div>
+                    <footer class="slds-modal__footer .slds-modal__footer_directional">
+                        
+                        <lightning:button label		= "Cancel"
+                                          title		= "Cancel"
+                                          onclick	= "{!c.showStep2}"
+                                          class		= "slds-button_neutral"/>
+                        
+                        <lightning:button label		= "Continue"
+                                          title		= "Continue"
+                                          onclick	= "{!c.processAdjustment}"
+                                          class		= "slds-button_brand"/>
+                        
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+        
+    </aura:if>
+    
+</aura:component>

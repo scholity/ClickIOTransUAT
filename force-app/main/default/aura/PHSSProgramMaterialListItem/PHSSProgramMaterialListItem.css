@@ -1,0 +1,12 @@
+.THIS.preview-expanded:hover, 
+.THIS.preview-expanded:hover>* {
+    background: transparent !important;
+}
+.THIS .cursor {
+	cursor: pointer;
+}
+
+.THIS .break-line {
+	word-wrap: break-word;
+    white-space: normal;
+}

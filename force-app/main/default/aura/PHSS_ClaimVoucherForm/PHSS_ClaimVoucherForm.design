@@ -1,0 +1,11 @@
+<design:component>
+	<design:attribute name="firstNameLabel" />
+    <design:attribute name="lastNameLabel" />
+    <design:attribute name="emailLabel" />
+    <design:attribute name="phoneLabel" />
+    <design:attribute name="voucherLabel" />
+    <design:attribute name="registerBtnLabel" />
+    <design:attribute name="emailErrorMsg" />
+    <design:attribute name="phoneErrorMsg" />
+    <design:attribute name="voucherErrorMsg"  />
+ </design:component>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fill_billing_Details_before_Saving_Acc</fullName>
+    <active>true</active>
+    <description>make billing Address required for Account with PHSS channel &#39;RCS Retail&#39;</description>
+    <errorConditionFormula>AND( 
+INCLUDES(PHSS_Channel__c, &quot;RCS Retail&quot;), 
+OR(ISBLANK(BillingStreet), 
+ISBLANK(BillingCity), 
+ISBLANK(BillingState), 
+ISBLANK(BillingPostalCode), 
+ISBLANK(BillingCountry) 
+),
+$User.Id &lt;&gt; &quot;005d0000005I9dx&quot;, /*Mike A Smith */
+$User.Id &lt;&gt; &quot;0050V000006ld8r&quot;, /*Jatin Acharya */
+$User.Id &lt;&gt; &quot;005d00000040uDS&quot; /*Gita Borovsky */ 
+)</errorConditionFormula>
+    <errorMessage>Fill billing details before saving Account with PHSS Channel Type RCS Retail.</errorMessage>
+</ValidationRule>

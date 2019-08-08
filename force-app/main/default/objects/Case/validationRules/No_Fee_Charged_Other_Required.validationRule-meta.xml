@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Fee_Charged_Other_Required</fullName>
+    <active>true</active>
+    <description>If case Sub Type is selected with  Individual Certificate - Initial Request - No Fee Charged or Individual Certificate - Replacement - No Fee Charged, &quot;Other&quot; field is required.</description>
+    <errorConditionFormula>AND(
+
+Or(
+ISPICKVAL( Case_Sub_Type__c , &quot;Individual Certificate - Initial Request - No Fee Charged&quot;),
+
+ISPICKVAL(Case_Sub_Type__c, &quot;Individual Certificate - Replacement - No Fee Charged&quot;)
+)
+, 
+
+ISBLANK( Other__c ),
+ 
+$Setup.Validation_Rules__c.Bypass_Rules__c = False
+
+)</errorConditionFormula>
+    <errorDisplayField>Other__c</errorDisplayField>
+    <errorMessage>Other field needs to be populated if Case Sub-Type = &quot;Individual Certificate - Initial Request - No Fee Charged&quot; or &quot;Individual Certificate - Replacement - No Fee Charged&quot;</errorMessage>
+</ValidationRule>

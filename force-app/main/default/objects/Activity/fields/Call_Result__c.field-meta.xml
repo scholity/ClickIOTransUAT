@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Call_Result__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Result of the call</inlineHelpText>
+    <label>Call Result</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Open - Not Yet Worked</fullName>
+                <default>false</default>
+                <label>Open - Not Yet Worked</label>
+            </value>
+            <value>
+                <fullName>Opportunity</fullName>
+                <default>false</default>
+                <label>Opportunity</label>
+            </value>
+            <value>
+                <fullName>Sale</fullName>
+                <default>false</default>
+                <label>Sale</label>
+            </value>
+            <value>
+                <fullName>No Sale</fullName>
+                <default>false</default>
+                <label>No Sale</label>
+            </value>
+            <value>
+                <fullName>No Opportunity</fullName>
+                <default>false</default>
+                <label>No Opportunity</label>
+            </value>
+            <value>
+                <fullName>Not Interested - No Reason Given</fullName>
+                <default>false</default>
+                <label>Not Interested - No Reason Given</label>
+            </value>
+            <value>
+                <fullName>Aged Pipeline Lead</fullName>
+                <default>false</default>
+                <label>Aged Pipeline Lead</label>
+            </value>
+            <value>
+                <fullName>Cancellation</fullName>
+                <default>false</default>
+                <label>Cancellation</label>
+            </value>
+            <value>
+                <fullName>Duplicate</fullName>
+                <default>false</default>
+                <label>Duplicate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

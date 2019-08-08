@@ -1,0 +1,45 @@
+<!--
+ - Created by dgajwani on 10/1/18.
+ -->
+
+<aura:component description="phss_cc_PODetail">
+
+    <!--Stored Payments from Server-->
+    <aura:attribute name="storedPaymentList" type="List"/>
+    <aura:attribute name="storedPaymentMap" type="Map"/>
+    <aura:attribute name="storedPaymentSfid" type="String"/>
+
+    <aura:attribute name="storedPayment" type="Map"/>
+    <aura:attribute name="isSelected" type="Boolean"/>
+
+    <!--Initializer-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!--Events to maintain cart-->
+    <aura:registerEvent name="sendSelectedPO" type="c:phss_cc_SelectedPOEvent"/>
+
+    <div class="slds-grid slds-border--bottom slds-text-heading--small">
+        <div class="slds-size_1-of-6 slds-text-align_left slds-p-bottom--medium slds-p-top--medium">
+            <lightning:formattedText value="{!v.storedPayment.name}"/>
+        </div>
+        <div class="slds-size_1-of-6 slds-text-align_left slds-p-bottom--medium slds-p-top--medium">
+            <lightning:formattedDateTime value="{!v.storedPayment.poStartDate}"/>
+        </div>
+        <div class="slds-size_1-of-6 slds-text-align_left slds-p-bottom--medium slds-p-top--medium">
+            <lightning:formattedDateTime value="{!v.storedPayment.poEndDate}"/>
+        </div>
+        <div class="slds-size_1-of-6 slds-text-align_right slds-p-bottom--medium slds-p-top--medium">
+            <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                       currencyDisplayAs="symbol" value="{!v.storedPayment.originalPOAmount}"/>
+        </div>
+        <div class="slds-size_1-of-6 slds-text-align_right slds-p-bottom--medium slds-p-top--medium">
+            <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                       currencyDisplayAs="symbol" value="{!v.storedPayment.remainingPOAmount}"/>
+        </div>
+        <div class="slds-size_1-of-6 slds-align_absolute-center">
+            <lightning:input class="slds-m-left--medium" type="radio" label=" "
+                             checked="{!v.isSelected}" onchange="{!c.handleSelected}"/>
+        </div>
+    </div>
+
+</aura:component>

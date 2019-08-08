@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Billing_State_in_US</fullName>
+    <active>true</active>
+    <description>Validates that the account Billing State/Province is a valid two-character
+abbreviation if Billing Country is US, USA, or blank.</description>
+    <errorConditionFormula>AND( 
+$User.ProfileId = &#39;00ed0000000IUFH&#39;, 
+RecordTypeId != &#39;012d000000098Wt&#39;, 
+$Setup.Validation_Rules__c.Bypass_Rules__c = false, 
+OR(BillingCountry = &quot;US&quot;, BillingCountry=&quot;USA&quot;, 
+LEN(BillingCountry)=0), 
+OR(LEN(BillingState) &lt; 2, 
+NOT(CONTAINS(&quot;AL:AK:AZ:AR:CA:CO:CT:DE:DC:FL:GA:GU:HI:ID:&quot; &amp; 
+&quot;IL:IN:IA:KS:KY:LA:ME:MD:MA:MI:MN:MS:MO:MT:NE:NV:NH:&quot; &amp; 
+&quot;NJ:NM:NY:NC:ND:OH:OK:OR:PA:PR:RI:SC:SD:TN:TX:UT:VI:VT:VA:&quot; &amp; 
+&quot;WA:WV:WI:WY&quot;, BillingState))))</errorConditionFormula>
+    <errorDisplayField>BillingState</errorDisplayField>
+    <errorMessage>A valid two-letter state code is required</errorMessage>
+</ValidationRule>

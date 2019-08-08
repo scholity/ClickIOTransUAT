@@ -1,0 +1,25 @@
+<aura:component abstract="true" extensible="true" controller="cc_lx_CloudCrazeComponentControllerV2" access="global">
+
+<ltng:require
+    styles="{!$Resource.cclxrep__CC_Lightning + '/css/lx.min.css'}"
+    scripts="{!join(',',$Resource.cclxrep__CC_Lightning + '/js/jquery-3.3.1.js',
+                        $Resource.cclxrep__CC_Lightning + '/js/spin.min.js',
+                        $Resource.cclxrep__CC_Lightning + '/js/underscore-min.js')}"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="prefix" type="String"/>
+	<aura:attribute name="networkUrlPrefix" type="String"/>
+	<aura:attribute name="queryString" type="String" />
+    
+    <!-- On init of the component, the recordid and componentOnObject is passed to apex method 
+getInitialContext and the return values are set in this object.
+	Whenever a call is made to apex methods, this context is passed to the method-->
+    <aura:attribute name="componentOnObject" type="String"  />
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="context" type="Object" />
+    
+    <div class="cc-lx">
+        {!v.body}
+    </div>
+
+</aura:component>

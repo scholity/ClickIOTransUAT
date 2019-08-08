@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Billing_Con_City_mismatch_RCSPO</fullName>
+    <active>true</active>
+    <description>Billing Contact City in Case is not matching with Account billing City.</description>
+    <errorConditionFormula>AND( ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),
+	RecordType.Name= &quot;RCS PO&quot;, 
+	!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE, 
+	(LOWER(Billing_City__c) &lt;&gt; LOWER(Account.BillingCity))
+)</errorConditionFormula>
+    <errorDisplayField>Billing_City__c</errorDisplayField>
+    <errorMessage>Billing City is not matching with Account billing City.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Courses__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Grant covers course fees</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check if Grant covers course fees</inlineHelpText>
+    <label>Courses</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

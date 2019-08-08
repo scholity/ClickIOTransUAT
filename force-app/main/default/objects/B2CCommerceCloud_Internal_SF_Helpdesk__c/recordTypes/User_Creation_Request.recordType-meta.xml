@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>User_Creation_Request</fullName>
+    <active>true</active>
+    <description>User Creation or Modification Request for B2C Commerce Cloud</description>
+    <label>User Creation or Modification Request</label>
+    <picklistValues>
+        <picklist>B2CCommerceCloud_Instance__c</picklist>
+        <values>
+            <fullName>Development Instance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Production Instance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sandbox Instance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Staging Instance</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Request_Status__c</picklist>
+        <values>
+            <fullName>Awaiting Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Awaiting Requester Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Created</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Training_Services_Business_Type__c</picklist>
+        <values>
+            <fullName>Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other %E2%80%93 Please Specify in Comments</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Management</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Delivery</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TSC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendor</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>User_Request_Type__c</picklist>
+        <values>
+            <fullName>New User</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>User Modification</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

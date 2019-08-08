@@ -1,0 +1,9 @@
+<design:component >
+	    <design:attribute name="header" label="Certification Header" default="My Certifications"/>
+    	<design:attribute name="noRecordsMessage" label="No Records Message" default="No records found"/>    
+    	<design:attribute name="renewMessage" label="Renew Message" default="! = Certification soon to expire"/>        
+	    <design:attribute name="showAll" label="Show All" default="True"/>
+    	<design:attribute name="numberOfElements" label="Number of Elements" default="5"/>    
+    	<design:attribute name="sortColumn" label="Sort Column" default="Expired_On__c" datasource="Expired_On__c, Acquired_On__c"/>    
+    	<design:attribute name="sortOrderAscending" label="Sort Ascending" default="True"/>            
+</design:component>

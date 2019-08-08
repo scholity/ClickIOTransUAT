@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>Name</field>
+        <field>Owner</field>
+        <field>Content</field>
+        <field>Parent</field>
+        <field>Approval_Type__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>Social_Manager_Approval_Queue</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <label>Offensive Words</label>
+        <name>Offensive_Words</name>
+    </approvalStep>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <formula>AND(IsOutbound =TRUE,
+ISPICKVAL(Provider,&quot;Facebook&quot;), 
+OR(
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;ass&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;asslick&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;asshole&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;asskisser&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;asswipe&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;balls&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;beastial&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;beastiality&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;beastility&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;beaver&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bestial&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bestiality&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bitch&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bitcher&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bitchers&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bitchin&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bitching&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;blowjob&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bonehead&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;boner&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;browneye&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;browntown&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bucket&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cunt&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bullshit&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bum&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;bung&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;butch&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;butt&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;buttface&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;buttfuck&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;buttfucker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;butthead&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;butthole&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;buttpicker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;clit&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cobia&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cock&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cocks&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cocksuck&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cocksucked&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cocksucker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cocksucking&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cocksucks&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cooter&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;crap&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cum&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cummer&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cumming&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cums&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cumshot&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cunilingus&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cunillingus&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cunnilingus&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cuntlick&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cuntlicker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cuntlicking&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cunts&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cyberfuc&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cyberfuck&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cyberfucked&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cyberfucker&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cyberfuckers&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;cyberfucking&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dick&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dike&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dildo&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dildos&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dink&quot;),
+CONTAINS(LOWER(&quot; &quot;&amp; Content &amp; &quot; &quot;),&quot;dinks&quot;)))</formula>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Social_Approved</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Social_Rejected</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Social_Rejected_Post_Email</name>
+            <type>Alert</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Social_In_Approval</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Social_Offensive_words_approval_type</name>
+            <type>FieldUpdate</type>
+        </action>
+    </initialSubmissionActions>
+    <label>Social- Offensive words</label>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>false</showApprovalHistory>
+</ApprovalProcess>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Check_Address</fullName>
+    <active>true</active>
+    <description>When Invoice Case Sub Type Is &quot;Missing Payment&quot; you must provide Check Address</description>
+    <errorConditionFormula>AND( 
+RecordType.DeveloperName = &#39;Invoicing&#39;,
+NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)),
+ISPICKVAL( Dispute_Issue__c, &#39;Missing Payment&#39;), 
+ISBLANK(Payment_Sent_To_Address__c ),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE  
+)</errorConditionFormula>
+    <errorDisplayField>Payment_Sent_To_Address__c</errorDisplayField>
+    <errorMessage>When Invoice Case Sub Type is &quot;Missing Payment&quot; you must Enter Check Address</errorMessage>
+</ValidationRule>

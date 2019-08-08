@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Network xmlns="http://soap.sforce.com/2006/04/metadata">
+    <allowInternalUserLogin>false</allowInternalUserLogin>
+    <allowMembersToFlag>false</allowMembersToFlag>
+    <changePasswordTemplate>All/PHSS_Community_Change_Password</changePasswordTemplate>
+    <communityRoles/>
+    <disableReputationRecordConversations>true</disableReputationRecordConversations>
+    <emailFooterText>© 2019 The American National Red Cross</emailFooterText>
+    <emailSenderAddress>snehra@salesforce.com</emailSenderAddress>
+    <emailSenderName>American Red Cross</emailSenderName>
+    <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
+    <enableDirectMessages>true</enableDirectMessages>
+    <enableGuestChatter>false</enableGuestChatter>
+    <enableGuestFileAccess>true</enableGuestFileAccess>
+    <enableInvitation>false</enableInvitation>
+    <enableKnowledgeable>false</enableKnowledgeable>
+    <enableMemberVisibility>true</enableMemberVisibility>
+    <enableNicknameDisplay>false</enableNicknameDisplay>
+    <enablePrivateMessages>false</enablePrivateMessages>
+    <enableReputation>false</enableReputation>
+    <enableShowAllNetworkSettings>false</enableShowAllNetworkSettings>
+    <enableSiteAsContainer>true</enableSiteAsContainer>
+    <enableTalkingAboutStats>true</enableTalkingAboutStats>
+    <enableTopicAssignmentRules>true</enableTopicAssignmentRules>
+    <enableTopicSuggestions>false</enableTopicSuggestions>
+    <enableUpDownVote>true</enableUpDownVote>
+    <forgotPasswordTemplate>All/PHSS_ICommunity_Forgot_Password</forgotPasswordTemplate>
+    <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
+    <navigationLinkSet>
+        <navigationMenuItem>
+            <label>Classes</label>
+            <position>1</position>
+            <publiclyAvailable>true</publiclyAvailable>
+            <subMenu>
+                <navigationMenuItem>
+                    <label>Become Certified</label>
+                    <position>0</position>
+                    <publiclyAvailable>true</publiclyAvailable>
+                    <target>/become-certified</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Classes I&#39;m Taking</label>
+                    <position>1</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/my-learning</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Classes I&#39;m Teaching</label>
+                    <position>2</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/classesteaching</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Course Materials</label>
+                    <position>3</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/course-materials</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>My Feedback</label>
+                    <position>4</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/my-feedback</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Take Another Class</label>
+                    <position>5</position>
+                    <publiclyAvailable>true</publiclyAvailable>
+                    <target>https://www.redcross.org/take-a-class</target>
+                    <type>ExternalLink</type>
+                </navigationMenuItem>
+            </subMenu>
+            <type>MenuLabel</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <label>Resources</label>
+            <position>2</position>
+            <publiclyAvailable>true</publiclyAvailable>
+            <subMenu>
+                <navigationMenuItem>
+                    <label>Administrative Information</label>
+                    <position>0</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/administration-information</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>How-To Information &amp; Videos</label>
+                    <position>1</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/how-to-information-and-videos</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>About the Science</label>
+                    <position>2</position>
+                    <publiclyAvailable>true</publiclyAvailable>
+                    <target>/science</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Account Affliliation</label>
+                    <position>3</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/account-management</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Manage Instructors</label>
+                    <position>4</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/verify-certifications</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Reports</label>
+                    <position>5</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/report/Report/Recent</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Student Detail Templates</label>
+                    <position>6</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/student-templates</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Learn to Swim/Safety Outreach</label>
+                    <position>7</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/learn-to-swim</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <defaultListViewId>All</defaultListViewId>
+                    <label>Centennial Campaign</label>
+                    <position>8</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>Centennial_Campaign__c</target>
+                    <type>SalesforceObject</type>
+                </navigationMenuItem>
+            </subMenu>
+            <type>MenuLabel</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <label>Instructor Lifecycle</label>
+            <position>3</position>
+            <publiclyAvailable>true</publiclyAvailable>
+            <subMenu>
+                <navigationMenuItem>
+                    <label>Become an Instructor</label>
+                    <position>0</position>
+                    <publiclyAvailable>true</publiclyAvailable>
+                    <target>/become-an-instructor</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Become a Provider</label>
+                    <position>1</position>
+                    <publiclyAvailable>true</publiclyAvailable>
+                    <target>/become-a-provider</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Recertification</label>
+                    <position>2</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/recertification</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Program Updates</label>
+                    <position>3</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/program-updates</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Bridging to Become an Instructor</label>
+                    <position>4</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/bridging</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Instructor Trainer Candidates</label>
+                    <position>5</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/instructor-trainer-candidates</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Instructor Candidate Resources</label>
+                    <position>6</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/instructor-candidate-resources</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Candidate Reources</label>
+                    <position>7</position>
+                    <publiclyAvailable>true</publiclyAvailable>
+                    <target>/candidate-resources</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+            </subMenu>
+            <type>MenuLabel</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <label>Forum</label>
+            <position>4</position>
+            <publiclyAvailable>false</publiclyAvailable>
+            <target>/forum</target>
+            <type>InternalLink</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <label>My Certification</label>
+            <position>5</position>
+            <publiclyAvailable>false</publiclyAvailable>
+            <target>/achievements-and-certificates</target>
+            <type>InternalLink</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <label>News</label>
+            <position>6</position>
+            <publiclyAvailable>false</publiclyAvailable>
+            <target>/recent-news</target>
+            <type>InternalLink</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <label>Questions?</label>
+            <position>7</position>
+            <publiclyAvailable>true</publiclyAvailable>
+            <target>/questions</target>
+            <type>InternalLink</type>
+        </navigationMenuItem>
+    </navigationLinkSet>
+    <networkMemberGroups>
+        <profile>Admin</profile>
+        <profile>SB PHSS-IC-Community Plus Login</profile>
+        <profile>SB PHSS-Partner-Community Plus Login</profile>
+        <profile>Learner Community Profile</profile>
+        <profile>SB ARC Business User Profile</profile>
+        <profile>SB ARC %2F TSC Manager</profile>
+        <profile>SB ARC %2F TSC Agent</profile>
+        <profile>SB ARC SD Instructor</profile>
+    </networkMemberGroups>
+    <networkPageOverrides>
+        <changePasswordPageOverrideSetting>Standard</changePasswordPageOverrideSetting>
+        <forgotPasswordPageOverrideSetting>Designer</forgotPasswordPageOverrideSetting>
+        <homePageOverrideSetting>Designer</homePageOverrideSetting>
+        <loginPageOverrideSetting>Designer</loginPageOverrideSetting>
+        <selfRegProfilePageOverrideSetting>Designer</selfRegProfilePageOverrideSetting>
+    </networkPageOverrides>
+    <picassoSite>Red_Cross_Learning_Center_C</picassoSite>
+    <selfRegistration>true</selfRegistration>
+    <sendWelcomeEmail>true</sendWelcomeEmail>
+    <site>Red_Cross_Learning_Center</site>
+    <status>Live</status>
+    <tabs>
+        <defaultTab>home</defaultTab>
+        <standardTab>Chatter</standardTab>
+    </tabs>
+    <urlPathPrefix>learner</urlPathPrefix>
+    <welcomeTemplate>All/PHSS_Comm_Welcome_Email</welcomeTemplate>
+</Network>

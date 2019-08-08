@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restriction_in_Editing_RCSPO_Case</fullName>
+    <active>true</active>
+    <description>Only certain user and certain profiles can Edit fields in RCSPO.</description>
+    <errorConditionFormula>AND( 
+OR( 
+$Profile.Name = &quot;ARC / TSC Agent&quot;, 
+$Profile.Name = &quot;ARC / TSC Manager&quot;, 
+$User.Id = &quot;005d00000040ghi&quot; /*Candida Barbosa (Only to Add Comments for RCSPO Cases)*/, 
+$User.Id = &quot;005d0000000Tuxk&quot; /*Pamela Malene (Only to Add Comments for RCSPO Cases)*/), 
+RecordType.Name = &quot;RCS PO&quot;, 
+!ISNEW(), 
+OR(ISCHANGED(Company_Name__c), 
+ISCHANGED(AccountId), 
+ISCHANGED(ContactId), 
+ISCHANGED(Customer_First_name__c), 
+ISCHANGED(Customer_Last_name__c), 
+ISCHANGED(Usage__c), 
+ISCHANGED(Billing_Contact__c), 
+ISCHANGED(Billing_Contact_First_Name__c), 
+ISCHANGED(Billing_Contact_Last_Name__c), 
+ISCHANGED(Billing_Contact_Email__c), 
+ISCHANGED(Billing_Address_1__c), 
+ISCHANGED(Billing_Address_2__c), 
+ISCHANGED(Billing_City__c), 
+ISCHANGED(Billing_State__c), 
+ISCHANGED(Billing_Zip__c), 
+ISCHANGED(Billing_Country_Name__c), 
+ISCHANGED(Billing_Country_Code__c), 
+ISCHANGED(Shipping_Contact__c), 
+ISCHANGED(Shipping_Contact_First_Name__c), 
+ISCHANGED(Shipping_Contact_Last_Name__c), 
+ISCHANGED(Shipping_Contact_Email__c), 
+ISCHANGED(Shipping_Address_1__c), 
+ISCHANGED(Shipping_Address_2__c), 
+ISCHANGED(Shipping_City__c), 
+ISCHANGED(Shipping_State__c), 
+ISCHANGED(Shipping_Zip__c), 
+ISCHANGED(Shipping_Country_Name__c), 
+ISCHANGED(Shipping_Country_Code__c), 
+ISCHANGED(Terms__c), 
+ISCHANGED(Invoice_Delivery__c), 
+ISCHANGED(External_LOGIN_EMAIL__c), 
+ISCHANGED(Invoice_delivery_Email__c), 
+ISCHANGED(PO_Number__c), 
+ISCHANGED(PO_Amount__c), 
+ISCHANGED(PO_Start_Date__c), 
+ISCHANGED(PO_End_Date__c), 
+ISCHANGED(IsNewRecord__c), 
+ISCHANGED(T_C_s_Confirmation_Date__c), 
+ISCHANGED(Type), 
+ISCHANGED(Case_Sub_Type__c), 
+ISCHANGED(Origin), 
+ISCHANGED(Priority), 
+ISCHANGED(Channel__c), 
+ISCHANGED(Contact_Address_Detail__c), 
+ISCHANGED(Site_Name1__c), 
+ISCHANGED(CFS_Error_message__c), 
+ISCHANGED(Error_Sending_to_CFS__c), 
+ISCHANGED(Copy_Billing_to_Shipping__c), 
+ISCHANGED(Sent_to_CFS__c), 
+ISCHANGED(Shipping_Contact_Phone__c), 
+ISCHANGED(Billing_Contact_Phone__c) 
+) 
+)</errorConditionFormula>
+    <errorMessage>User can only change status, Queue, and comments on the case.</errorMessage>
+</ValidationRule>

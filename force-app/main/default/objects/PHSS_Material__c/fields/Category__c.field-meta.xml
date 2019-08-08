@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category__c</fullName>
+    <externalId>false</externalId>
+    <label>Category</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Instructor Bulletin</fullName>
+                <default>false</default>
+                <label>Instructor Bulletin</label>
+            </value>
+            <value>
+                <fullName>Instructor Materials</fullName>
+                <default>false</default>
+                <label>Instructor Materials</label>
+            </value>
+            <value>
+                <fullName>Supporting Materials</fullName>
+                <default>false</default>
+                <label>Supporting Materials</label>
+            </value>
+            <value>
+                <fullName>Participant Materials</fullName>
+                <default>false</default>
+                <label>Participant Materials</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

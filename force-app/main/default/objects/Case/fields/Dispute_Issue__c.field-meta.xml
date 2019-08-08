@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Dispute_Issue__c</fullName>
+    <description>Depends on Service Case Type - Invoicing. Second case sub type.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select the main reason the customer is calling.</inlineHelpText>
+    <label>Invoice Case Sub Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ACH Detail</fullName>
+                <default>false</default>
+                <label>ACH Detail</label>
+            </value>
+            <value>
+                <fullName>ACH Request</fullName>
+                <default>false</default>
+                <label>ACH Request</label>
+            </value>
+            <value>
+                <fullName>AR Exception</fullName>
+                <default>false</default>
+                <label>AR Exception</label>
+            </value>
+            <value>
+                <fullName>Bad Address</fullName>
+                <default>false</default>
+                <label>Bad Address</label>
+            </value>
+            <value>
+                <fullName>Billed To Chapter</fullName>
+                <default>false</default>
+                <label>Billed To Chapter</label>
+            </value>
+            <value>
+                <fullName>Collections</fullName>
+                <default>false</default>
+                <label>Collections</label>
+            </value>
+            <value>
+                <fullName>Customer Account Maintenance</fullName>
+                <default>false</default>
+                <label>Customer Account Maintenance</label>
+            </value>
+            <value>
+                <fullName>Customer Service Credit</fullName>
+                <default>false</default>
+                <label>Customer Service Credit</label>
+            </value>
+            <value>
+                <fullName>Duplicate Invoice</fullName>
+                <default>false</default>
+                <label>Duplicate Invoice</label>
+            </value>
+            <value>
+                <fullName>Grants</fullName>
+                <default>false</default>
+                <label>Grants</label>
+            </value>
+            <value>
+                <fullName>Invoice Delivery Method</fullName>
+                <default>false</default>
+                <label>Invoice Delivery Method</label>
+            </value>
+            <value>
+                <fullName>Invoice Payments</fullName>
+                <default>false</default>
+                <label>Invoice Payments</label>
+            </value>
+            <value>
+                <fullName>Invoice Presentation</fullName>
+                <default>false</default>
+                <label>Invoice Presentation</label>
+            </value>
+            <value>
+                <fullName>Request Invoicing Privileges</fullName>
+                <default>false</default>
+                <label>Invoicing Privileges</label>
+            </value>
+            <value>
+                <fullName>Manual Billing Request</fullName>
+                <default>false</default>
+                <label>Manual Billing Request</label>
+            </value>
+            <value>
+                <fullName>Misapplied Payment</fullName>
+                <default>false</default>
+                <label>Misapplied Payment</label>
+            </value>
+            <value>
+                <fullName>Misdirected Deposit</fullName>
+                <default>false</default>
+                <label>Misdirected Deposit</label>
+            </value>
+            <value>
+                <fullName>Missing Payment</fullName>
+                <default>false</default>
+                <label>Missing Payment</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Pay Invoice</fullName>
+                <default>false</default>
+                <label>Pay Invoice</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Refund Credit Balance</fullName>
+                <default>false</default>
+                <label>Refund Credit Balance</label>
+            </value>
+            <value>
+                <fullName>Request Copy of Statement/Invoice</fullName>
+                <default>false</default>
+                <label>Request Billing Docs</label>
+            </value>
+            <value>
+                <fullName>Retail Collections</fullName>
+                <default>false</default>
+                <label>Retail Collections</label>
+            </value>
+            <value>
+                <fullName>Special Invoicing</fullName>
+                <default>false</default>
+                <label>Special Invoicing</label>
+            </value>
+            <value>
+                <fullName>Vendor Forms</fullName>
+                <default>false</default>
+                <label>Vendor Forms</label>
+            </value>
+            <value>
+                <fullName>Wrong Organization</fullName>
+                <default>false</default>
+                <label>Wrong Organization</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>ACH Detail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>ACH Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>AR Exception</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Bad Address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Collections</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Customer Account Maintenance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Customer Service Credit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Duplicate Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Invoice Delivery Method</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Invoice Payments</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Invoice Presentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Request Invoicing Privileges</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Manual Billing Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Misapplied Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Missing Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Pay Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Refund Credit Balance</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Request Copy of Statement/Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Vendor Forms</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoicing</controllingFieldValue>
+            <valueName>Wrong Organization</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

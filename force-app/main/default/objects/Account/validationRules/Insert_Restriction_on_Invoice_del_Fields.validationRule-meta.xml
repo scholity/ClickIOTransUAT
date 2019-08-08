@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Insert_Restriction_on_Invoice_del_Fields</fullName>
+    <active>false</active>
+    <description>Prevents inserting Invoice delivery fields, while creating Account if the user does not have permission.</description>
+    <errorConditionFormula>AND(ISNEW(), !$Permission.Permission_for_three_fields_in_Account, 
+OR(!ISPICKVAL(Invoice_Delivery_Type__c, &#39;&#39;), !ISBLANK(Inv_Del_Assign_Date__c), !ISBLANK(Invoice_delivery_Email__c)), $Profile.Name != &quot;System Administrator&quot;)</errorConditionFormula>
+    <errorMessage>You do not have permission to insert Invoice Delivery Method, Inv Del Assign Date or Invoice Delivery Email.</errorMessage>
+</ValidationRule>

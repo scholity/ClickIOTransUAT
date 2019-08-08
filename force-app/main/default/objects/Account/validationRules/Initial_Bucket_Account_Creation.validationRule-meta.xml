@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Initial_Bucket_Account_Creation</fullName>
+    <active>true</active>
+    <description>Bucket accounts that are newly created must be marked as having no spots taken</description>
+    <errorConditionFormula>ISNEW() &amp;&amp; RecordType.Id ==  $Setup.Bucket_Account_Settings__c.Bucket_Account_RecordTypeID__c &amp;&amp;  Spots_Taken__c != 0</errorConditionFormula>
+    <errorDisplayField>Spots_Taken__c</errorDisplayField>
+    <errorMessage>Bucket accounts that are newly created must be marked as having no spots taken</errorMessage>
+</ValidationRule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_Community_Preview__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field should be checked on all records that point to non-standard PDF files ( like the Adobe Presenter PDF files ) as well as any really large files that would take a long time to load into the previewer.</description>
+    <externalId>false</externalId>
+    <label>Disable Community Preview</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

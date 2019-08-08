@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Result_Detail_1__c</fullName>
+    <externalId>false</externalId>
+    <label>Opportunity Result Detail 1</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Opportunity_Result__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Being Worked</fullName>
+                <default>false</default>
+                <label>Being Worked</label>
+            </value>
+            <value>
+                <fullName>Sent Proposal</fullName>
+                <default>false</default>
+                <label>Sent Proposal</label>
+            </value>
+            <value>
+                <fullName>Contract</fullName>
+                <default>false</default>
+                <label>Contract</label>
+            </value>
+            <value>
+                <fullName>Closed Failed to Connect</fullName>
+                <default>false</default>
+                <label>Closed Failed to Connect</label>
+            </value>
+            <value>
+                <fullName>ARC Community</fullName>
+                <default>false</default>
+                <label>ARC Community</label>
+            </value>
+            <value>
+                <fullName>ARC AP</fullName>
+                <default>false</default>
+                <label>ARC AP</label>
+            </value>
+            <value>
+                <fullName>Competitor</fullName>
+                <default>false</default>
+                <label>Competitor</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Date Availability</fullName>
+                <default>false</default>
+                <label>Date Availability</label>
+            </value>
+            <value>
+                <fullName>Local Rep</fullName>
+                <default>false</default>
+                <label>Local Rep</label>
+            </value>
+            <value>
+                <fullName>Not Interested - No Reason Given</fullName>
+                <default>false</default>
+                <label>Not Interested - No Reason Given</label>
+            </value>
+            <value>
+                <fullName>Escalated</fullName>
+                <default>false</default>
+                <label>Escalated</label>
+            </value>
+            <value>
+                <fullName>Buyer&#39;s Remorse</fullName>
+                <default>false</default>
+                <label>Buyer&#39;s Remorse</label>
+            </value>
+            <value>
+                <fullName>Instructor No Show</fullName>
+                <default>false</default>
+                <label>Instructor No Show</label>
+            </value>
+            <value>
+                <fullName>No Contact - Follow Up</fullName>
+                <default>false</default>
+                <label>No Contact - Follow Up</label>
+            </value>
+            <value>
+                <fullName>Price - Bugdet</fullName>
+                <default>false</default>
+                <label>Price - Bugdet</label>
+            </value>
+            <value>
+                <fullName>NAN</fullName>
+                <default>false</default>
+                <label>NAN</label>
+            </value>
+            <value>
+                <fullName>SD Issue</fullName>
+                <default>false</default>
+                <label>SD Issue</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Pricing Agreement</fullName>
+                <default>false</default>
+                <label>Pricing Agreement</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Being Worked</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Sent Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Open</controllingFieldValue>
+            <valueName>Contract</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Closed Failed to Connect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>ARC Community</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>ARC AP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Date Availability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <controllingFieldValue>Cancellation</controllingFieldValue>
+            <valueName>Local Rep</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Not Interested - No Reason Given</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Escalated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>SD Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <controllingFieldValue>Cancellation</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Pricing Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation</controllingFieldValue>
+            <valueName>Buyer&#39;s Remorse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation</controllingFieldValue>
+            <valueName>Instructor No Show</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation</controllingFieldValue>
+            <valueName>No Contact - Follow Up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation</controllingFieldValue>
+            <valueName>Price - Bugdet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cancellation</controllingFieldValue>
+            <valueName>NAN</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

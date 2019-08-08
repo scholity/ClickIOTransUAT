@@ -1,0 +1,121 @@
+<apex:page Controller="PHSS_GeneratePDFController" standardStylesheets="false" applyHtmlTag="false" showHeader="false" renderAs="PDF">    
+    <!--{!PDFData}-->
+ <head>
+        <style type="text/CSS">
+            body{
+                font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;         
+            }
+
+            .center{
+                text-align:center;
+            }
+            
+            .table-bordered {
+                border: 1px solid #000;
+                border-collapse : collapse;
+                font-size : .7em;
+            }
+
+
+           thead>tr>th {
+                vertical-align: bottom;
+                border: 1px solid #000;
+                border-spacing: 0;
+                text-align:center;
+                border-collapse: collapse;
+                background : #e31b2e;
+                color:white;
+            }
+
+            td {
+                vertical-align: bottom;
+                border: 1px solid #000;
+                border-spacing: 0;
+                border-collapse: collapse;
+                text-align:center;
+            }
+
+            .header>td{
+                font-weight:bold;
+                background : #c4c4c4;               
+            }
+            h2{
+                font-weight:bold;
+                font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;         
+                font-size : .7em;          
+            }
+            .echoArea>td{
+                padding:10px;
+            }
+
+            @page {
+                            size: letter;
+                            margin: .5in .5in .5in .5in;
+                            
+                            @bottom-center {
+                                content: "Page " counter(page) " of " counter(pages);
+                            }
+                            
+                        
+                        }
+                        
+                        .page-break {
+                            display:block;
+                            page-break-after:always;
+                        }
+                        
+                        body {
+                            font-family: Arial Unicode MS;
+                        }
+
+        </style>
+    </head>
+    
+    <body>
+        <apex:image url="{!$Resource.PHSS_RedCrossLogo}" width="200" height="75"/>
+        <h4> Red Cross Certificate Mastery List</h4>
+        <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    <th>Instructor(s)</th>
+                    <th>Class</th>
+                    <th>Class Id</th>
+                    <th>Class Date</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td> {!IF(jsonRows.size > 0, jsonRows[0].ClassInstructor, '')}</td>
+                <td> {!IF(jsonRows.size > 0, jsonRows[0].ClassName, '')}</td>
+                <td> {!IF(jsonRows.size > 0, jsonRows[0].ClassId, '')}</td>                
+                <td> {!IF(jsonRows.size > 0, jsonRows[0].ClassDate, '')}  </td>
+                <td> {!IF(jsonRows.size > 0, jsonRows[0].ClassTime, '')}</td>      
+            </tbody>
+        </table>      
+        
+        <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>eMail</th>
+                    <th>Evaluation Results</th>
+                    <th>Reason</th>
+                    <th>Additional Information</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!jsonRows}" var="tableRow" >
+                    <tr>
+                        <td>{!tableRow.FirstName}</td>
+                        <td>{!tableRow.LastName}</td>
+                        <td>{!tableRow.Email}</td>
+                        <td>{!tableRow.Evaluation_Result}</td>
+                        <td>{!tableRow.Grade_Reason}</td>
+                        <td>{!tableRow.Grade_Additional_Info}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </body>   
+</apex:page>

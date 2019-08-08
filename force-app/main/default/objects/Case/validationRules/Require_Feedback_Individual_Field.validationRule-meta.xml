@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Feedback_Individual_Field</fullName>
+    <active>true</active>
+    <description>This validation rule is to make the feedback individual field required when customer feedback is selected from the type field.</description>
+    <errorConditionFormula>OR(
+   AND(
+       ISPICKVAL( Case_Sub_Type__c, &quot;Compliment&quot;),
+       ISBLANK(Feedback_Individual_Name__c),
+       $Setup.Validation_Rules__c.Bypass_Rules__c = FALSE ),
+   AND(
+       ISPICKVAL( Case_Sub_Type__c, &quot;Complaints&quot;),
+       ISBLANK( Feedback_Individual_Name__c),
+       $Setup.Validation_Rules__c.Bypass_Rules__c = FALSE )
+)</errorConditionFormula>
+    <errorDisplayField>Feedback_Individual_Name__c</errorDisplayField>
+    <errorMessage>Please fill in the Feedback Individual Name field because you selected &quot;Complaint&quot; of &quot;Compliment&quot; as the Case Sub-Type.</errorMessage>
+</ValidationRule>

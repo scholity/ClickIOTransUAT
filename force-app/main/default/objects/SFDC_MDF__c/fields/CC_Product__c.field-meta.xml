@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CC_Product__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Course to be registered</description>
+    <externalId>false</externalId>
+    <label>CC Product</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>ccrz__E_Product__c.CC_Category__r.Name</field>
+            <operation>equals</operation>
+            <value>Caregiving Scheduling</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>ccrz__E_Product__c</referenceTo>
+    <relationshipLabel>Grant Requests</relationshipLabel>
+    <relationshipName>Grant_Requests</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Director_Escalation</fullName>
+    <active>true</active>
+    <description>This validation rule is to not allow a user to escalate to a service director if there is no State chosen on the contact record. 
+If the SDD region field does says &quot;no region&quot; do not allow a user to check the &quot;Escalate to SDD&quot; checkbox.</description>
+    <errorConditionFormula>AND( Escalate_to_SDD__c , 
+    SDD_Sector__c = &quot;No Region&quot;)</errorConditionFormula>
+    <errorMessage>The contact does not have a Mailing State/Province filled in. You must have that field filled out in order to escalate to a delivery director.</errorMessage>
+</ValidationRule>

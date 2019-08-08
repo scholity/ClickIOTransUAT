@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="by this event we are pass the selected sObject(lookup list record) in the parent component">
+    <aura:attribute name="instanceID" type="String" />
+    <aura:attribute name="SelectedValue" type="sObject" />
+    <aura:attribute name="isClear" type="Boolean" />
+</aura:event>

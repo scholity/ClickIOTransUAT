@@ -1,0 +1,11 @@
+.THIS .leftPaddingClass {
+    padding-left: 2rem;
+}
+ 
+.THIS .pillSize{
+ width:100%;
+}
+
+.THIS .text-field-error {
+    border: 2px solid rgb(194, 57, 52);
+}

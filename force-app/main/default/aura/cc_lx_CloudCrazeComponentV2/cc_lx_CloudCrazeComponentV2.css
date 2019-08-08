@@ -1,0 +1,118 @@
+.THIS .slds-lx-button, .THIS .slds-card__header h2{
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 0px;
+  font-size: 16px;
+}
+
+.THIS .slds-button {
+  text-transform: uppercase;
+  border-radius: 0px;
+  white-space: nowrap;
+  font-weight: token(fontWeightBold);
+}
+.THIS .slds-button--small{
+  font-size: 12px;
+}
+.THIS .slds-button--brand, .THIS .slds-button--brand:hover, .THIS .slds-button--brand:active, .THIS .slds-button--brand:focus {
+  background-color: token(colorBackgroundButtonBrand);
+  border-color: token(colorBorderButtonBrand);
+  color: token(colorTextButtonBrand);
+}
+
+.THIS .slds-button--neutral, .THIS .slds-button--neutral:hover, .THIS .slds-button--neutral:active, .THIS .slds-button--neutral:focus{
+  background-color: token(colorBackgroundButtonDefault);
+  border-color: token(colorBorderButtonDefault);
+}
+
+.THIS input.cclx-quantity {
+  width: 50px;
+  text-align: center;
+  padding: 0;
+}
+
+.THIS a {
+    color: token(colorTextLink);
+}
+
+.THIS a:focus,.THIS a:hover {
+    color: token(colorTextBrand);
+}
+
+.THIS a:active {
+    color: token(colorTextBrand);
+}
+
+.THIS button.cclx-mobile-button {
+    display: none;
+}
+.THIS button.cclx-mobile-button2 {
+    display: none;
+}
+
+/* #Tablet (Portrait)
+================================================== */
+/* Note: Design for a width of 768px */
+@media all and (max-width: 959px) {
+    .THIS td.cclx-col4, .THIS th.cclx-col4 {
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    }
+}
+/* #Mobile (Landscape)
+================================================== */
+/* Note: Design for a width of 600px */
+@media all and (max-width: 767px) {
+    .THIS td.cclx-col3, .THIS th.cclx-col3 {
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    }
+}
+/* #Mobile (Landscape)
+================================================== */
+/* Note: Design for a width of 480px */
+@media all and (max-width: 599px) {
+    .THIS td.cclx-col2, .THIS th.cclx-col2 {
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    }
+    .THIS .slds-table tr > td:first-child, .THIS .slds-table tr > th:first-child {
+        padding-left: .5rem;
+    }
+    .THIS .slds-table tr > td:last-child, .THIS .slds-table tr > th:last-child {
+        padding-right: .5rem;
+    }
+    .THIS button.cclx-mobile-button2 {
+        display: block;
+    }
+    .THIS button.cclx-desktop-button2 {
+        display: none;
+    }
+}
+/*  #Mobile (Portrait)
+================================================== */
+/* Note: Design for a width of 320px */
+@media all and (max-width: 479px) {
+    .THIS td.cclx-col1, .THIS th.cclx-col1 {
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    }
+    .THIS button.cclx-mobile-button {
+        display: block;
+    }
+    .THIS button.cclx-desktop-button {
+        display: none;
+    }
+}

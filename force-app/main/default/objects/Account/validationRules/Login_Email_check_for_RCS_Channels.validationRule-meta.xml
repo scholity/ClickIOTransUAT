@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Login_Email_check_for_RCS_Channels</fullName>
+    <active>true</active>
+    <description>Checks Login email is entered for RCS channels</description>
+    <errorConditionFormula>AND( 
+OR( 
+INCLUDES(PHSS_Channel__c, &quot;RCS Retail&quot;), 
+INCLUDES(PHSS_Channel__c, &quot;RCS Distributor&quot;)), 
+ISBLANK(Log_In_Email__c),
+$User.Id &lt;&gt; &quot;005d0000005I9dx&quot;, /*Mike A Smith */
+$User.Id &lt;&gt; &quot;0050V000006ld8r&quot;, /*Jatin Acharya */
+$User.Id &lt;&gt; &quot;005d00000040uDS&quot; /*Gita Borovsky */ 
+)</errorConditionFormula>
+    <errorMessage>Red Cross Store Email field required when PHSS channel is of RCS Retail or RCS Distributor</errorMessage>
+</ValidationRule>

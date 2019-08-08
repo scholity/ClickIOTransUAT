@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>BGST Queue</name>
+    <queueMembers>
+        <users>
+            <user>candidabarbosa@redcrosssales.org</user>
+            <user>dennis.delgado@redcross.org</user>
+            <user>gigi.neffmascioli@redcross.org</user>
+            <user>hana.good@redcross.org</user>
+            <user>melissa.downes.bgst@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Lead__c</sobjectType>
+    </queueSobject>
+</Queue>

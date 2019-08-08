@@ -1,0 +1,4 @@
+<design:component >
+	<design:attribute name="bulletinLabel" label="Bulletin Column Label"/>
+	<design:attribute name="label" label="Label"/>
+</design:component>

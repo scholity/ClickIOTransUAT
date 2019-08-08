@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loss_Reason__c</fullName>
+    <description>Please fill this out if the Opportunity has been Closed-Lost.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Please fill this out if the Opportunity has been Closed-Lost.  It is required if the Opportunity had a potential for over $50,000.</inlineHelpText>
+    <label>Loss Reason</label>
+    <length>10000</length>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

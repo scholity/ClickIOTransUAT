@@ -1,0 +1,4 @@
+<design:component >
+	<design:attribute name="buttonTitle" label="Button Title" description="Label for Button" default="Submit"/>
+    <design:attribute name="buttonURL" label="Button URL" description="Target URL on Click"/>
+</design:component>

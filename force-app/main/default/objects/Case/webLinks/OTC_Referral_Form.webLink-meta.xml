@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OTC_Referral_Form</fullName>
+    <availability>online</availability>
+    <description>A custom link to the web form an agent will use to submit a lead to the Outbound Telesales group at Shop StayWell.</description>
+    <displayType>link</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>BGST Referral Form</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>http://www.redcross.org/bgst-form</url>
+</WebLink>

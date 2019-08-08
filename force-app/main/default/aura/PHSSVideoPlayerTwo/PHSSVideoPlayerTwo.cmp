@@ -1,0 +1,65 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" controller="PHSS_VideoPlayerTwoApexController" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="recordId" type="String" default="{!recordId}"/>
+    <aura:attribute name="phssMaterial" type="PHSS_Material__C[]" access="global" />    
+    <aura:attribute name="phssMaterialVideoURL" type="String" description="PHSS Material Video URL" access="global" />
+    <aura:attribute name="phssMaterialTypeIsVideo" type="Boolean" default="true" access="global" />
+    <aura:attribute name="CommunityContentVideoURL" type="String" description="Content Video URL" access="global" />
+    <aura:attribute name="CommunityURL" type="String" description="URL for the Community" access="global" default="https://partial-redcross.cs21.force.com/corner" />
+    <aura:attribute name="ContentVersionServletURL" type="String" default="/sfc/servlet.shepherd/version/download/" access="global" />
+    <aura:attribute name="ContentDocumentServletURL" type="String" default="/sfc/servlet.shepherd/document/download/" access="global" />    
+    <aura:attribute name="ContentVersionID" type="String" description="Content Version Record ID" access="global" />    
+    <aura:attribute name="ContentDocumentID" type="String" description="Content Document Record ID" access="global" />        
+   	<aura:attribute name="VideoType" type="String" default="video/mp4" access="global" /> 
+    <aura:attribute name="VideoTitle" type="String" default="Video Title" access="global" /> 
+    <aura:attribute name="VideoDescription" type="String" default="Video Description" access="global" />     
+    <aura:attribute name="VideoSize" type="String" default="640" access="global" /> 
+    <aura:attribute name="VideoShowControls" type="Boolean" default="true" access="global" /> 
+    <aura:attribute name="VideoAutoStart" type="Boolean" default="false" access="global" />
+        
+	<aura:if isTrue="{!v.phssMaterialTypeIsVideo}">
+	    <div align="center">
+            <div>
+                <video preload="auto" width="{!v.VideoSize}" controls="{!v.VideoShowControls ? 'controls' : ''}" autoplay="{!v.VideoAutoStart ? 'autoplay' : ''}">
+                    <source src="{!v.phssMaterialVideoURL}" type="{!v.VideoType}">                   
+                        Your browser does not support HTML5 video.</source>
+                </video>
+            </div>
+        </div>
+        <hr/>
+	    <div align="center">
+            <div>
+                <video preload="auto" width="{!v.VideoSize}" controls="{!v.VideoShowControls ? 'controls' : ''}" autoplay="{!v.VideoAutoStart ? 'autoplay' : ''}">
+                    <source src="{!v.CommunityURL+v.ContentVersionServletURL+v.ContentVersionID}" type="{!v.VideoType}">                   
+                        Your browser does not support HTML5 video.</source>
+                </video>
+            </div>
+        </div>        
+    </aura:if>
+    <div align="center">
+        <div>PHSS Material Type Is Video : {!v.phssMaterialTypeIsVideo}</div>
+        <br/>
+	    <div>Title : {!v.VideoTitle}</div>
+        <br/>
+	    <div>Description : {!v.VideoDescription}</div>
+        <br/>
+	    <div>PHSS Material Video Link : {!v.phssMaterialVideoURL}</div>
+        <br/>
+        <div>Constructed Video Link : {!v.CommunityURL+v.ContentVersionServletURL+v.ContentVersionID}</div>
+        <br/>
+	    <div>Community URL : {!v.CommunityURL}</div>
+        <br/>
+	    <div>Content Version Servlet URL : {!v.ContentVersionServletURL}</div>
+        <br/>
+	    <div>Content Document Servlet URL{!v.ContentDocumentServletURL}</div>
+        <br/>
+	    <div>Content Version ID : {!v.ContentVersionID}</div>
+        <br/>
+	    <div>Content Document ID : {!v.ContentDocumentID}</div>
+        <br/>
+	    <div>Show Controls : {!v.VideoShowControls}</div>
+        <br/>
+	    <div>Auto Start : {!v.VideoAutoStart}</div>
+    </div>
+</aura:component>

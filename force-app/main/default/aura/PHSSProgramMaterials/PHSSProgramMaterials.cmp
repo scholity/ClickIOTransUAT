@@ -1,0 +1,118 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global" controller="PHSSProgramMaterialsApexController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:attribute name="recordId" type="String" default="{!recordId}"/>
+    <aura:attribute name="programName" type="String"/>
+    <aura:attribute name="programDescription" type="String"/>    
+    <aura:attribute name="phssMaterialsAll" type="PHSS_Material__C[]" access="global" />
+    
+    <aura:attribute name="categoryInstructorDocuments" type="String" default="Instructor Materials"/>
+    <aura:attribute name="categoryInstructorVideos" type="String" default="Instructor Materials"/>
+    <aura:attribute name="categoryInstructorSupportingDocuments" type="String" default="Supporting Documents"/>
+    <aura:attribute name="categoryInstructorSupportingVideos" type="String" default="Supporting Documents"/>
+
+    <aura:attribute name="typeInstructorDocuments" type="String" default="Document"/>
+    <aura:attribute name="typeInstructorVideos" type="String" default="Video"/>
+    <aura:attribute name="typeInstructorSupportingDocuments" type="String" default="Document"/>
+    <aura:attribute name="typeInstructorSupportingVideos" type="String" default="Video"/>
+    
+    <aura:attribute name="phssMaterialsInstructorDocuments" type="PHSS_Material__C[]" access="global" />
+    <aura:attribute name="phssMaterialsInstructorVideos" type="PHSS_Material__C[]" access="global" />
+    <aura:attribute name="phssMaterialsInstructorSupportingDocuments" type="PHSS_Material__C[]" access="global" />
+    <aura:attribute name="phssMaterialsInstructorSupportingVideos" type="PHSS_Material__C[]" access="global" />
+    
+    <h2 class="listTitle">
+            <lightning:icon iconName="custom:custom64" size="medium" alternativeText="PHSS Program Materials"/>
+			{!v.programName}
+    </h2>
+    <br/>
+    <div>{!v.programDescription}</div>  
+    <br/>
+    <h3>
+        Course Documents
+    </h3>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+        <thead>
+            <tr class="slds-text-title">
+                <th scope="col">
+                    <div class="slds-truncate" title="Material Name">Material Name</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.phssMaterialsInstructorDocuments}" var="materialsID">
+                <tr>
+                    <th scope="row" data-label="Material Name">
+                        <div class="slds-truncate" title="{!materialsID.ContentVersionID__c}"><a href="{!materialsID.ContentVersionLink__c}">{!materialsID.Material_Name__c}</a></div>
+                    </th>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+    <br/>
+    <h3>
+        Course Videos
+    </h3>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+        <thead>
+            <tr class="slds-text-title">
+                <th scope="col">
+                    <div class="slds-truncate" title="Material Name">Material Name</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.phssMaterialsInstructorDocuments}" var="materialsID">
+                <tr>
+                    <th scope="row" data-label="Material Name">
+                        <div class="slds-truncate" title="{!materialsID.ContentVersionID__c}"><a href="{!materialsID.ContentVersionLink__c}">{!materialsID.Material_Name__c}</a></div>
+                    </th>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+    <br/>
+    <h3>
+        Supporting Materials
+    </h3>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+        <thead>
+            <tr class="slds-text-title">
+                <th scope="col">
+                    <div class="slds-truncate" title="Material Name">Material Name</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.phssMaterialsInstructorDocuments}" var="materialsID">
+                <tr>
+                    <th scope="row" data-label="Material Name">
+                        <div class="slds-truncate" title="{!materialsID.ContentVersionID__c}"><a href="{!materialsID.ContentVersionLink__c}">{!materialsID.Material_Name__c}</a></div>
+                    </th>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+    <br/>
+    <h3>
+        Participant Materials
+    </h3>
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+        <thead>
+            <tr class="slds-text-title">
+                <th scope="col">
+                    <div class="slds-truncate" title="Material Name">Material Name</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.phssMaterialsInstructorDocuments}" var="materialsID">
+                <tr>
+                    <th scope="row" data-label="Material Name">
+                        <div class="slds-truncate" title="{!materialsID.ContentVersionID__c}"><a href="{!materialsID.ContentVersionLink__c}">{!materialsID.Material_Name__c}</a></div>
+                    </th>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>    
+</aura:component>

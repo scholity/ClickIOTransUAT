@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Open_Order_Amount__c</fullName>
+    <defaultValue>0</defaultValue>
+    <description>Sum of Orders In Process</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Based on the total dollar value of open orders for all orders on the account. </inlineHelpText>
+    <label>Open Order Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

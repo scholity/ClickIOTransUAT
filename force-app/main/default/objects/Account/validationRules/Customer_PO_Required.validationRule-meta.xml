@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_PO_Required</fullName>
+    <active>true</active>
+    <description>If an Expiration date is entered, the PO # is required.</description>
+    <errorConditionFormula>AND(
+ISBLANK( Customer_PO__c), 
+ NOT(ISBLANK(Customer_PO_Expiration_Date__c)),
+ $Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>Customer_PO__c</errorDisplayField>
+    <errorMessage>If Customer PO # Expiration Date is entered, the Customer PO # is required.</errorMessage>
+</ValidationRule>

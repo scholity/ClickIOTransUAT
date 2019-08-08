@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Students_Taught__c</fullName>
+    <externalId>false</externalId>
+    <formula>Adult_Swim_Improving_Skills_and_Swimming__c + Adult_Swim_Learning_the_Basics__c + Basic_Swim_Instructor__c + Junior_Lifeguarding__c + Learn_to_Swim__c + Learn_to_Swim_Level_1__c + Learn_to_Swim_Level_2__c + Learn_to_Swim_Level_3__c + Lifeguarding__c + Lifeguarding_Instructor__c + Lifeguarding_Instructor_Trainer__c + Lifeguarding_Management__c + Parents_Caregivers_Water_Safety_Educat__c + Parent_and_Child_Aquatics__c + Parents_Caregivers_Pediatric_CPR_AED__c + Preschool_Level_1__c + Preschool_Level_2__c + Preschool_Level_3__c + Water_Safety_Instructor__c + Water_Safety_Instructor_Trainer__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Students Taught</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

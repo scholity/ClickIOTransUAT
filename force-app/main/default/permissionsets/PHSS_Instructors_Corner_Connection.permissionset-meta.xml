@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>PHSS_Instructors_Community</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>This gives access to the PHSS Instructors Corner Connection App</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>PHSS Instructors Corner Connection</label>
+</PermissionSet>

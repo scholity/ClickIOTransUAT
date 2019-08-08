@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>Illinois Leads</name>
+    <queueMembers>
+        <roles>
+            <role>PHSS_Sales_Dir_Central</role>
+            <role>PHSS_Sales_Dir_East</role>
+            <role>PHSS_Sales_Mgr_06</role>
+            <role>PHSS_Sales_Mgr_20</role>
+            <role>PHSS_Sales_Mgr_AQ_Central</role>
+            <role>PHSS_Sales_Mgr_Central_Mid_West</role>
+            <role>PHSS_Sales_Mgr_Mid_South</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+</Queue>

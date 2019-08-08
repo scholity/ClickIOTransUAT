@@ -1,0 +1,15 @@
+.THIS .search-header{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+    justify-content: space-between;
+}
+.THIS .search-header-section{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+    justify-content: flex-start;
+}
+.THIS .cursor{
+	cursor: pointer;
+}

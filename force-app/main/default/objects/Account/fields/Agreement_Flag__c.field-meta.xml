@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agreement_Flag__c</fullName>
+    <externalId>false</externalId>
+    <formula>IMAGE(
+CASE(Is_Pricing_Agreement__c,
+&quot;Yes&quot;, &quot;/servlet/servlet.FileDownload?file=0150V00000DDGLz&quot;,
+&quot;/s.gif&quot;),
+TEXT(Is_Pricing_Agreement__c)
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>New agreements on this account may be restricted, please look further if flagged</inlineHelpText>
+    <label>Agreement Flag</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>MALatitude_c_Purge</fullName>
+        <field>MALatitude__c</field>
+        <name>Territory__c.MALatitude_c_Purge</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>MALongitude_c_Purge</fullName>
+        <field>MALongitude__c</field>
+        <name>Territory__c.MALongitude_c_Purge</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>a0Rd00000006eWmEAI_Purge</fullName>
+        <actions>
+            <name>MALatitude_c_Purge</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>MALongitude_c_Purge</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Territory__c.a0Rd00000006eWmEAI_Purge</description>
+        <formula>OR(ISCHANGED(Territory_State__c))</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Start_date_greater_than_Sept</fullName>
+    <active>true</active>
+    <description>PO - Start date must be greater than September 2017.</description>
+    <errorConditionFormula>If(AND((ISPICKVAL(Status,&#39;PO On-Hold CFS&#39;) &amp;&amp; (DATEVALUE(PO_Start_Date__c) &lt; DATEVALUE(&quot;2017-09-01&quot;))), RecordType.Name= &quot;RCS PO&quot;,!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE), true, false)</errorConditionFormula>
+    <errorDisplayField>PO_Start_Date__c</errorDisplayField>
+    <errorMessage>PO Start date cannot be before Sept 1, 2017</errorMessage>
+</ValidationRule>

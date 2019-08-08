@@ -1,0 +1,103 @@
+<aura:component controller="phss_cc_PriceOverrideModalController">
+
+    <!--variables-->
+    <aura:attribute name="isShown" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="cartItem" type="Map"/>
+    <aura:attribute name="overrideType" type="String"/>
+
+    <!--register event-->
+    <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
+
+    <!--event handlers-->
+	<aura:handler event="c:phss_cc_ShowPriceOverrideModalEvent" action="{!c.show}"/>
+
+    <aura:if isTrue="{!v.isShown}">
+
+        <!--modal-->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.hide}" alternativeText="close" variant="bare-inverse" class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Override Cart Item Price</h2>
+                </header>
+
+                <!--spinner-->
+                <aura:if isTrue="{!v.showSpinner}">
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class=" slds-align_absolute-center">
+                            <div class="loadingSpinner">
+                                <lightning:spinner alternativeText="Loading..." size="medium"/>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                    <!--Cart Item-->
+                    <aura:if isTrue="{!v.cartItem}">
+                        <div class="slds-p-horizontal_xx-large slds-p-vertical_medium slds-align_absolute-center">
+                            <div>
+                                <div class="slds-p-bottom_medium">
+                                    <div class="slds-text-heading_medium">{!v.cartItem.productName}</div>
+                                    <div class="slds-text-title"><b>{!v.cartItem.productSKU}</b></div>
+                                </div>
+                                <fieldset class="slds-form-element">
+                                    <div class="slds-grid slds-form-element__control">
+                                        <div class="slds-col slds-p-top_xxx-small">
+                                                <span class="slds-radio">
+                                                    <lightning:input aura:id="percentDiscountRadio"
+                                                                     type="radio"
+                                                                     name="overrideOptions"
+                                                                     value="percentDiscount"
+                                                                     onclick="{!c.overrideSelected}"
+                                                                     checked="{!if(equals(v.overrideType, 'percentDiscount'), true, false)}"/>
+                                                </span>
+                                        </div>
+                                        <div class="slds-col">
+                                            <lightning:input aura:id="percentDiscountField"
+                                                             name="percentDiscount"
+                                                             label="Percent Discount"
+                                                             value="{!v.cartItem.percentDiscount}"
+                                                             onchange="{!c.valueFieldChanged}"/>
+                                        </div>
+                                        <div class="slds-col slds-p-horizontal_x-large slds-align_absolute-center">
+                                            <div><b>OR</b></div>
+                                        </div>
+                                        <div class="slds-col slds-p-top_xxx-small">
+                                                <span class="slds-radio">
+                                                    <lightning:input aura:id="unitPriceRadio"
+                                                                     type="radio"
+                                                                     name="overrideOptions"
+                                                                     value="unitPrice"
+                                                                     onclick="{!c.overrideSelected}"
+                                                                     checked="{!if(equals(v.overrideType, 'unitPrice'), true, false)}"/>
+                                                </span>
+
+                                        </div>
+                                        <div class="slds-col">
+                                            <lightning:input aura:id="unitPriceField"
+                                                             name="unitPrice"
+                                                             label="Unit Price"
+                                                             value="{!v.cartItem.price}"
+                                                             onchange="{!c.valueFieldChanged}"/>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Cancel" title="Cancel" onclick="{!c.hide}"/>
+                    <lightning:button variant="brand" label="Save" title="Save" onclick="{!c.save}"/>
+                </footer>
+            </div>
+            </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </aura:if>
+
+</aura:component>

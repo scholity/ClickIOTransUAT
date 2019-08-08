@@ -1,0 +1,73 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+
+    <aura:attribute name="b2cOrigin" type="Boolean"/>
+    <aura:attribute name="trainingAndCertification" type="String" default="TRAINING + CERTIFICATION"/>
+    <aura:attribute name="SuppliersAndProducts" type="String" default="SUPPLIES &amp; PRODUCTS"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:if isTrue="{!v.b2cOrigin}" >
+        <div style="border-bottom: 2px solid lightgrey; box-shadow: 0 0 5px lightgrey">
+            <div class="mobile" >
+
+                <div aura:id="menu_container" class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-closed" onclick="{!c.openMenu}">
+                    <button class="slds-button slds-button_icon slds-m-around_medium" aria-haspopup="true" title="Show More" >
+                        <lightning:icon iconName="utility:rows" size="medium" alternativeText="Menu" />
+                        <span class="slds-assistive-text">Show More</span>
+                    </button>
+
+                    <div class="slds-dropdown slds-dropdown_left slds-dropdown_large" >
+                        <ul class="slds-dropdown__list" role="menu" >
+                            <li class="slds-dropdown__item" role="presentation">
+                                <a href="https://www.redcross.org/" >
+                                    <img src="{!$Resource.PHSS_RedCrossLogo}" height="100" width="100" alt="ARC Logo" />
+                                </a>
+                            </li>
+                            <li class="slds-has-divider_top-space" role="separator"></li>
+                            <li class="slds-dropdown__item" role="presentation">
+                                <a href="https://www.redcross.org/take-a-class" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item Two">{!v.trainingAndCertification}</span>
+                                    <lightning:icon iconName="utility:chevronright" size="small" />
+                                </a>
+                            </li>
+                            <li class="slds-has-divider_top-space" role="separator"></li>
+                            <li class="slds-dropdown__item" role="presentation">
+                                <a href="https://www.redcross.org/store" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item Three">{!v.SuppliersAndProducts}</span>
+                                    <lightning:icon iconName="utility:chevronright" size="small" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <span class="globalmenu">
+                <a href="https://www.redcross.org/" >
+                    <img src="{!$Resource.PHSS_training_services_logo}" height="200" width="200" alt="ARC Training Services Logo" />
+                </a>
+            </span>
+
+            </div>
+            <div class="wide_screen">
+                <span class="globalmenu">
+                    <a href="https://www.redcross.org/" >
+                        <img src="{!$Resource.PHSS_training_services_logo}" height="200" width="200" alt="ARC Training Services Logo" />
+                    </a>
+                </span>
+                    <span class="globalmenu">
+                    <a href="https://www.redcross.org/take-a-class" class="globalmenu">{!v.trainingAndCertification}</a>
+                </span>
+                    <span class="globalmenu">
+                    <a href="https://www.redcross.org/store" class="globalmenu">{!v.SuppliersAndProducts}</a>
+                </span>
+            </div>
+
+        </div>
+        <aura:set attribute="else" >
+            <div class="slds-align_absolute-center">
+                <img src="{!$Resource.PHSS_RedCrossLogo}" height="200" width="200"/>
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

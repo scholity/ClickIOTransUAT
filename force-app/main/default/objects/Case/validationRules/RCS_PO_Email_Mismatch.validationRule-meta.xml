@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCS_PO_Email_Mismatch</fullName>
+    <active>true</active>
+    <description>Checks whether the field is mismatch</description>
+    <errorConditionFormula>AND( ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE, Account_Email_Matching__c = false)</errorConditionFormula>
+    <errorDisplayField>External_LOGIN_EMAIL__c</errorDisplayField>
+    <errorMessage>Wrong Account selected as external login email field is not matching with Account Login Email</errorMessage>
+</ValidationRule>

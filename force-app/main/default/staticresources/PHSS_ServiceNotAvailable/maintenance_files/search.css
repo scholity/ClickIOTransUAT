@@ -1,0 +1,88 @@
+/*--------------------*/	
+#Search_Suggestions	{
+	position: absolute;
+	right: 125px;
+	top: 36px;
+	width: 255px;
+	background-color:#fff;
+	/*display: none;*/
+	z-index:1;
+	}
+/*---------- search ----------*/
+.search-suggestions {
+	background-color: #e7e8e9;
+	color: #666;
+	font-family: lucida grande;
+	font-size: 11px;
+	line-height: 12px;
+	width: 250px; 
+	-moz-border-radius: 10px 10px 5px 5px;
+	border-radius: 10px 10px 5px 5px;
+	}
+#search-title-top {
+	height: 15px;
+	width: 230px;
+	background-color: #818181;
+	color: #fff;
+	margin: 0;
+	padding: 5px 10px 5px 10px;
+	font-size: 11px;
+	-moz-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0;
+	
+	}
+
+	
+#search-title-top a,
+#search-title-top a:link,
+#search-title-top a:visited,
+#search-title-top a:active {
+	text-decoration: none;
+	color: #fff;
+	font-weight:bold;
+	}
+#search-title-top a:hover {
+	text-decoration: none;
+	color: #e7e8e9;
+	font-weight:bold;
+	cursor:pointer;
+	}
+.search-suggestions ul {
+	list-style: none;
+	margin:0;
+	padding:0;
+	width: 250px; 
+	}
+.search-suggestions ul li {
+	padding: 15px;
+	list-style: none;
+	width: 200px; 
+	overflow: ellipsis;
+	}
+.search-suggestions a,
+.search-suggestions a:link,
+.search-suggestions a:visited,
+.search-suggestions a:active {
+	text-decoration: none;
+	color: #666;
+	}
+.search-suggestions a:hover {
+	text-decoration: none;
+	color: #3f6fb7;
+	}
+.search-suggestions a strong,
+.search-suggestions a:link strong,
+.search-suggestions a:visited strong,
+.search-suggestions a:active strong {
+	font-weight: bold;
+	text-decoration: none;
+	color: #222;
+	}
+.search-suggestions a:hover strong{
+	text-decoration: none;
+	color: #134c91;
+	}
+.search-suggestions ul li.selected { 
+	color: #fff;
+	background-color: #999;
+	}

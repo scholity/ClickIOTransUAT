@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Other_text_field</fullName>
+    <active>true</active>
+    <description>Require the &quot;Other&quot; text field on service cases when the Tertiary Sub-Type of &quot;Other&quot; is selected. &quot;Other&quot; appears as option in Tertiary Sub-Type when case Type is &quot;Certificates&quot; and Case Sub-Type is &quot;Extended Expired Base Level Certificate&quot;.</description>
+    <errorConditionFormula>AND( 
+ISPICKVAL(Tertiary_Sub_Type__c , &#39;Other&#39;), 
+ISBLANK( Other__c ) 
+)</errorConditionFormula>
+    <errorDisplayField>Other__c</errorDisplayField>
+    <errorMessage>When &quot;Other&quot; is selected in the Tertiary Sub-Type field, you must fill in the &quot;Other&quot; text field.</errorMessage>
+</ValidationRule>

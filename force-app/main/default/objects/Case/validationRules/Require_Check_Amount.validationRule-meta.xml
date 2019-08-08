@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Check_Amount</fullName>
+    <active>false</active>
+    <description>When the Invoice Case Sub Type Is &quot;Missing Payment&quot; you must provide further information; Check Amount</description>
+    <errorConditionFormula>AND( 
+ISPICKVAL( Dispute_Issue__c, &#39;Missing Payment&#39;), 
+ISBLANK( Payment_Amount__c ),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE  
+)</errorConditionFormula>
+    <errorDisplayField>Payment_Amount__c</errorDisplayField>
+    <errorMessage>When the Invoice Case Sub Type is &quot;Missing Payment&quot; you must complete Check Amount</errorMessage>
+</ValidationRule>

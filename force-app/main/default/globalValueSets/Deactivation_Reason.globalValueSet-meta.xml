@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Teaching Without Certification</fullName>
+        <default>false</default>
+        <label>Teaching Without Certification</label>
+    </customValue>
+    <customValue>
+        <fullName>Issuing Certificates w/o Class Being Taught</fullName>
+        <default>false</default>
+        <label>Issuing Certificates w/o Class Being Taught</label>
+    </customValue>
+    <customValue>
+        <fullName>Class Minimum Contact Hours Not Met</fullName>
+        <default>false</default>
+        <label>Class Minimum Contact Hours Not Met</label>
+    </customValue>
+    <customValue>
+        <fullName>Blocked</fullName>
+        <default>false</default>
+        <label>Blocked</label>
+    </customValue>
+    <masterLabel>Deactivation Reason</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

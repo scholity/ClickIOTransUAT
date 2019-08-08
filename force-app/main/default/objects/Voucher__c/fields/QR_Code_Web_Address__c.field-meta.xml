@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QR_Code_Web_Address__c</fullName>
+    <externalId>false</externalId>
+    <formula>/*IF(ILT_Class__c != null, IF(CONTAINS($Api.Partner_Server_URL_260, &#39;TransDev1&#39;), &#39;https://transdev1-americanredcross.cs52.force.com/learner/s/ClaimVoucher?voucherid=&#39; +  Id,
+    (If (CONTAINS($Api.Partner_Server_URL_260, &#39;Partial&#39;), &#39;https://partial-americanredcross.cs78.force.com/learner/s/ClaimVoucher?voucherid=&#39; + Id,
+    &#39;https://transuat-americanredcross.cs26.force.com/learner/s/ClaimVoucher?voucherid=&#39; +Id))), &#39;&#39;)*/
+IF(ILT_Class__c != null, $Label.Learner_Community_URL + &#39;/s/ClaimVoucher?voucherid=&#39; + Id, &#39;&#39;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>QR Code Web Address</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

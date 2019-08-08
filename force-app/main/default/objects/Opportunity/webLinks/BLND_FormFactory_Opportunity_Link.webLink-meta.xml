@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BLND_FormFactory_Opportunity_Link</fullName>
+    <availability>online</availability>
+    <displayType>link</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>FormFactory Opportunity Link</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
+sforce_session_id={!API.Session_ID}&amp; 
+sforce_server_url={!API.Partner_Server_URL_120}&amp; 
+sforce_user_name={!User.Username}&amp; 
+sforce_full_name={!User.Name}&amp; 
+sforce_user_id={!User.Id}&amp; 
+custom_link_name=FormFactory Form Name&amp; 
+myaccount={!Account.Id}&amp; 
+myopportunity={!Opportunity.Id}&amp; 
+myuser={!User.Id}</url>
+</WebLink>

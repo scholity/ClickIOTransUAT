@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Delivery_Channel__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISBLANK(Account.PHSS_Channel__c),NULL, 
+SUBSTITUTE( 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;AED&quot;),&quot;AED,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;Authorized Provider&quot;),&quot;Authorized Provider,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;Business Client&quot;),&quot;Business Client,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;CEP Agency&quot;),&quot;CEP Agency,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;Full Service&quot;),&quot;Full Service,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;Licensed Training Provider&quot;),&quot;Licensed Training Provider,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;NAT Agency&quot;),&quot;NAT Agency,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;National Account Network&quot;),&quot;National Account Network,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;RCS Distributor&quot;),&quot;RCS Distributor,&quot;,NULL)+ 
+IF(INCLUDES(Account.PHSS_Channel__c,&quot;RCS Retail&quot;),&quot;RCS Retail,&quot;,NULL)+&quot;.&quot;,&quot;,.&quot;,NULL))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Delivery Channel</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

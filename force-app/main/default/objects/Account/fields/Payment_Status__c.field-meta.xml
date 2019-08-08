@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Status__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>This is the status of customers&#39; timely payment</inlineHelpText>
+    <label>Payment Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Denied</fullName>
+                <default>false</default>
+                <label>Denied</label>
+            </value>
+            <value>
+                <fullName>Granted</fullName>
+                <default>false</default>
+                <label>Granted</label>
+            </value>
+            <value>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+                <label>Suspended</label>
+            </value>
+            <value>
+                <fullName>Terminated</fullName>
+                <default>false</default>
+                <label>Terminated</label>
+            </value>
+            <value>
+                <fullName>Eligible for Reinstatement</fullName>
+                <default>false</default>
+                <label>Eligible for Reinstatement</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

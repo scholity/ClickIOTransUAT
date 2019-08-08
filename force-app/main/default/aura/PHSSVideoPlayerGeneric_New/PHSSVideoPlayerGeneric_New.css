@@ -1,0 +1,12 @@
+.THIS .menu {
+    background-size: cover;    
+    width: 318px;
+    height: 180px;
+    position: relative;
+    float: left;
+    color: white;
+    padding: 5px;
+    font-size: small;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}

@@ -1,0 +1,100 @@
+<aura:component description="LTUI Learning's Header"
+                controller="RCClassHeaderCmpCtrl"
+                implements="forceCommunity:availableForAllPageTypes,force:hasRecordId"
+                access="global">
+
+
+  <!-- Main data -->
+  <aura:attribute name="item"                 type="Object"   default=""                        />
+  <aura:attribute name="extraFields"          type="Object[]" default=""                        />
+
+   
+  <aura:attribute name="label_Number_Of_Students"              type="String" default="{!$Label.c.Number_Of_Students}"/>
+  <aura:attribute name="label_Status"                          type="String" default="{!$Label.c.Status_Title}"/>
+  <aura:attribute name="label_Language"                        type="String" default="{!$Label.c.Language}"/>
+  <aura:attribute name="label_Class_Setting"                   type="String" default="{!$Label.c.Class_Setting}"/>
+  <aura:attribute name="label_Organization"                    type="String" default="{!$Label.c.Organization}"/>
+  <aura:attribute name="label_Start_Date"                      type="String" default="{!$Label.redwing.ALMS_Start_Date}"/>
+  <aura:attribute name="label_End_Date"                        type="String" default="{!$Label.redwing.ALMS_End_Date}"/>
+  <!-- <aura:handler event="ltui:RefreshEvent"  action="{!c.handleRefreshEvent}"                  /> -->
+  <ltng:require scripts="{!join(',',
+                                $Resource.RCUilib + '/jsLibs/moment-with-locales.min.js'
+                            )}"  afterScriptsLoaded="{!c.doInit}"/>
+  <div class="ILTClass">
+
+      <aura:if isTrue="{!!empty(v.item)}">
+
+        <div class="slds-grid slds-wrap slds-p-vertical_x-large header-container">
+
+          <!-- Item information -->
+          <div class="slds-nowrap header-item-information">
+
+
+              <div class="slds-media slds-media_center">
+
+                <div class="slds-media__figure ILTClass-header-icon">
+                  <lightning:icon iconName="standard:groups" size="medium"/>
+                </div>
+                <div class="slds-media__body">
+                  <div class="slds-text-heading_small">{!$Label.c.Class}</div>
+                  <div class="slds-text-heading_medium"><b>{!v.item.name}</b></div>
+                </div>
+              </div>
+              <div class="line slds-m-top_medium"> </div>
+
+
+            <div class="header-item-fields slds-m-bottom_small slds-grid slds-grid_vertical-align-start slds-wrap">
+
+              <aura:iteration items="{!v.extraFields}" var="field">
+                  <!-- <aura:if isTrue="{! field.value}"> -->
+                    <div class="{!'header-item-col slds-grid slds-grid_vertical slds-grid_align-spread slds-m-top_small slds-no-flex ' + (and(field.type, and(field.type == 'STRING', field.value.length > 20)) ? 'text-wrap' : '')}">
+                      <div class="slds-text-color_inverse-weak">{!field.label}</div>
+                      <div class="header-item-field-content" >
+                        <aura:if isTrue="{!field.type}">
+
+                          <aura:if isTrue="{!field.type == 'BOOLEAN'}">
+                            <lightning:input type="checkbox" checked="{!field.value}" disabled="true" class="default-checkbox"/>
+                          </aura:if>
+
+                          <aura:if isTrue="{!field.type == 'DATE'}">
+                            {!field.value}
+                          </aura:if>
+
+                          <aura:if isTrue="{!field.type == 'DATETIME'}">
+                            <lightning:formattedDateTime value="{!field.value.date}" year="numeric" month="2-digit" day="2-digit"/>
+                            <span class="slds-p-left_xx-small">
+                              {! field.value.time}
+                            </span>
+                          </aura:if>
+
+                          <aura:if isTrue="{!or(field.type == 'PICKLIST', field.type == 'STRING')}">
+                            <lightning:formattedText value="{!field.value}" />
+                          </aura:if>
+
+                          <aura:if isTrue="{!field.type == 'NUMBER' || field.type == 'DOUBLE' || field.type == 'INTEGER'}">
+                            <lightning:formattedNumber value="{!field.value}"/>
+                          </aura:if>
+
+                          <aura:set attribute="else">
+                            {!field.value}
+                          </aura:set>
+
+                        </aura:if>
+                      </div>
+                    </div>
+                  <!-- </aura:if> -->
+              </aura:iteration>
+
+                <div class="line slds-m-top_medium slds-order_3"> </div>
+
+
+            </div>
+
+          </div>
+        </div>
+
+      </aura:if>
+
+  </div>
+
+</aura:component>

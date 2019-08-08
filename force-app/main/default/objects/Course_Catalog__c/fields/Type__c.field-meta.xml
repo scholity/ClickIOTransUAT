@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Full Service</fullName>
+                <default>false</default>
+                <label>Full Service</label>
+            </value>
+            <value>
+                <fullName>Community</fullName>
+                <default>false</default>
+                <label>Community</label>
+            </value>
+            <value>
+                <fullName>Nurse Assistant Training</fullName>
+                <default>false</default>
+                <label>Nurse Assistant Training</label>
+            </value>
+            <value>
+                <fullName>Nurse Assistant Testing</fullName>
+                <default>false</default>
+                <label>Nurse Assistant Testing</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

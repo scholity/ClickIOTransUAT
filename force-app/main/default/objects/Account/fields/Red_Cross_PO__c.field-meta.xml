@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Red_Cross_PO__c</fullName>
+    <description>This number is created for use with pre payment and invoice approval</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This is the same as the Purchase Order ID in Saba. If the customer issued a PO, the number they provided will go in both fields</inlineHelpText>
+    <label>Red Cross PO#</label>
+    <length>150</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

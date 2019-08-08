@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approver__c</fullName>
+    <description>To be used in Service Cases with Type Invoicing.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Record name of person approving the invoice correction.</inlineHelpText>
+    <label>Approver</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

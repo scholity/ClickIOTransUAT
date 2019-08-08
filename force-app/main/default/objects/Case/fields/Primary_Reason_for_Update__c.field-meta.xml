@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Reason_for_Update__c</fullName>
+    <externalId>false</externalId>
+    <label>Primary Reason for Update</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Case_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ARC cancelled course</fullName>
+                <default>false</default>
+                <label>ARC cancelled course</label>
+            </value>
+            <value>
+                <fullName>Personal schedule conflict</fullName>
+                <default>false</default>
+                <label>Personal schedule conflict</label>
+            </value>
+            <value>
+                <fullName>Signed up for wrong course</fullName>
+                <default>false</default>
+                <label>Signed up for wrong course</label>
+            </value>
+            <value>
+                <fullName>Found lower price with competitor</fullName>
+                <default>false</default>
+                <label>Found lower price with competitor</label>
+            </value>
+            <value>
+                <fullName>Found better time with competitor</fullName>
+                <default>false</default>
+                <label>Found better time with competitor</label>
+            </value>
+            <value>
+                <fullName>Certification No Longer Required</fullName>
+                <default>false</default>
+                <label>Certification No Longer Required</label>
+            </value>
+            <value>
+                <fullName>Found better location</fullName>
+                <default>false</default>
+                <label>Found better location</label>
+            </value>
+            <value>
+                <fullName>Found better time</fullName>
+                <default>false</default>
+                <label>Found better time</label>
+            </value>
+            <value>
+                <fullName>Prefer different course</fullName>
+                <default>false</default>
+                <label>Prefer different course</label>
+            </value>
+            <value>
+                <fullName>Prefer to attend w/someone else</fullName>
+                <default>false</default>
+                <label>Prefer to attend w/someone else</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <valueName>ARC cancelled course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Personal schedule conflict</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Signed up for wrong course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <valueName>Found lower price with competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <valueName>Found better time with competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <valueName>Certification No Longer Required</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Prefer different course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Cancel</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Found better location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Found better time</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Prefer to attend w/someone else</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

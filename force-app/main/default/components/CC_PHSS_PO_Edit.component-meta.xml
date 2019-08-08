@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <description>Overrides page for new PO Edit</description>
+    <label>CC_PHSS_PO_Edit</label>
+    <packageVersions>
+        <majorNumber>3</majorNumber>
+        <minorNumber>133</minorNumber>
+        <namespace>ccrz</namespace>
+    </packageVersions>
+</ApexComponent>

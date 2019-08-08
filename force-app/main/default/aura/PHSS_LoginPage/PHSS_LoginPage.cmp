@@ -1,0 +1,22 @@
+<!--
+ - Created by bjarmolinski on 2019-06-07.
+ -->
+
+<aura:component description="PHSS_LoginPage" implements="forceCommunity:availableForAllPageTypes"  access="global" >
+
+    <aura:attribute name="version" type="String" description="login or password header and subheader"/>
+    <aura:attribute name="header" type="String" default="default header" />
+    <aura:attribute name="subheader" type="String" />
+
+    <aura:handler name="init" value="this" action="{!c.doInit}" />
+
+    <div class="wrapperdiv" >
+        <div >
+            <ui:outputText value="{!v.header}" class="header"/>
+        </div>
+        <div style="display: inline-block; max-width: 300px">
+            <ui:outputText value="{!v.subheader}" class="subheader"/>
+        </div>
+    </div>
+
+</aura:component>

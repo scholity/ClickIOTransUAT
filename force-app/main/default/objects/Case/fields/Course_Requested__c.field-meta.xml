@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Course_Requested__c</fullName>
+    <externalId>false</externalId>
+    <label>Course Requested</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Case_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Adult &amp; Ped CPR/AED</fullName>
+                <default>false</default>
+                <label>Adult &amp; Ped CPR/AED</label>
+            </value>
+            <value>
+                <fullName>Adult &amp;Ped FA/CPR/AED</fullName>
+                <default>false</default>
+                <label>Adult &amp;Ped FA/CPR/AED</label>
+            </value>
+            <value>
+                <fullName>Adult CPR/AED</fullName>
+                <default>false</default>
+                <label>Adult CPR/AED</label>
+            </value>
+            <value>
+                <fullName>Adult FA/CPR/AED</fullName>
+                <default>false</default>
+                <label>Adult FA/CPR/AED</label>
+            </value>
+            <value>
+                <fullName>Babysitters Training</fullName>
+                <default>false</default>
+                <label>Babysitters Training</label>
+            </value>
+            <value>
+                <fullName>BLS</fullName>
+                <default>false</default>
+                <label>BLS</label>
+            </value>
+            <value>
+                <fullName>CPR/AED for Prof Rescuers &amp; Heath Care</fullName>
+                <default>false</default>
+                <label>CPR/AED for Prof Rescuers &amp; Heath Care</label>
+            </value>
+            <value>
+                <fullName>CPR/AED for Prof Rescuers &amp; Heath Care Review</fullName>
+                <default>false</default>
+                <label>CPR/AED for Prof Rescuers &amp; Heath Care Review</label>
+            </value>
+            <value>
+                <fullName>FA/CPR/AED Instructor</fullName>
+                <default>false</default>
+                <label>FA/CPR/AED Instructor</label>
+            </value>
+            <value>
+                <fullName>Instructor Bridge</fullName>
+                <default>false</default>
+                <label>Instructor Bridge</label>
+            </value>
+            <value>
+                <fullName>Lifeguarding</fullName>
+                <default>false</default>
+                <label>Lifeguarding</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Adult &amp; Ped CPR/AED</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Adult &amp;Ped FA/CPR/AED</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Adult CPR/AED</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Adult FA/CPR/AED</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Babysitters Training</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>BLS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>CPR/AED for Prof Rescuers &amp; Heath Care</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>CPR/AED for Prof Rescuers &amp; Heath Care Review</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>FA/CPR/AED Instructor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Instructor Bridge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Lifeguarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,7 @@
+<!--
+ - Created by dgajwani on 9/24/18.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_ProductCountUpdate">
+    <aura:attribute name="productSfid" type="String" required="true"/>
+</aura:event>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_to_Train__c</fullName>
+    <description>used on Lead form to help identify which Sales channel a lead will go into.</description>
+    <externalId>false</externalId>
+    <label>Number to Train</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>0-6</fullName>
+                <default>false</default>
+                <label>0-6</label>
+            </value>
+            <value>
+                <fullName>7-50</fullName>
+                <default>false</default>
+                <label>7-50</label>
+            </value>
+            <value>
+                <fullName>over 50</fullName>
+                <default>false</default>
+                <label>over 50</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

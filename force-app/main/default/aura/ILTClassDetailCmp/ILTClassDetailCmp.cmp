@@ -1,0 +1,132 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId"
+                controller="RCILTViewerCmpCtrl">
+    <aura:attribute name="itemId"                   type="String"   default=""      />
+    <aura:attribute name="recordId"                 type="String"                   />
+
+    <aura:attribute name="record"                   type="Object"                   />
+
+    <!--Labels-->
+    <aura:attribute name="label_Details"                         type="String" default="{!$Label.c.Details}"/>
+    <aura:attribute name="label_Course"                          type="String" default="{!$Label.c.Course}"/>
+    <aura:attribute name="label_Organization"                    type="String" default="{!$Label.c.Organization}"/>
+    <aura:attribute name="label_OfferingId"                      type="String" default="Class Id"/>    
+    <aura:attribute name="label_Class_Setting"                   type="String" default="{!$Label.c.Class_Setting}"/>
+    <aura:attribute name="label_Status"                          type="String" default="{!$Label.c.Status_Title}"/>
+    <aura:attribute name="label_Language"                        type="String" default="{!$Label.c.Language}"/>
+    <aura:attribute name="label_Number_Of_Students"              type="String" default="{!$Label.c.Number_Of_Students}"/>
+    <aura:attribute name="label_Certifications"                  type="String" default="{!$Label.ltui.Certifications_Title}"/>
+    <aura:attribute name="label_Instructors"                     type="String" default="{!$Label.c.Instructors}"/>
+    <aura:attribute name="label_Start_Date"                      type="String" default="{!$Label.redwing.ALMS_Start_Date}"/>
+    <aura:attribute name="label_End_Date"                        type="String" default="{!$Label.redwing.ALMS_End_Date}"/>
+
+    <ltng:require scripts="{!join(',',
+                                $Resource.RCUilib + '/jsLibs/moment-with-locales.min.js'
+                            )}"  afterScriptsLoaded="{!c.doInit}"/>
+
+    <div class="bordered slds-p-around_medium slds-m-vertical_medium">
+        <c:TemplateMainCmp  aura:id         ="templateMainCmp"
+                            hasContent      ="{!!empty(v.record)}">
+
+            <div class="slds-text-heading_medium slds-m-bottom_medium">
+                <b>{!v.label_Details}</b>
+            </div>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Course} </div>
+                    <aura:if isTrue="{!v.record.courseName}">
+                        <div>{!v.record.courseName}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_OfferingId} </div>
+                    <aura:if isTrue="{!v.record.offeringId}">
+                        <div>{!v.record.offeringId}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+                
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Organization} </div>
+                    <aura:if isTrue="{!v.record.organization}">
+                        <div>{!v.record.organization}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Class_Setting} </div>
+                    <aura:if isTrue="{!v.record.classSetting}">
+                        <div>{!v.record.classSetting}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Status} </div>
+                    <aura:if isTrue="{!v.record.status}">
+                        <div>{!v.record.status}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+
+                <!-- <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Language} </div>
+                    <aura:if isTrue="{!v.record.language}">
+                        <div>{!v.record.language}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div> -->
+
+
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Certifications} </div>
+                    <aura:if isTrue="{!v.record.certificates}">
+                        <div>{!v.record.certificates}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Number_Of_Students} </div>
+                    <aura:if isTrue="{!v.record.numberOfStudents}">
+                        <div>{!v.record.numberOfStudents}</div>
+                        <aura:set attribute="else">0</aura:set>
+                    </aura:if>
+                </div>
+                
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2 slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Instructors} </div>
+                    <aura:if isTrue="{!v.record.instructors}">
+                        <div>{!v.record.instructors}</div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>                
+
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2  slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_Start_Date} </div>
+                    <aura:if isTrue="{!v.record.startDate}">
+                        <div>
+                            {!v.record.formattedStartDate}
+                        </div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+
+                <div class="slds-size_1-of-1 slds-small-size_1-of-2  slds-m-bottom_medium">
+                    <div class="slds-text-color_inverse-weak"> {!v.label_End_Date} </div>
+                    <aura:if isTrue="{!v.record.endDate}">
+                        <div>
+                            {!v.record.formattedEndDate}
+                        </div>
+                        <aura:set attribute="else">-</aura:set>
+                    </aura:if>
+                </div>
+            </div>
+        </c:TemplateMainCmp>
+
+        <c:ILTClassroomAndLocationCmp recordId="{!v.recordId}" isSideBar="false"/>
+    </div>
+</aura:component>

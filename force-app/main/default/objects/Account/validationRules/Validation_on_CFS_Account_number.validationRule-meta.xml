@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_on_CFS_Account_number</fullName>
+    <active>false</active>
+    <description>CFS Account Number must read PRXXXXXXXX (PR plus 8 numeric characters)</description>
+    <errorConditionFormula>AND(OR((MID(CFS_Account_Number_1__c,0,2) &lt;&gt; &#39;PR&#39;), NOT(ISNUMBER(MID(CFS_Account_Number_1__c,3,LEN(CFS_Account_Number_1__c)))), LEN(CFS_Account_Number_1__c) &lt;&gt; 9, CONTAINS(CFS_Account_Number_1__c,&#39;.&#39;)), !ISBLANK(CFS_Account_Number_1__c))</errorConditionFormula>
+    <errorDisplayField>CFS_Account_Number_1__c</errorDisplayField>
+    <errorMessage>CFS Account Number must of type PRXXXXXXXX</errorMessage>
+</ValidationRule>

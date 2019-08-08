@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Training_History_Request_Originator</fullName>
+    <active>true</active>
+    <description>Rule to require Training History Request Originator field to be filled out if Case Type = Training History Request.</description>
+    <errorConditionFormula>ISPICKVAL(Type, &quot;Training History Request&quot;)&amp;&amp;
+(AND((NOT(ISPICKVAL  (Training_History_Request_Originator__c , &quot;Organization&quot;))),(NOT(ISPICKVAL(  Training_History_Request_Originator__c , &quot;Learner&quot;)))))</errorConditionFormula>
+    <errorDisplayField>Training_History_Request_Originator__c</errorDisplayField>
+    <errorMessage>When the Case Type is Training History Request, please update the Request Originator.</errorMessage>
+</ValidationRule>

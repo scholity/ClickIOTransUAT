@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Notified_of_Resolution_On_API__c</fullName>
+    <description>This field will be updated by workflow when Customer Notified of Resolution check box is checked. Field will be hidden from page layout and a formula field will be exposed to mirror this field so users cannot update the field manually.</description>
+    <externalId>false</externalId>
+    <label>Customer Notified of Resolution On (API)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

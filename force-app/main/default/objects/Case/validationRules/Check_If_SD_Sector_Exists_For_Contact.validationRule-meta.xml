@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_If_SD_Sector_Exists_For_Contact</fullName>
+    <active>true</active>
+    <description>This validation rule will check if SD sector is assigned to the contact related to the given case.</description>
+    <errorConditionFormula>AND(  Sales_Director_Sector__c = &quot;No Sector&quot;,  Escalate_To_Sales_Director__c  = true)</errorConditionFormula>
+    <errorMessage>You cannot escalate to SD if related contact does not have a sector assigned.</errorMessage>
+</ValidationRule>

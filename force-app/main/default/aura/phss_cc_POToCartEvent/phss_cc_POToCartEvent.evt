@@ -1,0 +1,14 @@
+<!--
+ - Created by dgajwani on 10/2/18.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_POToCartEvent">
+    <aura:attribute default="" name="POSfid" type="String"/>
+    <aura:attribute default="" name="newPOName" type="String"/>
+    <aura:attribute default="" name="newPOAmount" type="String"/>
+    <aura:attribute default="" name="newPOStartDate" type="String"/>
+    <aura:attribute default="" name="newPOEndDate" type="String"/>
+    <aura:attribute name="newPODoSave" type="Boolean"/>
+    <aura:attribute name="updatePO" type="Boolean" default="false"/>
+    <aura:attribute name="updatedPOAmount" type="String" default=""/>
+</aura:event>

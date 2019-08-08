@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Materials__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Choose method for materials</inlineHelpText>
+    <label>Materials</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Purchase Materials - (see special Instructions below)</fullName>
+                <default>false</default>
+                <label>Purchase Materials - (see special Instructions below)</label>
+            </value>
+            <value>
+                <fullName>Customer Downloads Materials</fullName>
+                <default>false</default>
+                <label>Customer Downloads Materials</label>
+            </value>
+            <value>
+                <fullName>Red Cross Provides Materials for In Class Use Only</fullName>
+                <default>false</default>
+                <label>Red Cross Provides Materials for In Class Use Only</label>
+            </value>
+            <value>
+                <fullName>Course Includes Materials</fullName>
+                <default>false</default>
+                <label>Course Includes Materials</label>
+            </value>
+            <value>
+                <fullName>Customer Provides Materials</fullName>
+                <default>false</default>
+                <label>Customer Provides Materials</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

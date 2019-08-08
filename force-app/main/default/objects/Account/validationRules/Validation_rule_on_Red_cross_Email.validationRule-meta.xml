@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_rule_on_Red_cross_Email</fullName>
+    <active>false</active>
+    <description>Permission on Red cross Email log in field.</description>
+    <errorConditionFormula>AND( $User.Id != &quot;005d0000001WLvx&quot;, /*Jane McInerney*/ 
+$User.Id != &quot;0050n000000reUm&quot;, /*Nyle Grimes*/ 
+$Profile.Name != &quot;System Administrator&quot;, /*System Admin*/ 
+OR(
+AND(!ISNEW(), ISCHANGED(Log_In_Email__c)), /*Change in field*/ 
+AND(ISNEW(), !ISBLANK(Log_In_Email__c)))/*New record*/ 
+)</errorConditionFormula>
+    <errorDisplayField>Log_In_Email__c</errorDisplayField>
+    <errorMessage>You do not have permission to modify this field.</errorMessage>
+</ValidationRule>

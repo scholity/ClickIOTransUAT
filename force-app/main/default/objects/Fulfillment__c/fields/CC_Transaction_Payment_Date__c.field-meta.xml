@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CC_Transaction_Payment_Date__c</fullName>
+    <description>CC Transaction Payment Created Date</description>
+    <externalId>false</externalId>
+    <formula>CC_Transaction_Payment__r.CreatedDate</formula>
+    <inlineHelpText>CC Transaction Payment Created Date</inlineHelpText>
+    <label>CC Transaction Payment Date</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_On_Hold_Status_for_Course_Record</fullName>
+    <active>true</active>
+    <description>Requiored Oh-Hold Sub Status field when case type course record is selected and status is on-hold internal or cutomer</description>
+    <errorConditionFormula>AND( 
+
+$Setup.Validation_Rules__c.Bypass_Rules__c = false,
+
+ISPICKVAL(Type, &quot;Course Records&quot;),
+
+OR( ISPICKVAL( Status , &quot;On Hold - Internal&quot;), ISPICKVAL(Status, &quot;On Hold - Customer&quot;)), 
+
+ISPICKVAL(On_Hold_Sub_Status__c, &quot;&quot;)
+
+
+
+)</errorConditionFormula>
+    <errorDisplayField>On_Hold_Sub_Status__c</errorDisplayField>
+    <errorMessage>Field is required.</errorMessage>
+</ValidationRule>

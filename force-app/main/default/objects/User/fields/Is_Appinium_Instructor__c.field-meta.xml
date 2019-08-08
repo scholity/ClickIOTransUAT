@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Is_Appinium_Instructor__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Checked once an Appinium Instructor Record is created via flow</description>
+    <externalId>false</externalId>
+    <label>Is Appinium Instructor</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

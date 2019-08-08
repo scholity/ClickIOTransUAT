@@ -1,0 +1,100 @@
+.THIS#closeclassDiv {
+    text-align: right;
+}
+.THIS .left{
+    margin-left: 10px;
+}
+.THIS.white{
+    background-color: white !important;
+}
+
+.THIS .top{
+    margin-top: 7px;
+}
+.THIS .width{
+    width:100%;
+}
+.THIS .slds-box{
+    padding:0.25rem 
+}
+.THIS .slds-theme_shade{
+    background-color : #e3e4e5 !important;
+}
+.THIS .customButton{
+    background-color: #FF0000;
+    color: #fff; 
+}
+
+.THIS .customButtondisabled{
+    color: #000000; 
+}
+
+.THIS .customButtonRed{  
+    color: #FF0000; 
+}
+
+
+
+.THIS .custom-background {
+    background-color: gray;
+}
+
+.THIS.Red{
+    background-color: red !important;
+}
+
+.THIS .slds-progress__item .slds-progress__marker .slds-progress__list-bordered{
+    border-color:#FF0000 !important;
+    color:#FF0000 !important;
+}
+
+.THIS .slds-progress__item.slds-is-active .slds-progress__marker {
+    border-color:#FF0000 !important;
+    color:#FF0000 !important;
+}
+
+.THIS .slds-progress__marker  {
+    border-color:#FF0000;
+    color:#FF0000 !important;
+}
+
+.THIS .slds-progress-bar__value{
+    background-color:#FF0000 !important;
+}
+
+.THIS .mandate {
+    display:inline-block !important;
+    color: red;
+}
+
+.THIS select:disabled {
+    background: #dddddd;
+}
+
+.THIS .errInput {
+	border: 2px solid red;    
+}
+
+.THIS .errMsg {
+    display:inline-block !important;
+    color: red;
+}
+
+.THIS .selectBox {
+	width: 180px;
+    height: 35px;
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    color: #6D6E70;
+    text-align: left;    
+}
+
+.THIS .errMsg {
+    color: #ed1b2e;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 10px;
+}

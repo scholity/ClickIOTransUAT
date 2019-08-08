@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Inherit_Parent_Terms</fullName>
+    <active>true</active>
+    <description>Validate if the Account has a Parent Account i.e is a Child Account</description>
+    <errorConditionFormula>AND(Inherit_Parent_Terms__c,
+  OR(  ISBLANK(ParentId) ))</errorConditionFormula>
+    <errorMessage>Inherit Parent Terms is only available for Child Accounts</errorMessage>
+</ValidationRule>

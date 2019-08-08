@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Public</cacheControl>
+    <contentType>image/png</contentType>
+    <description>A warning icon that appears in community class search results when a community class has started or ended before the current date and time.</description>
+</StaticResource>

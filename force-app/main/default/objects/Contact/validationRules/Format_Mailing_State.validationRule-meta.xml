@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Format_Mailing_State</fullName>
+    <active>false</active>
+    <description>This validation rule will evaluate the user&#39;s profile and require the mailing state to be 2 capital letters.</description>
+    <errorConditionFormula>/*TSC Agent User = 00ed0000000Idqs */
+
+AND ($User.ProfileId=&quot;00ed0000000Idqs&quot;, State_Format_field__c = &quot;0&quot;,  $Setup.Validation_Rules__c.Bypass_Rules__c = false)</errorConditionFormula>
+    <errorDisplayField>MailingState</errorDisplayField>
+    <errorMessage>As a TSC agent, please fill in the Mailing State with a valid US state abbreviation or one of the following: Caribbean, Guam, or Northern Mariana Islands. If you do not know the Mailing State, enter &quot;Refused&quot;. Capitalizations are Required.</errorMessage>
+</ValidationRule>

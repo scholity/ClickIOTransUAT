@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_Sales_Case</fullName>
+    <availability>online</availability>
+    <description>This button is on the related case related list and creates a related sales case.</description>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Related Sales Case</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <requireRowSelection>false</requireRowSelection>
+    <url>/500/e?retURL=%2F{!Case.Id}&amp;def_contact_id={!Contact.Id}&amp;def_account_id={!Account.Id}&amp;RecordType=012d000000097TA&amp;ent=Case&amp;CF00Nd00000040lVe={!Case.CaseNumber}&amp;CF00Nd00000040lVe_lkid={!Case.Id}&amp;cas11={!Case.Origin}</url>
+</WebLink>

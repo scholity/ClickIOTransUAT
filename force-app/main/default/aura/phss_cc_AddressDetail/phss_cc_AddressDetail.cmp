@@ -1,0 +1,49 @@
+<!--
+ - Created by dgajwani on 10/29/18.
+ -->
+
+<aura:component description="phss_cc_AddressDetail">
+
+    <!--Product Details-->
+    <aura:attribute name="address" type="Map"/>
+    <aura:attribute name="addressMap" type="Map" default="{}"/>
+    <aura:attribute name="addressSfid" type="String"/>
+    <aura:attribute name="addressType" type="String"/>
+
+    <!--Component Attributes-->
+    <aura:attribute name="isSelected" type="Boolean"/>
+    <aura:attribute name="skipModalStyling" type="Boolean" default="false"/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="true"/>
+
+    <!--Initializer-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!--Event to updated Selected Address-->
+    <aura:registerEvent name="addressSelected" type="c:phss_cc_AddressSelectedEvent"/>
+
+    <aura:if isTrue="{!v.renderComplete}">
+
+
+        <div class="{!(v.skipModalStyling == true ? 'slds-size--4-of-8' : 'slds-size--1-of-4 slds-m-around--small') + ' slds-align--absolute-center'}"
+             style="{!v.isSelected == true ? 'border:1px solid red; border-radius: 5px;' : 'border:1px solid lightblue; border-radius: 5px;'}"
+             onclick="{!v.skipModalStyling == true ? '' : c.updateSelectedAddress}">
+
+            <div class="slds-p-around--x-small">
+                <lightning:formattedText class="slds-align_absolute-center slds-border--bottom"
+                                         value="{!v.address.firstName + ' ' + v.address.lastName}"/>
+                <br/>
+                <lightning:formattedText value="{!v.address.addressFirstline}"/>
+                <br/>
+                <aura:if isTrue="{!v.address.addressSecondline.length > 0}">
+                    <lightning:formattedText value="{!v.address.addressSecondline}"/>
+                    <br/>
+                </aura:if>
+                <lightning:formattedText value="{!v.address.city + ' , ' + v.address.state}"/>
+                <br/>
+                <lightning:formattedText value="{!v.address.country + ' , ' + v.address.postalCode}"/>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Channel__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Select customer entry point. RSG is the only option for RCS customers.</inlineHelpText>
+    <label>Sales Channel</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BGST</fullName>
+                <default>false</default>
+                <label>BGST</label>
+            </value>
+            <value>
+                <fullName>CEP</fullName>
+                <default>false</default>
+                <label>CEP</label>
+            </value>
+            <value>
+                <fullName>Field</fullName>
+                <default>false</default>
+                <label>Field</label>
+            </value>
+            <value>
+                <fullName>NAT</fullName>
+                <default>false</default>
+                <label>NAT</label>
+            </value>
+            <value>
+                <fullName>RSG</fullName>
+                <default>false</default>
+                <label>RSG</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

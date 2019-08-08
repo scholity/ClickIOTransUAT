@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Director_Sector__c</fullName>
+    <externalId>false</externalId>
+    <formula>Case(Contact.MailingState, 
+
+&quot;CT&quot;,&quot;Sector 1&quot;, 
+&quot;NH&quot;,&quot;Sector 1&quot;, 
+&quot;NJ&quot;,&quot;Sector 1&quot;, 
+&quot;NY&quot;,&quot;Sector 1&quot;, 
+&quot;MA&quot;,&quot;Sector 1&quot;, 
+&quot;ME&quot;,&quot;Sector 1&quot;, 
+&quot;RI&quot;,&quot;Sector 1&quot;, 
+&quot;VT&quot;,&quot;Sector 1&quot;, 
+
+&quot;SC&quot;,&quot;Sector 2&quot;, 
+&quot;NC&quot;,&quot;Sector 2&quot;, 
+&quot;VA&quot;,&quot;Sector 2&quot;, 
+&quot;WV&quot;,&quot;Sector 2&quot;, 
+&quot;DC&quot;,&quot;Sector 2&quot;, 
+&quot;MD&quot;,&quot;Sector 2&quot;, 
+&quot;DE&quot;,&quot;Sector 2&quot;, 
+&quot;PA&quot;,&quot;Sector 2&quot;, 
+
+
+&quot;AL&quot;,&quot;Sector 3&quot;, 
+&quot;FL&quot;,&quot;Sector 3&quot;, 
+&quot;GA&quot;,&quot;Sector 3&quot;, 
+&quot;LA&quot;,&quot;Sector 3&quot;, 
+&quot;MS&quot;,&quot;Sector 3&quot;, 
+&quot;Caribbean&quot;,&quot;Sector 3&quot;, 
+&quot;PR&quot;,&quot;Sector 3&quot;, 
+&quot;Puerto Rico&quot;,&quot;Sector 3&quot;, 
+
+&quot;MI&quot;,&quot;Sector 4&quot;, 
+&quot;IN&quot;,&quot;Sector 4&quot;, 
+&quot;OH&quot;,&quot;Sector 4&quot;, 
+&quot;KY&quot;,&quot;Sector 4&quot;, 
+&quot;TN&quot;,&quot;Sector 4&quot;, 
+
+&quot;ID&quot;,&quot;Sector 5&quot;, 
+&quot;MT&quot;,&quot;Sector 5&quot;, 
+&quot;ND&quot;,&quot;Sector 5&quot;, 
+&quot;SD&quot;,&quot;Sector 5&quot;, 
+&quot;MN&quot;,&quot;Sector 5&quot;, 
+&quot;WI&quot;,&quot;Sector 5&quot;, 
+&quot;IL&quot;,&quot;Sector 5&quot;, 
+&quot;MO&quot;,&quot;Sector 5&quot;, 
+&quot;KS&quot;,&quot;Sector 5&quot;, 
+&quot;NE&quot;,&quot;Sector 5&quot;, 
+&quot;IA&quot;,&quot;Sector 5&quot;, 
+&quot;OK&quot;,&quot;Sector 5&quot;, 
+&quot;AR&quot;,&quot;Sector 5&quot;, 
+
+&quot;CO&quot;,&quot;Sector 6&quot;, 
+&quot;WY&quot;,&quot;Sector 6&quot;, 
+&quot;AZ&quot;,&quot;Sector 6&quot;, 
+&quot;TX&quot;,&quot;Sector 6&quot;, 
+&quot;UT&quot;,&quot;Sector 6&quot;, 
+&quot;NV&quot;,&quot;Sector 6&quot;, 
+&quot;NM&quot;,&quot;Sector 6&quot;, 
+
+&quot;WA&quot;,&quot;Sector 7&quot;, 
+&quot;OR&quot;,&quot;Sector 7&quot;, 
+&quot;CA&quot;,&quot;Sector 7&quot;, 
+&quot;AK&quot;,&quot;Sector 7&quot;, 
+&quot;HI&quot;,&quot;Sector 7&quot;, 
+&quot;Guam&quot;,&quot;Sector 7&quot;, 
+&quot;GU&quot;,&quot;Sector 7&quot;, 
+&quot;Northern Marianas Islands&quot;,&quot;Sector 7&quot;, 
+&quot;No Sector&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>SD Sector</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

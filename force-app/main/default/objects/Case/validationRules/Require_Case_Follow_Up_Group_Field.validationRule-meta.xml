@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Case_Follow_Up_Group_Field</fullName>
+    <active>true</active>
+    <description>This validation rule requires a user to enter a follow up group value when a status of &quot;Agent Follow Up&quot; is chosen.</description>
+    <errorConditionFormula>AND
+(
+ISPICKVAL(Status, &quot;Agent Follow Up&quot;),        
+ISBLANK(TEXT( Follow_Up_Group__c )),
+NOT(CONTAINS($User.LastName, &quot;PRT&quot;)),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE  
+)</errorConditionFormula>
+    <errorDisplayField>Follow_Up_Group__c</errorDisplayField>
+    <errorMessage>Fill in the Follow Up Group Field</errorMessage>
+</ValidationRule>

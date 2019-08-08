@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>User_Creation_Request</fullName>
+    <active>true</active>
+    <description>Use this process to request creation of a new user</description>
+    <label>User Creation Request</label>
+    <picklistValues>
+        <picklist>Configuration_Request_Type__c</picklist>
+        <values>
+            <fullName>Enhancement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Feature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fix</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Dish_Request_Status__c</picklist>
+        <values>
+            <fullName>Awaiting Approval</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Awaiting Requester Response</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Complete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Created</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Declined</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Progress</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Requestor comment pending</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PHSS_Business__c</picklist>
+        <values>
+            <fullName>Brand Licensing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Operations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Ops %26 Admin Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Finance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nurse Assistant Training</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Product Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Delivery</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>High</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medium</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Report_Object__c</picklist>
+        <values>
+            <fullName>Accounts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contacts</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leads</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opportunities</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Training Events</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Saba_User_Roles__c</picklist>
+        <values>
+            <fullName>Chapter Manager %28Read Only%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Human Capital Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offering Administration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrar</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Time_Zone__c</picklist>
+        <values>
+            <fullName>Central</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eastern</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mountain</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Western</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>User_Access__c</picklist>
+        <values>
+            <fullName>Instructor%27s Corner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PHSS SharePoint</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SABA LMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salesforce Training Sandbox</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Skedulo</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>User_Request_Type__c</picklist>
+        <values>
+            <fullName>Existing User Change Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New User</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>User_is_a_Certified_Instructor__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Users_Impacted__c</picklist>
+        <values>
+            <fullName>1 User</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entire Team</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organization Wide</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

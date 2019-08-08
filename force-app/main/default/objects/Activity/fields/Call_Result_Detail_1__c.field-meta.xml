@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Call_Result_Detail_1__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Details of the call result</inlineHelpText>
+    <label>Call Result Detail 1</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Call_Result__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ARC AP</fullName>
+                <default>false</default>
+                <label>ARC AP</label>
+            </value>
+            <value>
+                <fullName>Closed Failed to Connect</fullName>
+                <default>false</default>
+                <label>Closed Failed to Connect</label>
+            </value>
+            <value>
+                <fullName>Community</fullName>
+                <default>false</default>
+                <label>Community</label>
+            </value>
+            <value>
+                <fullName>Competitor</fullName>
+                <default>false</default>
+                <label>Competitor</label>
+            </value>
+            <value>
+                <fullName>Date Availability</fullName>
+                <default>false</default>
+                <label>Date Availability</label>
+            </value>
+            <value>
+                <fullName>Escalated</fullName>
+                <default>false</default>
+                <label>Escalated</label>
+            </value>
+            <value>
+                <fullName>Local Rep</fullName>
+                <default>false</default>
+                <label>Local Rep</label>
+            </value>
+            <value>
+                <fullName>Not Interested / No Reason Given</fullName>
+                <default>false</default>
+                <label>Not Interested / No Reason Given</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Recently Certified</fullName>
+                <default>false</default>
+                <label>Recently Certified</label>
+            </value>
+            <value>
+                <fullName>Referred</fullName>
+                <default>false</default>
+                <label>Referred</label>
+            </value>
+            <value>
+                <fullName>Bad Contact Info</fullName>
+                <default>false</default>
+                <label>Bad Contact Info</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>ARC AP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Closed Failed to Connect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Community</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Date Availability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Escalated</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Local Rep</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Not Interested / No Reason Given</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Sale</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Opportunity</controllingFieldValue>
+            <valueName>Recently Certified</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Opportunity</controllingFieldValue>
+            <valueName>Referred</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No Opportunity</controllingFieldValue>
+            <valueName>Bad Contact Info</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

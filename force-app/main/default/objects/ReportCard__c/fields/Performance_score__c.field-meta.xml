@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Performance_score__c</fullName>
+    <externalId>false</externalId>
+    <formula>( CASE(Overall_performance__c, &quot;A&quot;, 5, &quot;B&quot;, 4,&quot;C&quot;,3, &quot;D&quot;,2,&quot;F&quot;,1,0) + CASE(  Recommendation__c , &quot;Yes&quot;, 5, &quot;No&quot;, 0,2.5) )
+/
+(CASE( Overall_performance__c , &quot;A&quot;, 5, &quot;B&quot;, 5,&quot;C&quot;,5, &quot;D&quot;,5,&quot;F&quot;,5,0) + CASE( Recommendation__c , &quot;Yes&quot;, 5, &quot;No&quot;, 5,&quot;Don&#39;t know&quot;,5, 0) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Combination of Overall performance score and recommendation</inlineHelpText>
+    <label>Performance score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Percent</type>
+</CustomField>

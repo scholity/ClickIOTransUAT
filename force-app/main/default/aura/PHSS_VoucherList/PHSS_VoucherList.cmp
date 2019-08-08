@@ -1,0 +1,139 @@
+<aura:component controller="PHSS_VoucherListController" implements="force:appHostable,force:hasRecordId,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="data" type="Object" />
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="vouchList" type="List" /> 
+    <aura:attribute name="showModal" type="Boolean" />
+    <aura:attribute name="voucherId" type="String" />
+    <aura:attribute name="voucherUser" type="String" />
+    <aura:attribute name="selectedAction" type="String" />
+    <aura:attribute name="cancelMessage" type="String" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="classClosed" type="Boolean" default="false" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:handler name="refreshVoucherList" event="c:PHSS_EnrollLearnerEvent" action="{!c.refreshVoucherList}" />
+
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+         <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col" style="width:22%">
+                    <div class="slds-truncate" title="Voucher #">Voucher #</div>
+                </th>                
+				<th scope="col" style="width:12%">
+                    <div class="slds-truncate" title="Status">Status</div>
+                </th>
+                <th scope="col" style="width:15%">
+                    <div class="slds-truncate" title="user">User</div>
+                </th>
+                <th scope="col" style="width:25%">
+                    <div class="slds-truncate" title="SignUp Url">SignUp Url</div>
+                </th>
+                <aura:if isTrue="{!v.vouchList[0].ILT_Class__r.Request_Type__c != 'Community'}">
+                    <th scope="col" style="width:22%">
+                        <div class="slds-truncate" title="Action"></div>
+                    </th>
+                </aura:if>
+            </tr>
+         </thead>
+         <tbody>
+            <aura:iteration items="{!v.vouchList }" var="vouch">
+               <tr>
+                    <td>{!vouch.Voucher_Claim__c}</td>
+                 	<td>{!vouch.Status__c}</td>
+                   	<td>{!vouch.User__r.Name}</td>
+                   	<aura:if isTrue="{!vouch.Status__c == 'Issued'}">
+                   		<td class="slds-cell-wrap">{!vouch.QR_Code_Web_Address__c}</td>
+                        <aura:set attribute="else">
+                        	<td></td>
+                        </aura:set>
+                    </aura:if>
+
+                    <aura:if isTrue="{! v.classClosed == false}">
+                        <aura:if isTrue="{!and(vouch.ILT_Class__r.Request_Type__c != 'Community',vouch.Status__c == 'Issued')}">
+                            <td>
+                                <div onclick="{!c.enrollAction}" data-value="{!vouch.Voucher_Claim__c}">
+                                    <lightning:button label="Enroll Learner" class="enrollBtn" />
+                                </div>
+                            </td>
+                            <aura:set attribute="else">
+                                <!--<aura:if isTrue="{!and(and(vouch.ILT_Class__r.Request_Type__c != 'Community', and(vouch.ILT_Class__r.Request_Type__c != 'Nurse Assistant Training', vouch.ILT_Class__r.Request_Type__c != 'Nurse Assistant Testing')),vouch.Status__c == 'Claimed')}">-->
+                                <aura:if isTrue="{!and(or(vouch.ILT_Class__r.Request_Type__c == 'LTP/AP', vouch.ILT_Class__r.Request_Type__c == 'Full Service'),vouch.Status__c == 'Claimed')}">
+                                    <td>
+                                        <div onclick="{!c.unenrollAction}" data-value="{!vouch.User__r.Name+'::'+vouch.Voucher_Claim__c}">
+                                            <lightning:button label="Cancel Learner" class="enrollBtn" />
+                                        </div>
+                                    </td>
+                                    <aura:set attribute="else">
+                                        <td></td>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                        <aura:set attribute="else">
+                            <td></td>
+                        </aura:set>
+                    </aura:if>
+
+
+               </tr>
+             </aura:iteration>
+        </tbody>
+    </table>
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <div class="slds-spinner_container">
+            <div role="status" class="slds-spinner slds-spinner_medium">
+                <span class="slds-assistive-text">Operation in progress...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!and(v.showModal, v.selectedAction == 'enroll')}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        <lightning:icon iconName="action:close" size="small" />
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Enroll Learner</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <c:PHSS_ClaimVoucherForm voucherId="{!v.voucherId}" />
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+
+
+    <aura:if isTrue="{!and(v.showModal, v.selectedAction == 'cancel')}">
+        <section role			  = "dialog"
+                 tabindex		  = "-1"
+                 class			  = "slds-modal slds-fade-in-open slds-modal_small"
+                 aria-labelledby  = "header43"
+                 aria-modal		  = "true"
+                 aria-describedby = "modal-content-id-1">
+
+            <div class = "slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        <lightning:icon iconName="action:close" size="small" />
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Cancel Enrollment</h2>
+                </header>
+                <div class="slds-modal__footer slds-grid slds-grid_align-spread progIndicator">
+                    Cancel Enrollment for {!v.voucherUser} (Voucher will be voided and learning assignment(s) cancelled)
+                    <div class="slds-col">
+                        <button class="slds-button slds-button_neutral customButton" onclick="{!c.doUnenroll}" >
+                            Cancel Enrollment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

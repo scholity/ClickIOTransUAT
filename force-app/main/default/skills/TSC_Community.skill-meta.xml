@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Skill xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <users>
+            <user>aaron.anderson@redcross.org</user>
+            <user>amber.chick@redcross.org</user>
+            <user>ashley.armstrong@redcross.org</user>
+            <user>cheryl.jackson@redcross.org</user>
+            <user>cora.killebrew@redcross.org</user>
+            <user>debra.baker@redcross.org</user>
+            <user>diana.martinez@redcross.org</user>
+            <user>erica.hanon@redcross.org</user>
+            <user>geraldine.harris@redcross.org</user>
+            <user>gordon.smith@redcross.org</user>
+            <user>guy.galluzzo@redcross.org</user>
+            <user>heather.carter@redcross.org</user>
+            <user>hector.rivera@redcross.org</user>
+            <user>janice.fischer@redcross.org</user>
+            <user>junior.minzie@redcross.org</user>
+            <user>kathryn.lee@redcross.org</user>
+            <user>lernecca.videau@redcross.org</user>
+            <user>lorraine.medlen@redcross.org</user>
+            <user>mary.joyner@redcross.org</user>
+            <user>maryb.moore@redcross.org</user>
+            <user>melinda.hair@redcross.org</user>
+            <user>michael.shaw@redcross.org</user>
+            <user>nancy.mickey@redcross.org</user>
+            <user>nancy.mitchell@redcross.org</user>
+            <user>nicholle.swank@redcross.org</user>
+            <user>nicole.provance@redcross.org</user>
+            <user>sha-retha.jackson@redcross.org</user>
+            <user>sharon.reynolds@redcross.org</user>
+            <user>sheila.meade@redcross.org</user>
+            <user>shelia.rose@redcross.org</user>
+            <user>tracy.quinn@redcross.org</user>
+            <user>yolanda.jones@redcross.org</user>
+        </users>
+    </assignments>
+    <description>Skill to use for all chats that originate from the PHSS Instructors corner</description>
+    <label>TSC Community</label>
+</Skill>

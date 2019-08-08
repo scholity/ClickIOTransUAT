@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission allows specific users to select &quot;Customer Service QA&quot; as a Reason Code for a Course Credit Adjustment on CC Order Item.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>SB - Customer Service QA Reason Code Available</label>
+    <recordTypeVisibilities>
+        <recordType>ccrz__E_OrderItem__c.Course_Credit_Adt_Customer_Service_QA</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

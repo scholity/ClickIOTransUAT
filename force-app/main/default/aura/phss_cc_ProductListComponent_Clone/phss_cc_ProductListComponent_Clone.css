@@ -1,0 +1,10 @@
+.THIS .columnHeaders{
+    font-size: 16px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.THIS .text-field-error {
+    border: 2px solid rgb(194, 57, 52);
+}

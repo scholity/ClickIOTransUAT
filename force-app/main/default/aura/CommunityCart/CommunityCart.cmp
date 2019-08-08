@@ -1,0 +1,166 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" controller="phss_cc_CartController">
+	
+    <aura:attribute name="recordId" type="String" />
+    
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="currOpportunity" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Account.Name,Account.BillingStreet, Account.BillingCity, Account.BillingState, Account.BillingPostalCode,Account.BillingCountry,Account.ShippingStreet, Account.ShippingCity, Account.ShippingState, Account.ShippingPostalCode,Account.ShippingCountry"
+                      targetFields="{!v.currOpportunity}"
+                      targetError="{!v.recordError}"
+    />
+
+    <!--Retrieved from Server-->
+    <aura:attribute name="productList" type="List"/>
+    <aura:attribute name="productsMap" type="Map"/>
+    <aura:attribute name="cartTotal" type="Decimal" default="0.00"/>
+
+    <!--Variables to maintain a cart on the front end-->
+    <aura:attribute name="encryptedCartId" type="String" default=""/>
+    <aura:attribute name="productQuantityMap" type="Map"/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="isCartUpdated" type="Boolean" default="false"/>
+
+    <!--Account Details-->
+    <aura:attribute name="bill_to_forename" type="String"/>
+    <aura:attribute name="bill_to_surname" type="String"/>
+    <aura:attribute name="bill_to_email" type="String"/>
+    <aura:attribute name="bill_to_address_line1" type="String"/>
+    <aura:attribute name="bill_to_address_city" type="String"/>
+    <aura:attribute name="bill_to_address_country" type="String"/>
+    <aura:attribute name="bill_to_address_state" type="String"/>
+    <aura:attribute name="bill_to_address_postal_code" type="String"/>
+
+    <!--Register Events-->
+    <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
+    <aura:registerEvent name="showPriceOverrideModal" type="c:phss_cc_ShowPriceOverrideModalEvent"/>
+
+    <!--Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdate"
+                  action="{!c.productCountIncrement}"/>
+    <aura:handler name="decrementProductCount" event="c:phss_cc_ProductCountUpdate"
+                  action="{!c.productCountDecrement}"/>
+    <aura:handler name="cyberSourceResponse" event="c:phss_cc_CyberSourceResponseEvent"
+                  action="{!c.handleCyberSourceResponse}"/>
+    <aura:handler name="sendPOToCart" event="c:phss_cc_POToCartEvent"
+                  action="{!c.handlePOPayment}"/>
+    <aura:handler event="c:phss_cc_RefreshComponentEvent" action="{!c.handleRefreshComponentEvent}"/>
+    <aura:handler name="showPriceOverrideModal" event="c:phss_cc_ShowPriceOverrideModalEvent" action="{!c.handleShowPriceOverrideModal}"/>
+
+    <!--Spinner when page loads-->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="{!$Label.c.Spinner_Alternate_Text}"/>
+    </aura:if>
+
+    <!--If not initialized-->
+    <aura:if isTrue="{!v.renderComplete == false}">
+        <div class="slds-align_absolute-center">
+            <lightning:formattedText class="slds-text-heading--medium slds-m-right--medium"
+                                     value="{!$Label.c.Cart_OnLoad_Message_NoCartFound}"/>
+            <lightning:button variant="brand" label="Reload"
+                              onclick="{!c.reloadCart}"/>
+        </div>
+    </aura:if>
+
+    <!--Display Cart-->
+    <aura:if isTrue="{!v.renderComplete}">
+        <h1 class="slds-text-heading--medium slds-m-bottom--small">
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.Cart_Table_Header}"/>
+            <lightning:formattedNumber class="slds-m-right--xx-small" value="{!v.productList.length}"/>
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.Cart_Table_Header_Value_Type}"/>
+        </h1>
+
+        <div class="slds-grid slds-border--top slds-border--bottom slds-m-bottom--small">
+            <div class="slds-size_2-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_SKU}</div>
+            <div class="slds-size_4-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_Name}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_UOM}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Price}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">&nbsp;</div>
+            <div class="slds-size_2-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>
+        </div>
+
+        <aura:if isTrue="{!v.productList.length==0}">
+            <lightning:formattedText class="slds-align_absolute-center slds-text-heading--small"
+                                     value="Cart is empty."/>
+            <lightning:button iconName="utility:refresh" variant="brand"
+                              class="slds-align_absolute-center slds-m-top--medium"
+                              onclick="{!c.reloadCart}" label="Reload Cart"/>
+        </aura:if>
+
+        <aura:if isTrue="{!v.productList.length!=0}">
+            <div class="slds-scrollable--y" style="max-height: 20rem; height: auto;">
+                <aura:iteration items="{!v.productList}" var="product">
+                    <c:phss_cc_ProductDetail productSfid="{!product}" productMap="{!v.productsMap}"
+                                             productQuantityMap="{!v.productQuantityMap}"
+                                             allowsPriceOverride="true"/>
+                </aura:iteration>
+            </div>
+
+            <!--Cart Total-->
+            <div class="slds-grid slds-p-bottom--medium slds-p-top--medium slds-border--top slds-border--bottom">
+                <div class="slds-size_7-of-12 slds-text-heading--medium" style="font-weight: bold;">Total:</div>
+                <div class="slds-size_1-of-12 slds-text-heading--medium" style="font-weight: bold;">
+                    <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}" currencyDisplayAs="symbol" value="{!v.cartTotal}" />
+                </div>
+            </div>
+
+            <!--Cart Buttons-->
+            <div align="center" class="slds-m-top--large">
+                <lightning:button iconName="utility:refresh" class="slds-m-bottom--medium" variant="neutral"
+                                  label="Reload Cart" onclick="{!c.reloadCart}"/>
+                <lightning:button iconName="utility:shopping_bag" class="slds-m-bottom--medium" variant="brand"
+                                  label="{!$Label.c.Cart_Button_UpdateCart}" onclick="{!c.updateCart}"/>
+            </div>
+
+            <!--Display Account Details-->
+            <div class="slds-grid slds-wrap slds-border--top slds-border--bottom">
+                <div class="slds-m-top--medium slds-m-bottom--medium slds-size--1-of-1 slds-text-heading--medium">
+                    Account Details:
+                </div>
+                <div class="slds-m-bottom--small slds-size--1-of-1 slds-text-heading--small">{!'Name: ' + v.currOpportunity.Account.Name}</div>
+                <div class="slds-m-bottom--small slds-size--1-of-2 slds-text-heading--small">
+                    Shipping Address:
+                    <br/>
+                    {!v.currOpportunity.Account.BillingStreet}
+                    <br/>
+                    {!v.currOpportunity.Account.BillingCity} , {!v.currOpportunity.Account.BillingState}
+                    <br/>
+                    {!v.currOpportunity.Account.BillingCountry} , {!v.currOpportunity.Account.BillingPostalCode}
+                </div>
+                <div class="slds-size--1-of-2 slds-text-heading--small">
+                    Billing Address:
+                    <br/>
+                    {!v.currOpportunity.Account.ShippingStreet}
+                    <br/>
+                    {!v.currOpportunity.Account.ShippingCity} , {!v.currOpportunity.Account.ShippingState}
+                    <br/>
+                    {!v.currOpportunity.Account.ShippingCountry} , {!v.currOpportunity.Account.ShippingPostalCode}
+                </div>
+            </div>
+
+            <!--Payment methods-->
+            <div class="slds-border--bottom">
+                <div class="slds-m-top--medium slds-m-bottom--medium slds-text-heading--medium">Payment Details:</div>
+                <lightning:tabset class="slds-m-top--medium slds-m-bottom--medium">
+                    <lightning:tab label="Credit Card">
+                        <c:phss_cc_CyberSourceCCProcessor currOpportunitySfid="{!v.recordId}"/>
+                    </lightning:tab>
+                    <lightning:tab label="Purchase Order">
+                        <c:phss_cc_PurchaseOrder currOpportunitySfid="{!v.recordId}"/>
+                    </lightning:tab>
+                </lightning:tabset>
+            </div>
+        </aura:if>
+    </aura:if>
+
+    <!--Price Override modal-->
+    <c:phss_cc_PriceOverrideModal/>
+    
+</aura:component>

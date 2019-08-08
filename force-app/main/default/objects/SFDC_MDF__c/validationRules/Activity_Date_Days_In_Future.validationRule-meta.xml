@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activity_Date_Days_In_Future</fullName>
+    <active>true</active>
+    <description>Confirm that the training date is a certain # days in the future</description>
+    <errorConditionFormula>AND(   OR (      ISNEW(),       ISCHANGED( Activity_Date__c )),    Activity_Date__c &lt; (TODAY()+0) )</errorConditionFormula>
+    <errorDisplayField>Activity_Date__c</errorDisplayField>
+    <errorMessage>The training date should be 0 days or more in the future</errorMessage>
+</ValidationRule>

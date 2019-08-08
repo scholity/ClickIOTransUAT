@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Orientation</fullName>
+        <default>false</default>
+        <label>Orientation</label>
+    </customValue>
+    <customValue>
+        <fullName>CPR</fullName>
+        <default>false</default>
+        <label>CPR</label>
+    </customValue>
+    <customValue>
+        <fullName>Theory</fullName>
+        <default>false</default>
+        <label>Theory</label>
+    </customValue>
+    <customValue>
+        <fullName>Lab</fullName>
+        <default>false</default>
+        <label>Lab</label>
+    </customValue>
+    <customValue>
+        <fullName>Clinical</fullName>
+        <default>false</default>
+        <label>Clinical</label>
+    </customValue>
+    <customValue>
+        <fullName>Make Up</fullName>
+        <default>false</default>
+        <label>Make Up</label>
+    </customValue>
+    <customValue>
+        <fullName>Graduation</fullName>
+        <default>false</default>
+        <label>Graduation</label>
+    </customValue>
+    <customValue>
+        <fullName>Review Day</fullName>
+        <default>false</default>
+        <label>Review Day</label>
+    </customValue>
+    <customValue>
+        <fullName>CPR/NAT</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>CPR/NAT</label>
+    </customValue>
+    <customValue>
+        <fullName>Make-up</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Make-up</label>
+    </customValue>
+    <masterLabel>Course Class Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Second_ARC_Response_Date_Time__c</fullName>
+    <description>Social Care: Response timestamp of second agent to addressing the case</description>
+    <externalId>false</externalId>
+    <label>Second ARC Response Date/Time</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>DateTime</type>
+</CustomField>

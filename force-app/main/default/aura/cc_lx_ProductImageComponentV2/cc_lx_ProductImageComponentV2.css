@@ -1,0 +1,14 @@
+.THIS .product-imitation{
+  display: block;
+}
+.THIS img{
+  max-height: 60px;
+}
+.THIS .qty-controls button{
+  min-width: 2.25rem;
+}
+.THIS a.carousel-control{
+  max-height: 5rem;
+  top: 30%;
+  max-width: 5rem;
+}

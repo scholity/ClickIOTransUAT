@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>P_D_Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(P_D__c &gt; 8, &quot;Promoter&quot;, IF(P_D__c &lt; 7, &quot;Detractor&quot;, &quot;Passive&quot;))</formula>
+    <inlineHelpText>Shows the status of the recommend score. 0-6 = Detractor; 7,8 = Passive; 9,10 = Promoter.</inlineHelpText>
+    <label>P-D Status</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

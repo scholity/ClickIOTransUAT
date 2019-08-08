@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Open_Fulfillment_Items__c</fullName>
+    <description>Calculates the number of Fulfillment Item records with Status equal to &#39;Ready&#39; or &#39;In Progress&#39;</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of Fulfillment Item records with Status set to &#39;Ready&#39; or &#39;In Progress&#39;</inlineHelpText>
+    <label>Open Fulfillment Items</label>
+    <summaryFilterItems>
+        <field>Fulfillment_Item__c.Status__c</field>
+        <operation>equals</operation>
+        <value>In Progress, Ready</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Fulfillment_Item__c.Fulfillment__c</summaryForeignKey>
+    <summaryOperation>count</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

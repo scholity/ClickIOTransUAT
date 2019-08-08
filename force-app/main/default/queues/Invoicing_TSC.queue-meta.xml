@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>Invoicing TSC</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>Back_Office</publicGroup>
+            <publicGroup>CST_Queue</publicGroup>
+            <publicGroup>TSC_Back_Office_TLs</publicGroup>
+            <publicGroup>TSC_Management</publicGroup>
+            <publicGroup>TSC_Team_Leads</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Back_Office_Team_Lead</role>
+            <role>CCO</role>
+            <role>CST</role>
+            <role>Front_Office_Manager_Role</role>
+            <role>Front_Office_Uniontown_Team_Lead_Role</role>
+            <role>Registration_Support_Group_Team_Lead_Role</role>
+            <role>Tier_III</role>
+            <role>TSC_Management</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

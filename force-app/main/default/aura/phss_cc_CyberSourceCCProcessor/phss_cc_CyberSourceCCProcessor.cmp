@@ -1,0 +1,275 @@
+<!--
+ - Created by dgajwani on 9/28/18.
+ -->
+
+<aura:component description="phss_cc_CyberSourceCCProcessor" controller="phss_cc_CyberSourceCCProcessorController">
+
+    <!--Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!--Opportunity Data-->
+    <aura:attribute name="currOpportunitySfid" type="String"/>
+
+    <!--Booleans for view manipulation-->
+    <aura:attribute name="showForm" type="Boolean" default="false"/>
+    <aura:attribute name="allowPaymentSubmission" type="Boolean" default="true"/>
+    
+    <!--Hack-->
+    <aura:attribute name="requiresClickHack" type="Boolean" default="false"/>
+    <aura:attribute name="showPaymentProgress" type="Boolean" default="false"/>
+
+    <!--Other Attributes-->
+    <aura:attribute name="cybersourceHostedFormData" type="Map"/>
+    <aura:attribute name="iframeURL" type="String"/>
+
+    <!--Spinner when page loads-->
+    <aura:attribute type="Boolean" name="showSpinner" default="false"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="Waiting on data from server."/>
+    </aura:if>
+
+    <!--Register Event-->
+    <aura:registerEvent name="cyberSourceResponse" type="c:phss_cc_CyberSourceResponseEvent"/>
+    
+    <aura:handler event="c:AccountBalanceToCreditCardEvent" action="{!c.handleABAmount}" includeFacets="true" />
+    
+    
+
+    <!--Form Data for POST-->
+    <aura:attribute name="access_key" type="String"/>
+    <aura:attribute name="profile_id" type="String"/>
+    <aura:attribute name="transaction_uuid" type="String"/>
+    <aura:attribute name="signed_field_names" type="String"/>
+    <aura:attribute name="signature" type="String"/>
+    <aura:attribute name="unsigned_field_names" type="String"/>
+    <aura:attribute name="reference_number" type="String"/>
+    <aura:attribute name="transaction_type" type="String"/>
+    <aura:attribute name="locale" type="String"/>
+    <aura:attribute name="currency" type="String"/>
+    <aura:attribute name="signed_date_time" type="String"/>
+    <aura:attribute name="payment_method" type="String"/>
+    <aura:attribute name="ignore_avs" type="String"/>
+    <aura:attribute name="override_custom_receipt_page" type="String"/>
+    <aura:attribute name="merchant_defined_data1" type="String"/>
+    <aura:attribute name="returnURL" type="String"/>
+    <aura:attribute name="postURL" type="String"/>
+    <aura:attribute name="currCartId" type="String"/>
+    <aura:attribute name="amount" type="String"/>
+    <aura:attribute name="paymentTypes" type="List"/>
+    <aura:attribute name="ipAddr" type="String"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="accountCreated" type="String"/>
+    <aura:attribute name="accountLastModified" type="String"/>
+
+    <!--User input-->
+    <aura:attribute name="bill_to_forename" type="String"/>
+    <aura:attribute name="bill_to_surname" type="String"/>
+    <aura:attribute name="bill_to_email" type="String"/>
+    <aura:attribute name="bill_to_phone" type="String"/>
+    <aura:attribute name="card_type" type="String"/>
+    <aura:attribute name="card_number" type="String"/>
+    <aura:attribute name="card_expiry_month" type="String"/>
+    <aura:attribute name="card_expiry_year" type="String"/>
+    <aura:attribute name="card_cvn" type="String"/>
+    <aura:attribute name="bill_to_address_line1" type="String"/>
+    <aura:attribute name="bill_to_address_city" type="String"/>
+    <aura:attribute name="bill_to_address_country" type="String"/>
+    <aura:attribute name="bill_to_address_state" type="String"/>
+    <aura:attribute name="bill_to_address_postal_code" type="String"/>
+
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning:icon class="slds-m-right--small" iconName="utility:description" size="medium"/>
+                </div>
+                <div class="slds-media__body">
+                    <h1>Credit Card Payment</h1>
+                </div>
+            </header>
+        </div>
+        <aura:if isTrue="{!v.showForm}">
+            <div class="slds-card__body slds-card__body_inner">
+
+                <!--Cardholder Details-->
+                <legend class="slds-form-element__label">Cardholder's Information</legend>
+                <div class="slds-grid slds-gutters_medium slds-wrap slds-m-bottom--x-large">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:input aura:id="payment_form" name="bill_to_forename" label="First Name"
+                                         required="true" value="{!v.bill_to_forename}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:input aura:id="payment_form" name="bill_to_surname" label="Last Name"
+                                         required="true" value="{!v.bill_to_surname}"/>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:input aura:id="payment_form" name="bill_to_phone" label="Phone Number"
+                                         required="true" value="{!v.bill_to_phone}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning:input aura:id="payment_form" name="bill_to_email" label="Email Address"
+                                         required="true" value="{!v.bill_to_email}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3"></div>
+                </div>
+
+                <!--Card Details-->
+                <legend class="slds-form-element__label">Card Information</legend>
+                <div class="slds-grid slds-wrap slds-m-bottom--x-large">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning:select aura:id="payment_form" label="Card Type" name="card_type" required="true" value="{!v.card_type}">
+                            <aura:iteration items="{!v.paymentTypes}" var="payment">
+                                <option value="{!payment.key}">{!payment.value}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 ">
+
+                        <!--card_type=001 (Visa)-->
+                        <aura:if isTrue="{! equals(v.card_type, '001') }">
+                            <lightning:input aura:id="payment_form" name="card_number" label="Card Number" required="true"
+                                             value="{!v.card_number}"
+                                             pattern="([0-9]{4})?[-]?([0-9]{4})[-]?([0-9]{4})[-]?([0-9]{4})"
+                                             messageWhenPatternMismatch="Please enter a valid input in the format XXXX-XXXX-XXXX-XXXX."
+                                             maxlength="19"
+                            />
+                        </aura:if>
+
+                        <!--card_type=002 (Mastercard)-->
+                        <aura:if isTrue="{! equals(v.card_type, '002') }">
+                            <lightning:input aura:id="payment_form" name="card_number" label="Card Number" required="true"
+                                             value="{!v.card_number}"
+                                             pattern="([0-9]{4})?[-]?([0-9]{4})[-]?([0-9]{4})[-]?([0-9]{4})"
+                                             messageWhenPatternMismatch="Please enter a valid input in the format XXXX-XXXX-XXXX-XXXX."
+                                             maxlength="19"
+                            />
+                        </aura:if>
+
+                        <!--card_type=003 (American Express)-->
+                        <aura:if isTrue="{! equals(v.card_type, '003') }">
+                            <lightning:input aura:id="payment_form" name="card_number" label="Card Number" required="true"
+                                             value="{!v.card_number}"
+                                             pattern="([0-9]{4})?[-]?([0-9]{6})[-]?([0-9]{5})"
+                                             messageWhenPatternMismatch="Please enter a valid input in the format XXXX-XXXXXX-XXXXX."
+                                             maxlength="17"
+                            />
+                        </aura:if>
+
+                        <!--card_type=004 (Discover)-->
+                        <aura:if isTrue="{! equals(v.card_type, '004') }">
+                            <lightning:input aura:id="payment_form" name="card_number" label="Card Number" required="true"
+                                             value="{!v.card_number}"
+                                             pattern="([0-9]{4})?[-]?([0-9]{4})[-]?([0-9]{4})[-]?([0-9]{4})"
+                                             messageWhenPatternMismatch="Please enter a valid input in the format XXXX-XXXX-XXXX-XXXX."
+                                             maxlength="19"
+                            />
+                        </aura:if>
+
+                    </div>
+
+                    <div class="slds-col slds-size--1-of-6 slds-m-right--medium">
+                        <lightning:input aura:id="payment_form" name="card_expiry_month" label="Exp MM"
+                                         required="true"
+                                         value="{!v.card_expiry_month}"
+                                         pattern="([0-9]{2})" placeholder="MM"
+                                         messageWhenPatternMismatch="Please enter a valid Month in the format MM."/>
+                    </div>
+                    <div class="slds-col slds-size--1-of-6">
+                        <lightning:input aura:id="payment_form" name="card_expiry_year" label="Exp YYYY"
+                                         required="true"
+                                         pattern="([0-9]{4})" placeholder="YY" value="{!v.card_expiry_year}"
+                                         messageWhenPatternMismatch="Please enter a valid Year in the format YYYY."/>
+                    </div>
+                    <div class="slds-col slds-size--1-of-6" style="margin-left: 220px;">
+                        <lightning:input aura:id="payment_form" name="card_cvn" label="CVV" required="true" maxlength="4"
+                                         messageWhenTooLong="Enter up to 4 digits." value="{!v.card_cvn}"/>
+                    </div>
+                </div>
+
+                <!--Billing Address-->
+                <legend class="slds-form-element__label">Credit Card Billing Address</legend>
+
+                <div class="slds-grid slds-wrap slds-gutters_large slds-m-bottom--xx-large">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning:input aura:id="payment_form" name="bill_to_address_line1" label="Street"
+                                         required="true"
+                                         value="{!v.bill_to_address_line1}"/>
+                    </div>
+                    <div class="slds-col slds-size--6-of-12">
+                        <lightning:input aura:id="payment_form" name="bill_to_address_city" label="City"
+                                         required="true" value="{!v.bill_to_address_city}"/>
+                    </div>
+                    <div class="slds-col slds-size--6-of-12">
+                        <lightning:input aura:id="payment_form" name="bill_to_address_state" label="State"
+                                         required="true" value="{!v.bill_to_address_state}"/>
+                    </div>
+                    <div class="slds-col slds-size--6-of-12">
+                        <lightning:input aura:id="payment_form" name="bill_to_address_country"
+                                         label="Country"
+                                         required="true" value="{!v.bill_to_address_country}"/>
+                    </div>
+                    <div class="slds-col slds-size--6-of-12">
+                        <lightning:input aura:id="payment_form" name="bill_to_address_postal_code"
+                                         label="Zip Code" required="true"
+                                         value="{!v.bill_to_address_postal_code}"/>
+                    </div>
+                </div>
+
+                <!--Make Payment-->
+                <aura:if isTrue="{! v.allowPaymentSubmission }">
+                    <lightning:button variant="success" class="slds-align_absolute-center slds-m-top--large" label="Make Payment"
+                                      onclick="{!c.submitFormData}"/>
+
+                    <aura:set attribute="else">
+                        <div class="slds-align_absolute-center slds-m-top_large">
+
+                            <!--disabled button-->
+                            <lightning:button variant="success" label="Make Payment" disabled="true"/>
+
+                            <!--popover-->
+                            <div class="approvalWarning">
+                                <div class="slds-popover slds-nubbin_left slds-popover_medium" style="z-index: unset;">
+                                    <div class="slds-popover__body">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="utility:error" variant="inverse" size="small" alternativeText="Error!" title="Please submit the opportunity for approval" />
+                                            </div>
+                                            <div class="slds-media__body slds-text-align_left">
+                                                Please submit the opportunity for approval
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </aura:set>
+                </aura:if>
+
+                <iframe aura:id="CC_Cybersource_pmt_iframe" name="CC_Cybersource_pmt_iframe" style="border:0px"
+                        src="{!v.iframeURL}"
+                        width="1px" height="1px"></iframe>
+            </div>
+        </aura:if>
+    </article>
+    
+    <aura:if isTrue="{! v.showPaymentProgress }">
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+      <header class="slds-modal__header">
+        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Processing Payment</h2>
+      </header>
+      <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+        <p>The payment is being processed.</p>
+      </div>
+      <footer class="slds-modal__footer">
+          <button class="slds-button slds-button_brand" onclick="{! c.dismissPaymentProgress }">Dismiss</button>
+      </footer>
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </aura:if>
+</aura:component>

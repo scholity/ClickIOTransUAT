@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="Organization" type="String"/>
+    <aura:attribute name="PartnerInstructor" type="String"/>
+</aura:event>

@@ -1,0 +1,7 @@
+<!--
+ - Created by dgajwani on 9/28/18.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_CyberSourceResponseEvent">
+    <aura:attribute name="responseString" type="String" required="true"/>
+</aura:event>

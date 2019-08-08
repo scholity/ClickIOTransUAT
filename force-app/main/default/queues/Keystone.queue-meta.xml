@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>Keystone</name>
+    <queueMembers>
+        <roles>
+            <role>PHSS_Sales_Dir_East</role>
+            <role>PHSS_Sales_Mgr_AQ_East</role>
+            <role>PHSS_Sales_Mgr_Keystone</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Lead__c</sobjectType>
+    </queueSobject>
+</Queue>

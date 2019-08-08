@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCS_PO_Payment_Terms_Mismatch</fullName>
+    <active>true</active>
+    <description>Checks whether the field is mismatch</description>
+    <errorConditionFormula>AND( ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE, Text(Account.Payment_Terms__c) &lt;&gt; Text(Terms__c))</errorConditionFormula>
+    <errorDisplayField>Terms__c</errorDisplayField>
+    <errorMessage>Account payment Terms is not matching with case payment terms.</errorMessage>
+</ValidationRule>

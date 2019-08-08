@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Real_Email__c</fullName>
+    <description>Real email address of user. Derived by removing the extra environment suffix from their username.  Delete after all initial users are loaded into the environment with their correct emails.</description>
+    <externalId>false</externalId>
+    <formula>SUBSTITUTE( Username, &#39;.phss&#39;, &#39;&#39;)</formula>
+    <inlineHelpText>Real email address of user. Derived by removing the extra environment suffix from their username.  Delete after all initial users are loaded into the environment with their correct emails.</inlineHelpText>
+    <label>Real Email</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PO_Reject_Reason__c</fullName>
+    <description>Related RCS PO rejected cases</description>
+    <externalId>false</externalId>
+    <label>RCS PO Reject Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Primary_Close_Reason__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Unpaid AR over 90 days past due</fullName>
+                <default>false</default>
+                <label>Unpaid AR over 90 days past due</label>
+            </value>
+            <value>
+                <fullName>High Risk Credit Rating</fullName>
+                <default>false</default>
+                <label>High Risk Credit Rating</label>
+            </value>
+            <value>
+                <fullName>Incomplete Information</fullName>
+                <default>false</default>
+                <label>Incomplete Information</label>
+            </value>
+            <value>
+                <fullName>Terminated Invoicing due to Non-payment of training or RCS invoice</fullName>
+                <default>false</default>
+                <label>Terminated Invoicing due to Non-payment of training or RCS invoice</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Customer Ineligible</controllingFieldValue>
+            <valueName>Unpaid AR over 90 days past due</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Ineligible</controllingFieldValue>
+            <valueName>High Risk Credit Rating</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Ineligible</controllingFieldValue>
+            <valueName>Incomplete Information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Ineligible</controllingFieldValue>
+            <valueName>Terminated Invoicing due to Non-payment of training or RCS invoice</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

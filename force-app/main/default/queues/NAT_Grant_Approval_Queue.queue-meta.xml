@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>NAT Grant Approval Queue</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>NAT_Approval_Request</publicGroup>
+        </publicGroups>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>SFDC_MDF_Claim__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>SFDC_MDF__c</sobjectType>
+    </queueSobject>
+</Queue>

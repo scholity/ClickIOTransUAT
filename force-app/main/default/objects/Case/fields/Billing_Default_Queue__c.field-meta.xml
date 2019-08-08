@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Billing_Default_Queue__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is intended to be used only via API and the Email Service logic to prevent the Auto Assignment rules from changing the Case owner.</description>
+    <externalId>false</externalId>
+    <label>Billing Default Queue</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

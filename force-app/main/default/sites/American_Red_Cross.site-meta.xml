@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowHomePage>false</allowHomePage>
+    <allowStandardAnswersPages>false</allowStandardAnswersPages>
+    <allowStandardIdeasPages>false</allowStandardIdeasPages>
+    <allowStandardLookups>false</allowStandardLookups>
+    <allowStandardPortalPages>true</allowStandardPortalPages>
+    <allowStandardSearch>false</allowStandardSearch>
+    <authorizationRequiredPage>ccrz__CCSiteLogin</authorizationRequiredPage>
+    <bandwidthExceededPage>ccrz__CCBandwidthExceeded</bandwidthExceededPage>
+    <browserXssProtection>true</browserXssProtection>
+    <changePasswordPage>ccrz__CCChangePassword</changePasswordPage>
+    <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
+    <contentSniffingProtection>true</contentSniffingProtection>
+    <cspUpgradeInsecureRequests>true</cspUpgradeInsecureRequests>
+    <enableAuraRequests>true</enableAuraRequests>
+    <fileNotFoundPage>ccrz__CCFileNotFound</fileNotFoundPage>
+    <forgotPasswordPage>ccrz__CCForgotPassword</forgotPasswordPage>
+    <genericErrorPage>ccrz__CCException</genericErrorPage>
+    <inMaintenancePage>ccrz__CCInMaintenance</inMaintenancePage>
+    <inactiveIndexPage>ccrz__CCInMaintenance</inactiveIndexPage>
+    <indexPage>ccrz__HomePage</indexPage>
+    <masterLabel>American Red Cross</masterLabel>
+    <referrerPolicyOriginWhenCrossOrigin>true</referrerPolicyOriginWhenCrossOrigin>
+    <requireHttps>true</requireHttps>
+    <requireInsecurePortalAccess>false</requireInsecurePortalAccess>
+    <selfRegPage>ccrz__CCSiteRegister</selfRegPage>
+    <siteAdmin>mgambino@salesforce.com.phss</siteAdmin>
+    <siteType>ChatterNetwork</siteType>
+    <subdomain>americanredcross</subdomain>
+    <urlPathPrefix>B2B</urlPathPrefix>
+</CustomSite>

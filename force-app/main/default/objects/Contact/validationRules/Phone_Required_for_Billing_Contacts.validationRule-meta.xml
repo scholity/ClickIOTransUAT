@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Phone_Required_for_Billing_Contacts</fullName>
+    <active>true</active>
+    <description>The Phone is required for Billing Contacts. Billing Contacts are determined by the Contact Type, if the Contact Type contains &#39;Billing&#39; then the Contact is considered a Billing Contact.</description>
+    <errorConditionFormula>IF( AND( INCLUDES(Contact_Type__c , &#39;Billing&#39;), ISBLANK(Phone) ), TRUE, FALSE)</errorConditionFormula>
+    <errorMessage>A phone number must be provided for the Billing Contact, update Contact record</errorMessage>
+</ValidationRule>

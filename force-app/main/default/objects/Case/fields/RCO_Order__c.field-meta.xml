@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCO_Order__c</fullName>
+    <description>RSG will begin registering learners who are interested in Blended Learning classes on RCO rather than in LMS. In order to track conversion rates and commissions for these agents will need a new field created where agents can enter an RCO order number.</description>
+    <externalId>false</externalId>
+    <label>RCO Order #</label>
+    <length>14</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

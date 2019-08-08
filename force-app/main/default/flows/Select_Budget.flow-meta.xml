@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <constants>
+        <description>Previously Approved Error Message</description>
+        <name>errPrevApproved</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>The Grant Request has been previously approved. You may not change the budget assignment.</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Check to see if the request has been approved</description>
+        <name>Check_Request_Status</name>
+        <label>Check  Request Status</label>
+        <locationX>311</locationX>
+        <locationY>53</locationY>
+        <defaultConnector>
+            <targetReference>Request_has_been_ap</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Previously_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sGrantRequest.Approved__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Find_Available_Budgets</targetReference>
+            </connector>
+            <label>Previously Approved?</label>
+        </rules>
+    </decisions>
+    <description>Select the budget for Grant Funding process</description>
+    <dynamicChoiceSets>
+        <name>cBudgetList</name>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sGrantRequest.Account__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Active__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>End_Date__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>Effective_End_Date</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Start_Date__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>Effective_Start_Date</elementReference>
+            </value>
+        </filters>
+        <object>SFDC_Budget__c</object>
+        <outputAssignments>
+            <assignToReference>sGrantRequest.Budget__c</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+        <valueField>Id</valueField>
+    </dynamicChoiceSets>
+    <formulas>
+        <description>First day of the current year</description>
+        <name>fFirstDayofCurrentYear</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!$Flow.CurrentDate}),1, 1)</expression>
+    </formulas>
+    <formulas>
+        <description>Last day of current year</description>
+        <name>fLastDayofCurrentYear</name>
+        <dataType>Date</dataType>
+        <expression>DATE(YEAR({!$Flow.CurrentDate}),12, 31)</expression>
+    </formulas>
+    <interviewLabel>Select Budget {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Select Budget</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get baseline Fund Request Information</description>
+        <name>Get_Fund_Request</name>
+        <label>Get Fund Request</label>
+        <locationX>186</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Request_Status</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>frmGrantRequest</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsDeleted</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>SFDC_MDF__c</object>
+        <outputReference>sGrantRequest</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Account__c</queriedFields>
+        <queriedFields>Budget__c</queriedFields>
+        <queriedFields>Request_ID__c</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <queriedFields>Amount__c</queriedFields>
+        <queriedFields>Activity_Date__c</queriedFields>
+        <queriedFields>Activity_Type__c</queriedFields>
+        <queriedFields>Approved__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update Grant Request with Selected Budget Option</description>
+        <name>Update_Grant_Request</name>
+        <label>Update Grant Request</label>
+        <locationX>780</locationX>
+        <locationY>49</locationY>
+        <inputReference>sGrantRequest</inputReference>
+    </recordUpdates>
+    <screens>
+        <description>List of Available Budgets</description>
+        <name>Available_Budgets</name>
+        <label>Available Budgets</label>
+        <locationX>626</locationX>
+        <locationY>47</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_Grant_Request</targetReference>
+        </connector>
+        <fields>
+            <name>Available_Budgets_Lists1</name>
+            <choiceReferences>cBudgetList</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Available Budgets Lists</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Find_Available_Budgets</name>
+        <label>Find Available Budgets</label>
+        <locationX>460</locationX>
+        <locationY>48</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Available_Budgets</targetReference>
+        </connector>
+        <fields>
+            <name>dspAccount</name>
+            <fieldText>{!sobjAccountName.Name}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>dspGrantName</name>
+            <fieldText>{!sGrantRequest.Name}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>dspGrantAmount</name>
+            <fieldText>{!sGrantRequest.Amount__c}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>dspGrantActivityType</name>
+            <fieldText>{!sGrantRequest.Activity_Type__c}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>dspGrantActivityDate</name>
+            <fieldText>{!sGrantRequest.Activity_Date__c}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Effective_Start_Date</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>fFirstDayofCurrentYear</elementReference>
+            </defaultValue>
+            <fieldText>Effective Start</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Effective_End_Date</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>fLastDayofCurrentYear</elementReference>
+            </defaultValue>
+            <fieldText>Effective End</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>Effective End  must be greater than Effective Start</errorMessage>
+                <formulaExpression>{!Effective_Start_Date} &lt;= {!Effective_End_Date}</formulaExpression>
+            </validationRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Please review</description>
+        <name>Request_has_been_ap</name>
+        <label>Request has been previously approved</label>
+        <locationX>321</locationX>
+        <locationY>200</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>{!errPrevApproved}</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>Get_Fund_Request</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>colBudgets</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SFDC_Budget__c</objectType>
+    </variables>
+    <variables>
+        <description>Grant Request ID</description>
+        <name>frmGrantRequest</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Grant Request Record</description>
+        <name>sGrantRequest</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SFDC_MDF__c</objectType>
+    </variables>
+    <variables>
+        <name>sobjAccountName</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <description>End Date</description>
+        <name>vEffectiveEndDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Start Date</description>
+        <name>vEffectiveStartDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

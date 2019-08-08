@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>AQ Managers</name>
+    <queueMembers>
+        <users>
+            <user>gita.borovsky@redcross.org</user>
+            <user>gwen.mcnamara3@redcross.org</user>
+            <user>james.robertson@redcross.org</user>
+            <user>nayeli.trejos@redcross.org</user>
+            <user>sarah.szymanski@redcross.org</user>
+            <user>theresa.rees@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>Lead__c</sobjectType>
+    </queueSobject>
+</Queue>

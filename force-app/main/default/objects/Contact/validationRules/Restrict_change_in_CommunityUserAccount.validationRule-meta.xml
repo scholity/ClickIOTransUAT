@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_change_in_CommunityUserAccount</fullName>
+    <active>false</active>
+    <description>This validation rule restricts change in Account Name when &#39;SABA Internal ID&#39; is present.</description>
+    <errorConditionFormula>AND(!ISBLANK(SABA_Internal_ID__c), ISCHANGED(AccountId), NOT($Permission.Contact_Account_change_for_community_user))</errorConditionFormula>
+    <errorMessage>You cannot change account for this contact record.</errorMessage>
+</ValidationRule>

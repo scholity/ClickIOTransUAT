@@ -1,0 +1,26 @@
+/**
+ * Created by bjarmolinski on 2019-06-03.
+ */
+.THIS .globalmenu {
+    padding: 12px;
+    font-size: 15px;
+    color: black;
+}
+
+@media screen and (max-width: 640px){
+    .THIS .mobile {
+        display: inline-block;
+    }
+    .THIS .wide_screen {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 640px){
+    .THIS .mobile {
+        display: none;
+    }
+    .THIS .wide_screen {
+        display: inline-block;
+    }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Account_For_MDF_Budget</fullName>
+    <active>true</active>
+    <description>Requires the MDF budget record not have an account entry. This is used when the user switches the record type to MDF from an accrual record and the record still has the account value.</description>
+    <errorConditionFormula>AND( RecordTypeId = &quot;012300000001reS&quot;, LEN( Account__c )&gt;0)</errorConditionFormula>
+    <errorDisplayField>Account__c</errorDisplayField>
+    <errorMessage>MDF record types should not reference an account. Please null the account field before saving the record</errorMessage>
+</ValidationRule>

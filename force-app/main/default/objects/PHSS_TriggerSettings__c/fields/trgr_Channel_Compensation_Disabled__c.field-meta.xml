@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>trgr_Channel_Compensation_Disabled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>When checked, the trgr_Channel_Compensation Trigger is disabled.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>When checked, the trgr_Channel_Compensation Trigger is disabled. NOTE: Only methods using checkbox will be disabled.</inlineHelpText>
+    <label>trgr_Channel_Compensation Disabled</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

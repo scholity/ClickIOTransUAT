@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Bucket_Account_Name_Change</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( IsNew() = false, RecordTypeId = &quot;012d000000098Wt&quot;,  ISCHANGED(Name),  $Setup.Validation_Rules__c.Bypass_Rules__c = false  )</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>You cannot change Bucket account name!</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>true</doesSendEmailToMembers>
+    <name>Mid-West Leads 4</name>
+    <queueMembers>
+        <roles>
+            <role>PHSS_Sales_Dir_Central</role>
+            <role>PHSS_Sales_Mgr_AQ_Central</role>
+            <role>PHSS_Sales_Mgr_Lone_Star</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Lead</sobjectType>
+    </queueSobject>
+</Queue>

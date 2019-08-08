@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <description>Entitlement for invoicing Case</description>
+    <entryStartDateField>Case.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Case.IsClosed</field>
+        <operation>equals</operation>
+        <value>true</value>
+    </exitCriteriaFilterItems>
+    <milestones>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Dispute_Issue__c</field>
+            <operation>equals</operation>
+            <value>Bad Address, Duplicate Invoice, Misapplied Payment, Missing Payment, Price, Wrong Organization</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Invoicing Case</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Customer Notification</milestoneName>
+        <minutesToComplete>1440</minutesToComplete>
+        <successActions>
+            <name>Update_Customer_Notified_Resolution</name>
+            <type>FieldUpdate</type>
+        </successActions>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Dispute_Issue__c</field>
+            <operation>equals</operation>
+            <value>Bad Address, Duplicate Invoice, Misapplied Payment, Missing Payment, Price, Wrong Organization</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Invoicing Case, Read Only Invoicing</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>Case Resolution</milestoneName>
+        <minutesToComplete>1440</minutesToComplete>
+        <successActions>
+            <name>Update_Record_Type</name>
+            <type>FieldUpdate</type>
+        </successActions>
+        <successActions>
+            <name>Update_case_status</name>
+            <type>FieldUpdate</type>
+        </successActions>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+</EntitlementProcess>

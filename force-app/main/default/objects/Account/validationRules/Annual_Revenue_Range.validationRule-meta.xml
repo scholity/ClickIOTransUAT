@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_Revenue_Range</fullName>
+    <active>true</active>
+    <description>Validates that the account Annual Revenue is not negative and also does not exceed $100 billion. This limit is designed to catch typos.You can definitely define your own limit for this</description>
+    <errorConditionFormula>AND(
+OR(
+AnnualRevenue &lt; 0,
+AnnualRevenue &gt; 100000000000
+
+),
+ $Setup.Validation_Rules__c.Bypass_Rules__c = false)</errorConditionFormula>
+    <errorDisplayField>AnnualRevenue</errorDisplayField>
+    <errorMessage>Annual Revenue cannot be negative</errorMessage>
+</ValidationRule>

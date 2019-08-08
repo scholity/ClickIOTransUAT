@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Line_is_Other</fullName>
+    <active>true</active>
+    <description>If Product Line = Other, Other Product Line is required</description>
+    <errorConditionFormula>AND(
+ ISPICKVAL( Product_Line__c , &quot;Other&quot;),
+ ISBLANK( Other_Products__c ),
+ $Setup.Validation_Rules__c.Bypass_Rules__c = false
+)</errorConditionFormula>
+    <errorDisplayField>Other_Products__c</errorDisplayField>
+    <errorMessage>Please provide Other Product information.</errorMessage>
+</ValidationRule>

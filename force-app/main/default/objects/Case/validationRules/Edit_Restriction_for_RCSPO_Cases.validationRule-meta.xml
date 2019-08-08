@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Edit_Restriction_for_RCSPO_Cases</fullName>
+    <active>true</active>
+    <description>Prevents other profile from Editing RCSPO Case.</description>
+    <errorConditionFormula>AND( $User.Id != &quot;005d0000001WLvx&quot;, /*Jane McInerney*/ 
+$User.Id != &quot;0050V000006jKNy&quot;, /*Nyle Grimes*/ 
+$User.Id != &quot;005d0000001Wyup&quot;, /*Kara Desmarais*/ 
+$User.Id != &quot;005d0000001Vmik&quot;, /*Wendy Firdman*/ 
+$User.Id != &quot;005d0000000Twtn&quot;, /*Joseph Kensil*/
+$User.Id != &quot;005d0000002mPMz&quot;, /*Stephen Lynch*/
+$User.Id != &quot;005d0000000Tvsu&quot;, /*LaJuanya Jones*/ 
+$User.Id != &quot;005d0000001VstM&quot;, /*Rose Albert*/ 
+$User.Id != &quot;005d00000040ghi&quot;, /*Candida Barbosa (Only to Add Comments for RCSPO Cases)*/ 
+$User.Id != &quot;005d0000000Tuxk&quot;, /*Pamela Malene (Only to Add Comments for RCSPO Cases)*/ 
+$Profile.Name != &quot;System Administrator&quot;, /*System Admin*/ 
+$Profile.Name != &quot;ARC / TSC Agent&quot;, /*ARC / TSC Agent*/ 
+$Profile.Name != &quot;ARC / TSC Manager&quot;, /*ARC / TSC Manager*/ 
+$Profile.Name != &quot;ARC Invoice Task Force&quot;, /*ARC Invoice Task Force*/ 
+$Profile.Name != &quot;ARC SCC User&quot;, /*ARC SCC User*/ 
+$Profile.Name != &quot;ARC Business User Profile&quot;, /*ARC Business User Profile*/ 
+!ISNEW(), 
+RecordType.Name = &quot;RCS PO&quot; 
+)</errorConditionFormula>
+    <errorMessage>You do not have permission to edit RCSPO Case.</errorMessage>
+</ValidationRule>

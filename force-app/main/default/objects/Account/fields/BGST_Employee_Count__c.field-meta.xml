@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BGST_Employee_Count__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Total number employed by this company.</inlineHelpText>
+    <label>BGST Employee Count</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1-10</fullName>
+                <default>false</default>
+                <label>1-10</label>
+            </value>
+            <value>
+                <fullName>11-25</fullName>
+                <default>false</default>
+                <label>11-25</label>
+            </value>
+            <value>
+                <fullName>26-50</fullName>
+                <default>false</default>
+                <label>26-50</label>
+            </value>
+            <value>
+                <fullName>51-100</fullName>
+                <default>false</default>
+                <label>51-100</label>
+            </value>
+            <value>
+                <fullName>101-250</fullName>
+                <default>false</default>
+                <label>101-250</label>
+            </value>
+            <value>
+                <fullName>251-500</fullName>
+                <default>false</default>
+                <label>251-500</label>
+            </value>
+            <value>
+                <fullName>501-1000</fullName>
+                <default>false</default>
+                <label>501-1000</label>
+            </value>
+            <value>
+                <fullName>1000+</fullName>
+                <default>false</default>
+                <label>1000+</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

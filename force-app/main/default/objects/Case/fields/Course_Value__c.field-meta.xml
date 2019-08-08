@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Course_Value__c</fullName>
+    <externalId>false</externalId>
+    <label>Course Value</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Tertiary_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>More than $100</fullName>
+                <default>false</default>
+                <label>More than $100</label>
+            </value>
+            <value>
+                <fullName>Less than $100</fullName>
+                <default>false</default>
+                <label>Less than $100</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Portal Billing</controllingFieldValue>
+            <valueName>More than $100</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Portal Billing</controllingFieldValue>
+            <valueName>Less than $100</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

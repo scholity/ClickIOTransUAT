@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_income_after_training_employmen__c</fullName>
+    <externalId>false</externalId>
+    <label>Annual income after training &amp; employmen</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>&lt;$12,000</fullName>
+                <default>false</default>
+                <label>&lt;$12,000</label>
+            </value>
+            <value>
+                <fullName>$12,000 - $20,780</fullName>
+                <default>false</default>
+                <label>$12,000 - $20,780</label>
+            </value>
+            <value>
+                <fullName>$20,781 - $25,000</fullName>
+                <default>false</default>
+                <label>$20,781 - $25,000</label>
+            </value>
+            <value>
+                <fullName>&gt;$25,001</fullName>
+                <default>false</default>
+                <label>&gt;$25,001</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

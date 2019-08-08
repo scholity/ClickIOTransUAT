@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Second_Sub_Type</fullName>
+    <active>false</active>
+    <description>The InvoiceCase Sub Type picklist field is required when the Type is Invoicing</description>
+    <errorConditionFormula>AND(
+NOT(ISPICKVAL( Case_Sub_Type__c , &#39;Other&#39;)),
+ISPICKVAL( Type , &#39;Invoicing&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;&#39;)
+)</errorConditionFormula>
+    <errorDisplayField>Dispute_Issue__c</errorDisplayField>
+    <errorMessage>Please fill in the Invoice Case Sub Type field</errorMessage>
+</ValidationRule>

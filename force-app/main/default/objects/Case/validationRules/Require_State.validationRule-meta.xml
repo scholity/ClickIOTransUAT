@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_State</fullName>
+    <active>false</active>
+    <description>When an Invoice Case Sub Type is selected , enter state</description>
+    <errorConditionFormula>AND( 
+NOT( ISBLANK (TEXT(Dispute_Issue__c  )) ), 
+ISBLANK( ( TEXT(State__c) )),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE  
+)</errorConditionFormula>
+    <errorDisplayField>State__c</errorDisplayField>
+    <errorMessage>Please provide a State</errorMessage>
+</ValidationRule>

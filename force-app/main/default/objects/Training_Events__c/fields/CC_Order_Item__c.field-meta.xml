@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CC_Order_Item__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <inlineHelpText>CC Order Item Related to the TE</inlineHelpText>
+    <label>CC Order Item</label>
+    <referenceTo>ccrz__E_OrderItem__c</referenceTo>
+    <relationshipLabel>Training Event</relationshipLabel>
+    <relationshipName>Training_Event</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invoice_Delivery_Method_required_for_RCS</fullName>
+    <active>true</active>
+    <description>Invoice Delivery Method is required for RCSPO Account creation.</description>
+    <errorConditionFormula>AND( 
+OR( 
+INCLUDES(PHSS_Channel__c, &quot;RCS Retail&quot;), 
+INCLUDES(PHSS_Channel__c, &quot;RCS Distributor&quot;)), 
+ISBLANK(TEXT(Invoice_Delivery_Type__c)))</errorConditionFormula>
+    <errorMessage>Invoice Delivery Method is required for RCS PO Account.</errorMessage>
+</ValidationRule>

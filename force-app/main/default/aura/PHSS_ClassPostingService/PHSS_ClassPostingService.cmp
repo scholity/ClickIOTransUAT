@@ -1,0 +1,542 @@
+<aura:component implements = "force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,flexipage:availableForRecordHome,force:hasSObjectName" access="global"
+                controller = "PHSS_CpsController">
+	
+    <aura:handler name = "init" value="{!this}" action = "{!c.doInit}" /> 
+    <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdateClone" action="{!c.productCountIncrement}"/>
+    <aura:attribute name = "CCProductId"			type = "String"  	default = ""/>
+    
+    <aura:attribute name = "storeFrontName" type="String" default = "" />
+    
+    <aura:attribute name = "stepNumber"			type = "String" 	default = "Zero" />
+    <aura:attribute name = "pMethod"			type = "String" 	default = "po" />
+    
+    <aura:attribute name = "cpsWrap"			type = "Object" />
+    <aura:attribute name = "initialWrap" 		type = "Object" />
+    <aura:attribute name = "selectedCourse" 	type = "sObject" 	default = "{}"/>
+    <aura:attribute name = "todaysDate"			type = "String" />
+    <aura:attribute name = "formattedStartTime" type = "String" />
+    <aura:attribute name = "formattedEndTime" type = "String" />
+    <aura:attribute name = "zoneList" type = "List" />
+    
+    <aura:attribute name = "allValid"		type = "Boolean"	description="" default="true"/>
+    <aura:attribute name = "isUrlValid"		type = "Boolean"	description="" default="true"/>
+    <aura:attribute name = "showError"		type = "Boolean"	required="true" description="" default="false"/>
+    <aura:attribute name = "errorMessage" 	type = "String"		required="false" description="" default="" />
+    <aura:attribute name = "courseError"    type = "Boolean"    default = "false"/>
+    <aura:attribute name = "formatError"    type = "Boolean"    default = "false"/>
+    <aura:attribute name = "zoneError"      type = "Boolean"    default = "false"/>
+    
+    <aura:attribute name = "oppIdParent" 			type = "String" 	default = ""/>
+    <aura:attribute name = "displayPaymentInfo" type = "Boolean" default="true"/>
+    
+    <aura:handler name = "change" value="{!v.selectedLookUpRecord1}" action = "{!c.accountSelected}" />
+    <aura:attribute name = "selectedLookUpRecord1" 	type = "sObject" 	default = "{}"/>
+    <aura:attribute name = "orgError" 				type = "Boolean" 	default = "false"/>
+    
+    <aura:if isTrue="{!v.stepNumber == 'Zero'}" >
+        <div id="cpsDiv"> 
+    		<lightning:button label		= "List Class on RCO"
+                              title		= "List Class on RCO"
+                              onclick	= "{!c.showStep1}"
+                              class		= "slds-button_neutral customButton width slds-text-title--caps"/>
+        </div>
+    </aura:if>
+    
+    <div>
+        <aura:if isTrue = "{!v.stepNumber != 'Zero'}" >
+            
+        <section role			  = "dialog"
+                 tabindex		  = "-1"
+                 class			  = "slds-modal slds-fade-in-open slds-modal_medium"
+                 aria-labelledby  = "header43" 
+                 aria-modal		  = "true"
+                 aria-describedby = "modal-content-id-1">
+            
+            <div class = "slds-modal__container">
+                
+                <!--Header - Start -->
+                
+                <header class="slds-modal__header">
+                    <button class	= "slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title	= "Close"
+                            onclick = "{!c.cancel}">
+                        
+                        <lightning:icon iconName="utility:close" class = "white"/>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id		= "header43"
+                        class	= "slds-text-heading_medium">
+                        Red Cross Class Posting Request
+                    </h2>
+                    <aura:renderIf isTrue="{!v.showError}">
+                        <div class="errMsg">
+                            <ui:outputRichText value="{!v.errorMessage}"/>
+                        </div>
+            		</aura:renderIf>
+                </header>
+                
+                <!--Header - End -->
+                
+                <!-- Body - Start -->
+                
+                <!-- Step 1 - Start -->
+                <aura:if isTrue="{!v.stepNumber == 'One'}" >
+                    
+                    <div class="slds-modal__content slds-grow slds-p-around_x-large" id="modal-content-id-1">
+                        <p class="slds-text-heading_medium">STEP 1: CLASS DETAILS</p> <br/>
+                        <div class = "slds-box slds-theme_shade">Class Information</div><br/>
+                        
+                        <div class = "slds-p-left_small">
+                            <!--
+                            <div class = "slds-size_3-of-6">
+                                <label style="color:gray; font-size: .75rem;">Organization</label><br/>
+                                {!v.cpsWrap.accName}
+                            </div>
+							-->
+                            <label class="slds-form-element__label" for="text-input-id-1">
+                                <abbr class="slds-required" title="required">*</abbr> 
+                                Organization
+                            </label>
+                            <lightning:helptext content="Select the course for whom the course will be offered. Only the organizations you are affiliated with will appear on this list." />
+                                    
+                            <c:CustomLookup objectAPIName   = "account"
+                                            selectedRecord	=  "{!v.selectedLookUpRecord1}"/>
+                            
+                            <aura:if isTrue="{!v.orgError}" >
+                                <div class="lookupError">Complete this field.</div>
+                            </aura:if>
+                            
+                            <br/>
+                            <label class="slds-form-element__label" for="text-input-id-1">
+                                <abbr class="slds-required" title="required">*</abbr> 
+                                Course
+                            </label>
+                            
+                            <div id="courseInput">
+                            	<c:phss_cc_ProductListComponent_Clone oppId = "{!v.oppIdParent}" storeFront = "{!v.storeFrontName}"/>
+                            </div>
+                            <aura:if isTrue="{!v.courseError}" >
+                                <div class="lookupError">Complete this field.</div>
+                            </aura:if>
+                                
+                            
+                            <div class = "slds-size_3-of-6 slds-p-top_small">
+                                <label style="font-size: .75rem;" class="slds-required">*</label>
+                                <label style="font-size: .75rem;" >Class Format</label><br/>
+                                <div class="slds-select_container">
+                                    <select id="formatSelect" value="{!v.cpsWrap.classFormat}" class="slds-select" onchange="{!c.onFormatChange}">
+                                        <option value=""> Select a format </option>
+                                        <aura:iteration items="{!v.cpsWrap.classFormatList}" var="format">
+                                            <option value="{!format}" selected="{!v.cpsWrap.classFormat == format}">{!format}</option>
+                                        </aura:iteration>
+                                    </select>
+                                </div>
+                                <aura:if isTrue="{!v.formatError}" >
+                                    <div class="lookupError">Complete this field.</div>
+                                </aura:if>
+                            </div>
+                            
+                            <div class = "slds-size_3-of-6 slds-p-top_small">
+                            	<label style="color:gray; font-size: .75rem;">Session</label>
+                            </div>    
+                            <!--
+                            <aura:iteration items="{!v.cpsWrap.sessionList}" var="sess" indexVar="index">
+                                -->
+                                <div class="slds-grid slds-gutters slds-size_6-of-6">
+                                  <div class="slds-col">
+                                    <lightning:input value	  = "{!v.cpsWrap.sessionList[0].classDate}"
+                                                             label 	  = "Date"
+                                                             required = "true"
+                                                             type     = "date"
+                                                     		 min      = "{!v.todaysDate}"
+                                                             aura:id  = "field"/>
+                                  </div>
+                                  <div class="slds-col">
+                                    <lightning:input value	  = "{!v.cpsWrap.sessionList[0].startTime}"
+                                                         label 	  = "Start Time"
+                                                         required = "true"
+                                                         type	  = "time"
+                                                         aura:id  = "field"/>
+                                  </div>
+                                  <div class="slds-col">
+                                    <lightning:input value	  = "{!v.cpsWrap.sessionList[0].endTime}"
+                                                         label 	  = "End Time"
+                                                         required = "true"
+                                                         type	  = "time"
+                                                         aura:id  = "field"/>
+                                  </div>
+                                  <div class="slds-col">
+                                    <label style="font-size: .75rem;" class="slds-required">*</label>
+                               	 	<label style="font-size: .75rem;" >Time Zone</label><br/>
+                                    <select id="zoneSelect" class="slds-select" onchange="{!c.onZoneChange}">
+                              	      <option value=""> Select a Time Zone </option>
+                                	      <aura:iteration items="{!v.zoneList}" var="zone" indexVar="key">
+                                              <option value="{!zone.key}" selected="{!v.cpsWrap.sessionList[0].timeZone == zone.key}"> {!zone.key} </option>
+                                          </aura:iteration>
+                                    </select>
+                                	<aura:if isTrue="{!v.zoneError}" >
+                                    	<div class="lookupError">Complete this field.</div>
+                                	</aura:if>
+                                  </div>
+                                    
+                                </div>
+                            <!--</aura:iteration>-->
+                            
+                            <!--
+                            <div class="slds-p-top_small">
+                                <button class="slds-button slds-button_neutral customButton"
+                                        onclick="{!c.addSession}" >
+                                    Add Session
+                                </button>
+                            </div>-->
+                            
+                        </div><br/>
+                        
+                        
+                        <div class = "slds-box slds-theme_shade">Facility</div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.siteName}"
+                                             label 	  = "Site Name"
+                                             required = "true" 
+                                             type	  = "text"
+                                             aura:id  = "field"/>
+                        </div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.address1}"
+                                             label 	  = "Address 1"
+                                             required = "true" 
+                                             type	  = "text"
+                                             aura:id  = "field"/>
+                        </div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.address2}"
+                                             label 	  = "Address 2"
+                                             type	  = "text"
+                                             aura:id  = "field"/>
+                        </div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.city}"
+                                             label 	  = "City"
+                                             required = "true" 
+                                             aura:id  = "field"/>
+                        </div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.state}"
+                                             label 	  = "State"
+                                             required = "true" 
+                                             maxlength = "2"
+                                             aura:id  = "field"/>
+                        </div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.zip}"
+                                             label 	  = "Zip"
+                                             required = "true" 
+                                             aura:id  = "field"
+                                             pattern  = "[0-9]{5}(?:-[0-9]{4})?"
+                                             messageWhenPatternMismatch = "Please enter a valid Zip code"/>
+                        </div><br/>
+                        
+                        <div class = "slds-box slds-theme_shade">Registration</div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.regUrl}"
+                                             label 	  = "URL for registration"
+                                             type  	  = "url" 
+                                             messageWhenTypeMismatch = "Please enter a valid URL"/>
+                        </div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.regPhone}"
+                                             label 	  = "Phone for registration"
+                                             type	  = "phone"
+                                             pattern  = "\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})" 
+                                             messageWhenPatternMismatch = "Please enter a valid Phone"/>
+                        </div>
+                        <div class = "slds-size_3-of-6 slds-p-top_small">
+                            <lightning:input value	  = "{!v.cpsWrap.regFee}"
+                                             label 	  = "Class Registration Fee"
+                                             required = "true" 
+                                             pattern = "[0-9]*(\.[0-9]+)?"
+                                             messageWhenPatternMismatch = "Please enter a valid Fee"
+                                             aura:id  = "field"
+                                             formatter = "currency" 
+                                             step      ="0.01"/>
+                        </div>
+                        
+                        
+                    </div>
+                </aura:if>
+                
+                <!-- Step 1 - End -->
+                
+                <!-- Step 2 - Start -->
+                
+                <aura:if isTrue="{!v.stepNumber == 'Two'}" >
+                    <div class="slds-modal__content slds-grow slds-p-around_x-large" id="modal-content-id-1">
+                        <p class="slds-text-heading_medium">STEP 2: PAYMENT</p> <br/>
+                        <div class = "slds-box slds-theme_shade">Payment</div><br/>
+                        
+                        <c:phss_cc_Cart_Clone recordId = "{!v.oppIdParent}" hideQuantityForLms="true" hideCreditCard = "{!v.displayPaymentInfo}"/>
+                        
+                        <!--
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_8-of-12">
+                                PAYMENT METHOD<br/>
+                                <lightning:buttonGroup class="slds-size_11-of-12">
+                                    <aura:if isTrue="{!v.pMethod == 'po'}" >
+                                        <lightning:button label		=	"Purchase Order"
+                                                          onclick	=	"{!c.showPO}"
+                                                          class		=	"slds-button slds-button_neutral customButton slds-size_1-of-2"/>
+                                        <lightning:button label		=	"Contact Billing Support" 
+                                                          onclick	=	"{!c.showBillSprt}"
+                                                          class		=	"slds-button slds-button_neutral customButtonRed slds-size_1-of-2"/>
+                                        
+                                        <aura:set attribute="else">
+                                            <lightning:button label		=	"Purchase Order"
+                                                              onclick	=	"{!c.showPO}"
+                                                              class		=	"slds-button slds-button_neutral customButtonRed slds-size_1-of-2"/>
+                                            <lightning:button label		=	"Contact Billing Support"
+                                                              onclick	=	"{!c.showBillSprt}"
+                                                              class		=	"slds-button slds-button_neutral customButton slds-size_1-of-2"/>                                                
+                                        </aura:set>
+                                    </aura:if>
+                                    
+                                </lightning:buttonGroup>
+                                <br/><br/>
+                                <aura:if isTrue="{!v.pMethod == 'po'}" >
+                                    <lightning:input label="PO Number" class="slds-size_11-of-12"/>
+                                    <aura:set attribute="else">
+                                        <br/><div class="slds-box slds-theme_shade slds-text-heading_small slds-text-align_left slds-size_11-of-12">A case will be created with Red Cross Support regarding payment.
+                                        <br/>Provide additional details below.</div><br/>
+                                        <lightning:input label="Field Label" class="slds-size_11-of-12"/><br/>
+                                        <lightning:input label="Field Label" class="slds-size_11-of-12"/><br/>
+                                        <lightning:textarea label="Comments" class="slds-size_11-of-12"/><br/>
+                                        
+                                        
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                            <div class="slds-size_4-of-12">PAYMENT AMOUNT<br/>
+                                <div class="slds-box ">
+                                    <br/>
+                                    <p>Posting Fee</p><br/>
+                                    <p>TOTAL</p><br/>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </aura:if>
+                
+                <!-- Step 2 - End -->
+                
+                <!-- Step 3 - Start -->
+                
+                <aura:if isTrue="{!v.stepNumber == 'Three'}" >
+                    <div class="slds-modal__content slds-grow slds-p-around_x-large" id="modal-content-id-1">
+                        <p class="slds-text-heading_medium">STEP 3: Review</p><br/>
+                        
+                        <div class= "slds-grid slds-grid_align-spread slds-box slds-theme_shade">
+                            <div class = "top">
+                                Course Information
+                            </div>
+                            <div >
+                                <b>
+                                    <lightning:button variant="base" label="EDIT" class = "customButtonRed" onclick="{!c.showStep1 }"/>
+                                </b>
+                            </div>
+                        </div>
+                        
+                        <div class= "slds-p-left_small">
+                            
+                            <div class= "slds-grid slds-wrap slds-p-top_medium">
+                                <div class = "slds-size_4-of-4">
+                                	<label style="color:gray; font-size: .75rem;">Organization</label><br/>
+                                    {!v.cpsWrap.accName}
+                                </div>
+                            </div>
+                                
+                            <div class= "slds-grid slds-wrap slds-p-top_medium">    
+                                <div class = "slds-size_2-of-4">
+                                    <label style="color:gray; font-size: .75rem;">Course</label><br/>
+                                    {!v.cpsWrap.courseName}
+                                </div>
+                                
+                                <div class = "slds-size_2-of-4">
+                                    <label style="color:gray; font-size: .75rem;">Class Format</label><br/>
+                                    {!v.cpsWrap.classFormat}
+                                </div>
+                            </div>
+                            
+                            <div class= "slds-grid slds-wrap slds-p-top_medium">
+                                <div class = "slds-size_2-of-4">
+                                    <label style="color:gray; font-size: .75rem;">Session</label><br/>
+                                    <table class="slds-table slds-table--cell-buffer">
+                                        <thead>
+                                            <tr class="slds-text-title--caps">
+                                                <!--<th scope="col">
+                                                    <div class="slds-truncate" title=""></div>
+                                                </th>-->
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="DATE">DATE</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="START TIME">START TIME</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="END TIME">END TIME</div>
+                                                </th>
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="END TIME">TIME ZONE</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <aura:iteration items="{!v.cpsWrap.sessionList}" var="item" indexVar="index">
+                                                <tr>
+                                                    <!--<td>
+                                                        <b>{!index+1}</b>
+                                                    </td>-->
+                                                    <td>
+                                                        <div class="slds-truncate">
+                                                            <ui:outputDate value="{!item.classDate}" format="MM/DD/yyyy"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">
+                                                            <!--{! item.startTime }-->
+                                                            {!v.formattedStartTime}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">
+                                                            <!--{! item.endTime }-->
+                                                            {!v.formattedEndTime}
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">
+                                                            <!--{! item.endTime }-->
+                                                            {!v.cpsWrap.sessionList[0].timeZone}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class= "slds-grid slds-wrap slds-p-top_medium">
+                                <div class = "slds-size_2-of-4">
+                                    <label style="color:gray; font-size: .75rem;">Training Facility</label><br/>
+                                    {!v.cpsWrap.siteName},&nbsp;{!v.cpsWrap.address1},&nbsp;{!v.cpsWrap.address2},&nbsp;{!v.cpsWrap.city},&nbsp;{!v.cpsWrap.state},&nbsp;{!v.cpsWrap.zip}
+                                </div>
+                                
+                                <div class = "slds-size_2-of-4">
+                                    <label style="color:gray; font-size: .75rem;">URL for registration</label><br/>
+                                    {!v.cpsWrap.regUrl}
+                                </div>
+                            </div>
+                            
+                            <div class= "slds-grid slds-wrap slds-p-top_medium slds-p-bottom_medium">    
+                                <div class = "slds-size_2-of-4">
+                                    <label style="color:gray; font-size: .75rem;">Class Registration Fee</label><br/>
+                                    ${!v.cpsWrap.regFee}
+                                </div>
+                                
+                                <div class = "slds-size_2-of-4">
+                                    <label style="color:gray; font-size: .75rem;">Phone for registration</label><br/>
+                                    {!v.cpsWrap.regPhone}
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class= "slds-grid slds-grid_align-spread slds-box slds-theme_shade">
+                            <div class = "top">
+                                Payment
+                            </div>
+                            	
+                            <div >
+                                <b>
+                                    <lightning:button variant="base" label="EDIT" class = "customButtonRed" onclick="{!c.showStep2 }"/>
+                                </b>
+                            </div>
+                        </div>
+                     	
+                        <div class= "slds-p-left_small">
+                            <div class= "slds-grid slds-wrap slds-p-top_medium">
+                                <div class="slds-size_6-of-12">
+                                    <lightning:input label="Payment Method" readonly = "true"/> <br/>
+                                    <lightning:input label="PO Number" readonly = "true"/>  
+                                </div>
+                                <div class="slds-size_6-of-12">PAYMENT AMOUNT<br/>
+                                    <div class="slds-box ">
+                                        <br/><p>Posting Fee</p><br/>
+                                        <p>TOTAL</p><br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </aura:if>
+                
+                <!-- Step 3 - End -->
+                
+                <!-- Body - End -->
+                
+                <!-- Footer - Start -->
+                
+                <footer class="slds-modal__footer slds-grid slds-grid_align-spread progIndicator">
+                    
+                    <div class="slds-col">
+                        <button class="slds-button slds-button_neutral customButtonRed" onclick="{!c.cancel}">Cancel</button>
+                    </div>
+                    
+                    <div class="slds-col slds-size_2-of-3 " >
+                        <lightning:progressIndicator currentStep="{!v.stepNumber}" type="base">
+                            
+                            <lightning:progressStep label="Step 1"
+                                                    value="One"
+                                                    onclick="{!c.showStep1}"/>
+                            
+                            <lightning:progressStep label="Step 2"
+                                                    value="Two"
+                                                    onclick="{!c.showStep2}"
+                                                    />
+                            
+                            <lightning:progressStep label="Step 3"
+                                                    value="Three"
+                                                    onclick="{!c.showStep3}"
+                                                    />
+                            
+                        </lightning:progressIndicator>
+                    </div> 
+                    
+                    <aura:if isTrue="{!v.stepNumber == 'Three'}">
+                        
+                        <div class="slds-col">
+                            <button class="slds-button slds-button_neutral customButton"
+                                    onclick="{!c.createClass}" >
+                                Submit
+                            </button>
+                        </div>
+                        
+                        <aura:set attribute="else">                        
+                            
+                            <div class="slds-col">
+                                <button class="slds-button slds-button_neutral customButton"
+                                        onclick="{!c.onclickNext}" >
+                                    Next
+                                </button> 
+                            </div>
+                        </aura:set>
+                        
+                    </aura:if>
+                    
+                </footer>
+                <!-- Footer - End -->
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div></aura:if>
+    </div>
+</aura:component>

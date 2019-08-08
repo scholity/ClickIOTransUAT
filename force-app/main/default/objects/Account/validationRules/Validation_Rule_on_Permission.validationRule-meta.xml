@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_Rule_on_Permission</fullName>
+    <active>true</active>
+    <description>Permission Related to RCSPO.</description>
+    <errorConditionFormula>AND( $User.Id != &quot;005d0000001WLvx&quot;, /*Jane McInerney*/ 
+$User.Id != &quot;0050V000006jKNy&quot;, /*Nyle Grimes*/ 
+$User.Id != &quot;005d0000001Wyup&quot;, /*Kara Desmarais*/ 
+$User.Id != &quot;005d0000001Vmik&quot;, /*Wendy Firdman*/ 
+$User.Id != &quot;005d0000000Tvsu&quot;, /*LaJuanya Jones*/ 
+$User.Id != &quot;005d0000001VstM&quot;, /*Rose Albert*/
+$User.Id != &quot;005d0000000Twtn&quot;, /*Joseph Kensil*/ 
+$User.Id != &quot;005d0000002mPMz&quot;, /*Stephen Lynch*/  
+$Profile.Name != &quot;System Administrator&quot;, /*System Admin*/ 
+OR( 
+AND(ISNEW(), OR(INCLUDES(PHSS_Channel__c, &quot;RCS Retail&quot;), INCLUDES(PHSS_Channel__c, &quot;RCS Distributor&quot;))), /*Restriction in RCSPO Account creating*/ 
+OR(INCLUDES(PHSS_Channel__c, &quot;RCS Retail&quot;), INCLUDES(PHSS_Channel__c, &quot;RCS Distributor&quot;)), /*Restriction in Changing RCSPO Account*/ 
+OR(INCLUDES(PRIORVALUE(PHSS_Channel__c), &quot;RCS Retail&quot;), INCLUDES(PRIORVALUE(PHSS_Channel__c), &quot;RCS Distributor&quot;))) /*Change in RCSPO Account to other Account*/ 
+)</errorConditionFormula>
+    <errorMessage>You do not have permission to Create/Edit RCS PO Account.</errorMessage>
+</ValidationRule>

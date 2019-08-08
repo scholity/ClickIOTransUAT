@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_Contact_Information_For_CFS</fullName>
+    <active>true</active>
+    <description>This field should be filled to Make the Status as &#39;PO On-Hold CFS&#39;...</description>
+    <errorConditionFormula>If(AND(
+(ISPICKVAL(Status,&#39;PO On-Hold CFS&#39;) &amp;&amp; ISBLANK(Contact.FirstName)) &amp;&amp; RecordType.Name= &quot;RCS PO&quot; &amp;&amp; !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE), true, false)</errorConditionFormula>
+    <errorDisplayField>ContactId</errorDisplayField>
+    <errorMessage>Select contact details before setting status to PO On-Hold CFS</errorMessage>
+</ValidationRule>

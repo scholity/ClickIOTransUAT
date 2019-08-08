@@ -1,0 +1,850 @@
+<aura:component extensible="true"
+                implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId"
+                extends="c:cc_lx_CloudCrazeComponentV2" access="global" description="CC Order Checkout Component"
+                controller="cc_lx_ContractCheckoutControllerV2">
+
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+
+    <aura:attribute name="renderDefaultComponent" type="Boolean" default="true"/>
+    <aura:attribute name="cart" type="Map" default=""/>
+    <aura:attribute name="contracts" type="List"/>
+    <aura:attribute name="addresses" type="Map"/>
+
+    <aura:attribute name="showCartControls" type="Boolean" default="true"/>
+    <aura:attribute name="sortKey" type="String"/>
+    <aura:attribute name="sortReverse" type="Boolean" default="false"/>
+    <aura:attribute name="showImage" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="showSKU" type="Boolean" default="true" access="global"/>
+
+    <aura:attribute name="paymentMethod" type="String" default="contract"/>
+    <aura:attribute name="allowContract" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="allowPO" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="allowCreditCard" type="Boolean" default="false" access="global"/>
+    <aura:attribute name="showTerms" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="termsLabel" type="String" default="Agree To Terms"/>
+    <aura:attribute name="termsTextLabel" type="String" default="cclxTerms" access="global"/>
+    <aura:attribute name="termsText" type="String" default=""/>
+    <aura:attribute name="showDeliveryDate" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="deliveryDate" type="Date"/>
+    <aura:attribute name="agreeToTerms" type="Boolean" default="false"/>
+    <aura:attribute name="selectedContract" type="String"/>
+    <aura:attribute name="poNumber" type="String"/>
+    <aura:attribute name="cardNumber" type="String"/>
+    <aura:attribute name="cardExpirationDate" type="String"/>
+    <aura:attribute name="cardCode" type="String"/>
+    <aura:attribute name="cardName" type="String"/>
+    <aura:attribute name="note" type="String"/>
+    <aura:attribute name="showShipping" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="showUOM" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="selectedShippingMethod" type="String" default=""/>
+    <aura:attribute name="shippingOptions" type="List" default="null"/>
+    <aura:attribute name="selectedShippingPrice" type="Decimal" default="0"/>
+    <aura:attribute name="calculatedTotal" type="Decimal" default="0"/>
+    <aura:attribute name="accountName" type="String" default="Account"/>
+    <aura:attribute name="editingAddress" type="Boolean" default="false"/>
+    <aura:attribute name="storedPayments" type="List" default="null"/>
+    <aura:attribute name="originalPOAmount" type="Decimal"/>
+    <aura:attribute name="savePayment" type="Boolean" default="false"/>
+    <aura:attribute name="cyberSourcePaymentTypes" type="List" default="null"/>
+
+    <aura:attribute name="ignoreCartEvent" type="Boolean" default="false"/>
+    <aura:handler event="c:cc_lx_CartUpdateEventV2" action="{!c.doFetchCart}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-card">
+        <aura:if isTrue="{!v.renderDefaultComponent}">
+            <div class="slds-card__header">
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-has-flexi-truncate">
+                        <p class="slds-text-heading--small">{!$Label.cclxrep.cclxCheckoutTitle}</p>
+                    </div>
+                </div>
+                <div id="errorDiv" aura:id="errorDiv"></div>
+            </div>
+            <div class="slds-card__body" aura:id="mainCartBody">
+                <aura:if isTrue="{!v.cart}">
+                    <aura:if isTrue="{!v.cart.ECartItemsS}">
+
+                        <div class="slds-card__body--inner">
+                            <div class="slds-text-heading--small">{!$Label.cclxrep.cclxCheckoutSummaryTitle}</div>
+                        </div>
+                        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+                            <thead>
+                            <tr class="slds-text-heading--label">
+                                <th scope="col"
+                                    class="{!if(v.showImage,'slds-medium-show--table-cell imageColHeader','slds-hide')}">
+                                </th>
+                                <th class="{!if(v.showSKU,'slds-is-sortable','slds-hide')}" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnProductString}" data-key="SKU">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxCheckoutSortColumn}</span>
+                                        <span class="slds-truncate slds-text-align--center"
+                                              title="{!$Label.cclxrep.cclxCheckoutSKU}">{!$Label.cclxrep.cclxCheckoutSKU}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxCheckoutSortColumn}">
+                                        </div>
+                                    </a>
+                                </th>
+                                <th class="slds-is-sortable slds-medium-show--table-cell" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnProductString}" data-key="sfdcName">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxCheckoutSortColumn}</span>
+                                        <span class="slds-truncate slds-text-align--center"
+                                              title="{!$Label.cclxrep.cclxCheckoutNameCol}">{!$Label.cclxrep.cclxCheckoutNameCol}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxCheckoutSortColumn}">
+                                        </div>
+                                    </a>
+                                </th>
+                                <th class="slds-is-sortable slds-medium-show--table-cell amount-column" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnNumber}" data-key="price">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxCheckoutSortColumn}</span>
+                                        <span class="slds-truncate slds-text-align--center"
+                                              title="{!$Label.cclxrep.cclxCheckoutUnitPriceCol}">{!$Label.cclxrep.cclxCheckoutUnitPriceCol}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxCheckoutSortColumn}">
+                                        </div>
+                                    </a>
+                                </th>
+                                <th class="slds-is-sortable cclx-quantity-column" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnNumber}" data-key="quantity">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxCheckoutSortColumn}</span>
+                                        <span class="slds-truncate slds-text-align--center"
+                                              title="{!$Label.cclxrep.cclxCheckoutQuantityCol}">{!$Label.cclxrep.cclxCheckoutQuantityCol}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxCheckoutSortColumn}">
+                                        </div>
+                                    </a>
+                                </th>
+                                <th class="slds-is-sortable amount-column" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnNumber}" data-key="subAmount">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxCheckoutSortColumn}</span>
+                                        <span class="slds-truncate slds-text-align--center"
+                                              title="{!$Label.cclxrep.cclxCheckoutTotalCol}">{!$Label.cclxrep.cclxCheckoutTotalCol}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxCheckoutSortColumn}">
+                                        </div>
+                                    </a>
+                                </th>
+                                <th scope="col" class="cclx-button-column slds-medium-show--table-cell">
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <aura:iteration items="{!v.cart.ECartItemsS}" var="item">
+                                <tr class="slds-hint-parent">
+                                    <td data-label="{!$Label.cclxrep.cclxCheckoutImageCol}"
+                                        class="{!if(v.showImage,'imageCol slds-medium-show--table-cell','slds-hide')}">
+                                        <div class="slds-media slds-p-right--small">
+                                <span>
+                                    <c:cc_lx_ProductImageComponentV2 product="{!item.productItem}"
+                                                                     type="Product Image Thumbnail"/>
+                                </span>
+                                        </div>
+                                    </td>
+                                    <td class="{!if(v.showSKU,'slds-truncate slds-text-align--center','slds-hide')}"
+                                        data-label="{!$Label.cclxrep.cclxCheckoutSKU}"
+                                        title="{!item.productItem.SKU}">{!item.productItem.SKU}</td>
+                                    <td class="slds-truncate slds-text-align--center slds-medium-show--table-cell"
+                                        data-label="{!$Label.cclxrep.cclxCheckoutNameCol}"
+                                        title="{!item.productItem.sfdcName}">{!item.productItem.sfdcName}</td>
+                                    <td class="slds-truncate slds-text-align--center slds-medium-show--table-cell"
+                                        data-label="{!$Label.cclxrep.cclxCheckoutUnitPriceCol}" title="{!item.price}">
+                                        <ui:outputCurrency value="{!item.price}"/>
+                                        <aura:if isTrue="{!v.showUOM}">
+                                            <ui:outputText class="slds-m-left--xx-small" value="{!item.unitOfMeasure}"/>
+                                        </aura:if>
+                                    </td>
+                                    <td class="cclx-quantity-column"
+                                        data-label="{!$Label.cclxrep.cclxCheckoutQuantityCol}" title="{!item.quantity}">
+                                        <aura:if isTrue="{!v.showCartControls}">
+                                            <div class="slds-button-group slds-grid--align-end" role="group">
+                                                <lightning:buttonIcon iconName="utility:dash" size="x-small"
+                                                                      alternativeText="{!$Label.cclxrep.cclxDecQuant}"
+                                                                      class="cc-lightButton" value="{!item.product}"
+                                                                      onclick="{!c.decrement}" variant="brand"/>
+                                                <ui:inputNumber value="{!item.quantity}" class="cclx-quantity"/>
+                                                <lightning:buttonIcon iconName="utility:add" size="x-small"
+                                                                      alternativeText="{!$Label.cclxrep.cclxIncQuant}"
+                                                                      class="cc-lightButton" value="{!item.product}"
+                                                                      onclick="{!c.increment}" variant="brand"/>
+                                            </div>
+                                            <aura:set attribute="else">
+                                                <ui:outputNumber value="{!item.quantity}"/>
+                                            </aura:set>
+                                        </aura:if>
+                                    </td>
+                                    <td class="slds-truncate slds-text-align--center"
+                                        data-label="{!$Label.cclxrep.cclxCheckoutTotalCol}" title="{!item.subAmount}">
+                                        <ui:outputCurrency value="{!item.subAmount}"/>
+                                    </td>
+                                    <td class="cclx-button-column slds-medium-show--table-cell">
+                                        <aura:if isTrue="{!v.showCartControls}">
+                                            <lightning:button variant="neutral" class="slds-button cclx-desktop-button2"
+                                                              value="{!item.sfid}"
+                                                              label="{!$Label.cclxrep.cclxCheckoutRemoveButton}"
+                                                              onclick="{!c.removeCartItem}"/>
+                                            <lightning:buttonIcon iconName="utility:clear" alternativeText="Remove"
+                                                                  value="{!item.sfid}" onclick="{!c.removeCartItem}"
+                                                                  variant="brand"
+                                                                  class="slds-button slds-button--neutral slds-button--icon-border slds-p-right--x-large cclx-mobile-button2"/>
+                                        </aura:if>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td class="{!if(v.showImage,'slds-medium-show--table-cell','slds-hide')}"></td>
+                                <td class="{!if(v.showSKU,'','slds-hide')}"></td>
+                                <td class="slds-medium-show--table-cell"></td>
+                                <td class="slds-medium-show--table-cell"></td>
+                                <td class="slds-text-align--center cclx-quantity-column"
+                                    data-label="{!$Label.cclxrep.cclxCheckoutQuantityCol}"
+                                    title="{!v.cart.totalQuantity}">
+                                    <ui:outputNumber value="{!v.cart.totalQuantity}"/>
+                                </td>
+                                <td class="slds-text-align--center" data-label="{!$Label.cclxrep.cclxCheckoutTotalCol}"
+                                    title="{!v.calculatedTotal}">
+                                    <ui:outputCurrency value="{!v.calculatedTotal}"/>
+                                </td>
+                                <td class="cclx-button-column slds-medium-show">
+                                    <button class="slds-button slds-button--neutral cclx-desktop-button2"
+                                            onclick="{!c.doUpdateCart}"
+                                            title="{!$Label.cclxrep.cclxCheckoutUpdateCartTitle}">{!$Label.cclxrep.cclxCheckoutUpdateCartButton}</button>
+                                    <lightning:buttonIcon iconName="utility:refresh"
+                                                          alternativeText="{!$Label.cclxrep.cclxCheckoutUpdateCartButton}"
+                                                          onclick="{!c.doUpdateCart}" variant="brand"
+                                                          class="slds-button slds-button--neutral slds-button--icon-border slds-p-right--x-large cclx-mobile-button2"/>
+                                </td>
+                            </tr>
+                            <tr class="mobile-only">
+                                <td colspan="3" class="slds-text-align--right">
+                                    <button class="slds-button slds-button--neutral" onclick="{!c.doUpdateCart}"
+                                            title="{!$Label.cclxrep.cclxCheckoutUpdateCartTitle}">{!$Label.cclxrep.cclxCheckoutUpdateCartButton}</button>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <aura:if isTrue="{!v.showShipping}">
+                            <div class="slds-card__body--inner slds-p-top--small">
+                                <aura:if isTrue="{!v.shippingOptions != null}">
+                                    <div class="slds-text-heading--small">{!$Label.cclxrep.cclxCheckoutShippingTitle}</div>
+                                    <div class="slds-p-around--small">
+                                        <lightning:select aura:id="shippingSelect"
+                                                          label="{!$Label.cclxrep.cclxCheckoutShippingOptionsLabel}"
+                                                          onchange="{!c.shippingChanged}">
+                                            <aura:iteration items="{!v.shippingOptions}" var="item">
+                                                <option value="{!item.uniqueId}"
+                                                        selected="{!item.isSelected}">{!item.shippingLabel}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </aura:if>
+
+                        <hr/>
+
+                        <div class="slds-card__body--inner slds-p-top--small slds-p-bottom--small slds-grid slds-wrap">
+                            <div class="slds-text-heading--small slds-size--1-of-1">{!$Label.cclxrep.cclxCheckoutAddressTitle}</div>
+                            <div class="slds-text-heading--x-small slds-size--1-of-1">{!$Label.cclxrep.cclxCheckoutAccountName}
+                                : {!v.accountName}
+                            </div>
+                            <aura:if isTrue="{!v.editingAddress}">
+                                <div class="checkoutAddressEdit slds-m-top--medium slds-m-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2 slds-p-right--medium">
+                                    <div class="slds-text-heading--x-small slds-size--1-of-1">{!$Label.cclxrep.cclxCheckoutAddressShipToTitle}</div>
+                                    <div>
+                                        <p>
+                                            <ui:inputText aura:id="ShippingStreet" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.ShippingStreet}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressStreet1Placeholder}"/>
+                                        </p>
+                                        <p>
+                                            <ui:inputText aura:id="ShippingStreet2" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.ShippingStreet2}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressStreet2Placeholder}"/>
+                                        </p>
+                                        <p class="slds-grid slds-wrap slds-grid--align-spread">
+                                            <ui:inputText aura:id="ShippingCity"
+                                                          class="slds-m-bottom--small slds-size--1-of-1 slds-medium-size--2-of-3"
+                                                          value="{!v.addresses.ShippingCity}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressCityPlaceholder}"/>
+                                            <ui:inputText aura:id="ShippingState"
+                                                          value="{!v.addresses.ShippingStateISOCode}"
+                                                          class="slds-m-bottom--small slds-size--1-of-1 slds-medium-size--1-of-4"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressStatePlaceholder}"/>
+                                        </p>
+                                        <p>
+                                            <ui:inputText aura:id="ShippingPostalCode" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.ShippingPostalCode}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressZipPlaceholder}"/>
+                                        </p>
+                                        <p>
+                                            <ui:inputText aura:id="ShippingCountry" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.ShippingCountry}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressCountryPlaceholder}"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="checkoutAddressEdit slds-m-top--medium slds-size--1-of-1 slds-medium-size--1-of-2">
+                                    <div class="slds-text-heading--x-small">{!$Label.cclxrep.cclxCheckoutAddressBillToTitle}</div>
+                                    <div>
+                                        <p>
+                                            <ui:inputText aura:id="BillingStreet" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.BillingStreet}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressStreet1Placeholder}"/>
+                                        </p>
+                                        <p>
+                                            <ui:inputText aura:id="BillingStreet2" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.BillingStreet2}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressStreet2Placeholder}"/>
+                                        </p>
+                                        <p class="slds-grid slds-wrap slds-grid--align-spread">
+                                            <ui:inputText aura:id="BillingCity"
+                                                          class="slds-m-bottom--small slds-size--1-of-1 slds-medium-size--2-of-3 slds-m-right--small"
+                                                          value="{!v.addresses.BillingCity}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressCityPlaceholder}"/>
+                                            <ui:inputText aura:id="BillingState"
+                                                          value="{!v.addresses.BillingStateISOCode}"
+                                                          class="slds-m-bottom--small slds-size--1-of-1 slds-medium-size--1-of-4"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressStatePlaceholder}"/>
+                                        </p>
+                                        <p>
+                                            <ui:inputText aura:id="BillingPostalCode" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.BillingPostalCode}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressZipPlaceholder}"/>
+                                        </p>
+                                        <p>
+                                            <ui:inputText aura:id="BillingCountry" class="slds-m-bottom--small"
+                                                          value="{!v.addresses.BillingCountry}"
+                                                          placeholder="{!$Label.cclxrep.cclxCheckoutAddressCountryPlaceholder}"/>
+                                        </p>
+                                    </div>
+                                </div>
+                                <aura:set attribute="else">
+                                    <div class="checkoutAddress slds-m-top--medium slds-m-bottom--medium slds-size--1-of-1 slds-medium-size--1-of-2">
+                                        <div class="slds-text-heading--xx-small slds-p-right-medium">{!$Label.cclxrep.cclxCheckoutAddressShipToTitle}</div>
+                                        <div class="slds-p-left--small">
+                                            <p>{!v.addresses.ShippingStreet}</p>
+                                            <aura:if isTrue="{!v.addresses.ShippingStreet2 != ''}">
+                                                <p>{!v.addresses.ShippingStreet2}</p>
+                                            </aura:if>
+                                            <p>{!v.addresses.ShippingCity + ', ' + v.addresses.ShippingStateISOCode + ' ' + v.addresses.ShippingPostalCode}</p>
+                                            <p>{!v.addresses.ShippingCountry}</p>
+                                        </div>
+                                    </div>
+                                    <div class="checkoutAddress slds-size--1-of-1 slds-medium-size--1-of-2">
+                                        <div class="slds-text-heading--xx-small">{!$Label.cclxrep.cclxCheckoutAddressBillToTitle}</div>
+                                        <div class="slds-p-left--small">
+                                            <p>{!v.addresses.BillingStreet}</p>
+                                            <aura:if isTrue="{!v.addresses.BillingStreet2 != ''}">
+                                                <p>{!v.addresses.BillingStreet2}</p>
+                                            </aura:if>
+                                            <p>{!v.addresses.BillingCity + ', ' + v.addresses.BillingStateISOCode + ' ' + v.addresses.BillingPostalCode}</p>
+                                            <p>{!v.addresses.BillingCountry}</p>
+                                        </div>
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+
+                            <lightning:button aura:id="editAddressButton" variant="brand"
+                                              label="{!$Label.cclxrep.cclxCheckoutAddressEditButtonText}"
+                                              class="updateButton" onclick="{!c.editAddress}"/>
+                        </div>
+
+                        <hr/>
+
+                        <div class="slds-card__body--inner slds-p-top--small slds-p-bottom--small">
+                            <div class="slds-text-heading--small dateTitle">{!$Label.cclxrep.cclxCheckoutDeliveryDateTitle} </div>
+
+                            <div class="slds-size--1-of-1 slds-large-size--1-of-2">
+                                <fieldset class="slds-form--compound slds-m-top--small">
+                                    <div class="form-element__group">
+                                        <aura:if isTrue="{!v.showDeliveryDate}">
+                                            <div class="slds-form-element__row">
+                                                <div class="slds-form-element deliveryDateField">
+                                                    <div class="slds-card__body--inner slds-p-left--none">
+                                                        <div id="dateError" aura:id="dateError"></div>
+                                                    </div>
+                                                    <span class="slds-truncate">{!$Label.cclxrep.cclxCheckoutDeliveryDateLabel}</span>
+                                                    <ui:inputDate aura:id="deliveryDate"
+                                                                  labelClass="slds-form-element__label"
+                                                                  class="slds-input slds-m-top--medium"
+                                                                  value="{!v.deliveryDate}" displayDatePicker="true"
+                                                                  select="{!c.onDateSelected}"/>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                        <div class="slds-card__body--inner slds-p-top--small">
+                            <div class="slds-text-heading--small">{!$Label.cclxrep.cclxCheckoutPaymentTitle}</div>
+
+
+                            <div class="slds-card__body--inner">
+                                <div class="slds-text-heading--small">My Wallet</div>
+                            </div>
+                            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+                                <thead>
+                                <tr class="slds-text-heading--label">
+                                    <th class="" scope="col">
+
+                                    </th>
+                                    <th class="" scope="col">
+                                        Account Number
+                                    </th>
+                                    <th class="" scope="col">
+                                        Original PO Amount
+                                    </th>
+                                    <th class="" scope="col">
+                                        Remaining PO Amount
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <aura:iteration items="{!v.storedPayments}" var="item">
+                                    <aura:if isTrue="{!item.remainingPOAmount >= v.calculatedTotal}">
+                                        <tr class="slds-hint-parent">
+                                            <td class="">
+                                                <ui:inputCheckbox value="{!item.selected}" text="{!item.sfid}"
+                                                                  change="{! c.paymentSelected }"/>
+                                            </td>
+                                            <td class="slds-truncate  slds-medium-show--table-cell">{!item.accountNumber}</td>
+                                            <td class="slds-truncate  slds-medium-show--table-cell">{!item.originalPOAmount}</td>
+                                            <td class="slds-truncate  slds-medium-show--table-cell">{!item.remainingPOAmount}</td>
+                                        </tr>
+                                    </aura:if>
+                                </aura:iteration>
+                                </tbody>
+                            </table>
+
+
+                            <div class="slds-tabs--default">
+                                <ul class="slds-tabs--default__nav" role="tablist">
+                                    <aura:if isTrue="{!v.allowContract}">
+                                        <li aura:id="contractTab"
+                                            class="{! 'slds-tabs--default__item slds-text-heading--label' + if(v.paymentMethod == 'contract',' slds-active','')}"
+                                            title="{!$Label.cclxrep.cclxCheckoutContractTab}" role="presentation"><a
+                                                    class="slds-tabs--default__link" href="javascript:void(0);"
+                                                    role="tab" tabindex="0" aria-selected="true"
+                                                    aria-controls="tab-default-1" id="tab-default-1__item"
+                                                    onclick="{!c.paymentSelection}"
+                                                    data-id="contract">{!$Label.cclxrep.cclxCheckoutContractTab}</a>
+                                        </li>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.allowPO}">
+                                        <li aura:id="poTab"
+                                            class="{! 'slds-tabs--default__item slds-text-heading--label' + if(v.paymentMethod == 'po',' slds-active','')}"
+                                            title="{!$Label.cclxrep.cclxCheckoutPOTab}" role="presentation"><a
+                                                    class="slds-tabs--default__link" href="javascript:void(0);"
+                                                    role="tab" tabindex="-1" aria-selected="false"
+                                                    aria-controls="tab-default-2" id="tab-default-2__item"
+                                                    onclick="{!c.paymentSelection}"
+                                                    data-id="po">{!$Label.cclxrep.cclxCheckoutPOTab}</a></li>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.allowCreditCard}">
+                                        <li aura:id="ccTab"
+                                            class="{! 'slds-tabs--default__item slds-text-heading--label' + if(v.paymentMethod == 'cc',' slds-active','')}"
+                                            title="{!$Label.cclxrep.cclxCheckoutCreditCardTab}" role="presentation"><a
+                                                    class="slds-tabs--default__link" href="javascript:void(0);"
+                                                    role="tab" tabindex="-1" aria-selected="false"
+                                                    aria-controls="tab-default-3" id="tab-default-3__item"
+                                                    onclick="{!c.paymentSelection}"
+                                                    data-id="cc">{!$Label.cclxrep.cclxCheckoutCreditCardTab}</a></li>
+                                    </aura:if>
+                                    <li aura:id="cyberTab"
+                                        class="{! 'slds-tabs--default__item slds-text-heading--label' + if(v.paymentMethod == 'cyber',' slds-active','')}"
+                                        title="{!$Label.cclxrep.cclxCheckoutCreditCardTab}" role="presentation"><a
+                                                class="slds-tabs--default__link" href="javascript:void(0);" role="tab"
+                                                tabindex="-1" aria-selected="false" aria-controls="tab-default-4"
+                                                id="tab-default-4__item" onclick="{!c.paymentSelection}"
+                                                data-id="cyber">{!$Label.cclxrep.cclxCheckoutCreditCardTab}</a></li>
+                                </ul>
+
+                                <aura:if isTrue="{!v.allowContract}">
+                                    <div aura:id="contractContent" id="tab-default-1"
+                                         class="{! 'slds-tabs--default__content' + if(v.paymentMethod == 'contract','',' slds-hide')}"
+                                         role="tabpanel" aria-labelledby="tab-default-1__item">
+
+                                        <div class="slds-scrollable--y" style="height: 200px">
+                                            <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                                                <thead>
+                                                <tr class="slds-text-heading--label">
+                                                    <th scope="col"></th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate"
+                                                             title="{!$Label.cclxrep.cclxCheckoutContractNumber}">{!$Label.cclxrep.cclxCheckoutContractNumberShort}</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate"
+                                                             title="{!$Label.cclxrep.cclxCheckoutContractStartDate}">{!$Label.cclxrep.cclxCheckoutContractStartDateShort}</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div class="slds-truncate"
+                                                             title="{!$Label.cclxrep.cclxCheckoutContractEndDate}">{!$Label.cclxrep.cclxCheckoutContractEndDateShort}</div>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <aura:if isTrue="{!v.contracts}">
+                                                    <aura:iteration items="{!v.contracts}" var="item">
+                                                        <tr>
+                                                            <td role="gridcell" class="slds-cell-shrink"
+                                                                data-label="{!$Label.cclxrep.cclxCheckoutContractSelectRow}">
+                                                                <label class="slds-checkbox">
+                                                                    <input type="checkbox" class="cclx-checkbox"
+                                                                           name="options" onclick="{!c.selectContract}"
+                                                                           data-id="{!item.Id}"/>
+                                                                    <span class="slds-checkbox--faux"></span>
+                                                                    <span class="slds-assistive-text">{!$Label.cclxrep.cclxCheckoutContractSelectRow}</span>
+                                                                </label>
+                                                            </td>
+                                                            <td scope="row"
+                                                                data-label="{!$Label.cclxrep.cclxCheckoutContractNumber}">
+                                                                <div class="slds-truncate"
+                                                                     title="{!item.ContractNumber}">{!item.ContractNumber}</div>
+                                                            </td>
+                                                            <td data-label="{!$Label.cclxrep.cclxCheckoutContractStartDate}">
+                                                                <div class="slds-truncate" title="{!item.StartDate}">
+                                                                    <ui:outputDateTime value="{!item.StartDate}"
+                                                                                       format="{!$Label.cclxrep.cclxCheckoutDateFormatShort}"/>
+                                                                </div>
+                                                            </td>
+                                                            <td data-label="{!$Label.cclxrep.cclxCheckoutContractEndDate}">
+                                                                <div class="slds-truncate" title="{!item.EndDate}">
+                                                                    <ui:outputDateTime value="{!item.EndDate}"
+                                                                                       format="{!$Label.cclxrep.cclxCheckoutDateFormatShort}"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </aura:iteration>
+                                                    <aura:set attribute="else">
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <div class="slds-p-around--medium slds-text-align--center">{!$Label.cclxrep.cclxCheckoutContractNotFound}</div>
+                                                            </td>
+                                                        </tr>
+                                                    </aura:set>
+                                                </aura:if>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </aura:if>
+
+                                <aura:if isTrue="{!v.allowPO}">
+                                    <div aura:id="poContent" id="tab-default-2"
+                                         class="{! 'slds-tabs--default__content' + if(v.paymentMethod == 'po','',' slds-hide')}"
+                                         role="tabpanel" aria-labelledby="tab-default-2__item">
+
+                                        <div class="slds-size--1-of-1 slds-large-size--1-of-3">
+                                            <fieldset class="slds-form--compound slds-m-top--small">
+                                                <div class="form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element">
+                                                            <ui:inputText label="{!$Label.cclxrep.cclxCheckoutPOTab}"
+                                                                          aura:id="po-number"
+                                                                          labelClass="slds-form-element__label"
+                                                                          class="slds-input" value="{!v.poNumber}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element">
+                                                            <ui:inputText label="Original PO Amount" aura:id="po-amt"
+                                                                          labelClass="slds-form-element__label"
+                                                                          class="slds-input"
+                                                                          value="{!v.originalPOAmount}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element">
+                                                            <ui:inputCheckbox label="Save Payment" aura:id="po-save"
+                                                                              labelClass="slds-form-element__label"
+                                                                              class="" value="{!v.savePayment}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+
+                                    </div>
+                                </aura:if>
+
+                                <aura:if isTrue="{!v.allowCreditCard}">
+                                    <div aura:id="ccContent" id="tab-default-3"
+                                         class="{! 'slds-tabs--default__content' + if(v.paymentMethod == 'cc','',' slds-hide')}"
+                                         role="tabpanel" aria-labelledby="tab-default-3__item">
+                                        <div class="slds-size--1-of-1 slds-large-size--1-of-3">
+
+                                            <fieldset class="slds-form--compound">
+                                                <legend class="slds-form-element__label">Credit Card Information
+                                                </legend>
+                                                <div class="form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element">
+                                                            <ui:inputText label="Name on Card" aura:id="card-name"
+                                                                          labelClass="slds-form-element__label"
+                                                                          class="slds-input" value="{!v.cardName}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element">
+                                                            <ui:inputText label="Card Number" aura:id="card-number"
+                                                                          labelClass="slds-form-element__label"
+                                                                          class="slds-input" value="{!v.cardNumber}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-2">
+                                                            <ui:inputDate label="Expiration Date"
+                                                                          aura:id="card-expiry-picker"
+                                                                          displayDatePicker="true"
+                                                                          format="{!$Label.cclxrep.cclxCheckoutDateFormatShort}"
+                                                                          labelClass="slds-form-element__label"
+                                                                          class="slds-input card-expiry-date"
+                                                                          value="{!v.cardExpirationDate}"/>
+                                                        </div>
+                                                        <div class="slds-form-element slds-size--1-of-2">
+                                                            <ui:inputText label="CV Code" aura:id="card-cv"
+                                                                          labelClass="slds-form-element__label"
+                                                                          class="slds-input" value="{!v.cardCode}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </aura:if>
+
+                                <div aura:id="cyberContent" id="tab-default-4"
+                                     class="{! 'slds-tabs--default__content' + if(v.paymentMethod == 'cyber','',' slds-hide')}"
+                                     role="tabpanel" aria-labelledby="tab-default-4__item">
+
+                                    <div class="ccPaymentOuterContainer">
+                                        <div class="panel panel-default cc_panel cc_payment_sopcc">
+                                            <!--<div class="panel-heading cc_heading">-->
+                                                <!--<h3 class="panel-title cc_title">New Credit Card</h3>-->
+                                            <!--</div>-->
+                                            <aura:if isTrue="{!v.renderComplete}">
+                                                <c:cc_lx_CyberSourceCCProcessor cart="{!v.cart}"/>
+                                            </aura:if>
+                                            <div class="ccpgcs-messagingSection-Error" style="display: none"></div>
+                                            <!--<form id="sopccPay" action="#" class="sopccPay">-->
+                                                <!--<div class="panel-body cc_body">-->
+                                                    <!--<input type="hidden" name="accountType" value="sopcc"/>-->
+                                                    <!--<div class="form-group">-->
+                                                        <!--&lt;!&ndash;*************&ndash;&gt;-->
+                                                        <!--<label for="first_name"-->
+                                                               <!--class="control-label firstNameLabel fieldLabel">First-->
+                                                            <!--Name</label>-->
+                                                        <!--<input type="text" name="first_name"-->
+                                                               <!--class="form-control firstName"/>-->
+                                                        <!--<label for="last_name"-->
+                                                               <!--class="control-label lastNameLabel fieldLabel">Last-->
+                                                            <!--Name</label>-->
+                                                        <!--<input type="text" name="last_name"-->
+                                                               <!--class="form-control lastName"/>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="clear"></div>-->
+                                                    <!--<div class="form-group">-->
+                                                        <!--&lt;!&ndash;***********&ndash;&gt;-->
+                                                        <!--<label for="card_type"-->
+                                                               <!--class="control-label cardTypeLabel fieldLabel">Card-->
+                                                            <!--Type</label>-->
+                                                        <!--<select name="card_type" class="form-control cardType">-->
+                                                            <!--<option value="">Select Card Type</option>-->
+                                                            <!--<aura:iteration items="{!v.cyberSourcePaymentTypes}"-->
+                                                                            <!--var="item">-->
+                                                                <!--<option data-sfid="{!item.sfid}"-->
+                                                                        <!--data-verification="{!item.verification}"-->
+                                                                        <!--value="{!item.type}">{!item.name}</option>-->
+                                                            <!--</aura:iteration>-->
+                                                        <!--</select>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="form-group">-->
+                                                        <!--&lt;!&ndash;*************&ndash;&gt;-->
+                                                        <!--<label for="card_number"-->
+                                                               <!--class="control-label cardNumberLabel fieldLabel">Card-->
+                                                            <!--Number</label>-->
+                                                        <!--<input type="tel" name="card_number"-->
+                                                               <!--class="form-control cardNumber"/>-->
+                                                    <!--</div>-->
+                                                    <!--<div class="form-group">-->
+                                                        <!--<div class="form-inline row">-->
+                                                            <!--<div class="col-sm-6">-->
+                                                                <!--&lt;!&ndash;************&ndash;&gt;-->
+                                                                <!--<label for="card_expirationM"-->
+                                                                       <!--class="control-label cardExpirationLabel fieldLabel">Card-->
+                                                                    <!--Expiration</label>-->
+                                                                <!--<input type="tel" name="card_expirationMM" maxlength="2"-->
+                                                                       <!--class="form-control cardExpirationMM"-->
+                                                                       <!--placeholder="MM"/>-->
+                                                                <!--<input type="tel" name="card_expirationYYYY"-->
+                                                                       <!--maxlength="4"-->
+                                                                       <!--class="form-control cardExpirationYYYY"-->
+                                                                       <!--placeholder="YYYY"/>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="col-sm-6">-->
+                                                                <!--&lt;!&ndash;*****&ndash;&gt;-->
+                                                                <!--<label for="card_cvn"-->
+                                                                       <!--class="control-label cardCvnLabel fieldLabel">CVN</label>-->
+                                                                <!--<input type="tel" name="card_cvn" maxlength="4"-->
+                                                                       <!--class="form-control cardCvn"-->
+                                                                       <!--disabled="disabled"/>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                    <!--&lt;!&ndash;*********&ndash;&gt;-->
+                                                    <!--<div class="addressBlock"></div>-->
+                                                    <!--<hr/>-->
+                                                    <!--<div class="form-group">-->
+                                                        <!--<div class="form-inline row">-->
+                                                            <!--<div class="displayName col-sm-6">-->
+                                                                <!--<label for="displayName"-->
+                                                                       <!--class="saveDisplay Name fieldLabel">Name-->
+                                                                    <!--(Optional)</label>-->
+                                                                <!--<input type="text" name="displayName" id="displayName"-->
+                                                                       <!--class="form-control displayName" maxlength="50"/>-->
+                                                            <!--</div>-->
+                                                            <!--<div class="checkbox col-sm-6">-->
+                                                                <!--<label for="saveAsStoredPayment"-->
+                                                                       <!--class="control-label saveLabel SavePayment fieldLabel">-->
+                                                                    <!--<input type="checkbox" name="saveAsStoredPayment"-->
+                                                                           <!--id="saveAsStoredPayment"-->
+                                                                           <!--class="saveAsStoredPayment" value="true"/>-->
+                                                                    <!--Save Payment-->
+                                                                <!--</label>-->
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
+                                                    <!--<p class="cc_po_action_buttons form-group">-->
+                                                    <!--<div class="panel-body pull-right cc_action_buttons">-->
+                                                        <!--<input type="button"-->
+                                                               <!--class="btn btn-default btn-sm sopccMakePayment button"-->
+                                                               <!--name="sopccMakePayment" id="sopccPayment"-->
+                                                               <!--data-id="sopccPay" value="Make Payment"/>-->
+                                                    <!--</div>-->
+                                                    <!--</p>-->
+                                                <!--</div>-->
+                                            <!--</form>-->
+                                            <!--<iframe id="sopccFrame" src="" border="0"></iframe>-->
+                                        </div>
+                                    </div>
+                                    <div id="sopccAddress"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                        <div class="slds-card__body--inner slds-p-top--small">
+                            <div class="slds-text-heading--small noteTitle">{!$Label.cclxrep.cclxCheckoutNoteTitle}</div>
+                            <div class="noteInputWrapper">
+                                <ui:inputTextArea rows="5" maxlength="1000" class="note" value="{!v.note}"/>
+                            </div>
+
+
+                        </div>
+
+                        <hr/>
+
+                        <div class="slds-card__body--inner">
+                            <div class="slds-size--1-of-1 slds-large-size--1-of-3">
+                                <fieldset class="slds-form--compound slds-m-top--small">
+                                    <div class="form-element__group">
+                                        <aura:if isTrue="{!v.showTerms}">
+                                            <div class="slds-form-element__row">
+                                                <div class="slds-form-element">
+                                                    <ui:inputCheckbox labelClass="slds-form-element__label"
+                                                                      class="slds-checkbox"
+                                                                      label="{!v.termsLabel}"
+                                                                      value="{!v.agreeToTerms}"/>
+                                                </div>
+                                                <div class="slds-form-element__icon">
+                                                    <a href="javascript:void(0);" onclick="{!c.showModal}">
+                                        <span class="slds-icon_container">
+                                        <lightning:icon iconName="utility:info"/>
+                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+                        <hr/>
+
+                        {!v.body}
+
+                        <aura:set attribute="else">
+                            <div class="slds-card__body--inner">
+                                <h2 class="slds-truncate slds-m-bottom--small">{!$Label.cclxrep.cclxCheckoutNoItemsError}</h2>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+
+            </div>
+            <div class="slds-card__footer" aura:id="mainCartFooter">
+                <aura:if isTrue="{!v.cart.ECartItemsS}">
+                    <button class="slds-button slds-button--brand"
+                            onclick="{!c.doPlaceOrder}">{!$Label.cclxrep.cclxCheckoutPlaceItemButton}</button>
+                </aura:if>
+            </div>
+            <aura:set attribute="else">
+                {!v.body}
+            </aura:set>
+        </aura:if>
+    </div>
+
+    <aura:if isTrue="{!v.renderDefaultComponent}">
+        <div aura:id="termsPopupDiv" class="slds-hide">
+            <div aria-hidden="true" role="dialog" class="slds-modal slds-fade-in-open">
+                <aura:if isTrue="{!v.cart}"> <!-- This is to fix the race condition issue with icons -->
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__header slds-p-around--medium">
+                            <h2 class="slds-text-heading--medium">{!v.termsLabel}</h2>
+                            <button class="slds-button slds-button--icon-inverse slds-modal__close cc_modal_close"
+                                    onclick="{!c.cancelModal}">
+                                <lightning:icon iconName="action:close" class="close-modal"/>
+                            </button>
+                        </div>
+                        <div class="slds-modal__content slds-p-around--large">
+                            <div>
+                                {!v.termsText}
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>
+        </div>
+
+        <div class="slds-spinner_container slds-hide" aura:id="spinner">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <div class="hidden">
+        {!$Label.cclxrep.cclxTerms} <!-- So it gets packaged -->
+        {!$Label.cclxrep.cclxCheckoutNoContractSelectedError}
+        {!$Label.cclxrep.cclxCheckoutNoPOError}
+        {!$Label.cclxrep.cclxCheckoutTermsNotSelectedError}
+        {!$Label.cclxrep.cclxCheckoutNoDeliveryDateSelectedError}
+        {!$Label.cclxrep.cclxCheckoutDeliveryDateRangeError}
+    </div>
+</aura:component>

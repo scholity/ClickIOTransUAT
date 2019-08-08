@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>First_Response_Time_in_minutes__c</fullName>
+    <description>Social Care: Time difference between the customer post and the agent post</description>
+    <externalId>false</externalId>
+    <formula>/** First_Customer_Post_Date_Time__c - First_ARC_Response_Date_Time__c **/
+
+IF( ISBLANK(First_ARC_Response_Date_Time__c ), NULL,
+IF(LEFT(TEXT( First_Customer_Post_Date_Time__c - (5/24)),10) = LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),10),
+
+IF(OR(
+First_Customer_Post_Date_Time__c &lt; DATETIMEVALUE(LEFT(TEXT( First_Customer_Post_Date_Time__c - (5/24)),11) &amp; &quot;14:00:00&quot;),
+First_ARC_Response_Date_Time__c &gt; DATETIMEVALUE(LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),11) &amp; &quot;22:00:00&quot;)
+), 0,
+
+MIN(17, (First_Customer_Post_Date_Time__c - DATETIMEVALUE(LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),11) &amp; &quot;05:00:00&quot;)) * 24) -
+MAX(8, (First_ARC_Response_Date_Time__c - DATETIMEVALUE(LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),11) &amp; &quot;05:00:00&quot;)) * 24))
+
+/** SAME DAY **/
+
+,
+(
+((CASE(MOD( DATEVALUE(First_ARC_Response_Date_Time__c) - DATE(1900,1,8),7),
+0 , CASE( MOD( DATEVALUE(First_Customer_Post_Date_Time__c)- DATEVALUE(First_ARC_Response_Date_Time__c) ,7),1,2,2,3,3,4,4,5,5,5,6,5,1),
+1 , CASE( MOD( DATEVALUE(First_Customer_Post_Date_Time__c)- DATEVALUE(First_ARC_Response_Date_Time__c) ,7),1,2,2,3,3,4,4,4,5,4,6,5,1),
+2 , CASE( MOD( DATEVALUE(First_Customer_Post_Date_Time__c)- DATEVALUE(First_ARC_Response_Date_Time__c) ,7),1,2,2,3,3,3,4,3,5,4,6,5,1),
+3 , CASE( MOD( DATEVALUE(First_Customer_Post_Date_Time__c)- DATEVALUE(First_ARC_Response_Date_Time__c) ,7),1,2,2,2,3,2,4,3,5,4,6,5,1),
+4 , CASE( MOD( DATEVALUE(First_Customer_Post_Date_Time__c)- DATEVALUE(First_ARC_Response_Date_Time__c)
+,7),1,1,2,1,3,2,4,3,5,4,6,5,1),
+5 , CASE( MOD( DATEVALUE(First_Customer_Post_Date_Time__c)- DATEVALUE(First_ARC_Response_Date_Time__c)
+,7),1,0,2,1,3,2,4,3,5,4,6,5,0),
+CASE( MOD( DATEVALUE(First_Customer_Post_Date_Time__c) - DATEVALUE(First_ARC_Response_Date_Time__c) ,7),1,1,2,2,3,3,4,4,5,5,6,5,0))
++
+( FLOOR( (DATEVALUE(First_Customer_Post_Date_Time__c) - DATEVALUE(First_ARC_Response_Date_Time__c))/7 )*5) ) -2 )
+
+/** BUSINESS DAYS **/
+
++
+
+(IF ( First_ARC_Response_Date_Time__c &gt; DATETIMEVALUE(LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),11) &amp; &quot;22:00:00&quot;), First_ARC_Response_Date_Time__c, DATETIMEVALUE(LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),11) &amp; &quot;22:00:00&quot;)) -
+
+IF(First_ARC_Response_Date_Time__c &lt; DATETIMEVALUE(LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),11) &amp; &quot;14:00:00&quot;), DATETIMEVALUE(LEFT(TEXT( First_ARC_Response_Date_Time__c - (5/24)),11) &amp; &quot;14:00:00&quot;),First_ARC_Response_Date_Time__c
+)
+)
+
++
+
+IF( First_Customer_Post_Date_Time__c &lt;= DATETIMEVALUE(LEFT(TEXT( First_Customer_Post_Date_Time__c - (5/24)),11) &amp; &quot;14:00:00&quot;), 0,
+IF( First_Customer_Post_Date_Time__c &gt;= DATETIMEVALUE(LEFT(TEXT( First_Customer_Post_Date_Time__c - (5/24)),11) &amp; &quot;22:00:00&quot;), 9/24,
+First_Customer_Post_Date_Time__c - DATETIMEVALUE(LEFT(TEXT( First_Customer_Post_Date_Time__c - (5/24)),11) &amp; &quot;14:00:00&quot;)))
+)*24
+)*60)</formula>
+    <label>First Response Time in minutes</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

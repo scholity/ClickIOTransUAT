@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PHSS_Channel__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Used to identify the PHSS Sales Channel type.  Choose all that apply.</inlineHelpText>
+    <label>PHSS Channel</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AED</fullName>
+                <default>false</default>
+                <label>AED</label>
+            </value>
+            <value>
+                <fullName>Authorized Provider</fullName>
+                <default>false</default>
+                <label>Authorized Provider</label>
+            </value>
+            <value>
+                <fullName>Business Client</fullName>
+                <default>false</default>
+                <label>Business Client</label>
+            </value>
+            <value>
+                <fullName>CEP Agency</fullName>
+                <default>false</default>
+                <label>CEP Agency</label>
+            </value>
+            <value>
+                <fullName>Full Service</fullName>
+                <default>false</default>
+                <label>Full Service</label>
+            </value>
+            <value>
+                <fullName>Licensed Training Provider</fullName>
+                <default>false</default>
+                <label>Licensed Training Provider</label>
+            </value>
+            <value>
+                <fullName>NAT Agency</fullName>
+                <default>false</default>
+                <label>NAT Agency</label>
+            </value>
+            <value>
+                <fullName>National Account Network</fullName>
+                <default>false</default>
+                <label>National Account Network</label>
+            </value>
+            <value>
+                <fullName>RCS Distributor</fullName>
+                <default>false</default>
+                <label>RCS Distributor</label>
+            </value>
+            <value>
+                <fullName>RCS Retail</fullName>
+                <default>false</default>
+                <label>RCS Retail</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Assign_Invoicing_Cases_to_Sales_P</fullName>
+    <active>true</active>
+    <description>Cases that are with Type Invoicing should not be able to be reassigned to users who have Sales Profile</description>
+    <errorConditionFormula>And( 
+ISPICKVAL( Type,&quot;Invoicing&quot;) , 
+ISCHANGED( OwnerId ) , 
+Owner:User.Profile.Id = &quot;00ed0000000IUFH&quot;,
+Not( OwnerId = &quot;005d0000001VdIm&quot;),
+Not( OwnerId = &quot;005d0000001VFkj&quot;),
+ $Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>Cases wth Type &quot;Invoicing&quot; can not be reassigned back to Sales Users.</errorMessage>
+</ValidationRule>

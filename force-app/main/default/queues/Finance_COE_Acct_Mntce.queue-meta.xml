@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>FIN Customer Mntce</name>
+    <queueMembers>
+        <users>
+            <user>brandoncecil.owen@redcross.org</user>
+            <user>jane.mcinerney@redcross.org</user>
+            <user>jonathan.phillips@redcross.org</user>
+            <user>katherine.harris2@redcross.org</user>
+            <user>kimberlyn.goode@redcross.org</user>
+            <user>nyle.grimes@redcross.org</user>
+            <user>rcspo@redcross.org</user>
+            <user>s.skomorucha@redcross.org</user>
+            <user>sfdcsudhir@redcross.org</user>
+            <user>thomas.white@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

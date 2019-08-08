@@ -1,0 +1,74 @@
+<apex:page standardController="redwing__ILT_Class__c" extensions="ILTClassRosterPDFController" renderAs="pdf" applyBodyTag="false">
+<html>
+<head>
+<style>
+    @page {
+        size: letter;
+        margin: 25mm;
+        @top-center {
+            content: "Sample";
+        }
+        @bottom-center {
+            content: "Page " counter(page) " of " counter(pages);
+        }
+    }
+    .page-break {
+        display:block;
+        page-break-after:always;
+    }
+    body {
+        font-family: Arial Unicode MS;
+    }
+</style>
+<apex:image url="{!URLFOR($Resource.ARCLogo, '2000px-American_Red_Cross_Logo.png')}" width="25%"/>
+</head>
+<body>
+    <div class="page-break">
+    <br/>
+    <center><b style="font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;"><apex:outputText value="{!currentClass.Name}"/> Roster</b></center>
+    <br/>
+    <br/>
+    <apex:pageBlock >
+        <table class="tableClass" id="thePage:theTable" border="0" cellpadding="1" cellspacing="0" style="font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;border-collapse:collapse;width:100%;">
+        <colgroup span="2"></colgroup>
+        <caption><b></b></caption>
+        <thead>
+            <tr>
+                <td colspan="2" scope="colgroup"></td>
+            </tr>   
+            <tr>
+                <td scope="col"></td>
+                <td scope="col"></td>
+            </tr>
+        </thead>   
+        <tfoot>
+            <tr>
+                <td colspan="2" scope="colgroup"></td>
+            </tr>
+        </tfoot>    
+        <tbody>
+            <tr>
+                <td style="width:50%;"><b>Facility: </b><apex:outputText value="{!currentClass.Account__r.Name}"/></td>
+                <td style="width:50%;"><b>Start/End Date: </b><apex:outputText value="{!currentClass.redwing__Start_Date__c} - {!currentClass.redwing__End_Date__c}"/></td>
+            </tr>
+            <tr>
+                <td style="width:50%;"><b>Location: </b><apex:outputText value="{!currentClass.redwing__Location__r.Name}"/></td>
+                <td style="width:50%;"><b>Start/End Time: </b><apex:outputText value="{!currentClass.redwing__Start_Time__c} - {!currentClass.redwing__End_Time__c}"/></td>
+                
+            </tr>
+        </tbody>   
+    </table>
+    </apex:pageBlock>
+    <br/>
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!rosterList}" var="rosterEntry" border="1px solid #ddd;" style="font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;border-collapse:collapse;width:100%;">
+            <apex:column value="{!rosterEntry.redwing__User__r.FirstName}" style="padding:3px;"/>
+            <apex:column value="{!rosterEntry.redwing__User__r.LastName}" style="padding:3px;"/>             
+            <apex:column value="{!rosterEntry.redwing__ILT_Session__r.Name}" style="padding:3px;"/>
+            <apex:column value="{!rosterEntry.redwing__Attended__c}" style="padding:3px;"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    </div>   
+</body>  
+</html>  
+</apex:page>

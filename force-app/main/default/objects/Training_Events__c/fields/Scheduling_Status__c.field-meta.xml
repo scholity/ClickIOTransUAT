@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Scheduling_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Scheduling Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Course_Order_Status__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Open</fullName>
+                <default>false</default>
+                <label>Open</label>
+            </value>
+            <value>
+                <fullName>Requested</fullName>
+                <default>false</default>
+                <label>Requested</label>
+            </value>
+            <value>
+                <fullName>Contacting</fullName>
+                <default>true</default>
+                <label>Contacting</label>
+            </value>
+            <value>
+                <fullName>In-Discussion</fullName>
+                <default>false</default>
+                <label>In-Discussion</label>
+            </value>
+            <value>
+                <fullName>Reserved</fullName>
+                <default>false</default>
+                <label>Reserved</label>
+            </value>
+            <value>
+                <fullName>Rescheduling</fullName>
+                <default>false</default>
+                <label>Rescheduling</label>
+            </value>
+            <value>
+                <fullName>Void</fullName>
+                <default>false</default>
+                <label>Void</label>
+            </value>
+            <value>
+                <fullName>Canceled</fullName>
+                <default>false</default>
+                <label>Canceled</label>
+            </value>
+            <value>
+                <fullName>Completed</fullName>
+                <default>false</default>
+                <label>Completed</label>
+            </value>
+            <value>
+                <fullName>In Discussion - Customer Hold</fullName>
+                <default>false</default>
+                <label>In Discussion - Customer Hold</label>
+            </value>
+            <value>
+                <fullName>In Discussion - Scheduling</fullName>
+                <default>false</default>
+                <label>In Discussion - Scheduling</label>
+            </value>
+            <value>
+                <fullName>Sent Addendum</fullName>
+                <default>false</default>
+                <label>Sent Addendum</label>
+            </value>
+            <value>
+                <fullName>Course Record Processed</fullName>
+                <default>false</default>
+                <label>Course Record Processed</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <valueName>Requested</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <controllingFieldValue>In Process</controllingFieldValue>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>Contacting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <controllingFieldValue>In Process</controllingFieldValue>
+            <valueName>In-Discussion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <valueName>Reserved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <controllingFieldValue>In Process</controllingFieldValue>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>Rescheduling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <controllingFieldValue>In Process</controllingFieldValue>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>Void</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>In Process</controllingFieldValue>
+            <valueName>Open</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>In Process</controllingFieldValue>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>In Discussion - Customer Hold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>In Discussion - Scheduling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>Sent Addendum</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Schedule</controllingFieldValue>
+            <valueName>Course Record Processed</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Owner_Duration__c</fullName>
+    <description>This field takes the duration__c and turns it into a readable time.</description>
+    <externalId>false</externalId>
+    <formula>IF ((Handed_Off__c - Received__c)&gt; 0, 
+TEXT(FLOOR((Handed_Off__c - Received__c))) &amp; &quot;:&quot; &amp; 
+TEXT(FLOOR( 24 * ((Handed_Off__c - Received__c) - FLOOR((Handed_Off__c - Received__c))))) &amp; &quot;:&quot; &amp; 
+TEXT(ROUND(60 * (ROUND( 24 * ((Handed_Off__c - Received__c)-FLOOR((Handed_Off__c - Received__c))),8) - FLOOR( 
+ROUND( 24 * ((Handed_Off__c - Received__c)- FLOOR((Handed_Off__c - Received__c))),8)) ),0))&amp; &quot;:&quot; &amp; 
+TEXT(Round(60*(((Handed_Off__c - Received__c) *1440) - FLOOR(((Handed_Off__c - Received__c) *1440))),0)) 
+, &quot;&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Case Owner Duration</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

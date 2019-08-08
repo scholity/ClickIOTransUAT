@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Channel</fullName>
+    <active>false</active>
+    <description>When Invoice Case Sub Type is selected then Sales Channel is required.</description>
+    <errorConditionFormula>AND(OR(
+ISPICKVAL( Dispute_Issue__c , &#39;ACH Detail&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;ACH Request&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;AR Exception&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Bad Address&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Collections&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Customer Account Maintenance&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Customer Service Credit&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Duplicate Invoice&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;External PO Needed&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Grants&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Invoice Delivery Method&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Manual Billing Request&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Misapplied Payment&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Missing Payment&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Other&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Pay Invoice&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Refund Credit Balance&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Request Copy of Statement/Invoice&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Request Invoicing Privileges&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Request Receipt/Order Detail&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Retail Collections&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Vendor Forms&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Why Bill to Chapter&#39;), 
+ISPICKVAL( Dispute_Issue__c , &#39;Wrong Organization&#39;)), 
+
+ISPICKVAL ( Sales_Channel__c, &#39;&#39;),
+NOT(ISPICKVAL( Status , &quot;New&quot;)), 
+NOT(ISPICKVAL( Status , &quot;New - Assigned&quot;)), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = false 
+)</errorConditionFormula>
+    <errorDisplayField>Sales_Channel__c</errorDisplayField>
+    <errorMessage>Please provide the Sales Channel</errorMessage>
+</ValidationRule>

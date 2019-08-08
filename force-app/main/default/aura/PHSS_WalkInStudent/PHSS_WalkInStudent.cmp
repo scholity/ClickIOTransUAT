@@ -1,0 +1,111 @@
+<aura:component controller="PHSS_WalkInStudentController" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global">
+    <aura:attribute name="isCommunityCourse" type="Boolean" default="false" /> 
+    <aura:attribute name="formWrap" type="Object" />
+    <aura:attribute name="showForm" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>	
+    
+    <aura:if isTrue="{!v.isCommunityCourse}" >
+        <div> 
+            <lightning:button label		= "Walk-In Student"
+                              title		= "Walk-In Student"
+                              onclick	= "{!c.showCaseForm}"
+                              class		= "slds-button_neutral customButton intialButton"/>
+        </div>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showForm}">
+        <section role			  = "dialog"
+                 tabindex		  = "-1"
+                 class			  = "slds-modal slds-fade-in-open slds-modal_small"
+                 aria-labelledby  = "header43" 
+                 aria-modal		  = "true"
+                 aria-describedby = "modal-content-id-1">
+            
+            <div class = "slds-modal__container">
+                
+                <!--Header - Start -->
+                
+                <header class="slds-modal__header">
+                    <button class	= "slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title	= "Close"
+                            onclick = "{!c.cancel}">
+                        
+                        <lightning:icon iconName="utility:close">
+                        </lightning:icon>
+                        
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    
+                    <h2 id		= "header43"
+                        class	= "slds-text-heading_medium">
+                        Walk-In Student
+                    </h2>
+                    
+                </header>
+                
+                <!--Header - End -->
+                
+                <!-- Body - Start -->
+                
+                <div class	= "slds-modal__content slds-grow slds-p-around_medium "
+                     id		= "modal-content-id-1">
+                    <div class="slds-text-align_center slds-text-heading_medium" style = "color:red;">{!v.helpText}</div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning:input aura:id="field" 
+                                         value="{!v.formWrap.firstName}" 
+                                         label = "First Name"
+                                         placeholder="First Name" 
+                                         required="true" /><br/>
+                        
+                        <lightning:input aura:id="field" 
+                                         value="{!v.formWrap.lastName}"
+                                         label = "Last Name"
+                                         placeholder="Last Name" 
+                                         required="true" /><br/>
+                        
+                        <lightning:input type="email" 
+                                         value="{!v.formWrap.email}" 
+                                         label = "Email"
+                                         aura:id="field" 
+                                         placeholder="Email" 
+                                         required="true" 
+                                         pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*[a-zA-Z_]+?\.[a-zA-Z]{2,3}" 
+                                         messageWhenPatternMismatch="Must be a valid email address"/><br/>
+                        
+                        <lightning:input type="tel" 
+                                         value="{!v.formWrap.phone}" 
+                                         label = "Phone"
+                                         aura:id="field" 
+                                         placeholder="Phone" 
+                                         pattern="\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})" 
+                                         messageWhenPatternMismatch="Must be a valid phone number" 
+                                         required="true"/><br/>
+                    </div>    
+                </div>
+                
+                <!-- Body - End -->
+                
+                <!-- Footer - Start -->
+                
+                <footer class="slds-modal__footer slds-grid slds-grid_align-spread progIndicator">
+                    
+                    <div class="slds-col">
+                        <button class="slds-button slds-button_neutral customButtonRed" onclick="{!c.cancel}">Cancel</button>
+                    </div> 
+                    
+                    <div class="slds-col">
+                        <button class="slds-button slds-button_neutral customButton"
+                                onclick="{!c.saveCase}" >
+                            Submit
+                        </button>
+                    </div>
+                    
+                </footer>
+                <!-- Footer - End -->
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>

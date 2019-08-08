@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Lost_Detail_rule</fullName>
+    <active>true</active>
+    <description>Can not save record if Closed Lost stage is selected without a value in the Closed Lost Details field</description>
+    <errorConditionFormula>AND(
+
+NOT($Setup.Validation_Rules__c.Bypass_Rules__c),
+
+ISPICKVAL(StageName, &quot;Closed Lost&quot;),
+ISBLANK( Closed_Lost_Details__c ))</errorConditionFormula>
+    <errorDisplayField>Closed_Lost_Reason_New__c</errorDisplayField>
+    <errorMessage>You must enter a Closed Lost Reason AND Closed Lost Details</errorMessage>
+</ValidationRule>

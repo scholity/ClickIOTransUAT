@@ -1,0 +1,36 @@
+<aura:component controller="PHSS_CancelEnrollmentController" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,flexipage:availableForRecordHome" >
+	
+    <aura:attribute name="status" type="String" default="" />
+    
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+
+    <aura:attribute type="Id" name="recordId" />
+    <aura:attribute name="record" type="redwing__ILT_Roster__c" />
+    <aura:attribute name="rosterFields" type="Object"/>
+    <aura:attribute name="recordError" type="String" />
+    <force:recordData aura:id="iltrecord"
+                      layoutType="FULL"
+                      recordId="{!v.recordId}"
+                      targetError="{!v.recordError}"
+                      targetFields="{!v.rosterFields}"
+                       />
+
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navService"/>
+
+    <aura:renderIf isTrue="{!v.status == 'Cancelled'}">
+        <div class="slds-align_absolute-center slds-m-top_xx-large">
+            <p class="slds-text-heading_small"><b>Enrollment already cancelled</b></p>
+        </div>
+    </aura:renderIf>
+    
+    <aura:renderIf isTrue="{!and(v.status != '',v.status != 'Cancelled')}">
+        <div class="slds-align_absolute-center slds-m-top_xx-large">
+            <p class="slds-text-heading_small"><b>Are you sure you want to cancel the enrollment?</b></p>
+        </div>
+        <div class="slds-align_absolute-center slds-m-top_medium">
+            <lightning:button label="YES" class="bold" variant="brand" type="submit" onclick="{!c.cancelEnrollment1}" />
+            <lightning:button label="NO" class="bold" type="submit" onclick="{!c.closePanel}" />	
+        </div>
+    </aura:renderIf>
+</aura:component>

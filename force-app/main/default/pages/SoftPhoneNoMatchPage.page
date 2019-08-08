@@ -1,0 +1,18 @@
+<apex:page >
+    <apex:pageBlock title="Hello {!$User.FirstName}!">
+    
+    <font size='4' color='red'>
+    <b>
+        No Matches have been found!
+    </b>
+    </font>    
+    <p>
+    <b>
+    <font size='2'>
+        Please perform a manual search to identify the caller in Salesforce. If no records are identified, 
+        proceed by creating a new Contact record.
+    </font>
+    </b>
+    </p>
+    </apex:pageBlock>
+</apex:page>

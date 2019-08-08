@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Lost_Reason__c</fullName>
+    <description>FOR HISTORICAL REPORTING PURPOSES ONLY</description>
+    <externalId>false</externalId>
+    <label>Closed Lost Reason (old)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>StageName</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Client Ceased to Communicate</fullName>
+                <default>false</default>
+                <label>Client Ceased to Communicate</label>
+            </value>
+            <value>
+                <fullName>Insufficient Staff Size</fullName>
+                <default>false</default>
+                <label>Insufficient Staff Size</label>
+            </value>
+            <value>
+                <fullName>Lack of Internal Approval</fullName>
+                <default>false</default>
+                <label>Lack of Internal Approval</label>
+            </value>
+            <value>
+                <fullName>Loss to Competitor - AHA</fullName>
+                <default>false</default>
+                <label>Loss to Competitor - AHA</label>
+            </value>
+            <value>
+                <fullName>Loss to Competitor - Other</fullName>
+                <default>false</default>
+                <label>Loss to Competitor - Other</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Service Delivery Issue</fullName>
+                <default>false</default>
+                <label>Service Delivery Issue</label>
+            </value>
+            <value>
+                <fullName>Time Commitment</fullName>
+                <default>false</default>
+                <label>Time Commitment</label>
+            </value>
+            <value>
+                <fullName>Expired Opportunity</fullName>
+                <default>false</default>
+                <label>Expired Opportunity</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Client Ceased to Communicate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Insufficient Staff Size</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Lack of Internal Approval</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Loss to Competitor - AHA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Loss to Competitor - Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Service Delivery Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Time Commitment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Expired Opportunity</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

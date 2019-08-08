@@ -1,0 +1,8 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:attribute name="buttonTitle" type="String" description="Button Title" access="global" default="Submit"/>
+    <aura:attribute name="buttonURL" type="String" description="Button URL" access="global"/>
+
+    <div>
+        <lightning:button variant="brand" aura:id="address" class="buttonStyle" onclick="{!c.handleClick}" value="{!v.buttonURL}">{!v.buttonTitle}</lightning:button>  
+    </div>
+</aura:component>

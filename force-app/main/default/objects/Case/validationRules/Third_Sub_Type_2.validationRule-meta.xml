@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Third_Sub_Type_2</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+ISPICKVAL( Type_of_Price_Dispute__c , &quot;Product/Delivery&quot;), 
+OR( 
+ISBLANK (Order_Number__c ),  
+ISBLANK (Invoice_Number__c ),
+ISBLANK (Company_Name__c ), 
+ISBLANK(Text( Requested_Amount_of_Change__c )) 
+),
+$Setup.Validation_Rules__c.Bypass_Rules__c = false)</errorConditionFormula>
+    <errorMessage>Check all required fields - Account Name; Contact Name; Delivery Channel; Company Name; LMS Order Number (RCS Number); Invoice Number; State</errorMessage>
+</ValidationRule>

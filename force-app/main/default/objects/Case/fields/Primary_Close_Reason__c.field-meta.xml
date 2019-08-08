@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Close_Reason__c</fullName>
+    <description>Indicates the initial resolution of the case.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>What is the main reason for closing the case?</inlineHelpText>
+    <label>Primary Close Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Status</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Credit Processed</fullName>
+                <default>false</default>
+                <label>Credit Processed</label>
+            </value>
+            <value>
+                <fullName>Customer Unresponsive</fullName>
+                <default>false</default>
+                <label>Customer Unresponsive</label>
+            </value>
+            <value>
+                <fullName>Did Not Register in New Course</fullName>
+                <default>false</default>
+                <label>Did Not Register in New Course</label>
+            </value>
+            <value>
+                <fullName>Did Not Reschedule / Did Not Save Customer</fullName>
+                <default>false</default>
+                <label>Did Not Reschedule / Did Not Save Customer</label>
+            </value>
+            <value>
+                <fullName>Invoice Accurate - No Actual Dispute</fullName>
+                <default>false</default>
+                <label>Invoice Accurate - No Actual Dispute</label>
+            </value>
+            <value>
+                <fullName>Invoice Privileges Request</fullName>
+                <default>false</default>
+                <label>Invoice Privileges Request</label>
+            </value>
+            <value>
+                <fullName>Issue Resolved</fullName>
+                <default>false</default>
+                <label>Issue Resolved</label>
+            </value>
+            <value>
+                <fullName>Opted for AP Class Listed on RCO</fullName>
+                <default>false</default>
+                <label>Opted for AP Class Listed on RCO</label>
+            </value>
+            <value>
+                <fullName>Payment Processed</fullName>
+                <default>false</default>
+                <label>Payment Processed</label>
+            </value>
+            <value>
+                <fullName>Referred to Website</fullName>
+                <default>false</default>
+                <label>Referred to Website</label>
+            </value>
+            <value>
+                <fullName>Registered in New Course</fullName>
+                <default>false</default>
+                <label>Registered in New Course</label>
+            </value>
+            <value>
+                <fullName>Rescheduled in New Course / Saved Customer</fullName>
+                <default>false</default>
+                <label>Rescheduled in New Course / Saved Customer</label>
+            </value>
+            <value>
+                <fullName>Submitted OTC Referral Form</fullName>
+                <default>false</default>
+                <label>Submitted OTC Referral Form</label>
+            </value>
+            <value>
+                <fullName>Successful Warm Transfer</fullName>
+                <default>false</default>
+                <label>Successful Warm Transfer</label>
+            </value>
+            <value>
+                <fullName>Unsuccessful Warm Transfer</fullName>
+                <default>false</default>
+                <label>Unsuccessful Warm Transfer</label>
+            </value>
+            <value>
+                <fullName>Work Completed</fullName>
+                <default>false</default>
+                <label>Work Completed</label>
+            </value>
+            <value>
+                <fullName>Successful transfer or save</fullName>
+                <default>false</default>
+                <label>Successful transfer or save</label>
+            </value>
+            <value>
+                <fullName>Submitted OTC Referral or referral to field</fullName>
+                <default>false</default>
+                <label>Submitted OTC Referral or referral to field</label>
+            </value>
+            <value>
+                <fullName>Retail Order – New</fullName>
+                <default>false</default>
+                <label>Retail Order – New</label>
+            </value>
+            <value>
+                <fullName>Retail Order – Replacement</fullName>
+                <default>false</default>
+                <label>Retail Order – Replacement</label>
+            </value>
+            <value>
+                <fullName>Retail Order – Did not buy</fullName>
+                <default>false</default>
+                <label>Retail Order – Did not buy</label>
+            </value>
+            <value>
+                <fullName>Canceled Retail Order</fullName>
+                <default>false</default>
+                <label>Canceled Retail Order</label>
+            </value>
+            <value>
+                <fullName>Canceled Retail Item</fullName>
+                <default>false</default>
+                <label>Canceled Retail Item</label>
+            </value>
+            <value>
+                <fullName>Tracking provided</fullName>
+                <default>false</default>
+                <label>Tracking provided</label>
+            </value>
+            <value>
+                <fullName>Order Pending</fullName>
+                <default>false</default>
+                <label>Order Pending</label>
+            </value>
+            <value>
+                <fullName>Order on Hold</fullName>
+                <default>false</default>
+                <label>Order on Hold</label>
+            </value>
+            <value>
+                <fullName>Back-Order</fullName>
+                <default>false</default>
+                <label>Back-Order</label>
+            </value>
+            <value>
+                <fullName>Status of Return</fullName>
+                <default>false</default>
+                <label>Status of Return</label>
+            </value>
+            <value>
+                <fullName>Referred to Form on Website</fullName>
+                <default>false</default>
+                <label>Referred to Form on Website</label>
+            </value>
+            <value>
+                <fullName>Reviewed process for return</fullName>
+                <default>false</default>
+                <label>Reviewed process for return</label>
+            </value>
+            <value>
+                <fullName>Wrong Size</fullName>
+                <default>false</default>
+                <label>Wrong Size</label>
+            </value>
+            <value>
+                <fullName>Item not as described</fullName>
+                <default>false</default>
+                <label>Item not as described</label>
+            </value>
+            <value>
+                <fullName>Changed mind</fullName>
+                <default>false</default>
+                <label>Changed mind</label>
+            </value>
+            <value>
+                <fullName>Retail item damaged/defective</fullName>
+                <default>false</default>
+                <label>Retail item damaged/defective</label>
+            </value>
+            <value>
+                <fullName>Packaging damaged/defective</fullName>
+                <default>false</default>
+                <label>Packaging damaged/defective</label>
+            </value>
+            <value>
+                <fullName>AED</fullName>
+                <default>false</default>
+                <label>AED</label>
+            </value>
+            <value>
+                <fullName>Incorrect Product</fullName>
+                <default>false</default>
+                <label>Incorrect Product</label>
+            </value>
+            <value>
+                <fullName>Incomplete</fullName>
+                <default>false</default>
+                <label>Incomplete</label>
+            </value>
+            <value>
+                <fullName>Lost in Transit</fullName>
+                <default>false</default>
+                <label>Lost in Transit</label>
+            </value>
+            <value>
+                <fullName>Delivered late</fullName>
+                <default>false</default>
+                <label>Delivered late</label>
+            </value>
+            <value>
+                <fullName>Delivered to wrong address</fullName>
+                <default>false</default>
+                <label>Delivered to wrong address</label>
+            </value>
+            <value>
+                <fullName>Approved/Completed</fullName>
+                <default>false</default>
+                <label>Approved/Completed</label>
+            </value>
+            <value>
+                <fullName>Customer Ineligible</fullName>
+                <default>false</default>
+                <label>Customer Ineligible</label>
+            </value>
+            <value>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+                <label>Cancelled</label>
+            </value>
+            <value>
+                <fullName>CFS Reject/Data Fix</fullName>
+                <default>false</default>
+                <label>CFS Reject/Data Fix</label>
+            </value>
+            <value>
+                <fullName>Blanket PO</fullName>
+                <default>false</default>
+                <label>Blanket PO</label>
+            </value>
+            <value>
+                <fullName>Sent to PHSS Contracts</fullName>
+                <default>false</default>
+                <label>Sent to PHSS Contracts</label>
+            </value>
+            <value>
+                <fullName>RCS PO Account Set Up Only</fullName>
+                <default>false</default>
+                <label>RCS PO Account Set Up Only</label>
+            </value>
+            <value>
+                <fullName>Preferred Credit Card</fullName>
+                <default>false</default>
+                <label>Preferred Credit Card</label>
+            </value>
+            <value>
+                <fullName>Quote Requested</fullName>
+                <default>false</default>
+                <label>Quote Requested</label>
+            </value>
+            <value>
+                <fullName>Inquiry Addressed Referred to CAPO</fullName>
+                <default>false</default>
+                <label>Inquiry Addressed Referred to CAPO</label>
+            </value>
+            <value>
+                <fullName>Issued Blanket PO</fullName>
+                <default>false</default>
+                <label>Issued Blanket PO</label>
+            </value>
+            <value>
+                <fullName>No Actual Dispute</fullName>
+                <default>false</default>
+                <label>No Actual Dispute</label>
+            </value>
+            <value>
+                <fullName>Payment Reapplied</fullName>
+                <default>false</default>
+                <label>Payment Reapplied</label>
+            </value>
+            <value>
+                <fullName>Processed Credit Memo/Write Off</fullName>
+                <default>false</default>
+                <label>Processed Credit Memo/Write Off</label>
+            </value>
+            <value>
+                <fullName>Processed Transaction/Payment</fullName>
+                <default>false</default>
+                <label>Processed Transaction/Payment</label>
+            </value>
+            <value>
+                <fullName>Referred to RCO Website</fullName>
+                <default>false</default>
+                <label>Referred to RCO Website</label>
+            </value>
+            <value>
+                <fullName>Refund Check Request Processed</fullName>
+                <default>false</default>
+                <label>Refund Check Request Processed</label>
+            </value>
+            <value>
+                <fullName>Request Denied: AR or Min. Spending</fullName>
+                <default>false</default>
+                <label>Request Denied: AR or Min. Spending</label>
+            </value>
+            <value>
+                <fullName>Request Denied: No Agreement</fullName>
+                <default>false</default>
+                <label>Request Denied: No Agreement</label>
+            </value>
+            <value>
+                <fullName>Request Processed: Provided Info</fullName>
+                <default>false</default>
+                <label>Request Processed: Provided Info</label>
+            </value>
+            <value>
+                <fullName>Request Processed: Sent Docs</fullName>
+                <default>false</default>
+                <label>Request Processed: Sent Docs</label>
+            </value>
+            <value>
+                <fullName>Request Processed: Updated System(s)</fullName>
+                <default>false</default>
+                <label>Request Processed: Updated System(s)</label>
+            </value>
+            <value>
+                <fullName>Unable to Reach Customer</fullName>
+                <default>false</default>
+                <label>Unable to Reach Customer</label>
+            </value>
+            <value>
+                <fullName>Case Reached Age Limit</fullName>
+                <default>false</default>
+                <label>Case Reached Age Limit</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Closed - Blanket PO</controllingFieldValue>
+            <valueName>Blanket PO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - RCS PO Inquiry</controllingFieldValue>
+            <valueName>Issue Resolved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - RCS PO Inquiry</controllingFieldValue>
+            <valueName>Sent to PHSS Contracts</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - RCS PO Inquiry</controllingFieldValue>
+            <valueName>RCS PO Account Set Up Only</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - RCS PO Inquiry</controllingFieldValue>
+            <controllingFieldValue>Closed – RCS PO</controllingFieldValue>
+            <controllingFieldValue>Escalation</controllingFieldValue>
+            <valueName>Preferred Credit Card</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - RCS PO Inquiry</controllingFieldValue>
+            <valueName>Quote Requested</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - RCS PO Inquiry</controllingFieldValue>
+            <valueName>Inquiry Addressed Referred to CAPO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store</controllingFieldValue>
+            <valueName>Retail Order – New</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store</controllingFieldValue>
+            <valueName>Retail Order – Replacement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store</controllingFieldValue>
+            <valueName>Retail Order – Did not buy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store</controllingFieldValue>
+            <valueName>Canceled Retail Order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store</controllingFieldValue>
+            <valueName>Canceled Retail Item</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Tracking provided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Order Pending</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Order on Hold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Back-Order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Status of Return</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Referred to Form on Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Reviewed process for return</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Wrong Size</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Item not as described</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Changed mind</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Retail item damaged/defective</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Packaging damaged/defective</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>AED</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Incorrect Product</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <controllingFieldValue>Closed – RCS PO</controllingFieldValue>
+            <valueName>Incomplete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Lost in Transit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Delivered late</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <valueName>Delivered to wrong address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Red Cross Store Support - New</controllingFieldValue>
+            <controllingFieldValue>Closed - Community Course Registration</controllingFieldValue>
+            <controllingFieldValue>Closed Non Community Course Registration</controllingFieldValue>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Community Course Registration</controllingFieldValue>
+            <valueName>Did Not Register in New Course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Community Course Registration</controllingFieldValue>
+            <valueName>Did Not Reschedule / Did Not Save Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Community Course Registration</controllingFieldValue>
+            <valueName>Registered in New Course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Community Course Registration</controllingFieldValue>
+            <valueName>Rescheduled in New Course / Saved Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Community Course Registration</controllingFieldValue>
+            <valueName>Successful transfer or save</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed – RCS PO</controllingFieldValue>
+            <valueName>Approved/Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed – RCS PO</controllingFieldValue>
+            <valueName>Customer Ineligible</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed – RCS PO</controllingFieldValue>
+            <valueName>Cancelled</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed – RCS PO</controllingFieldValue>
+            <valueName>CFS Reject/Data Fix</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Non Community Course Registration</controllingFieldValue>
+            <valueName>Opted for AP Class Listed on RCO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Non Community Course Registration</controllingFieldValue>
+            <controllingFieldValue>Closed - Product Sales Referral</controllingFieldValue>
+            <valueName>Referred to Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Non Community Course Registration</controllingFieldValue>
+            <valueName>Submitted OTC Referral Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Issued Blanket PO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>No Actual Dispute</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Payment Reapplied</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Processed Credit Memo/Write Off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Processed Transaction/Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Referred to RCO Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Refund Check Request Processed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Request Denied: AR or Min. Spending</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Request Denied: No Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Request Processed: Provided Info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Request Processed: Sent Docs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Request Processed: Updated System(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Unable to Reach Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Case Reached Age Limit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Group Sales Referal</controllingFieldValue>
+            <valueName>Submitted OTC Referral or referral to field</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

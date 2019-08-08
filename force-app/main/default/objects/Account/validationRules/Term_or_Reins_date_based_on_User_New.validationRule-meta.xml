@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Term_or_Reins_date_based_on_User_New</fullName>
+    <active>true</active>
+    <errorConditionFormula>And( 
+NOT(ISBLANK(Terminate_Reinstate_Date__c)), 
+AND
+(ISCHANGED(Terminate_Reinstate_Date__c)),
+AND( 
+$User.Id != &quot;005d0000001YGDE&quot;, /*Monisha Slater*/ 
+$User.Id != &quot;005d0000001VDfh&quot;, /*Michael Johnson*/ 
+$User.Id != &quot;00555000001MeMz&quot;, /*Mike A Smith*/ 
+$User.Id != &quot;005d00000040uDS&quot;, /*Gita Borovsky*/ 
+$User.Id != &quot;005d0000001VDoF&quot;, /*Mary Ann Kopinski*/ 
+$User.Id != &quot;005d0000001WLvx&quot;, /*Jane McInerney*/ 
+$User.Id != &quot;005d0000001Wyup&quot;, /*Kara Desmarais*/ 
+$User.Id != &quot;005d0000001Wyuz&quot;, /*John Thompson*/ 
+$User.Id != &quot;005d0000000TvQL&quot;, /*Marty Mullins*/ 
+$User.Id != &quot;005d0000000TvrN&quot;, /*Timothy Archuleta*/ 
+$User.Id != &quot;005d0000000Tvri&quot;, /*Neil Lokuge*/ 
+$User.Id != &quot;005d0000000Tvsu&quot;, /*LaJuanya Jones*/ 
+$User.Id != &quot;005d0000001Vmik&quot;, /*Wendy Firdman*/ 
+$User.Id != &quot;005d0000001VstM&quot;, /*Rose Albert*/ 
+$User.Id != &quot;00555000002OedK&quot;, /*Sudhir */ 
+$User.Id != &quot;005d0000006VecC&quot;, /*Sudhir dakshinamurthy*/ 
+$User.Id != &quot;005d0000001YBPi&quot;, /* Melissa Stratman */
+$User.Id != &quot;005d0000001ZBOi&quot;, /* Jonathan Phillips */
+$User.Id != &quot;005d0000000Tuxg&quot; /* Peggy Brown */
+
+
+
+
+
+), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = false )</errorConditionFormula>
+    <errorDisplayField>Terminate_Reinstate_Date__c</errorDisplayField>
+    <errorMessage>You don&#39;t have permission to set Terminate/Reinstate Date.</errorMessage>
+</ValidationRule>

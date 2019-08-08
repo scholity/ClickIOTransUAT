@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Correct_Order_Amount</fullName>
+    <active>false</active>
+    <description>When Case Type = Invoicing, Invoice Sub-Type = Price require fields:
+
+Correct Order Amount (Amount_Should_Be__c)</description>
+    <errorConditionFormula>AND( OR(
+ISPICKVAL( Dispute_Issue__c , &#39;Customer Service Credit&#39;),
+AND(
+ISPICKVAL(Type  , &quot;Invoicing&quot;),
+ISPICKVAL(Dispute_Issue__c, &quot;Price&quot;))),
+ISBLANK(Amount_Should_Be__c),
+
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Amount_Should_Be__c</errorDisplayField>
+    <errorMessage>Please provide the Correct Order Amount</errorMessage>
+</ValidationRule>

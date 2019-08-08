@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>US_Phone_Number_with_10_Digits</fullName>
+    <active>true</active>
+    <description>US Phone number with 10 Digits</description>
+    <errorConditionFormula>IF( 
+
+OR (ISBLANK(Phone),   $Setup.Validation_Rules__c.Bypass_Rules__c), false, 
+
+NOT(REGEX(Phone, &quot;\\D*?(\\d\\D*?){10}&quot;))
+
+)</errorConditionFormula>
+    <errorDisplayField>Phone</errorDisplayField>
+    <errorMessage>US Phone numbers should be in this format: (999) 999-9999</errorMessage>
+</ValidationRule>

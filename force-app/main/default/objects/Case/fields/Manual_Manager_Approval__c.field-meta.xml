@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Manual_Manager_Approval__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Social Care: field to indicate if a social customer care agent would like a post manually reviewed and approved by an agent before it&#39;s posted</description>
+    <externalId>false</externalId>
+    <label>Manual Manager Approval</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

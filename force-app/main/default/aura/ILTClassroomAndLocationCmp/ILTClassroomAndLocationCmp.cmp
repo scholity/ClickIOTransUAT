@@ -1,0 +1,120 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId"
+                controller="RCILTClassroomAndLocationCmpCtrl">
+
+    <aura:attribute name="itemId"                   type="String"   default=""      />
+    <aura:attribute name="recordId"                 type="String"                   />
+    <aura:attribute name="records"                  type="Object[]"                 />
+    <aura:attribute name="isSideBar"                type="Boolean"  default="true"/>
+
+    <!--Labels-->
+    <aura:attribute name="label_Classroom_Schedule_and_Location" type="string" default="{!$Label.c.Classroom_Schedule_and_Location}"/>
+    <aura:attribute name="label_Day"                             type="string" default="{!$Label.c.Day}"/>
+    <aura:attribute name="label_Date"                            type="string" default="{!$Label.ltui.Date}"/>
+    <aura:attribute name="label_Time"                            type="string" default="{!$Label.c.Time}"/>
+    <aura:attribute name="label_Training_Site"                    type="string" default="{!$Label.c.Training_Site}"/>
+    <aura:attribute name="label_There_Is_No_Content"             type="string" default="{!$Label.c.There_Is_No_Content}"/>
+    <aura:attribute name="label_Map_Directions"                  type="string" default="{!$Label.c.Map_and_Directions}"/>
+
+    <ltng:require scripts="{!join(',',
+                                $Resource.RCUilib + '/jsLibs/moment-with-locales.min.js'
+                            )}"  afterScriptsLoaded="{!c.doInit}"/>
+
+    <div class="{! v.isSideBar ? 'sidebar slds-p-around_medium slds-is-relative' : ''}">
+        <c:TemplateMainCmp  aura:id         ="templateMainCmp"
+                            hasContent      ="{!!empty(v.records)}">
+            <div class="{! 'slds-p-horizontal_x-small slds-p-vertical_xx-small ' + (v.isSideBar ? ' mainLabel ' : ' heading-background slds-text-heading_small')}">
+                {!v.label_Classroom_Schedule_and_Location}
+            </div>
+            <aura:if isTrue="{! and(v.records, v.records.length)}">
+                <aura:if isTrue="{!v.isSideBar}">
+                    <aura:iteration items="{!v.records}" var="session">
+                        <div class="slds-p-top_x-small slds-p-bottom_medium slds-is-relative locationBlock">
+                            <div class="slds-truncate slds-text-color_inverse-weak slds-p-bottom_small labelDay" >{! v.label_Day + '    ' + session.day}</div>
+
+                            <div class="slds-truncate slds-p-bottom_small sessionTime" >
+                                {!session.startDate}
+                                <div class="slds-p-left_medium slds-show_inline-block">
+                                    {!session.startTime + ' - ' + session.endTime}
+                                </div>
+                            </div>
+                            <aura:if isTrue="{!and(session.location, session.location.name)}">
+                                <div class="slds-truncate" >{!session.location.name}</div>
+                                <div class="slds-truncate address slds-p-bottom_medium" >
+                                    <lightning:formattedAddress street="{! session.location.address1 ? session.location.address1 : '' }"
+                                                                city="{! session.location.city ? session.location.city : ''}"
+                                                                country="{! session.location.country ? session.location.country : ''}"
+                                                                province="{! session.location.state ? session.location.state : ''}"
+                                                                title="{! session.location.formattedAddress}"
+                                                                postalCode="{! session.location.postalCode ? session.location.postalCode : ''}"
+                                                                class="slds-truncate address-link"
+                                                                disabled="true"/>
+                                </div>
+                                <div class="mapDirections" >
+                                    <a href="{! session.location.mapUrl}" target="_blank">
+                                        {!v.label_Map_Directions}
+                                    </a>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </aura:iteration>
+                    <aura:set attribute="else">
+                        <table class="slds-table slds-table_cell-buffer slds-max-medium-table_stacked-horizontal">
+                            <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div class="slds-truncate slds-text-color_inverse-weak">{!v.label_Day}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate slds-text-color_inverse-weak">{!v.label_Date}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate slds-text-color_inverse-weak">{!v.label_Time}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate slds-text-color_inverse-weak">{!v.label_Training_Site}</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <aura:iteration items="{!v.records}" var="session">
+                                <tr>
+                                    <th scope="row" data-label="{!v.label_Day}">
+                                        <div class="slds-truncate" >{!session.day}</div>
+                                    </th>
+                                    <td data-label="{!v.label_Date}">
+                                        <div class="slds-truncate" >
+                                            {!session.startDate}
+                                        </div>
+                                    </td>
+                                    <td data-label="{!v.label_Time}">
+                                        <div class="slds-truncate" >{!session.startTime + ' - ' + session.endTime}</div>
+                                    </td>
+                                    <td data-label="{!v.label_Training_Site}">
+                                        <aura:if isTrue="{!and(session.location, session.location.name)}">
+                                            <div class="slds-truncate" >{!session.location.name}</div>
+                                            <div class="slds-truncate" >
+                                                <lightning:formattedAddress street="{! session.location.address1 ? session.location.address1 : '' }"
+                                                                            city="{! session.location.city ? session.location.city : ''}"
+                                                                            country="{! session.location.country ? session.location.country : ''}"
+                                                                            province="{! session.location.state ? session.location.state : ''}"
+                                                                            title="{! session.location.formattedAddress}"
+                                                                            postalCode="{! session.location.postalCode ? session.location.postalCode : ''}"
+                                                                            class="slds-truncate address-link" />
+                                            </div>
+                                        </aura:if>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                            </tbody>
+                        </table>
+                    </aura:set>
+                </aura:if>
+                <aura:set attribute="else">
+                    <div class="slds-text-heading_medium">
+                        {!v.label_There_Is_No_Content}
+                    </div>
+                </aura:set>
+            </aura:if>
+        </c:TemplateMainCmp>
+    </div>
+</aura:component>

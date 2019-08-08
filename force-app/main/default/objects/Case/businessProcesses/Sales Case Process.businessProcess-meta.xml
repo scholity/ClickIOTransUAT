@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales Case Process</fullName>
+    <description>This process will be used to handle the cases are for tracking sales cases.</description>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Agent Follow Up</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed - Community Course Registration</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed - Group Sales Referal</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed - Other</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed - Product Sales Referral</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed - Red Cross Store</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed Non Community Course Registration</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>New</fullName>
+        <default>true</default>
+    </values>
+</BusinessProcess>

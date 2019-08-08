@@ -1,0 +1,14 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global" controller="PHSSProgramMaterialsApexController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="appEvent" type="c:PHSSProgramMaterialLoadedEvent"/>
+    <aura:attribute name="recordId" type="String" default="{!recordId}"/>
+    <aura:attribute name="programName" type="String"/>
+    <aura:attribute name="programDescription" type="String"/>
+
+    <aura:attribute name="isCandidateMaterial" type="Boolean" default="false"/>
+
+    <h2 class="listTitle slds-m-bottom--large">
+		<span>{!v.programName}</span>
+    </h2>
+    <div class="slds-m-bottom--large">{!v.programDescription}</div>
+</aura:component>

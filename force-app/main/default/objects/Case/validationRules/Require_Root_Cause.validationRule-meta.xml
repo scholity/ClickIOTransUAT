@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Root_Cause</fullName>
+    <active>false</active>
+    <description>The Root Cause field is required when the Approval field is populated</description>
+    <errorConditionFormula>AND( 
+NOT( ISBLANK( TEXT( BOS_Approval__c )) ), 
+ISBLANK( TEXT( Root_Cause__c   )) 
+)</errorConditionFormula>
+    <errorDisplayField>Root_Cause__c</errorDisplayField>
+    <errorMessage>Please provide a Root Cause</errorMessage>
+</ValidationRule>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>arcgcacctng@redcross.org</email>
+    <name>Credit Card Dispute</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>ARC_Finance_Credit_Card_Team</publicGroup>
+            <publicGroup>Back_Office</publicGroup>
+            <publicGroup>TSC_Back_Office_TLs</publicGroup>
+            <publicGroup>TSC_Management</publicGroup>
+            <publicGroup>TSC_Team_Leads</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Back_Office_Team_Lead</role>
+            <role>Tier_III</role>
+            <role>TSC_Management</role>
+        </roles>
+        <users>
+            <user>jane.mcinerney@redcross.org</user>
+            <user>john.thompson@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

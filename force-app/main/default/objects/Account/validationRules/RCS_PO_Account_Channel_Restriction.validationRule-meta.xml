@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCS_PO_Account_Channel_Restriction</fullName>
+    <active>false</active>
+    <description>When Red cross email is selected, PHSS channel should be  &#39;RCS Retail&#39; or &#39;RCS Distributor&#39;.</description>
+    <errorConditionFormula>AND( 
+NOT(OR( 
+INCLUDES(PHSS_Channel__c, &quot;RCS Retail&quot;), 
+INCLUDES(PHSS_Channel__c, &quot;RCS Distributor&quot;))), 
+OwnerId = &#39;0050n000000t8y0&#39;)   /* RCSPO User */</errorConditionFormula>
+    <errorMessage>RCS PO Account should be associated with channel Type &#39;RCS Retail&#39; or &#39;RCS Distributor&#39;.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,199 @@
+<apex:page controller="SubmitCaseController" showHeader="false" standardStylesheets="false" sidebar="false" >
+
+
+<html lang="en">
+  <head>
+      <meta charset="utf-8"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <meta name="description" content=""/>
+      <meta name="author" content=""/>
+        
+        <style type="text/css">
+            .form-group.required .control-label:after { 
+               content:"*";
+               color:red;
+            }
+            
+        </style>
+      
+    <title>PHSS Customer Invoice Inquiry Instructions</title>
+      
+    <!-- Bootstrap core CSS -->
+      <apex:stylesheet value="{!URLFOR($Resource.bootstrap_static_resource, '/bootstrap-3.2.0-dist/css/bootstrap.min.css')}" />
+
+  </head>
+
+  <body>
+      
+<br/>
+            
+              
+    <div class="container">
+            
+       <!--    <br/>        
+           
+<h3>PHSS Customer Inquiry Instructions</h3>
+      
+           <br/>Use this form to communicate PHSS Customer Invoice Inquiries, Disputes and AR Exceptions. Complete the required fields and submit.  A Salesforce case will be opened and routed to the appropriate work group.  You will receive confirmation that a case has been open by email and it will include a Salesforce case number. To ensure the case gets linked to your customer’s Account, be sure the customer contact is listed in Salesforce and the LMS Org Id provided exactly matches the format in Saba.  <br/>
+            <br/><br/>
+   -->          
+            <h4>Organization and Customer Contact Information</h4>
+          <apex:form styleClass="form-horizontal">
+            
+            <apex:pageMessages />  
+              
+              <div class="form-group">
+                  <label for="inputCompanyOrganization" class="control-label col-xs-2">* Salesforce Account (Company/Organization)</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="required" styleClass="form-control" id="inputCompanyOrganization" value="{!companyOrganization}"/>
+                </div>
+             </div>
+
+              <div class="form-group">
+                <label for="inputBillingContactFirstName" class="control-label col-xs-2">* Salesforce Billing Contact First Name</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="true" styleClass="form-control" id="inputBillingContactFirstName" value="{!billingContactFirstName}"/>
+                </div>
+             </div>
+             
+             <div class="form-group">
+                <label for="inputBillingContactLastName" class="control-label col-xs-2">* Salesforce Billing Contact Last Name</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="true" styleClass="form-control" id="inputBillingContactLastName" value="{!billingContactLastName}"/>
+                </div>
+             </div>
+              
+              <div class="form-group">
+                <label for="inputBillingContactPhone" class="control-label col-xs-2">Billing Contact Phone #</label>
+                <div class="col-xs-10">
+                    <apex:inputText styleClass="form-control" id="inputBillingContactPhone" value="{!billingContactPhone}"/>
+                </div>
+             </div>
+              
+              <div class="form-group">
+                <label for="inputBillingContactEmail" class="control-label col-xs-2">* Billing Contact Email Address</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="true" styleClass="form-control" id="inputBillingContactEmail" value="{!billingContactEmail}"/>
+                </div>
+             </div>
+              
+               <div class="form-group">
+                <label for="inputState" class="control-label col-xs-2">* State</label>
+                 
+                 <div class="col-xs-10">
+                     <apex:selectList value="{!state}" id="inputState" styleClass="form-control" required="true" multiselect="false" size="1">
+                         <apex:selectOptions value="{!stateOptions}">
+                        </apex:selectOptions>
+                    </apex:selectList>
+                </div>
+             </div>
+             
+              <br/><br/>
+            
+             
+            <h4>Inquiry Information</h4>
+              
+              <div class="form-group">
+                <label for="inputRequestType" class="control-label col-xs-2">* Request Type</label>
+                <div class="col-xs-10">
+
+                    <apex:selectList value="{!webRequestType}" styleClass="form-control" required="true" id="inputRequestType" multiselect="false" size="1">
+                        <apex:selectOptions value="{!webRequestTypeOptions}">
+                        </apex:selectOptions>
+                    </apex:selectList>
+                </div>
+             </div>
+              
+              <br/>
+    <h6>Important: Copy the LMS Org ID from Saba.  It must match Saba format exactly.  </h6>
+              
+              <div class="form-group">
+                <label for="inputLmsOrgId" class="control-label col-xs-2">* Customer's LMS Org Id (for training) or CFS Account Number (for products)</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="true" styleClass="form-control" id="inputLmsOrgId" value="{!lmsOrgId}"/>
+                </div>
+             </div>
+              
+              
+              <div class="form-group">
+                <label for="inputInvoiceNumber" class="control-label col-xs-2">Invoice Number</label>
+                <div class="col-xs-10">
+                    <apex:inputText styleClass="form-control" id="inputInvoiceNumber" value="{!invoiceNumber}"/>
+                </div>
+             </div>
+           
+                  
+              
+              <div class="form-group">
+                <label for="inputDescription" class="control-label col-xs-2">* Description of Problem</label>
+                <div class="col-xs-10">
+                    <apex:inputTextArea styleClass="form-control" id="inputDescription" required="true" rows="5" value="{!description}"/>
+                   
+                </div>  
+             </div>
+                 
+                
+                <br/><br/>
+              
+              <h4> Requester Information </h4>
+
+               <div class="form-group">
+                <label for="inputPersonToContactFirstName" class="control-label col-xs-2">* PHSS Staff First Name</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="true" styleClass="form-control" id="inputPersonToContactFirstName" value="{!personToContactFirstName}"/>
+                </div>
+             </div>
+             
+             <div class="form-group">
+                <label for="inputPersonToContactLastName" class="control-label col-xs-2">* PHSS Staff Last Name</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="true" styleClass="form-control" id="inputPersonToContactLastName" value="{!personToContactLastName}"/>
+                </div>
+             </div>
+              
+              
+              <div class="form-group">
+                  <label for="inputSalesRepEmail" class="control-label col-xs-2">* PHSS Staff Email Address</label>
+                <div class="col-xs-10">
+                    <apex:inputText required="true" styleClass="form-control" id="inputSalesRepEmail" value="{!salesRepEmail}"/>
+                </div>
+             </div>
+             
+              
+              <div class="form-group">
+                <label for="inputPHSSStaffPhone#" class="control-label col-xs-2">PHSS Staff Phone #</label>
+                <div class="col-xs-10">
+                    <apex:inputText styleClass="form-control" id="inputPHSSStaffPhone" value="{!PHSSStaffPhone}"/>
+                </div>
+             </div>
+                  
+             
+             <div class="form-group">
+                <label for="inputFile" class="control-label col-xs-2">Attachment</label>
+                <div class="col-xs-10">
+                    <apex:inputFile styleClass="form-control" value="{!attachment.body}" filename="{!attachment.name}" id="inputFile"/>
+                </div>
+             </div> 
+             <h6>Note: Only one document may be attached.</h6>
+             <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-10">
+                    <apex:commandButton styleClass="btn btn-default" value="Submit Request" action="{!submitCase}"/>
+                </div>
+            </div>
+            
+            </apex:form>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>
+
+
+   
+
+</apex:page>

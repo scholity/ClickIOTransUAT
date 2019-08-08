@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Details_of_Delivery_Channel</fullName>
+    <active>true</active>
+    <description>When &#39;Other&#39; is selected in Delivery Channel then description field &#39;Details of Delivery Channel&#39; is required.</description>
+    <errorConditionFormula>OR( 
+AND( 
+ISPICKVAL( Invoice_Case_Sub_Type__c , &quot;Other&quot;), 
+ISBLANK( Details_of_Delivery_Channel__c ), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)
+)</errorConditionFormula>
+    <errorDisplayField>Details_of_Delivery_Channel__c</errorDisplayField>
+    <errorMessage>Please provide details about the Delivery Channel</errorMessage>
+</ValidationRule>

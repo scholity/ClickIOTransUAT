@@ -1,0 +1,19 @@
+.THIS {
+}
+
+.THIS.kitIcon {
+    position: relative;
+    display: inline-block;
+}
+
+.THIS .slds-popover {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: calc(12px - 100%);
+    display: none;
+    white-space: normal;
+}
+
+.THIS.kitIcon:hover .slds-popover {
+    display: block;
+}

@@ -1,0 +1,207 @@
+<aura:component >
+
+    <aura:attribute name="isReadOnly" type="Boolean" default="true"/>
+    <aura:attribute name="numberOfSuccessfulEvaluations" type="Integer"/>
+    <aura:attribute name="numberOfUnsuccessfulEvaluations" type="Integer"/>
+    <aura:attribute name="numberOfNonEvaluations" type="Integer"/>
+    <aura:attribute name="totalEvaluations" type="Integer" default="0"/>
+
+    <aura:attribute name="isValid" type="Boolean" default="false"/>
+    <aura:attribute name="validationState" type="String"/>
+    <aura:attribute name="quantityOverOrUnder" type="Integer" default="0"/>
+
+    <!--Handlers-->
+    <aura:handler name = "init" value="{!this}" action = "{!c.doInit}" />
+
+
+    <div class="slds-text-heading_large slds-p-top_medium slds-p-bottom_small slds-align_absolute-center">{! v.totalEvaluations } Evaluations</div>
+
+    <!--Error messaging-->
+    <div class="slds-align_absolute-center slds-text-heading_small slds-p-bottom_large">
+
+        <!--Valid state-->
+        <aura:if isTrue="{! equals(validationState, null) }">
+            &nbsp;
+        </aura:if>
+
+        <!--Sum exceeds expected total-->
+        <aura:if isTrue="{! equals(v.validationState, 'excessiveQuantity') }">
+            <span class="slds-text-color_error">
+                The total number of evaluations exceeds {! v.totalEvaluations }.&nbsp;
+                <aura:if isTrue="{! equals(v.quantityOverOrUnder, 1) }">
+                    Please remove&nbsp;<b>1 evaluation</b>&nbsp;from the counts below.
+
+                    <aura:set attribute="else">
+                        Please remove&nbsp;<b>{! v.quantityOverOrUnder } evaluations</b>&nbsp;from the counts below.
+                    </aura:set>
+                </aura:if>
+            </span>
+        </aura:if>
+
+        <!--Sum is short of expected total-->
+        <aura:if isTrue="{! equals(v.validationState, 'insufficientQuantity')}">
+            <aura:if isTrue="{! equals(v.quantityOverOrUnder, 1) }">
+                Please add&nbsp;<b>1 evaluation</b>&nbsp;to the counts below.
+
+                <aura:set attribute="else">
+                    Please add&nbsp;<b>{! v.quantityOverOrUnder } evaluations</b>&nbsp;to the counts below.
+                </aura:set>
+            </aura:if>
+        </aura:if>
+
+        <!--Invalid value for one or more quantities-->
+        <aura:if isTrue="{! equals(v.validationState, 'invalidQuantity')}">
+            <span class="slds-text-color_error">
+                Please correct the invalid quantity value.
+            </span>
+        </aura:if>
+    </div>
+
+
+    <!--Cards with Evaluation Counts-->
+    <div class="slds-grid slds-gutters_medium">
+        <div class="slds-col slds-size_1-of-8"></div>
+
+
+        <!--Successful Evaluations-->
+        <div class="slds-col slds-size_2-of-8">
+            <lightning:card class="slds-card_boundary slds-text-align_center">
+                <aura:if isTrue="{! v.isReadOnly }">
+
+                    <!--Read Only-->
+                    <div class="slds-p-bottom_large">
+                        <div class="slds-text-heading_large valueLabel">{! v.numberOfSuccessfulEvaluations }</div>
+                        <div class="slds-text-title">Successful Evaluations</div>
+                    </div>
+
+                    <!--Read/Write-->
+                    <aura:set attribute="else">
+                        <div class="slds-align_absolute-center slds-p-around_small">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="slds-align_absolute-center">
+                                        <lightning:input aura:id="field"
+                                                         label="Successful Evaluations"
+                                                         variant="label-hidden"
+                                                         type="text"
+                                                         maxlength="3"
+                                                         value="{! v.numberOfSuccessfulEvaluations }"
+                                                         onchange="{! c.handleNumberChanged }"
+                                                         max="{! v.totalEvaluations }"
+                                                         pattern="\d{1,3}"
+                                                         placeholder="0"
+                                                         messageWhenPatternMismatch="Only numbers 0-999 allowed"
+                                                         messageWhenRangeOverflow="This number exceeds the total number of evaluations"
+                                                         class="inputTextField"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-align_absolute-center slds-text-title_caps slds-p-around_small">Successful Evaluations</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </aura:set>
+
+                </aura:if>
+            </lightning:card>
+        </div>
+
+
+        <!--Unsuccessful Evaluations-->
+        <div class="slds-col slds-size_2-of-8">
+            <lightning:card class="slds-card_boundary slds-text-align_center">
+                <aura:if isTrue="{! v.isReadOnly }">
+
+                    <!--Read Only-->
+                    <div class="slds-p-bottom_large">
+                        <div class="slds-text-heading_large valueLabel">{! v.numberOfUnsuccessfulEvaluations }</div>
+                        <div class="slds-text-title">Unsuccessful Evaluations</div>
+                    </div>
+
+                    <!--Read/Write-->
+                    <aura:set attribute="else">
+                        <div class="slds-align_absolute-center slds-p-around_small">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="slds-align_absolute-center">
+                                        <lightning:input aura:id="field"
+                                                         label="Unsuccessful Evaluations"
+                                                         variant="label-hidden"
+                                                         type="text"
+                                                         maxlength="3"
+                                                         value="{! v.numberOfUnsuccessfulEvaluations }"
+                                                         onchange="{! c.handleNumberChanged }"
+                                                         max="{! v.totalEvaluations }"
+                                                         pattern="\d{1,3}"
+                                                         placeholder="0"
+                                                         messageWhenPatternMismatch="Only numbers 0-999 allowed"
+                                                         messageWhenRangeOverflow="This number exceeds the total number of evaluations"
+                                                         class="inputTextField"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-align_absolute-center slds-text-title_caps slds-p-around_small">Unsuccessful Evaluations</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </aura:set>
+
+                </aura:if>
+            </lightning:card>
+        </div>
+
+
+        <!--Non Evaluations-->
+        <div class="slds-col slds-size_2-of-8">
+            <lightning:card class="slds-card_boundary slds-text-align_center">
+                <aura:if isTrue="{! v.isReadOnly }">
+
+                    <!--Read Only-->
+                    <div class="slds-p-bottom_large">
+                        <div class="slds-text-heading_large valueLabel">{! v.numberOfNonEvaluations }</div>
+                        <div class="slds-text-title">Not Evaluated</div>
+                    </div>
+
+                    <!--Read/Write-->
+                    <aura:set attribute="else">
+                        <div class="slds-align_absolute-center slds-p-around_small">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="slds-align_absolute-center">
+                                        <lightning:input aura:id="field"
+                                                         label="Not Evaluated"
+                                                         variant="label-hidden"
+                                                         type="text"
+                                                         maxlength="3"
+                                                         value="{! v.numberOfNonEvaluations }"
+                                                         onchange="{! c.handleNumberChanged }"
+                                                         max="{! v.totalEvaluations }"
+                                                         pattern="\d{1,3}"
+                                                         placeholder="0"
+                                                         messageWhenPatternMismatch="Only numbers 0-999 allowed"
+                                                         messageWhenRangeOverflow="This number exceeds the total number of evaluations"
+                                                         class="inputTextField"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="slds-align_absolute-center slds-text-title_caps slds-p-around_small">Not Evaluated</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </aura:set>
+
+                </aura:if>
+            </lightning:card>
+        </div>
+
+
+        <div class="slds-col slds-size_1-of-8"></div>
+    </div>
+
+</aura:component>

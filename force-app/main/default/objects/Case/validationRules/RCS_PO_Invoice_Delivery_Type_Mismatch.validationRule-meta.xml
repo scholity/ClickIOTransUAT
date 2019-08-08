@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCS_PO_Invoice_Delivery_Type_Mismatch</fullName>
+    <active>true</active>
+    <description>Checks whether the field is mismatch</description>
+    <errorConditionFormula>AND( ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE, Text(Account.Invoice_Delivery_Type__c) &lt;&gt; Text(Invoice_Delivery__c))</errorConditionFormula>
+    <errorDisplayField>Invoice_Delivery__c</errorDisplayField>
+    <errorMessage>Account Invoice Delivery Type is not matching with case Invoice Delivery Type.</errorMessage>
+</ValidationRule>

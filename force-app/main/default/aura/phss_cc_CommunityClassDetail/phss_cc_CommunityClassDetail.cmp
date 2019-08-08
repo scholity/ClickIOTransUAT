@@ -1,0 +1,81 @@
+<aura:component >
+
+    <aura:attribute name="class" type="Map" default="{}"/>
+    <aura:attribute name="courseId" type="String" default=""/>
+    <aura:attribute name="count" type="Integer" default="0"/>
+    <aura:attribute name="inventory" type="Integer" default="{! v.class.seatsAvailable }"/>
+    <aura:attribute name="isEnabled" type="Boolean" default="true"/>
+
+    <!--Cart-related events-->
+    <aura:registerEvent name="cartUpdate" type="c:phss_cc_CommunityClassCartUpdate"/>
+
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+
+    <div class="slds-grid slds-border_top slds-p-top_medium">
+        <div class="slds-size_1-of-8 slds-align_absolute-center">
+            <div>
+                <div class="slds-text-title_caps slds-text-align_center calendar-header">{! v.class.startMonth }</div>
+                <div class="slds-text-heading_large slds-text-align_center calendar-content">{! v.class.startDay }</div>
+                <aura:if isTrue="{! lessthan(v.class.startWeekday.length, 7) }">
+                    <div class="slds-text-title slds-text-align_center calendar-footer">{! v.class.startWeekday }</div>
+                    <aura:set attribute="else">
+                        <div class="slds-text-title slds-text-align_center calendar-footer">{! v.class.startWeekdayAbbreviation }</div>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </div>
+        <div class="slds-size_1-of-8 slds-align_absolute-center slds-text-title">
+            <div class="slds-text-align_center">
+                <div>{! v.class.startTime }&nbsp;<b>{! v.class.startTimeAMPM }</b></div>
+                <div>({! v.class.duration })</div>
+            </div>
+        </div>
+        <div class="slds-size_4-of-8 slds-align-middle" title="{! v.class.locationName }">
+            <p class="slds-text-heading_small">{! v.class.locationName }</p>
+            <p class="slds-text-body_regular">{! v.class.address }</p>
+        </div>
+        <div class="slds-size_1-of-8 slds-text-title slds-align-middle">
+            <div><b>{! v.class.seatsAvailable } seats</b></div>
+        </div>
+        <div class="slds-size_1-of-8 slds-align_absolute-center">
+            <div>
+                <lightning:layout horizontalAlign="spread">
+                    <lightning:layoutItem>
+                        <lightning:buttonIcon iconName="utility:dash" alternativeText="Remove" onclick="{! c.decrementClassCount }" variant="border-filled"/>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem class="slds-m-left--large slds-m-right--large slds-align-middle">
+                        <ui:outputNumber value="{! v.count }"/>
+                    </lightning:layoutItem>
+
+                    <lightning:layoutItem>
+                        <lightning:buttonIcon iconName="utility:add" alternativeText="Add" onclick="{! c.incrementClassCount }" variant="border-filled"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </div>
+    </div>
+
+
+    <!--WARNING for courses that have ended-->
+    <aura:if isTrue="{! and(not(empty(v.class.requiresDateAcknowledgement)), equals(v.class.requiresDateAcknowledgement, true)) }">
+        <div class='slds-m-top_medium'>
+            <div class='warning-background'>
+                <lightning:layout verticalAlign="center">
+                    <lightning:layoutItem >
+                        <div class='warning-icon'><img src='{! $Resource.WarningIcon }' class='warning-img'/></div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem>
+                        <div class='warning-message'>
+                            <b>This class has ended.</b> &nbsp; To be able to add this to your cart, you must acknowledge this class has ended by checking this box:
+                        </div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem>
+                        <div class='warning-checkbox'><lightning:input aura:id="acknowledgmentCheckbox" type="checkbox" label="" checked="false" onchange="{!c.toggleCheckbox}"/></div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </div>
+    </aura:if>
+
+</aura:component>

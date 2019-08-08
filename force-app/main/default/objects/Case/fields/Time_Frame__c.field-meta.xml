@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Time_Frame__c</fullName>
+    <externalId>false</externalId>
+    <label>Time Frame</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Case_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tomorrow</fullName>
+                <default>false</default>
+                <label>Tomorrow</label>
+            </value>
+            <value>
+                <fullName>This Week</fullName>
+                <default>false</default>
+                <label>This Week</label>
+            </value>
+            <value>
+                <fullName>Next Week</fullName>
+                <default>false</default>
+                <label>Next Week</label>
+            </value>
+            <value>
+                <fullName>Next 31 days</fullName>
+                <default>false</default>
+                <label>Next 31 days</label>
+            </value>
+            <value>
+                <fullName>Beyond 31 days</fullName>
+                <default>false</default>
+                <label>Beyond 31 days</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Tomorrow</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>This Week</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Next Week</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Next 31 days</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Beyond 31 days</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ignore_Unique_Constraint_Trigger__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>When this check box is checked, the apex trigger ignores duplicates.</description>
+    <externalId>false</externalId>
+    <label>Ignore Unique Constraint Trigger</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

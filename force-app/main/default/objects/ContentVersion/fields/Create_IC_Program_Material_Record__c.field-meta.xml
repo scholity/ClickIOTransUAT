@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_IC_Program_Material_Record__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Defaults to unchecked. Only check if you want to also create a PHSS Material record which would result in the content being included in the IC community materials display logic.</description>
+    <externalId>false</externalId>
+    <label>Create IC Program Material Record</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

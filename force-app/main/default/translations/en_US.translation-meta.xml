@@ -1,0 +1,1487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- ARC Service Console --></label>
+        <name>ARC_Service_Console</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- BGST Sales --></label>
+        <name>BGST_Sales</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- BGST Sales Lightning --></label>
+        <name>BGST_Sales_Lightning</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- DreamFactory Utilities --></label>
+        <name>BLND_DreamFactory_Utilities</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Case Comment Management --></label>
+        <name>Case_Comment_Management</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Grant Management --></label>
+        <name>Grant_Management</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Grants --></label>
+        <name>Grants</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IRT Service Console --></label>
+        <name>IRT_Service_Console</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- LMS Admin --></label>
+        <name>LMS_Admin</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- LMS Admin Lightning --></label>
+        <name>LMS_Admin_Lightning</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- PHSS Instructors Community --></label>
+        <name>PHSS_Instructors_Community</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- PHSS Sales --></label>
+        <name>PHSS_Sales</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Red Cross Sales --></label>
+        <name>Red_Cross_Sales</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Red Cross Sales Lightning --></label>
+        <name>Red_Cross_Sales_Lightning</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- SD Dispatch --></label>
+        <name>SD_Dispatch</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- TSC Agent Console Lightning --></label>
+        <name>TSC_Agent_Console_Lightning</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Training Support Center --></label>
+        <name>Training_Support_Center</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Training Support Center Lightning --></label>
+        <name>Training_Support_Center_Lightning</name>
+    </customApplications>
+    <customLabels>
+        <label><!-- Account --></label>
+        <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Account_Name --></label>
+        <name>Account_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing_City --></label>
+        <name>Billing_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing_Postal_Code --></label>
+        <name>Billing_Postal_Code</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing_State --></label>
+        <name>Billing_State</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Billing_Street --></label>
+        <name>Billing_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cancel --></label>
+        <name>Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cancelled --></label>
+        <name>Cancelled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The text for the UpdateCart button. --></label>
+        <name>Cart_Button_UpdateCart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The message to show when no active carts are found for the opportunity. --></label>
+        <name>Cart_OnLoad_Message_NoCartFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The table header for the cart data table. --></label>
+        <name>Cart_Table_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The value type of the cart data. --></label>
+        <name>Cart_Table_Header_Value_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseInsertUpdateEmail --></label>
+        <name>CaseInsertUpdateEmail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ClaimedVoucherTypes --></label>
+        <name>ClaimedVoucherTypes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Class --></label>
+        <name>Class</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Class_History --></label>
+        <name>Class_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Class_Setting --></label>
+        <name>Class_Setting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Class_Settings --></label>
+        <name>Class_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Classroom_Schedule_and_Location --></label>
+        <name>Classroom_Schedule_and_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The text for the AddToCart button. --></label>
+        <name>CommunityClassSearch_Button_AddToCart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The text for the Search button. --></label>
+        <name>CommunityClassSearch_Button_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Company --></label>
+        <name>Company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Complete --></label>
+        <name>Complete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Completed --></label>
+        <name>Completed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Course --></label>
+        <name>Course</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Course_Record_Entry --></label>
+        <name>Course_Record_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Current_Classes --></label>
+        <name>Current_Classes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Day --></label>
+        <name>Day</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Days --></label>
+        <name>Days</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DefaultMOMApprover --></label>
+        <name>DefaultMOMApprover</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Details --></label>
+        <name>Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Direct Assignment To Bucket Account Error --></label>
+        <name>Direct_Assignment_To_Bucket_Account_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Global Ghost Contacts --></label>
+        <name>Global_Ghost_Contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- In_Progress --></label>
+        <name>In_Progress</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Instructors --></label>
+        <name>Instructors</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Language --></label>
+        <name>Language</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Learner Community URL --></label>
+        <name>Learner_Community_URL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Loading --></label>
+        <name>Loading</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Location --></label>
+        <name>Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Map_and_Directions --></label>
+        <name>Map_and_Directions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Name --></label>
+        <name>Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New_Account --></label>
+        <name>New_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Next --></label>
+        <name>Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No --></label>
+        <name>No</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_Bucket_Account_Setings_Validation --></label>
+        <name>No_Bucket_Account_Setings_Validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_Classes --></label>
+        <name>No_Classes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- You do not have permissions to view this class. --></label>
+        <name>No_Permissions_To_View_Class</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No_matching_results --></label>
+        <name>No_matching_results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Not_Started --></label>
+        <name>Not_Started</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Number_Of_Students --></label>
+        <name>Number_Of_Students</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Online_Completion --></label>
+        <name>Online_Completion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Online_Work --></label>
+        <name>Online_Work</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Organization --></label>
+        <name>Organization</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Owner --></label>
+        <name>Owner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS_EmailInstructions --></label>
+        <name>PHSS_EmailInstructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS_EmailInstructionsTitle --></label>
+        <name>PHSS_EmailInstructionsTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS IC Community URL Content Document Servlet --></label>
+        <name>PHSS_IC_Community_URL_Content_Document_Servlet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS IC Community URL Content Version Servlet --></label>
+        <name>PHSS_IC_Community_URL_Content_Version_Servlet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS IC Community URL Domain --></label>
+        <name>PHSS_IC_Community_URL_Domain</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS In Maintenance Message 1 --></label>
+        <name>PHSS_InMaintenance_Message_Part_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS In Maintenance Message 2 --></label>
+        <name>PHSS_InMaintenance_Message_Part_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS_LoginContent --></label>
+        <name>PHSS_LoginContent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS_RBCUnsuccessMsg --></label>
+        <name>PHSS_RBCUnsuccessMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS_VoucherInstructions --></label>
+        <name>PHSS_VoucherInstructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- PHSS_VoucherInstructionsTitle --></label>
+        <name>PHSS_VoucherInstructionsTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Page --></label>
+        <name>Page</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Parent_Account --></label>
+        <name>Parent_Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Phone_Number --></label>
+        <name>Phone_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Previous --></label>
+        <name>Previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Discount Percentage column label text. --></label>
+        <name>ProductDetail_Column_DiscountPercentage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Discount Price column label text. --></label>
+        <name>ProductDetail_Column_DiscountPrice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Extended Price column label text. --></label>
+        <name>ProductDetail_Column_ExtendedPrice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The List Price column label text. --></label>
+        <name>ProductDetail_Column_ListPrice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Name column label text. --></label>
+        <name>ProductDetail_Column_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Price column label text. --></label>
+        <name>ProductDetail_Column_Price</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Quantity column label text. --></label>
+        <name>ProductDetail_Column_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The SKU column label text. --></label>
+        <name>ProductDetail_Column_SKU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The UOM column label text. --></label>
+        <name>ProductDetail_Column_UOM</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The text for the AddToCart button. --></label>
+        <name>ProductSearch_Button_AddToCart</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Name column label text. --></label>
+        <name>ProductSearch_Column_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Price column label text. --></label>
+        <name>ProductSearch_Column_Price</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The Quantity column label text. --></label>
+        <name>ProductSearch_Column_Quantity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The SKU column label text. --></label>
+        <name>ProductSearch_Column_SKU</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The UOM column label text. --></label>
+        <name>ProductSearch_Column_UOM</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The message to show when a search has not been performed. --></label>
+        <name>ProductSearch_OnLoad_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The table header for the product search - results table. --></label>
+        <name>ProductSearch_Table_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The value type of the product search results. --></label>
+        <name>ProductSearch_Table_Header_Value_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- The header text for the product search. --></label>
+        <name>Product_Search_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reported --></label>
+        <name>Reported</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Request_Blended_Classes --></label>
+        <name>Request_Blended_Classes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Reset_Search --></label>
+        <name>Reset_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Sked Job trigger - eligible profiles - Enter names separated by semi-colons --></label>
+        <name>SBSkedToILTClassAllowedProfiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search_by --></label>
+        <name>Search_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search_criteria --></label>
+        <name>Search_criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SmartAccountSearch_Header --></label>
+        <name>SmartAccountSearch_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Smart_Account_Search --></label>
+        <name>Smart_Account_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Alternate text for lightning spinner --></label>
+        <name>Spinner_Alternate_Text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Start_Date --></label>
+        <name>Start_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Status --></label>
+        <name>Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Status_Title --></label>
+        <name>Status_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Students --></label>
+        <name>Students</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- There_Are_No_Records --></label>
+        <name>There_Are_No_Records</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- There_Is_No_Content --></label>
+        <name>There_Is_No_Content</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Time --></label>
+        <name>Time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Training Site --></label>
+        <name>Training_Site</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upcoming --></label>
+        <name>Upcoming</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- UserID --></label>
+        <name>UserID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Yes --></label>
+        <name>Yes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- item --></label>
+        <name>item</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- items --></label>
+        <name>items</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- This is to eliminate line break in Account - Billing street. --></label>
+        <name>linebreak</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- of --></label>
+        <name>of</name>
+    </customLabels>
+    <customTabs>
+        <label><!-- Monarch --></label>
+        <name>BLND_Monarch</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Snapshot --></label>
+        <name>BLND_Snapshot</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- TableTop --></label>
+        <name>BLND_TableTop</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Brand Central --></label>
+        <name>Brand_Central</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- CEP Scheduling --></label>
+        <name>CEP_Scheduling</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Chat Supervisor Console --></label>
+        <name>Chat_Supervisor_Console</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Community Scheduling --></label>
+        <name>Community_Scheduling</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Course Record Entry --></label>
+        <name>Course_Record_Entry</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Getting Started --></label>
+        <name>Getting_Started</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- NAT Scheduling --></label>
+        <name>NAT_Scheduling</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- PHSS Sharepoint --></label>
+        <name>PHSS_Sharepoint</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- RedCross.org --></label>
+        <name>RedCross_org</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Request Blended Class --></label>
+        <name>Request_Blended_Class</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Resource Activity Report --></label>
+        <name>Resource_Activity_Report</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Saba --></label>
+        <name>Saba</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- Sales Rep Store --></label>
+        <name>Sales_Rep_Store</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- The Exchange --></label>
+        <name>The_Exchange</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- When2Work --></label>
+        <name>When2Work</name>
+    </customTabs>
+    <flowDefinitions>
+        <flows>
+            <fullName>Learning_Assignment-4</fullName>
+        </flows>
+        <fullName>Learning_Assignment</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <choices>
+                <name>CREStore</name>
+            </choices>
+            <choices>
+                <name>CPS</name>
+            </choices>
+            <choices>
+                <name>GeneralStore</name>
+            </choices>
+            <fullName>Add_Product_to_Price_List-4</fullName>
+            <screens>
+                <fields>
+                    <name>Effective_End</name>
+                </fields>
+                <fields>
+                    <name>Effective_Start</name>
+                </fields>
+                <fields>
+                    <name>Enabled</name>
+                </fields>
+                <fields>
+                    <name>Product</name>
+                </fields>
+                <fields>
+                    <name>Select_Price_Lists</name>
+                </fields>
+                <fields>
+                    <name>Storefront_1</name>
+                </fields>
+                <fields>
+                    <name>scnPrice</name>
+                </fields>
+                <name>Establish_Base_Price</name>
+            </screens>
+        </flows>
+        <fullName>Add_Product_to_Price_List</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Child_Price_Group_Account_Records-3</fullName>
+        </flows>
+        <fullName>Create_Child_Price_Group_Account_Records</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Set_Cart_Approval_Level-1</fullName>
+        </flows>
+        <fullName>Set_Cart_Approval_Level</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Order_Status_Controller-12</fullName>
+        </flows>
+        <fullName>Order_Status_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Add_Rescheduling_Fee_to_Order-14</fullName>
+            <screens>
+                <fields>
+                    <name>PricingError</name>
+                </fields>
+                <name>Pricing_Not_Found</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Comments</name>
+                </fields>
+                <fields>
+                    <name>RescheduleFeeHeader</name>
+                </fields>
+                <name>Reschedule_Fee_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>ProductError</name>
+                </fields>
+                <name>Rescheduling_Fee_Missing</name>
+            </screens>
+        </flows>
+        <fullName>Add_Rescheduling_Fee_to_Order</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Cart_Controller-10</fullName>
+        </flows>
+        <fullName>Cart_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Community_User_Deactivated-1</fullName>
+        </flows>
+        <fullName>Community_User_Deactivated</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Transaction_Payment_Controller-10</fullName>
+        </flows>
+        <fullName>Transaction_Payment_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Full_Service_Minimum_Quantity-1</fullName>
+        </flows>
+        <fullName>Full_Service_Minimum_Quantity</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Order_Header_Status_Update-4</fullName>
+        </flows>
+        <fullName>Order_Header_Status_Update</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Contract_Controller-1</fullName>
+        </flows>
+        <fullName>Contract_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Account_When_Missing_on_Contact-4</fullName>
+        </flows>
+        <fullName>Create_Account_When_Missing_on_Contact</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Order_Status_Controller2-5</fullName>
+        </flows>
+        <fullName>Order_Status_Controller2</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Appinium_Instructor-2</fullName>
+        </flows>
+        <fullName>Create_Appinium_Instructor</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <choices>
+                <name>CPS</name>
+            </choices>
+            <choices>
+                <name>GeneralStore</name>
+            </choices>
+            <choices>
+                <name>CREStore</name>
+            </choices>
+            <fullName>Create_Contract-25</fullName>
+            <screens>
+                <fields>
+                    <name>Effective_End_Date</name>
+                    <validationRule/>
+                </fields>
+                <fields>
+                    <name>Effective_Start_Date</name>
+                </fields>
+                <fields>
+                    <name>Enabled</name>
+                </fields>
+                <fields>
+                    <name>Group_Name</name>
+                </fields>
+                <fields>
+                    <name>Storefront</name>
+                </fields>
+                <fields>
+                    <name>dspAccount</name>
+                </fields>
+                <fields>
+                    <name>dspOppurtunityName</name>
+                </fields>
+                <name>Establish_Price_Group</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>ApprovalDisplay</name>
+                </fields>
+                <fields>
+                    <name>FinalMessage</name>
+                </fields>
+                <name>FinalScreen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Selected_Price_Lists</name>
+                </fields>
+                <name>Price_Lists</name>
+            </screens>
+        </flows>
+        <fullName>Create_Contract</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_New_Account_When_Account_is_Missing_on_Contact-2</fullName>
+        </flows>
+        <fullName>Create_New_Account_When_Account_is_Missing_on_Contact</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Sales_Oppurtunity-17</fullName>
+        </flows>
+        <fullName>Create_Sales_Oppurtunity</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Training_Event_from_Opputunity-19</fullName>
+        </flows>
+        <fullName>Create_Training_Event_from_Opputunity</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Set_Order_Item_Emails-3</fullName>
+        </flows>
+        <fullName>Set_Order_Item_Emails</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Vouchers_from_TE_V2-7</fullName>
+        </flows>
+        <fullName>Create_Vouchers_from_TE_V2</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>ILT_Roster_Resend_Confirmation-2</fullName>
+        </flows>
+        <fullName>ILT_Roster_Resend_Confirmation</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Manage_Order_Status-47</fullName>
+        </flows>
+        <fullName>Manage_Order_Status</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Opportunity_Controller-22</fullName>
+        </flows>
+        <fullName>Opportunity_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Opportunity_to_Contract-3</fullName>
+        </flows>
+        <fullName>Opportunity_to_Contract</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Order_Fulfillment_Status_Change-1</fullName>
+        </flows>
+        <fullName>Order_Fulfillment_Status_Change</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Order_Item_Controller-3</fullName>
+        </flows>
+        <fullName>Order_Item_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Order_Item_Set_Reservations-3</fullName>
+        </flows>
+        <fullName>Order_Item_Set_Reservations</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Process_On_Hold_Orders-2</fullName>
+        </flows>
+        <fullName>Process_On_Hold_Orders</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Set_Order_Approval_Level-6</fullName>
+        </flows>
+        <fullName>Set_Order_Approval_Level</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Training_Event_Controller-9</fullName>
+        </flows>
+        <fullName>Training_Event_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Contact_based_on_User-1</fullName>
+        </flows>
+        <fullName>Update_Contact_based_on_User</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Achievement_Assignment_Controller-4</fullName>
+        </flows>
+        <fullName>Achievement_Assignment_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Account_Groups-2</fullName>
+        </flows>
+        <fullName>Update_Account_Groups</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Awaiting_Customer_Response-1</fullName>
+        </flows>
+        <fullName>Social_Awaiting_Customer_Response</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Content_populate_onto_Case-1</fullName>
+        </flows>
+        <fullName>Social_Content_populate_onto_Case</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Rejected_Post-3</fullName>
+        </flows>
+        <fullName>Social_Rejected_Post</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_timestamps-2</fullName>
+        </flows>
+        <fullName>Social_timestamps</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Customer_Follow_Up-2</fullName>
+        </flows>
+        <fullName>Social_Customer_Follow_Up</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Follower_Count-1</fullName>
+        </flows>
+        <fullName>Social_Follower_Count</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Send_Email_when_Order_Line_Item_is_Cancelled-1</fullName>
+        </flows>
+        <fullName>Send_Email_when_Order_Line_Item_is_Cancelled</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Pending_Approval-2</fullName>
+        </flows>
+        <fullName>Social_Pending_Approval</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Instructor_or_Partner_Profile_ID-1</fullName>
+        </flows>
+        <fullName>Update_Instructor_or_Partner_Profile_ID</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Order_Opportunity-1</fullName>
+        </flows>
+        <fullName>Update_Order_Opportunity</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Priority_setting_on_case-1</fullName>
+        </flows>
+        <fullName>Social_Priority_setting_on_case</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Account_On_Budget-1</fullName>
+        </flows>
+        <fullName>Update_Account_On_Budget</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Kit_Checker-1</fullName>
+            <screens>
+                <fields>
+                    <name>Component_List</name>
+                </fields>
+                <fields>
+                    <name>dsprecordselection</name>
+                </fields>
+                <fields>
+                    <name>scrCompositeProduct</name>
+                </fields>
+                <name>Display_Composite_Products</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>SKU</name>
+                </fields>
+                <fields>
+                    <name>dspMessage</name>
+                </fields>
+                <name>Kit_Checker</name>
+            </screens>
+        </flows>
+        <fullName>Kit_Checker</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Mass_Cancellation_Cases-6</fullName>
+        </flows>
+        <fullName>Create_Mass_Cancellation_Cases</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>ILT_Class_Controller-2</fullName>
+        </flows>
+        <fullName>ILT_Class_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Notify_Roster_Members_of_Cancelled_ILT_Class-1</fullName>
+        </flows>
+        <fullName>Notify_Roster_Members_of_Cancelled_ILT_Class</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Set_Learning_Plan_Assignment_Expiration_Date-2</fullName>
+        </flows>
+        <fullName>Set_Learning_Plan_Assignment_Expiration_Date</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Order_Item_Status_Controller_Change-9</fullName>
+        </flows>
+        <fullName>Order_Item_Status_Controller_Change</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>LoginFlow_for_Community_Users-2</fullName>
+            <screens>
+                <fields>
+                    <name>I_accept</name>
+                </fields>
+                <fields>
+                    <name>TermsAndConditions</name>
+                </fields>
+                <name>Accept_TC</name>
+            </screens>
+        </flows>
+        <fullName>LoginFlow_for_Community_Users</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Revoke_Grant_Request-2</fullName>
+            <screens>
+                <fields>
+                    <name>Grant_Claim_Exist</name>
+                </fields>
+                <name>Grant_Claims_Exist</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>GrantRequestConfirm</name>
+                </fields>
+                <name>Grant_Request_Reject_Confirm</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>RejectedNote</name>
+                </fields>
+                <name>RejectGrant</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>GrantName</name>
+                </fields>
+                <name>Revoke_Grant_Request</name>
+            </screens>
+        </flows>
+        <fullName>Revoke_Grant_Request</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Order_Opportunity_for_Closed_Won-1</fullName>
+        </flows>
+        <fullName>Update_Order_Opportunity_for_Closed_Won</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>PHSS_User_Provisioning_Logger-1</fullName>
+        </flows>
+        <fullName>PHSS_User_Provisioning_Logger</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Case_Resolution-2</fullName>
+        </flows>
+        <fullName>Update_Case_Resolution</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Credit_Records-1</fullName>
+        </flows>
+        <fullName>Create_Credit_Records</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Grant_Claim_Payment-3</fullName>
+        </flows>
+        <fullName>Create_Grant_Claim_Payment</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Grant_Claim_Controller-4</fullName>
+        </flows>
+        <fullName>Grant_Claim_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Grant_Request_Controller-1</fullName>
+        </flows>
+        <fullName>Grant_Request_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Revoke_Grant-1</fullName>
+        </flows>
+        <fullName>Revoke_Grant</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Contact_Info_from_User_record-2</fullName>
+        </flows>
+        <fullName>Update_Contact_Info_from_User_record</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Landing_Page_to_Campaign_Routing-1</fullName>
+        </flows>
+        <fullName>Landing_Page_to_Campaign_Routing</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>PHSS_Certification_Provisioning_Logger-1</fullName>
+        </flows>
+        <fullName>PHSS_Certification_Provisioning_Logger</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Set_Deactivated_Date-1</fullName>
+        </flows>
+        <fullName>Set_Deactivated_Date</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Contract_Opportunity_update-1</fullName>
+        </flows>
+        <fullName>Contract_Opportunity_update</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Training_Event_Time_Stamps-4</fullName>
+        </flows>
+        <fullName>Training_Event_Time_Stamps</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>AED_Offers-1</fullName>
+        </flows>
+        <fullName>AED_Offers</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Manage_Credit_Status-1</fullName>
+        </flows>
+        <fullName>Manage_Credit_Status</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Expire_Achievement_Assignment_Records-4</fullName>
+        </flows>
+        <fullName>Expire_Achievement_Assignment_Records</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Process_Scheduler_Controller-1</fullName>
+        </flows>
+        <fullName>Process_Scheduler_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_CC_Order_PO_Number-1</fullName>
+        </flows>
+        <fullName>Update_CC_Order_PO_Number</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Grant_Payment-1</fullName>
+        </flows>
+        <fullName>Grant_Payment</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Revoke_Issued_Grant-4</fullName>
+            <screens>
+                <fields>
+                    <name>NotPaidNote</name>
+                </fields>
+                <name>NotPaidRevoke</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>IsRejectedNote</name>
+                </fields>
+                <name>PreviouslyRejected</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>ClaimAmount</name>
+                </fields>
+                <fields>
+                    <name>ClaimBudget</name>
+                </fields>
+                <fields>
+                    <name>ClaimName</name>
+                </fields>
+                <fields>
+                    <name>Reason_for_revoking_claim</name>
+                </fields>
+                <fields>
+                    <name>Status</name>
+                </fields>
+                <name>Revoke_Claim</name>
+            </screens>
+        </flows>
+        <fullName>Revoke_Issued_Grant</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Billing_State_from_Accounts-2</fullName>
+        </flows>
+        <fullName>Update_Billing_State_from_Accounts</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Select_Budget-1</fullName>
+            <screens>
+                <fields>
+                    <name>Available_Budgets_Lists1</name>
+                </fields>
+                <name>Available_Budgets</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Effective_End_Date</name>
+                    <validationRule/>
+                </fields>
+                <fields>
+                    <name>Effective_Start_Date</name>
+                </fields>
+                <fields>
+                    <name>dspAccount</name>
+                </fields>
+                <fields>
+                    <name>dspGrantActivityDate</name>
+                </fields>
+                <fields>
+                    <name>dspGrantActivityType</name>
+                </fields>
+                <fields>
+                    <name>dspGrantAmount</name>
+                </fields>
+                <fields>
+                    <name>dspGrantName</name>
+                </fields>
+                <name>Find_Available_Budgets</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>ErrorMessage</name>
+                </fields>
+                <name>Request_has_been_ap</name>
+            </screens>
+        </flows>
+        <fullName>Select_Budget</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_Entitlement_Process-1</fullName>
+        </flows>
+        <fullName>Update_Entitlement_Process</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Social_Post_TEST-1</fullName>
+        </flows>
+        <fullName>Social_Post_TEST</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Learning_Plan_Assignment_Controller-2</fullName>
+        </flows>
+        <fullName>Learning_Plan_Assignment_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Learning_Plan_Section_Assignment-3</fullName>
+        </flows>
+        <fullName>Learning_Plan_Section_Assignment</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Catalog_Account_Controller-1</fullName>
+        </flows>
+        <fullName>Catalog_Account_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Add_Cancelation_Fee_to_Order-26</fullName>
+            <screens>
+                <fields>
+                    <name>CancelFeeError</name>
+                </fields>
+                <name>Cancel_Fee_Missing</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>CancellationFeeHeader</name>
+                </fields>
+                <fields>
+                    <name>Comments</name>
+                </fields>
+                <name>Cancellation_Fee_Notes</name>
+            </screens>
+        </flows>
+        <fullName>Add_Cancelation_Fee_to_Order</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Learning_Assignment_Approver_Case-2</fullName>
+        </flows>
+        <fullName>Create_Learning_Assignment_Approver_Case</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Add_Contact_Email_Phone_Address_to_Individual_Account-7</fullName>
+        </flows>
+        <fullName>Add_Contact_Email_Phone_Address_to_Individual_Account</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>AccountContractRelationshipController-4</fullName>
+        </flows>
+        <fullName>AccountContractRelationshipController</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_On_Hold_Order_Case-11</fullName>
+        </flows>
+        <fullName>Create_On_Hold_Order_Case</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Account_Controller-7</fullName>
+        </flows>
+        <fullName>Account_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Add_Onsite_Fee_Waiver-6</fullName>
+            <screens>
+                <fields>
+                    <name>Error</name>
+                </fields>
+                <name>Error_Message</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>ProductError</name>
+                </fields>
+                <name>Onsite_Fee_Missing_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>Comments</name>
+                </fields>
+                <fields>
+                    <name>RescheduleFeeHeader</name>
+                </fields>
+                <name>Onsite_Fee_Screen</name>
+            </screens>
+        </flows>
+        <fullName>Add_Onsite_Fee_Waiver</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Create_Training_Revenue_Record-3</fullName>
+        </flows>
+        <fullName>Create_Training_Revenue_Record</fullName>
+    </flowDefinitions>
+    <quickActions>
+        <label><!-- Add or Remove Affiliation --></label>
+        <name>Add_or_Remove_Affiliation</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create New Grant Request --></label>
+        <name>Apply_For_Grant</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create New Learn to Swim Registration --></label>
+        <name>Create_New_Learn_to_Swim_Registration</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Guest Community Case --></label>
+        <name>GuestCommunityCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Log a Call --></label>
+        <name>LogACall</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewAccount --></label>
+        <name>NewAccount</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewCase --></label>
+        <name>NewCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Community Case --></label>
+        <name>NewCommunityCase</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewContact --></label>
+        <name>NewContact</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewEvent --></label>
+        <name>NewEvent</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewGroup --></label>
+        <name>NewGroup</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewLead --></label>
+        <name>NewLead</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewNote --></label>
+        <name>NewNote</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewOpportunity --></label>
+        <name>NewOpportunity</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New Task --></label>
+        <name>NewTask</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create New Case --></label>
+        <name>PHSS_Create_Instructor_Case</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create New Case --></label>
+        <name>PHSS_Create_Learner_Case</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create New Case --></label>
+        <name>PHSS_Create_Partner_Case</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create New Case --></label>
+        <name>PHSS_Create_Service_Case</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Record Learn to Swim Class --></label>
+        <name>Record_Learn_to_Swim_Class</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Record Safety Outreach --></label>
+        <name>Record_Safety_Outreach</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Remove Affiliation --></label>
+        <name>Remove_Affiliation</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Email --></label>
+        <name>SendEmail</name>
+    </quickActions>
+</Translations>

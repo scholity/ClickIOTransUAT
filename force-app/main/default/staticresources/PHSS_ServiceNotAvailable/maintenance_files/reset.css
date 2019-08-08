@@ -1,0 +1,104 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+	list-style: none;
+}
+
+#header ol, #header ul{
+	list-style:none;
+	width: 0;
+	float:none;
+}
+
+#login_form ol, #login_form ul{
+	list-style:none;
+	width: 0;
+	float:none;
+}
+
+#search ol, #search ul {
+	list-style:none;
+	width: 0;
+	float:none;
+}
+
+#why_join ol, #why_join ul{
+	list-style:none;
+	width: 173px;
+	margin-top:23px;
+}
+
+#secondary_bar ol, #secondary_bar ul{
+	width:auto;
+	float:none;	
+}
+
+#f_menu ol, #f_menu ul{
+	width:auto;
+}
+
+#sub_menu_first ul,
+#sub_menu_aquatics ul,
+#sub_menu_caregiving ul,
+#sub_menu_preparedness ul,
+#sub_menu_instructor_tools ul{
+	margin-left: 30px;
+	width:260px;
+	margin-top:20px;
+	float:left;
+}
+
+#sub_menu_first ul li,
+#sub_menu_aquatics ul li,
+#sub_menu_caregiving ul li,
+#sub_menu_preparedness ul li,
+#sub_menu_instructor_tools ul li{
+	list-style: none;
+	width:264px;
+	float: left;
+	line-height: 1.1em;
+	margin-bottom: 5px;
+}
+
+#menu-bottom ol, #menu-bottom ul{
+	display:inline;
+	list-style: none !important;
+	float:none !important;
+}
+
+ol, ul {
+	list-style: none;
+	width: 200px;
+	float: left;
+}
+
+
+blockquote, q {
+	quotes: none;
+}
+:focus {
+	outline: 0;
+}
+ins {
+	text-decoration: none;
+}
+del {
+	text-decoration: line-through;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}

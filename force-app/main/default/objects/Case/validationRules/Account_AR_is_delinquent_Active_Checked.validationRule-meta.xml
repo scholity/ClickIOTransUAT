@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_AR_is_delinquent_Active_Checked</fullName>
+    <active>false</active>
+    <description>Based on the data in these fields RCS Customers who are included on termination file upload must be prevented from having new PO requests processed</description>
+    <errorConditionFormula>OR(AND( 
+ISNEW(), 
+ISPICKVAL(Account.Preferred_Payment_type__c, &quot;Credit/Debit Card&quot;), 
+ISPICKVAL(Account.Payment_Status__c,&quot;Terminated&quot;), 
+ISPICKVAL(Account.Termination_Reason__c, &quot;Non Payment; Sent to Collections&quot;), 
+Account.OwnerId = &#39;0050V000006kiTY&#39;, 
+RecordType.Name =&quot;RCS PO&quot;, 
+ISPICKVAL( Case_Sub_Type__c , &quot;RCS PO&quot;) 
+), 
+AND( 
+!ISNEW(), 
+ISPICKVAL(Account.Preferred_Payment_type__c, &quot;Credit/Debit Card&quot;), 
+ISPICKVAL(Account.Payment_Status__c,&quot;Terminated&quot;), 
+ISPICKVAL(Account.Termination_Reason__c, &quot;Non Payment; Sent to Collections&quot;), 
+Account.OwnerId = &#39;0050V000006kiTY&#39;, 
+RecordType.Name =&quot;RCS PO&quot;, 
+ISPICKVAL( Case_Sub_Type__c , &quot;RCS PO&quot;), 
+ISPICKVAL(Status, &#39;PO On-Hold CFS&#39;) 
+))</errorConditionFormula>
+    <errorMessage>Account AR is delinquent, no additional orders may be processed until issue resolved</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Postal_Mail_cannot_include_Roster</fullName>
+    <active>true</active>
+    <description>If Invoice Delivery Method is Postal Mail, then &quot;Include Roster&quot; cannot be selected.</description>
+    <errorConditionFormula>AND( 
+    ISPICKVAL( Invoice_Delivery_Type__c , &quot;Postal Mail&quot;), 
+     Include_Roster__c  = TRUE
+)</errorConditionFormula>
+    <errorDisplayField>Include_Roster__c</errorDisplayField>
+    <errorMessage>If Invoice Delivery Method is Postal Mail, then &quot;Include Roster&quot; cannot be selected.</errorMessage>
+</ValidationRule>

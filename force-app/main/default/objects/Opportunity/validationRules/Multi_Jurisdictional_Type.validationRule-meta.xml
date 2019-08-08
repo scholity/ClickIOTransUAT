@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Multi_Jurisdictional_Type</fullName>
+    <active>true</active>
+    <description>When Multi-Jurisdictional Drop-down is set to Yes, you must choose an option for Multi-Jurisdictional Type</description>
+    <errorConditionFormula>AND 
+( ISPICKVAL( Multi_Jurisdictional__c , &quot;Yes&quot;), 
+NOT OR ( 
+ISPICKVAL(Multi_Jurisdictional_Type__c, &quot;Single POC, Central Billing&quot;), 
+ISPICKVAL(Multi_Jurisdictional_Type__c, &quot;Single POC, Local Billing&quot;), 
+ISPICKVAL(Multi_Jurisdictional_Type__c, &quot;Local POC, Central Billing&quot;), 
+ISPICKVAL(Multi_Jurisdictional_Type__c, &quot;Local POC, Local Billing&quot;) 
+) 
+)</errorConditionFormula>
+    <errorMessage>When Multi-Jurisdictional Drop-down is set to Yes, you must choose an option for Multi-Jurisdictional Type</errorMessage>
+</ValidationRule>

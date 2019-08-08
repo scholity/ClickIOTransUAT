@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BANT_Description__c</fullName>
+    <description>This is a Description field to capture any additional information that goes beyond the limited options in the picklist fields under Budget, Authority, Need and purchase Timeline.</description>
+    <externalId>false</externalId>
+    <label>BANT Description</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>TextArea</type>
+</CustomField>

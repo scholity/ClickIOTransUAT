@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_Product__c</fullName>
+    <externalId>false</externalId>
+    <label>Primary Product</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AED</fullName>
+                <default>false</default>
+                <label>AED</label>
+            </value>
+            <value>
+                <fullName>Aquatics Learn to Swim</fullName>
+                <default>false</default>
+                <label>Aquatics Learn to Swim</label>
+            </value>
+            <value>
+                <fullName>Aquatics Other</fullName>
+                <default>false</default>
+                <label>Aquatics Other</label>
+            </value>
+            <value>
+                <fullName>Babysitting</fullName>
+                <default>false</default>
+                <label>Babysitting</label>
+            </value>
+            <value>
+                <fullName>Basic Water Rescue</fullName>
+                <default>false</default>
+                <label>Basic Water Rescue</label>
+            </value>
+            <value>
+                <fullName>BLS</fullName>
+                <default>false</default>
+                <label>BLS</label>
+            </value>
+            <value>
+                <fullName>Citizen CPR</fullName>
+                <default>false</default>
+                <label>Citizen CPR</label>
+            </value>
+            <value>
+                <fullName>Continuing Education Units</fullName>
+                <default>false</default>
+                <label>Continuing Education Units</label>
+            </value>
+            <value>
+                <fullName>CPR for the Professional Rescuer</fullName>
+                <default>false</default>
+                <label>CPR for the Professional Rescuer</label>
+            </value>
+            <value>
+                <fullName>Emergency Medical Response</fullName>
+                <default>false</default>
+                <label>Emergency Medical Response</label>
+            </value>
+            <value>
+                <fullName>Emergency Preparedness</fullName>
+                <default>false</default>
+                <label>Emergency Preparedness</label>
+            </value>
+            <value>
+                <fullName>First Aid</fullName>
+                <default>false</default>
+                <label>First Aid</label>
+            </value>
+            <value>
+                <fullName>First Aid/CPR/AED Training</fullName>
+                <default>false</default>
+                <label>First Aid/CPR/AED Training</label>
+            </value>
+            <value>
+                <fullName>First Aid Emergency Drills</fullName>
+                <default>false</default>
+                <label>First Aid Emergency Drills</label>
+            </value>
+            <value>
+                <fullName>Lifeguarding</fullName>
+                <default>false</default>
+                <label>Lifeguarding</label>
+            </value>
+            <value>
+                <fullName>Lifeline</fullName>
+                <default>false</default>
+                <label>Lifeline</label>
+            </value>
+            <value>
+                <fullName>MERT Drills</fullName>
+                <default>false</default>
+                <label>MERT Drills</label>
+            </value>
+            <value>
+                <fullName>Nurse Assistant Training</fullName>
+                <default>false</default>
+                <label>Nurse Assistant Training</label>
+            </value>
+            <value>
+                <fullName>OSHA</fullName>
+                <default>false</default>
+                <label>OSHA</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Ready Rating</fullName>
+                <default>false</default>
+                <label>Ready Rating</label>
+            </value>
+            <value>
+                <fullName>Safety Training for Swim Coaches</fullName>
+                <default>false</default>
+                <label>Safety Training for Swim Coaches</label>
+            </value>
+            <value>
+                <fullName>Training Supplies</fullName>
+                <default>false</default>
+                <label>Training Supplies</label>
+            </value>
+            <value>
+                <fullName>Water Safety Instructor</fullName>
+                <default>false</default>
+                <label>Water Safety Instructor</label>
+            </value>
+            <value>
+                <fullName>Water Safety Outreach</fullName>
+                <default>false</default>
+                <label>Water Safety Outreach</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

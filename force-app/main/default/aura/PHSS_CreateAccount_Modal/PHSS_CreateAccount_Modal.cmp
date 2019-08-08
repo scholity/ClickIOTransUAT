@@ -1,0 +1,28 @@
+<!--
+ - Created by bjarmolinski on 2019-06-13.
+ -->
+
+<aura:component description="PHSS_CreateAccount_Modal" implements="forceCommunity:availableForAllPageTypes,force:appHostable" access="global">
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+    <aura:attribute name="modalOn" type="Boolean" default="false" />
+
+    <div class="container" >
+        <div onclick="{!c.handlepopover}" class="slds-text-align_right" >
+            <ui:outputText value="Why do I have to do this?" class="link" />
+        </div>
+
+        <div aura:id="popover" class="slds-hide popover1">
+            <section aria-describedby="dialog-body-id-77" aria-label="Dialog Title" class="slds-popover slds-nubbin_top-right" role="dialog">
+                <button class="slds-button slds-button_icon slds-button_icon-small slds-float_right slds-popover__close" title="Close dialog" >
+                    <lightning:icon iconName="utility:close" size="small" alternativeText="Close popover" onclick="{!c.closepopover}" />
+                    <span class="slds-assistive-text">Close dialog</span>
+                </button>
+                <div class="slds-popover__body slds-text-align_left" id="dialog-body-id-77">
+                    <p>At American Red Cross Training Services we are upgrading our systems so moving forward you will have one account for every Red Cross Training Services website and tool. Create your new account now for full access.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</aura:component>

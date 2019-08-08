@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Sales_Opportunity_Set_to_Reservation</name>
+        <label>Sales Opportunity - Set to Reservation</label>
+        <locationX>637</locationX>
+        <locationY>173</locationY>
+        <assignmentItems>
+            <assignToReference>sOpportunity.StageName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reservation</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Order_Opportunity</name>
+        <label>Set Order Opportunity</label>
+        <locationX>637</locationX>
+        <locationY>44</locationY>
+        <assignmentItems>
+            <assignToReference>sOpportunity.StageName</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed Won</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_If_Order_Opportunity</name>
+        <label>Check If Order Opportunity</label>
+        <locationX>448</locationX>
+        <locationY>49</locationY>
+        <defaultConnector>
+            <targetReference>Sales_Opportunity_Set_to_Reservation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Order_Opportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sOpportunity.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>outRecordTypeID</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Order_Opportunity</targetReference>
+            </connector>
+            <label>Is Order Opportunity</label>
+        </rules>
+    </decisions>
+    <description>Updates the Order Opportunity to Closed One but does not update a Sales Opportunity</description>
+    <interviewLabel>Update Order Opportunity for Closed Won {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Order Opportunity for Closed Won</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Opportunity Record</description>
+        <name>Get_Opportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>303</locationX>
+        <locationY>49</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_If_Order_Opportunity</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>frmOpportunity</elementReference>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <outputReference>sOpportunity</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>StageName</queriedFields>
+        <queriedFields>RecordTypeId</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Record_Type_ID</name>
+        <label>Get Record Type ID</label>
+        <locationX>173</locationX>
+        <locationY>50</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Opportunity</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Order_Opportunity</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opportunity</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputAssignments>
+            <assignToReference>outRecordTypeID</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Opportunity</name>
+        <label>Update Opportunity</label>
+        <locationX>814</locationX>
+        <locationY>136</locationY>
+        <inputReference>sOpportunity</inputReference>
+    </recordUpdates>
+    <startElementReference>Get_Record_Type_ID</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>frmOpportunity</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>outRecordTypeID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sOpportunity</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+</Flow>

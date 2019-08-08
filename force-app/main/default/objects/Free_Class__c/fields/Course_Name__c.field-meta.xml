@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Course_Name__c</fullName>
+    <externalId>false</externalId>
+    <label>Course Name</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Adult Swim – Fitness Swimming</fullName>
+                <default>false</default>
+                <label>Adult Swim – Fitness Swimming</label>
+            </value>
+            <value>
+                <fullName>Adult Swim – Learning and Refining Swim Strokes</fullName>
+                <default>false</default>
+                <label>Adult Swim – Learning and Refining Swim Strokes</label>
+            </value>
+            <value>
+                <fullName>Adult Swim – Learning the Basics</fullName>
+                <default>false</default>
+                <label>Adult Swim – Learning the Basics</label>
+            </value>
+            <value>
+                <fullName>General Water Safety</fullName>
+                <default>false</default>
+                <label>General Water Safety</label>
+            </value>
+            <value>
+                <fullName>Home Pool Safety</fullName>
+                <default>false</default>
+                <label>Home Pool Safety</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 1 – Introduction to Water Skills</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 1 – Introduction to Water Skills</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 2 – Fundamental Aquatic Skills</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 2 – Fundamental Aquatic Skills</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 3 – Stroke Development</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 3 – Stroke Development</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 4 – Stroke Improvement</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 4 – Stroke Improvement</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 5 – Stroke Refinement</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 5 – Stroke Refinement</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 6 – Skill Proficiency – Fitness Swimmer</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 6 – Skill Proficiency – Fitness Swimmer</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 6 – Skill Proficiency – Fundamentals of Diving</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 6 – Skill Proficiency – Fundamentals of Diving</label>
+            </value>
+            <value>
+                <fullName>Learn-to-Swim Level 6 – Skill Proficiency – Personal Water Safety</fullName>
+                <default>false</default>
+                <label>Learn-to-Swim Level 6 – Skill Proficiency – Personal Water Safety</label>
+            </value>
+            <value>
+                <fullName>Parent and Child Aquatics Level 1</fullName>
+                <default>false</default>
+                <label>Parent and Child Aquatics Level 1</label>
+            </value>
+            <value>
+                <fullName>Parent and Child Aquatics Level 2</fullName>
+                <default>false</default>
+                <label>Parent and Child Aquatics Level 2</label>
+            </value>
+            <value>
+                <fullName>Parent Orientation to Swim Lessons</fullName>
+                <default>false</default>
+                <label>Parent Orientation to Swim Lessons</label>
+            </value>
+            <value>
+                <fullName>Preschool Aquatics Level 1</fullName>
+                <default>false</default>
+                <label>Preschool Aquatics Level 1</label>
+            </value>
+            <value>
+                <fullName>Preschool Aquatics Level 2</fullName>
+                <default>false</default>
+                <label>Preschool Aquatics Level 2</label>
+            </value>
+            <value>
+                <fullName>Preschool Aquatics Level 3</fullName>
+                <default>false</default>
+                <label>Preschool Aquatics Level 3</label>
+            </value>
+            <value>
+                <fullName>Private Swim Lesson</fullName>
+                <default>false</default>
+                <label>Private Swim Lesson</label>
+            </value>
+            <value>
+                <fullName>Rip Current Safety</fullName>
+                <default>false</default>
+                <label>Rip Current Safety</label>
+            </value>
+            <value>
+                <fullName>Sun Safety</fullName>
+                <default>false</default>
+                <label>Sun Safety</label>
+            </value>
+            <value>
+                <fullName>WHALE Tales – Longfellows</fullName>
+                <default>false</default>
+                <label>WHALE Tales – Longfellows</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

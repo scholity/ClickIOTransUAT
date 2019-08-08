@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Timeline__c</fullName>
+    <description>The individual has confirmed they have the Timeframe for purchase.</description>
+    <externalId>false</externalId>
+    <label>Timeline</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+            <value>
+                <fullName>3 Months</fullName>
+                <default>false</default>
+                <label>3 Months</label>
+            </value>
+            <value>
+                <fullName>6 Months</fullName>
+                <default>false</default>
+                <label>6 Months</label>
+            </value>
+            <value>
+                <fullName>9 Months</fullName>
+                <default>false</default>
+                <label>9 Months</label>
+            </value>
+            <value>
+                <fullName>1 year</fullName>
+                <default>false</default>
+                <label>1 year</label>
+            </value>
+            <value>
+                <fullName>2 Years</fullName>
+                <default>false</default>
+                <label>2 Years</label>
+            </value>
+            <value>
+                <fullName>3 Years</fullName>
+                <default>false</default>
+                <label>3 Years</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

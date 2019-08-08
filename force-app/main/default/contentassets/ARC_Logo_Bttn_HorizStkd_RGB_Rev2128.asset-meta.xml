@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentAsset xmlns="http://soap.sforce.com/2006/04/metadata">
+    <isVisibleByExternalUsers>false</isVisibleByExternalUsers>
+    <language>en_US</language>
+    <masterLabel>ARC_Logo_Bttn_HorizStkd_RGB_Rev2128</masterLabel>
+    <originNetwork>Instructor&#39;s Corner</originNetwork>
+    <relationships>
+        <network>
+            <access>VIEWER</access>
+            <name>Instructor&#39;s Corner</name>
+        </network>
+        <workspace>
+            <access>INFERRED</access>
+            <isManagingWorkspace>true</isManagingWorkspace>
+            <name>sfdc_asset_company_assets</name>
+        </workspace>
+    </relationships>
+    <versions>
+        <version>
+            <number>1</number>
+            <pathOnClient>ARC_Logo_Bttn_HorizStkd_RGB_Rev-212891_cropped-302151.png</pathOnClient>
+        </version>
+    </versions>
+</ContentAsset>

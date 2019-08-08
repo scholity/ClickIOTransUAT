@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Est_Num_of_Attendees__c</fullName>
+    <description>Aggregate of Product quantities excluding delivery fee</description>
+    <externalId>false</externalId>
+    <label>Est. Num of Attendees</label>
+    <summarizedField>OpportunityLineItem.Quantity</summarizedField>
+    <summaryFilterItems>
+        <field>OpportunityLineItem.ListPrice</field>
+        <operation>notEqual</operation>
+        <value>1.00</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

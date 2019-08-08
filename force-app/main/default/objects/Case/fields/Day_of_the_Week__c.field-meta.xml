@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Day_of_the_Week__c</fullName>
+    <externalId>false</externalId>
+    <label>Day of the Week</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Case_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Weekday</fullName>
+                <default>false</default>
+                <label>Weekday</label>
+            </value>
+            <value>
+                <fullName>Saturday</fullName>
+                <default>false</default>
+                <label>Saturday</label>
+            </value>
+            <value>
+                <fullName>Sunday</fullName>
+                <default>false</default>
+                <label>Sunday</label>
+            </value>
+            <value>
+                <fullName>Any Day</fullName>
+                <default>false</default>
+                <label>Any Day</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Weekday</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Saturday</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Sunday</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Any Day</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

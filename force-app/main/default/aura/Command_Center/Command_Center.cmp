@@ -1,0 +1,56 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" controller="AgentCommandCenterCtlrLightning" access="global" >
+    <aura:attribute name="wrapperContent" type="object"/>
+     
+    <lightning:workspaceAPI aura:id="workspace" />
+    <div class="slds-p-top_x-small slds-text-align_center slds-text-heading_small">
+        TSC Agent Command Center
+    </div>
+    <div class="slds-p-top_x-small slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.learningCenterClick}">
+            Learning Center
+        </a>
+    </div>
+    <div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.informationStationClick}">
+            Information Station
+        </a>
+    </div>
+    <div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.webiClick}">
+            Webi
+        </a>
+    </div>
+    <div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.instructorscornerClick}">
+            Instructors Corner
+        </a>
+    </div>
+    <div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.BusinessMan}">
+            Business Manager
+        </a>
+    </div>
+    <div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.customerDataSearchClick}">
+            Customer Data Search
+        </a>
+    </div>
+    <!--<div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.shopStayWellClick}">
+            Shop Stay Well
+        </a>
+    </div>-->
+    <div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.redCrossClick}">
+            Red Cross
+        </a>
+    </div>
+    <div class="slds-p-bottom_x-small slds-text-align_center">
+        <a href="javascript:void(0)" onclick="{!c.globalGhostContactClick}">
+            Global Ghost Contact
+        </a> 
+    </div>
+    <div class="slds-text-align_center">
+        <button class="slds-button slds-button_brand" onclick="{!c.acceptCase}">Accept Next Case</button>
+    </div>
+</aura:component>

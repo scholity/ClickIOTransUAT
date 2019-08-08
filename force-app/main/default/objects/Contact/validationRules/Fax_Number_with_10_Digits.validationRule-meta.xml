@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fax_Number_with_10_Digits</fullName>
+    <active>true</active>
+    <description>Fax Number with 10 Digits</description>
+    <errorConditionFormula>IF( OR(ISBLANK(Fax),  $Setup.Validation_Rules__c.Bypass_Rules__c)
+
+, false, NOT(REGEX(Fax, &quot;\\D*?(\\d\\D*?){10}&quot;)))</errorConditionFormula>
+    <errorDisplayField>Fax</errorDisplayField>
+    <errorMessage>US Fax numbers should be in this format: (999) 999-9999</errorMessage>
+</ValidationRule>

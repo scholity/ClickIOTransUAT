@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_Case_Create_For_Delivery_Failure</fullName>
+    <active>false</active>
+    <description>Prevent Case creation for Delivery Failure Emails.</description>
+    <errorConditionFormula>AND(ISPICKVAL(Origin, &#39;Email&#39;), OR(CONTAINS(UPPER(Subject), &#39;DELIVERY FAILURE&#39;), CONTAINS(UPPER(Description), &#39;DELIVERY FAILURE&#39;), CONTAINS(UPPER(Subject), &#39;NO REPLY&#39;)), ISNEW())</errorConditionFormula>
+    <errorMessage>Case cannot be created for Delivery Failure Emails.</errorMessage>
+</ValidationRule>

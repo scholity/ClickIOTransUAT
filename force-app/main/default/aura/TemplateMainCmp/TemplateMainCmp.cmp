@@ -1,0 +1,126 @@
+<aura:component description="Main template component">
+
+  <aura:attribute name="isBoxHeader"            type="Boolean"  default="false" />
+  <aura:attribute name="isLearningHeader"       type="Boolean"  default="false" />
+  <aura:attribute name="isCustomHeader"         type="Boolean"  default="false" />
+
+  <aura:attribute name="answerSuccess"          type="Boolean"  default="true"  />
+  <aura:attribute name="numberOfRequests"       type="Integer"  default="0"     />
+  <aura:attribute name="hasContent"             type="Boolean"  default="false" />
+
+  <aura:attribute name="headerLabel"            type="String"   default=""      />
+  <aura:attribute name="learningCount"          type="Integer"  default="0"     />
+  <aura:attribute name="noContentLabel"         type="String"   default="{!$Label.c.There_Is_No_Content}" />
+  <aura:attribute name="noContentClass"         type="String"   default="" />
+  <aura:attribute name="goBackButton"           type="String"   default="" />
+
+  <aura:attribute name="headerFacet"            type="Aura.Component[]" />
+
+  <aura:method name="goToDetail">
+    <aura:attribute name="itemId"         type="String"   required="true"/>
+  </aura:method>
+
+  <aura:method name="goToURL">
+    <aura:attribute name="path"           type="String"   required="true"/>
+  </aura:method>
+
+  <!--changed name from showMessage for Safari-->
+  <aura:method name="showMe">
+    <aura:attribute name="title"          type="String"   required="true"/>
+    <aura:attribute name="message"        type="String"   required="true"/>
+    <aura:attribute name="type"           type="String"   required="false"/>
+  </aura:method>
+
+  <aura:method name="doRequest">
+    <aura:attribute name="action"         type="Object"   required="true"/>
+    <aura:attribute name="callBack"       type="Object"   required="true"/>
+    <aura:attribute name="callBackFail"   type="Object"/>
+  </aura:method>
+
+  <aura:method name="getSearchParam">
+    <aura:attribute name="cmpContext"     type="Aura.Component" required="true"/>
+  </aura:method>
+
+  <aura:method name="getRecordIdParam">
+    <aura:attribute name="cmpContext"     type="Aura.Component" required="true"/>
+  </aura:method>
+
+  <aura:method name="getStatusParam">
+    <aura:attribute name="cmpContext"     type="Aura.Component" required="true"/>
+  </aura:method>
+
+  <aura:method name="fadeColorHexToRgbA">
+    <aura:attribute name="cmpContext"     type="Aura.Component" required="true"/>
+  </aura:method>
+  
+  <aura:method name="goBack">
+  </aura:method>
+
+  <!-- Labels -->
+  <aura:attribute name="unknown_error"    type="String" default="{!$Label.c.Unknown_error}"/>
+
+  <div>
+
+    <!-- Component headers -->
+    <aura:if isTrue="{!v.isBoxHeader}">
+      <div class="slds-border--bottom slds-p-bottom--medium slds-m-bottom--large slds-text-heading--medium slds-truncate cmp-header">
+        <div class="cmp-header-label">{!v.headerLabel}</div>
+      </div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.isLearningHeader}">
+      <div class="slds-grid slds-grid--vertical-align-center slds-p-bottom--medium slds-text-heading--medium slds-truncate cmp-header">
+        <div class="cmp-header-label">{!v.headerLabel}</div>
+        <div class="slds-m-left--small slds-p-horizontal--x-small slds-text-body--regular learning-total-items">
+                {!v.learningCount}
+        </div>
+        <div class="slds-size--1-of-1 slds-m-left--small cmp-header-line"/>
+      </div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.isCustomHeader}">
+            {!v.headerFacet}
+    </aura:if>
+
+    <!-- Main content -->
+    <aura:if isTrue="{!v.answerSuccess}">
+
+      <aura:if isTrue="{!v.numberOfRequests == 0}">
+
+        <aura:if isTrue="{!v.hasContent}">
+
+        {!v.body}
+
+          <!-- If server answer has no data -->
+          <aura:set attribute="else">
+            <div class="{!(v.noContentClass ? v.noContentClass : 'slds-m-around--medium slds-text-heading--medium slds-text-align--center slds-truncate cmp-no-content')}">
+                    {!v.noContentLabel}
+            </div>
+
+            <aura:if isTrue="{!v.goBackButton}">
+              <div class="slds-button">
+                <lightning:button class="slds-m-top_x-small" label="{!v.goBackButton}" onclick="{!c.goBack}"/>
+              </div>
+            </aura:if>
+          </aura:set>
+        </aura:if>
+
+        <!-- If server answer has no data -->
+        <aura:set attribute="else">
+          <div class="cmp-spinner-container">
+            <lightning:spinner size="large" alternativeText="{!$Label.c.Waiting_response_from_server}"/>
+          </div>
+        </aura:set>
+      </aura:if>
+
+      <!-- If server answer doesn't have data or error occurred-->
+      <aura:set attribute="else">
+        <div class="slds-m-around--medium slds-text-heading--medium slds-text-align--center slds-truncate cmp-server-error">
+                {!$Label.c.Error_Occurred}
+        </div>
+      </aura:set>
+    </aura:if>
+
+  </div>
+
+</aura:component>

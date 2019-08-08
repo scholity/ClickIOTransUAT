@@ -1,0 +1,32 @@
+<aura:component >
+	<aura:attribute name="course" type="Map" default="{}"/>
+    <aura:attribute name="class" type="Map" default="{}"/>
+    <aura:attribute name="rowIdx" type="Integer" default="0"/>
+
+    <div class="{! 'slds-p-around_medium slds-border_bottom ' + if(equals(mod(v.rowIdx, 2), 0), 'slds-theme_shade', '') }">
+        <div class="slds-grid slds-p-bottom_xx-small">
+            <div class="slds-col slds-size_10-of-12" title="{! v.class.iltClassId }">
+                <div class="slds-text-heading_small"><b>{! v.course.sfdcName }</b></div>
+                <div class="slds-text-title_caps">{! v.course.SKU }</div>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_right">
+                <div class="slds-text-heading_medium" title="{! '$' + if(not(empty(v.class.priceOverride)), v.class.priceOverride, v.course.price) }">
+                    <lightning:formattedNumber style="currency"
+                                               currencyCode="{! $Locale.currencyCode }"
+                                               currencyDisplayAs="symbol"
+                                               value="{! if(not(empty(v.class.priceOverride)), v.class.priceOverride, v.course.price) }"/>
+                </div>
+                <div class="slds-text-body_small">{! v.course.unitOfMeasure }</div>
+            </div>
+        </div>
+
+        <aura:if isTrue="{! and(not(empty(v.course.longDesc)), not(equals(v.course.sfdcName, v.course.longDesc))) }">
+            <div class="slds-text-body_regular slds-p-bottom_small">{! v.course.longDesc }</div>
+        </aura:if>
+
+        <aura:if isTrue="{! not(empty(v.class)) }">
+            <c:phss_cc_CommunityClassDetail class="{! v.class }" courseId="{! v.course.sfid }"/>
+        </aura:if>
+    </div>
+
+</aura:component>

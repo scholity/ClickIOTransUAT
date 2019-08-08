@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Follow_up_Method__c</fullName>
+    <externalId>false</externalId>
+    <label>Follow up Method</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Follow_Up_Group__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>See Notes</fullName>
+                <default>false</default>
+                <label>See Notes</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Registration Support Queue</controllingFieldValue>
+            <controllingFieldValue>Instructor Updates</controllingFieldValue>
+            <controllingFieldValue>Problem Records</controllingFieldValue>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <controllingFieldValue>Digital Certificate Escalation</controllingFieldValue>
+            <controllingFieldValue>ARC Management Escalations</controllingFieldValue>
+            <controllingFieldValue>Pending Field Request</controllingFieldValue>
+            <controllingFieldValue>Current User</controllingFieldValue>
+            <controllingFieldValue>CCO Specialist</controllingFieldValue>
+            <controllingFieldValue>Certificate Support</controllingFieldValue>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <controllingFieldValue>RDC Queue</controllingFieldValue>
+            <controllingFieldValue>Instructor Support</controllingFieldValue>
+            <controllingFieldValue>Credit Card Payments</controllingFieldValue>
+            <controllingFieldValue>ARC Support Team</controllingFieldValue>
+            <controllingFieldValue>Outbound Group Queue</controllingFieldValue>
+            <controllingFieldValue>CST Queue</controllingFieldValue>
+            <valueName>Phone</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Registration Support Queue</controllingFieldValue>
+            <controllingFieldValue>Instructor Updates</controllingFieldValue>
+            <controllingFieldValue>Problem Records</controllingFieldValue>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <controllingFieldValue>Digital Certificate Escalation</controllingFieldValue>
+            <controllingFieldValue>ARC Management Escalations</controllingFieldValue>
+            <controllingFieldValue>Pending Field Request</controllingFieldValue>
+            <controllingFieldValue>Current User</controllingFieldValue>
+            <controllingFieldValue>CCO Specialist</controllingFieldValue>
+            <controllingFieldValue>Certificate Support</controllingFieldValue>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <controllingFieldValue>RDC Queue</controllingFieldValue>
+            <controllingFieldValue>Instructor Support</controllingFieldValue>
+            <controllingFieldValue>Credit Card Payments</controllingFieldValue>
+            <controllingFieldValue>ARC Support Team</controllingFieldValue>
+            <controllingFieldValue>Outbound Group Queue</controllingFieldValue>
+            <controllingFieldValue>CST Queue</controllingFieldValue>
+            <valueName>Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Registration Support Queue</controllingFieldValue>
+            <controllingFieldValue>Instructor Updates</controllingFieldValue>
+            <controllingFieldValue>Problem Records</controllingFieldValue>
+            <controllingFieldValue>On Hold</controllingFieldValue>
+            <controllingFieldValue>Digital Certificate Escalation</controllingFieldValue>
+            <controllingFieldValue>ARC Management Escalations</controllingFieldValue>
+            <controllingFieldValue>Pending Field Request</controllingFieldValue>
+            <controllingFieldValue>Current User</controllingFieldValue>
+            <controllingFieldValue>CCO Specialist</controllingFieldValue>
+            <controllingFieldValue>Certificate Support</controllingFieldValue>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <controllingFieldValue>RDC Queue</controllingFieldValue>
+            <controllingFieldValue>Instructor Support</controllingFieldValue>
+            <controllingFieldValue>Credit Card Payments</controllingFieldValue>
+            <controllingFieldValue>ARC Support Team</controllingFieldValue>
+            <controllingFieldValue>Outbound Group Queue</controllingFieldValue>
+            <controllingFieldValue>CST Queue</controllingFieldValue>
+            <valueName>See Notes</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

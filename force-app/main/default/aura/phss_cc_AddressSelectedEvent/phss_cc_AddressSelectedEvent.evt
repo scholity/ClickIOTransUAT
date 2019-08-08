@@ -1,0 +1,8 @@
+<!--
+ - Created by dgajwani on 11/12/18.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_AddressSelectedEvent">
+    <aura:attribute name="selectedAddressSfid" type="String" required="true"/>
+    <aura:attribute name="selectedAddressType" type="String" required="true"/>
+</aura:event>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_Billing_to_Shipping__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This checkbox will run a formula that copies all of the Billing Address information to the Shipping Address Fields.</description>
+    <externalId>false</externalId>
+    <label>Copy Billing to Shipping</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

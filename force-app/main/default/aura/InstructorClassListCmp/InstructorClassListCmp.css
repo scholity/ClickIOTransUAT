@@ -1,0 +1,99 @@
+.THIS {
+    position: relative;
+}
+
+.THIS .height {
+    height: 58px;
+}
+
+.THIS .btn-filter svg,
+.THIS .btn-menu svg{
+    fill: currentColor;
+}
+.THIS .btn-filter,
+.THIS .btn-menu{
+    line-height: 10px;
+}
+.THIS .btn-menu{
+    padding: 0.2rem;
+}
+.THIS .btn-filter{
+    padding: 0.45rem;
+}
+.THIS .btn-filter{
+    padding: 0.45rem;
+}
+.THIS .btn-filter svg{
+    width: 1.25rem;
+    height: 1.25rem;
+}
+.THIS .address-link a{
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.THIS .address-link a > *{
+    display: inline-block;
+}
+.THIS .address-link a > *:not(:last-child){
+    padding-right: 0.25rem;
+}
+.THIS .address-link a > *:not(:last-child):after{
+    content: ',';
+}
+.THIS .address-link a:hover{
+    text-decoration: unset;
+}
+.THIS .colDate {
+    width: 110px;
+}
+.THIS .colTime {
+    /*width: 140px;*/
+}
+.THIS .colDays {
+    width: 66px;
+}
+.THIS .colCompany {
+
+}
+.THIS .colLocation {
+    /*width: 260px;*/
+}
+.THIS .slds-button,
+.THIS .slds-tabs_default__item::after,
+.THIS .slds-tabs--default__item::after,
+.THIS .slds-table tr th,
+.THIS .slds-table tr td,
+.THIS a{
+    transition: 0.2s background-color, 0.2s color;
+}
+@media (min-width: 48.001em){
+
+    .THIS thead.slds-color__background_gray-4 th {
+        background-color: transparent;
+    }
+    .THIS table {
+        border-top: 1px solid #9e9da2;
+    }
+    .THIS .slds-table_bordered tbody tr:first-child td,
+    .THIS .slds-table_bordered tbody tr:first-child th,
+    .THIS .slds-table--bordered tbody tr:first-child td,
+    .THIS .slds-table--bordered tbody tr:first-child th {
+        border-top: unset;
+    }
+    .THIS .table-title{
+        max-width: calc(100% - 16px);
+    }
+    .THIS .slds-table thead th .btn-sort{
+        opacity: 0;
+        transition: 0.2s opacity;
+    }
+    .THIS .slds-table thead th:hover .btn-sort,
+    .THIS .slds-table thead th .sorting .btn-sort{
+        opacity: 1;
+    }
+    .THIS .btn-menu-container{
+        position: absolute;
+    }
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Contact Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Admin</fullName>
+                <default>false</default>
+                <label>Admin</label>
+            </value>
+            <value>
+                <fullName>Billing</fullName>
+                <default>false</default>
+                <label>Billing</label>
+            </value>
+            <value>
+                <fullName>Caregiver/Guardian</fullName>
+                <default>false</default>
+                <label>Caregiver/Guardian</label>
+            </value>
+            <value>
+                <fullName>Chapter representative</fullName>
+                <default>false</default>
+                <label>Chapter representative</label>
+            </value>
+            <value>
+                <fullName>Individual Learner</fullName>
+                <default>false</default>
+                <label>Individual Learner</label>
+            </value>
+            <value>
+                <fullName>Instructor</fullName>
+                <default>false</default>
+                <label>Instructor</label>
+            </value>
+            <value>
+                <fullName>Learning</fullName>
+                <default>false</default>
+                <label>Learning</label>
+            </value>
+            <value>
+                <fullName>Members</fullName>
+                <default>false</default>
+                <label>Members</label>
+            </value>
+            <value>
+                <fullName>NAT Student (Confirmed)</fullName>
+                <default>false</default>
+                <label>NAT Student (Confirmed)</label>
+            </value>
+            <value>
+                <fullName>NAT Student (Prospect)</fullName>
+                <default>false</default>
+                <label>NAT Student (Prospect)</label>
+            </value>
+            <value>
+                <fullName>PHSS Field personnel</fullName>
+                <default>false</default>
+                <label>PHSS Field personnel</label>
+            </value>
+            <value>
+                <fullName>RCS Billing</fullName>
+                <default>false</default>
+                <label>RCS Billing</label>
+            </value>
+            <value>
+                <fullName>RCS Shipping</fullName>
+                <default>false</default>
+                <label>RCS Shipping</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

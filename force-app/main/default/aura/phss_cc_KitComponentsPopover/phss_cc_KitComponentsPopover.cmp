@@ -1,0 +1,53 @@
+<aura:component >
+
+    <aura:attribute name="productName" type="String" default="Kit Components" />
+    <aura:attribute name="sku" type="String" default="" />
+    <aura:attribute name="components" type="List" default="[]" />
+    <aura:attribute name="showsHeader" type="Boolean" default="false" />
+
+    <aura:if isTrue="{! v.components.length > 0 }">
+        <div class="kitIcon">
+
+            <!--icon-->
+            <lightning:icon iconName="utility:all" size="small" alternativeText="Show Kit Components" title="Show Kit Components" />
+
+            <!--popover-->
+            <div class="{! 'slds-popover slds-nubbin_top-right ' + (v.showsHeader ? 'slds-popover_panel ' : '') }" role="dialog">
+
+                <!--header-->
+                <aura:if isTrue="{! v.showsHeader }">
+                    <div class="slds-popover__header">
+                        <div class="slds-media slds-media_center">
+                            <div class="slds-media__figure">
+                                <lightning:icon title="Kit Components" iconName="standard:all" size="medium" alternativeText="Kit Components" />
+                            </div>
+                            <div class="slds-media__body slds-text-align_left">
+                                {! v.sku }
+                                <h2 class="slds-text-heading_small">{! v.productName }</h2>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <!--component list-->
+                <div class="slds-popover__body">
+                    <div class="slds-popover__body-list">
+                        <aura:iteration items="{! v.components }" var="component">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_3-of-4 slds-item_label slds-text-color_weak slds-text-align_left" title="{! component.componentR.sfdcName }">
+                                    {! component.componentR.sfdcName }
+                                </div>
+                                <div class="slds-col slds-size_1-of-4 slds-item_detail slds-text-align_right" title="{! component.componentR.price }">
+                                    <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                               currencyDisplayAs="symbol" value="{! component.componentR.price }"/>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </aura:if>
+
+</aura:component>

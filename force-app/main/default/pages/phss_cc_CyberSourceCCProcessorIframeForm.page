@@ -1,0 +1,91 @@
+<!--
+ - Created by dgajwani on 9/14/18.
+ -->
+
+<apex:page id="phss_cc_CyberSourceCCProcessorIframeForm" applyHtmlTag="true" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" contentType="text/html">
+    <body>
+    <form method="POST" name="newCCForm" id="newCCForm" action="">
+        <input type="hidden" id="access_key" name="access_key"/>
+        <input type="hidden" id="profile_id" name="profile_id"/>
+        <input type="hidden" id="transaction_uuid" name="transaction_uuid"/>
+        <input type="hidden" id="signed_field_names" name="signed_field_names"/>
+        <input type="hidden" id="signature" name="signature"/>
+        <input type="hidden" id="unsigned_field_names" name="unsigned_field_names"/>
+        <input type="hidden" id="reference_number" name="reference_number"/>
+        <input type="hidden" id="transaction_type" name="transaction_type"/>
+        <input type="hidden" id="locale" name="locale"/>
+        <input type="hidden" id="amount" name="amount"/>
+        <input type="hidden" id="currency" name="currency"/>
+        <input type="hidden" id="signed_date_time" name="signed_date_time"/>
+        <input type="hidden" id="payment_method" name="payment_method"/>
+        <input type="hidden" id="ignore_avs" name="ignore_avs"/>
+        <input type="hidden" id="override_custom_receipt_page" name="override_custom_receipt_page"/>
+        <input type="hidden" id="merchant_defined_data1" name="merchant_defined_data1"/>
+        <input type="hidden" id="merchant_defined_data33" name="merchant_defined_data33"/>
+        <input type="hidden" id="merchant_defined_data38" name="merchant_defined_data38"/>
+        <input type="hidden" id="merchant_defined_data39" name="merchant_defined_data39"/>
+        <input type="hidden" id="merchant_defined_data40" name="merchant_defined_data40"/>
+
+        <!--From Lightning Input-->
+        <input type="hidden" id="bill_to_forename" name="bill_to_forename"/>
+        <input type="hidden" id="bill_to_surname" name="bill_to_surname"/>
+        <input type="hidden" id="bill_to_email" name="bill_to_email"/>
+        <input type="hidden" id="bill_to_phone" name="bill_to_phone"/>
+        <input type="hidden" id="card_type" name="card_type"/>
+        <input type="hidden" id="card_number" name="card_number"/>
+        <input type="hidden" id="card_expiry_date" name="card_expiry_date"/>
+        <input type="hidden" id="card_cvn" name="card_cvn"/>
+        <input type="hidden" id="bill_to_address_line1" name="bill_to_address_line1"/>
+        <input type="hidden" id="bill_to_address_city" name="bill_to_address_city"/>
+        <input type="hidden" id="bill_to_address_country" name="bill_to_address_country"/>
+        <input type="hidden" id="bill_to_address_state" name="bill_to_address_state"/>
+        <input type="hidden" id="bill_to_address_postal_code" name="bill_to_address_postal_code"/>
+    </form>
+    </body>
+    <script type="text/javascript">
+        window.addEventListener("message", receiveMessage, false);
+
+        function receiveMessage(event)
+        {
+            var map = event.data;
+            document.getElementById('access_key').value = map['access_key'];
+            document.getElementById('profile_id').value = map['profile_id'];
+            document.getElementById('transaction_uuid').value = map['transaction_uuid'];
+            document.getElementById('signed_field_names').value = map['signed_field_names'];
+            document.getElementById('signature').value = map['signature'];
+            document.getElementById('unsigned_field_names').value = map['unsigned_field_names'];
+            document.getElementById('reference_number').value = map['reference_number'];
+            document.getElementById('transaction_type').value = map['transaction_type'];
+            document.getElementById('locale').value = map['locale'];
+            document.getElementById('amount').value = map['amount'];
+            document.getElementById('currency').value = map['currency'];
+            document.getElementById('signed_date_time').value = map['signed_date_time'];
+            document.getElementById('payment_method').value = map['payment_method'];
+            document.getElementById('ignore_avs').value = map['ignore_avs'];
+            document.getElementById('override_custom_receipt_page').value = map['override_custom_receipt_page'];
+            document.getElementById('merchant_defined_data1').value = map['merchant_defined_data1'];
+            document.getElementById('merchant_defined_data33').value = map['merchant_defined_data33'];
+            document.getElementById('merchant_defined_data38').value = map['merchant_defined_data38'];
+            document.getElementById('merchant_defined_data39').value = map['merchant_defined_data39'];
+            document.getElementById('merchant_defined_data40').value = map['merchant_defined_data40'];
+            document.getElementById('bill_to_forename').value = map['bill_to_forename'];
+            document.getElementById('bill_to_surname').value = map['bill_to_surname'];
+            document.getElementById('bill_to_email').value = map['bill_to_email'];
+            document.getElementById('bill_to_phone').value = map['bill_to_phone'];
+            document.getElementById('card_type').value = map['card_type'];
+            document.getElementById('card_number').value = map['card_number'];
+            document.getElementById('card_expiry_date').value = map['card_expiry_date'];
+            document.getElementById('card_cvn').value = map['card_cvn'];
+            document.getElementById('bill_to_address_line1').value = map['bill_to_address_line1'];
+            document.getElementById('bill_to_address_city').value = map['bill_to_address_city'];
+            document.getElementById('bill_to_address_country').value = map['bill_to_address_country'];
+            document.getElementById('bill_to_address_state').value = map['bill_to_address_state'];
+            document.getElementById('bill_to_address_postal_code').value = map['bill_to_address_postal_code'];
+
+            document.getElementById('newCCForm').action = map['postURL'];
+            document.getElementById('newCCForm').submit();
+            
+            console.log('CyberSource iFrame submitted');
+        }
+    </script>
+</apex:page>

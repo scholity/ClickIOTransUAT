@@ -1,0 +1,29 @@
+.THIS #download.dlUpdate3 {
+    margin: 0 3% 25px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    float: left;
+    background-color: #F2F2F2;
+    text-align: left;
+}
+.THIS #download.dlUpdate4 {
+    margin: 40px 0 0 5px;
+    padding: 0;
+    float: left;
+    width: 28%;
+    background-color: #fff;
+    text-align: left;
+}
+.THIS #download.innerWhole {
+    margin: 0 0 25px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    float: left;
+    width: 90%;
+    background-color: #F2F2F2;
+    text-align: left;
+}

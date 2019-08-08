@@ -1,0 +1,27 @@
+.THIS .slds-modal__close{
+    width: 2rem;
+    height: 5rem;
+    border: none;
+    color: none;
+}
+
+.THIS .slds-icon-action-close{
+    background-color: #ed1b2e;
+}
+
+.THIS.slds-table {
+	table-layout: fixed !important; 
+}
+
+.THIS.slds-table td {
+    white-space: normal;
+    word-break: break-word;
+}
+
+
+.THIS .enrollBtn {
+    color: #fff;
+    background-color: #ed1b2e;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+}

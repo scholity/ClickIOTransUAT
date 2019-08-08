@@ -1,0 +1,47 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="VideoURL" type="String" description="URL for the Community" access="global" />
+    <aura:attribute name="VideoType" type="String" default="video/mp4" access="global" /> 
+    <aura:attribute name="VideoTitle" type="String" default="Video Title" access="global" /> 
+    <aura:attribute name="VideoDescription" type="String" default="Video Description" access="global" />     
+    <aura:attribute name="VideoSize" type="String" default="320" access="global" /> 
+    <aura:attribute name="VideoShowControls" type="Boolean" default="true" access="global" /> 
+    <aura:attribute name="VideoAutoStart" type="Boolean" default="false" access="global" /> 
+    
+    <aura:attribute name="MoreLabel" type="String" default="More"/>
+    <aura:attribute name="MoreURL" type="String" default=""/>
+    
+    <aura:attribute name="URLForImage" type="String" default="phss_program/PHSS_Program__c/00Bq0000000xnzS"/>
+    <aura:attribute name="image" type="String" default=""/>
+    <aura:attribute name="HideContent" type="String" default="video" access="global" />
+    
+    <div style="display:flex;width:98%;">
+        <div style="width:70%;">
+            <aura:if isTrue="{!v.HideContent == 'video'}">
+                <video preload="auto" width="{!v.VideoSize}" controls="{!v.VideoShowControls ? 'controls' : ''}" autoplay="{!v.VideoAutoStart ? 'autoplay' : ''}">
+                    <source src="{!v.VideoURL}" type="{!v.VideoType}">
+                        Your browser does not support HTML5 video.</source>
+                </video>
+                <aura:set attribute="else">
+                    <a href="{#v.URLForImage}">
+                    <!--<div class="menu-cpr menu lr">{#v.label1}</div>-->
+                    <div class="menu lr" style="{#'background: linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.3)), url(' + v.image + '); font-size: ' + v.fontSize1 + ';'}">
+                       
+                    </div>
+                    
+                </a>
+                </aura:set>
+            </aura:if>
+            
+        </div>
+        
+        <div style="width: 65%;display: block;text-align: justify;">
+            
+            <div>{!v.VideoTitle}</div><br/>
+            
+            {!v.VideoDescription}<br/>
+            
+            <a href="{#v.MoreURL}" style="float:right;margin-top:7px;">{!v.MoreLabel}</a>
+        </div>
+    </div>
+    
+</aura:component>

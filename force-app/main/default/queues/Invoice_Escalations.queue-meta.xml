@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>Invoice Escalations</name>
+    <queueMembers>
+        <users>
+            <user>angela.gerstein@redcross.org</user>
+            <user>corey.burke2@redcross.org</user>
+            <user>jane.mcinerney@redcross.org</user>
+            <user>james.parker@redcross.org</user>
+            <user>john.thompson@redcross.org</user>
+            <user>joseph.kensil@redcross.org</user>
+            <user>kara.desmarais@redcross.org</user>
+            <user>martin.mullins@redcross.org</user>
+            <user>stephen.lynch@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

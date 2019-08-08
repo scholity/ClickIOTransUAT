@@ -1,0 +1,15 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+  
+    <aura:attribute name="title"
+        type="String"
+        default=""
+        access="global"
+    />
+    
+    <h1 class='VAB-title'>{!v.title}</h1>
+    
+	<p class='VAB-copy'>
+        Our virtual agent is learning how to automatically answer student questions. 
+        Please help improve it, by clicking on the button below, entering a question as if you were a student or new customer, then review the response.
+    </p>
+</aura:component>

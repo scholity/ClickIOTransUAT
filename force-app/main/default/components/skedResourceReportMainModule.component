@@ -1,0 +1,200 @@
+<apex:component >
+    <script>
+    (function(window, angular, moment, _) {
+        var mod = angular.module('main', []);
+        
+        mod.controller('MainCtrl', ['$q', '$scope', '$timeout', '$window', 'exportExcelSvc', function($q, $scope, $timeout, $window, exportExcelSvc) {
+            var groupReportDataBy = function (reportData, groupByField) {
+                var groupedDataObj, groupedDataArr = [];
+                groupedDataObj = _.groupBy(reportData || [], groupByField);
+
+                angular.forEach(groupedDataObj, function (groupedArr, keyName) {
+                    groupedDataArr.push({
+                        name: (keyName === 'undefined')?'N/A':keyName,
+                        type: 'group',
+                        items: groupedArr
+                    });
+                });
+
+                return groupedDataArr;
+            }
+
+            var processReportData = function (originReportData) {
+                var reportData = [], groupedData;
+
+                var processGroupData = function (groupData, groupByFieldIndex, groupByFields) {
+                    var processedData;
+                    if (groupByFieldIndex < groupByFields.length) {
+                        processedData = groupReportDataBy(groupData, groupByFields[groupByFieldIndex].field);
+                        angular.forEach(processedData, function (group) {
+                            group.items = processGroupData(group.items, groupByFieldIndex + 1, groupByFields);
+                        });
+                    } else {
+                        processedData = groupData;
+                    }
+
+                    return processedData;
+                };
+
+                if (angular.isArray($scope.state.groupBy) && $scope.state.groupBy.length > 0) {
+                    reportData = processGroupData(originReportData, 0, _.sortBy($scope.state.groupBy, 'order'))
+                } else {
+                    reportData = originReportData;
+                }
+
+                console.log(reportData);
+
+                return reportData;
+            };
+            
+            var sortGroups = function(groups) {
+                groups.sort(function(groupA, groupAB) {
+                    if (groupA.name === 'N/A') {
+                    	return 1;
+                    }
+                    return groupA.name < groupAB.name ? -1 : 1;
+                });
+                angular.forEach(groups, function (group) {
+                    if (group.items && group.items.length > 1) {
+                        sortGroups(group.items);
+                    }
+                });
+            }
+
+            $scope.DEFAULT_PHOTO_URL = "{!URLFOR($Resource.sked_ARC_Vendors, '/slds/images/avatar1.jpg')}";
+
+            $scope.contentLoading = false;
+            
+            $scope.dateFormat = {
+                display: 'MM/DD/YYYY',
+                value: 'YYYY-MM-DD'
+            };
+            
+            $scope.data = {
+                activityTypeOptions: [],
+                availabilityTypeOptions: [],
+                employmentTypeOptions: [],
+                jobTypeOptions: [],
+                jobStatusOptions: [],
+                regionOptions: [],
+                supervisorOptions: [],
+                groupByOptions: []
+            }
+            
+            $scope.state = {
+                startDate: new Date(),
+                endDate: new Date(),
+                activityTypes: [],
+                availabilityTypes: [],
+                employmentTypes: [],
+                jobTypes: [],
+                jobStatuses: [],
+                regions: [],
+                selectedSupervisor: { id: null, label: '--None--' },
+                groupBy: [],
+                reportData: []
+            }
+            
+            $scope.$watch('state.startDate', function (newDate) {
+                console.log(newDate);
+            });
+            
+            $scope.runReport = function() {
+                var criteria = {};
+                criteria.startDateStr = moment($scope.state.startDate).format($scope.dateFormat.value);
+                criteria.endDateStr = moment($scope.state.endDate).format($scope.dateFormat.value);
+                
+                criteria.activityTypes = [];
+                angular.forEach($scope.state.activityTypes, function(item) {
+                	criteria.activityTypes.push(item.id);
+                });
+                
+                criteria.availabilityTypes = [];
+                angular.forEach($scope.state.availabilityTypes, function(item) {
+                    criteria.availabilityTypes.push(item.id);
+                });
+                
+                criteria.employmentTypes = [];
+                angular.forEach($scope.state.employmentTypes, function(item) {
+                	criteria.employmentTypes.push(item.id);
+                });
+                
+                criteria.jobTypes = [];
+                angular.forEach($scope.state.jobTypes, function(item) {
+                	criteria.jobTypes.push(item.id);
+                });
+                
+                criteria.jobStatuses = [];
+                angular.forEach($scope.state.jobStatuses, function(item) {
+                	criteria.jobStatuses.push(item.id);
+                });
+                
+                criteria.regionIds = [];
+                angular.forEach($scope.state.regions, function(item) {
+                	criteria.regionIds.push(item.id);
+                });
+                
+                criteria.supervisorIds = [];
+                if ($scope.state.selectedSupervisor !== null && $scope.state.selectedSupervisor.id !== null) {
+                    criteria.supervisorIds.push($scope.state.selectedSupervisor.id);
+                }
+                
+                $scope.contentLoading = true;
+            	API.runReport(criteria, function (response) {
+                    $timeout(function() {
+                        $scope.state.originalReportData = response.data;
+                        $scope.state.reportData = processReportData(response.data);
+                        $scope.reportData = $scope.state.reportData;
+                        sortGroups($scope.reportData);
+                    
+                        $scope.contentLoading = false;
+                    }, 100)
+                });
+            }
+            
+            $scope.exportToExcel = function() {
+                return $q.when() //Get Export Data
+                .then(function(exportData){
+                    var workbook = exportExcelSvc.buildExcelWorkbook($scope.reportData); //build workbook
+
+                    //save file
+                    var path = 'Resource Activities Report_' + moment().format('MM-DD-YYYY-hh-mm-A') + '.xlsx';
+                    var mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                    return workbook.xlsx.writeBuffer()
+                    .then(function(data) {
+                        var blob = new Blob([data], { type : mimeType });
+                        saveAs(blob, path);
+                    });
+                })
+            }
+            
+            API.getConfigData(function (response) {
+                $timeout(function() {
+                    $scope.data.activityTypeOptions = response.data.activityTypeOptions;
+                    $scope.data.availabilityTypeOptions = response.data.availabilityTypeOptions;
+                    $scope.data.employmentTypeOptions = response.data.employmentTypeOptions;
+                    $scope.data.jobTypeOptions = response.data.jobTypeOptions;
+                    $scope.data.jobStatusOptions = response.data.jobStatusOptions;
+                    $scope.data.regionOptions = response.data.regionOptions;
+                    $scope.data.supervisorOptions = response.data.supervisorOptions;
+                    $scope.data.supervisorOptions.unshift({id:null,label:'--None--'});
+                    
+                    $scope.data.groupByOptions = [];
+                    $scope.data.groupByOptions.push({id:'region',label:'Region', field: 'regionName', order: 1});
+                    $scope.data.groupByOptions.push({id:'supervisor',label:'Supervisor', field: 'supervisorName', order: 2});
+                    
+                    $scope.state.activityTypes = angular.extend([], $scope.data.activityTypeOptions);
+                    $scope.state.availabilityTypes = angular.extend([], $scope.data.availabilityTypeOptions);
+                    $scope.state.employmentTypes = angular.extend([], $scope.data.employmentTypeOptions);
+                    $scope.state.jobTypes = angular.extend([], $scope.data.jobTypeOptions);
+                    $scope.state.jobStatuses = angular.extend([], $scope.data.jobStatusOptions);
+                    $scope.state.regions = angular.extend([], $scope.data.regionOptions);
+                    $scope.state.groupBy = [];
+                    $scope.state.selectedSupervisor = $scope.data.supervisorOptions[0];
+                }, 100)
+            })
+        }])
+        
+    })(window, angular, moment, _);
+    </script>
+</apex:component>

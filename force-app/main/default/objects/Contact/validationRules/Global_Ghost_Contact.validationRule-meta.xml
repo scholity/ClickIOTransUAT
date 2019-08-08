@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Global_Ghost_Contact</fullName>
+    <active>true</active>
+    <description>Users can not update information on Contact record 003d000001giA46 unless Validation Rule Custom settings is enabled.</description>
+    <errorConditionFormula>AND( 
+Id = &quot;003d000001giA46&quot;, 
+$Setup.Validation_Rules__c.Bypass_Rules__c = False, 
+OR( 
+ISCHANGED(Email), 
+ISCHANGED(Phone), 
+ISCHANGED(MobilePhone), 
+ISCHANGED(Extension__c), 
+ISCHANGED(OtherPhone), 
+ISCHANGED(FirstName), 
+ISCHANGED(LastName), 
+ISCHANGED(MailingCity), 
+ISCHANGED(MailingCountry), 
+ISCHANGED( MailingState ), 
+ISCHANGED( MailingStreet ), 
+ISCHANGED( MailingPostalCode ), 
+ISCHANGED( OtherCity ), 
+ISCHANGED( OtherCountry ), 
+ISCHANGED( OtherState ), 
+ISCHANGED( OtherStreet ), 
+ISCHANGED( OtherPostalCode ), 
+ISCHANGED(Description)))</errorConditionFormula>
+    <errorMessage>You are not allowed to edit this contact, because it is part of the Ghost Call Contact automation process. Please contact your Salesforce administrator if you have any questions.</errorMessage>
+</ValidationRule>

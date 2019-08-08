@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Current_Account</fullName>
+    <active>false</active>
+    <description>When the Third Sub Type is &quot;Wrong Account&quot; you must provide further information; Current Account</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL( Type_of_Price_Dispute__c, &#39;Wrong Account&#39;),
+        ISPICKVAL( Dispute_Issue__c, &#39;Refund Credit Balance&#39;)
+    ),
+    (RecordTypeId &lt;&gt; &quot;012d000000097TB&quot;),
+    (RecordTypeId &lt;&gt; &quot;012d000000097TC&quot;),
+    ( $Setup.ETL_Configuration__c.Is_ETL_User__c = FALSE ),
+    ISBLANK( GP_Current_Account__c),
+    $Setup.Validation_Rules__c.Bypass_Rules__c = FALSE
+)</errorConditionFormula>
+    <errorDisplayField>GP_Current_Account__c</errorDisplayField>
+    <errorMessage>When the Third Sub Type is &quot;Wrong Account&quot; or when Invoice Case Sub Type is &quot;Refund Credit Balance&quot; you must provide the Current Account</errorMessage>
+</ValidationRule>

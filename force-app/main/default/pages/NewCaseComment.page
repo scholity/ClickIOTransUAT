@@ -1,0 +1,110 @@
+<apex:page standardController="Case" extensions="CaseCommentController">
+
+
+      <apex:sectionHeader title="Comments - Case Number {!Case.CaseNumber}"/>
+    
+      <apex:form >
+        
+        <apex:messages style="color: red; font-weight: bold;" />
+        
+      <apex:pageBlock title="Case Comment Edit">
+          
+
+       <apex:pageblockButtons >
+              <apex:commandButton value="Save Comment" action="{!saveComment}" />
+              <apex:commandButton value="Cancel" action="{!cancel}"/>
+         </apex:pageblockButtons>
+
+              
+          <apex:pageBlockSection title="Case Details" columns="1" collapsible="false">
+              
+              <apex:outputField value="{!Case.Subject}" label="Subject"/>
+              <apex:outputField value="{!Case.Description}" label="Description"/>
+              <apex:inputField value="{!Case.OwnerId}" label="Case Owner"/>
+             <apex:inputField value="{!Case.Status}" label="Status"/>
+              
+          </apex:pageBlockSection>
+          
+          <apex:pageBlockSection title="Case Comment Template" collapsible="false" columns="1">
+                   
+                
+                <apex:pageblockSectionItem >
+                         
+                         
+                         <apex:outputLabel ><b>Case Comment Template Category</b></apex:outputLabel>
+                
+                        <apex:selectList id="commentTemplateCategory" value="{!caseCommentModel.selectedCommentTemplateCategory}" size="1">
+                          
+                          <apex:selectOptions value="{!caseCommentModel.commentTemplateCategory}"/>
+                          
+                          <apex:actionSupport action="{!selectTemplatesForCategory}" rerender="out" event="onchange"/>
+                          
+                     </apex:selectList>
+                 
+                </apex:pageblockSectionItem>
+            
+                
+                 
+                 
+                        
+                        <apex:pageBlockSectionItem >
+                                
+                                <apex:outputLabel >Case Comment Template</apex:outputLabel>
+                             <apex:outputPanel id="out">
+                                <apex:selectList id="templateSelection" value="{!caseCommentModel.selectedTemplate}" size="1">
+                                      <apex:selectOptions value="{!caseCommentModel.templates}"/>
+                                 </apex:selectList> 
+                                 <apex:commandButton value="Insert Template" action="{!insertCommentTemplate}" rerender="commentBodyOutputPanel"/>
+                        
+                    </apex:outputPanel>                       
+                                 
+                        </apex:pageBlockSectionItem>
+
+                                      
+                    
+
+                       
+                    
+          </apex:pageBlockSection>
+          
+          <apex:pageBlockSection title="Comment Details" columns="1" collapsible="false">
+                  
+                        <apex:pageblockSectionItem >
+                            
+                                <apex:outputLabel >Public</apex:outputLabel>
+                                <apex:inputField value="{!caseCommentModel.caseCommentSobj.isPublished}"/>
+                                                    
+                        </apex:pageblockSectionItem>
+
+                            
+                            <apex:pageblocksectionItem >
+                                   
+                                   <apex:outputLabel >Comment</apex:outputLabel>
+                                    
+                                    <apex:outputPanel id="commentBodyOutputPanel"> 
+                          
+                          
+                                        <apex:inputTextarea label="Case Comment" value="{!caseCommentModel.caseCommentSobj.CommentBody}" rows="10" cols="60" required="false" />                      
+                              </apex:outputPanel>
+                            
+                            </apex:pageblocksectionItem>
+                      
+                                           
+
+
+                  
+        
+          </apex:pageBlockSection>
+
+    
+      </apex:pageBlock>
+      
+                       </apex:form> 
+  
+              
+                      
+  <!--
+  <apex:relatedList list="CaseComment"/>
+  -->
+
+</apex:page>

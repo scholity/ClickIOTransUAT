@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Approver</fullName>
+    <active>false</active>
+    <description>The Approver field is required when the Business Approval field is populated</description>
+    <errorConditionFormula>AND( 
+NOT( ISBLANK( TEXT( BOS_Approval__c )) ), 
+ISBLANK(   Approver__c ) 
+)</errorConditionFormula>
+    <errorDisplayField>Approver__c</errorDisplayField>
+    <errorMessage>Please provide the Approver</errorMessage>
+</ValidationRule>

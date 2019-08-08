@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Status_Invoicing_Privileges_Appr</fullName>
+    <active>false</active>
+    <description>This VR defines that only specific users are able to switch values on Payment Status field. The group of users is defined in AR Exception Group.</description>
+    <errorConditionFormula>AND( 
+AND( 
+ISCHANGED(Payment_Status__c), 
+OR( 
+ISPICKVAL(Payment_Status__c, &quot;Cancelled&quot;), 
+ISPICKVAL(Payment_Status__c, &quot;Denied&quot;), 
+ISPICKVAL(Payment_Status__c, &quot;Granted&quot;), 
+ISPICKVAL(Payment_Status__c, &quot;Pending&quot;), 
+ISPICKVAL(Payment_Status__c, &quot;Suspended&quot;), 
+ISPICKVAL(Payment_Status__c, &quot;Terminated&quot;))), 
+
+
+AND( 
+$User.Id != &quot;005d0000001VstM&quot;, /*Rose Albert*/
+$User.Id != &quot;005d0000000TvrN&quot;, /*Timothy Archuleta*/
+$User.Id != &quot;005d0000001Vmik&quot;, /*Wendy Firdman*/
+$User.Id != &quot;005d0000000Tvsu&quot;, /*LaJuanya Jones*/
+$User.Id != &quot;005d0000000Tvri&quot;, /*Neil Lokuge*/
+$User.Id != &quot;005d0000000TvQL&quot;, /*Marty Mullins*/
+$User.Id != &quot;005d0000001WLvx&quot;, /*Jane McInerney*/
+$User.Id != &quot;005d0000001VFkj&quot;, /*Joy Zukauskas*/
+$User.Id != &quot;005d0000001VdIm&quot;, /*Loretta Stahl*/
+$User.Id != &quot;005d0000001XNW9&quot;, /*Ivo Dimov*/
+$User.Id != &quot;005d00000040uDS&quot;, /*Gita Borovsky*/
+$User.ProfileId != &quot;00eJ0000000Hyse&quot;, /*ARC SCC Profile*/ 
+$User.Id != &quot;005d0000000Tvs4&quot;,/*Mickey Mason*/
+$User.Id != &quot;005d0000001Wyup&quot;, /*Kara Desmaris*/   
+$User.Id != &quot;005d0000000TvsF&quot;, /*Shawn Barker*/ 
+$User.Id != &quot;005d0000001VDfh&quot;, /*Michael Johnson*/
+$User.Id != &quot;005d0000001YGCa&quot;, /*Maggie Pauls*/
+$User.Id != &quot;005d0000001YGDE&quot;, /*Monisha Slater*/
+$User.Id != &quot;005d0000001VtMi&quot;, /*Mufalo Chitam*/
+$User.Id != &quot;005d0000000Tuyj&quot;, /*Diane DeAnda*/
+$User.Id != &quot;005d0000000Tzft&quot;, /*Juliet M. Panganiban */
+$User.Id != &quot;005d0000001YBPi&quot;, /*Melissa Stratman*/
+$User.Id != &quot;005d0000000Tvtl&quot;, /*Linda Thelen*/
+$User.Id != &quot;005d0000000TvtP&quot;, /*Denice Douglas*/
+$User.Id != &quot;005d0000001VhXb&quot;, /*Martha Terry*/
+$User.Id != &quot;005d0000001Vxz1&quot;, /*Amy Alison*/
+$User.Id != &quot;005d0000000TwiG&quot;, /*Deborah Judy*/
+$User.Id != &quot;005d0000001Vp4A&quot;, /*DéBorah Ashley*/
+$User.Id != &quot;005d0000001Wyym&quot;, /*Beth McLeod*/
+$User.Id != &quot;005d0000001VeCL&quot;, /*Maeella Smith*/
+$User.Id != &quot;005d0000000TvuL&quot;, /*Monica Heller*/
+$User.Id != &quot;005d0000001VeCG&quot;, /*Heather True */
+$User.Id != &quot;005d0000000TuyJ&quot;, /*Heather Weller*/
+$User.Id != &quot;005d0000001Vx87&quot;, /*Rita Vienazindis*/
+$User.Id != &quot;005d0000005I9dx&quot; /*Mike A Smith*/
+), 
+
+$Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>Payment_Status__c</errorDisplayField>
+    <errorMessage>You do not have permission to make this change. Please contact your Business Operations Manager for assistance.</errorMessage>
+</ValidationRule>

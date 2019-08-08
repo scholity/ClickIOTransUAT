@@ -1,0 +1,4 @@
+<!-- c:CloseClassButton -->
+<aura:event type="APPLICATION" description="AppEvent to be fired from managed package">
+    <aura:attribute name="name" type="String"/>
+</aura:event>

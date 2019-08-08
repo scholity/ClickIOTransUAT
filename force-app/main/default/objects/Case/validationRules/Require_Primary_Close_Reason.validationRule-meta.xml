@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Primary_Close_Reason</fullName>
+    <active>true</active>
+    <description>The Primary Close Reason picklist field is required when Status is Closed - Invoicing</description>
+    <errorConditionFormula>AND( 
+ISPICKVAL(  Status , &#39;Closed - Invoicing&#39;), 
+ISBLANK( TEXT( Primary_Close_Reason__c  )) 
+)</errorConditionFormula>
+    <errorDisplayField>Primary_Close_Reason__c</errorDisplayField>
+    <errorMessage>Please provide a Primary Close Reason</errorMessage>
+</ValidationRule>

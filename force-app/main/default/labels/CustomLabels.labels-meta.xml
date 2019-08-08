@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Account</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account</shortDescription>
+        <value>Account</value>
+    </labels>
+    <labels>
+        <fullName>Account_Name</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account_Name</shortDescription>
+        <value>Account Name</value>
+    </labels>
+    <labels>
+        <fullName>Billing_City</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing_City</shortDescription>
+        <value>Billing City</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Postal_Code</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing_Postal_Code</shortDescription>
+        <value>Billing Postal code</value>
+    </labels>
+    <labels>
+        <fullName>Billing_State</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing_State</shortDescription>
+        <value>Billing State</value>
+    </labels>
+    <labels>
+        <fullName>Billing_Street</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Billing_Street</shortDescription>
+        <value>Billing Street</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Cancelled</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancelled</shortDescription>
+        <value>Cancelled</value>
+    </labels>
+    <labels>
+        <fullName>Cart_Button_UpdateCart</fullName>
+        <categories>Cart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The text for the UpdateCart button.</shortDescription>
+        <value>Update Cart</value>
+    </labels>
+    <labels>
+        <fullName>Cart_OnLoad_Message_NoCartFound</fullName>
+        <categories>Cart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The message to show when no active carts are found for the opportunity.</shortDescription>
+        <value>No active carts found.</value>
+    </labels>
+    <labels>
+        <fullName>Cart_Table_Header</fullName>
+        <categories>Cart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The table header for the cart data table.</shortDescription>
+        <value>Cart Summary:</value>
+    </labels>
+    <labels>
+        <fullName>Cart_Table_Header_Value_Type</fullName>
+        <categories>Cart</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The value type of the cart data.</shortDescription>
+        <value>items.</value>
+    </labels>
+    <labels>
+        <fullName>CaseInsertUpdateEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CaseInsertUpdateEmail</shortDescription>
+        <value>jane.mcinerney@redcross.org; kara.desmarais@redcross.org; jacqueline.raikevitch@redcross.org; Thomas.White@redcross.org;gita.borovsky@redcross.org; mike.smith2@redcross.org; brenda.kraus@redcross.org; nyle.grimes@redcross.org</value>
+    </labels>
+    <labels>
+        <fullName>ClaimedVoucherTypes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClaimedVoucherTypes</shortDescription>
+        <value>Temp Hold;Reserved;Claimed</value>
+    </labels>
+    <labels>
+        <fullName>Class</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Class</shortDescription>
+        <value>Class</value>
+    </labels>
+    <labels>
+        <fullName>Class_History</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Class_History</shortDescription>
+        <value>Class History</value>
+    </labels>
+    <labels>
+        <fullName>Class_Setting</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Class_Setting</shortDescription>
+        <value>Class Setting</value>
+    </labels>
+    <labels>
+        <fullName>Class_Settings</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Class_Settings</shortDescription>
+        <value>Class Settings</value>
+    </labels>
+    <labels>
+        <fullName>Classroom_Schedule_and_Location</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Classroom_Schedule_and_Location</shortDescription>
+        <value>Classroom Schedule and Location</value>
+    </labels>
+    <labels>
+        <fullName>CommunityClassSearch_Button_AddToCart</fullName>
+        <categories>Community Class Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The text for the AddToCart button.</shortDescription>
+        <value>Add to Cart</value>
+    </labels>
+    <labels>
+        <fullName>CommunityClassSearch_Button_Search</fullName>
+        <categories>Community Class Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The text for the Search button.</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>Company</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Company</shortDescription>
+        <value>Company</value>
+    </labels>
+    <labels>
+        <fullName>Complete</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Complete</shortDescription>
+        <value>Complete</value>
+    </labels>
+    <labels>
+        <fullName>Completed</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Completed</shortDescription>
+        <value>Completed</value>
+    </labels>
+    <labels>
+        <fullName>Course</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Course</shortDescription>
+        <value>Course</value>
+    </labels>
+    <labels>
+        <fullName>Course_Record_Entry</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Course_Record_Entry</shortDescription>
+        <value>Course Record Entry</value>
+    </labels>
+    <labels>
+        <fullName>Current_Classes</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Current_Classes</shortDescription>
+        <value>Current Classes</value>
+    </labels>
+    <labels>
+        <fullName>Day</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Day</shortDescription>
+        <value>Day</value>
+    </labels>
+    <labels>
+        <fullName>Days</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Days</shortDescription>
+        <value>Days</value>
+    </labels>
+    <labels>
+        <fullName>DefaultMOMApprover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DefaultMOMApprover</shortDescription>
+        <value>Donna Palmieri</value>
+    </labels>
+    <labels>
+        <fullName>Details</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Details</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>Direct_Assignment_To_Bucket_Account_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Direct Assignment To Bucket Account Error</shortDescription>
+        <value>You cannot directly assign a contact to a specific bucket account. Please contact your administrator.</value>
+    </labels>
+    <labels>
+        <fullName>Global_Ghost_Contacts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Global Ghost Contacts</shortDescription>
+        <value>003d000001giA46AAE</value>
+    </labels>
+    <labels>
+        <fullName>In_Progress</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>In_Progress</shortDescription>
+        <value>In Progress</value>
+    </labels>
+    <labels>
+        <fullName>Instructors</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Instructors</shortDescription>
+        <value>Instructor(s)</value>
+    </labels>
+    <labels>
+        <fullName>Language</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Language</shortDescription>
+        <value>Language</value>
+    </labels>
+    <labels>
+        <fullName>Learner_Community_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Learner Community URL</shortDescription>
+        <value>https://transuat-americanredcross.cs26.force.com/learner</value>
+    </labels>
+    <labels>
+        <fullName>Loading</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Loading</shortDescription>
+        <value>Loading</value>
+    </labels>
+    <labels>
+        <fullName>Location</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Location</shortDescription>
+        <value>Location</value>
+    </labels>
+    <labels>
+        <fullName>Map_and_Directions</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Map_and_Directions</shortDescription>
+        <value>Map and Directions</value>
+    </labels>
+    <labels>
+        <fullName>Name</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Name</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>New_Account</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New_Account</shortDescription>
+        <value>New Account</value>
+    </labels>
+    <labels>
+        <fullName>Next</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>No</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>No_Bucket_Account_Setings_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_Bucket_Account_Setings_Validation</shortDescription>
+        <value>Please contact your administrator. Settings for business to consumer contacts need to be defined in Salesforce.</value>
+    </labels>
+    <labels>
+        <fullName>No_Classes</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>No_Classes</shortDescription>
+        <value>No Classes</value>
+    </labels>
+    <labels>
+        <fullName>No_Permissions_To_View_Class</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>You do not have permissions to view this class.</shortDescription>
+        <value>You do not have permissions to view this class.</value>
+    </labels>
+    <labels>
+        <fullName>No_matching_results</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_matching_results</shortDescription>
+        <value>No matching results</value>
+    </labels>
+    <labels>
+        <fullName>Not_Started</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Not_Started</shortDescription>
+        <value>Not Started</value>
+    </labels>
+    <labels>
+        <fullName>Number_Of_Students</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Number_Of_Students</shortDescription>
+        <value>Number of Students</value>
+    </labels>
+    <labels>
+        <fullName>Online_Completion</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online_Completion</shortDescription>
+        <value>Online Completion</value>
+    </labels>
+    <labels>
+        <fullName>Online_Work</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Online_Work</shortDescription>
+        <value>Online Work</value>
+    </labels>
+    <labels>
+        <fullName>Organization</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Organization</shortDescription>
+        <value>Organization</value>
+    </labels>
+    <labels>
+        <fullName>Owner</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Owner</shortDescription>
+        <value>Owner</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_EmailInstructions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS_EmailInstructions</shortDescription>
+        <value>&lt;html&gt;
+Send an email to each Learner with a self-registration Voucher URL. Include the following information:&lt;br/&gt;&lt;br/&gt;
+&lt;ul&gt;
+&lt;li&gt;* Name of Student&lt;/li&gt;
+&lt;li&gt;* Course Name&lt;/li&gt;
+&lt;li&gt;* Course Location&lt;/li&gt;
+&lt;li&gt;* Instructor Name&lt;/li&gt;
+&lt;li&gt;* Course Time&lt;/li&gt;
+&lt;li&gt;* Copy the URL from the Voucher List and cut and paste  into the email body&lt;/li&gt;  
+&lt;/ul&gt;
+&lt;/html&gt;</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_EmailInstructionsTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS_EmailInstructionsTitle</shortDescription>
+        <value>Instructions (email template) on sending vouchers to learners</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_IC_Community_URL_Content_Document_Servlet</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS IC Community URL Content Document Servlet</shortDescription>
+        <value>/sfc/servlet.shepherd/document/download/</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_IC_Community_URL_Content_Version_Servlet</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS IC Community URL Content Version Servlet</shortDescription>
+        <value>/sfc/servlet.shepherd/version/download/</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_IC_Community_URL_Domain</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS IC Community URL Domain</shortDescription>
+        <value>https://transuat-americanredcross.cs26.force.com/learner</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_InMaintenance_Message_Part_1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS In Maintenance Message 1</shortDescription>
+        <value>Thank you for visiting the American Red Cross Instructor&#39;s Corner. We are currently in the process of updating the site.</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_InMaintenance_Message_Part_2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS In Maintenance Message 2</shortDescription>
+        <value>The site will remain down for approximately one hour as we make these content changes. Thank you for your patience.</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_LoginContent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS_LoginContent</shortDescription>
+        <value>&lt;html&gt;
+&lt;b&gt;If you have received a voucher to take an online course, select the Claim Voucher button in order to enter your voucher number and gain access to the Learner&#39;s Community.&lt;br/&gt;&lt;br&gt;
+&lt;u&gt;&lt;a href=&quot;{0}&quot;&gt;Red Cross Employees (whose primary role is not as an instructor), click here to login&lt;/a&gt;&lt;/b&gt;&lt;/u&gt;&lt;br/&gt;&lt;br/&gt;
+The Community is supported by Apple® Safari® 10.x on Mac OS, Microsoft® Edge for Windows® 10, Mozilla® Firefox® and Google Chrome™.&lt;br/&gt;&lt;br/&gt;
+&lt;b&gt;&lt;a href=&quot;{1}&quot;&gt;Forgot your password? Click here.&lt;/a&gt;&lt;/b&gt;&lt;br/&gt;&lt;br/&gt;
+&lt;b&gt;Forgot your username?&lt;/b&gt; Try your email address. If this does not work, click on &lt;b&gt;&lt;a href=&quot;{2}&quot;&gt;Learning Center&lt;/a&gt;&lt;/b&gt; and then click on &quot;Forgot Username&quot;. Enter your email address and you will receive an email with your username. If you receive an error message that your email address does not exist in the system, please call the Training Support Center at 1-800-Red Cross and select the option for Training and Certification.
+&lt;/html&gt;</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_RBCUnsuccessMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS_RBCUnsuccessMsg</shortDescription>
+        <value>Contact Red Cross for Assistance</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_VoucherInstructions</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS_VoucherInstructions</shortDescription>
+        <value>&lt;html&gt;
+Please navigate to the Class I&#39;m Teaching and Select the Class to view the Voucher List &lt;br/&gt;&lt;br/&gt;
+To view and distribute vouchers please navigate to your class in the Classes I&#39;m Teaching page, select the class, and click on the Student Vouchers tab to display the voucher list.  &lt;br/&gt;
+Select a voucher(s) with a status of &#39;Issued&#39;. Copy and paste the self-registration URL to the student&#39;s email.
+&lt;/html&gt;</value>
+    </labels>
+    <labels>
+        <fullName>PHSS_VoucherInstructionsTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PHSS_VoucherInstructionsTitle</shortDescription>
+        <value>Instruction on where to see vouchers</value>
+    </labels>
+    <labels>
+        <fullName>Page</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page</shortDescription>
+        <value>Page</value>
+    </labels>
+    <labels>
+        <fullName>Parent_Account</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Parent_Account</shortDescription>
+        <value>Parent Account</value>
+    </labels>
+    <labels>
+        <fullName>Phone_Number</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Phone_Number</shortDescription>
+        <value>Phone Number</value>
+    </labels>
+    <labels>
+        <fullName>Previous</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_DiscountPercentage</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Discount Percentage column label text.</shortDescription>
+        <value>%</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_DiscountPrice</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Discount Price column label text.</shortDescription>
+        <value>Discount</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_ExtendedPrice</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Extended Price column label text.</shortDescription>
+        <value>Extended Price</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_ListPrice</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The List Price column label text.</shortDescription>
+        <value>List Price</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_Name</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Name column label text.</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_Price</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Price column label text.</shortDescription>
+        <value>Price</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_Quantity</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Quantity column label text.</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_SKU</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The SKU column label text.</shortDescription>
+        <value>Product SKU</value>
+    </labels>
+    <labels>
+        <fullName>ProductDetail_Column_UOM</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The UOM column label text.</shortDescription>
+        <value>UOM</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Button_AddToCart</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The text for the AddToCart button.</shortDescription>
+        <value>Add to Cart</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Column_Name</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Name column label text.</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Column_Price</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Price column label text.</shortDescription>
+        <value>Price</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Column_Quantity</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The Quantity column label text.</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Column_SKU</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The SKU column label text.</shortDescription>
+        <value>Product SKU</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Column_UOM</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The UOM column label text.</shortDescription>
+        <value>UOM</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_OnLoad_Message</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The message to show when a search has not been performed.</shortDescription>
+        <value>Perform a search to load products.</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Table_Header</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The table header for the product search - results table.</shortDescription>
+        <value>Search Results:</value>
+    </labels>
+    <labels>
+        <fullName>ProductSearch_Table_Header_Value_Type</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The value type of the product search results.</shortDescription>
+        <value>products.</value>
+    </labels>
+    <labels>
+        <fullName>Product_Search_Header</fullName>
+        <categories>Product Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>The header text for the product search.</shortDescription>
+        <value>Product Search</value>
+    </labels>
+    <labels>
+        <fullName>Reported</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Reported</shortDescription>
+        <value>Reported</value>
+    </labels>
+    <labels>
+        <fullName>Request_Blended_Classes</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Request_Blended_Classes</shortDescription>
+        <value>Request Blended Classes</value>
+    </labels>
+    <labels>
+        <fullName>Reset_Search</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reset_Search</shortDescription>
+        <value>Reset Search</value>
+    </labels>
+    <labels>
+        <fullName>SBSkedToILTClassAllowedProfiles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sked Job trigger - eligible profiles - Enter names separated by semi-colons</shortDescription>
+        <value>ARC Service Delivery; SB ARC Service Delivery; ARC NAT Team; SB ARC NAT Team</value>
+    </labels>
+    <labels>
+        <fullName>Search_by</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search_by</shortDescription>
+        <value>Search By</value>
+    </labels>
+    <labels>
+        <fullName>Search_criteria</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search_criteria</shortDescription>
+        <value>Search Criteria</value>
+    </labels>
+    <labels>
+        <fullName>SmartAccountSearch_Header</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SmartAccountSearch_Header</shortDescription>
+        <value>&lt;b&gt;Before creating a new Account, search for duplicate Accounts here.&lt;/b&gt; If the Account already exists, click the existing Account to edit. Please do not create a duplicate Account.</value>
+    </labels>
+    <labels>
+        <fullName>Smart_Account_Search</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Smart_Account_Search</shortDescription>
+        <value>Smart Account Search</value>
+    </labels>
+    <labels>
+        <fullName>Spinner_Alternate_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Alternate text for lightning spinner</shortDescription>
+        <value>Waiting on data from the server.</value>
+    </labels>
+    <labels>
+        <fullName>Start_Date</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Start_Date</shortDescription>
+        <value>Start Date</value>
+    </labels>
+    <labels>
+        <fullName>Status</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>Status_Title</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Status_Title</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>Students</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Students</shortDescription>
+        <value>Students</value>
+    </labels>
+    <labels>
+        <fullName>There_Are_No_Records</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>There_Are_No_Records</shortDescription>
+        <value>There are no records</value>
+    </labels>
+    <labels>
+        <fullName>There_Is_No_Content</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>There_Is_No_Content</shortDescription>
+        <value>There is no content</value>
+    </labels>
+    <labels>
+        <fullName>Time</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Time</shortDescription>
+        <value>Time</value>
+    </labels>
+    <labels>
+        <fullName>Training_Site</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Training Site</shortDescription>
+        <value>Training Site</value>
+    </labels>
+    <labels>
+        <fullName>Upcoming</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Upcoming</shortDescription>
+        <value>Upcoming</value>
+    </labels>
+    <labels>
+        <fullName>UserID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UserID</shortDescription>
+        <value>Salesforce Automation Account</value>
+    </labels>
+    <labels>
+        <fullName>Yes</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>item</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>item</shortDescription>
+        <value>item</value>
+    </labels>
+    <labels>
+        <fullName>items</fullName>
+        <categories>Custom RC UI</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>items</shortDescription>
+        <value>items</value>
+    </labels>
+    <labels>
+        <fullName>linebreak</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>This is to eliminate line break in Account - Billing street.</shortDescription>
+        <value>-
+-</value>
+    </labels>
+    <labels>
+        <fullName>of</fullName>
+        <categories>Smart Account Search</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>of</shortDescription>
+        <value>of</value>
+    </labels>
+</CustomLabels>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Third_Sub_Type</fullName>
+    <active>true</active>
+    <description>The Third Sub Type picklist field is required when the Invoice Case Sub Type field is populated with Price, Un-used pre-paid balance and Request Invoicing Privileges</description>
+    <errorConditionFormula>AND( 
+OR( 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Price&#39;), 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Collections&#39;), 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Customer Account Maintenance&#39;), 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Customer Service Credit&#39;), 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Invoice Delivery Method&#39;), 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Request Billing Docs&#39;), 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Wrong Organization&#39;), 
+ISPICKVAL ( Dispute_Issue__c ,&#39;Request Invoicing Privileges&#39;), 
+ISPICKVAL(Dispute_Issue__c, &quot;Bad Address&quot;), 
+ISPICKVAL(Dispute_Issue__c, &quot;Misapplied Payment&quot;), 
+ISPICKVAL(Dispute_Issue__c, &quot;AR Exception&quot;), 
+ISPICKVAL(Dispute_Issue__c, &quot;Invoice Payments&quot;), 
+ISPICKVAL(Dispute_Issue__c, &quot;Invoice Presentation&quot;), 
+ISPICKVAL(Dispute_Issue__c, &quot;Vendor Forms&quot;) 
+), 
+OR(NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)), OwnerId = &#39;00Gd0000000SdP5&#39;), 
+RecordType.DeveloperName = &quot;Invoicing&quot;, 
+ISBLANK(TEXT( Type_of_Price_Dispute__c )), 
+($Setup.ETL_Configuration__c.Is_ETL_User__c = FALSE), 
+(RecordTypeId &lt;&gt; &quot;012d000000097TC&quot;), 
+(RecordTypeId &lt;&gt; &quot;012d000000097TB&quot;), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Type_of_Price_Dispute__c</errorDisplayField>
+    <errorMessage>Please select a Third Sub Type</errorMessage>
+</ValidationRule>

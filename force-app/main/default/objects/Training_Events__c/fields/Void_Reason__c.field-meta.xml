@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Void_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Void Reason</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Scheduling_Status__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Created in Error</fullName>
+                <default>false</default>
+                <label>Created in Error</label>
+            </value>
+            <value>
+                <fullName>Customer Declined</fullName>
+                <default>false</default>
+                <label>Customer Declined</label>
+            </value>
+            <value>
+                <fullName>Incorrect Product</fullName>
+                <default>false</default>
+                <label>Incorrect Product</label>
+            </value>
+            <value>
+                <fullName>Returned to Sales</fullName>
+                <default>false</default>
+                <label>Returned to Sales</label>
+            </value>
+            <value>
+                <fullName>Returned to Sales - Reschedule</fullName>
+                <default>false</default>
+                <label>Returned to Sales - Reschedule</label>
+            </value>
+            <value>
+                <fullName>Pre-Approval</fullName>
+                <default>false</default>
+                <label>Pre-Approval</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Void</controllingFieldValue>
+            <valueName>Created in Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Void</controllingFieldValue>
+            <valueName>Customer Declined</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Void</controllingFieldValue>
+            <valueName>Incorrect Product</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Void</controllingFieldValue>
+            <valueName>Returned to Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Void</controllingFieldValue>
+            <valueName>Returned to Sales - Reschedule</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

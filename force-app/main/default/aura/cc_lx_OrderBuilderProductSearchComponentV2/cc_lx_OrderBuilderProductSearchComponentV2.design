@@ -1,0 +1,9 @@
+<design:component label="CC Order Builder Product Search">
+    <design:attribute name="componentOnObject" label="Component Added On Object" description="Select the object on which the component is added." datasource="Account,Opportunity"  />
+    <design:attribute name="showImage" label="Show Product Image" description="Specify whether to show the product image" default="true"/>
+	<design:attribute name="showSKU"   label="Show Product SKU"  description="Specify whether to show the product SKU" default="true"/>
+	<design:attribute name="showUOM"   label="Show Product UOM"  description="Specify whether to show the product Unit of Measure" default="true"/>
+	<design:attribute name="showDesc"  label="Show Product Description"  description="Specify whether to show the product short description" default="true"/>
+	<design:attribute name="showPrice" label="Show Product Price"  description="Specify whether to show the product price" default="true"/>
+	<design:attribute name="resultsLength" label="Results Length" description="Results Length" datasource="5,10,25,50" />
+</design:component>

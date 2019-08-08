@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Follow_Up_Information</fullName>
+    <active>true</active>
+    <description>This validation rule requires the user to input a Follow Up Date and Time.</description>
+    <errorConditionFormula>AND(     
+                 OR(
+                         ISPICKVAL( Follow_up_Method__c , &quot;Phone&quot;),
+                         ISPICKVAL( Follow_up_Method__c , &quot;Email&quot;),
+                         ISPICKVAL( Follow_up_Method__c , &quot;See Notes&quot;)),
+                         ISBLANK(  Follow_up_Date_Time__c  )
+                       )</errorConditionFormula>
+    <errorDisplayField>Follow_up_Date_Time__c</errorDisplayField>
+    <errorMessage>Please fill in the Date and Time for Follow Up</errorMessage>
+</ValidationRule>

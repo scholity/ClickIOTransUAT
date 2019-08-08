@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>P_D__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Likelihood of recommendation to a friend or colleague where 1 is highly unlikely and 10 is highly likely. Used to calculate &#39;%P-%D&#39; score (the % of people who score 9 or 10 - % of people who score less than 6).</inlineHelpText>
+    <label>P-D</label>
+    <precision>2</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

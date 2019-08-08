@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Aquatic_Training_Types__c</fullName>
+    <description>Aquatic training types.</description>
+    <externalId>false</externalId>
+    <label>Aquatic Training Types</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Water Parks</fullName>
+                <default>false</default>
+                <label>Water Parks</label>
+            </value>
+            <value>
+                <fullName>Parks &amp; Rec</fullName>
+                <default>false</default>
+                <label>Parks &amp; Rec</label>
+            </value>
+            <value>
+                <fullName>Municipality</fullName>
+                <default>false</default>
+                <label>Municipality</label>
+            </value>
+            <value>
+                <fullName>College/University</fullName>
+                <default>false</default>
+                <label>College/University</label>
+            </value>
+            <value>
+                <fullName>Fitness Club</fullName>
+                <default>false</default>
+                <label>Fitness Club</label>
+            </value>
+            <value>
+                <fullName>Hotels, Resorts, Motels, Associations</fullName>
+                <default>false</default>
+                <label>Hotels, Resorts, Motels, Associations</label>
+            </value>
+            <value>
+                <fullName>YMCA</fullName>
+                <default>false</default>
+                <label>YMCA</label>
+            </value>
+            <value>
+                <fullName>Boys and Girls Club</fullName>
+                <default>false</default>
+                <label>Boys and Girls Club</label>
+            </value>
+            <value>
+                <fullName>Other social support organization</fullName>
+                <default>false</default>
+                <label>Other social support organization</label>
+            </value>
+            <value>
+                <fullName>Camps</fullName>
+                <default>false</default>
+                <label>Camps</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

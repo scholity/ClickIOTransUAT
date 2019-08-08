@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Billing_Web_Request_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Billing Web Request Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>AR Exception Needed</fullName>
+                <default>false</default>
+                <label>AR Exception Needed</label>
+            </value>
+            <value>
+                <fullName>Bankruptcy Notice Received</fullName>
+                <default>false</default>
+                <label>Bankruptcy Notice Received</label>
+            </value>
+            <value>
+                <fullName>Change Invoice Delivery Method To Email</fullName>
+                <default>false</default>
+                <label>Change Invoice Delivery Method To Email</label>
+            </value>
+            <value>
+                <fullName>Change Invoice Delivery Method To Portal</fullName>
+                <default>false</default>
+                <label>Change Invoice Delivery Method To Portal</label>
+            </value>
+            <value>
+                <fullName>Complete Vendor Forms</fullName>
+                <default>false</default>
+                <label>Complete Vendor Forms</label>
+            </value>
+            <value>
+                <fullName>Duplicate Invoice Issue</fullName>
+                <default>false</default>
+                <label>Duplicate Invoice Issue</label>
+            </value>
+            <value>
+                <fullName>Increase Credit Limit</fullName>
+                <default>false</default>
+                <label>Increase Credit Limit</label>
+            </value>
+            <value>
+                <fullName>Invoice Presentation Issue</fullName>
+                <default>false</default>
+                <label>Invoice Presentation Issue</label>
+            </value>
+            <value>
+                <fullName>Manual Billing Form Submission</fullName>
+                <default>false</default>
+                <label>Manual Billing Form Submission</label>
+            </value>
+            <value>
+                <fullName>Missing Payment Issue</fullName>
+                <default>false</default>
+                <label>Missing Payment Issue</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>true</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Payment Applied To Wrong Invoice/Account</fullName>
+                <default>false</default>
+                <label>Payment Applied To Wrong Invoice/Account</label>
+            </value>
+            <value>
+                <fullName>Refund Credit Balance</fullName>
+                <default>false</default>
+                <label>Refund Credit Balance</label>
+            </value>
+            <value>
+                <fullName>Request Billing/Payment History</fullName>
+                <default>false</default>
+                <label>Request Billing/Payment History</label>
+            </value>
+            <value>
+                <fullName>Request Copy Of Invoice Or Credit Memo</fullName>
+                <default>false</default>
+                <label>Request Copy Of Invoice Or Credit Memo</label>
+            </value>
+            <value>
+                <fullName>Request Order Details For Invoice</fullName>
+                <default>false</default>
+                <label>Request Order Details For Invoice</label>
+            </value>
+            <value>
+                <fullName>Request To Pay By ACH</fullName>
+                <default>false</default>
+                <label>Request To Pay By ACH</label>
+            </value>
+            <value>
+                <fullName>Restore Invoicing Privileges</fullName>
+                <default>false</default>
+                <label>Restore Invoicing Privileges</label>
+            </value>
+            <value>
+                <fullName>Submit Customer PO Form</fullName>
+                <default>false</default>
+                <label>Submit Customer PO Form</label>
+            </value>
+            <value>
+                <fullName>Temporary Collections Hold</fullName>
+                <default>false</default>
+                <label>Temporary Collections Hold</label>
+            </value>
+            <value>
+                <fullName>Update Billing Info</fullName>
+                <default>false</default>
+                <label>Update Billing Info</label>
+            </value>
+            <value>
+                <fullName>Update Tax Exemption Status</fullName>
+                <default>false</default>
+                <label>Update Tax Exemption Status</label>
+            </value>
+            <value>
+                <fullName>Wrong Organization Charged</fullName>
+                <default>false</default>
+                <label>Wrong Organization Charged</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,41 @@
+<apex:page controller="AddTrainingEventController" lightningStylesheets="true"> <apex:slds />
+
+    <apex:form >
+
+        <apex:pageBlock mode="edit">
+        <div Class="slds-modal__header" >
+        <h2 class="slds-text-heading_medium slds-hyphenate">New Training Event</h2>
+        </div>
+        
+        
+        <div Class = "slds-modal__content slds-p-around_medium"> 
+        <apex:pageblocksection >
+            
+            <apex:inputField value="{!trainingEvent.SCC_Code__c}" />
+            <apex:inputField value="{!trainingEvent.Scheduling_Status__c}" />
+            <apex:inputField value="{!trainingEvent.Course_ID__c}" />
+            <apex:inputField value="{!trainingEvent.Void_Reason__c}" />
+            <apex:inputField value="{!trainingEvent.Course_Name__c}" />
+            <apex:inputField value="{!trainingEvent.TE_Owner__c}" />
+            <apex:inputField value="{!trainingEvent.Account__c}" />
+            <apex:inputField value="{!trainingEvent.Times_Rescheduled__c}" />                          
+            <apex:inputField value="{!trainingEvent.Opportunity__c}" />
+            <apex:inputField value="{!trainingEvent.Rescheduling_Fee__c}" />
+            <apex:inputField value="{!trainingEvent.Billing_Account__c}" />
+            <apex:inputField value="{!trainingEvent.Region__c}" />
+            <apex:inputField value="{!trainingEvent.Course_Order_Status__c}" html-disabled="true"/>
+                
+        </apex:pageblocksection>
+        </div>
+
+        <apex:pageBlockButtons location="bottom" styleClass="slds-modal__footer" >
+
+            <apex:commandButton value="Save" action="{!save}" />
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+
+        </apex:pageBlockButtons>
+        
+        </apex:pageblock>
+    </apex:form>
+    
+</apex:page>

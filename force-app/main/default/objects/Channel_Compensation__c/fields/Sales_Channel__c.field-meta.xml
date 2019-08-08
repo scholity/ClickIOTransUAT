@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Channel__c</fullName>
+    <description>Formula for reporting purposes.  Testing for F2F, BGST,  F2F/BGST, House.</description>
+    <externalId>false</externalId>
+    <formula>IF(CONTAINS(SubPG__c, &quot;NAT&quot;),&quot;NAT&quot;,IF(Channel__c =&quot;COM-ITM&quot;,&quot;COM_ITM&quot;,IF(Channel__c =&quot;COM-RCO&quot;,&quot;COM-RCO&quot;,IF(Focis_Location__c=&quot;BGST&quot;, if(isblank(Territory_Code__c),&quot;BGST&quot;, &quot;BGST/F2F&quot;),if(isblank(Territory_Code__c),&quot;House&quot;,&quot;F2F&quot;)))))</formula>
+    <label>Sales Channel</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

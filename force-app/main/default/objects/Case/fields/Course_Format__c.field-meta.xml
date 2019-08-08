@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Course_Format__c</fullName>
+    <externalId>false</externalId>
+    <label>Course Format</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Case_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Classroom</fullName>
+                <default>false</default>
+                <label>Classroom</label>
+            </value>
+            <value>
+                <fullName>Online</fullName>
+                <default>false</default>
+                <label>Online</label>
+            </value>
+            <value>
+                <fullName>Blended</fullName>
+                <default>false</default>
+                <label>Blended</label>
+            </value>
+            <value>
+                <fullName>Any</fullName>
+                <default>false</default>
+                <label>Any</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Classroom</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Online</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Blended</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Marketing Registration</controllingFieldValue>
+            <controllingFieldValue>Marketing Other</controllingFieldValue>
+            <controllingFieldValue>New Registration</controllingFieldValue>
+            <controllingFieldValue>Course Change</controllingFieldValue>
+            <valueName>Any</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

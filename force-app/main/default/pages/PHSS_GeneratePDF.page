@@ -1,0 +1,47 @@
+<apex:page controller="PHSS_GeneratePDFController" showHeader="false">
+
+    <apex:includeLightning />
+    
+    <apex:includeScript value="/lightning/lightning.out.js" />    
+    
+    <!-- Page code -->
+    <apex:form >
+        <apex:inputhidden id="hiddenData" value="{!PDFData}"/>
+    
+        <apex:actionfunction name="jsGeneratePDF" action="{!downloadPDF}" />
+        
+        <div id="lightning" />
+        
+    <script>
+        function saveData(data, callback){
+            var printData = document.getElementById('{!$Component.hiddenData}');
+            printData.value = JSON.stringify(data);
+            
+            //invoke PDF Generation
+            jsGeneratePDF();
+         
+            //invoke callback;
+            if(typeof callback == 'function') callback();
+        }
+        
+        
+        function loadComponents(){
+            console.log("Loading lightning component: PHSS_RosterListTab");
+            
+            $Lightning.use("c:PHSS_GeneratePDF", function() {
+                $Lightning.createComponent("c:PHSS_RosterListTab",
+                { 
+                    sendData : saveData,
+                    recordId : "{!$CurrentPage.parameters.id}"                    
+                },
+                "lightning",
+                function(cmp) {
+                    // do some stuff
+                });
+            });
+        }
+        
+        loadComponents();
+    </script>
+    </apex:form>
+</apex:page>

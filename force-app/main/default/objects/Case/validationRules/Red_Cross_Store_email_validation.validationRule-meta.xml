@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Red_Cross_Store_email_validation</fullName>
+    <active>true</active>
+    <description>Email address format validation</description>
+    <errorConditionFormula>IF( 
+
+OR (!ISBLANK(&#39;RCS_Email__c&#39;), $Setup.Validation_Rules__c.Bypass_Rules__c), false, 
+
+NOT(REGEX(RCS_Email__c,&quot;[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}&quot;)) 
+
+)</errorConditionFormula>
+    <errorDisplayField>RCS_Email__c</errorDisplayField>
+    <errorMessage>Please double check the format of this email address.</errorMessage>
+</ValidationRule>

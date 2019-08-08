@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CRS_Total_Amount__c</fullName>
+    <description>This field is the value found on the Payment Details page of a course record in the &quot;Total&quot; field.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This field is the value found on the Payment Details page of a course record in the &quot;Total&quot; field.</inlineHelpText>
+    <label>CRS Total Amount</label>
+    <precision>12</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

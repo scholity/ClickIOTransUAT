@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BANT_Score__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( Ispickval(Budget__c, &quot;Yes&quot;), 0.25, 0) +  IF( Ispickval(Authority__c, &quot;Yes&quot;), 0.25, 0)  + IF( Ispickval(Need__c, &quot;Yes&quot;), 0.25, 0) +
+IF(Ispickval( Timeline__c, &quot;3 Months&quot;), 0.25, If(Ispickval( Timeline__c,  &quot;6 Months&quot;), 0.20, If(Ispickval( Timeline__c, &quot;9 Months&quot;), 0.15, If(Ispickval( Timeline__c, &quot;1 Year&quot;), 0.10, If(Ispickval( Timeline__c, &quot;2 Years&quot;), 0.05, If(Ispickval( Timeline__c, &quot;3 Years&quot;), 0.00, 0.00 ))))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>BANT Score</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Percent</type>
+</CustomField>

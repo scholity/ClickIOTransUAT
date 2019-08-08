@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mailing_Street_is_Required</fullName>
+    <active>true</active>
+    <description>Validates that the contact Mailing Street is provided.</description>
+    <errorConditionFormula>AND(
+OR($Profile.Id = &quot;00ed0000000IUFH&quot;),
+OR(LEN( MailingState )= 0),
+$Setup.Validation_Rules__c.Bypass_Rules__c = false
+)
+
+/*ARC Sales User = 00ed0000000IUFH */
+/*Bluewolf has added the ARC Sales Profile as the only profile where the validation rule is relative */</errorConditionFormula>
+    <errorDisplayField>MailingStreet</errorDisplayField>
+    <errorMessage>Mailing Street is required.</errorMessage>
+</ValidationRule>

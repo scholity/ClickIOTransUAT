@@ -1,0 +1,10 @@
+<apex:component access="global" controller="skedJobCancellationNotificationCon">
+    <apex:attribute name="inputJobAllocationId" assignTo="{!jobAllocationId}" description="" type="String" />
+    
+    <p>
+        Hi {!resourceName}, <br/><br/>
+        {!jobName} - {!jobDescription} Class on {!jobStartDate} at {!jobStartTime} has been canceled.<br/><br/>
+        Location: {!jobLocation}
+    </p>
+    
+</apex:component>

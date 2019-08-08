@@ -1,0 +1,21 @@
+.THIS {
+}
+
+.THIS .approvalWarning {
+    position: relative;
+    display: inline-block;
+}
+
+.THIS .slds-popover {
+    position: absolute;
+    top: calc(100% + 26px);
+    left: -90px;
+    display: none;
+    white-space: normal;
+}
+
+.THIS .approvalWarning .slds-popover {
+    background-color: rgb(212, 80, 76);
+    color: white;
+    display: block;
+}

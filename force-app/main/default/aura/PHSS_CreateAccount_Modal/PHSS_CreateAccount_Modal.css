@@ -1,0 +1,21 @@
+/**
+ * Created by bjarmolinski on 2019-06-13.
+ */
+.THIS.container {
+    margin: auto;
+    max-width: 450px;
+    padding-bottom: 50px;
+}
+
+.THIS .link {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    font-weight: normal;
+    padding-top: 20px;
+}
+
+.THIS .popover1 {
+    text-align: right;
+    margin: 20px;
+}

@@ -1,0 +1,25 @@
+/**
+ * Created by jbarker on 2019-05-30.
+ */
+.THIS {
+}
+
+.THIS .inputTextField input {
+    background-color: #F8F8F8;
+    border: 0px;
+    font-size: 60px;
+    font-weight: lighter;
+    text-align: center;
+    width: 180px;
+}
+
+.THIS .inputTextField input::placeholder {
+    color: #666666;
+    font-size: 60px;
+    font-weight: lighter;
+}
+
+.THIS .valueLabel {
+    font-size: 60px;
+    font-weight: lighter;
+}

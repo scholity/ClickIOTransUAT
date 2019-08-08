@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Follow_Up_Group__c</fullName>
+    <externalId>false</externalId>
+    <label>Follow Up Group</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ARC Management Escalations</fullName>
+                <default>false</default>
+                <label>ARC Management Escalations</label>
+            </value>
+            <value>
+                <fullName>ARC Support Team</fullName>
+                <default>false</default>
+                <label>ARC Support Team</label>
+            </value>
+            <value>
+                <fullName>ATG - On Hold</fullName>
+                <default>false</default>
+                <label>ATG - On Hold</label>
+            </value>
+            <value>
+                <fullName>CCO Specialist</fullName>
+                <default>false</default>
+                <label>CCO Specialist</label>
+            </value>
+            <value>
+                <fullName>CEP</fullName>
+                <default>false</default>
+                <label>CEP</label>
+            </value>
+            <value>
+                <fullName>Certificate Support</fullName>
+                <default>false</default>
+                <label>Certificate Support</label>
+            </value>
+            <value>
+                <fullName>Course Records</fullName>
+                <default>false</default>
+                <label>Course Records</label>
+            </value>
+            <value>
+                <fullName>Credit Card Payments</fullName>
+                <default>false</default>
+                <label>Credit Card Payments</label>
+            </value>
+            <value>
+                <fullName>CST Queue</fullName>
+                <default>false</default>
+                <label>CST Queue</label>
+            </value>
+            <value>
+                <fullName>Current User</fullName>
+                <default>false</default>
+                <label>Current User</label>
+            </value>
+            <value>
+                <fullName>Digital Certificate Escalation</fullName>
+                <default>false</default>
+                <label>Digital Certificate Escalation</label>
+            </value>
+            <value>
+                <fullName>Instructor Support</fullName>
+                <default>false</default>
+                <label>Instructor Support</label>
+            </value>
+            <value>
+                <fullName>Instructor Updates</fullName>
+                <default>false</default>
+                <label>Instructor Updates</label>
+            </value>
+            <value>
+                <fullName>NAT - Refunds</fullName>
+                <default>false</default>
+                <label>NAT - Refunds</label>
+            </value>
+            <value>
+                <fullName>New Instructors Corner</fullName>
+                <default>false</default>
+                <label>New Instructors Corner</label>
+            </value>
+            <value>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+                <label>On Hold</label>
+            </value>
+            <value>
+                <fullName>On Hold - Community Learner Registration</fullName>
+                <default>false</default>
+                <label>On Hold - Community Learner Registration</label>
+            </value>
+            <value>
+                <fullName>On Hold - CST</fullName>
+                <default>false</default>
+                <label>On Hold - CST</label>
+            </value>
+            <value>
+                <fullName>Open BL Offerings</fullName>
+                <default>false</default>
+                <label>Open BL Offerings</label>
+            </value>
+            <value>
+                <fullName>Outbound Group Queue</fullName>
+                <default>false</default>
+                <label>Outbound Group Queue</label>
+            </value>
+            <value>
+                <fullName>Payment Policy</fullName>
+                <default>false</default>
+                <label>Payment Policy</label>
+            </value>
+            <value>
+                <fullName>Pending Field Request</fullName>
+                <default>false</default>
+                <label>Pending Field Request</label>
+            </value>
+            <value>
+                <fullName>Problem Records</fullName>
+                <default>false</default>
+                <label>Problem Records</label>
+            </value>
+            <value>
+                <fullName>Quick Start</fullName>
+                <default>false</default>
+                <label>Quick Start</label>
+            </value>
+            <value>
+                <fullName>RDC Queue</fullName>
+                <default>false</default>
+                <label>RDC Queue</label>
+            </value>
+            <value>
+                <fullName>Red Cross Store</fullName>
+                <default>false</default>
+                <label>Red Cross Store</label>
+            </value>
+            <value>
+                <fullName>Registration Support Queue</fullName>
+                <default>false</default>
+                <label>Registration Support Queue</label>
+            </value>
+            <value>
+                <fullName>Registration Support Queue - On Hold</fullName>
+                <default>false</default>
+                <label>Registration Support Queue - On Hold</label>
+            </value>
+            <value>
+                <fullName>TSC CEP - Sponsored</fullName>
+                <default>false</default>
+                <label>TSC CEP - Sponsored</label>
+            </value>
+            <value>
+                <fullName>TSC NAT - Inquiries</fullName>
+                <default>false</default>
+                <label>TSC NAT/CEP - Inquiries</label>
+            </value>
+            <value>
+                <fullName>TSC NAT - Self-Pay</fullName>
+                <default>false</default>
+                <label>TSC NAT - Self-Pay</label>
+            </value>
+            <value>
+                <fullName>TSC NAT - Sponsored</fullName>
+                <default>false</default>
+                <label>TSC NAT - Sponsored</label>
+            </value>
+            <value>
+                <fullName>Web Assistance Team</fullName>
+                <default>false</default>
+                <label>Web Assistance Team</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

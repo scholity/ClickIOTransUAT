@@ -1,0 +1,1242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Sub_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Case Sub-Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>true</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Type</controllingField>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>2017 Rev/Chal Price Change</fullName>
+                <default>false</default>
+                <label>2017 Rev/Chal Price Change</label>
+            </value>
+            <value>
+                <fullName>2018 AP/LTP Price Increase</fullName>
+                <default>false</default>
+                <label>2018 AP/LTP Price Increase</label>
+            </value>
+            <value>
+                <fullName>Abandoned in Portal</fullName>
+                <default>false</default>
+                <label>Abandoned in Portal</label>
+            </value>
+            <value>
+                <fullName>AHA Crossover</fullName>
+                <default>false</default>
+                <label>AHA Crossover</label>
+            </value>
+            <value>
+                <fullName>Annual AP/LTP Price Increase</fullName>
+                <default>false</default>
+                <label>Annual AP/LTP Price Increase</label>
+            </value>
+            <value>
+                <fullName>AP/LTP – Blended Learning</fullName>
+                <default>false</default>
+                <label>AP/LTP – Blended Learning</label>
+            </value>
+            <value>
+                <fullName>AP/LTP – Classroom</fullName>
+                <default>false</default>
+                <label>AP/LTP – Classroom</label>
+            </value>
+            <value>
+                <fullName>Application Fee paid</fullName>
+                <default>false</default>
+                <label>Application Fee paid</label>
+            </value>
+            <value>
+                <fullName>Application Info sent to customer</fullName>
+                <default>false</default>
+                <label>Application Info sent to customer</label>
+            </value>
+            <value>
+                <fullName>AP Scheduling Tool</fullName>
+                <default>false</default>
+                <label>AP Scheduling Tool</label>
+            </value>
+            <value>
+                <fullName>Aquatics Examiner Service.</fullName>
+                <default>false</default>
+                <label>Aquatics Examiner Service.</label>
+            </value>
+            <value>
+                <fullName>Authorized Provider</fullName>
+                <default>false</default>
+                <label>Authorized Provider</label>
+            </value>
+            <value>
+                <fullName>Blended Learning</fullName>
+                <default>false</default>
+                <label>Blended Learning</label>
+            </value>
+            <value>
+                <fullName>Blood</fullName>
+                <default>false</default>
+                <label>Blood</label>
+            </value>
+            <value>
+                <fullName>Bridging</fullName>
+                <default>false</default>
+                <label>Bridging</label>
+            </value>
+            <value>
+                <fullName>Cancel</fullName>
+                <default>false</default>
+                <label>Cancel</label>
+            </value>
+            <value>
+                <fullName>Canceled CRS</fullName>
+                <default>false</default>
+                <label>Canceled CRS</label>
+            </value>
+            <value>
+                <fullName>Cardio</fullName>
+                <default>false</default>
+                <label>Cardio</label>
+            </value>
+            <value>
+                <fullName>Certifications</fullName>
+                <default>false</default>
+                <label>Certifications</label>
+            </value>
+            <value>
+                <fullName>CEU Class</fullName>
+                <default>false</default>
+                <label>CEU Class</label>
+            </value>
+            <value>
+                <fullName>Cintas</fullName>
+                <default>false</default>
+                <label>Cintas</label>
+            </value>
+            <value>
+                <fullName>CNA Prep Course</fullName>
+                <default>false</default>
+                <label>CNA Prep Course</label>
+            </value>
+            <value>
+                <fullName>Community Cancellation</fullName>
+                <default>false</default>
+                <label>Community Cancellation</label>
+            </value>
+            <value>
+                <fullName>Community Offerings on RCO</fullName>
+                <default>false</default>
+                <label>Community Offerings on RCO</label>
+            </value>
+            <value>
+                <fullName>Community Roster</fullName>
+                <default>false</default>
+                <label>Community Roster</label>
+            </value>
+            <value>
+                <fullName>Complaints</fullName>
+                <default>false</default>
+                <label>Complaints</label>
+            </value>
+            <value>
+                <fullName>Compliment</fullName>
+                <default>false</default>
+                <label>Compliment</label>
+            </value>
+            <value>
+                <fullName>Correct</fullName>
+                <default>false</default>
+                <label>Correct</label>
+            </value>
+            <value>
+                <fullName>Coupons/Promos</fullName>
+                <default>false</default>
+                <label>Coupons/Promos</label>
+            </value>
+            <value>
+                <fullName>Course Cancel</fullName>
+                <default>false</default>
+                <label>Course Cancel</label>
+            </value>
+            <value>
+                <fullName>Course Change</fullName>
+                <default>false</default>
+                <label>Course Change</label>
+            </value>
+            <value>
+                <fullName>Course Record Certification</fullName>
+                <default>false</default>
+                <label>Course Record Certification</label>
+            </value>
+            <value>
+                <fullName>Course Record - Initial Cert Request</fullName>
+                <default>false</default>
+                <label>Course Record - Initial Cert Request</label>
+            </value>
+            <value>
+                <fullName>Course Record-  Replacement Cert Request</fullName>
+                <default>false</default>
+                <label>Course Record-  Replacement Cert Request</label>
+            </value>
+            <value>
+                <fullName>Create Blended Learning Offering</fullName>
+                <default>false</default>
+                <label>Create Blended Learning Offering</label>
+            </value>
+            <value>
+                <fullName>Create New Coupon</fullName>
+                <default>false</default>
+                <label>Create New Coupon</label>
+            </value>
+            <value>
+                <fullName>CRS - Digital Cert Link Sent</fullName>
+                <default>false</default>
+                <label>CRS - Digital Cert Link Sent</label>
+            </value>
+            <value>
+                <fullName>CRS - Name Correction - ITSD</fullName>
+                <default>false</default>
+                <label>CRS - Name Correction - ITSD</label>
+            </value>
+            <value>
+                <fullName>CRS - Name Correction - TSC</fullName>
+                <default>false</default>
+                <label>CRS - Name Correction - TSC</label>
+            </value>
+            <value>
+                <fullName>Direct Links</fullName>
+                <default>false</default>
+                <label>Direct Links</label>
+            </value>
+            <value>
+                <fullName>Disaster</fullName>
+                <default>false</default>
+                <label>Disaster</label>
+            </value>
+            <value>
+                <fullName>Donations</fullName>
+                <default>false</default>
+                <label>Donations</label>
+            </value>
+            <value>
+                <fullName>Extend Existing Coupon</fullName>
+                <default>false</default>
+                <label>Extend Existing Coupon</label>
+            </value>
+            <value>
+                <fullName>Facility Request</fullName>
+                <default>false</default>
+                <label>Facility Request</label>
+            </value>
+            <value>
+                <fullName>Fraud</fullName>
+                <default>false</default>
+                <label>Fraud</label>
+            </value>
+            <value>
+                <fullName>FS – Blended Learning</fullName>
+                <default>false</default>
+                <label>FS – Blended Learning</label>
+            </value>
+            <value>
+                <fullName>FS – Classroom</fullName>
+                <default>false</default>
+                <label>FS – Classroom</label>
+            </value>
+            <value>
+                <fullName>Full Service</fullName>
+                <default>false</default>
+                <label>Full Service</label>
+            </value>
+            <value>
+                <fullName>Gov Shutdown</fullName>
+                <default>false</default>
+                <label>Gov Shutdown</label>
+            </value>
+            <value>
+                <fullName>Granted Grace Period for Expired Base Level Cert</fullName>
+                <default>false</default>
+                <label>Granted Grace Period for Expired Base Level Cert</label>
+            </value>
+            <value>
+                <fullName>Health Fairs</fullName>
+                <default>false</default>
+                <label>Health Fairs</label>
+            </value>
+            <value>
+                <fullName>Incorrect</fullName>
+                <default>false</default>
+                <label>Incorrect</label>
+            </value>
+            <value>
+                <fullName>Individual Certificate - Digital Cert Link Sent</fullName>
+                <default>false</default>
+                <label>Individual Certificate - Digital Cert Link Sent</label>
+            </value>
+            <value>
+                <fullName>Individual Certificate - Initial Request - Fee Charged</fullName>
+                <default>false</default>
+                <label>Individual Certificate - Initial Request - Fee Charged</label>
+            </value>
+            <value>
+                <fullName>Individual Certificate - Initial Request - No Fee Charged</fullName>
+                <default>false</default>
+                <label>Individual Certificate - Initial Request - No Fee Charged</label>
+            </value>
+            <value>
+                <fullName>Individual Certificate - Replacement - Fee Charged</fullName>
+                <default>false</default>
+                <label>Individual Certificate - Replacement - Fee Charged</label>
+            </value>
+            <value>
+                <fullName>Individual Certificate - Replacement - No Fee Charged</fullName>
+                <default>false</default>
+                <label>Individual Certificate - Replacement - No Fee Charged</label>
+            </value>
+            <value>
+                <fullName>Individual Certification</fullName>
+                <default>false</default>
+                <label>Individual Certification</label>
+            </value>
+            <value>
+                <fullName>Individual - Name Correction - ITSD</fullName>
+                <default>false</default>
+                <label>Individual - Name Correction - ITSD</label>
+            </value>
+            <value>
+                <fullName>Individual - Name Correction - TSC</fullName>
+                <default>false</default>
+                <label>Individual - Name Correction - TSC</label>
+            </value>
+            <value>
+                <fullName>Individual Pay</fullName>
+                <default>false</default>
+                <label>Individual Pay</label>
+            </value>
+            <value>
+                <fullName>Initial Inquiry</fullName>
+                <default>false</default>
+                <label>Initial Inquiry</label>
+            </value>
+            <value>
+                <fullName>Instructor&#39;s Corner</fullName>
+                <default>false</default>
+                <label>Instructor&#39;s Corner</label>
+            </value>
+            <value>
+                <fullName>Instructor Profile Update</fullName>
+                <default>false</default>
+                <label>Instructor Profile Update</label>
+            </value>
+            <value>
+                <fullName>Invalid Delivery Type</fullName>
+                <default>false</default>
+                <label>Invalid Delivery Type</label>
+            </value>
+            <value>
+                <fullName>Learner Profile Update</fullName>
+                <default>false</default>
+                <label>Learner Profile Update</label>
+            </value>
+            <value>
+                <fullName>Learning Center</fullName>
+                <default>false</default>
+                <label>Learning Center</label>
+            </value>
+            <value>
+                <fullName>Lifeguarding</fullName>
+                <default>false</default>
+                <label>Lifeguarding</label>
+            </value>
+            <value>
+                <fullName>LMS Error</fullName>
+                <default>false</default>
+                <label>LMS Error</label>
+            </value>
+            <value>
+                <fullName>Logistics</fullName>
+                <default>false</default>
+                <label>Logistics</label>
+            </value>
+            <value>
+                <fullName>LTP</fullName>
+                <default>false</default>
+                <label>LTP</label>
+            </value>
+            <value>
+                <fullName>LTP Access</fullName>
+                <default>false</default>
+                <label>LTP Access</label>
+            </value>
+            <value>
+                <fullName>LTS Agreement</fullName>
+                <default>false</default>
+                <label>LTS Agreement</label>
+            </value>
+            <value>
+                <fullName>LTS Facility Fee Issue</fullName>
+                <default>false</default>
+                <label>LTS Facility Fee Issue</label>
+            </value>
+            <value>
+                <fullName>LTS - Learn to Swim</fullName>
+                <default>false</default>
+                <label>LTS - Learn to Swim</label>
+            </value>
+            <value>
+                <fullName>Marketing Other</fullName>
+                <default>false</default>
+                <label>Marketing Other</label>
+            </value>
+            <value>
+                <fullName>Marketing Registration</fullName>
+                <default>false</default>
+                <label>Marketing Registration</label>
+            </value>
+            <value>
+                <fullName>Modify</fullName>
+                <default>false</default>
+                <label>Modify</label>
+            </value>
+            <value>
+                <fullName>Modify Offering</fullName>
+                <default>false</default>
+                <label>Modify Offering</label>
+            </value>
+            <value>
+                <fullName>Moved - No forwarding address</fullName>
+                <default>false</default>
+                <label>Moved - No forwarding address</label>
+            </value>
+            <value>
+                <fullName>MTN</fullName>
+                <default>false</default>
+                <label>MTN</label>
+            </value>
+            <value>
+                <fullName>MTN Bridge</fullName>
+                <default>false</default>
+                <label>MTN Instructor Bridge</label>
+            </value>
+            <value>
+                <fullName>MTN IT Bridge</fullName>
+                <default>false</default>
+                <label>MTN IT Bridge</label>
+            </value>
+            <value>
+                <fullName>New</fullName>
+                <default>false</default>
+                <label>New</label>
+            </value>
+            <value>
+                <fullName>New Agency Lead</fullName>
+                <default>false</default>
+                <label>New Agency Lead</label>
+            </value>
+            <value>
+                <fullName>New Instructors Corner</fullName>
+                <default>false</default>
+                <label>New Instructors Corner</label>
+            </value>
+            <value>
+                <fullName>New Registration</fullName>
+                <default>false</default>
+                <label>New Registration</label>
+            </value>
+            <value>
+                <fullName>No address found</fullName>
+                <default>false</default>
+                <label>No address found</label>
+            </value>
+            <value>
+                <fullName>No Certificate Found</fullName>
+                <default>false</default>
+                <label>No Certificate Found</label>
+            </value>
+            <value>
+                <fullName>No Coupon Created</fullName>
+                <default>false</default>
+                <label>No Coupon Created</label>
+            </value>
+            <value>
+                <fullName>No Show Instructor</fullName>
+                <default>false</default>
+                <label>No Show Instructor</label>
+            </value>
+            <value>
+                <fullName>Online Content Completion Report and Roster</fullName>
+                <default>false</default>
+                <label>Online Content Completion Report and Roster</label>
+            </value>
+            <value>
+                <fullName>Order Issues</fullName>
+                <default>false</default>
+                <label>Order Issues</label>
+            </value>
+            <value>
+                <fullName>Organization Request</fullName>
+                <default>false</default>
+                <label>Organization Request</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>PDF of Certs Sent</fullName>
+                <default>false</default>
+                <label>PDF of Certs Sent</label>
+            </value>
+            <value>
+                <fullName>PO Requests</fullName>
+                <default>false</default>
+                <label>PO Requests</label>
+            </value>
+            <value>
+                <fullName>Portal Payment</fullName>
+                <default>false</default>
+                <label>Portal Payment</label>
+            </value>
+            <value>
+                <fullName>Post Offering</fullName>
+                <default>false</default>
+                <label>Post Offering</label>
+            </value>
+            <value>
+                <fullName>Presentation</fullName>
+                <default>false</default>
+                <label>Presentation</label>
+            </value>
+            <value>
+                <fullName>Questions</fullName>
+                <default>false</default>
+                <label>Questions</label>
+            </value>
+            <value>
+                <fullName>Questions about NAT Registration Process</fullName>
+                <default>false</default>
+                <label>Questions about NAT Registration Process</label>
+            </value>
+            <value>
+                <fullName>Quick Start</fullName>
+                <default>false</default>
+                <label>Quick Start</label>
+            </value>
+            <value>
+                <fullName>RCS Blanket PO</fullName>
+                <default>false</default>
+                <label>RCS Blanket PO</label>
+            </value>
+            <value>
+                <fullName>RCS PO</fullName>
+                <default>false</default>
+                <label>RCS PO</label>
+            </value>
+            <value>
+                <fullName>RCS PO Inquiry</fullName>
+                <default>false</default>
+                <label>RCS PO Inquiry</label>
+            </value>
+            <value>
+                <fullName>Re-Bill / Wrong Org</fullName>
+                <default>false</default>
+                <label>Re-Bill / Wrong Org</label>
+            </value>
+            <value>
+                <fullName>RedCross.org</fullName>
+                <default>false</default>
+                <label>RedCross.org</label>
+            </value>
+            <value>
+                <fullName>Redcross.org Store</fullName>
+                <default>false</default>
+                <label>Redcross.org Store</label>
+            </value>
+            <value>
+                <fullName>Refund</fullName>
+                <default>false</default>
+                <label>Refund</label>
+            </value>
+            <value>
+                <fullName>Refund Issue</fullName>
+                <default>false</default>
+                <label>Refund Issue</label>
+            </value>
+            <value>
+                <fullName>Refund Issued</fullName>
+                <default>false</default>
+                <label>Refund Issued</label>
+            </value>
+            <value>
+                <fullName>Refused</fullName>
+                <default>false</default>
+                <label>Refused</label>
+            </value>
+            <value>
+                <fullName>Register Deep Link</fullName>
+                <default>false</default>
+                <label>Register Deep Link</label>
+            </value>
+            <value>
+                <fullName>Registration Fee paid</fullName>
+                <default>false</default>
+                <label>Registration Fee paid</label>
+            </value>
+            <value>
+                <fullName>Request for Old Version of Code</fullName>
+                <default>false</default>
+                <label>Request for Old Version of Code</label>
+            </value>
+            <value>
+                <fullName>Request to become an Instuctor</fullName>
+                <default>false</default>
+                <label>Request to become an Instuctor</label>
+            </value>
+            <value>
+                <fullName>Request to become an Instuctor Trainer</fullName>
+                <default>false</default>
+                <label>Request to become an Instuctor Trainer</label>
+            </value>
+            <value>
+                <fullName>Retest</fullName>
+                <default>false</default>
+                <label>Retest</label>
+            </value>
+            <value>
+                <fullName>Return Instructions/Form</fullName>
+                <default>false</default>
+                <label>Return Instructions/Form</label>
+            </value>
+            <value>
+                <fullName>Return to Sender</fullName>
+                <default>false</default>
+                <label>Return to Sender</label>
+            </value>
+            <value>
+                <fullName>S/H Email Sent</fullName>
+                <default>false</default>
+                <label>S/H Email Sent</label>
+            </value>
+            <value>
+                <fullName>SAF</fullName>
+                <default>false</default>
+                <label>SAF</label>
+            </value>
+            <value>
+                <fullName>Safety Training for Swim Coaches</fullName>
+                <default>false</default>
+                <label>Safety Training for Swim Coaches</label>
+            </value>
+            <value>
+                <fullName>Shop StayWell</fullName>
+                <default>false</default>
+                <label>Shop StayWell</label>
+            </value>
+            <value>
+                <fullName>Sim Learning</fullName>
+                <default>false</default>
+                <label>Sim Learning</label>
+            </value>
+            <value>
+                <fullName>Small Craft/Boating Safety</fullName>
+                <default>false</default>
+                <label>Small Craft/Boating Safety</label>
+            </value>
+            <value>
+                <fullName>Sponsored</fullName>
+                <default>false</default>
+                <label>Sponsored</label>
+            </value>
+            <value>
+                <fullName>Status of Order</fullName>
+                <default>false</default>
+                <label>Status of Order</label>
+            </value>
+            <value>
+                <fullName>Submitted by Email</fullName>
+                <default>false</default>
+                <label>Submitted by Email</label>
+            </value>
+            <value>
+                <fullName>Submitted by Postal Mail</fullName>
+                <default>false</default>
+                <label>Submitted by Postal Mail</label>
+            </value>
+            <value>
+                <fullName>Training Verification</fullName>
+                <default>false</default>
+                <label>Training Verification</label>
+            </value>
+            <value>
+                <fullName>Transcript Support</fullName>
+                <default>false</default>
+                <label>Transcript Support</label>
+            </value>
+            <value>
+                <fullName>Transfer</fullName>
+                <default>false</default>
+                <label>Transfer</label>
+            </value>
+            <value>
+                <fullName>TSC Error</fullName>
+                <default>false</default>
+                <label>TSC Error</label>
+            </value>
+            <value>
+                <fullName>Use of Portal</fullName>
+                <default>false</default>
+                <label>Use of Portal</label>
+            </value>
+            <value>
+                <fullName>Virtual Agent Beta</fullName>
+                <default>false</default>
+                <label>Virtual Agent Beta</label>
+            </value>
+            <value>
+                <fullName>Volunteering</fullName>
+                <default>false</default>
+                <label>Volunteering</label>
+            </value>
+            <value>
+                <fullName>Water Safety</fullName>
+                <default>false</default>
+                <label>Water Safety</label>
+            </value>
+            <value>
+                <fullName>Water Safety Instructor Classes</fullName>
+                <default>false</default>
+                <label>Water Safety Instructor Classes</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Credit Card Dispute</controllingFieldValue>
+            <valueName>Correct</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Card Dispute</controllingFieldValue>
+            <valueName>Fraud</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Credit Card Dispute</controllingFieldValue>
+            <valueName>Incorrect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>Aquatics Examiner Service.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>Lifeguarding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>LTS Agreement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>LTS Facility Fee Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>LTS - Learn to Swim</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>Safety Training for Swim Coaches</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>Small Craft/Boating Safety</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>Water Safety</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>Water Safety Instructor Classes</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Codes</controllingFieldValue>
+            <valueName>Invalid Delivery Type</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Codes</controllingFieldValue>
+            <valueName>Request for Old Version of Code</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pro Bono Requests</controllingFieldValue>
+            <valueName>Health Fairs</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pro Bono Requests</controllingFieldValue>
+            <valueName>Presentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>AHA Crossover</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>Bridging</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>Certifications</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>MTN Bridge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>MTN IT Bridge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>Quick Start</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>Request to become an Instuctor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>Request to become an Instuctor Trainer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Offering (non-Community)</controllingFieldValue>
+            <valueName>AP/LTP – Blended Learning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Offering (non-Community)</controllingFieldValue>
+            <valueName>AP/LTP – Classroom</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Offering (non-Community)</controllingFieldValue>
+            <valueName>FS – Blended Learning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Offering (non-Community)</controllingFieldValue>
+            <valueName>FS – Classroom</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Coupons</controllingFieldValue>
+            <valueName>Create New Coupon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Coupons</controllingFieldValue>
+            <valueName>Extend Existing Coupon</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Coupons</controllingFieldValue>
+            <valueName>No Coupon Created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Processes</controllingFieldValue>
+            <valueName>Annual AP/LTP Price Increase</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Processes</controllingFieldValue>
+            <valueName>Community Offerings on RCO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Special Processes</controllingFieldValue>
+            <valueName>Virtual Agent Beta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Field Request</controllingFieldValue>
+            <valueName>Community Cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Field Request</controllingFieldValue>
+            <valueName>Create Blended Learning Offering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Field Request</controllingFieldValue>
+            <valueName>Facility Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Field Request</controllingFieldValue>
+            <valueName>Modify Offering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Field Request</controllingFieldValue>
+            <valueName>Organization Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>Application Fee paid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>Application Info sent to customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>CEU Class</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>CNA Prep Course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>New Agency Lead</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Product Sales Referral</controllingFieldValue>
+            <controllingFieldValue>Non-Training</controllingFieldValue>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>Questions about NAT Registration Process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>Refund Issued</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>Registration Fee paid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <controllingFieldValue>CEP</controllingFieldValue>
+            <valueName>Transfer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Red Cross Store</controllingFieldValue>
+            <controllingFieldValue>AP Blended Learning</controllingFieldValue>
+            <valueName>Cancel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Red Cross Store</controllingFieldValue>
+            <controllingFieldValue>AP Blended Learning</controllingFieldValue>
+            <valueName>New</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Red Cross Store Support</controllingFieldValue>
+            <valueName>Coupons/Promos</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Red Cross Store Support</controllingFieldValue>
+            <valueName>Order Issues</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Red Cross Store Support</controllingFieldValue>
+            <valueName>Return Instructions/Form</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Red Cross Store Support</controllingFieldValue>
+            <valueName>Status of Order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CEP</controllingFieldValue>
+            <valueName>Individual Pay</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CEP</controllingFieldValue>
+            <valueName>Initial Inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CEP</controllingFieldValue>
+            <valueName>Questions</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CEP</controllingFieldValue>
+            <valueName>Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CEP</controllingFieldValue>
+            <valueName>Retest</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>CEP</controllingFieldValue>
+            <valueName>Sponsored</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Non-Training</controllingFieldValue>
+            <valueName>Blood</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Non-Training</controllingFieldValue>
+            <valueName>Disaster</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Non-Training</controllingFieldValue>
+            <valueName>Donations</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Non-Training</controllingFieldValue>
+            <valueName>Gov Shutdown</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Non-Training</controllingFieldValue>
+            <valueName>SAF</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <valueName>Volunteering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RCS PO</controllingFieldValue>
+            <valueName>RCS Blanket PO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RCS PO</controllingFieldValue>
+            <valueName>RCS PO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RCS PO</controllingFieldValue>
+            <valueName>RCS PO Inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Sales Referral</controllingFieldValue>
+            <valueName>Redcross.org Store</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Product Sales Referral</controllingFieldValue>
+            <valueName>Shop StayWell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Returned Mail</controllingFieldValue>
+            <valueName>LMS Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Returned Mail</controllingFieldValue>
+            <valueName>Moved - No forwarding address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Returned Mail</controllingFieldValue>
+            <valueName>No address found</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Returned Mail</controllingFieldValue>
+            <valueName>Refused</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Returned Mail</controllingFieldValue>
+            <valueName>Return to Sender</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Returned Mail</controllingFieldValue>
+            <valueName>TSC Error</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Training Validation</controllingFieldValue>
+            <valueName>Training Verification</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Training Validation</controllingFieldValue>
+            <valueName>Transcript Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>AP Scheduling Tool</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>Blended Learning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>Direct Links</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>Instructor&#39;s Corner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>Learning Center</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>New Instructors Corner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>RedCross.org</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>Register Deep Link</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>Sim Learning</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Troubleshooting</controllingFieldValue>
+            <valueName>Use of Portal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Course Record - Initial Cert Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Course Record-  Replacement Cert Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>CRS - Digital Cert Link Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>CRS - Name Correction - ITSD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>CRS - Name Correction - TSC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Granted Grace Period for Expired Base Level Cert</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Individual Certificate - Digital Cert Link Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Individual Certificate - Initial Request - Fee Charged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Individual Certificate - Initial Request - No Fee Charged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Individual Certificate - Replacement - Fee Charged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Individual Certificate - Replacement - No Fee Charged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Individual - Name Correction - ITSD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Individual - Name Correction - TSC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>No Certificate Found</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>PDF of Certs Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>S/H Email Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Registration</controllingFieldValue>
+            <valueName>Course Cancel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Registration</controllingFieldValue>
+            <valueName>Course Change</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Registration</controllingFieldValue>
+            <valueName>Marketing Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Registration</controllingFieldValue>
+            <valueName>Marketing Registration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Registration</controllingFieldValue>
+            <valueName>New Registration</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>Logistics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Abandoned in Portal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Canceled CRS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Cardio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Cintas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Portal Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Re-Bill / Wrong Org</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Submitted by Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Submitted by Postal Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Complaints</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>Compliment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Feedback</controllingFieldValue>
+            <valueName>No Show Instructor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>User Account Maintenance</controllingFieldValue>
+            <valueName>Instructor Profile Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>User Account Maintenance</controllingFieldValue>
+            <valueName>Learner Profile Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AP Blended Learning</controllingFieldValue>
+            <valueName>Modify</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AP Blended Learning</controllingFieldValue>
+            <valueName>MTN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AP Blended Learning</controllingFieldValue>
+            <valueName>Online Content Completion Report and Roster</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

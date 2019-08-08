@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Action_Taken__c</fullName>
+    <description>The action taken once the Invoicing case is being closed</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select which action was taken during resolution.</inlineHelpText>
+    <label>Action Taken</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Status</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Adjustment Process</fullName>
+                <default>false</default>
+                <label>Adjustment Process</label>
+            </value>
+            <value>
+                <fullName>Credit Memo</fullName>
+                <default>false</default>
+                <label>Credit Memo</label>
+            </value>
+            <value>
+                <fullName>Document/Copies Sent</fullName>
+                <default>false</default>
+                <label>Document/Copies Sent</label>
+            </value>
+            <value>
+                <fullName>Manual Invoice</fullName>
+                <default>false</default>
+                <label>Manual Invoice</label>
+            </value>
+            <value>
+                <fullName>No Accounting Adjustment Needed</fullName>
+                <default>false</default>
+                <label>No Accounting Adjustment Needed</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Privileges Granted - PO Created</fullName>
+                <default>false</default>
+                <label>Privileges Granted - PO Created</label>
+            </value>
+            <value>
+                <fullName>Unable to Collect</fullName>
+                <default>false</default>
+                <label>Unable to Collect</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Adjustment Process</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Credit Memo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Document/Copies Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Manual Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>No Accounting Adjustment Needed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Privileges Granted - PO Created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed - Invoicing</controllingFieldValue>
+            <valueName>Unable to Collect</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

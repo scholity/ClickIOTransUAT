@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Billing_Contact_Required_for_Invoicing</fullName>
+    <active>false</active>
+    <description>The Billing Contact is required for Invoicing Accounts. Invoicing Accounts are determined by the Preferred Payment Type=Invoice.</description>
+    <errorConditionFormula>IF( AND(ISPICKVAL(Preferred_Payment_type__c, &#39;Invoice&#39;), ISBLANK(Billing_Contact__c ) ) , TRUE, FALSE)</errorConditionFormula>
+    <errorMessage>Billing Contact must be listed on the Account when the Preferred Payment Type equals Invoicing</errorMessage>
+</ValidationRule>

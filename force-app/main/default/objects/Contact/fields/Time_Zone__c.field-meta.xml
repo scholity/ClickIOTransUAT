@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Time_Zone__c</fullName>
+    <externalId>false</externalId>
+    <label>Time Zone</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Central Time Zone</fullName>
+                <default>false</default>
+                <label>Central Time Zone</label>
+            </value>
+            <value>
+                <fullName>Eastern Time Zone</fullName>
+                <default>false</default>
+                <label>Eastern Time Zone</label>
+            </value>
+            <value>
+                <fullName>Mountain Time Zone</fullName>
+                <default>false</default>
+                <label>Mountain Time Zone</label>
+            </value>
+            <value>
+                <fullName>Pacific Time Zone</fullName>
+                <default>false</default>
+                <label>Pacific Time Zone</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

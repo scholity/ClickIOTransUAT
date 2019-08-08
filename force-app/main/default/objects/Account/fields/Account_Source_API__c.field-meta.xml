@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Source_API__c</fullName>
+    <description>Only used for background processes not intended to be exposed on page layouts.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Where did the account got inserted from: Quick Create CDI, User etc</inlineHelpText>
+    <label>Account Source API</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>User</fullName>
+                <default>true</default>
+                <label>User</label>
+            </value>
+            <value>
+                <fullName>Quick Create CDI</fullName>
+                <default>false</default>
+                <label>Quick Create CDI</label>
+            </value>
+            <value>
+                <fullName>Smart Account Search</fullName>
+                <default>false</default>
+                <label>Smart Account Search</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fees__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Grant Covers registration fees</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Check if grant covers registration fees</inlineHelpText>
+    <label>Fees</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

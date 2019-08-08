@@ -1,0 +1,63 @@
+/**
+ * Created by jbarker on 9/27/18.
+ */
+.THIS {
+}
+
+.THIS .calendar-header {
+    background-color: #b0adab;
+    color: #ffffff;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-top: 1px solid #cccccc;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 60px;
+}
+
+.THIS .calendar-content {
+    background-color: #ffffff;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    padding-top: 2px;
+    width: 60px;
+}
+
+.THIS .calendar-footer {
+    background-color: #ffffff;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-bottom: 2px;
+    width: 60px;
+}
+
+.THIS .warning-background {
+    background-color: red;
+    border-radius: 30px;
+    padding: 10px 13px;
+}
+
+.THIS .warning-icon {
+    height: 18px;
+    line-height: 0px;
+    width: 18px;
+}
+
+.THIS .warning-img {
+    height: 18px;
+    width: 18px;
+}
+
+.THIS .warning-checkbox {
+    margin: 0px 0px 1px 6px;
+    padding: 0px;
+}
+
+.THIS .warning-message {
+    color: white;
+    font: 12px sans-serif;
+    margin-left: 8px;
+}

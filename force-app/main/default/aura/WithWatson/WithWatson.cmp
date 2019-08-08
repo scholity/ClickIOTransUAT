@@ -1,0 +1,5 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+  <div class='with-watson'>
+     <img class='with-watson-logo' src='{!$Resource.WithWatsonLogo}' />  
+  </div>
+</aura:component>

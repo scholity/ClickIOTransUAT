@@ -1,0 +1,84 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false">
+    <span id="{! 'liveagent_button_online_' + $CurrentPage.parameters.buttonId}"></span>
+    <span id="'{! 'liveagent_button_offline_' + $CurrentPage.parameters.buttonId}"></span>
+    <script type="text/javascript" src="{!$CurrentPage.parameters.deploymentJsUrl}"></script>
+    <script>
+    var buttonId = '{!$CurrentPage.parameters.buttonId}';
+    var deploymentId = '{!$CurrentPage.parameters.deploymentId}';
+    var orgId = '{!$CurrentPage.parameters.orgId}';
+    var deploymentUrl = '{!$CurrentPage.parameters.deploymentUrl}';
+    var liveAgentInitUrl = '{!$CurrentPage.parameters.liveAgentInitUrl}';
+    var debugMode = '{!$CurrentPage.parameters.debugMode}';
+
+    // Send message to Parent that Live Agent is loaded..
+    if (liveagent != null) {
+        parent.postMessage({
+            'type': 'LiveAgentEvent',
+            'status': 'LIVEAGENT_LOADED'
+        }, location.protocol + "//" + location.host);
+    }
+
+    function init_liveagent(liveagentattrs) {
+        // Button Callback functions.
+        var buttonCallback = function(e) {
+        	console.log('Received Callback');
+            if (e == liveagent.BUTTON_EVENT.BUTTON_AVAILABLE) {
+                parent.postMessage({
+                    'type': 'LiveAgentEvent',
+                    'status': 'LIVEAGENT_BUTTON_AVAILABLE'
+                }, location.protocol + "//" + location.host);
+            }
+            if (e == liveagent.BUTTON_EVENT.BUTTON_UNAVAILABLE) {
+                parent.postMessage({
+                    'type': 'LiveAgentEvent',
+                    'status': 'LIVEAGENT_BUTTON_UNAVAILABLE'
+                }, location.protocol + "//" + location.host);
+            }
+        }
+        if (debugMode != null && debugMode != '') {
+            liveagent.enableLogging();
+        }
+
+        if (!window._laq) {
+            window._laq = [];
+        }
+
+        window._laq.push(function() {
+             liveagent.showWhenOnline(buttonId, document.getElementById('liveagent_button_online_' + buttonId));
+             liveagent.showWhenOffline(buttonId, document.getElementById('liveagent_button_offline_' + buttonId));
+        });
+        liveagent.addButtonEventHandler(buttonId, buttonCallback);
+
+        if (liveagentattrs != null && liveagentattrs.name != null && liveagentattrs.name != '') {
+            liveagent.setName(liveagentattrs.name);
+        }
+
+        if (liveagentattrs != null && liveagentattrs.contactId != null && liveagentattrs.contactId != '') {
+            liveagent.addCustomDetail('Contact ID', liveagentattrs.contactId, false);
+            console.log('Contact: ' + liveagentattrs.contactId);
+            liveagent.findOrCreate("Contact").map("Id", 'Contact ID', true, true, false);
+        }
+
+        liveagent.init(liveAgentInitUrl, deploymentId, orgId);
+    }
+
+    window.addEventListener('message', function(event) {
+        var eventData = event.data;
+
+        console.log('Received Event for Chat Message');
+        console.log(eventData);
+        if (eventData != null) {
+            var eventType = eventData.type;
+            if (eventType == 'INIT_LIVEAGENT') {
+                init_liveagent(eventData.attributes);
+            } else if (eventType == 'START_LIVEAGENT_CHAT') {
+                liveagent.startChat(buttonId);
+            }
+        }
+
+
+    });
+    </script>
+    <span id="{! 'liveagent_button_online_' + $CurrentPage.parameters.buttonId }"></span>
+    <span id="{! 'liveagent_button_offline_' + $CurrentPage.parameters.buttonId}"></span>
+</apex:page>

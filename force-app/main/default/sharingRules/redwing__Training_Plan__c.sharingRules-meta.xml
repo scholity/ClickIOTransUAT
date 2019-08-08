@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Customer_Portal_Access_to_Learning_Plan</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Sharing rule to enable CRE email to display name of learning plan</description>
+        <label>Customer Portal Access to Learning Plan</label>
+        <sharedTo>
+            <allCustomerPortalUsers/>
+        </sharedTo>
+        <sharedFrom>
+            <allInternalUsers/>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

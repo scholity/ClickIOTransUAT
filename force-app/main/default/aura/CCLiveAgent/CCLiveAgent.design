@@ -1,0 +1,11 @@
+<design:component>
+    <design:attribute name="buttonId" label="Button ID" description="Live Agent Button Id"/>
+    <design:attribute name="deploymentId" label="Deployment ID" description="Live Agent Deployment Id"/>
+    <design:attribute name="orgId" label="Organization ID" description="Organization Id"/>
+    <design:attribute name="liveagentInitUrl" label="Live Agent Init URL" description="Live Agent Init URL"/>
+    <design:attribute name="chatButtonLabel" label="Button Label" description="Live Chat Button Label"/>
+    <design:attribute name="agentBusyLabel" label="Agent Busy Message" description="Agent Busy Label"/>
+    <design:attribute name="debugMode" label="Debug Mode" description="If set to true, enables Live agent debug mode."/>
+    <design:attribute name="popupContact" label="Enable Contact Screen Pop" description="If set to true, pops up contact to the agent." default="false"/>
+
+</design:component>

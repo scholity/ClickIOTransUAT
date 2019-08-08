@@ -1,0 +1,23 @@
+<aura:component >
+	<aura:attribute name="columnName1" type="String" default=""/>
+	<aura:attribute name="columnName2" type="String" default=""/>
+	<aura:attribute name="columnName3" type="String" default=""/>
+
+	<aura:attribute name="caseComment" type="Object" default="{}"/>
+	<aura:attribute name="index" type="Integer" default=""/>
+
+	<aura:registerEvent name="navigateToURL" type="force:navigateToURL"/>
+  <aura:registerEvent name="caseCommentAction" type="c:PHSS_CaseCommentAction"/>
+
+	<tr>
+      <td scope="row" data-label="{#v.columnName1}">
+        <div class="slds-truncate">{!v.caseComment.ownerNick}</div>
+      </td>
+      <td data-label="{#v.columnName3}">
+        <div class="slds-truncate">{!v.caseComment.createdDate}</div>
+      </td>
+      <td data-label="{#v.columnName2}">
+        <div class="slds-truncate">{!v.caseComment.commentBody}</div>
+      </td>
+    </tr>
+</aura:component>

@@ -1,0 +1,26 @@
+<apex:page showHeader="false" title="{!$Label.site.in_maintenance}" cache="false">
+<html>
+<head>
+<apex:stylesheet value="{!URLFOR($Resource.PHSS_Maintenance_Page_Assets, 'style.css')}"/>
+</head>
+<body>
+<table align="center" style="margin: 0px auto; width: 800px;">
+    <tr>
+        <td>
+            <apex:image url="{!URLFOR($Resource.PHSS_Maintenance_Page_Assets, 'img/ARC_Logo_Bttn_HorizStkd_RGB_Rev-212891_250pxWhite.png')}" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="font-size: large;"><apex:outputText value="{!$Label.PHSS_InMaintenance_Message_Part_1}"/></p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p style="font-size: large;"><apex:outputText value="{!$Label.PHSS_InMaintenance_Message_Part_2}"/></p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+</apex:page>

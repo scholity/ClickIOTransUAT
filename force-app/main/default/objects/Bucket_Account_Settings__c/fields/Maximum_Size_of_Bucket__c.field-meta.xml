@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Maximum_Size_of_Bucket__c</fullName>
+    <description>Define how many contacts a bucket account may contain before it is considered closed and may not accept any more contacts. Note if you change this value, then you must request that all B2C contacts are reassigned to buckets. This can be done by setting their AccountID to null. Triggers will catch on this criteria and reassign them to buckets based on the new threshold.</description>
+    <externalId>false</externalId>
+    <label>Maximum Size of Bucket</label>
+    <precision>18</precision>
+    <required>true</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

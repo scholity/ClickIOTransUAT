@@ -1,0 +1,88 @@
+.THIS .chromeRerender {
+  -webkit-transform: translate3d(0,0,0);
+  transform: translateZ(0);
+}
+.THIS td.cclx-quantity-column, .THIS th.cclx-quantity-column {
+    width: 100px;
+}
+.THIS td.cclx-button-column {
+    width: 100px;
+}
+.THIS hr {
+    margin: 0;
+}
+.THIS .slds-tabs--default__content {
+    padding-bottom: 0;
+}
+.THIS .slds-input {
+    text-align: left;
+}
+.THIS img.product-image {
+    max-height: 5rem;
+}
+.THIS th span {
+    width: 100%;
+}
+.THIS .slds-table td {
+    white-space: normal;
+}
+.THIS .cc-lightButton {
+  min-height: calc(2.125rem + 2px)
+}
+
+.THIS .cc_modal_close {
+  top: -2rem;
+  right: -1.5rem;
+}
+
+.THIS .noteTitle {
+  margin-bottom: .75rem;
+}
+
+.THIS .note {
+  width: 100%;
+}
+
+.THIS .hidden {
+    display: none;
+}
+
+/*.THIS .checkoutAddress, .THIS .checkoutAddressEdit {
+    display: inline-block;
+    width: 45%;
+}*/
+
+.THIS .checkoutAddress>div {
+  display:inline-block;
+  vertical-align: top;
+}
+
+.THIS .imageCol {
+  height: 60px; /*if we don't set the height, artifacts show up when the list is rerendered */
+}
+
+.THIS .imageColHeader {
+  width: 110px;
+}
+
+.THIS .cclx-button-column {
+  width: 150px;
+}
+
+.THIS .amount-column {
+  width: 150px;
+}
+
+.THIS .updateButton {
+  display: block;
+}
+
+.THIS .deliveryDateField .uiInputDate {
+  display: inline-block;
+}
+
+@media all and (min-width: 480px) {
+    .THIS tr.mobile-only {
+      display: none;
+    }
+}

@@ -1,0 +1,24 @@
+.THIS.bordered {
+    border: 1px solid #9e9da2;
+}
+.THIS .heading-background{
+    background-color: #eaeaeb;
+    font-size: 1.1rem;
+}
+.THIS .address-link a{
+    display: flex;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+.THIS .address-link a > *:not(:last-child){
+    padding-right: 0.25rem;
+}
+.THIS .address-link a > *:not(:last-child):after{
+    content: ',';
+}
+.THIS .address-link a:hover{
+    text-decoration: unset;
+}

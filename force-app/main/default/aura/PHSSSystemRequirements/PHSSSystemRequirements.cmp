@@ -1,0 +1,30 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="Title" type="String" default="System Requirements" description="System Requirements" access="global" />
+    <div>
+    	<h2>{!v.Title}</h2>    	 
+    	<p>Please review before downloading the multimedia presentation.</p>
+	    <div>
+    	    <div id="download" class="dlUpdate3">   
+                <p>Adobe Reader: Adobe Reader 9 or higher (It’s free. Download now at <a href="http://get.adobe.com/reader/" target="_blank">http://get.adobe.com/reader/</a>)</p>
+                <p>Flash: Flash Player 9 for Windows and Mac; Flash Player 9 for Linux and Solaris</p>
+                <p>Processor: Intel Core 2 Duo/AMD Athlon 64 X2 GHz or faster processor (required for viewing the PDF, recommended for streaming the course presentation)</p>
+                <p>Memory: 2 GB of RAM or higher</p>
+                <p>Hard Drive: Recommended minimum of 2 GB of hard drive space (file requires 500 MB)</p>
+                <p>Operating System: Windows Vista, XP, Windows 7, 8 or Mac OS 10.5 or higher</p>
+                <br/>
+                <br/>
+                <p style="text-decoration: underline;">Equipment Requirements:</p>
+                <p>
+                    <ul><li>Laptop/desktop computer</li>
+                        <li>Power source</li>
+                        <li>Projector (including any connection cables)</li>
+                        <li>Projection screen/areaComputer speakers (or other source for sound)</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div>
+    	<p><em><strong>Note:</strong> The resolution of the videos in Adobe Presenter is excellent, but playback will be slightly different than playing the DVD directly.</em></p>    
+    </div>
+</aura:component>

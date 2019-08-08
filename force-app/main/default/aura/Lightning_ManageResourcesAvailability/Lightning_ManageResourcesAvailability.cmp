@@ -1,0 +1,3 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId" >
+	<ui:button label="Manage Availability" press="{!c.mangeResourceAvailability}" aura:id="btnManageAvailability" class="btnManageAvailability" /> 
+</aura:component>

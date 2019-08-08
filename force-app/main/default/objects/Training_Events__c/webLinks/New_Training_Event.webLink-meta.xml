@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Training_Event</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>New Training Event</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>/a1h/e?
+CF00Nd0000007xD4u={!Opportunity.Name}
+&amp;CF00Nd0000007xD4u_lkid={!Opportunity.Id}
+
+&amp;CF00Nd0000007xD4v={!Opportunity.Account}
+&amp;CF00Nd0000007xD4v_lkid={!Opportunity.AccountId}
+
+&amp;CF00Nd0000007xH4K={!User.Name}
+
+&amp;retURL={!Opportunity.Id}</url>
+</WebLink>

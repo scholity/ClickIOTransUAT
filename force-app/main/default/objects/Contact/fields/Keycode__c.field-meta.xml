@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Keycode__c</fullName>
+    <description>created for April 2015 Direct Marketing campaign run out of Business Operations.  intended to capture 3 character code on Postcards and Letters.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Keycode for used for marketing purposes.</inlineHelpText>
+    <label>Keycode</label>
+    <length>16</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

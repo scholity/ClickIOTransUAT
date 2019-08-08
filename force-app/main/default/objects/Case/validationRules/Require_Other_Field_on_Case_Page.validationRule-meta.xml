@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Other_Field_on_Case_Page</fullName>
+    <active>true</active>
+    <description>This validation rule will make the &quot;Other&quot; field required when an agent selects &quot;other&quot; from the any picklist value.
+
+This is different than the validation on the case close page because we are using 2 separate &quot;other&quot; fields based on field type.</description>
+    <errorConditionFormula>OR( 
+AND( 
+ISPICKVAL( Case_Sub_Type__c , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+), 
+AND( 
+ISPICKVAL( Type , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+), 
+AND( 
+ISPICKVAL( Course_Requested__c , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+), 
+AND( 
+ISPICKVAL( Follow_Up_Reason__c , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+), 
+AND( 
+ISPICKVAL( Primary_Reason_for_Update__c , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+), 
+AND( 
+ISPICKVAL ( Dispute_Issue__c , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+),
+AND( 
+ISPICKVAL ( Dispute_Issue__c , &#39;Invoice Presentation&#39;),
+RecordType.DeveloperName = &#39;Invoicing&#39;,
+ISPICKVAL(Type_of_Price_Dispute__c , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+),
+AND( 
+ISPICKVAL ( Type_of_Price_Dispute__c , &#39;Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+), 
+AND( 
+ISPICKVAL ( Case_Sub_Type__c , &#39;Marketing Other&#39;), 
+ISBLANK(Other__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+) 
+)</errorConditionFormula>
+    <errorDisplayField>Other__c</errorDisplayField>
+    <errorMessage>When an &quot;Other&quot; value is selected from a picklist you must fill in the &quot;Other&quot; text field.</errorMessage>
+</ValidationRule>

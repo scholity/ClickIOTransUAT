@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>On_Hold_Sub_Status__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>On-Hold Sub-Status</inlineHelpText>
+    <label>On-Hold Sub-Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not on Hold</fullName>
+                <default>false</default>
+                <label>Not on Hold</label>
+            </value>
+            <value>
+                <fullName>On Hold - Requested Additional Information from the Customer</fullName>
+                <default>false</default>
+                <label>On Hold - Requested Additional Information from the Customer</label>
+            </value>
+            <value>
+                <fullName>On Hold - Insufficient Payment</fullName>
+                <default>false</default>
+                <label>On Hold - Insufficient Payment</label>
+            </value>
+            <value>
+                <fullName>On Hold - Purchase Order Issue</fullName>
+                <default>false</default>
+                <label>On Hold - Purchase Order Issue</label>
+            </value>
+            <value>
+                <fullName>On Hold - Course Record Discrepancy</fullName>
+                <default>false</default>
+                <label>On Hold - Course Record Discrepancy</label>
+            </value>
+            <value>
+                <fullName>On Hold - PRT Escalation</fullName>
+                <default>false</default>
+                <label>On Hold - PRT Escalation</label>
+            </value>
+            <value>
+                <fullName>On Hold - ITSD</fullName>
+                <default>false</default>
+                <label>On Hold - ITSD</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

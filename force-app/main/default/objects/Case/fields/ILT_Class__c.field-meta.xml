@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ILT_Class__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>ILT Class</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>Please Select an ILT Class</errorMessage>
+        <filterItems>
+            <field>redwing__ILT_Class__c.Request_Type__c</field>
+            <operation>equals</operation>
+            <value>LTP/AP</value>
+        </filterItems>
+        <infoMessage>Please select an Class for CRE + RBC Case</infoMessage>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>redwing__ILT_Class__c</referenceTo>
+    <relationshipLabel>Cases</relationshipLabel>
+    <relationshipName>Cases</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>true</trackTrending>
+    <type>Lookup</type>
+</CustomField>

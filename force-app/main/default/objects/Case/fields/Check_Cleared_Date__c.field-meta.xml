@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Cleared_Date__c</fullName>
+    <description>Used for Service Cases of Type Invoice</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Enter date the check or credit card payment cleared (per customer or document).</inlineHelpText>
+    <label>Check Cleared Date</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_Discount_Amount_Cur__c</fullName>
+    <description>Used for Service Cases of Type Invoice</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Amount of any discount applied to invoice.</inlineHelpText>
+    <label>Current Discount Amount</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

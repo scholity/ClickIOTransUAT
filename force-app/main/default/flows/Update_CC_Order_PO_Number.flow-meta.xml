@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Do_Nothing</name>
+        <label>Do Nothing</label>
+        <locationX>360</locationX>
+        <locationY>207</locationY>
+        <actionName>Donothing</actionName>
+        <actionType>apex</actionType>
+    </actionCalls>
+    <decisions>
+        <description>If NO PO then end</description>
+        <name>Stored_Payment_Record_Exists</name>
+        <label>Stored Payment Record Exists</label>
+        <locationX>354</locationX>
+        <locationY>58</locationY>
+        <defaultConnector>
+            <targetReference>Do_Nothing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Stored_Payment_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sTransactionPayment.ccrz__StoredPayment__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Stored_Payment</targetReference>
+            </connector>
+            <label>Stored Payment Exists</label>
+        </rules>
+    </decisions>
+    <description>Used in Process Builder to update PO number</description>
+    <interviewLabel>Update CC Order PO Number {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update CC Order PO Number</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Stored_Payment</name>
+        <label>Get Stored Payment</label>
+        <locationX>517</locationX>
+        <locationY>60</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Order</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sTransactionPayment.ccrz__StoredPayment__c</elementReference>
+            </value>
+        </filters>
+        <object>ccrz__E_StoredPayment__c</object>
+        <outputReference>sStoredPayment</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ccrz__DisplayName__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Transaction_Payment_Record</name>
+        <label>Get Transaction Payment Record</label>
+        <locationX>201</locationX>
+        <locationY>53</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Stored_Payment_Record_Exists</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>frmTransactionPayment</elementReference>
+            </value>
+        </filters>
+        <object>ccrz__E_TransactionPayment__c</object>
+        <outputReference>sTransactionPayment</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ccrz__StoredPayment__c</queriedFields>
+        <queriedFields>ccrz__CCOrder__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Order</name>
+        <label>Update Order</label>
+        <locationX>738</locationX>
+        <locationY>68</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sTransactionPayment.ccrz__CCOrder__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ccrz__PONumber__c</field>
+            <value>
+                <elementReference>sStoredPayment.ccrz__DisplayName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>ccrz__E_Order__c</object>
+    </recordUpdates>
+    <startElementReference>Get_Transaction_Payment_Record</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>frmTransactionPayment</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>sStoredPayment</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ccrz__E_StoredPayment__c</objectType>
+    </variables>
+    <variables>
+        <name>sTransactionPayment</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ccrz__E_TransactionPayment__c</objectType>
+    </variables>
+</Flow>

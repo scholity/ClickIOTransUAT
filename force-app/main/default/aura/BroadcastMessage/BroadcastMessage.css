@@ -1,0 +1,42 @@
+.THIS {
+
+}
+.THIS.info, .THIS.success, .THIS.warning, .THIS.error, .THIS.validation {
+	border: 1px solid;
+	margin: 10px 0px;
+	padding: 10px 10px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	border-radius: 10px;
+	font-family: Arial, Serif;        
+    display: block;
+    height: 70px;
+    text-align: center;
+}
+.THIS.info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('info.png');
+}
+.THIS.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image:url('success.png');
+}
+.THIS.warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('warning.png');
+}
+.THIS.error {
+    color: #FFFFFF;
+    background-color: #ED1B2E; 
+    background-image: url('error.png');
+}
+.THIS #close_popup{
+    display:block;
+    width:24px;
+    height:24px;
+    background:url('http://cdn3.iconfinder.com/data/icons/gnomeicontheme/24x24/actions/window-close.png');
+    float:right;
+}

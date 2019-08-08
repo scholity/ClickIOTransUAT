@@ -1,0 +1,284 @@
+<aura:component controller="phss_cc_OnAccountBalanceController">
+    <!--Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!--Stored Payments from Server-->
+    <!-- <aura:attribute name="storedPaymentList" type="List"/> -->
+    <aura:attribute name="storedPaymentList" type="Object[]"/>
+    <aura:attribute name="storedPaymentMap" type="Map"/>
+
+    <!--Component Attributes-->
+    <aura:attribute name="currOpportunitySfid" type="String" default="false"/>
+    <aura:attribute name="selectedPOSfid" type="String" default=""/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="listUpdate" type="Boolean" default="false"/>
+    <aura:attribute name="invoiceType" type="String" default="noPO"/>
+
+    <!--Event handler-->
+    <aura:handler name="sendSelectedPO" event="c:phss_cc_SelectedPOEvent" action="{!c.handleSelectedPO}"/>
+
+    <!--Register Events-->
+    <aura:registerEvent name="sendPOToCart" type="c:phss_cc_POToCartEvent"/>
+
+    <!--New PO Attributes-->
+    <aura:attribute type="String" name="newPOName"/>
+    <aura:attribute type="String" name="newPOAmount"/>
+    <aura:attribute type="String" name="newPOStartDate"/>
+    <aura:attribute type="String" name="newPOEndDate"/>
+    <aura:attribute type="Boolean" name="newPODoSave" default="false"/>
+    <aura:attribute type="Boolean" name="showCalc" 		default="false"/>
+    <aura:attribute type="Boolean" name="showCalcErr" 		default="false"/>
+    <aura:attribute type="Boolean" name="disableSubmit" 		default="true"/>
+    <aura:attribute type = "Decimal" name = "TotalCartAmount"/>
+    <aura:attribute type = "Decimal" name = "TotalAppliedCreditAmount" />
+    <aura:attribute type = "Decimal" name = "RemainingCartAmount"/>
+
+    <!--Existing PO Attributes-->
+    <aura:attribute type="Boolean" name="shouldUpdatePOAmount" default="false"/>
+    <aura:attribute type="String" name="updatePOAmount"/>
+
+    <!--Spinner when page loads-->
+    <aura:attribute type="Boolean" name="showSpinner" default="false"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="Waiting on data from server."/>
+    </aura:if>
+
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning:icon class="slds-m-right--small" iconName="utility:description" size="medium"/>
+                </div>
+                <div class="slds-media__body">
+                    <h1>Account Balance Payment</h1>
+                </div>
+            </header>
+        </div>
+
+        <!--If not initialized-->
+        <aura:if isTrue="{!v.renderComplete == false}">
+            <div class="slds-align_absolute-center">
+                <lightning:formattedText class="slds-text-heading--medium slds-m-right--medium"
+                                         value="No stored payments found."/>
+            </div>
+        </aura:if>
+
+        <aura:if isTrue="{!v.renderComplete}">
+            <div class="slds-card__body slds-card__body_inner">
+<!-- 
+                <fieldset class="slds-form-element">
+                    <div class="slds-border**top slds-border**bottom">
+                        <div class="slds-grid slds-form-element__control slds-align-content-center slds-m-around_large">
+                            <ul class="slds-list_horizontal slds-has-block-links_space">
+                                <li class="slds-m-right_large">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id="noPORadio"
+                                                         type="radio"
+                                                         label="No PO"
+                                                         name="invoiceOptions"
+                                                         value="noPO"
+                                                         onclick="{!c.invoiceTypeSelected}"
+                                                         checked="{!if(equals(v.invoiceType, 'noPO'), true, false)}"/>
+                                    </span>
+                                </li>
+                                <li class="slds-m-right_large">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id="existingPORadio"
+                                                         type="radio"
+                                                         label="Existing PO"
+                                                         name="invoiceOptions"
+                                                         value="existingPO"
+                                                         onclick="{!c.invoiceTypeSelected}"
+                                                         checked="{!if(equals(v.invoiceType, 'existingPO'), true, false)}"/>
+                                    </span>
+                                </li>
+                                <li class="slds-m-right_large">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id="newPORadio"
+                                                         type="radio"
+                                                         label="New PO"
+                                                         name="invoiceOptions"
+                                                         value="newPO"
+                                                         onclick="{!c.invoiceTypeSelected}"
+                                                         checked="{!if(equals(v.invoiceType, 'newPO'), true, false)}"/>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset> -->
+
+                <!--List of existing POs-->
+               <!--  <aura:if isTrue="{!equals(v.invoiceType, 'existingPO')}"> 
+                    <aura:if isTrue="{!v.listUpdate}"> -->
+                        <h1 class="slds-text-heading--medium slds-m-vertical--small">
+                            <lightning:formattedText class="slds-m-right--xx-small" value="My Wallet:"/>
+                            <lightning:formattedNumber class="slds-m-right--xx-small"
+                                                       value="{!v.storedPaymentList.length}"/>
+                            <lightning:formattedText class="slds-m-right--xx-small" value=" stored payments."/>
+                        </h1>
+
+                <!-- <div class="slds-grid slds-border**top slds-border**bottom">
+                    <div class="slds-size_1-of-6 slds-text-align_left columnHeaders">CB Name</div>
+                    <div class="slds-size_1-of-6 slds-text-align_left columnHeaders">Start Date</div>
+                    <div class="slds-size_1-of-6 slds-text-align_left columnHeaders">End Date</div>
+                    <div class="slds-size_1-of-6 slds-text-align_right columnHeaders">Original CB Amount</div>
+                    <div class="slds-size_1-of-6 slds-text-align_right columnHeaders">Remaining CB Amount</div>
+                    <div class="slds-size_1-of-6 slds-align_absolute-center columnHeaders">Select</div>
+                </div>-->
+                <table class="slds-table slds-table--cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title--caps  slds-border--top slds-border--bottom">
+                            <th scope="col">
+                                <div class="slds-truncate columnHeaders" title="CB Name">CB Name</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate columnHeaders" title="Start Date">Start Date</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate columnHeaders" title="End Date">End Date</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate columnHeaders" title="Original CB Amount">Original CB Amount</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate columnHeaders" title="Remaining CB Amount">Remaining CB Amount</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate columnHeaders" title="Select">Select</div>
+                            </th>                                        
+                        </tr> 
+                    </thead>
+                    <!--  <div class="slds-scrollable**y" style="max-height: 20rem; height: auto;"> -->
+                    <tbody>
+                        <aura:iteration items="{!v.storedPaymentList}" var="storedPayment" indexVar="index">
+                            <tr>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <ui:outputText value="{!storedPayment.name}"/>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <ui:outputDate value="{!storedPayment.poStartDate}"/>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <ui:outputDate value="{!storedPayment.poEndDate}"/>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <ui:outputCurrency value = "{!storedPayment.originalPOAmount}"/>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate">
+                                        <ui:outputCurrency value = "{!storedPayment.remainingPOAmount}"/>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <ui:inputCheckbox value = "{!storedPayment.isSelected}" aura:id = "checkbox" change = "{!c.onCheck}"/>
+                                </th>                                    
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                       <!--  </div> -->
+                            
+        
+<!-- 
+                        <div class="slds-grid slds-border_top slds-border_bottom slds-m-bottom_xx-large">
+                            <div class="slds-size_2-of-6"></div>
+                            <div class="slds-size_2-of-6 slds-align_absolute-center">
+                                <lightning:input label="Update remaining PO amount"
+                                                 type="checkbox"
+                                                 value="{!v.shouldUpdatePOAmount}"
+                                                 onchange="{!c.toggleShouldUpdatePOAmount}"/>
+                            </div>
+                            <div class="slds-size_1-of-6">
+                                <lightning:input class="slds-m-bottom_medium"
+                                                 label=""
+                                                 type="number"
+                                                 step="0.01"
+                                                 value="{!v.updatePOAmount}"/>
+                            </div>
+                            <div class="slds-size_1-of-6"></div>
+                        </div> -->
+                    <!-- </aura:if>
+                </aura:if> -->
+
+               <lightning:button class="slds-align_absolute-center slds-m-top--large"
+                                  label="Calculate Total Credit" onclick="{!c.calculateCredit}"/>
+                
+                <br/><br/><br/>
+                <aura:if isTrue="{!v.showCalcErr}">
+                    <div style = "color : red;" class="slds-text-align_center">
+                    	Please select at least one Credit Balance.
+                    </div>
+                
+                </aura:if>
+                <aura:if isTrue="{!v.showCalc}">
+                    <div class="slds-border_right slds-border_bottom slds-border_left slds-border_top " style = "margin-left: 50%;">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-p-left_medium slds-p-top_medium slds-col slds-size_6-of-12"> 
+                                <b>Total Cart Amount</b>			 
+                            </div>
+                            <div class="slds-col slds-size_1-of-12 slds-p-top_medium">
+                                :
+                            </div>
+                            <div class="slds-col slds-size_5-of-12 slds-p-top_medium">
+                                <ui:outputCurrency value = "{!v.TotalCartAmount}" />
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-p-left_medium slds-col slds-size_2-of-4"> 
+                                <b>Total Applied Credit Amount</b> 
+                            </div>
+                            <div class="slds-col slds-size_1-of-12">
+                                :
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <ui:outputCurrency value = "{!v.TotalAppliedCreditAmount}" />
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-p-left_medium slds-p-bottom_medium slds-col slds-size_2-of-4"> 
+                                <b>Remaining Cart Amount</b>		 
+                            </div>
+                            <div class="slds-col slds-size_1-of-12">
+                                :
+                            </div>
+                            <div class="slds-col slds-size_5-of-12">
+                                <ui:outputCurrency value = "{!v.RemainingCartAmount}" />
+                            </div>
+                        </div>
+                    </div>
+                
+                    <br/>
+                    
+                    <!--Submit Payment-->
+                    <div align="center" class="slds-m-top--large">
+                        
+                        <lightning:button variant  = "success" 
+                                          label    = "Submit Payment"
+                                          disabled = "{!v.disableSubmit}"
+                                          onclick  = "{!c.submitPayment}"/>
+                        
+                        
+                        <lightning:button variant = "brand"
+                                          label	  = "Apply Payment"
+                                          onclick = "{!c.applyPayment}"/>
+                        
+                    </div>
+                    
+                </aura:if>
+            </div>
+        </aura:if>
+    </article>
+    
+	
+</aura:component>

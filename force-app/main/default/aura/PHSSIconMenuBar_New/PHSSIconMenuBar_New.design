@@ -1,0 +1,77 @@
+<design:component>
+    <design:attribute name="title" label="title"/>
+    <design:attribute name="MenuBarNumber" label="Number of Menubar to be displayed " datasource="3,6,9,12" />
+    <design:attribute name="hideChevronIcon" label="Hide Icon" datasource="yes,no" />
+    
+	<design:attribute name="label1" label="Label 1"/>
+    <design:attribute name="url1" label="Url 1"/>
+    <design:attribute name="image1" label="Image 1"/>
+    <design:attribute name="fontSize1" label="Font Size 1"/>
+    <design:attribute name="description1" label="description1"/>
+
+    <design:attribute name="label2" label="Label 2"/>
+    <design:attribute name="url2" label="Url 2"/>
+    <design:attribute name="image2" label="Image 2"/>
+    <design:attribute name="fontSize2" label="Font Size 2"/>
+    <design:attribute name="description2" label="description2"/>
+    
+    <design:attribute name="label3" label="Label 3"/>
+    <design:attribute name="url3" label="Url 3"/>
+    <design:attribute name="image3" label="Image 3"/>
+    <design:attribute name="fontSize3" label="Font Size 3"/>
+    <design:attribute name="description3" label="description3"/>
+    
+    <design:attribute name="label4" label="Label 4"/>
+    <design:attribute name="url4" label="Url 4"/>
+    <design:attribute name="image4" label="Image 4"/>
+    <design:attribute name="fontSize4" label="Font Size 4"/>
+    <design:attribute name="description4" label="description4"/>
+
+    <design:attribute name="label5" label="Label 5"/>
+    <design:attribute name="url5" label="Url 5"/>
+    <design:attribute name="image5" label="Image 5"/>
+    <design:attribute name="fontSize5" label="Font Size 5"/>
+    <design:attribute name="description5" label="description5"/>
+
+    <design:attribute name="label6" label="Label 6"/>
+    <design:attribute name="url6" label="Url 6"/>
+    <design:attribute name="image6" label="Image 6"/>
+    <design:attribute name="fontSize6" label="Font Size 6"/>
+    <design:attribute name="description6" label="description6"/>
+    
+    <design:attribute name="label7" label="Label 7"/>
+    <design:attribute name="url7" label="Url 7"/>
+    <design:attribute name="image7" label="Image 7"/>
+    <design:attribute name="fontSize7" label="Font Size 7"/>
+    <design:attribute name="description7" label="description7"/>
+    
+    <design:attribute name="label8" label="Label 8"/>
+    <design:attribute name="url8" label="Url 8"/>
+    <design:attribute name="image8" label="Image 8"/>
+    <design:attribute name="fontSize8" label="Font Size 8"/>
+    <design:attribute name="description8" label="description8"/>
+    
+    <design:attribute name="label9" label="Label 9"/>
+    <design:attribute name="url9" label="Url 9"/>
+    <design:attribute name="image9" label="Image 9"/>
+    <design:attribute name="fontSize9" label="Font Size 9"/>
+    <design:attribute name="description9" label="description9"/>
+    
+    <design:attribute name="label10" label="Label 10"/>
+    <design:attribute name="url10" label="Url 10"/>
+    <design:attribute name="image10" label="Image 10"/>
+    <design:attribute name="fontSize10" label="Font Size 10"/>
+    <design:attribute name="description10" label="description10"/>
+    
+    <design:attribute name="label11" label="Label 11"/>
+    <design:attribute name="url11" label="Url 11"/>
+    <design:attribute name="image11" label="Image 11"/>
+    <design:attribute name="fontSize11" label="Font Size 11"/>
+    <design:attribute name="description11" label="description11"/>
+    
+    <design:attribute name="label12" label="Label 12"/>
+    <design:attribute name="url12" label="Url 12"/>
+    <design:attribute name="image12" label="Image 12"/>
+    <design:attribute name="fontSize12" label="Font Size 12"/>
+    <design:attribute name="description12" label="description12"/>
+</design:component>

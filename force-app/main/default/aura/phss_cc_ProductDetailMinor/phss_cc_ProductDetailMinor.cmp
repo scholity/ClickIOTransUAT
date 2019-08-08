@@ -1,0 +1,130 @@
+<!--
+ - Created by dgajwani on 10/9/18.
+ -->
+
+<aura:component description="phss_cc_ProductDetailMinor">
+
+    <!--Product Details-->
+    <aura:attribute name="product" type="Map"/>
+    <aura:attribute name="productMap" type="Map" default="{}"/>
+    <aura:attribute name="productSfid" type="String"/>
+
+    <aura:attribute name="productQuantityMap" type="Map"/>
+    <aura:attribute name="productCount" type="Integer"/>
+
+    <aura:attribute name="allowsPriceOverride" type="Boolean" default="false"/>
+    <aura:attribute name="showDiscountPricing" type="Boolean" default="false"/>
+
+    <aura:registerEvent name="showPriceOverrideModal" type="c:phss_cc_ShowPriceOverrideModalEvent"/>
+
+    <!--Initializer-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds-grid slds-p-bottom--medium slds-p-top--medium">
+        <div class="slds-size_2-of-12">
+
+        </div>
+        <div class="slds-p-left--x-large slds-size_4-of-12 cellProperties">
+            <lightning:formattedText value="{!v.product.sfdcName}"/>
+        </div>
+
+
+        <aura:if isTrue="{!not(v.showDiscountPricing)}">
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <lightning:formattedText value="{!v.product.unitOfMeasure}"/>
+            </div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <aura:if isTrue="{!v.allowsPriceOverride}">
+                    <a onclick="{!c.handlePriceOverrideClick}" class="priceOverrideLink">
+                        <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                   currencyDisplayAs="symbol" value="{!v.product.price}"/>
+                        <aura:if isTrue="{!equals(v.product.pricingType, 'external')}">
+                            <img src="{!$Resource.AttentionIcon}" class="attentionIcon" alt="Price has been overridden"/>
+                        </aura:if>
+                    </a>
+
+                    <aura:set attribute="else">
+                        <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                   currencyDisplayAs="symbol" value="{!v.product.price}"/>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </aura:if>
+
+
+        <aura:if isTrue="{!v.showDiscountPricing}">
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <aura:if isTrue="{!v.allowsPriceOverride}">
+                    <a onclick="{!c.handlePriceOverrideClick}" class="priceOverrideLink">
+                        <aura:if isTrue="{!equals(v.product.pricingType, 'external')}">
+                            <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                       currencyDisplayAs="symbol" value="{!v.product.originalItemPrice}"/>
+                            <aura:set attribute="else">
+                                <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                           currencyDisplayAs="symbol" value="{!v.product.price}"/>
+                            </aura:set>
+                        </aura:if>
+                    </a>
+
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!equals(v.product.pricingType, 'external')}">
+                            <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                       currencyDisplayAs="symbol" value="{!v.product.originalItemPrice}"/>
+
+                            <aura:set attribute="else">
+                                <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                           currencyDisplayAs="symbol" value="{!v.product.price}"/>
+                            </aura:set>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+
+            </div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <aura:if isTrue="{!v.allowsPriceOverride}">
+                    <a onclick="{!c.handlePriceOverrideClick}" class="priceOverrideLink">
+                        <aura:if isTrue="{!equals(v.product.pricingType, 'external')}">
+                            <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                       currencyDisplayAs="symbol" value="{!v.product.price}"/>
+                        </aura:if>
+                    </a>
+
+                    <aura:set attribute="else">
+                        <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                   currencyDisplayAs="symbol" value="{!v.product.price}"/>
+                    </aura:set>
+                </aura:if>
+            </div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <aura:if isTrue="{!v.allowsPriceOverride}">
+                    <a onclick="{!c.handlePriceOverrideClick}" class="priceOverrideLink">
+                        <aura:if isTrue="{!equals(v.product.pricingType, 'external')}">
+                            {!v.product.percentDiscount}
+                            <img src="{!$Resource.AttentionIcon}" class="attentionIcon" alt="Price has been overridden"/>
+                        </aura:if>
+                    </a>
+
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!equals(v.product.pricingType, 'external')}">
+                            {!v.product.percentDiscount}
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </aura:if>
+
+
+        <div class="slds-size_1-of-12">
+            &nbsp;
+        </div>
+
+        <div class="slds-size_2-of-12 slds-align_absolute-center cellProperties">
+            <lightning:layout horizontalAlign="center">
+                <lightning:layoutItem class="slds-m-left--large slds-m-right--large">
+                    <ui:outputNumber value="{!v.productCount}"/>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </div>
+    </div>
+
+</aura:component>

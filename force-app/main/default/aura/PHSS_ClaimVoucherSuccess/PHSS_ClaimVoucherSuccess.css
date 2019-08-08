@@ -1,0 +1,19 @@
+.THIS.container {
+    text-align: center;
+}
+.THIS .sfdc_button {
+    color: #fff;
+    background-color: #ed1b2e;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+}
+.THIS .content {
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    color: #6D6E70;
+    line-height: unset;
+}
+.THIS .btn {
+    padding-bottom: 10px;
+}

@@ -1,0 +1,91 @@
+<!--
+ - Created by dgajwani on 9/24/18.
+ -->
+
+<aura:component description="phss_cc_ProductListComponent" implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="phss_cc_ProductListComponentController">
+
+    <!--Retrieved from Server-->
+    <aura:attribute name="productList" type="List"/>
+    <aura:attribute name="productsMap" type="Map"/>
+
+    <!--Variables to maintain a cart on the front end-->
+    <aura:attribute name="encryptedCartId" type="String" default=""/>
+    <aura:attribute name="productQuantityMap" type="Map" default="{}"/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
+    <!--Event Handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdate" action="{!c.productCountIncrement}"/>
+    <aura:handler name="decrementProductCount" event="c:phss_cc_ProductCountUpdate" action="{!c.productCountDecrement}"/>
+    <aura:handler event="c:phss_cc_RefreshComponentEvent" action="{!c.handleRefreshComponentEvent}"/>
+
+    <!--Register Event-->
+    <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
+
+    <!--Component Attributes-->
+    <aura:attribute type="String" name="searchQuery"/>
+
+    <!--Spinner when page loads-->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="{!$Label.c.Spinner_Alternate_Text}"/>
+    </aura:if>
+
+    <!--Product Search Input-->
+    <lightning:layout>
+        <lightning:layoutItem>
+            <lightning:icon class="slds-m-right--x-small" iconName="utility:search" size="x-small"/>
+        </lightning:layoutItem>
+        <lightning:layoutItem>
+            <h1 class="slds-text-heading--medium">{!$Label.c.Product_Search_Header}</h1>
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <div class="slds-grid slds-wrap slds-m-bottom--large">
+        <div class="slds-col slds-size_2-of-6 slds-m-right--small">
+            <ui:inputText value="{!v.searchQuery}"/>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <lightning:button label="Submit" name="searchButton" onclick="{!c.onSearch}" variant="brand"/>
+        </div>
+    </div>
+
+    <!--Render Product Table-->
+    <aura:if isTrue="{!v.renderComplete}">
+        <h1 class="slds-text-heading--medium slds-m-bottom--small">
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.ProductSearch_Table_Header}"/>
+            <lightning:formattedNumber class="slds-m-right--xx-small" value="{!v.productList.length}"/>
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.ProductSearch_Table_Header_Value_Type}"/>
+        </h1>
+        <div class="slds-grid slds-border--top slds-border--bottom slds-m-bottom--small">
+            <div class="slds-size_2-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_SKU}</div>
+            <div class="slds-size_4-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_Name}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_UOM}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Price}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">&nbsp;</div>
+            <div class="slds-size_2-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>
+        </div>
+        <div class="slds-scrollable--y slds-m-bottom--large" style="max-height: 20rem; height: auto;">
+            <aura:iteration items="{!v.productList}" var="product">
+                <c:phss_cc_ProductDetail productSfid="{!product}"
+                                         productMap="{!v.productsMap}"
+                                         allowsKitComponentPopover="true"/>
+            </aura:iteration>
+
+            <!--SPACER to accommodate a popover for the last row-->
+            <div style="width: 35px; height: 35px;"></div>
+        </div>
+
+        <!--Add to cart button-->
+        <lightning:button iconName="utility:add" class="slds-align_absolute-center slds-m-top--x-large" label="{!$Label.c.ProductSearch_Button_AddToCart}" name="addToCartButton" variant="brand" onclick="{!c.addProdsToCart}"/>
+
+        <aura:set attribute="else">
+            <div class="slds-border--top slds-border--bottom">
+                <lightning:formattedText class="slds-align_absolute-center slds-text-heading--small"
+                                         value="{!$Label.c.ProductSearch_OnLoad_Message}"/>
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

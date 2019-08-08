@@ -1,0 +1,79 @@
+<apex:page controller="CTIScreenPopCtlr" action="{!initConfirmContactInformation}" >
+ <apex:includeScript value="/support/console/20.0/integration.js"/>
+<apex:form >
+ 
+  
+<script type="text/javascript">     
+        
+       function setTabTitle() {
+          // sforce.console.setTabTitle('test');
+       }      
+
+       
+       var previousOnload = window.onload;       
+       window.onload = function() {
+            if (previousOnload) {
+                previousOnload();
+            }               
+            setTimeout('setTabTitle()', '500');
+       }
+</script>
+
+<style>
+#application {
+   font-size: 1.1em;
+   padding: 2em;
+}
+
+#application h1 {
+    font-size: 1.5em;
+}
+#application h2 {
+    font-style: italic;
+    font-size: 1.2em;
+}
+.page-icon {
+    float: left;
+    width: 55px;
+    height: 55px;
+    margin-right: 1.5em;
+    
+}
+</style>
+
+
+<div id="application">
+
+    <c:PleaseWaitOverlay message=""/>
+
+    <div style="margin-bottom: 2em;">
+        <apex:image value="{!URLFOR( $Resource.CTIScreenPopResources, 'contact-info.png'  )}" styleClass="page-icon"   ></apex:image>
+        <h1>Please Confirm Contact Information</h1>
+        <div><h2></h2></div>        
+    </div>   
+     
+    
+    <apex:pageMessages id="msgs" ></apex:pageMessages>
+    
+    <apex:pageBlock >
+        <apex:pageBlockSection >   
+            <apex:inputField value="{!confirmContactProxy.firstName}" label="First Name" required="true"/>
+            <apex:inputField value="{!confirmContactProxy.lastName}" label="Last Name" required="true"/>
+            <apex:inputField value="{!confirmContactProxy.Phone}" label="Phone" required="true"/>
+            <apex:inputField value="{!confirmContactProxy.email}" label="Email" required="true"/>
+            <apex:inputField value="{!confirmContactProxy.mailingStreet}" label="Street" required="false"/>
+            <apex:inputField value="{!confirmContactProxy.mailingCity}" label="City" required="false"/>
+            <apex:inputField value="{!confirmContactProxy.mailingState}" label="State" required="false"/>
+            <apex:inputField value="{!confirmContactProxy.mailingPostalCode}" label="Zip" required="false"/>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Confirm" action="{!confirm}" rerender="msgs" status="pleaseWaitOverlay"/>
+            <apex:commandButton value="Back" action="{!cancelConfirmContactInformation}" immediate="true"/>
+        </apex:pageBlockButtons>
+ 
+    </apex:pageBlock>
+</div>
+
+</apex:form>
+</apex:page>

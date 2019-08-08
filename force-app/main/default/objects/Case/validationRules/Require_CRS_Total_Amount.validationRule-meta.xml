@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_CRS_Total_Amount</fullName>
+    <active>false</active>
+    <description>The CRS Total Amount field is required when the Case Sub-Type is &quot;Authorized Provider&quot; or &quot;Full Service&quot;</description>
+    <errorConditionFormula>OR( 
+AND( 
+ISPICKVAL(Case_Sub_Type__c, &#39;Authorized Provider&#39;), 
+ISBLANK(CRS_Total_Amount__c),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE  
+), 
+AND ( 
+ISPICKVAL(Case_Sub_Type__c, &#39;Full Service&#39;), 
+ISBLANK (CRS_Total_Amount__c),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE  
+) 
+)</errorConditionFormula>
+    <errorDisplayField>CRS_Total_Amount__c</errorDisplayField>
+    <errorMessage>When the Case Sub-Type is &quot;Authorized Provider&quot; or &quot;Full Service&quot;, you must provide the CRS Total Amount</errorMessage>
+</ValidationRule>

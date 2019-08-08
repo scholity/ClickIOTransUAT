@@ -1,0 +1,182 @@
+<apex:component >
+  <script>
+    (function(window, angular, moment, _) {
+        var mod = angular.module('app.exportExcelModule', []);
+        mod.factory('exportExcelSvc', function(){
+            var rowIndex, lastColInx;
+            var excelRowHeader = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
+            var excelColors = ["", "FF2FA5CC", "FF2FA5CC", "FF2FA5CC"];
+
+            var jobTableHeaderCols = ["JOB NAME", "JOB DESCRIPTION", "ACCOUNT", "JOB DATE", "START TIME", "END TIME", "JOB LOCATION", "JOB TYPE", "JOB STATUS"];
+
+            var activityTableHeaderCols = ["ACTIVITY NAME", "ACTIVITY DATE", "START TIME", "END TIME", "ACTIVITY TYPE"];
+
+            var availabilityTableHeaderCols = ["AVAILABILITY NAME", "AVAILABILITY DATE", "START TIME", "END TIME", "AVAILABILITY TYPE", "STATUS", "IS AVAILABLE"];
+
+            var addRow = function(worksheet, row) {
+                worksheet.addRow(row);
+                rowIndex++;
+            }
+
+            var getMaxLevel = function(group, level) {
+                if (group.type && group.type === 'group') {
+                    if (group.items && group.items.length > 0) {
+                        level = getMaxLevel(group.items[0], level+1);
+                    }
+                }
+                return level;
+            }
+
+            var buildExcelWorkbook = function(exportData) {
+                var sheetName = 'Resource Activities Report';
+                var maxLevel = getMaxLevel(exportData[0], 1);
+                lastColInx = maxLevel + jobTableHeaderCols.length - 1;
+                rowIndex = 1;
+
+                // create workbook & add worksheet
+                var workbook = new ExcelJS.Workbook();
+                var worksheet = workbook.addWorksheet(sheetName);
+
+                worksheet.getColumn(excelRowHeader[maxLevel]).width = 17;
+                worksheet.getColumn(excelRowHeader[maxLevel + 1]).width = 24;
+                worksheet.getColumn(excelRowHeader[maxLevel + 2]).width = 20;
+                worksheet.getColumn(excelRowHeader[maxLevel + 3]).width = 16;
+                worksheet.getColumn(excelRowHeader[maxLevel + 4]).width = 16;
+                worksheet.getColumn(excelRowHeader[maxLevel + 5]).width = 16;
+                worksheet.getColumn(excelRowHeader[maxLevel + 6]).width = 40;
+                worksheet.getColumn(excelRowHeader[maxLevel + 7]).width = 22;
+                worksheet.getColumn(excelRowHeader[maxLevel + 8]).width = 20;
+                
+                renderingGroups(worksheet, 1, exportData);
+                
+                return workbook;
+            }
+
+            var renderingGroups = function(worksheet, level, groups) {
+                angular.forEach(groups, function(group) {
+                    var groupRow = [];
+                    var label = group.name;
+                    if (!group.type || group.type !== 'group') {
+                        label += ' - ' + group.employmentType + ' - ' + group.regionName;
+                    }
+                    groupRow[level] = label;
+                    addRow(worksheet, groupRow);
+
+                    var firstCell = excelRowHeader[level] + (rowIndex - 1);
+                    var lastCell = excelRowHeader[lastColInx] + (rowIndex - 1);
+                    worksheet.mergeCells(firstCell + ':' + lastCell);
+
+                    worksheet.getCell(firstCell).fill = {
+                        type: 'pattern',
+                        pattern:'solid',
+                        fgColor:{argb:excelColors[level]}
+                    };
+
+                    addRow(worksheet, []);
+                    
+                    if (group.type && group.type === 'group') {
+                        if (group.items && group.items.length > 0) {
+                            renderingGroups(worksheet, level+1, group.items);
+                        }
+                    }
+                    else {
+                        renderingResource(worksheet, level, group);
+                    }
+                });
+            }
+
+            var renderingResource = function(worksheet, level, group) {
+                if (group.jobs && group.jobs.length > 0) {
+                    var jobTableHeaderRow = [];
+                    for (var i = 0; i < jobTableHeaderCols.length; i++) {
+                        jobTableHeaderRow[level+i] = jobTableHeaderCols[i];
+                    }
+                    addRow(worksheet, jobTableHeaderRow);
+                    worksheet.getRow(rowIndex - 1).font = { bold: true };
+
+                    outlineBorderARow(worksheet.getRow(rowIndex - 1), level, lastColInx);
+
+                    angular.forEach(group.jobs, function(job) {
+                        var jobTableRowCells = [job.name, job.description, job.accountName, job.dateStr, job.startTimeStr, job.endTimeStr, job.jobLocation, job.jobType, job.status];
+                        var jobTableRow = []
+                        for (var i = 0; i < jobTableRowCells.length; i++) {
+                            jobTableRow[level+i] = jobTableRowCells[i];
+                        }
+                        addRow(worksheet, jobTableRow);
+
+                        outlineBorderARow(worksheet.getRow(rowIndex - 1), level, lastColInx);
+                    });
+
+                    addRow(worksheet, []);
+                }
+
+                if (group.activities && group.activities.length > 0) {
+                    var activityTableHeaderRow = [];
+                    for (var i = 0; i < activityTableHeaderCols.length; i++) {
+                        activityTableHeaderRow[level+i] = activityTableHeaderCols[i];
+                    }
+                    addRow(worksheet, activityTableHeaderRow, level);
+                    worksheet.getRow(rowIndex - 1).font = { bold: true };
+
+                    outlineBorderARow(worksheet.getRow(rowIndex - 1), level, level + activityTableHeaderCols.length - 1);
+
+                    angular.forEach(group.activities, function(activity) {
+                        var activityTableRowCells = [activity.name, activity.dateStr, activity.startTimeStr, activity.endTimeStr, activity.activityType];
+                        var activityTableRow = []
+                        for (var i = 0; i < activityTableRowCells.length; i++) {
+                            activityTableRow[level+i] = activityTableRowCells[i];
+                        }
+                        addRow(worksheet, activityTableRow);
+
+                        outlineBorderARow(worksheet.getRow(rowIndex - 1), level, level + activityTableHeaderCols.length - 1);
+                    });
+
+                    addRow(worksheet, []);
+                }
+
+                if (group.availabilities && group.availabilities.length > 0) {
+                    var availabilityTableHeaderRow = [];
+                    for (var i = 0; i < availabilityTableHeaderCols.length; i++) {
+                        availabilityTableHeaderRow[level+i] = availabilityTableHeaderCols[i];
+                    }
+                    addRow(worksheet, availabilityTableHeaderRow, level);
+                    worksheet.getRow(rowIndex - 1).font = { bold: true };
+
+                    outlineBorderARow(worksheet.getRow(rowIndex - 1), level, level + availabilityTableHeaderCols.length - 1);
+
+                    angular.forEach(group.availabilities, function(availability) {
+                        var isAvalableTxt = availability.isAvailable === true ? 'YES' : 'NO';
+                        var availabilityTableRowCells = [availability.name, availability.dateStr, availability.startTimeStr, availability.endTimeStr, availability.availabilityType, availability.status, isAvalableTxt];
+                        var availabilityTableRow = []
+                        for (var i = 0; i < availabilityTableRowCells.length; i++) {
+                            availabilityTableRow[level+i] = availabilityTableRowCells[i];
+                        }
+                        addRow(worksheet, availabilityTableRow);
+
+                        outlineBorderARow(worksheet.getRow(rowIndex - 1), level, level + availabilityTableHeaderCols.length - 1);
+                    });
+
+                    addRow(worksheet, []);
+                }
+            }
+
+            var outlineBorderARow = function(row, startIndex, endIndex) {
+                for (var i = startIndex; i <= endIndex; i++) {
+                    var cell = row.getCell(i);
+                    cell.border = {
+                        top: {style:'thin', color: {argb:'333333'}},
+                        left: {style:'thin', color: {argb:'333333'}},
+                        bottom: {style:'thin', color: {argb:'333333'}},
+                        right: {style:'thin', color: {argb:'333333'}}
+                    };
+
+                }
+            }
+
+            return {
+                buildExcelWorkbook: buildExcelWorkbook
+            };
+        })
+    })(window, angular, moment, _);
+    </script>
+</apex:component>

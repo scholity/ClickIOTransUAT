@@ -1,0 +1,39 @@
+<aura:component access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="url" type="String"/>
+
+    <aura:registerEvent name="appEvent" type="c:PHSSProgramMaterialListItemToggleEvent"/>
+    <aura:handler event="c:PHSSProgramMaterialListItemToggleEvent" action="{!c.handleToggle}"/>
+
+
+    <aura:attribute name="materialObject" type="PHSS_Material__C"/>
+    <aura:attribute name="previewAvailable" type="Boolean" default="true"/>
+    <aura:attribute name="expanded" type="Boolean" default="false"/>
+    <aura:attribute name="isLink" type="Boolean" default="false"/>
+    <aura:attribute name="unavailablePreviewMessage" type="String" access="public" required="true"/>
+
+    <tr class="{!v.expanded ? 'preview-expanded' : ''}">
+        <td scope="row" data-label="Material Name">
+            <div class="slds-truncate cursor slds-grid" title="{!v.materialObject.Material_Name__c}" onclick="{!c.toggle}">
+            	<span class="slds-size--10-of-12 break-line">{!v.materialObject.Material_Name__c}</span>
+                <span class="slds-size--3-of-12 slds-hide">{!v.materialObject.LastModifiedDate}</span>
+                <span class="slds-size--2-of-12">{!v.materialObject.Type__c}</span>
+            </div>
+            <aura:if isTrue="{!v.expanded}">
+	            <div class="expandable-area">
+	            	<a href="{#v.materialObject.ContentVersionLink__c}" download="">
+                        <lightning:button variant="neutral" label="Download" iconName="utility:download" iconPosition="left" class="slds-m-top--small"/>     
+                    </a>
+                    <aura:if isTrue="{!v.previewAvailable}">
+                        <div class="preview-container">
+                            <aura:if isTrue="{!v.materialObject.Type__c=='Video' || v.materialObject.Type__c=='Document'}">
+                                <c:PHSSMaterialPreview materialObject="{!v.materialObject}" unavailablePreviewMessage="{#v.unavailablePreviewMessage}"
+								 	url="{#v.url}"/>
+                            </aura:if>
+                        </div>
+                    </aura:if>
+	            </div>
+	        </aura:if>
+        </td>
+    </tr>
+</aura:component>

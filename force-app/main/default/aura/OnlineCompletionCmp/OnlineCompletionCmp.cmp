@@ -1,0 +1,61 @@
+<aura:component
+    implements="force:hasRecordId,forceCommunity:availableForAllPageTypes"
+    controller="RCOnlineCompletionCtrl">
+
+    <aura:attribute name="recordId"             type="String"  default="" />
+    <aura:attribute name="allRosters"           type="Integer" default="0" />
+    <aura:attribute name="completedRosters"     type="Integer" default="0" />
+    <aura:attribute name="isDataLoaded"         type="Boolean" default="false" />
+    <aura:attribute name="isPieLoaded"          type="Boolean" default="false" />
+    <aura:attribute name="isInstructor"          type="Boolean" default="false" />
+
+    <aura:attribute name="label_Online_Completion"     type="String" default="{!$Label.c.Online_Completion}" />
+    <aura:attribute name="label_Complete"              type="String" default="{!$Label.c.Complete}" />
+    <aura:attribute name="label_No"                    type="String" default="{!$Label.c.No}" />
+    <aura:attribute name="label_Yes"                   type="String" default="{!$Label.c.Yes}" />
+
+    <ltng:require scripts="{!join(',',
+                                $Resource.RCUilib + '/jsLibs/d3.min.js',
+                                $Resource.RCUilib + '/jsLibs/d3pie.min.js'
+                            )}" afterScriptsLoaded="{!c.afterScriptsLoaded}" />
+
+    <aura:handler name="init" value="this" action="{!c.doInit}" />
+
+
+    <div class="slds-p-around_medium slds-is-relative">
+        <c:TemplateMainCmp  aura:id         ="templateMainCmp"
+                            hasContent      ="{!v.isInstructor}">
+            <div class="slds-text-heading_medium">
+                <b>
+                    {!v.label_Online_Completion}
+                </b>
+            </div>
+
+            <div class="slds-m-vertical_medium slds-grid slds-grid_align-center">
+                <div id="pie-container" aura:id="pie-container" class="pie-container">
+
+                </div>
+                <div class="{! 'pieLabel ' + (v.completedRosters > 999 ? 'twoLine' : 'oneLine')}">
+                    {! v.completedRosters + '/' + ( v.completedRosters > 999 ? ' ' : '') + v.allRosters}
+                </div>
+            </div>
+
+            <div class="slds-grid slds-grid_vertical-align-center">
+                <div class="slds-m-right_small">{!v.label_Complete + ' |'}</div>
+                <div class="slds-p-right_small slds-grid slds-grid_vertical-align-center">
+                    <div class="circle circle-gray slds-m-right_xx-small"></div>
+                    <div>{!v.label_No}</div>
+                </div>
+                <div class="slds-p-right_small slds-grid slds-grid_vertical-align-center">
+                    <div class="circle circle-green slds-m-right_xx-small"></div>
+                    <div>{!v.label_Yes}</div>
+                </div>
+            </div>
+            <aura:if isTrue="{!and(!v.isDataLoaded, !v.isPieLoaded)}">
+                <lightning:spinner size="medium" alternativeText="Loading..." />
+            </aura:if>
+        </c:TemplateMainCmp>
+
+    </div>
+
+</aura:component>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pricing_Approval_Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(TEXT(Pricing_Approval_Level__c)=&quot;No Approval Needed&quot;,
+IMAGE(&quot;/img/samples/flag_green.gif&quot;, &quot;Green&quot;),
+( 
+IF(TEXT(Approval_Status__c)=&quot;Approved&quot;,
+IMAGE(&quot;/img/samples/flag_green.gif&quot;, &quot;Green&quot;),
+IMAGE(&quot;/img/samples/flag_red.gif&quot;, &quot;Red&quot;)
+)
+)
+)</formula>
+    <label>Pricing Approval Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

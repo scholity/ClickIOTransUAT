@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Spots_Taken_Not_Null_For_Bucket_Accounts</fullName>
+    <active>true</active>
+    <description>Accounts that are of Bucket Account RecordType should always have a Spots_Taken__c value, as it is completely necessary.</description>
+    <errorConditionFormula>RecordType.Id ==  $Setup.Bucket_Account_Settings__c.Bucket_Account_RecordTypeID__c &amp;&amp;  Spots_Taken__c == NULL</errorConditionFormula>
+    <errorDisplayField>Spots_Taken__c</errorDisplayField>
+    <errorMessage>All bucket accounts must have spots taken filled out</errorMessage>
+</ValidationRule>

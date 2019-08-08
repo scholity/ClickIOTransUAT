@@ -1,0 +1,15 @@
+<!--
+ - Created by dgajwani on 9/14/18.
+ -->
+
+<apex:page applyHtmlTag="false" docType="html-5.0" sidebar="false" showHeader="false" standardStylesheets="false"
+           controller="phss_cc_CyberSourceCCProcessorPostback">
+    <body>
+    <script type="text/javascript">
+        var result = '<apex:outputText value="{!JSENCODE(result)}"/>';
+        if (parent){
+            parent.postMessage(result, '{!returnURL}');
+        }
+    </script>
+    </body>
+</apex:page>

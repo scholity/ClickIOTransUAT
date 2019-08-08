@@ -1,0 +1,154 @@
+<apex:component controller="CC_PHSS_PO_EditController">
+  <script id="MyAccount-MyWalletPO-Desktop" type="text/template">
+  <div class="panel panel-default cc_panel cc_myaccount_mywallet">
+   <div class="panel-heading cc_heading">
+    <h3 class="panel-title cc_title">{{pageLabelMap 'MyWallet_EditPymtMtd'}}</h3>
+   </div>
+   <div class="cc_myaccount_content panel-body cc_body">
+    <div class="error_messages_section" style="display:none;"></div>
+    <form id="editPOForm" class="form-horizontal editPOForm cc_edit_po_form">
+     <h4>{{pageLabelMap 'MyWallet_EditPO'}}</h4>
+     <p>{{pageLabelMap 'MyWallet_OriginalPOAmount'}}: {{this.originalPOAmount}} &nbsp;&nbsp;{{pageLabelMap 'MyWallet_RemainingPOAmount'}}: {{this.remainingPOAmount}}</p>
+     <div class="form-group displayName">
+      <label for="displayName" class="col-sm-2 control-label poLabel Name fieldLabel">{{pageLabelMap 'MyWallet_NameOpt'}}</label>
+      <div class="col-sm-10">
+       <input id="displayName" type="text" class="form-control" value="{{this.displayName}}" name="displayName" maxlength="50" />
+      </div>
+     </div>
+     <div class="form-group accountNumber">
+      <label for="accountNumber" class="col-sm-2 control-label poLabel Number fieldLabel">{{pageLabelMap 'MyWallet_PONum'}}</label>
+      <div class="col-sm-10">
+       <input id="accountNumber" type="text" class="form-control" name="accountNumber" value="{{this.accountNumber}}" maxlength="50" />
+      </div>
+     </div>
+     <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+       <div class="checkbox">
+        <label for="isEnabled" class="poLabel SavePayment fieldLabel">
+         <input type="checkbox" name="isEnabled" id="isEnabled" {{#if this.isEnabled}}checked{{/if}} />{{pageLabelMap 'MyWallet_Enabled'}}
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="form-group updateOriginalPOAmount">
+      <label for="updateOriginalPOAmount" class="col-sm-2 control-label poLabel Number fieldLabel">{{pageLabelMap 'MyWallet_UpdateOriginalPOAmount'}}</label>
+      <div class="col-sm-10">
+       <input id="updateOriginalPOAmount" type="text" class="form-control" name="updateOriginalPOAmount" value="" maxlength="50" />
+      </div>
+     </div>
+     <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+       <input type="button" class='btn btn-default btn-sm button cancelPO cc_cancel_po' id="cancelPO" value="{{pageLabelMap 'MyWallet_Cancel'}}" />
+       <input type="button" class='btn btn-default btn-sm button savePO cc_save_po' id="savePO" value="{{pageLabelMap 'MyWallet_SaveToWall'}}" />
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </script>
+ 
+ 
+ <script>
+var storedPaymentId = "{!storedPayment.Id}";
+var displayName = "{!storedPayment.ccrz__DisplayName__c}";
+var accountNumber = "{!storedPayment.ccrz__AccountNumber__c}";
+var isEnabled = {!storedPayment.ccrz__Enabled__c};
+
+var originalPOAmount = {!storedPayment.Original_PO_Amount__c};
+var remainingPOAmount = {!storedPayment.Remaining_PO_Amount__c};
+
+jQuery(function($) {
+ CCRZ.models.StoredPaymentsPOModel = CCRZ.CloudCrazeModel.extend({
+  className : "c.CC_PHSS_PO_EditController",
+  updatePONumber: function(poData, callback) {
+  /*
+   var v = this;
+   this.invokeCtx("updatePONumber", JSON.stringify(poData),
+    function(response){
+     if(response && response.success ) {
+      console.log(response.data);
+      callback();
+     }
+    }
+   );
+   */
+   CC_PHSS_PO_EditController.updatePONumber( 
+                            CCRZ.pagevars.remoteContext,
+                            JSON.stringify(poData), 
+                            function(response) {
+                                if(response && response.success ) {
+                                  console.log(response.data);
+                                  callback();
+                                }
+                            }
+                        );
+  },
+ });
+
+ CCRZ.views.StoredPaymentsPOView = CCRZ.CloudCrazeView.extend({
+  viewName : "StoredPaymentsPOView",
+  templateDesktop : CCRZ.util.template(CCRZ.uiProperties.StoredPaymentsPOView.desktop.tmpl),
+  templatePhone : CCRZ.util.template(CCRZ.uiProperties.StoredPaymentsPOView.phone.tmpl),
+  init : function(){
+   this.render();
+  },
+  events: {
+   "click #savePO" : "updatePONumber",
+   "click #cancelPO" : "cancelNewPONumber"
+  },
+  initValidation : function() {
+   $('#editPOForm').validate({
+    invalidHandler : function(event, validator) {
+     CCRZ.handleValidationErrors(event, validator, 'error_messages_section', false);
+    },
+    rules : {
+     accountNumber : { required : CCRZ.getPageConfig('Pmt_PO.ReqNum', true) }
+    },
+    messages : {
+     accountNumber : { required : CCRZ.pagevars.pageLabels['PMTPO_POReq']}
+    },
+    errorPlacement : function(error, element) { }
+   });
+  },
+  preRender : function() {
+   this.data={
+    'storedPaymentId' : storedPaymentId,
+    'displayName' : displayName,
+    'accountNumber' : accountNumber,
+    'isEnabled' : isEnabled,
+    'originalPOAmount' : originalPOAmount,
+    'remainingPOAmount' : remainingPOAmount
+   };
+  },
+  renderDesktop : function(){
+   this.setElement($(CCRZ.uiProperties.StoredPaymentsPOView.desktop.selector));
+   this.$el.html(this.templateDesktop(this.data));
+  },
+  renderPhone : function(){
+   this.setElement($(CCRZ.uiProperties.StoredPaymentsPOView.phone.selector));
+   this.$el.html(this.templatePhone(this.data));
+  },
+  postRender : function() {
+   this.initValidation();
+  },
+  cancelNewPONumber : function(){
+   myWallet();
+  },
+  updatePONumber : function(event) {
+   if ($('#editPOForm').valid()) {
+    var formData = form2js("editPOForm", '.', false, function(node) {}, false);
+    formData.storedPaymentId = this.data.storedPaymentId;
+    formData.isEnabled = formData.isEnabled != null ? true : false;
+    this.model.updatePONumber(formData, function() {
+     myWallet();
+    });
+   }
+  }
+ });
+
+ CCRZ.poView = new CCRZ.views.StoredPaymentsPOView({
+  model : new CCRZ.models.StoredPaymentsPOModel
+ });
+});
+</script>
+</apex:component>

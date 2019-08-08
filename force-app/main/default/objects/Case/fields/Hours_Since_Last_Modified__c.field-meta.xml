@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hours_Since_Last_Modified__c</fullName>
+    <externalId>false</externalId>
+    <formula>(NOW() - Last_Case_Update_Time_Date__c  ) * 24</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>This field displays the time that has passed since a case has been edited, a new case comment has been added, or a email has been sent or received.</inlineHelpText>
+    <label>Hours Since Last Modified</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>1</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Prevent_record_creation_On_Contract</fullName>
+    <active>true</active>
+    <description>Prevent from record creation for Account with PHSS Channel &#39;RCS Retail&#39; And &#39;RCS Distributor&#39;.</description>
+    <errorConditionFormula>OR( 
+INCLUDES(Account.PHSS_Channel__c, &quot;RCS Retail&quot;), 
+INCLUDES(Account.PHSS_Channel__c, &quot;RCS Distributor&quot;))</errorConditionFormula>
+    <errorMessage>You cannot create Contract from a Red Cross Store Account. Create a New Account first.</errorMessage>
+</ValidationRule>

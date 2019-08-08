@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Access_to_All_users</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Access to All users</label>
+        <sharedTo>
+            <roleAndSubordinates>Preparedness_Health_Safety_Services</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>Access_to_Community_Users</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Access to Community Users</label>
+        <sharedTo>
+            <allCustomerPortalUsers/>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

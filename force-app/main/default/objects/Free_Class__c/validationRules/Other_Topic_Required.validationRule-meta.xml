@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Other_Topic_Required</fullName>
+    <active>true</active>
+    <description>Validation Rule to enforce that if the topic = other than Other field needs to be filled out.</description>
+    <errorConditionFormula>ISPICKVAL( Topic__c, &quot;Other&quot;)&amp;&amp;
+ISBLANK (Other_Topic__c )</errorConditionFormula>
+    <errorDisplayField>Other_Topic__c</errorDisplayField>
+    <errorMessage>You&#39;ve selected Other for Topic, please add the topic in this Other field.</errorMessage>
+</ValidationRule>

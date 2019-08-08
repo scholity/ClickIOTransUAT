@@ -1,0 +1,36 @@
+.THIS.watson-button {
+	width: 100%;
+	height: 50px;
+    background: rgb(237, 27, 46);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.THIS.watson-button.button-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.THIS.watson-button.button-content img {
+    width: 30px;
+    height: auto;
+    margin-left: 20px;
+} 
+
+.THIS.watson-button p {
+    font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 700;
+    color: white;
+    font-size: 18px;
+}
+
+.THIS.watson-button:hover {
+    background-color: rgb(197, 16, 32);
+    transition: all 0.5s ease;
+}

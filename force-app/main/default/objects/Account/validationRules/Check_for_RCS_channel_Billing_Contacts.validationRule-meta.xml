@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_for_RCS_channel_Billing_Contacts</fullName>
+    <active>false</active>
+    <description>Checks if the Billing contact type is &quot;RCS Billing&quot; for the PHSS channel RCS Retail or RCS Distributor</description>
+    <errorConditionFormula>AND(
+        !ISBLANK(Billing_Contact__c),
+       NOT(AND( 
+        OR( 
+          INCLUDES(PHSS_Channel__c, &quot;RCS Retail&quot;), 
+          INCLUDES(PHSS_Channel__c, &quot;RCS Distributor&quot;)
+         ),
+ 
+    INCLUDES(Billing_Contact__r.Contact_Type__c,&quot;RCS Billing&quot;)
+         )   )
+
+)</errorConditionFormula>
+    <errorDisplayField>Billing_Contact__c</errorDisplayField>
+    <errorMessage>RCS Billing Contact Type has to be RCS Billing for RCS Retail or RCS Distributors channels</errorMessage>
+</ValidationRule>

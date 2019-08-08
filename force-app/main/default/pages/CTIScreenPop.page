@@ -1,0 +1,187 @@
+<apex:page controller="CTIScreenPopCtlr" tabStyle="Account" showHeader="true" sidebar="false"   lightningStylesheets="true">
+    <apex:includeScript value="{!$Resource.jquery191}" />
+    <apex:includeScript value="/support/console/30.0/integration.js"/>
+    <apex:includeScript value="{!$Resource.CTIScreenPopJS}"/>
+    <apex:Slds />  
+    <div class="slds-scope">
+        <apex:form >
+            
+            
+            <style>
+                #application {
+                font-size: 1.1em;
+                padding: 0.5em;
+                }
+                
+                #application h1 {
+                font-size: 1.5em;
+                }
+                #application h2 {
+                font-style: italic;
+                font-size: 1.2em;
+                }
+                
+                .page-icon {
+                float: left;
+                width: 3%;
+                margin-right: 1.5em;
+                
+                }
+                
+            </style>
+            <div id="application">
+                <div style="margin-bottom: 1em;">
+                    <apex:image value="{!URLFOR( $Resource.CTIScreenPopResources, 'phone-icon.png'  )}" styleClass="page-icon" rendered="{!showPhoneIcon}"  ></apex:image>
+                    <apex:image value="{!URLFOR( $Resource.CTIScreenPopResources, 'search-icon.png'  )}" styleClass="page-icon" rendered="{!NOT(showPhoneIcon)}"  ></apex:image>
+                    
+                    <h1>{!pageTitle}</h1>
+                    <div><h2>{!formattedPhone}</h2></div>           
+                </div>   
+                
+                <apex:pageMessages id="msgs" />      
+                
+                <apex:pageBlock >
+                    
+                    <div class="slds-tabs--default">
+                        <ul class="slds-tabs--default__nav" role="tablist">
+                            <li class="slds-tabs--default__item slds-text-heading--label slds-active" title="Item One" role="presentation">
+                                <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item" onClick="evtTabChanged('SearchTab');">
+                                    Search
+                                </a>
+                            </li>
+                            <li class="slds-tabs--default__item slds-text-heading--label" title="Item Two" role="presentation">
+                                <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item" onClick="evtTabChanged('QuickCreateTab');">
+                                    Quick Create
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                            <apex:actionRegion >
+                                <apex:pageBlockSection id="formSection" columns="2" >
+                                    <apex:inputText value="{!constituentSearchForm.firstName}" label="First Name" id="searchFieldFirstName"/>
+                                    <apex:inputText value="{!constituentSearchForm.lastName}" label="Last Name" id="searchFieldLastName"/>
+                                    <apex:inputText value="{!constituentSearchForm.phone}" label="Phone" id="searchFieldPhone" onkeyup="checkPhoneField()" onblur="formatPhone(this)"/>
+                                    <apex:inputText value="{!constituentSearchForm.emailAddress}" label="Email" id="searchFieldEmail"/>
+                                    <apex:inputText value="{!constituentSearchForm.city}" label="City" id="searchFieldCity"/>
+                                    <apex:inputText value="{!constituentSearchForm.state}" label="State" id="searchFieldState"/>
+                                    <apex:inputText value="{!constituentSearchForm.zip}" label="Zip" id="searchFieldZip"/>
+                                    
+                                    
+                                </apex:pageBlockSection>  
+                                
+                                <apex:pageBlockSection columns="1">
+                                    <apex:commandButton id="searchButton" value="Search" action="{!searchForConstituent}" immediate="false" rerender="searchResultTable, msgs" status="pleaseWaitOverlay" />
+                                    <apex:commandButton id="ghostButton" value="Log Ghost Call" action="{!logGhostCall}" immediate="false" rerender="searchResultTable, msgs, formSection" oncomplete="checkPhoneField()" status="pleaseWaitOverlay" />
+                                </apex:pageBlockSection>
+                                
+                            </apex:actionRegion>
+                            
+                            
+                            
+                            <apex:pageBlockTable id="searchResultTable" value="{!contactSearchResults }" var="searchResultItem" styleClass="app-phone-search-table" >
+                                <apex:column width="5%" styleClass="app-phone-search-table-column" >
+                                    <apex:facet name="header">Action</apex:facet>
+                                    <apex:commandLink value="Select" immediate="true" action="{!selectConstituent}" status="pleaseWaitOverlay" >
+                                        <!-- <apex:param name="selectedConstituentId" value="{!searchResultItem.ConstituentId}" assignTo="{!selectedConstituentId}"/>
+<apex:param name="selectedManagedLearningFlag" value="{!searchResultItem.ManagedLearningContactFlag}" assignTo="{!selectedManagedLearningFlag}"/>
+<apex:param name="selectedContactId" value="{!searchResultItem.SFContactId}" assignTo="{!selectedContactId}"/> -->
+                                        <apex:param name="selectedContactId" value="{!searchResultItem.id}" assignTo="{!selectedContactIdVFPage}"/>
+                                    </apex:commandLink>
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">First Name</apex:facet>
+                                    {!searchResultItem.FirstName}
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Last Name</apex:facet>
+                                    {!searchResultItem.LastName}
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Phone</apex:facet>
+                                    {!searchResultItem.Phone}
+                                </apex:column>
+                                
+                                <!-- <apex:column >
+                                    <apex:facet name="header">Address</apex:facet>
+                                    {!searchResultItem.AddressLine1}
+                                </apex:column> -->
+                                
+                                <apex:column >
+                                    <apex:facet name="header">City</apex:facet>
+                                    {!searchResultItem.MailingCity}
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">State</apex:facet>
+                                    {!searchResultItem.MailingState}
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Zip</apex:facet>
+                                    {!searchResultItem.MailingPostalCode}
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Email</apex:facet>
+                                    {!searchResultItem.Email}
+                                </apex:column>
+                                <!-- <apex:column >
+                                    <apex:facet name="header">Learning Center Id</apex:facet>
+                                    {!searchResultItem.SabaPersonId}
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">Instructor?</apex:facet>
+                                    {!searchResultItem.InstructorFlag}
+                                </apex:column> 
+                                <apex:column >
+                                    <apex:facet name="header">Managed Learning Contact?</apex:facet>
+                                    {!searchResultItem.ManagedLearningContactFlag}
+                                </apex:column> -->
+                                
+                            </apex:pageBlockTable>
+                            
+                            
+                        </div>
+                        <div id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">
+                            <apex:actionRegion >
+                                
+                                <apex:pageBlockSection columns="2" >
+                                    <apex:inputField value="{!qcContactProxy.firstName}" label="First Name" id="qcFieldFirstName" required="true"/>
+                                    <apex:inputField value="{!qcContactProxy.lastName}" label="Last Name" id="qcFieldLastName" required="true"/>
+                                    <apex:inputField value="{!qcContactProxy.phone}" label="Phone" id="qcFieldPhone" required="true"/>
+                                    <apex:inputField value="{!qcContactProxy.email}" label="Email" id="qcFieldEmail" required="true"/>
+                                    <apex:inputField value="{!qcContactProxy.mailingStreet}" id="qcFieldStreet" label="Address" required="false"/>
+                                    <apex:inputField value="{!qcContactProxy.mailingCity}" id="qcFieldCity" label="City" required="false"/>
+                                    <apex:inputField value="{!qcContactProxy.mailingState}" id="qcFieldState" label="State"  required="false"/>
+                                    <apex:inputField value="{!qcContactProxy.mailingPostalCode}" id="qcFieldZip" label="Zip" required="false"/>
+                                </apex:pageBlockSection>
+                                
+                                <apex:commandButton id="createConstituentButton" value="Create Contact" action="{!QuickCreateConstituent}" rerender="msgs" status="pleaseWaitOverlay" />
+                                
+                            </apex:actionRegion>
+                        </div>
+                    </div>
+                    
+                    
+                </apex:pageBlock>
+                
+                
+            </div>
+            
+            <apex:actionFunction action="{!searchForPhone}" immediate="true" name="searchForPhone" rerender="searchResultTable, msgs" status="pleaseWaitOverlay" >
+            </apex:actionFunction>
+            
+        </apex:form>
+        <script>
+         var j$ = jQuery.noConflict();
+        /*SLDS Tabs JS*/
+        j$('.slds-tabs--default__link,.slds-tabs--scoped__link').click(function(){
+            j$(this).parent().parent().find('.slds-tabs--default__link,.slds-tabs--scoped__link').attr('aria-selected','false');
+            j$(this).attr('aria-selected','true');
+            j$(this).parent().parent().find('.slds-tabs--default__link,.slds-tabs--scoped__link').attr('tabindex','-1');
+            j$(this).attr('tabindex','0');
+            j$(this).parent().addClass('slds-active').siblings().removeClass('slds-active');
+            j$(this).parent().parent().parent().find('.'+j$(this).parent().parent().parent().find('.slds-tabs--default__content,.slds-tabs--scoped__content')[0].classList[0]).removeClass('slds-show').addClass('slds-hide');
+            j$(this).parent().parent().parent().find('#'+j$(this).attr('aria-controls')).removeClass('slds-hide').addClass('slds-show');
+        }); 
+        /*SLDS Tabs JS*/
+        </script>
+    </div>
+</apex:page>

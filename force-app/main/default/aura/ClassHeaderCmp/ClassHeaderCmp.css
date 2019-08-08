@@ -1,0 +1,85 @@
+.THIS {
+    background-color: #fff;
+}
+.THIS {
+  position: relative;
+  border-radius: 0.25rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox_faux, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox--faux, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] ~ .slds-checkbox_faux, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] ~ .slds-checkbox--faux, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox__label .slds-checkbox_faux, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox__label .slds-checkbox--faux{
+  background-color: white;
+}
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox_faux::after, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox--faux::after, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] ~ .slds-checkbox_faux::after, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] ~ .slds-checkbox--faux::after, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox__label .slds-checkbox_faux::after, 
+.THIS .default-checkbox .slds-checkbox [type="checkbox"][disabled] + .slds-checkbox__label .slds-checkbox--faux::after {
+  border-color: rgb(112, 110, 107);
+}
+.THIS.ILTClass .header-item-information .ILTClass-header-icon .slds-icon_container{
+  background-color: #e52a35;
+}
+.THIS.ILTClass .header-item-information .ILTClass-header-icon .slds-icon{
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #e52a35;
+}
+.THIS:not(.ILTClass) .header-item-information {
+  padding-right: 3rem;
+  padding-left: 1rem;
+  max-width: calc(100% - 12rem);
+  width: 100%;
+}
+.THIS .header-item-information {
+  flex: 1 1 0rem;
+}
+.THIS .header-item-information > div {
+  word-break: normal;
+}
+.THIS .line{
+  height: 1px;
+  width: 100%;
+  background-color: #9e9da2;
+}
+.THIS .header-item-col{
+  white-space: nowrap;
+}
+.THIS .header-item-col > div{
+  display: flex;
+  align-items: center;
+}
+.THIS .header-item-col:not(:last-child)>div{
+  margin-right: 4rem;
+}
+.THIS .text-wrap {
+  white-space: normal;
+}
+.THIS .header-container .header-item-information *:not(svg){
+  max-width: 100%;
+}
+@media (max-width: 48rem) {
+  .THIS .header-container .header-item-information{
+    max-width: 100%;
+  }
+}
+@media (max-width: 30rem) {
+  .THIS .header-container {
+    flex-direction: column;
+  }
+  .THIS .header-item-fields .header-item-col{
+    min-width: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+  .THIS .header-item-fields .header-item-col .header-item-field-content{
+    margin-right: 0;
+  }
+}

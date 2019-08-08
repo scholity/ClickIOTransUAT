@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Tertiary_Sub_Type</fullName>
+    <active>false</active>
+    <description>Require tertiary sub type</description>
+    <errorConditionFormula>AND
+( 
+OR(
+ISPICKVAL(Case_Sub_Type__c , &quot;Course Record - Initial Request&quot;), 
+ISPICKVAL(Case_Sub_Type__c , &quot;Course Record - Replacement Request&quot;), 
+ISPICKVAL(Case_Sub_Type__c , &quot;Individual - Initial Request&quot;), 
+ISPICKVAL(Case_Sub_Type__c , &quot;Individual - Replacement Request&quot;)
+), 
+
+ISBLANK(TEXT( Tertiary_Sub_Type__c )), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Tertiary_Sub_Type__c</errorDisplayField>
+    <errorMessage>Field is required.</errorMessage>
+</ValidationRule>

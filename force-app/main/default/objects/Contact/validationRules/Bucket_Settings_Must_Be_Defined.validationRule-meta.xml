@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bucket_Settings_Must_Be_Defined</fullName>
+    <active>true</active>
+    <errorConditionFormula>LEN($Setup.Bucket_Account_Settings__c.Bucket_Account_Owner_ID__c)&lt;15 ||  !BEGINS($Setup.Bucket_Account_Settings__c.Bucket_Account_Owner_ID__c, &#39;005&#39;) || LEN( $Setup.Bucket_Account_Settings__c.Bucket_Account_RecordTypeID__c )&lt;15 ||  !BEGINS($Setup.Bucket_Account_Settings__c.Bucket_Account_RecordTypeID__c, &#39;012&#39;) ||   $Setup.Bucket_Account_Settings__c.Maximum_Size_of_Bucket__c&lt;200 ||  ISBLANK($Setup.Bucket_Account_Settings__c.Default_Bucket_Name__c)</errorConditionFormula>
+    <errorMessage>Please contact your administrator. Settings for business to consumer contacts need to be defined in Salesforce.</errorMessage>
+</ValidationRule>

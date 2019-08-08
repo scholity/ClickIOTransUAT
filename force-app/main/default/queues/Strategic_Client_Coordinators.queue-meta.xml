@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Strategic Client Coordinators</name>
+    <queueMembers>
+        <users>
+            <user>andrew.marrs2@redcross.org</user>
+            <user>jim.thornberg@redcross.org</user>
+            <user>karen.martin@redcross.org</user>
+            <user>kimberly.dunham@redcross.org</user>
+            <user>kristi.fladager@redcross.org</user>
+            <user>michael.mason@redcross.org</user>
+            <user>patricia.darnall@redcross.org</user>
+            <user>shawn.barker@redcross.org</user>
+            <user>tammy.ohara@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

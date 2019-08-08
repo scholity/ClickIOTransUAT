@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Secondary_Close_Reason__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Additional clarification to the resolution of the case.</inlineHelpText>
+    <label>Secondary Close Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Primary_Close_Reason__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Course Availability</fullName>
+                <default>false</default>
+                <label>Course Availability</label>
+            </value>
+            <value>
+                <fullName>Distance Issue; Cust Not Willing to Drive</fullName>
+                <default>false</default>
+                <label>Distance Issue; Cust Not Willing to Drive</label>
+            </value>
+            <value>
+                <fullName>Price too high</fullName>
+                <default>false</default>
+                <label>Price too high</label>
+            </value>
+            <value>
+                <fullName>Window shopping - Not ready to buy</fullName>
+                <default>false</default>
+                <label>Window shopping - Not ready to buy</label>
+            </value>
+            <value>
+                <fullName>Payment issue</fullName>
+                <default>false</default>
+                <label>Payment issue</label>
+            </value>
+            <value>
+                <fullName>Need approval (employer, family mbr, other)</fullName>
+                <default>false</default>
+                <label>Need approval (employer, family mbr, other)</label>
+            </value>
+            <value>
+                <fullName>Need to check schedule</fullName>
+                <default>false</default>
+                <label>Need to check schedule</label>
+            </value>
+            <value>
+                <fullName>Course Content; Cust Not Sure What they Need</fullName>
+                <default>false</default>
+                <label>Course Content; Cust Not Sure What they Need</label>
+            </value>
+            <value>
+                <fullName>Frustrated with ARC Cancellation</fullName>
+                <default>false</default>
+                <label>Frustrated with ARC Cancellation</label>
+            </value>
+            <value>
+                <fullName>New Certification</fullName>
+                <default>false</default>
+                <label>New Certification</label>
+            </value>
+            <value>
+                <fullName>Renewal of Certification</fullName>
+                <default>false</default>
+                <label>Renewal of Certification</label>
+            </value>
+            <value>
+                <fullName>Different course</fullName>
+                <default>false</default>
+                <label>Different course</label>
+            </value>
+            <value>
+                <fullName>Same course, different date or location</fullName>
+                <default>false</default>
+                <label>Same course, different date or location</label>
+            </value>
+            <value>
+                <fullName>Successful Warm Transfer</fullName>
+                <default>false</default>
+                <label>Successful Warm Transfer</label>
+            </value>
+            <value>
+                <fullName>Unsuccessful Warm Transfer</fullName>
+                <default>false</default>
+                <label>Unsuccessful Warm Transfer</label>
+            </value>
+            <value>
+                <fullName>Kept Original Course</fullName>
+                <default>false</default>
+                <label>Kept Original Course</label>
+            </value>
+            <value>
+                <fullName>Customer not reached for follow up</fullName>
+                <default>false</default>
+                <label>Customer not reached for follow up</label>
+            </value>
+            <value>
+                <fullName>Redcross.org</fullName>
+                <default>false</default>
+                <label>Redcross.org</label>
+            </value>
+            <value>
+                <fullName>ShopStayWell</fullName>
+                <default>false</default>
+                <label>ShopStayWell</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Wrong Organization</fullName>
+                <default>false</default>
+                <label>Wrong Organization</label>
+            </value>
+            <value>
+                <fullName>Bad Address</fullName>
+                <default>false</default>
+                <label>Bad Address</label>
+            </value>
+            <value>
+                <fullName>Duplicate Invoice</fullName>
+                <default>false</default>
+                <label>Duplicate Invoice</label>
+            </value>
+            <value>
+                <fullName>Account Review/Reconcilliation</fullName>
+                <default>false</default>
+                <label>Account Review/Reconcilliation</label>
+            </value>
+            <value>
+                <fullName>Sales Rep did not Respond</fullName>
+                <default>false</default>
+                <label>Sales Rep did not Respond</label>
+            </value>
+            <value>
+                <fullName>TSC did not Respond</fullName>
+                <default>false</default>
+                <label>TSC did not Respond</label>
+            </value>
+            <value>
+                <fullName>BOS did not Respond</fullName>
+                <default>false</default>
+                <label>BOS did not Respond</label>
+            </value>
+            <value>
+                <fullName>Privileges Granted Exception Category</fullName>
+                <default>false</default>
+                <label>Privileges Granted Exception Category</label>
+            </value>
+            <value>
+                <fullName>Privileges Granted Special Exception</fullName>
+                <default>false</default>
+                <label>Privileges Granted Special Exception</label>
+            </value>
+            <value>
+                <fullName>Privileges Granted Meet Threshold Criteria</fullName>
+                <default>false</default>
+                <label>Privileges Granted Meet Threshold Criteria</label>
+            </value>
+            <value>
+                <fullName>Privileges Denied</fullName>
+                <default>false</default>
+                <label>Privileges Denied</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Referral to field</fullName>
+                <default>false</default>
+                <label>Referral to field</label>
+            </value>
+            <value>
+                <fullName>Opted for AP Class Listed on RCO</fullName>
+                <default>false</default>
+                <label>Opted for AP Class Listed on RCO</label>
+            </value>
+            <value>
+                <fullName>Placed Order</fullName>
+                <default>false</default>
+                <label>Placed Order</label>
+            </value>
+            <value>
+                <fullName>PO Not Approved</fullName>
+                <default>false</default>
+                <label>PO Not Approved</label>
+            </value>
+            <value>
+                <fullName>Product Availability</fullName>
+                <default>false</default>
+                <label>Product Availability</label>
+            </value>
+            <value>
+                <fullName>Product Features</fullName>
+                <default>false</default>
+                <label>Product Features</label>
+            </value>
+            <value>
+                <fullName>Product - Customer not sure what they need</fullName>
+                <default>false</default>
+                <label>Product - Customer not sure what they need</label>
+            </value>
+            <value>
+                <fullName>Customer no longer wants</fullName>
+                <default>false</default>
+                <label>Customer no longer wants</label>
+            </value>
+            <value>
+                <fullName>Order will not arrive on time</fullName>
+                <default>false</default>
+                <label>Order will not arrive on time</label>
+            </value>
+            <value>
+                <fullName>Found item elsewhere for less cost</fullName>
+                <default>false</default>
+                <label>Found item elsewhere for less cost</label>
+            </value>
+            <value>
+                <fullName>Wants to modify an existing order</fullName>
+                <default>false</default>
+                <label>Wants to modify an existing order</label>
+            </value>
+            <value>
+                <fullName>Wants to place a new order</fullName>
+                <default>false</default>
+                <label>Wants to place a new order</label>
+            </value>
+            <value>
+                <fullName>Ordered wrong product – replacement order</fullName>
+                <default>false</default>
+                <label>Ordered wrong product – replacement order</label>
+            </value>
+            <value>
+                <fullName>Ordered wrong product – no replacement</fullName>
+                <default>false</default>
+                <label>Ordered wrong product – no replacement</label>
+            </value>
+            <value>
+                <fullName>Found product with preferred features elsewhere</fullName>
+                <default>false</default>
+                <label>Found product with preferred features elsewhere</label>
+            </value>
+            <value>
+                <fullName>Issues with payment – cannot correct</fullName>
+                <default>false</default>
+                <label>Issues with payment – cannot correct</label>
+            </value>
+            <value>
+                <fullName>Verbally</fullName>
+                <default>false</default>
+                <label>Verbally</label>
+            </value>
+            <value>
+                <fullName>Sent email</fullName>
+                <default>false</default>
+                <label>Sent email</label>
+            </value>
+            <value>
+                <fullName>Link to website</fullName>
+                <default>false</default>
+                <label>Link to website</label>
+            </value>
+            <value>
+                <fullName>Returning item(s)</fullName>
+                <default>false</default>
+                <label>Returning item(s)</label>
+            </value>
+            <value>
+                <fullName>Not returning item(s)</fullName>
+                <default>false</default>
+                <label>Not returning item(s)</label>
+            </value>
+            <value>
+                <fullName>Replacement order</fullName>
+                <default>false</default>
+                <label>Replacement order</label>
+            </value>
+            <value>
+                <fullName>No replacement order</fullName>
+                <default>false</default>
+                <label>No replacement order</label>
+            </value>
+            <value>
+                <fullName>Claim filed – replacement order</fullName>
+                <default>false</default>
+                <label>Claim filed – replacement order</label>
+            </value>
+            <value>
+                <fullName>Claim filed – no replacement order</fullName>
+                <default>false</default>
+                <label>Claim filed – no replacement order</label>
+            </value>
+            <value>
+                <fullName>Order entered to PFS &amp; Sent email</fullName>
+                <default>false</default>
+                <label>Order entered to PFS &amp; Sent email</label>
+            </value>
+            <value>
+                <fullName>Product Order Submitted</fullName>
+                <default>false</default>
+                <label>Product Order Submitted</label>
+            </value>
+            <value>
+                <fullName>Open AR 60 days DPD</fullName>
+                <default>false</default>
+                <label>Open AR 60 days DPD</label>
+            </value>
+            <value>
+                <fullName>Credit Risk</fullName>
+                <default>false</default>
+                <label>Credit Risk</label>
+            </value>
+            <value>
+                <fullName>Doesn’t Qualify</fullName>
+                <default>false</default>
+                <label>Doesn’t Qualify</label>
+            </value>
+            <value>
+                <fullName>Returned PO to Customer</fullName>
+                <default>false</default>
+                <label>Returned PO to Customer</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Approved/Completed</controllingFieldValue>
+            <valueName>Order entered to PFS &amp; Sent email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Submitted OTC Referral Form</controllingFieldValue>
+            <controllingFieldValue>Submitted OTC Referral or referral to field</controllingFieldValue>
+            <valueName>Successful Warm Transfer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Submitted OTC Referral Form</controllingFieldValue>
+            <controllingFieldValue>Submitted OTC Referral or referral to field</controllingFieldValue>
+            <valueName>Unsuccessful Warm Transfer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Privileges Request</controllingFieldValue>
+            <valueName>Privileges Granted Exception Category</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Privileges Request</controllingFieldValue>
+            <valueName>Privileges Granted Special Exception</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Privileges Request</controllingFieldValue>
+            <valueName>Privileges Granted Meet Threshold Criteria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Privileges Request</controllingFieldValue>
+            <valueName>Privileges Denied</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Registered in New Course</controllingFieldValue>
+            <valueName>New Certification</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Registered in New Course</controllingFieldValue>
+            <valueName>Renewal of Certification</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <valueName>Course Availability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <valueName>Distance Issue; Cust Not Willing to Drive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>Price too high</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>Window shopping - Not ready to buy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>Payment issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>Need approval (employer, family mbr, other)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <valueName>Need to check schedule</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <valueName>Course Content; Cust Not Sure What they Need</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <valueName>Customer not reached for follow up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Register in New Course</controllingFieldValue>
+            <valueName>Opted for AP Class Listed on RCO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rescheduled in New Course / Saved Customer</controllingFieldValue>
+            <controllingFieldValue>Successful transfer or save</controllingFieldValue>
+            <valueName>Different course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rescheduled in New Course / Saved Customer</controllingFieldValue>
+            <controllingFieldValue>Successful transfer or save</controllingFieldValue>
+            <valueName>Same course, different date or location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rescheduled in New Course / Saved Customer</controllingFieldValue>
+            <controllingFieldValue>Successful transfer or save</controllingFieldValue>
+            <valueName>Kept Original Course</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Did Not Reschedule / Did Not Save Customer</controllingFieldValue>
+            <valueName>Frustrated with ARC Cancellation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred to Website</controllingFieldValue>
+            <valueName>Redcross.org</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred to Website</controllingFieldValue>
+            <valueName>ShopStayWell</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred to Website</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Submitted OTC Referral or referral to field</controllingFieldValue>
+            <valueName>Referral to field</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Order – New</controllingFieldValue>
+            <controllingFieldValue>Retail Order – Replacement</controllingFieldValue>
+            <valueName>Placed Order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>PO Not Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>Product Availability</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>Product Features</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Order – Did not buy</controllingFieldValue>
+            <valueName>Product - Customer not sure what they need</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Customer no longer wants</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Order will not arrive on time</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Found item elsewhere for less cost</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Wants to modify an existing order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Wants to place a new order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Ordered wrong product – replacement order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Ordered wrong product – no replacement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Found product with preferred features elsewhere</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canceled Retail Order</controllingFieldValue>
+            <controllingFieldValue>Canceled Retail Item</controllingFieldValue>
+            <valueName>Issues with payment – cannot correct</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reviewed process for return</controllingFieldValue>
+            <valueName>Verbally</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reviewed process for return</controllingFieldValue>
+            <valueName>Sent email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reviewed process for return</controllingFieldValue>
+            <valueName>Link to website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail item damaged/defective</controllingFieldValue>
+            <controllingFieldValue>Packaging damaged/defective</controllingFieldValue>
+            <valueName>Returning item(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail item damaged/defective</controllingFieldValue>
+            <controllingFieldValue>Packaging damaged/defective</controllingFieldValue>
+            <valueName>Not returning item(s)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost in Transit</controllingFieldValue>
+            <valueName>Claim filed – replacement order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lost in Transit</controllingFieldValue>
+            <valueName>Claim filed – no replacement order</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

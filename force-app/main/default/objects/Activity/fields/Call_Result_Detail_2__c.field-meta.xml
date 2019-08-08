@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Call_Result_Detail_2__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Details of the call result</inlineHelpText>
+    <label>Call Result Detail 2</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Call_Result_Detail_1__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Date</fullName>
+                <default>false</default>
+                <label>Date</label>
+            </value>
+            <value>
+                <fullName>Group Size</fullName>
+                <default>false</default>
+                <label>Group Size</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>NAN</fullName>
+                <default>false</default>
+                <label>NAN</label>
+            </value>
+            <value>
+                <fullName>AP</fullName>
+                <default>false</default>
+                <label>AP</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Full Service</fullName>
+                <default>false</default>
+                <label>Full Service</label>
+            </value>
+            <value>
+                <fullName>Shopping</fullName>
+                <default>false</default>
+                <label>Shopping</label>
+            </value>
+            <value>
+                <fullName>Too High</fullName>
+                <default>false</default>
+                <label>Too High</label>
+            </value>
+            <value>
+                <fullName>Budget</fullName>
+                <default>false</default>
+                <label>Budget</label>
+            </value>
+            <value>
+                <fullName>ARC AP</fullName>
+                <default>false</default>
+                <label>ARC AP</label>
+            </value>
+            <value>
+                <fullName>ARC Community</fullName>
+                <default>false</default>
+                <label>ARC Community</label>
+            </value>
+            <value>
+                <fullName>ARC Full Service</fullName>
+                <default>false</default>
+                <label>ARC Full Service</label>
+            </value>
+            <value>
+                <fullName>Competitor - AP</fullName>
+                <default>false</default>
+                <label>Competitor - AP</label>
+            </value>
+            <value>
+                <fullName>Competitor - Full Service</fullName>
+                <default>false</default>
+                <label>Competitor - Full Service</label>
+            </value>
+            <value>
+                <fullName>Competitor - Group Size</fullName>
+                <default>false</default>
+                <label>Competitor - Group Size</label>
+            </value>
+            <value>
+                <fullName>Local Rep</fullName>
+                <default>false</default>
+                <label>Local Rep</label>
+            </value>
+            <value>
+                <fullName>ARC Community - Group Size</fullName>
+                <default>false</default>
+                <label>ARC Community - Group Size</label>
+            </value>
+            <value>
+                <fullName>ARC Community - Other</fullName>
+                <default>false</default>
+                <label>ARC Community - Other</label>
+            </value>
+            <value>
+                <fullName>ARC Community - Price</fullName>
+                <default>false</default>
+                <label>ARC Community - Price</label>
+            </value>
+            <value>
+                <fullName>Demo - No Fee Class</fullName>
+                <default>false</default>
+                <label>Demo - No Fee Class</label>
+            </value>
+            <value>
+                <fullName>Field Non BGST Class</fullName>
+                <default>false</default>
+                <label>Field Non BGST Class</label>
+            </value>
+            <value>
+                <fullName>FO Other</fullName>
+                <default>false</default>
+                <label>FO Other</label>
+            </value>
+            <value>
+                <fullName>RCO Website</fullName>
+                <default>false</default>
+                <label>RCO Website</label>
+            </value>
+            <value>
+                <fullName>Pending Agreement/Proposal</fullName>
+                <default>false</default>
+                <label>Pending Agreement/Proposal</label>
+            </value>
+            <value>
+                <fullName>Out of Business</fullName>
+                <default>false</default>
+                <label>Out of Business</label>
+            </value>
+            <value>
+                <fullName>Wrong Email</fullName>
+                <default>false</default>
+                <label>Wrong Email</label>
+            </value>
+            <value>
+                <fullName>Wrong Phone Number</fullName>
+                <default>false</default>
+                <label>Wrong Phone Number</label>
+            </value>
+            <value>
+                <fullName>Wrong POC</fullName>
+                <default>false</default>
+                <label>Wrong POC</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>NAN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <controllingFieldValue>Community</controllingFieldValue>
+            <valueName>AP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>ARC Community - Group Size</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>ARC Community - Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>ARC Community - Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>Demo - No Fee Class</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>Field Non BGST Class</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>FO Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>RCO Website</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Referred</controllingFieldValue>
+            <valueName>Pending Agreement/Proposal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Contact Info</controllingFieldValue>
+            <controllingFieldValue>Community</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Contact Info</controllingFieldValue>
+            <valueName>Out of Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Contact Info</controllingFieldValue>
+            <valueName>Wrong Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Contact Info</controllingFieldValue>
+            <valueName>Wrong Phone Number</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Contact Info</controllingFieldValue>
+            <valueName>Wrong POC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community</controllingFieldValue>
+            <controllingFieldValue>Competitor</controllingFieldValue>
+            <valueName>Date</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community</controllingFieldValue>
+            <controllingFieldValue>Competitor</controllingFieldValue>
+            <valueName>Group Size</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community</controllingFieldValue>
+            <controllingFieldValue>Competitor</controllingFieldValue>
+            <valueName>Price</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Competitor</controllingFieldValue>
+            <valueName>Full Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Shopping</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Too High</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Budget</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recently Certified</controllingFieldValue>
+            <valueName>ARC AP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recently Certified</controllingFieldValue>
+            <valueName>ARC Community</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recently Certified</controllingFieldValue>
+            <valueName>ARC Full Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recently Certified</controllingFieldValue>
+            <valueName>Competitor - AP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recently Certified</controllingFieldValue>
+            <valueName>Competitor - Full Service</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recently Certified</controllingFieldValue>
+            <valueName>Competitor - Group Size</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recently Certified</controllingFieldValue>
+            <valueName>Local Rep</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_creation_only_for_Jane_And_Nyle</fullName>
+    <active>false</active>
+    <description>This is added to prevent creation of RCS Po Case for ARC Business User profile Other than Jane and Nyle</description>
+    <errorConditionFormula>AND($Profile.Name = &quot;ARC Business User Profile&quot;, !OR($User.Id  =&quot;005d0000001WLvx&quot; , $User.Id = &quot;0050V000006jKNy&quot;))</errorConditionFormula>
+    <errorMessage>Sorry, This feature is still not Enabled.</errorMessage>
+</ValidationRule>

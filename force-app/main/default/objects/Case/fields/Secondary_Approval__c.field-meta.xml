@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Secondary_Approval__c</fullName>
+    <externalId>false</externalId>
+    <label>Secondary Approval</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>BOS_Approval__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BOS did not Respond</fullName>
+                <default>false</default>
+                <label>BOS did not Respond</label>
+            </value>
+            <value>
+                <fullName>Sales Rep did not Respond</fullName>
+                <default>false</default>
+                <label>Sales Rep did not Respond</label>
+            </value>
+            <value>
+                <fullName>TSC did not Respond</fullName>
+                <default>false</default>
+                <label>TSC did not Respond</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Resolution Approval Not Received</controllingFieldValue>
+            <valueName>BOS did not Respond</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Resolution Approval Not Received</controllingFieldValue>
+            <valueName>Sales Rep did not Respond</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Resolution Approval Not Received</controllingFieldValue>
+            <valueName>TSC did not Respond</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

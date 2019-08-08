@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Action_Taken_Status_Invoicing</fullName>
+    <active>false</active>
+    <description>The Action Taken picklist field is required when the Status is Closed - Invocing. Except when the Primary Close Reason is Payment Proessed, Issue Resolved or Secondary Close Reason is Privileges Denied</description>
+    <errorConditionFormula>AND( 
+ISPICKVAL(  Status , &#39;Closed - Invoicing&#39;), 
+ISBLANK( TEXT( Action_Taken__c )),
+NOT(OR(
+ISPICKVAL( Primary_Close_Reason__c, &#39;Payment Processed&#39; ),
+ISPICKVAL( Primary_Close_Reason__c, &#39;Issue Resolved&#39; ),
+ISPICKVAL ( Secondary_Close_Reason__c , &#39;Privileges Denied&#39;)
+))
+)</errorConditionFormula>
+    <errorDisplayField>Action_Taken__c</errorDisplayField>
+    <errorMessage>When the Status is &quot;Closed - Invoicing&quot; you must provide an Action Taken</errorMessage>
+</ValidationRule>

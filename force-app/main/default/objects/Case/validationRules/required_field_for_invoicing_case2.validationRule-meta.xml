@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>required_field_for_invoicing_case2</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR( 
+INCLUDES(Account.PHSS_Channel__c, &#39;AED&#39;), 
+INCLUDES(Account.PHSS_Channel__c, &#39;Authorized Provider&#39;), 
+INCLUDES(Account.PHSS_Channel__c, &#39;Business Client&#39;), 
+INCLUDES(Account.PHSS_Channel__c, &#39;CEP Agency&#39;), 
+INCLUDES(Account.PHSS_Channel__c, &#39;Full Service&#39;), 
+INCLUDES(Account.PHSS_Channel__c, &#39;Licensed Training Provider&#39;), 
+INCLUDES(Account.PHSS_Channel__c, &#39;NAT Agency&#39;), 
+INCLUDES(Account.PHSS_Channel__c, &#39;National Account Network&#39;) 
+), 
+RecordType.DeveloperName = &quot;Invoicing&quot;, 
+NOT(RCS_Ship_To_Contact__c == null),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE)</errorConditionFormula>
+    <errorDisplayField>RCS_Ship_To_Contact__c</errorDisplayField>
+    <errorMessage>This field is only Available for RCS Retail and RCS Distributor Accounts</errorMessage>
+</ValidationRule>

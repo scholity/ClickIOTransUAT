@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bypass_Rules__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This setting is used in validation rules and apex classes to prevent validation rules from firing for certain users and profiles.</description>
+    <externalId>false</externalId>
+    <label>Bypass Rules</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

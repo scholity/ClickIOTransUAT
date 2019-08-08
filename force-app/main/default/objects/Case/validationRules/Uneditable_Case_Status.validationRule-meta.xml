@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Uneditable_Case_Status</fullName>
+    <active>true</active>
+    <description>This validation rules makes the case status error out when changed whenever the case record type is Read Only Sales Case or Read Only Service Case.</description>
+    <errorConditionFormula>AND( 
+ISCHANGED(Status), 
+    OR(RecordType.Id = &quot;012d000000097TC&quot;,
+       RecordType.Id = &quot;012d000000097TB&quot;),
+    OR($User.ProfileId = &quot;00ed0000000Idqs&quot;, 
+       $User.ProfileId = &quot;00ed0000000Idqx&quot;),
+     $Setup.Validation_Rules__c.Bypass_Rules__c = false
+)
+
+/* 
+   Read only Sales record ID = 012d000000097TB
+   Read only Service record ID = 012d000000097TC 
+   TSC Agent Profile Id = 00ed0000000Idqs
+   TSC Manager Profile Id = 00ed0000000Idqx
+*/</errorConditionFormula>
+    <errorMessage>This case had been closed - You may add a case comment or create a related case from this page only.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Correct_Discount_Amount_cur</fullName>
+    <active>false</active>
+    <description>When the Invoice Case Sub Type is &quot;Price&quot; you must provide further information; Correct Discount Amount</description>
+    <errorConditionFormula>AND( 
+RecordType.DeveloperName = &#39;Invoicing&#39;, 
+NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)),
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISBLANK( Correct_Discount_Amount_Cur__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Correct_Discount_Amount_Cur__c</errorDisplayField>
+    <errorMessage>Please provide the Correct Discount Amount</errorMessage>
+</ValidationRule>

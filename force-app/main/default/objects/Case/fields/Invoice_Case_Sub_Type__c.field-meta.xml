@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invoice_Case_Sub_Type__c</fullName>
+    <description>Sub Type specifically for the Invoice Case Type</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select Training or Product delivery method.</inlineHelpText>
+    <label>Delivery Channel</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Authorized Provider</fullName>
+                <default>false</default>
+                <label>Authorized Provider</label>
+            </value>
+            <value>
+                <fullName>Community</fullName>
+                <default>false</default>
+                <label>Community</label>
+            </value>
+            <value>
+                <fullName>Full Service</fullName>
+                <default>false</default>
+                <label>Full Service</label>
+            </value>
+            <value>
+                <fullName>Licensed Training Provider</fullName>
+                <default>false</default>
+                <label>Licensed Training Provider</label>
+            </value>
+            <value>
+                <fullName>Medical Testing (CEP)</fullName>
+                <default>false</default>
+                <label>Medical Testing (CEP)</label>
+            </value>
+            <value>
+                <fullName>National Account - AP</fullName>
+                <default>false</default>
+                <label>National Account - AP</label>
+            </value>
+            <value>
+                <fullName>National Account - FS</fullName>
+                <default>false</default>
+                <label>National Account - FS</label>
+            </value>
+            <value>
+                <fullName>Medical Training</fullName>
+                <default>false</default>
+                <label>Nurse Assistant Training</label>
+            </value>
+            <value>
+                <fullName>Product</fullName>
+                <default>false</default>
+                <label>RCS Product</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

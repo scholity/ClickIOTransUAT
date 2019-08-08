@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restrict_RCS_Billing_for_Other_Account</fullName>
+    <active>false</active>
+    <description>Restrict creating RCS Billing Contact for Accounts other than RCSPO.</description>
+    <errorConditionFormula>AND(
+Account.OwnerId &lt;&gt; &#39;0050V000006kiTY&#39;,
+OR(INCLUDES(Contact_Type__c, &quot;RCS Billing&quot;), INCLUDES(Contact_Type__c, &quot;RCS Shipping&quot;))
+)</errorConditionFormula>
+    <errorMessage>You cannot have RCS Billing contact type with Training Account.</errorMessage>
+</ValidationRule>

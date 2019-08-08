@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCS_PO_Channel_Mismatch</fullName>
+    <active>true</active>
+    <description>Checks whether the field is mismatch</description>
+    <errorConditionFormula>AND( RecordType.Name= &quot;RCS PO&quot;, ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE, Account_Channel_Matching__c = false,ISPICKVAL( Origin , &quot;Web to Case&quot;))</errorConditionFormula>
+    <errorDisplayField>AccountId</errorDisplayField>
+    <errorMessage>Wrong Account selected as PHSS channel is not  Retail or Distributor</errorMessage>
+</ValidationRule>

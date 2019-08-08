@@ -1,0 +1,105 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="category" type="String" description="category of the material"/>
+    <aura:attribute name="type" type="String" description="type of the material"/>
+    <aura:attribute name="description" type="String" description="list name displayed at the top"/>
+    <aura:attribute name="url" type="String"/>
+
+    <aura:attribute name="initalDisplayNum" type="String" description="initial number of displayed records"/>
+    <aura:attribute name="currentDisplayNum" type="String" description="current number of displayed records"/>
+    <aura:attribute name="showMoreButton" type="String" description="flag for showing/hiding 'show more' button"/>
+
+    <aura:attribute name="materials" type="PHSS_Material__C[]" description="all materials in this category/type" default="[]"/>
+    <aura:attribute name="filteredMaterials" type="PHSS_Material__C[]" description="materials after filtering and search"/>
+
+    <aura:attribute name="filtersList" type="String[]" description="list of filters displayed in dropdown"/>
+    <aura:attribute name="filterField" type="String" default="Type__c" description="field that the filters are applied to"/>
+
+    <aura:attribute name="searchTitle" type="String" default="Title Search"/>
+
+    <aura:attribute name="noResultsLabel" type="String" default="No results"/>
+
+    <aura:attribute name="isUsingGlobalEvent" type="Boolean" default="true"/>
+    <aura:attribute name="shouldProcess" type="Boolean" default="false"/>
+    <aura:attribute name="tags" type="String" default=""/>
+
+    <aura:attribute name="unavailablePreviewMessage" type="String" access="public" default="Preview of this file is not supported, please download"/>
+
+    <aura:attribute name="materialNameColumnLabel" type="String" access="public" default="Material Name"/>
+    <aura:attribute name="lastModifiedDateColumnLabel" type="String" access="public" default="Last Modified Date"/>
+    <aura:attribute name="materialTypeColumnLabel" type="String" access="public" default="Type"/>
+
+    <aura:handler event="c:PHSSProgramMaterialLoadedEvent" action="{!c.handleGlobalMaterials}"/>
+	<aura:handler name="change" value="{!v.shouldProcess}" action="{!c.handleLocalMaterials}"/>
+
+	<div class="slds-m-bottom--large">
+	    <h3>{!v.description}</h3>
+	    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+	        <thead>
+	            <tr class="slds-text-title">
+	                <th scope="col">
+	                	<div class="search-header">
+	                		<div class="search-header-section">
+		            			<div class="slds-truncate">{#v.searchTitle}</div>
+		            			<div class="slds-form-element slds-m-left--small">
+							  		<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+									    <lightning:icon iconName="utility:search" size="x-small" class="slds-input__icon slds-icon-text-default"/>
+								    <input aura:id="searchInput" class="slds-input" type="text" onkeyup="{!c.handleSearch}"/>
+								  </div>
+								</div>
+							</div>
+							<div class="search-header-section">
+								<div class="slds-truncate">Type</div>
+								<div class="slds-form-element slds-m-left--small">
+								  <div class="slds-form-element__control">
+								    <div class="slds-select_container">
+								      <select id="filterSelect" class="slds-select" aura:id="filterSelect" onchange="{!c.handleSearch}">
+								      	<option value="">All</option>
+								      	<aura:iteration items="{!v.filtersList}" var="filter">
+								        	<option value="{!filter}">{!filter}</option>
+								    	</aura:iteration>
+								      </select>
+								    </div>
+								  </div>
+								</div>
+							</div>
+	                	</div>
+	                </th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <aura:if isTrue="{!empty(v.filteredMaterials)}">
+	            	<tr>
+	            		<td>
+	            			<span>{#v.noResultsLabel}</span>	
+	            		</td>
+	            	</tr>
+	            	<aura:set attribute="else">
+	            		<tr>
+	            			<th class="slds-truncate cursor slds-grid">
+	            				<span class="slds-size--10-of-12">{#v.materialNameColumnLabel}</span>
+	            				<span class="slds-size--3-of-12 slds-hide">{#v.lastModifiedDateColumnLabel}</span>
+	            				<span class="slds-size--2-of-12">{#v.materialTypeColumnLabel}</span>
+	            			</th>
+	            		</tr>
+	            		<aura:iteration items="{!v.filteredMaterials}" var="material">
+			            	<c:PHSSProgramMaterialListItem materialObject="{!material}" unavailablePreviewMessage="{#v.unavailablePreviewMessage}" 
+														   url="{#v.url}"/>
+			            </aura:iteration>
+	            	</aura:set>
+	            </aura:if>
+	      
+			    <tr>
+			    	<aura:if isTrue="{!v.showMoreButton}">
+			        <td>
+			        	
+				            <div class="slds-truncate cursor" onclick="{!c.showMore}">
+				            	<span>Show More...</span>
+				            </div>
+			        </td>
+            			</aura:if>
+
+			    </tr>
+	        </tbody>
+	    </table>
+	</div>
+</aura:component>

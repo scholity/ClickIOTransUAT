@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>The purpose of this custom setting is to control worflows and apex triggers logic. When an ETL or data loader user logs in and attempts to run mass update, delete, create etc we want to make sure there are checks so business processes are not affected.</description>
+    <enableFeeds>false</enableFeeds>
+    <label>ETL Configuration</label>
+    <visibility>Protected</visibility>
+</CustomObject>

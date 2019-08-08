@@ -1,0 +1,37 @@
+.THIS {
+}
+
+.THIS .quantity-control, .THIS .cclx-quantity, .THIS .cclx-checkbox {
+    width: 40px;
+}
+
+.THIS .cclx-checkbox {
+    width: 25px;
+}
+
+.THIS .cc-lightButton {
+    min-height: calc(1.875rem + 2px)
+}
+
+.THIS table.search-form {
+    border-spacing: 16px;
+    border-collapse: separate;
+    width: 1000px;
+}
+
+.THIS .table-header {
+    background-color: #fafaf9;
+}
+
+.THIS input::-webkit-contacts-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+}
+
+.THIS .calendar-tile {
+    padding: 16px 8px 16px 18px;
+    width: 103px;
+}

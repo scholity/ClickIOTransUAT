@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Price_Information</fullName>
+    <active>false</active>
+    <description>The following fields are required when the Invoice Case Sub Type = Price. Number of Students, Price per Student, Order Amount, Amount Should Be</description>
+    <errorConditionFormula>OR( 
+AND( 
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISBLANK(Number_of_Students__c) 
+), 
+AND( 
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISBLANK(Price_per_Student__c) 
+), 
+AND( 
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISBLANK( Current_Discount_Amount__c ) 
+), 
+AND( 
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISBLANK( Correct_Number_of_Students__c ) 
+), 
+AND( 
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISBLANK( Correct_Discount_Amount__c ) 
+), 
+AND( 
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;), 
+ISBLANK(  Correct_Price_per_Student__c  ) 
+)
+)</errorConditionFormula>
+    <errorMessage>When the Invoice Case Sub Type is &quot;Price&quot; you must provide Current and Correct; Price per Student, Number and Order Amount</errorMessage>
+</ValidationRule>

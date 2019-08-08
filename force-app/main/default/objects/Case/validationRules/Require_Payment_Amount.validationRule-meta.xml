@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Payment_Amount</fullName>
+    <active>false</active>
+    <description>When Invoice Case Sub Type = &quot;Refund Credit Balance&quot; or &quot;Misapplied Payment&quot; you must populate the Payment Amount field.</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(  Dispute_Issue__c , &quot;Refund Credit Balance&quot;),
+        ISPICKVAL(Dispute_Issue__c , &quot;Misapplied Payment&quot;)
+        ),
+    (RecordTypeId &lt;&gt; &quot;012d000000097TB&quot;),
+    (RecordTypeId &lt;&gt; &quot;012d000000097TC&quot;),
+    ( $Setup.ETL_Configuration__c.Is_ETL_User__c = FALSE ),
+    (Payment_Amount__c = &quot;&quot;),
+    $Setup.Validation_Rules__c.Bypass_Rules__c = FALSE
+)</errorConditionFormula>
+    <errorDisplayField>Payment_Amount__c</errorDisplayField>
+    <errorMessage>When Invoice Case Sub Type = &quot;Refund Credit Balance&quot; or &quot;Misapplied Payment&quot; you must populate the Payment Amount field.</errorMessage>
+</ValidationRule>

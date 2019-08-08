@@ -1,0 +1,325 @@
+<apex:page standardController="Account" extensions="SmartAccountSearchExtension" sidebar="true" tabstyle="Account" id="pg" readOnly="true">
+    <apex:sectionHeader title="{!$Label.Account}" subtitle="{!$Label.Smart_Account_Search}"/>
+    <apex:form id="frm">
+        <script>
+          // Character limits of search product for all fields
+          var searchCharacterLimit = 2;
+        </script>
+        <div>
+            <span><apex:outputText value="{!$Label.SmartAccountSearch_Header}" escape="false" /></span>
+        </div>
+        <table class="list" width="100%">
+
+            <tr class="dataRow" onmouseout="javascript:hiOff(this)" onmouseover="javascript:hiOn(this)">
+                <td class="labelCol" colspan="1" style="width:200px;" ><h2 class="pageDescription">{!$Label.Smart_Account_Search}</h2></td>
+                <td class="dataCell" colspan="4"><a href="javascript:void(0);" onclick="resetSearchStatus();"> {!$Label.Reset_Search}</a> </td>
+            </tr>   
+            <tr class="dataRow" onmouseout="javascript:hiOff(this)" onmouseover="javascript:hiOn(this)">
+                <td class="labelCol" style="width:200px;" > {!$Label.Search_by}: </td>
+                <td class="dataCell" >{!$Label.Account_Name} </td>
+                <!-- 
+                <td class="dataCell" > City </td>
+                <td class="dataCell" > State/Province </td>
+                
+                 -->
+                 <td class="dataCell" >  </td>
+                
+            </tr>   
+            <tr class="dataRow" onmouseout="javascript:hiOff(this)" onmouseover="javascript:hiOn(this)">
+                <td class="labelCol" style="width:200px;" > {!$Label.Search_criteria}: </td>
+                <td class="dataCell" >  
+                     <apex:outputPanel >
+                        <apex:inputText title="Minimum two characters are required" value="{!accountNameToSeaarch}" onkeyup="validateForSearch(this);" id="txtAccountName" style="width:100px;" />
+                    </apex:outputPanel> 
+                </td>
+
+                 <td class="dataCell" > 
+                    <!-- 
+                    <apex:outputPanel >
+                        <apex:inputText value="{!shippingCountryToSearch}" onkeyup="validateForSearch(this);" id="txtShippingCountry" style="width:100px;" />
+                    </apex:outputPanel>
+                     --> 
+                 </td>               
+            </tr>   
+        </table>
+        
+        <input type="hidden" id="oldAccountName" value="" />
+
+        <input type="hidden" id="oldShippingCountry" value="" />
+        
+<script>
+    function validateForSearch(ctrl){
+        setTimeout("validateForSearch2()",1000);
+    }
+    
+    //Function to trim string
+    function fncTrim(value) {
+        return value.replace(/^\s*/, "").replace(/\s*$/, "");
+    }
+ 
+    function validateForSearch2(){
+        try{
+            var txtAccountName = document.getElementById("pg:frm:txtAccountName").value;
+          //  var txtShippingCountry = document.getElementById("pg:frm:txtShippingCountry").value;
+  
+  if(fncTrim(txtAccountName) != ''){
+        
+        var oldAccountName = document.getElementById('oldAccountName').value;
+        var oldShippingCountry = document.getElementById('oldShippingCountry').value;
+ 
+        document.getElementById('oldAccountName').value = txtAccountName;
+       // document.getElementById('oldShippingCountry').value = txtShippingCountry;
+        
+        var isChange = 'No';
+               
+        if(fncTrim(txtAccountName).length >= searchCharacterLimit && txtAccountName != oldAccountName){
+           isChange = 'Yes';
+        }
+
+         
+       
+    if(isChange == 'Yes' ){
+        search(txtAccountName);
+    }    
+  } 
+  }
+  catch(e){
+    alert(e);
+  }     
+ }
+ 
+ // No longer needed, it was causing problems with same_origin i-frame security issues 
+    function goToBack(){
+        window.location.href = '/001/o';
+        return false;
+    }
+    
+    function sortAccountDataJS(sortField) {
+            var txtAccountName = document.getElementById("pg:frm:txtAccountName").value;
+            
+            var isValid = 'No';
+               
+        if(fncTrim(txtAccountName).length >= searchCharacterLimit){
+           isValid = 'Yes';
+        }
+       
+        if(isValid == 'Yes') {
+            sortAccountData(sortField);
+        }
+       
+            
+            
+    }
+    
+    // No longer needed, it was causing problems with same_origin i-frame security issues 
+    function createNewAccount(){
+        var newName = document.getElementById("pg:frm:txtAccountName").value;
+        newName     = encodeURI(newName);
+        window.location.href = '../001/e?retURL=/apex/SmartAccountSearch&nooverride=1&RecordType={!$CurrentPage.parameters.RecordType}&acc2=' + newName; 
+        return false;
+    }
+</script>
+
+<apex:actionFunction action="{!performSearch}" name="search" reRender="resultBlock,resultBlockBrand,pnlDisplayMsg" status="status" >
+
+    
+    <apex:param name="d" value="" assignTo="{!accountNameToSeaarch}" />
+</apex:actionFunction>
+
+<apex:actionFunction action="{!sortData}" name="sortAccountData" reRender="resultBlock,pnlDisplayMsg" status="status" >
+    <apex:param name="sortField" assignTo="{!sortField}" value="" />
+</apex:actionFunction>
+
+<apex:actionFunction name="nextAccountPage" action="{!nextAccountPage}" reRender="resultBlock,pnlDisplayMsg" status="status" />
+<apex:actionFunction name="previousAccountPage" action="{!previousAccountPage}" reRender="resultBlock,pnlDisplayMsg" status="status" />
+<apex:actionFunction name="resetSearchStatus" action="{!resetSearchStatus}" reRender="frm" status="status" />
+
+
+
+<apex:outputPanel id="pnlDisplayMsg">
+    <apex:pageMessages />
+</apex:outputPanel>
+
+<apex:pageBlock id="resultBlock" title="{!$Label.Account} {!IF((searchCount==0), '', ' [' + TEXT(searchCount) + ']')}">
+    <apex:pageBlockButtons location="top" >
+ 
+        <apex:commandButton value="{!$Label.New_Account}" action="{!redirectToAccountPage}" disabled="{!IF(showAccountButton = true, false, true)}"/>
+        <apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>
+        
+        <apex:actionStatus id="status">
+                <apex:facet name="start">
+                  <span style="color:red;">{!$Label.Loading}</span> <img src="/img/loading.gif" />
+                </apex:facet>
+            </apex:actionStatus>
+            
+    </apex:pageBlockButtons>
+    <apex:pageBlockTable value="{!accounts}" var="acc">
+            <apex:column >
+              <!-- <apex:outputLink value="/{!acc.Id}" target="_blank">{!acc.Name}</apex:outputLink> -->
+              <apex:outputLink value="/{!acc.Id}" >{!acc.Name}</apex:outputLink>
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('Name');">{!$Label.Name}<img
+                             src="{!IF(sortField = 'Name',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+        
+         <apex:column >
+                <apex:outputLabel value="{!acc.BillingStreet}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('BillingStreet');">{!$Label.Billing_Street}<img
+                             src="{!IF(sortField = 'BillingStreet',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+
+         <apex:column >
+                <apex:outputLabel value="{!acc.BillingCity}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('BillingCity');">{!$Label.Billing_City}<img
+                             src="{!IF(sortField = 'BillingCity',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+        
+         <apex:column >
+                <apex:outputLabel value="{!acc.BillingState}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('BillingState');">{!$Label.Billing_State}<img
+                             src="{!IF(sortField = 'BillingState',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+        
+        
+         <apex:column >
+                <apex:outputLabel value="{!acc.BillingPostalCode}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('BillingPostalCode');">{!$Label.Billing_Postal_Code}<img
+                             src="{!IF(sortField = 'BillingPostalCode',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>     
+        
+        <apex:column >
+             <apex:outputLabel value="{!acc.Parent.Name}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('Parent.Name');"> {!$Label.Parent_Account}<img
+                             src="{!IF(sortField = 'Parent.Name',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>   
+        
+        <!-- 
+         <apex:column >
+                <apex:outputLabel value="{!acc.ERP_Customer_Code__c}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('ERP_Customer_Code__c');"> {!$Label.ERP_Customer_Code}<img
+                             src="{!IF(sortField = 'ERP_Customer_Code__c',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+         -->
+       
+       <!--  
+        <apex:column >
+                <apex:outputLabel value="{!acc.Category__c}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('Category__c');"> {!$Label.Category}<img
+                             src="{!IF(sortField = 'Category__c',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+        -->
+        
+        <!--
+        <apex:column >
+                <apex:outputLabel value="{!acc.Region__c}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('Region__c');">{!$Label.Region}<img
+                             src="{!IF(sortField = 'Region__c',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+        -->
+        
+        <!--
+        <apex:column >
+                <apex:outputLabel value="{!acc.isActive__c}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('isActive__c');"> {!$Label.Active}<img
+                             src="{!IF(sortField = 'isActive__c',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+        -->
+        
+        
+        
+         <apex:column >
+                <apex:outputLabel value="{!acc.Owner.Name}" />
+                 <apex:facet name="header">
+                 <apex:outputPanel >
+                     <apex:outputLink value="javascript:void(0);"
+                         onclick="sortAccountDataJS('Owner.Name');"> {!$Label.Owner}<img
+                             src="{!IF(sortField = 'Owner.Name',IF(isAsc = true,'/img/sort_asc_arrow.gif','/img/sort_desc_arrow.gif'),'/s.gif')}" />
+                     </apex:outputLink>                                                              
+                 </apex:outputPanel>
+             </apex:facet>
+        </apex:column>
+    </apex:pageBlockTable>
+    <apex:outputPanel id="errorBlock" rendered="{!(searchCount==0)}"><span style="color:red;">{!searchStatus}</span></apex:outputPanel>
+     <apex:outputPanel rendered="{!NOT(searchCount==0)}">
+                 <hr/>
+                 <table width="100%" >
+                  <tr>
+                   <td align="left" width="33%">
+                        <div id="pagelinkblock" >
+                           <div id="curstate"> {!showingFrom}-{!showingTo} {!$Label.of} {!totalResults} </div>
+                        </div>
+                   </td>
+                   <td align="center" width="33%" style="vertical-align:middle;">
+                       <apex:outputLink value="javascript:void(0);"  rendered="{!hasPrevious}" onclick="previousAccountPage();">&lt;&lt;{!$Label.Previous}</apex:outputLink>
+                       <span id="div_mid1" >&nbsp;<apex:outputLabel rendered="{!hasPrevious && hasNext}" value="|"  /> &nbsp;</span>
+                        <apex:outputLink value="javascript:void(0);" rendered="{!hasNext}" onclick="nextAccountPage();">{!$Label.Next}&gt;&gt;</apex:outputLink>
+                   </td>   
+                   <td align="right" width="33%" style="vertical-align:middle;">
+                        <div id="pagenumber"> {!$Label.Page} &nbsp;<apex:inputText value="{!requestedPage}" style="width:40px"/> {!$Label.of} {!totalPage} <apex:commandButton value="Go" action="{!requestedAccountPage}" reRender="resultBlock,pnlDisplayMsg" status="status" /></div>
+                   </td>
+                 </tr>
+                </table> 
+    </apex:outputPanel>
+  </apex:pageBlock>
+  
+</apex:form>
+</apex:page>

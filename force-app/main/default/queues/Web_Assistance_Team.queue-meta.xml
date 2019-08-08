@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>Web Assistance Team</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>TSC_Management</publicGroup>
+            <publicGroup>TSC_Team_Leads</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Back_Office_Team_Lead</role>
+            <role>Front_Office_Chat_Agent</role>
+            <role>Front_Office_Uniontown_Agent_Role</role>
+            <role>Front_Office_Uniontown_Team_Lead_Role</role>
+            <role>Training_Support_Center</role>
+            <role>Web_Assistance_Team</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

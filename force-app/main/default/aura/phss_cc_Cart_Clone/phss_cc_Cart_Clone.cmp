@@ -1,0 +1,218 @@
+<!--
+ - Created by dgajwani on 9/27/18.
+ -->
+
+<aura:component description="phss_cc_Cart" implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+                controller="phss_cc_CartController">
+
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="currOpportunity" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Account.Name,Account.BillingStreet, Account.BillingCity, Account.BillingState, Account.BillingPostalCode,Account.BillingCountry,Account.ShippingStreet, Account.ShippingCity, Account.ShippingState, Account.ShippingPostalCode,Account.ShippingCountry"
+                      targetFields="{!v.currOpportunity}"
+                      targetError="{!v.recordError}"
+    />
+
+    <!--Retrieved from Server-->
+    <aura:attribute name="productList" type="List"/>
+    <aura:attribute name="productsMap" type="Map"/>
+    <aura:attribute name="cartTotal" type="Decimal" default="0.00"/>
+
+    <!--Variables to maintain a cart on the front end-->
+    <aura:attribute name="encryptedCartId" type="String" default=""/>
+    <aura:attribute name="productQuantityMap" type="Map"/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="isCartUpdated" type="Boolean" default="false"/>
+    <aura:attribute name="allowPaymentByInvoice" type="Boolean" default="false"/>
+    <aura:attribute name="wasOrderSuccessfullyPlaced" type="Boolean" default="false"/>
+    <aura:attribute name="cartContainsLearnToSwimProduct" type="Boolean" default="false"/>
+
+    <!--Account Details-->
+    <aura:attribute name="bill_to_forename" type="String"/>
+    <aura:attribute name="bill_to_surname" type="String"/>
+    <aura:attribute name="bill_to_email" type="String"/>
+    <aura:attribute name="bill_to_address_line1" type="String"/>
+    <aura:attribute name="bill_to_address_city" type="String"/>
+    <aura:attribute name="bill_to_address_country" type="String"/>
+    <aura:attribute name="bill_to_address_state" type="String"/>
+    <aura:attribute name="bill_to_address_postal_code" type="String"/>
+
+    <!--Register Events-->
+    <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
+    <aura:registerEvent name="showPriceOverrideModal" type="c:phss_cc_ShowPriceOverrideModalEvent"/>
+	<aura:registerEvent name="notifyPaymentComplete" type="c:PHSS_NotifyPaymentComplete_Event"/>
+    
+    <!--Hide Quantity, Update Cart button for community users-->
+    <aura:attribute name="hideQuantityForLms" type="Boolean" default="false" />
+    <aura:attribute name="hideCreditCard"	  type="Boolean" default="true" />
+    <aura:attribute name="showQuantity"       type="Boolean" default="true"/>
+    <aura:attribute name="showExtendedPrice"  type="Boolean" default="true"/>
+    <aura:attribute name="allowCartReload"    type="Boolean" default="true"/>
+
+    <!--Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdate"
+                  action="{!c.productCountIncrement}"/>
+    <aura:handler name="decrementProductCount" event="c:phss_cc_ProductCountUpdate"
+                  action="{!c.productCountDecrement}"/>
+    <aura:handler name="cyberSourceResponse" event="c:phss_cc_CyberSourceResponseEvent"
+                  action="{!c.handleCyberSourceResponse}"/>
+    <aura:handler name="sendPOToCart" event="c:phss_cc_POToCartEvent"
+                  action="{!c.handlePOPayment}"/>
+    <aura:handler event="c:phss_cc_RefreshComponentEvent" action="{!c.handleRefreshComponentEvent}"/>
+    <aura:handler name="showPriceOverrideModal" event="c:phss_cc_ShowPriceOverrideModalEvent" action="{!c.handleShowPriceOverrideModal}"/>
+
+    <!--Spinner when page loads-->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="{!$Label.c.Spinner_Alternate_Text}"/>
+    </aura:if>
+
+    <!--If not initialized-->
+    <aura:if isTrue="{!v.renderComplete == false}">
+        <aura:if isTrue="{!v.wasOrderSuccessfullyPlaced == false}">
+            <aura:if isTrue="{!v.allowCartReload}">
+                <div class="slds-align_absolute-center">
+                    <lightning:formattedText class="slds-text-heading--medium slds-m-right--medium"
+                                             value="{!$Label.c.Cart_OnLoad_Message_NoCartFound}"/>
+                    <lightning:button variant="brand" label="Reload"
+                                      onclick="{!c.reloadCart}"/>
+                </div>
+            </aura:if>
+        </aura:if>
+
+        <aura:if isTrue="{!v.wasOrderSuccessfullyPlaced == true}">
+            <div class="slds-align_absolute-center slds-m-vertical_xx-large">
+                <!--Success Message For Order Placed-->
+                <table>
+				<tr>
+                        <td class="slds-text-heading_large">
+                            <div class="slds-align_absolute-center slds-m-vertical_small">
+                                Click submit to record course completion and student evaluations. You will receive an email confirmation shortly.
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="slds-text-heading_medium">
+                            <div class="slds-align_absolute-center slds-m-vertical_small">
+                                Thank you, your payment has been received.
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </aura:if>
+    </aura:if>
+
+    <!--Display Cart-->
+    <aura:if isTrue="{!v.renderComplete}">
+        <h1 class="slds-text-heading--medium slds-m-bottom--small">
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.Cart_Table_Header}"/>
+            <lightning:formattedNumber class="slds-m-right--xx-small" value="{!v.productList.length}"/>
+            <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.Cart_Table_Header_Value_Type}"/>
+        </h1>
+
+        <div class="slds-grid slds-border--top slds-border--bottom slds-m-bottom--small">
+            <div class="slds-size_2-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_SKU}</div>
+            <div class="slds-size_4-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_Name}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_ListPrice}</div>
+            <aura:if isTrue="{!!v.hideQuantityForLms}">
+                <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_DiscountPrice}</div>
+                <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_DiscountPercentage}</div>
+            	<div class="slds-size_3-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>
+            </aura:if>
+            <aura:if isTrue="{!v.showQuantity}">
+                <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>
+            </aura:if>
+            <aura:if isTrue="{!v.showExtendedPrice}">
+                <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_ExtendedPrice}</div>
+            </aura:if>
+        </div>
+
+        <aura:if isTrue="{!v.productList.length==0}">
+            <lightning:formattedText class="slds-align_absolute-center slds-text-heading--small"
+                                     value="Cart is empty."/>
+
+            <aura:if isTrue="{!v.allowCartReload}">
+                <lightning:button iconName="utility:refresh" variant="brand"
+                                  class="slds-align_absolute-center slds-m-top--medium"
+                                  onclick="{!c.reloadCart}" label="Reload Cart"/>
+            </aura:if>
+        </aura:if>
+
+        <aura:if isTrue="{!v.productList.length!=0}">
+            <div class="slds-scrollable--y" style="max-height: 20rem; height: auto;">
+                <aura:iteration items="{!v.productList}" var="product">
+                    <c:phss_cc_ProductDetail_Clone productSfid="{!product}" productMap="{!v.productsMap}"
+                                             	   productQuantityMap="{!v.productQuantityMap}"
+                                                   showDiscountPricing="true"
+                                                   showPayment="true"
+                                                   showQuantity="{!v.showQuantity}"
+                                                   showExtendedPrice="{!v.showExtendedPrice}"/>
+                </aura:iteration>
+            </div>
+
+            <!--Cart Total-->
+            <div class="slds-grid slds-p-bottom--medium slds-no-flex slds-p-top--medium slds-border--top">
+                <div class="slds-size_11-of-12 slds-text-heading--medium" style="font-weight: bold;width:90%;">Total:</div>
+                
+                    
+                <div class="slds-size_1-of-12 slds-no-flex slds-text-heading--medium" style="font-weight: bold;">
+                  
+                    <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                               currencyDisplayAs="symbol" value="{!v.cartTotal}"/>
+                                    </div>
+                   
+                
+            </div>
+
+            <!--Cart Buttons-->
+            <div align="center" class="slds-m-top--large">
+                <aura:if isTrue="{!v.allowCartReload}">
+                    <lightning:button iconName="utility:refresh" class="slds-m-bottom--medium" variant="neutral"
+                                      label="Reload Cart" onclick="{!c.reloadCart}"/>
+                </aura:if>
+                <aura:if isTrue="{!!v.hideQuantityForLms}">
+                    <lightning:button iconName="utility:shopping_bag" class="slds-m-bottom--medium" variant="brand"
+                    	              label="{!$Label.c.Cart_Button_UpdateCart}" onclick="{!c.updateCart}"/>
+                </aura:if>
+            </div>
+
+            <!--Address Picker-->
+            <c:phss_cc_BillToShipToAddressSelector_Clone currOpportunitySfid="{!v.recordId}"/>
+
+            <!--Payment methods-->
+            <div class="slds-border--bottom">
+                <div class="slds-m-top--medium slds-m-bottom--medium slds-text-heading--medium">Payment Details:
+                </div>
+                <aura:if isTrue="{! v.cartContainsLearnToSwimProduct }">
+                    <div class="slds-text-body_regular slds-m-bottom_medium slds-m-horizontal_x-large">
+                        Below are the payment options available for your account.  Please select the method of payment you will use. If your Organization has Invoicing as a payment option, you may use an existing Purchase Order, create a new Purchase Order or submit the order by selecting No Purchase Order.  <b>Note:</b> for zero dollar transactions, select 'No PO' as your payment method, then scroll down and click Make Payment.
+                    </div>
+                </aura:if>
+                <lightning:tabset class="slds-m-top--medium slds-m-bottom--medium">
+                    <aura:if isTrue="{!v.hideCreditCard}">
+                        <lightning:tab label="Credit Card">
+                            <c:phss_cc_CyberSourceCCProcessor currOpportunitySfid="{!v.recordId}" requiresClickHack="true"/>
+                        </lightning:tab>
+                    </aura:if>
+                    <aura:if isTrue="{! v.allowPaymentByInvoice }">
+                        <lightning:tab label="Invoice">
+                            <c:phss_cc_PurchaseOrder currOpportunitySfid="{!v.recordId}"/>
+                        </lightning:tab>
+                    </aura:if>
+                </lightning:tabset>
+            </div>
+        </aura:if>
+    </aura:if>
+
+    <!--Price Override modal-->
+    <!--SW 1/24/2019  <c:phss_cc_PriceOverrideModal/> -->
+
+</aura:component>

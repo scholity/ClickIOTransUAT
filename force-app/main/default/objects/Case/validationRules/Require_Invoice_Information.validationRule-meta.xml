@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Invoice_Information</fullName>
+    <active>false</active>
+    <description>The fields Current Invoice and Correct Invoice are required when the Third Sub Type is Correct Account Wrong Invoice</description>
+    <errorConditionFormula>OR( 
+AND( 
+ISPICKVAL( Type_of_Price_Dispute__c , &#39;Correct Account Wrong Invoice&#39;), 
+ISBLANK(  Correct_Invoice__c  ) 
+), 
+AND ( 
+ISPICKVAL( Type_of_Price_Dispute__c , &#39;Correct Account Wrong Invoice&#39;), 
+ISBLANK (  Current_Invoice__c  ) 
+) 
+)</errorConditionFormula>
+    <errorMessage>The fields Current Invoice and Correct Invoice are required when the Third Sub Type is Correct Account Wrong Invoice</errorMessage>
+</ValidationRule>

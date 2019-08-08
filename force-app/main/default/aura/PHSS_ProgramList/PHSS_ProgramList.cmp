@@ -1,0 +1,38 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="PHSS_ProgramListController" access="global">
+	<aura:attribute name="bulletinLabel" type="String" default="Instructor bulletin" access="public"/>
+	<aura:attribute name="label" type="String" default="Featured Programs" access="public"/>
+
+	<aura:attribute name="programs" type="PHSS_Program__c[]" default="[]" access="private"/>
+	<aura:attribute name="isAll" type="Boolean" default="false" access="private"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+
+	<h2 class="slds-text-heading--small slds-p-bottom--small">{#v.label}</h2>
+	<table class="slds-table slds-table--bordered">
+		<thead>
+			<tr class="slds-text-title">
+				<th scope="col">
+					<div class="slds-truncate" title="PHSS PROGRAM NAME"> PROGRAM NAME</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="INSTRUCTOR BULLETIN">INSTRUCTOR BULLETIN</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<aura:iteration items="{!v.programs}" var="program">
+				<c:PHSS_ProgramListItem program="{#program}"
+					bulletinLabel="{#v.bulletinLabel}"
+				/>
+			</aura:iteration>
+			<aura:if isTrue="{!!v.isAll}">
+				<tr>
+					<td>
+						<a onclick="{!c.getAll}">View All</a>
+					</td>
+					<td></td>
+				</tr>
+			</aura:if>
+		</tbody>
+	</table>
+</aura:component>

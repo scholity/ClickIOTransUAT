@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <ui:button label="Schedule Full Service" press="{!c.openBookingGridModal}" class="btnSchduleFullService" /> 
+    <ui:button label="Manage Resource" press="{!c.openAllocationModal}" class="btnSchduleFullService" /> 
+    <ui:button label="Cancel Jobs" press="{!c.openJobsCancellationModal}" class="btnSchduleFullService" /> 
+    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="ifmsrc" type="String" default="" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="destroy" value="{!this}" action="{!c.doDestroy}"/>
+</aura:component>

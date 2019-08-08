@@ -1,0 +1,36 @@
+<aura:component controller="BroadcastMessageApexController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <!-- events -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:attribute name="show" type="Boolean" default="true" access="global" />
+    <!-- attributes -->
+    <aura:attribute name="family" type="String" default="serif" access="global" />
+    <aura:attribute name="size" type="String" default="large" access="global" />
+    <aura:attribute name="color" type="String" default="#ed1b2e" access="global" />
+    <aura:attribute name="weight" type="String" default="lighter" access="global" />
+    <aura:attribute name="animation" type="String" default="pulsate" access="global" />
+    <aura:attribute name="messages" type="Broadcast_Message__c[]" access="global" />
+    <aura:attribute name="messageIndex" type="Integer" default="0" access="global"/>
+    <aura:attribute name="currentMessage" type="String" access="global" default=""/>
+    <aura:attribute name="currentMessageLink" type="String" access="global" default=""/> 
+    <aura:attribute name="interval" type="String" access="global" default="6000" />
+    <aura:attribute name="type" type="String" access="global" default="error" />
+	<!-- render messages -->
+    <aura:if isTrue="{!v.messages.length > 0}">
+        <aura:if isTrue="{!v.show}">
+            <div class="{!v.type}">            
+                <aura:if isTrue="{!(v.currentMessageLink != undefined &amp;&amp; v.currentMessageLink != '')}">
+                    <a href="{!v.currentMessageLink}">{!v.currentMessage}</a>
+<!--                    
+                    <a href="javascript:void(0);" onclick="{!c.handleClick}" id="close_popup"></a>
+-->
+                <aura:set attribute="else">
+                    {!v.currentMessage}
+<!--                    
+                    <a href="javascript:void(0);" onclick="{!c.handleClick}" id="close_popup"></a>
+-->
+                </aura:set>
+                </aura:if>
+            </div>
+        </aura:if>
+    </aura:if>	
+</aura:component>

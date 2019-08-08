@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disaster__c</fullName>
+    <externalId>false</externalId>
+    <label>Disaster</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>California Wildfires</fullName>
+                <default>false</default>
+                <label>California Wildfires</label>
+            </value>
+            <value>
+                <fullName>Hurricane Barry</fullName>
+                <default>false</default>
+                <label>Hurricane Barry</label>
+            </value>
+            <value>
+                <fullName>Hurricane Florence</fullName>
+                <default>false</default>
+                <label>Hurricane Florence</label>
+            </value>
+            <value>
+                <fullName>Hurricane Harvey</fullName>
+                <default>false</default>
+                <label>Hurricane Harvey</label>
+            </value>
+            <value>
+                <fullName>Hurricane Irma</fullName>
+                <default>false</default>
+                <label>Hurricane Irma</label>
+            </value>
+            <value>
+                <fullName>Hurricane Maria</fullName>
+                <default>false</default>
+                <label>Hurricane Maria</label>
+            </value>
+            <value>
+                <fullName>Hurricane Michael</fullName>
+                <default>false</default>
+                <label>Hurricane Michael</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,19 @@
+/**
+ * Created by bjarmolinski on 2019-06-07.
+ */
+.THIS .header {
+    font-size: 24px;
+    font-weight: bolder;
+    font-family: Arial;
+}
+
+.THIS .subheader {
+    font-size: 13px;
+    font-family: Arial;
+}
+
+.THIS.wrapperdiv {
+    text-align: center;
+    padding-bottom: 40px;
+    padding-top: 80px;
+}

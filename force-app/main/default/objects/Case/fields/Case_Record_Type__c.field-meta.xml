@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Record_Type__c</fullName>
+    <description>This field is used as a reporting field. Since we have case open record types and case close record types we are using &quot;Buckets&#39;&#39; in the reporting to group them together for readability and using this field as a bucketed field since the standard Record Type field is not available to bucket.</description>
+    <externalId>false</externalId>
+    <formula>RecordType.DeveloperName</formula>
+    <label>Case Record Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

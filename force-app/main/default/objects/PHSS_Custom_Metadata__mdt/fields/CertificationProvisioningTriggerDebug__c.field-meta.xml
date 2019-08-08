@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CertificationProvisioningTriggerDebug__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If TRUE then records in PHSS_Certification_Provisioning__c will NOT be deleted after processing</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>If TRUE then records in PHSS_Certification_Provisioning__c will NOT be deleted after processing</inlineHelpText>
+    <label>Certification Provisioning Trigger Debug</label>
+    <type>Checkbox</type>
+</CustomField>

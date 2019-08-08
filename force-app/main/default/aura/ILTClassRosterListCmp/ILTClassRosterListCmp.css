@@ -1,0 +1,12 @@
+.THIS thead.slds-color__background_gray-4 th {
+    background-color: transparent;
+}
+.THIS table {
+    border-top: 1px solid #9e9da2;
+}
+.THIS .slds-table_bordered tbody tr:first-child td, 
+.THIS .slds-table_bordered tbody tr:first-child th, 
+.THIS .slds-table--bordered tbody tr:first-child td, 
+.THIS .slds-table--bordered tbody tr:first-child th {
+    border-top: unset;
+}

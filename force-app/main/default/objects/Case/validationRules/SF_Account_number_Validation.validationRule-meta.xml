@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SF_Account_number_Validation</fullName>
+    <active>true</active>
+    <description>Validate SF Number before going to CFS.</description>
+    <errorConditionFormula>AND(OR((MID(SF_Account_number__c,0,2) &lt;&gt; &#39;SF&#39;), NOT(ISNUMBER(MID(SF_Account_number__c,3,LEN(SF_Account_number__c)))), LEN(SF_Account_number__c) &lt;&gt; 10, CONTAINS(SF_Account_number__c,&#39;.&#39;)), !ISBLANK(SF_Account_number__c), ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;), RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE)</errorConditionFormula>
+    <errorMessage>Enter valid SF Account number in Account to set Case Status to &#39;PO On-Hold CFS&#39;.</errorMessage>
+</ValidationRule>

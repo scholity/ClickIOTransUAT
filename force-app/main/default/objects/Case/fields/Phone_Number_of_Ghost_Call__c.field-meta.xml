@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Phone_Number_of_Ghost_Call__c</fullName>
+    <description>This field is only populated for cases that were created as a consequence of pressing the &quot;Log Ghost Call&quot; button on the &quot;Search for Customer Contact&quot; page.</description>
+    <externalId>false</externalId>
+    <label>Phone Number of Ghost Call</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Phone</type>
+</CustomField>

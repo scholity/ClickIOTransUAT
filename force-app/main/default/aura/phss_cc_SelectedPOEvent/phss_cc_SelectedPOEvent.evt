@@ -1,0 +1,7 @@
+<!--
+ - Created by dgajwani on 10/2/18.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_SelectedPOEvent">
+    <aura:attribute name="POSfid" type="String"/>
+</aura:event>

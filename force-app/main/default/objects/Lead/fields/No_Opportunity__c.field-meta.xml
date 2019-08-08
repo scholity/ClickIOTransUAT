@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Opportunity__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Reason if no opportunity is created.</inlineHelpText>
+    <label>No Opportunity Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Recently Certified</fullName>
+                <default>false</default>
+                <label>Recently Certified</label>
+            </value>
+            <value>
+                <fullName>Bad Contact Info</fullName>
+                <default>false</default>
+                <label>Bad Contact Info</label>
+            </value>
+            <value>
+                <fullName>Referred</fullName>
+                <default>false</default>
+                <label>Referred</label>
+            </value>
+            <value>
+                <fullName>Not Reached</fullName>
+                <default>false</default>
+                <label>Not Reached</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

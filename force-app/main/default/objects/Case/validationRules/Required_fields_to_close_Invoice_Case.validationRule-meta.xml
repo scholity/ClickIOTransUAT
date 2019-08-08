@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_fields_to_close_Invoice_Case</fullName>
+    <active>true</active>
+    <description>When Invoice Case Type =Bad Address, Duplicate Invoice, Customer Service Credit, Misapplied Payment, Missing Payment, Price, Wrong Organization  Roor Case picklist value is required to close the case</description>
+    <errorConditionFormula>AND( 
+OR( 
+ISPICKVAL( Dispute_Issue__c, &#39;Bad Address&#39;), 
+ISPICKVAL( Dispute_Issue__c, &#39;Duplicate Invoice&#39;), 
+ISPICKVAL( Dispute_Issue__c, &#39;Misapplied Payment&#39;), 
+ISPICKVAL( Dispute_Issue__c, &#39;Missing Payment&#39;), 
+ISPICKVAL( Dispute_Issue__c, &#39;Price&#39;), 
+ISPICKVAL( Dispute_Issue__c, &#39;Wrong Organization&#39;) 
+), 
+RecordType.DeveloperName = &#39;Invoicing&#39;, 
+ISPICKVAL(Type,&#39;Invoicing&#39;), 
+ISPICKVAL(Status, &#39;Closed - Invoicing&#39;), 
+ISPICKVAL(Root_Cause__c, &#39;&#39;), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+
+)</errorConditionFormula>
+    <errorDisplayField>Root_Cause__c</errorDisplayField>
+    <errorMessage>Provide Root Cause Value</errorMessage>
+</ValidationRule>

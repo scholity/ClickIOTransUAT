@@ -1,0 +1,47 @@
+.THIS.sidebar {
+    border: 1px solid #9e9da2;
+    background-color: white;
+}
+.THIS.sidebar .heading-background{
+    font-size: 1.1rem;
+}
+.THIS.sidebar .locationBlock{
+    border-bottom: 1px solid #9e9da2;
+}
+.THIS.sidebar .locationBlock:last-child{
+    border-bottom: none;
+}
+.THIS .address-link a{
+    display: flex;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    flex-wrap: wrap;
+}
+.THIS.sidebar .address{
+    font-size: 0.9rem;
+    color: #505052;
+}
+.THIS.sidebar .labelDay{
+    font-size: 1rem;
+}
+.THIS.sidebar .sessionTime{
+    font-weight: 900;
+    font-size: 0.85rem;
+}
+.THIS.sidebar .mainLabel{
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-left: 0;
+    color: #6D6D6F;
+}
+.THIS.sidebar .mapDirections{
+    font-size: 1rem;
+}
+.THIS.sidebar .mapDirections a{
+    /*color:  red;*/
+}
+.THIS.sidebar .mapDirections a:hover{
+    text-decoration: none;
+}

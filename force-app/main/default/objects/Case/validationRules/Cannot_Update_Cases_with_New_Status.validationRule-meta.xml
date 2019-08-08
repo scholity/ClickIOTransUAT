@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Update_Cases_with_New_Status</fullName>
+    <active>false</active>
+    <description>Service cases with a &quot;New&quot; status cannot be updated if they have the &quot;Invoicing&quot; type. The case status must be updated to be able to save case changes.</description>
+    <errorConditionFormula>AND(ISNEW() = FALSE, ISPICKVAL( Status , &quot;New&quot;), RecordType.DeveloperName = &quot;Service_Cases&quot;, ISPICKVAL (Type, &quot;Invoicing&quot;), $Setup.Validation_Rules__c.Bypass_Rules__c = false, ISCHANGED( OwnerId )= false)</errorConditionFormula>
+    <errorDisplayField>Status</errorDisplayField>
+    <errorMessage>&quot;Invoicing&quot; type service cases with &quot;New&quot; status cannot be saved without updating the case status. Please change the case Status field.</errorMessage>
+</ValidationRule>

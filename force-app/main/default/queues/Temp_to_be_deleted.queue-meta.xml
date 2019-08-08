@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Temp - to be deleted</name>
+    <queueMembers>
+        <users>
+            <user>gita.borovsky@redcross.org</user>
+            <user>jatinkumar.acharya@redcross.org</user>
+            <user>mike.smith2@redcross.org</user>
+            <user>sfdcsudhir@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

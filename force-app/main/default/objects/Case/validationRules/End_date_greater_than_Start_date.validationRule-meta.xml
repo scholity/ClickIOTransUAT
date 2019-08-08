@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>End_date_greater_than_Start_date</fullName>
+    <active>true</active>
+    <description>End date should always be greater than Start date.</description>
+    <errorConditionFormula>If(AND((ISPICKVAL(Status,&#39;PO On-Hold CFS&#39;) &amp;&amp; (DATEVALUE(PO_Start_Date__c) &gt;= DATEVALUE(PO_End_Date__c))), RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE), true, false)</errorConditionFormula>
+    <errorDisplayField>PO_End_Date__c</errorDisplayField>
+    <errorMessage>PO Expiration date cannot be before the PO Start Date.</errorMessage>
+</ValidationRule>

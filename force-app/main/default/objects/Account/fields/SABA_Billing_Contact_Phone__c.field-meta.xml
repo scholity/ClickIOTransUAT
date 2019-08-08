@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SABA_Billing_Contact_Phone__c</fullName>
+    <description>Saba-Legacy data migration</description>
+    <externalId>false</externalId>
+    <label>SABA Billing Contact Phone</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Phone</type>
+</CustomField>

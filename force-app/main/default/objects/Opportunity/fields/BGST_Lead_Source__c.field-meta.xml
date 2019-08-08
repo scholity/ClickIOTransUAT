@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BGST_Lead_Source__c</fullName>
+    <description>Lead Source Field use for the BGST Profile</description>
+    <externalId>false</externalId>
+    <label>BGST Lead Source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IVR</fullName>
+                <default>false</default>
+                <label>IVR</label>
+            </value>
+            <value>
+                <fullName>TSC Transfer</fullName>
+                <default>false</default>
+                <label>TSC Transfer</label>
+            </value>
+            <value>
+                <fullName>Voice Mail</fullName>
+                <default>false</default>
+                <label>Voice Mail</label>
+            </value>
+            <value>
+                <fullName>After-Hours Transfer Lead Form</fullName>
+                <default>false</default>
+                <label>After-Hours Transfer Lead Form</label>
+            </value>
+            <value>
+                <fullName>Referral/Repeat Business</fullName>
+                <default>false</default>
+                <label>Referral/Repeat Business</label>
+            </value>
+            <value>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+                <label>Marketing</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

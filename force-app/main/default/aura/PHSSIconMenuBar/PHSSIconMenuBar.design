@@ -1,0 +1,33 @@
+<design:component>
+    <design:attribute name="title" label="title"/>
+    
+	<design:attribute name="label1" label="Label 1"/>
+    <design:attribute name="url1" label="Url 1"/>
+    <design:attribute name="image1" label="Image 1"/>
+    <design:attribute name="fontSize1" label="Font Size 1"/>
+
+    <design:attribute name="label2" label="Label 2"/>
+    <design:attribute name="url2" label="Url 2"/>
+    <design:attribute name="image2" label="Image 2"/>
+    <design:attribute name="fontSize2" label="Font Size 2"/>
+    
+    <design:attribute name="label3" label="Label 3"/>
+    <design:attribute name="url3" label="Url 3"/>
+    <design:attribute name="image3" label="Image 3"/>
+    <design:attribute name="fontSize3" label="Font Size 3"/>
+    
+    <design:attribute name="label4" label="Label 4"/>
+    <design:attribute name="url4" label="Url 4"/>
+    <design:attribute name="image4" label="Image 4"/>
+    <design:attribute name="fontSize4" label="Font Size 4"/>
+
+    <design:attribute name="label5" label="Label 5"/>
+    <design:attribute name="url5" label="Url 5"/>
+    <design:attribute name="image5" label="Image 5"/>
+    <design:attribute name="fontSize5" label="Font Size 5"/>
+
+    <design:attribute name="label6" label="Label 6"/>
+    <design:attribute name="url6" label="Url 6"/>
+    <design:attribute name="image6" label="Image 6"/>
+    <design:attribute name="fontSize6" label="Font Size 6"/>
+</design:component>

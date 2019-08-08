@@ -1,0 +1,315 @@
+<aura:component
+        extensible="true"
+        implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId"
+        extends="c:cc_lx_CloudCrazeComponentV2"
+        access="global"
+        controller="cc_lx_OBProductSearchControllerV2"
+        description="CC Order Builder Product Search Component">
+
+    <ltng:require scripts="{!join(',', $Resource.jquery331, $Resource.underscore191)}"/>
+
+    <!-- step SA 1. add force:hasRecordId to implements attribute. This willmake sure we get the record id of the object on
+    which it is added -->
+
+    <!-- step SA 2: SF sets this field with the id of the object on which itis added. -->
+
+    <!-- THis attribute is set by admin when the component is addded to the lightning page.
+THis will be set to Account or Opportunity based on which objects page it is added. Also see DESIGN 
+ -->
+
+
+    <aura:attribute name="renderDefaultComponent" type="Boolean" default="true"/>
+    <aura:attribute name="showCartControls" type="Boolean" default="true"/>
+    <aura:attribute name="productList" type="List"/>
+    <aura:attribute name="searchQuery" type="String" default=""/>
+    <aura:attribute name="sortKey" type="String"/>
+    <aura:attribute name="sortReverse" type="Boolean" default="false"/>
+    <aura:attribute name="showImage" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="showSKU" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="showUOM" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="showDesc" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="showPrice" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="resultsLength" type="String" default="10" access="global"/>
+
+    <aura:attribute name="pageStart" type="Integer" default="0"/>
+    <aura:attribute name="pageEnd" type="Integer" default="0"/>
+    <aura:attribute name="showFirst" type="Boolean" default="false"/>
+    <aura:attribute name="showPrev" type="Boolean" default="false"/>
+    <aura:attribute name="showNext" type="Boolean" default="false"/>
+    <aura:attribute name="footSpan" type="Integer" default="1"/>
+    <aura:attribute name="mobileFootSpan" type="Integer" default="1"/>
+
+    <aura:attribute name="length" type="Integer" default="10"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="reloadCart" type="c:cc_lx_CartUpdateEventV2"/>
+
+    <div class="slds-card">
+        <aura:if isTrue="{!v.renderDefaultComponent}">
+            <div class="slds-card__header">
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-has-flexi-truncate">
+                        <p class="slds-text-heading--small">{!$Label.cclxrep.cclxOBProdSrch}</p>
+                    </div>
+                </div>
+                <div id="errorDiv" aura:id="errorDiv"></div>
+                <div class="slds-grid">
+                    <div class="slds-col--padded">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                                <lightning:icon iconName="utility:search"
+                                                class="slds-input__icon slds-icon-text-default"/>
+                                <input type="text" class="slds-input cclx-search-input"
+                                       placeholder="{!$Label.cclxrep.cclxOBProdSrchPlaceholder}"
+                                       onkeyup="{!c.triggerSearch}" aura:id="seach-input" value="{!v.searchQuery}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col--padded">
+                        <div class="slds-form-element">
+                            <button class="slds-button slds-button--brand" type="button"
+                                    onclick="{!c.executeSearch}">{!$Label.cclxrep.cclxOBProdSrchSearchBtn}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__body">
+                <aura:if isTrue="{!v.productList != null}">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout"
+                           aura:id="OB_ProductSearchTable">
+                        <thead>
+                        <tr class="slds-text-heading--label">
+                            <aura:if isTrue="{!v.showImage}">
+                                <th scope="col" class="slds-medium-show--table-cell"></th>
+                            </aura:if>
+                            <aura:if isTrue="{!v.showSKU}">
+                                <th class="slds-is-sortable slds-medium-show--table-cell" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnString}" data-key="SKU">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxOBProdSrchSortColumn}</span>
+                                        <span class="slds-truncate"
+                                              title="SKU">{!$Label.cclxrep.cclxOBProdSrchSKU}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxOBProdSrchSortColumn}"></div>
+                                    </a>
+                                </th>
+                            </aura:if>
+                            <th class="slds-is-sortable" scope="col">
+                                <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                   onclick="{!c.sortColumnString}" data-key="sfdcName">
+                                    <span class="slds-assistive-text">{!$Label.cclxrep.cclxOBProdSrchSortColumn}</span>
+                                    <span class="slds-truncate" title="Name">{!$Label.cclxrep.cclxOBProdSrchName}</span>
+                                    <div class="slds-icon_container"
+                                         title="{!$Label.cclxrep.cclxOBProdSrchSortColumn}"></div>
+                                </a>
+                            </th>
+                            <aura:if isTrue="{!v.showDesc}">
+                                <th class="slds-is-sortable slds-medium-show--table-cell" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnString}" data-key="shortDesc">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxOBProdSrchSortColumn}</span>
+                                        <span class="slds-truncate"
+                                              title="Description">{!$Label.cclxrep.cclxOBProdSrchDescription}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxOBProdSrchSortColumn}"></div>
+                                    </a>
+                                </th>
+                            </aura:if>
+                            <aura:if isTrue="{!v.showUOM}">
+                                <th class="slds-is-sortable slds-medium-show--table-cell" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnString}" data-key="uom">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxOBProdSrchSortColumn}</span>
+                                        <span class="slds-truncate"
+                                              title="Description">{!$Label.cclxrep.cclxOBProdSrchUOM}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxOBProdSrchSortColumn}"></div>
+                                    </a>
+                                </th>
+                            </aura:if>
+                            <aura:if isTrue="{!v.showPrice}">
+                                <th class="slds-is-sortable" scope="col">
+                                    <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset"
+                                       onclick="{!c.sortColumnString}" data-key="price">
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxOBProdSrchSortColumn}</span>
+                                        <span class="slds-truncate"
+                                              title="Price">{!$Label.cclxrep.cclxOBProdSrchPrice}</span>
+                                        <div class="slds-icon_container"
+                                             title="{!$Label.cclxrep.cclxOBProdSrchSortColumn}"></div>
+                                    </a>
+                                </th>
+                            </aura:if>
+                            <th scope="col" class="cclx-quantity-column">
+                                <span class="slds-truncate"
+                                      title="Quantity">{!$Label.cclxrep.cclxOBProdSrchQuantity}</span>
+                            </th>
+                            <th scope="col" class="cclx-checkbox-column">
+                                <aura:if isTrue="{!v.showCartControls}">
+                                    <label class="slds-checkbox">
+                                        <input type="checkbox" name="options" onclick="{!c.selectAll}"/>
+                                        <span class="slds-checkbox--faux" title="Select/Deselect All"></span>
+                                        <span class="slds-assistive-text">{!$Label.cclxrep.cclxOBProdSrchSelectAll}</span>
+                                    </label>
+                                </aura:if>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <aura:iteration items="{!v.productList}" var="item" start="{!v.pageStart}" end="{!v.pageEnd}">
+                            <tr class="slds-hint-parent" data-id="{!item.sfid}">
+                                <aura:if isTrue="{!v.showImage}">
+                                    <td data-label="Product Image" class="slds-medium-show--table-cell">
+                                        <div class="slds-media slds-p-right--small">
+                                            <a data-id="{!item.sfid}"
+                                               href="{! '/' + v.networkUrlPrefix + '/' + item.sfid + v.queryString }">
+										<span>
+											<c:cc_lx_ProductImageComponent product="{!item}"
+                                                                           type="Product Image Thumbnail"/>
+										</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showSKU}">
+                                    <td class="slds-truncate slds-medium-show--table-cell" data-label="SKU"
+                                        title="{!item.SKU}">
+                                        <a data-id="{!item.sfid}"
+                                           href="{! '/' + v.networkUrlPrefix + '/' + item.sfid + v.queryString }">{!item.SKU}</a>
+                                    </td>
+                                </aura:if>
+                                <td class="slds-truncate" data-label="Name" title="{!item.sfdcName}">
+                                    <a data-id="{!item.sfid}"
+                                       href="{! '/' + v.networkUrlPrefix + '/' + item.sfid + v.queryString }">{!item.sfdcName}</a>
+                                </td>
+                                <aura:if isTrue="{!v.showDesc}">
+                                    <td class="slds-truncate slds-medium-show--table-cell" data-label="Description"
+                                        title="{!item.shortDesc}">
+                                        <aura:unescapedHtml value="{!item.shortDesc}"/>
+                                    </td>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showUOM}">
+                                    <td class="slds-truncate slds-medium-show--table-cell" data-label="Description"
+                                        title="{!item.unitOfMeasure}">{!item.unitOfMeasure}</td>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showPrice}">
+                                    <td class="slds-truncate" data-label="Amount" title="{!item.price}">
+                                        <ui:outputCurrency value="{!item.price}"/>
+                                    </td>
+                                </aura:if>
+                                <td class="cclx-quantity-column">
+                                    <aura:renderIf isTrue="{!v.showCartControls}">
+                                        <div class="slds-button-group" role="group">
+                                            <lightning:buttonIcon iconName="utility:dash" size="x-small"
+                                                                  alternativeText="{!$Label.cclxrep.cclxDecQuant}"
+                                                                  class="cc-lightButton" value="{!item.sfid}"
+                                                                  onclick="{!c.decrement}" variant="brand"/>
+                                            <ui:inputNumber value="{!item.quantity}" class="cclx-quantity"/>
+                                            <lightning:buttonIcon iconName="utility:add" size="x-small"
+                                                                  alternativeText="{!$Label.cclxrep.cclxIncQuant}"
+                                                                  class="cc-lightButton" value="{!item.sfid}"
+                                                                  onclick="{!c.increment}" variant="brand"/>
+                                        </div>
+                                    </aura:renderIf>
+                                </td>
+                                <td class="cclx-checkbox-column">
+                                    <aura:if isTrue="{!v.showCartControls}">
+                                        <label class="slds-checkbox">
+                                            <input type="checkbox" class="cclx-checkbox" data-id="{!item.sfid}"/>
+                                            <span class="slds-checkbox--faux" title="Select Row"></span>
+                                            <span class="slds-assistive-text">{!$Label.cclxrep.cclxOBProdSrchSelectRow}</span>
+                                        </label>
+                                    </aura:if>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                        </tbody>
+                        <tfoot>
+                        <aura:if isTrue="{!v.productList}">
+                            <tr>
+                                <td colspan="{!v.mobileFootSpan}" class="mobile-only">
+                                    <aura:if isTrue="{!v.showFirst}">
+                                        <button class="slds-button slds-button--brand" onclick="{!c.doGoFirst}">
+                                            &lt;&lt;
+                                        </button>
+                                        <aura:set attribute="else">
+                                            <button class="slds-button slds-button--brand" disabled="disabled">
+                                                &lt;&lt;
+                                            </button>
+                                        </aura:set>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.showPrev}">
+                                        <button class="slds-button slds-button--brand" onclick="{!c.doGoPrev}">&lt;
+                                        </button>
+                                        <aura:set attribute="else">
+                                            <button class="slds-button slds-button--brand" disabled="disabled">&lt;
+                                            </button>
+                                        </aura:set>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.showNext}">
+                                        <button class="slds-button slds-button--brand" onclick="{!c.doGoNext}">&gt;
+                                        </button>
+                                        <aura:set attribute="else">
+                                            <button class="slds-button slds-button--brand" disabled="disabled">&gt;
+                                            </button>
+                                        </aura:set>
+                                    </aura:if>
+                                </td>
+                            </tr>
+                            <tr class="mobile-only">
+                                <td colspan="{!v.mobileFootSpan}" class="slds-text-align--right">
+                                    <button class="slds-button slds-button--brand"
+                                            onclick="{!c.doAddToCart}">{!$Label.cclxrep.cclxOBProdSrchAddToCartBtn}</button>
+                                </td>
+                            </tr>
+                        </aura:if>
+                        </tfoot>
+                    </table>
+                </aura:if>
+                <aura:if isTrue="{!v.productList == null}">
+                    <div class="slds-p-around--medium slds-text-align--center no-results-row">{!$Label.cclxrep.cclxOBProdSrchNoResults}</div>
+                </aura:if>
+                <aura:if isTrue="{!v.productList != null}">
+                    <div class="button-container slds-p-around--x-small">
+                        <aura:if isTrue="{!v.showFirst}">
+                            <button class="slds-button slds-button--brand" onclick="{!c.doGoFirst}">&lt;&lt;</button>
+                            <aura:set attribute="else">
+                                <button class="slds-button slds-button--brand" disabled="disabled">&lt;&lt;</button>
+                            </aura:set>
+                        </aura:if>
+                        <aura:if isTrue="{!v.showPrev}">
+                            <button class="slds-button slds-button--brand" onclick="{!c.doGoPrev}">&lt;</button>
+                            <aura:set attribute="else">
+                                <button class="slds-button slds-button--brand" disabled="disabled">&lt;</button>
+                            </aura:set>
+                        </aura:if>
+                        <aura:if isTrue="{!v.showNext}">
+                            <button class="slds-button slds-button--brand" onclick="{!c.doGoNext}">&gt;</button>
+                            <aura:set attribute="else">
+                                <button class="slds-button slds-button--brand" disabled="disabled">&gt;</button>
+                            </aura:set>
+                        </aura:if>
+                        <button class="slds-button slds-button--brand flex-right-align"
+                                onclick="{!c.doAddToCart}">{!$Label.cclxrep.cclxOBRecentProdAddToCartBtn}</button>
+                    </div>
+                </aura:if>
+                {!v.body}
+            </div>
+            <div class="slds-card__footer"></div>
+            <aura:set attribute="else">
+                {!v.body}
+            </aura:set>
+        </aura:if>
+    </div>
+    <aura:if isTrue="{!v.renderDefaultComponent}">
+        <div class="slds-spinner_container slds-hide" aura:id="spinner">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <div class="hidden">
+        {!$Label.cclxrep.cclxOBProdSrchProductsAddedTitle} <!-- So it gets packaged -->
+        {!$Label.cclxrep.cclxOBProdSrchProductsAddedMessage}
+    </div>
+</aura:component>

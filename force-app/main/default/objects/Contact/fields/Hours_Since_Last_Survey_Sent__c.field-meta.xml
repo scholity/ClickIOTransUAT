@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hours_Since_Last_Survey_Sent__c</fullName>
+    <description>Hours since last time a survey has been sent to contact.</description>
+    <externalId>false</externalId>
+    <formula>(NOW() - Survey_Last_Sent__c) * 24</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Hours since last time a survey has been sent to contact.</inlineHelpText>
+    <label>Hours Since Last Survey Sent</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

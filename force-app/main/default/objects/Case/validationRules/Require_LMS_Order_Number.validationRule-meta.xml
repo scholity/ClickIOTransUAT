@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_LMS_Order_Number</fullName>
+    <active>true</active>
+    <description>Require &quot;LMS Order Number&quot; on &quot;Invoice Case Sub Type&quot;:  Duplicate Invoice, Grants, Price, Why Bill to Chapter, Wrong Organization, and Other</description>
+    <errorConditionFormula>AND( 
+OR( 
+ISPICKVAL( Dispute_Issue__c , &quot;Duplicate Invoice&quot;), 
+ISPICKVAL( Dispute_Issue__c , &quot;Price&quot;), 
+ISPICKVAL( Dispute_Issue__c , &quot;Wrong Organization&quot;) 
+), 
+OR(NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)), OwnerId = &#39;00Gd0000000SdP5&#39;), 
+( Order_Number__c = &quot;&quot;), 
+(RecordTypeId &lt;&gt; &quot;012d000000097TB&quot;), 
+(RecordTypeId &lt;&gt; &quot;012d000000097TC&quot;), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = false 
+)</errorConditionFormula>
+    <errorDisplayField>Order_Number__c</errorDisplayField>
+    <errorMessage>Please provide the LMS Order Number</errorMessage>
+</ValidationRule>

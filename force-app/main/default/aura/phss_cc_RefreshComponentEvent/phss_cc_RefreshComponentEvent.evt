@@ -1,0 +1,6 @@
+<!--
+ - Created by dgajwani on 10/1/18.
+ -->
+
+<aura:event type="APPLICATION" description="phss_cc_RefreshComponentEvent">
+</aura:event>

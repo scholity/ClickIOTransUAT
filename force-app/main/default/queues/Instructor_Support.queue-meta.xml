@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>Instructor Support</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>Instructor_Support</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Back_Office_Manager_Role</role>
+            <role>Back_Office_Team_Lead</role>
+            <role>Front_Office_Manager_Role</role>
+            <role>Front_Office_Uniontown_Team_Lead_Role</role>
+            <role>ISG</role>
+            <role>Registration_Support_Group_Team_Lead_Role</role>
+            <role>Tier_III</role>
+            <role>Trainer</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

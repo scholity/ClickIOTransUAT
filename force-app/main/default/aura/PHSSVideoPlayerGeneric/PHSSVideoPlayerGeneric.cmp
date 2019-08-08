@@ -1,0 +1,21 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="VideoURL" type="String" description="URL for the Community" access="global" />
+   	<aura:attribute name="VideoType" type="String" default="video/mp4" access="global" /> 
+    <aura:attribute name="VideoTitle" type="String" default="Video Title" access="global" /> 
+    <aura:attribute name="VideoDescription" type="String" default="Video Description" access="global" />     
+    <aura:attribute name="VideoSize" type="String" default="640" access="global" /> 
+    <aura:attribute name="VideoShowControls" type="Boolean" default="true" access="global" /> 
+    <aura:attribute name="VideoAutoStart" type="Boolean" default="false" access="global" /> 
+    <div align="center">
+        <div>
+            <video preload="auto" width="{!v.VideoSize}" controls="{!v.VideoShowControls ? 'controls' : ''}" autoplay="{!v.VideoAutoStart ? 'autoplay' : ''}">
+                <source src="{!v.VideoURL}" type="{!v.VideoType}">
+                    Your browser does not support HTML5 video.</source>
+            </video>
+        </div>
+        <br/>
+	    <div>{!v.VideoTitle}</div>
+        <br/>
+	    <div>{!v.VideoDescription}</div>
+	</div>
+</aura:component>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_characters_for_Supp_Info</fullName>
+    <active>true</active>
+    <description>No Special Characters allowed in the Supp Info field.</description>
+    <errorConditionFormula>AND(
+( NOT( ISBLANK(Supp_Info__c))),
+(NOT(REGEX( Supp_Info__c, &quot;[a-zA-Z0-9\\s]+&quot;)))
+)</errorConditionFormula>
+    <errorDisplayField>Supp_Info__c</errorDisplayField>
+    <errorMessage>No Special Characters allowed in the Supp Info Field. (ie #, &amp;, $)</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reporting_of_Total_Participation__c</fullName>
+    <defaultValue>(&quot;Please report the total number of individuals who participated the Learn-to-Swim program this month, to include Parent and Child Aquatics, Preschool Aquatics, Learn-to-Swim Levels 1 - 3 and Adult Swim.&quot;)</defaultValue>
+    <externalId>false</externalId>
+    <label>Reporting of Total Participation</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>4</visibleLines>
+</CustomField>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activity_On__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(LEFT(WhatId,3), 
+&quot;001&quot;,&quot;Account&quot;, 
+&quot;006&quot;,&quot;Opportunity&quot;, 
+&quot;500&quot;,&quot;Case&quot;, 
+CASE(LEFT(WhoId,3), 
+&quot;003&quot;,&quot;Contact&quot;, 
+&quot;00Q&quot;,&quot;Lead&quot;, 
+NULL))</formula>
+    <inlineHelpText>This field provides description to what object this record belongs to.</inlineHelpText>
+    <label>Activity On</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

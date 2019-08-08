@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closing_Cases_with_Queue_Ownership</fullName>
+    <active>true</active>
+    <description>This validation rule restricts a user from closing a case that still is in a queue.</description>
+    <errorConditionFormula>AND(
+
+OwnerId != &quot;00Gd0000000SYUt&quot; /*AutoCloseQueue*/, 
+
+
+CONTAINS(OwnerId, &quot;00G&quot;), 
+
+OR(
+ISPICKVAL( Status , &quot;Closed - Resolved&quot;),
+ISPICKVAL( Status , &quot;Closed - Unresolved&quot;),
+ISPICKVAL( Status , &quot;Closed - Invoicing&quot;),
+ISPICKVAL( Status , &quot;Closed - Community Course Registration&quot;),
+ISPICKVAL( Status , &quot;Closed Non Community Course Registration&quot;)
+),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>The case owner is a queue. Please change the owner before closing this case.</errorMessage>
+</ValidationRule>

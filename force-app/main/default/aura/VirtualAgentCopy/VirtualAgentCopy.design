@@ -1,0 +1,6 @@
+<design:component >
+	<design:attribute name="title" 
+    	label="Title"
+    	description="The title that the component should render." 
+  	/>
+</design:component>

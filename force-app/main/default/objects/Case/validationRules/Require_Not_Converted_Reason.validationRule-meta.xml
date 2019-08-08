@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Not_Converted_Reason</fullName>
+    <active>true</active>
+    <description>Validation rule will require not converted reason field to be filled if converted sale is no.</description>
+    <errorConditionFormula>AND(
+ISPICKVAL( Type , &quot;Community Course Registration&quot;),
+ISPICKVAL( Case_Sub_Type__c, &quot;New Registration&quot;),
+ISPICKVAL(Converted_To_Sale__c, &quot;No&quot;),
+ISBLANK( Not_Converted_To_Sale_Reason__c ),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Not_Converted_To_Sale_Reason__c</errorDisplayField>
+    <errorMessage>Please describe the reason this interraction did not result in a sale.</errorMessage>
+</ValidationRule>

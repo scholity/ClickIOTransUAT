@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Details_of_Agreement_Coverage</fullName>
+    <active>true</active>
+    <description>When &quot;Other, please describe&quot; or &quot;MOU&quot; is selected in &#39;Agreement Covers&#39; then description field &quot;Details of Agreement Coverage&quot; is mandatory.</description>
+    <errorConditionFormula>OR( 
+AND( 
+ISPICKVAL( Agreement_Covers__c , &quot;Other, please describe&quot;), 
+ISBLANK( Details_of_Agreement_Coverage__c ), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+), 
+AND( 
+ISPICKVAL( Agreement_Covers__c , &quot;MOU&quot;), 
+ISBLANK( Details_of_Agreement_Coverage__c ), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+) 
+)</errorConditionFormula>
+    <errorDisplayField>Details_of_Agreement_Coverage__c</errorDisplayField>
+    <errorMessage>Please describe the details of the agreement coverage</errorMessage>
+</ValidationRule>

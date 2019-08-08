@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Third_Sub_Type_1</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+ISPICKVAL( Type_of_Price_Dispute__c , &quot;Missing Payment&quot;),  
+OR( 
+ISBLANK (Order_Number__c ), 
+ISBLANK (Text(Proof_Of_Payment_Attached__c )), 
+ISBLANK ( RDC_Number__c ), 
+ISBLANK(  Payment_Amount__c  ), 
+ISBLANK( Text(Payment_Date__c  )),
+ISBLANK( Payment_Sent_To_Address__c ),
+ISBLANK( Payment_Sent_To_State__c ),
+ISBLANK (Invoice_Number__c ),
+ISBLANK (Company_Name__c ),
+ISBLANK(  Check_Cleared_Date__c )),
+$Setup.Validation_Rules__c.Bypass_Rules__c = false)</errorConditionFormula>
+    <errorMessage>Check all required fields - Account Name; Contact Name; Delivery Channel; Company Name; LMS Order # (RCS #); Inv. #; ST; Proof of Pmt. Attached; Check/RDC Number; Pmt. Amount; Pmt. Date; Pmt. Sent to Address; Pmt. Sent to ST; Check Cleared Date</errorMessage>
+</ValidationRule>

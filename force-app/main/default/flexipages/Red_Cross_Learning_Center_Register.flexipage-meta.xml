@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <appendable>enabled</appendable>
+        <name>header</name>
+        <prependable>enabled</prependable>
+        <replaceable>enabled</replaceable>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <appendable>enabled</appendable>
+        <componentInstances>
+            <componentName>PHSS_LogoHeader</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>richTextValue</name>
+                <value>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img class=&quot;sfdcCbImage&quot; src=&quot;{!contentAsset.warning16.1}&quot; /&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;If you created your ID on or before Jan 15, 2019, you will&lt;/p&gt;
+&lt;p style=&quot;text-align: center;&quot;&gt;need to create a new login to access our systems&lt;/p&gt;</value>
+            </componentInstanceProperties>
+            <componentName>forceCommunity:richTextInline</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentName>PHSS_CreateAccount_Modal</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>richTextValue</name>
+                <value>&lt;h1 style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/h1&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;h1 style=&quot;text-align: center;&quot;&gt;Create Account&amp;nbsp;&lt;/h1&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</value>
+            </componentInstanceProperties>
+            <componentName>forceCommunity:richTextInline</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>richTextValue</name>
+                <value>&lt;p style=&quot;text-align: center;&quot;&gt;Please create an account to help you manage orders,&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;classes, certificates and purchase products.&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</value>
+            </componentInstanceProperties>
+            <componentName>forceCommunity:richTextInline</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>confirmPasswordLabel</name>
+                <value>Confirm Password</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>emailLabel</name>
+                <value>Email</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>firstnameLabel</name>
+                <value>First Name</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>includePasswordField</name>
+                <value>true</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>lastnameLabel</name>
+                <value>Last Name</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>passwordLabel</name>
+                <value>Create Password</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>regConfirmUrl</name>
+                <value>./CheckPasswordResetEmail</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>submitButtonLabel</name>
+                <value>Sign Up</value>
+            </componentInstanceProperties>
+            <componentName>PHSS_CustomSelfRegiter</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>showHeader</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentName>salesforceIdentity:socialLogin2</componentName>
+        </componentInstances>
+        <name>content</name>
+        <prependable>enabled</prependable>
+        <replaceable>enabled</replaceable>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <appendable>enabled</appendable>
+        <name>footer</name>
+        <prependable>enabled</prependable>
+        <replaceable>enabled</replaceable>
+        <type>Region</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <appendable>enabled</appendable>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>description</name>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>metaTags</name>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>title</name>
+            </componentInstanceProperties>
+            <componentName>forceCommunity:seoAssistant</componentName>
+        </componentInstances>
+        <name>sfdcHiddenRegion</name>
+        <prependable>enabled</prependable>
+        <replaceable>enabled</replaceable>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Register</masterLabel>
+    <template>
+        <name>siteforce:sldsOneColLayout</name>
+    </template>
+    <type>CommSelfRegisterPage</type>
+</FlexiPage>

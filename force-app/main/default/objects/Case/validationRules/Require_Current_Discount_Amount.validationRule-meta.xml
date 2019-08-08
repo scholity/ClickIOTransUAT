@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Current_Discount_Amount</fullName>
+    <active>false</active>
+    <description>When the Invoice Case Sub Type is &quot;Price&quot; you must provide further information; Current Discount Amount</description>
+    <errorConditionFormula>AND(OR(
+
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39;),
+ISPICKVAL( Dispute_Issue__c , &#39;Customer Service Credit&#39;)),  
+ISBLANK( Current_Discount_Amount__c ),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Current_Discount_Amount__c</errorDisplayField>
+    <errorMessage>Please provide the Current Discount Amount</errorMessage>
+</ValidationRule>

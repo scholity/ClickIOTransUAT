@@ -1,0 +1,92 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <ltng:require styles="/resource/fa/fa/css/font-awesome.min.css" />
+    <aura:attribute name="cssfontfamily" type="String" description="CSS Font family" access="global"/>
+    <aura:attribute name="cssfontsize" type="String" description="CSS Font size" access="global"/>
+    <aura:attribute name="cssfontweight" type="String" description="CSS Font weight" access="global"/>
+    <aura:attribute name="csspaddinghorz" type="String" description="CSS Horizontal padding (ex. 10px)" access="global"/>
+    <aura:attribute name="csspaddingvert" type="String" description="CSS Vertical padding (ex. 10px)" access="global"/>    
+    <aura:attribute name="copyrighttext" type="String" description="Copyright text" access="global"/>
+	<aura:attribute name="copyrighturl" type="String" description="Copyright url" access="global"/>    
+	<aura:attribute name="copyrightshow" type="Boolean" description="Display Copyright" access="global" default="true"/>        
+	<aura:attribute name="termstext" type="String" description="Terms text" access="global"/>
+	<aura:attribute name="termsurl" type="String" description="Terms url" access="global"/>    
+	<aura:attribute name="termsshow" type="Boolean" description="Display Terms" access="global" default="true"/>        
+	<aura:attribute name="privacytext" type="String" description="Privacy text" access="global"/>
+	<aura:attribute name="privacyurl" type="String" description="Privacy url" access="global"/>    
+	<aura:attribute name="privacyshow" type="Boolean" description="Display Privacy" access="global" default="true"/>        
+	<aura:attribute name="contacttext" type="String" description="Contact text" access="global"/>
+	<aura:attribute name="contacturl" type="String" description="Contact url" access="global"/>    
+	<aura:attribute name="contactshow" type="Boolean" description="Display Contact" access="global" default="true"/>        
+	<aura:attribute name="faqtext" type="String" description="FAQ text" access="global"/>
+	<aura:attribute name="faqurl" type="String" description="FAQ url" access="global"/>    
+	<aura:attribute name="faqshow" type="Boolean" description="Display FAQ" access="global" default="true"/>        
+
+	<aura:attribute name="fburl" type="String" description="Facebook url" access="global"/>    
+	<aura:attribute name="fbshow" type="Boolean" description="Display Facebook" access="global" default="true"/>        
+	<aura:attribute name="twurl" type="String" description="Twitter url" access="global"/>    
+	<aura:attribute name="twshow" type="Boolean" description="Display Twitter" access="global" default="true"/>        
+	<aura:attribute name="yturl" type="String" description="You Tube url" access="global"/>    
+	<aura:attribute name="ytshow" type="Boolean" description="Display You Tube" access="global" default="true"/>        
+	<aura:attribute name="fkurl" type="String" description="Flikr url" access="global"/>    
+	<aura:attribute name="fkshow" type="Boolean" description="Display Flikr" access="global" default="true"/>        
+	<aura:attribute name="igurl" type="String" description="Instagram url" access="global"/>    
+	<aura:attribute name="igshow" type="Boolean" description="Display Instagram" access="global" default="true"/>        
+    
+    <footer>
+        <div class="phssfooter" style="{!'padding: '+v.csspaddingvert+' '+v.csspaddinghorz+';'}">        
+        <div class="bar">
+            <div class="bar-wrap">
+                <ul class="links">
+                    <aura:if isTrue="{!v.copyrightshow}">
+                        <li><a style="{!'font-family:'+v.cssfontfamily+';font-size: '+v.cssfontsize+';font-weight: '+v.cssfontweight+';'}" href="{!v.copyrighturl}">{!v.copyrighttext}</a></li>
+                    </aura:if>
+                    <aura:if isTrue="{!v.termsshow}">
+                        <li><a style="{!'font-family:'+v.cssfontfamily+';font-size: '+v.cssfontsize+';font-weight: '+v.cssfontweight+';'}" href="{!v.termsurl}">{!v.termstext}</a></li>
+                    </aura:if>
+                    <aura:if isTrue="{!v.privacyshow}">
+                        <li><a style="{!'font-family:'+v.cssfontfamily+';font-size: '+v.cssfontsize+';font-weight: '+v.cssfontweight+';'}" href="{!v.privacyurl}">{!v.privacytext}</a></li>
+                    </aura:if>
+                    <aura:if isTrue="{!v.contactshow}">
+                        <li><a style="{!'font-family:'+v.cssfontfamily+';font-size: '+v.cssfontsize+';font-weight: '+v.cssfontweight+';'}" href="{!v.contacturl}">{!v.contacttext}</a></li>
+                    </aura:if>
+                    <aura:if isTrue="{!v.faqshow}">
+                        <li><a style="{!'font-family:'+v.cssfontfamily+';font-size: '+v.cssfontsize+';font-weight: '+v.cssfontweight+';'}" href="{!v.faqurl}">{!v.faqtext}</a></li>
+                    </aura:if>
+                </ul>
+            </div>
+        </div>
+        <div class="btn-container">
+            <!-- Facebook -->
+            <aura:if isTrue="{!v.fbshow}">                    
+                <a href="{!v.fburl}" target="_blank" class="share-btn facebook">
+                    <i class="fa fa-facebook-square"></i>
+                </a>
+            </aura:if>                        
+            <!-- Twitter -->
+            <aura:if isTrue="{!v.twshow}">                                        
+                <a href="{!v.twurl}" target="_blank" class="share-btn twitter">
+                    <i class="fa fa-twitter-square"></i>
+                </a>
+            </aura:if>
+            <!-- Flikr -->
+            <aura:if isTrue="{!v.fkshow}">                                                            
+                <a href="{!v.fkurl}" target="_blank" class="share-btn flikr">
+                    <i class="fa fa-flickr"></i>
+                </a>
+            </aura:if>
+            <!-- You Tube -->
+            <aura:if isTrue="{!v.ytshow}">                                        
+                <a href="{!v.yturl}" target="_blank" class="share-btn youtube">
+                    <i class="fa fa-youtube-square"></i>
+                </a>
+            </aura:if>
+            <!-- Instagram -->
+            <aura:if isTrue="{!v.igshow}">                                                            
+                <a href="{!v.igurl}" target="_blank" class="share-btn instagram">
+                    <i class="fa fa-instagram"></i>
+                </a>
+            </aura:if>
+        </div>                
+        </div>
+	</footer>        
+</aura:component>

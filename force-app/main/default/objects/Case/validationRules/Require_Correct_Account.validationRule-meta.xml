@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Correct_Account</fullName>
+    <active>false</active>
+    <description>When the Third Sub Type is &quot;Wrong Account&quot; you must provide further information; Correct Account</description>
+    <errorConditionFormula>AND( 
+ISPICKVAL( Type_of_Price_Dispute__c , &#39;Wrong Account&#39;), 
+ISBLANK(  GP_Correct_Account__c  ) 
+)</errorConditionFormula>
+    <errorDisplayField>GP_Correct_Account__c</errorDisplayField>
+    <errorMessage>When the Third Sub Type is &quot;Wrong Account&quot; you must provide the Correct Account</errorMessage>
+</ValidationRule>

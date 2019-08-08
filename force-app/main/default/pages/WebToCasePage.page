@@ -1,0 +1,251 @@
+<!--
+/****************************************************************************************************
+Page     :  WebToCasePage
+Developer:  Mickey Murphy, Blue Wolf Group LLC
+Created  :  April 23, 2013
+Modified :  April 24, 2013
+Objective:  This page allows site visitors to create a case from redcross.org.
+
+****************************************************************************************************/
+-->
+
+<apex:page controller="WebToCasePageController"
+              docType="html-5.0"
+                   id="webToCasePage"
+           showHeader="false">
+
+    <apex:pageMessages id="error" />
+
+    <apex:define name="header">
+
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+    </apex:define>
+
+    <apex:define name="body">
+
+        <apex:panelGrid bgcolor="white" columns="1" width="800px">
+
+            <apex:panelGrid bgcolor="white"
+                            cellpadding="0"
+                            cellspacing="0"
+                                columns="1"
+                             styleClass="topPanelContainer"
+                                  width="775px">
+
+                <apex:outputPanel layout="block" styleClass="topPanel">
+
+                    <apex:panelGrid bgcolor="white"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                        columns="2"
+                                          width="750px">
+
+                        <apex:panelGroup >
+
+                            <apex:form forceSSL="true" id="webToCaseApexForm">
+
+                                <apex:pageBlock >
+
+                                    <apex:pageBlockSection collapsible="false"
+                                                               columns="1" 
+                                                                 title="Submit a Case.">
+
+                                        <apex:pageBlockSectionItem >
+
+                                            <em>
+
+                                                All fields are required.
+
+                                            </em>
+
+                                        </apex:pageBlockSectionItem>
+
+                                        <apex:pageBlockSectionItem >
+
+                                            <apex:outputLabel for="firstName"
+                                                              style="text-align: right"
+                                                              value="First Name" />
+
+                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+
+                                                <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                                                <apex:inputText id="firatName"
+                                                                style="width: 150px"
+                                                                value="{!firstName}" />
+
+                                            </apex:outputPanel>
+
+                                        </apex:pageBlockSectionItem> 
+
+                                        <apex:pageBlockSectionItem >
+
+                                            <apex:outputLabel for="lastName"
+                                                              style="text-align: right"
+                                                              value="Last Name" />
+
+                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+
+                                                <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                                                <apex:inputText id="laatName"
+                                                                style="width: 150px"
+                                                                value="{!lastName}" />
+
+                                            </apex:outputPanel>
+
+                                        </apex:pageBlockSectionItem>
+
+                                        <apex:pageBlockSectionItem >
+
+                                            <apex:outputLabel for="mailingPostalCode"
+                                                              style="text-align: right"
+                                                              value="Mailing Postal Code" />
+
+                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+
+                                                <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                                                <apex:inputText id="mailingPostalCode"
+                                                                style="width: 100px"
+                                                                value="{!mailingPostalCode}" />
+
+                                            </apex:outputPanel>
+
+                                        </apex:pageBlockSectionItem>
+
+                                        <apex:pageBlockSectionItem >
+
+                                            <apex:outputLabel for="caseEmail"
+                                                              style="text-align: right"
+                                                              value="Email" />
+
+                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+
+                                                <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                                                <apex:inputText id="caseEmail"
+                                                                style="width: 150px"                   
+                                                                value="{!email}" />
+                                            </apex:outputPanel>
+
+                                        </apex:pageBlockSectionItem>
+
+                                        <apex:pageBlockSectionItem >
+
+                                            <apex:outputLabel for="caseSubject"
+                                                              style="text-align: right"
+                                                              value="Case Subject" />
+
+                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+
+                                                <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                                                <apex:inputText id="caseSubject"
+                                                                style="width: 100px"
+                                                                value="{!caseSubject}" />
+
+                                            </apex:outputPanel>
+
+                                        </apex:pageBlockSectionItem>
+
+                                        <apex:pageBlockSectionItem >
+
+                                            <apex:outputLabel for="caseDescription"
+                                                              style="text-align: right"
+                                                              value="Case Description" />
+
+                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+
+                                                <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                                                <apex:inputTextArea id="caseDescription"
+                                                                     rows="6"
+                                                                    style="width: 300px"                   
+                                                                    value="{!caseDescription}" />
+
+                                            </apex:outputPanel>
+
+                                        </apex:pageBlockSectionItem>
+
+                                    </apex:pageBlockSection>
+
+                                    <apex:pageBlockButtons location="bottom" 
+                                                           rendered="{!renderContinue}">
+
+                                        <apex:commandButton action="{!validateCaseInput}"
+                                                                id="validateCaseInput"                                                        
+                                                             value="Continue" />
+
+                                    </apex:pageBlockButtons>
+
+                                </apex:pageBlock>
+
+                            </apex:form>
+
+                        </apex:panelGroup>
+
+                    </apex:panelGrid>
+
+                </apex:outputPanel>
+
+                <apex:outputPanel id="webToCaseFormPanel" rendered="{!renderCreateCase}">
+
+                    <form action="https://login.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8"
+                              id="webToCaseForm"
+                          method="post">
+
+                        <div style="margin-left: 125px">
+
+                            <input  name="orgid"
+                                    type="hidden"
+                                   value="00Dd0000000bxKz" />
+
+                            <input  name="retURL"
+                                    type="hidden" 
+                                   value="http://www.redcross.org/courses/index.jsp" />
+
+                            <input    id="name"
+                                    name="name"
+                                    type="hidden"
+                                   value="{!firstName + ' ' + lastName}" />
+                                
+                            <input    id="email"
+                                    name="email"
+                                    type="hidden"
+                                   value="{!email}" />
+
+                            <input    id="00Nd00000040lVI"
+                                    name="00Nd00000040lVI"
+                                    type="hidden"
+                                   value="{!mailingPostalCode}" />
+
+                            <input    id="subject"
+                                    name="subject"
+                                    type="hidden"
+                                   value="{!caseSubject}" />
+
+                            <textarea hidden="true"
+                                        cols="70"                  
+                                          id="description"
+                                        name="description"
+                                        rows="6"
+                                       style="display: none">
+
+                                {!caseDescription}
+
+                            </textarea>
+
+                            <input    id="submit"
+                                    name="submit"
+                                    type="submit"
+                                   value="Submit Case" />
+
+                        </div>
+
+                    </form> 
+
+                </apex:outputPanel>
+
+            </apex:panelGrid>
+
+        </apex:panelGrid>
+
+    </apex:define>
+
+</apex:page>

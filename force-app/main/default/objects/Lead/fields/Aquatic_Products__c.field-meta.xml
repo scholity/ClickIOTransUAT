@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Aquatic_Products__c</fullName>
+    <description>Aquatic products</description>
+    <externalId>false</externalId>
+    <label>Aquatic Products</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Aquatics Learn to Swim</fullName>
+                <default>false</default>
+                <label>Aquatics Learn to Swim</label>
+            </value>
+            <value>
+                <fullName>Aquatics Other</fullName>
+                <default>false</default>
+                <label>Aquatics Other</label>
+            </value>
+            <value>
+                <fullName>Water Safety Instructor</fullName>
+                <default>false</default>
+                <label>Water Safety Instructor</label>
+            </value>
+            <value>
+                <fullName>Basic Water Rescue</fullName>
+                <default>false</default>
+                <label>Basic Water Rescue</label>
+            </value>
+            <value>
+                <fullName>Water Safety Outreach</fullName>
+                <default>false</default>
+                <label>Water Safety Outreach</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>3</visibleLines>
+</CustomField>

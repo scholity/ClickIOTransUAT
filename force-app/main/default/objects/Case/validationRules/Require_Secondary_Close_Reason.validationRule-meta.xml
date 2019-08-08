@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Secondary_Close_Reason</fullName>
+    <active>true</active>
+    <description>The Secondary Close Reason picklist field is required when the Primary Close Reason is populated with Dispute Different than Customer Reported, Resolution Approval Not Received - Credit Issued, Invoice Privileges Request</description>
+    <errorConditionFormula>AND(OR(
+ISPICKVAL ( Primary_Close_Reason__c ,&#39;Dispute Different than Customer Reported&#39;),
+ISPICKVAL ( Primary_Close_Reason__c ,&#39;Resolution Approval Not Received - Credit Issued&#39;), 
+ISPICKVAL ( Primary_Close_Reason__c , &#39;Invoice Privileges Request&#39;)
+),
+ISPICKVAL (  Secondary_Close_Reason__c , &#39;&#39;)
+)</errorConditionFormula>
+    <errorDisplayField>Secondary_Close_Reason__c</errorDisplayField>
+    <errorMessage>Please provide a Secondary Close Reason</errorMessage>
+</ValidationRule>

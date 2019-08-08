@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quick_Start_Progress__c</fullName>
+    <externalId>false</externalId>
+    <label>Quick Start Progress</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Tertiary_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>14 Day Reminder sent</fullName>
+                <default>false</default>
+                <label>14 Day Reminder sent</label>
+            </value>
+            <value>
+                <fullName>21 Day Reminder sent</fullName>
+                <default>false</default>
+                <label>21 Day Reminder sent</label>
+            </value>
+            <value>
+                <fullName>7-Day Extension Granted</fullName>
+                <default>false</default>
+                <label>7-Day Extension Granted</label>
+            </value>
+            <value>
+                <fullName>Additional Requirements Needed</fullName>
+                <default>false</default>
+                <label>Additional Requirements Needed</label>
+            </value>
+            <value>
+                <fullName>Guidelines sent</fullName>
+                <default>false</default>
+                <label>Guidelines sent</label>
+            </value>
+            <value>
+                <fullName>Quick Start Completed</fullName>
+                <default>false</default>
+                <label>Quick Start Completed</label>
+            </value>
+            <value>
+                <fullName>Quick Start Not Completed</fullName>
+                <default>false</default>
+                <label>Quick Start Not Completed</label>
+            </value>
+            <value>
+                <fullName>Waiting for Proof of Certification</fullName>
+                <default>false</default>
+                <label>Waiting for Proof of Certification</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>14 Day Reminder sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>21 Day Reminder sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>7-Day Extension Granted</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>Additional Requirements Needed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>Guidelines sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>Quick Start Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>Quick Start Not Completed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FA/CPR/AED</controllingFieldValue>
+            <controllingFieldValue>CPRO</controllingFieldValue>
+            <controllingFieldValue>EMR</controllingFieldValue>
+            <valueName>Waiting for Proof of Certification</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invoice_Delivery_Email_Field_Validation</fullName>
+    <active>true</active>
+    <description>Check for Invoice Delivery Email based on the Invoice Delivery Type</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),
+ISPICKVAL(Invoice_Delivery__c,&quot;Postal Mail&quot;),
+!ISBLANK(Invoice_delivery_Email__c),
+RecordType.Name= &quot;RCS PO&quot;,
+!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE
+)</errorConditionFormula>
+    <errorDisplayField>Invoice_delivery_Email__c</errorDisplayField>
+    <errorMessage>Invoice Delivery Email should be blank for Postal Mail Delivery Type</errorMessage>
+</ValidationRule>

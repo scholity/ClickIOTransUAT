@@ -1,0 +1,116 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" controller="PHSS_InstructorCertificationController" access="global" >
+    <aura:attribute name="header" type="String" default="My Certifications"/>
+    <aura:attribute name="recordId" type="String" default="{!recordId}"/>
+    <aura:attribute name="noRecordsMessage" type="String" default="No records found"/>
+    <aura:attribute name="renewMessage" type="String" default="! = Certification soon to expire"/>    
+    <aura:attribute name="showAll" type="Boolean" default="True"/>
+    <aura:attribute name="sortColumn" type="String" default="Expired_On__c"/>    
+    <aura:attribute name="sortOrderAscending" type="Boolean" default="True"/>        
+    <aura:attribute name="numberOfElements" type="String" default="5"/>
+    <aura:attribute name="certifications" type="PHSS_Instructor_Certification__c[]"/>
+    <aura:attribute name="certificationsLimited" type="PHSS_Instructor_Certification__c[]"/>    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="forceCommunityRecordListCompact forceCommunityObjectHome">
+        <div class="filterListPlaceholder">
+            <div class="dark uiAbstractList forceRecordLayout forceFilterListDeprecated">
+                <div class="listTitleContainer uiBlock">
+                    <div class="bBody">
+                            <h2 class="listTitle truncate">{!v.header}</h2>
+                    </div>
+                </div>                                
+            </div>
+        </div>        
+    </div>
+    <div>
+        <aura:if isTrue="{!v.showAll}">
+            <aura:if isTrue="{!v.certifications.length > 0}">
+                <table class="slds-table slds-table--bordered slds-table--compact">
+                    <thead>
+                        <tr class="slds-text-title">
+                            <th scope="col" style="width:32px;">
+                                <div class="slds-truncate certheader renew" title="{!v.renewMessage}">!</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate certheader" title="Name">Name</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate certheader" title="Expires">Expires</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.certifications}" var="certs">
+                            <tr>
+                                <td data-label="Renew">
+                                    <aura:if isTrue="{!certs.isExpiring__c}">
+                                            <div class="slds-truncate certbody" title="{!v.renewMessage}">
+                                                <lightning:icon iconName="utility:warning" size="x-small" alternativeText="{!v.renewMessage}"/>
+                                            </div>
+                                        <aura:set attribute="else">
+                                            <div class="slds-truncate"></div>
+                                        </aura:set>
+                                    </aura:if>                                                                      
+                                </td>
+                                <td data-label="Name">
+                                    <div class="slds-truncate certbody" title="{!certs.Certification_Name__c}">{!certs.Certification_Name__c}</div>
+                                </td>
+                                <td data-label="Expires">
+                                    <div class="slds-truncate certbody" title=""><ui:outputDate format="MM/DD/YYYY" value="{!certs.Expired_On__c}"/></div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <aura:set attribute="else">
+                    <div class="slds-truncate" title="{!v.noRecordsMessage}">{!v.noRecordsMessage}</div>
+                </aura:set>
+            </aura:if>
+            <aura:set attribute="else">
+                <aura:if isTrue="{!v.certificationsLimited.length > 0}">
+                    <table class="slds-table slds-table--bordered slds-table--compact" style="table-layout:fixed;">
+                        <thead>
+                            <tr class="slds-text-title">
+                                <th scope="col" style="width:32px;">
+                                    <div class="slds-truncate certheader renew" title="{!v.renewMessage}">!</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate certheader" title="Name">Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate certheader" title="Expires">Expires</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.certificationsLimited}" var="certs">
+                                <tr>
+                                    <td data-label="Renew">
+                                        <aura:if isTrue="{!certs.isExpiring__c}">
+                                                <div class="slds-truncate certbody" title="{!v.renewMessage}">
+                                                    <lightning:icon iconName="utility:warning" size="x-small" alternativeText="{!v.renewMessage}"/>
+                                                </div>
+                                            <aura:set attribute="else">
+                                                <div class="slds-truncate"></div>
+                                            </aura:set>
+                                        </aura:if>                                                                      
+                                    </td>
+                                    <td data-label="Name">
+                                        <div class="slds-truncate certbody" title="{!certs.Certification_Name__c}">{!certs.Certification_Name__c}</div>
+                                    </td>
+                                    <td data-label="Expires">
+                                        <div class="slds-truncate certbody" title=""><ui:outputDate format="MM/DD/YYYY" value="{!certs.Expired_On__c}"/></div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                    <aura:set attribute="else">
+                        <div class="slds-truncate" title="{!v.noRecordsMessage}">{!v.noRecordsMessage}</div>
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

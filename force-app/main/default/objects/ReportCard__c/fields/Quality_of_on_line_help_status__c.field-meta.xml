@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quality_of_on_line_help_status__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE (  Quality_of_on_line_help__c  , &quot;A&quot;, IMAGE(&quot;/img/samples/color_green.gif&quot;, &quot;Strong&quot;, 10, 100) &amp; &quot; A&quot;, &quot;B&quot;, IMAGE(&quot;/img/samples/color_green.gif&quot;, &quot;Strong&quot;, 10, 80) &amp; &quot; B&quot;, &quot;C&quot;, IMAGE(&quot;/img/samples/color_yellow.gif&quot;, &quot;At risk&quot;, 10, 60) &amp; &quot; C&quot;, &quot;D&quot;, IMAGE(&quot;/img/samples/color_yellow.gif&quot;, &quot;At risk&quot;, 10, 40) &amp; &quot; D&quot;, &quot;F&quot;, IMAGE(&quot;/img/samples/color_red.gif&quot;, &quot;Danger&quot;, 10, 20) &amp; &quot; F&quot;, &quot;No response&quot;)</formula>
+    <label>Quality of on-line help</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employee_Number</fullName>
+    <active>true</active>
+    <description>Employee number can be only edited by Lindsay Pour</description>
+    <errorConditionFormula>AND(
+ISCHANGED(EmployeeNumber),
+$Profile.Id &lt;&gt;&#39;00ed0000000IUPl&#39;,/*System Administ + Deploy*/
+$Profile.Id  &lt;&gt; &#39;00ed0000000uehO&#39;,/*System Administrator*/
+$User.Id &lt;&gt; &#39;005d0000001VF7D&#39;,/*Lindsay Pour*/
+$User.Id &lt;&gt; &#39;005d0000001YL4H&#39;,/*Tyson Johnson*/
+$Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>EmployeeNumber</errorDisplayField>
+    <errorMessage>You do not have permission to update this field. If updates need to be performed please contact Salesforce Admin team.</errorMessage>
+</ValidationRule>

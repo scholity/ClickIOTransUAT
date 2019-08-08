@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Used to get last run date/Time of scheduler, used in updating contact info from User record.</description>
+    <enableFeeds>false</enableFeeds>
+    <label>Update contact info using scheduler</label>
+    <visibility>Public</visibility>
+</CustomObject>

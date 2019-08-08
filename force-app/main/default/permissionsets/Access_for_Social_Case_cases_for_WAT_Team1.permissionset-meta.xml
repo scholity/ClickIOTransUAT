@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Access for Social Case cases for WAT Teams</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Access for Social Case cases for WAT Team1</label>
+</PermissionSet>

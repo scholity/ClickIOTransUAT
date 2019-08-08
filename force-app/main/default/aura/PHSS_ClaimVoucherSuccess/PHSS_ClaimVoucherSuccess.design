@@ -1,0 +1,4 @@
+<design:component>
+	<design:attribute name="newLearnerMsg" default="Check your email to complete your enrollment and then Login."/>
+    <design:attribute name="existingLearnerMsg" default="Login to the student community to view class details and access online training." />
+</design:component>

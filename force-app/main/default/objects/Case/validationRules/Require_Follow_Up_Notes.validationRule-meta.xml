@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Follow_Up_Notes</fullName>
+    <active>true</active>
+    <description>This validation rule forces a user to input notes when the notes section is blank and the follow up method is &quot;see notes&quot;.</description>
+    <errorConditionFormula>AND( 
+                          ISPICKVAL( Follow_up_Method__c , &quot;See Notes&quot;),         
+                          ISBLANK( Follow_up_Notes__c )
+                          )</errorConditionFormula>
+    <errorDisplayField>Follow_up_Notes__c</errorDisplayField>
+    <errorMessage>Must Fill in the Follow Up Notes Field when &quot;See Notes&quot; is selected for Follow Up method.</errorMessage>
+</ValidationRule>

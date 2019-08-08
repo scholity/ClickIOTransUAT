@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CC_Transaction_Payment__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
+    <label>CC Transaction Payment</label>
+    <referenceTo>ccrz__E_TransactionPayment__c</referenceTo>
+    <relationshipLabel>Fulfillments</relationshipLabel>
+    <relationshipName>Fulfillments</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

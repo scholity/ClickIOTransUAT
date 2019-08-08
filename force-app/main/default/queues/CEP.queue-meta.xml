@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>CEP</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>ARC_NAT_Team</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Back_Office_Manager_Role</role>
+            <role>Back_Office_Team_Lead</role>
+            <role>Front_Office_Manager_Role</role>
+            <role>Front_Office_Uniontown_Team_Lead_Role</role>
+            <role>TSC_Management</role>
+        </roles>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

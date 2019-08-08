@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Payment_Status_Granted</fullName>
+    <active>false</active>
+    <description>If payment Status = Granted, Red Cross PO# is required</description>
+    <errorConditionFormula>AND(ISPICKVAL( Payment_Status__c , &quot;Granted&quot;),
+ISBLANK( Red_Cross_PO__c ), 
+ $Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>Payment_Status__c</errorDisplayField>
+    <errorMessage>If Payment Status is Granted, Red Cross PO# is required.</errorMessage>
+</ValidationRule>

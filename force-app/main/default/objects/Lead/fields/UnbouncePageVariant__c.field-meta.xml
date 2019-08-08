@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UnbouncePageVariant__c</fullName>
+    <description>Unbounce page version (variant)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Unbounce page version (variant)</inlineHelpText>
+    <label>Unbounce Page Variant</label>
+    <length>250</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

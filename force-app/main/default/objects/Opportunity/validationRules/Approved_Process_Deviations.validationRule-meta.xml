@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approved_Process_Deviations</fullName>
+    <active>true</active>
+    <description>This VR defines that only specific users are able to make changes on Approved Process Deviations field</description>
+    <errorConditionFormula>AND( 
+AND( 
+ISCHANGED(Approved_Process_Deviations__c), 
+OR( 
+ISPICKVAL(Approved_Process_Deviations__c, &quot;Yes, select Contract Number above&quot;), 
+ISPICKVAL(Approved_Process_Deviations__c, &quot;No&quot;))), 
+
+
+AND( 
+$User.Id != &quot;005d0000000TvQL&quot;, /*Marty Mullins*/ 
+$User.Id != &quot;005d0000000TuyJ&quot;, /*Heather Weller*/ 
+$User.Id != &quot;005d0000000Tuxg&quot;, /*Peggy Brown*/ 
+$User.Id != &quot;005d0000000TvOu&quot; /*Dalia Dinkins*/ 
+), 
+
+$Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>Approved_Process_Deviations__c</errorDisplayField>
+    <errorMessage>You do not have permission to make this change.</errorMessage>
+</ValidationRule>

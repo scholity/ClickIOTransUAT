@@ -1,0 +1,135 @@
+<aura:component controller="LightningLoginFormController" implements="forceCommunity:availableForAllPageTypes,force:appHostable">
+    
+    <aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    <aura:attribute name="usernameLabel" type="String" required="false" default="Username (Email)"/>
+    <aura:attribute name="passwordLabel" type="String" required="false" default="Password"/>
+    <aura:attribute name="loginButtonLabel" type="String" required="false" default="LOGIN"/>
+    <aura:attribute name="expid" type="String" required="false" description="The branding experience ID" />        
+    <aura:attribute name="voucherButtonLabel" type="String" default="CLAIM VOUCHER" />
+    <aura:attribute name="claimVoucherUrl" type="String" required="false" default="/s/ClaimVoucher" />
+    
+    <aura:attribute name="employeesUrl" type="String" required="false" />
+    <aura:attribute name="selfRegisterLabel" type="String" required="false" default="Sign Me Up"/>
+    <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/learner/s/ForgotPassword"/>
+    <aura:attribute name="selfRegisterUrl" type="String" required="false" default="/learner/s/SelfRegister" />
+    <aura:attribute name="learningCenterUrl" type="String" required="false" />
+    
+    <aura:attribute name="isUsernamePasswordEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="isSelfRegistrationEnabled" type="Boolean" access="private"/>
+    <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
+    <aura:attribute name="communitySelfRegisterUrl" type="String" access="private"/>
+    
+    <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <aura:dependency resource="c:setStartUrl" type="EVENT"/>
+    <aura:dependency resource="siteforce:registerQueryEventMap" type="EVENT"/>
+    <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/>
+    <aura:handler event="c:setExpId" action="{!c.setExpId}"/>    
+    <aura:dependency resource="c:setExpId" type="EVENT"/>  
+
+    <aura:attribute name="b2c_origin" type="Boolean" default="true" />
+    <aura:attribute name="b2c_step" type="Integer" default="0" />
+    <aura:attribute name="email" type="String" />
+    <lightning:navigation aura:id="navService_b2c" />
+
+    <aura:if isTrue="{! !v.b2c_origin}">
+        <div class="container">
+            <aura:renderIf isTrue="{!v.isUsernamePasswordEnabled}">
+            <span>
+                <aura:renderIf isTrue="{!v.showError}">
+                    <div id="error">
+                        <ui:outputRichText value="{!v.errorMessage}"/>
+                    </div>
+                </aura:renderIf>
+            </span>
+                <div id="sfdc_username_container" class="sfdc">
+                    <span id="sfdc_user" class="sfdc" data-icon="c"><lightning:icon iconName="utility:user" size="small" /></span>
+                    <ui:inputText value="" aura:id="username" placeholder="{!v.usernameLabel}" keyup="{!c.onKeyUp}" class="input sfdc_usernameinput sfdc" label="{!v.usernameLabel}" labelClass="assistiveText"/>
+                </div>
+
+                <div id="sfdc_password_container" class="sfdc">
+                    <span id="sfdc_lock" class="sfdc" data-icon="c"><lightning:icon iconName="utility:lock" size="small" /></span>
+                    <ui:inputSecret value="" aura:id="password" placeholder="{!v.passwordLabel}" keyup="{!c.onKeyUp}" class="input sfdc_passwordinput sfdc" label="{!v.passwordLabel}" labelClass="assistiveText"/>
+                </div>
+
+                <lightning:button aura:id="submitButton" label="{!v.loginButtonLabel}" onclick="{!c.handleLogin}" class="sfdc_button"/>
+                <lightning:button aura:id="claimVoucherBtn" label="{!v.voucherButtonLabel}" onclick="{!c.navigateToClaimVoucher}" class="sfdc_button"/>
+
+                <div id="sfdc_register" class="sfdc">
+                    <aura:renderIf isTrue="{!v.isSelfRegistrationEnabled}">
+                        <span style="float:right" ><a href="{!v.selfRegisterUrl+'?startURL='+v.startUrl}">{!v.selfRegisterLabel}</a></span>
+                    </aura:renderIf>
+                </div>
+
+                <div class="slds-p-top--small">
+                    <p class="loginContent">
+                        <aura:unescapedHtml value="{!format($Label.c.PHSS_LoginContent,v.employeesUrl,v.forgotPasswordUrl,v.learningCenterUrl)}" />
+                    </p>
+                </div>
+
+            </aura:renderIf>
+        </div>
+    </aura:if>
+
+
+    <aura:if isTrue="{!v.b2c_origin}">
+        <div class="container">
+            <aura:renderIf isTrue="{!v.isUsernamePasswordEnabled}">
+                <span>
+                    <aura:renderIf isTrue="{!v.showError}">
+                        <div id="error">
+                            <ui:outputRichText value="{!v.errorMessage}"/>
+                        </div>
+                    </aura:renderIf>
+                </span>
+
+                <aura:if isTrue="{!v.b2c_step == 0}">
+                    <c:PHSS_LoginPage version="login"/>
+                    <div id="sfdc_username_container" class="sfdc">
+                        <span id="sfdc_user" class="sfdc" data-icon="c"><lightning:icon iconName="utility:user" size="small" /></span>
+                        <!--ui:inputText value="" aura:id="username" placeholder="{!v.usernameLabel}" keyup="{!c.onKeyUp}" class="input sfdc_usernameinput sfdc" label="{!v.usernameLabel}" labelClass="assistiveText"/-->
+    					<ui:inputEmail aura:id="usernameb2c" placeholder="{!v.usernameLabel}" value="{!v.email}" keyup="{!c.onKeyUp}" class="input sfdc_usernameinput sfdc" label="{!v.usernameLabel}" labelClass="assistiveText"/>
+                        
+                    </div>
+
+                    <lightning:button aura:id="nextButton" label="NEXT" onclick="{!c.navigateToNextStep}" class="sfdc_button"/>
+                    <div class="sfdc" onclick="{!c.navigateToForgottenPasswdB2C}" style="cursor: pointer; color: blue">Forgot Password</div>
+
+
+                    <div id="sfdc_create_account">
+                        <div class="container" style="text-align: center;">
+                            <span style="font-weight: bold;">Don't have an account?</span>
+                            <div>
+                                <lightning:button variant="base" label="CREATE ACCOUNT" onclick="{!c.navigateToCreateAccount}" class="alternative_button" />
+                            </div>
+                        </div>
+                    </div>
+
+                </aura:if>
+
+                <aura:if isTrue="{!v.b2c_step == 1}" >
+                    <c:PHSS_LoginPage version="password"/>
+                    <div id="sfdc_password_container" class="sfdc">
+                        <span id="sfdc_lock" class="sfdc" data-icon="c"><lightning:icon iconName="utility:lock" size="small" /></span>
+                        <ui:inputSecret value="" aura:id="passwordb2c" placeholder="{!v.passwordLabel}" keyup="{!c.onKeyUp}" class="input sfdc_passwordinput sfdc" label="{!v.passwordLabel}" labelClass="assistiveText"/>
+                    </div>
+
+                    <lightning:button aura:id="submitButtonb2c" label="{!v.loginButtonLabel}" onclick="{!c.handleLogin}" class="sfdc_button"/>
+                    <div class="sfdc" onclick="{!c.navigateToForgottenPasswdB2C}" style="cursor: pointer; color: blue">Forgot Password</div>
+
+                    <div class="bottom_text">
+                        American Red Cross Training Services offers a single sign-on solution for the Red Cross Store and the Learning Center!
+                        Enroll in Red Cross classes and shop for training, first aid, and emergency supplies on the Red Cross Store.
+                        Use the Learning Center to manage your Red Cross classes and programs.
+                    </div>
+                </aura:if>
+
+
+            </aura:renderIf>
+        </div>
+    </aura:if>
+
+
+</aura:component>

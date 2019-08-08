@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RCS_PO_Invoice_Delivery_Email_Mismatch</fullName>
+    <active>true</active>
+    <description>Checks whether the field is mismatch</description>
+    <errorConditionFormula>AND( ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;),RecordType.Name= &quot;RCS PO&quot;, !$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE, 
+ISPICKVAL(Invoice_Delivery__c,&quot;Email&quot;), 
+(Account.Invoice_delivery_Email__c) &lt;&gt; (Invoice_delivery_Email__c))</errorConditionFormula>
+    <errorDisplayField>Invoice_delivery_Email__c</errorDisplayField>
+    <errorMessage>Account Invoice Delivery Email is not matching with case Invoice Delivery Email.</errorMessage>
+</ValidationRule>

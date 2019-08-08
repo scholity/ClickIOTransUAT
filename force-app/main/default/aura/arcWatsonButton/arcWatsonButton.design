@@ -1,0 +1,11 @@
+<design:component >
+  <design:attribute name="title" 
+    label="Button Title"
+    description="The title that the button should render." 
+  />
+    
+  <design:attribute name="url" 
+    label="Button Url"
+    description="The url that should load in the window opened when the button is clicked." 
+  />
+</design:component>

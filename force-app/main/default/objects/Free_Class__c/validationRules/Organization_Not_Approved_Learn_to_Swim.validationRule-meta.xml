@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Organization_Not_Approved_Learn_to_Swim</fullName>
+    <active>true</active>
+    <description>Validation Rule to ensure that the organization is Approved Learn to Swim Facility.</description>
+    <errorConditionFormula>AND(Organization__r.Approved_Learn_to_Swim_Facility__c =
+False,
+ RecordType.Name  =&quot;Learn to Swim Class&quot;)</errorConditionFormula>
+    <errorMessage>The Organization you have selected is not approved as a Learn to Swim Facility.</errorMessage>
+</ValidationRule>

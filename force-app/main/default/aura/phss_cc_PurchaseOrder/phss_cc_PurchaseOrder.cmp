@@ -1,0 +1,232 @@
+<!--
+ - Created by dgajwani on 10/1/18.
+ -->
+
+<aura:component description="phss_cc_PurchaseOrder" controller="phss_cc_PurchaseOrderController">
+
+    <!--Handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!--Stored Payments from Server-->
+    <aura:attribute name="storedPaymentList" type="List"/>
+    <aura:attribute name="storedPaymentMap" type="Map"/>
+
+    <!--Component Attributes-->
+    <aura:attribute name="currOpportunitySfid" type="String" default="false"/>
+    <aura:attribute name="selectedPOSfid" type="String" default=""/>
+
+    <!--Booleans for changing component visibility-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="listUpdate" type="Boolean" default="false"/>
+    <aura:attribute name="invoiceType" type="String" default="noPO"/>
+    <aura:attribute name="allowPaymentSubmission" type="Boolean" default="true"/>
+
+    <!--Event handler-->
+    <aura:handler name="sendSelectedPO" event="c:phss_cc_SelectedPOEvent" action="{!c.handleSelectedPO}"/>
+
+    <!--Register Events-->
+    <aura:registerEvent name="sendPOToCart" type="c:phss_cc_POToCartEvent"/>
+
+    <!--New PO Attributes-->
+    <aura:attribute type="String" name="newPOName"/>
+    <aura:attribute type="String" name="newPOAmount"/>
+    <aura:attribute type="String" name="newPOStartDate"/>
+    <aura:attribute type="String" name="newPOEndDate"/>
+    <aura:attribute type="Boolean" name="newPODoSave" default="false"/>
+
+    <!--Existing PO Attributes-->
+    <aura:attribute type="Boolean" name="shouldUpdatePOAmount" default="false"/>
+    <aura:attribute type="String" name="updatePOAmount"/>
+
+    <!--Spinner when page loads-->
+    <aura:attribute type="Boolean" name="showSpinner" default="false"/>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" alternativeText="Waiting on data from server."/>
+    </aura:if>
+
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                    <lightning:icon class="slds-m-right--small" iconName="utility:description" size="medium"/>
+                </div>
+                <div class="slds-media__body">
+                    <h1>Purchase Order Payment</h1>
+                </div>
+            </header>
+        </div>
+
+        <!--If not initialized-->
+        <aura:if isTrue="{!v.renderComplete == false}">
+            <div class="slds-align_absolute-center">
+                <lightning:formattedText class="slds-text-heading--medium slds-m-right--medium"
+                                         value="No stored payments found."/>
+            </div>
+        </aura:if>
+
+        <aura:if isTrue="{!v.renderComplete}">
+            <div class="slds-card__body slds-card__body_inner">
+
+                <fieldset class="slds-form-element">
+                    <div class="slds-border--top slds-border--bottom">
+                        <div class="slds-grid slds-form-element__control slds-align-content-center slds-m-around_large">
+                            <ul class="slds-list_horizontal slds-has-block-links_space">
+                                <li class="slds-m-right_large">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id="noPORadio"
+                                                         type="radio"
+                                                         label="No PO"
+                                                         name="invoiceOptions"
+                                                         value="noPO"
+                                                         onclick="{!c.invoiceTypeSelected}"
+                                                         checked="{!if(equals(v.invoiceType, 'noPO'), true, false)}"/>
+                                    </span>
+                                </li>
+                                <li class="slds-m-right_large">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id="existingPORadio"
+                                                         type="radio"
+                                                         label="Existing PO"
+                                                         name="invoiceOptions"
+                                                         value="existingPO"
+                                                         onclick="{!c.invoiceTypeSelected}"
+                                                         checked="{!if(equals(v.invoiceType, 'existingPO'), true, false)}"/>
+                                    </span>
+                                </li>
+                                <li class="slds-m-right_large">
+                                    <span class="slds-radio">
+                                        <lightning:input aura:id="newPORadio"
+                                                         type="radio"
+                                                         label="New PO"
+                                                         name="invoiceOptions"
+                                                         value="newPO"
+                                                         onclick="{!c.invoiceTypeSelected}"
+                                                         checked="{!if(equals(v.invoiceType, 'newPO'), true, false)}"/>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!--List of existing POs-->
+                <aura:if isTrue="{!equals(v.invoiceType, 'existingPO')}">
+                    <aura:if isTrue="{!v.listUpdate}">
+                        <h1 class="slds-text-heading--medium slds-m-vertical--small">
+                            <lightning:formattedText class="slds-m-right--xx-small" value="My Wallet:"/>
+                            <lightning:formattedNumber class="slds-m-right--xx-small"
+                                                       value="{!v.storedPaymentList.length}"/>
+                            <lightning:formattedText class="slds-m-right--xx-small" value=" stored payments."/>
+                        </h1>
+
+                        <div class="slds-grid slds-border--top slds-border--bottom">
+                            <div class="slds-size_1-of-6 slds-text-align_left columnHeaders">PO Name</div>
+                            <div class="slds-size_1-of-6 slds-text-align_left columnHeaders">Start Date</div>
+                            <div class="slds-size_1-of-6 slds-text-align_left columnHeaders">End Date</div>
+                            <div class="slds-size_1-of-6 slds-text-align_right columnHeaders">Original PO Amount</div>
+                            <div class="slds-size_1-of-6 slds-text-align_right columnHeaders">Remaining PO Amount</div>
+                            <div class="slds-size_1-of-6 slds-align_absolute-center columnHeaders">Select</div>
+                        </div>
+
+                        <div class="slds-scrollable--y" style="max-height: 20rem; height: auto;">
+                            <aura:iteration items="{!v.storedPaymentList}" var="storedPayment">
+                                <c:phss_cc_PODetail storedPaymentSfid="{!storedPayment}"
+                                                    storedPaymentMap="{!v.storedPaymentMap}"
+                                                    isSelected="{!v.selectedPOSfid == storedPayment ? true : false}"/>
+                            </aura:iteration>
+                        </div>
+
+                        <div class="slds-grid slds-border_top slds-border_bottom slds-m-bottom_xx-large">
+                            <div class="slds-size_2-of-6"></div>
+                            <div class="slds-size_2-of-6 slds-align_absolute-center">
+                                <lightning:input label="Update remaining PO amount"
+                                                 type="checkbox"
+                                                 value="{!v.shouldUpdatePOAmount}"
+                                                 onchange="{!c.toggleShouldUpdatePOAmount}"/>
+                            </div>
+                            <div class="slds-size_1-of-6">
+                                <lightning:input class="slds-m-bottom_medium"
+                                                 label=""
+                                                 type="number"
+                                                 step="0.01"
+                                                 value="{!v.updatePOAmount}"/>
+                            </div>
+                            <div class="slds-size_1-of-6"></div>
+                        </div>
+                    </aura:if>
+                </aura:if>
+
+                <!--Input a new PO-->
+                <aura:if isTrue="{!equals(v.invoiceType, 'newPO')}">
+                    <h1 class="slds-text-heading--medium slds-m-vertical--medium">Add a new Purchase Order</h1>
+
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-1">
+                            <lightning:input class="slds-m-bottom--medium"
+                                             label="PO Name"
+                                             type="text"
+                                             fieldLevelHelp="This is the PO Number that will appear on your invoice. Do not use special characters."
+                                             value="{!v.newPOName}"
+                                             onchange="{!c.clearPOSelected}"/>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-gutters_small">
+                        <div class="slds-col slds-size_2-of-4">
+                            <lightning:input class="slds-m-bottom--medium" label="Original PO Amount" type="number" step="0.01" value="{!v.newPOAmount}"
+                                             onchange="{!c.clearPOSelected}"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4">
+                            <lightning:input aura:id="poStartDateField"
+                                             type="date"
+                                             name="startDateInput"
+                                             label="Start date"
+                                             fieldLevelHelp="Default is today’s date. Date should be updated to match PO document dates."
+                                             value="{!v.newPOStartDate}"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4">
+                            <lightning:input aura:id="poEndDateField"
+                                             type="date" name="endDateInput"
+                                             label="End date"
+                                             fieldLevelHelp="Default is 12/31/2099. Date should be updated to match PO document end date or your organization's fiscal year end as applicable."
+                                             value="{!v.newPOEndDate}"/>
+                        </div>
+                    </div>
+
+                    <lightning:input class="slds-m-bottom--medium" label="Save Payment" type="checkbox" value="{!v.newPODoSave}" onchange="{!c.handleDoSave}"/>
+                </aura:if>
+
+                <!--Submit Payment-->
+                <aura:if isTrue="{! v.allowPaymentSubmission }">
+                    <lightning:button variant="success" class="slds-align_absolute-center slds-m-top--large"
+                                      label="Submit Payment" onclick="{!c.sendPOToCart}"/>
+
+                    <aura:set attribute="else">
+                        <div class="slds-align_absolute-center slds-m-top_large">
+
+                            <!--disabled button-->
+                            <lightning:button variant="success" label="Submit Payment" disabled="true"/>
+
+                            <!--popover-->
+                            <div class="approvalWarning">
+                                <div class="slds-popover slds-nubbin_top-left" style="z-index: unset;">
+                                    <div class="slds-popover__header">
+                                        <div class="slds-media slds-media_center">
+                                            <div class="slds-media__figure">
+                                                <lightning:icon iconName="utility:error" variant="inverse" size="x-small" alternativeText="Error!" title="Please submit the opportunity for approval" />
+                                            </div>
+                                            <div class="slds-media__body slds-text-align_left">
+                                                Please submit the opportunity for approval
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </aura:if>
+    </article>
+</aura:component>

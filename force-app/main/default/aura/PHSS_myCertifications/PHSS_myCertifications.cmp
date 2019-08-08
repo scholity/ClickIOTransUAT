@@ -1,0 +1,70 @@
+<aura:component controller="PHSS_myCertifications" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name = "init" value="{!this}" action = "{!c.doInit}" /> 
+    <aura:attribute name = "TempListAA" type = "object[]" default = "[]"/>
+    <aura:attribute name = "ListAchivementAssignment" type = "object[]" default = "[]"/>
+    <aura:attribute name="Pagelimit" type="Integer" default="10"/>
+    <aura:attribute name="More" type="Boolean" />
+    <aura:attribute name="few" type="Boolean" />
+    
+    
+    <div class="slds-box">
+        <div class="slds-text-heading_medium">
+            Certifications
+        </div>
+        <table class="slds-table">
+            <thead class="slds-color__background_gray-4">
+                <tr class="slds-text-title_caps">
+                    
+                    <th scope="col">
+                        <div  class="slds-truncate" title="Certificate Name">Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Expiration Date">Expiration</div>
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <aura:if isTrue="{!v.ListAchivementAssignment.length > 0}">
+                    
+                    <aura:iteration items="{!v.ListAchivementAssignment}" var="a">
+                        <tr>                      
+                            <aura:if isTrue="{!a.expireFlag}">
+                                <td data-label="Certificate Name" style="color:red;" class="slds-cell-wrap">
+                                    <a onclick="{!c.handleClick}" data-recId="{!a.QRCodeWebAddress}" class="slds-cell-wrap" title="">{!a.achievementName}</a>
+                                </td>
+                                <td data-label="Expiration Date" style="color:red;">
+                                    
+                                    <div class="slds-truncate" title="">
+                                        <ui:outputDate aura:id="oDate" value="{!a.expDate}" format="MM/DD/YYYY"/>
+                                    </div>
+                                </td>
+                                <aura:set attribute="else">
+                                    <td data-label="Certificate Name" style="color:black;" class="slds-cell-wrap">
+                                        <a  onclick="{!c.handleClick}" data-recId="{!a.QRCodeWebAddress}" class="slds-cell-wrap" title="">{!a.achievementName}</a>
+                                    </td>
+                                    <td data-label="Expiration Date">               
+	                                    <div class="slds-truncate" title="">
+	                                        <ui:outputDate aura:id="oDate" value="{!a.expDate}" format="MM/DD/YYYY"/>
+	                                    </div>
+                                    </td>
+                                </aura:set>
+                            </aura:if> 
+                            
+                            
+                        </tr>
+                    </aura:iteration>
+                </aura:if>        
+                
+            </tbody>
+            
+        </table>
+        <div style="width:200px; margin:0 auto;">
+            <div class="slds-icon_container">  
+                <lightning:icon iconName="utility:arrowup" onclick="{!c.showfew }" size="xx-small" alternativeText="sort arrow up"/> Fewer
+            </div>|<div class="slds-icon_container">  
+            <lightning:icon iconName="utility:arrowdown" onclick="{!c.showmore }" size="xx-small" alternativeText="sort arrow down"/> More
+            </div>
+        </div>
+    </div>
+</aura:component>

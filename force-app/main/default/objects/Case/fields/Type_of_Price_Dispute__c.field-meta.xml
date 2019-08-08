@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Price_Dispute__c</fullName>
+    <description>Depends on Service Case Second Sub Type</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select the value that further describes the customer’s issue.</inlineHelpText>
+    <label>Third Sub Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Dispute_Issue__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Account Reconciliation</fullName>
+                <default>false</default>
+                <label>Account Reconciliation</label>
+            </value>
+            <value>
+                <fullName>ACH Detail</fullName>
+                <default>false</default>
+                <label>ACH Detail</label>
+            </value>
+            <value>
+                <fullName>ACH Info Request</fullName>
+                <default>false</default>
+                <label>ACH Info Request</label>
+            </value>
+            <value>
+                <fullName>Add/Change PO</fullName>
+                <default>false</default>
+                <label>Add/Change PO</label>
+            </value>
+            <value>
+                <fullName>Apply Balance to Current Year/Transaction</fullName>
+                <default>false</default>
+                <label>Apply Balance to Current Year/Transaction</label>
+            </value>
+            <value>
+                <fullName>Apply On Acct Credits</fullName>
+                <default>false</default>
+                <label>Apply On Acct Credits</label>
+            </value>
+            <value>
+                <fullName>AR Exception</fullName>
+                <default>false</default>
+                <label>AR Exception</label>
+            </value>
+            <value>
+                <fullName>Attempt to Collect</fullName>
+                <default>false</default>
+                <label>Attempt to Collect</label>
+            </value>
+            <value>
+                <fullName>Bankruptcy</fullName>
+                <default>false</default>
+                <label>Bankruptcy</label>
+            </value>
+            <value>
+                <fullName>Bankruptcy Chp 7</fullName>
+                <default>false</default>
+                <label>Bankruptcy Chp 7</label>
+            </value>
+            <value>
+                <fullName>Bankruptcy Chp 9 or 11</fullName>
+                <default>false</default>
+                <label>Bankruptcy Chp 9 or 11</label>
+            </value>
+            <value>
+                <fullName>Billed to Chapter</fullName>
+                <default>false</default>
+                <label>Billed to Chapter</label>
+            </value>
+            <value>
+                <fullName>Billing &amp; Payment History</fullName>
+                <default>false</default>
+                <label>Billing &amp; Payment History</label>
+            </value>
+            <value>
+                <fullName>Change CFS Customer Class</fullName>
+                <default>false</default>
+                <label>Change CFS Customer Class</label>
+            </value>
+            <value>
+                <fullName>Change Org ID/Name/Address</fullName>
+                <default>false</default>
+                <label>Change Org ID/Name/Address</label>
+            </value>
+            <value>
+                <fullName>Change Payment Terms</fullName>
+                <default>false</default>
+                <label>Change Payment Terms</label>
+            </value>
+            <value>
+                <fullName>Collections</fullName>
+                <default>false</default>
+                <label>Collections</label>
+            </value>
+            <value>
+                <fullName>Correct Account Wrong Invoice</fullName>
+                <default>false</default>
+                <label>Correct Account Wrong Invoice</label>
+            </value>
+            <value>
+                <fullName>Coupon/Discount Not Applied</fullName>
+                <default>false</default>
+                <label>Coupon/Discount Not Applied</label>
+            </value>
+            <value>
+                <fullName>Coupon Details</fullName>
+                <default>false</default>
+                <label>Coupon Details</label>
+            </value>
+            <value>
+                <fullName>Course Record</fullName>
+                <default>false</default>
+                <label>Course Record</label>
+            </value>
+            <value>
+                <fullName>Credit Balance</fullName>
+                <default>false</default>
+                <label>Credit Balance</label>
+            </value>
+            <value>
+                <fullName>Credit Balance Application</fullName>
+                <default>false</default>
+                <label>Credit Balance Application</label>
+            </value>
+            <value>
+                <fullName>Credit Card Receipt</fullName>
+                <default>false</default>
+                <label>Credit Card Receipt</label>
+            </value>
+            <value>
+                <fullName>Credit Check</fullName>
+                <default>false</default>
+                <label>Credit Check</label>
+            </value>
+            <value>
+                <fullName>Credit Memo</fullName>
+                <default>false</default>
+                <label>Credit Memo</label>
+            </value>
+            <value>
+                <fullName>Customer Already Paid</fullName>
+                <default>false</default>
+                <label>Customer Already Paid</label>
+            </value>
+            <value>
+                <fullName>Customer Forms</fullName>
+                <default>false</default>
+                <label>Customer Forms</label>
+            </value>
+            <value>
+                <fullName>Customer PO</fullName>
+                <default>false</default>
+                <label>Customer PO</label>
+            </value>
+            <value>
+                <fullName>Deconsolidate/Consolidate</fullName>
+                <default>false</default>
+                <label>Deconsolidate/Consolidate</label>
+            </value>
+            <value>
+                <fullName>Do Not Contact</fullName>
+                <default>false</default>
+                <label>Do Not Contact</label>
+            </value>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Give Up</fullName>
+                <default>false</default>
+                <label>Give Up</label>
+            </value>
+            <value>
+                <fullName>Increase Credit Limit</fullName>
+                <default>false</default>
+                <label>Increase Credit Limit</label>
+            </value>
+            <value>
+                <fullName>In-Progress</fullName>
+                <default>false</default>
+                <label>In-Progress</label>
+            </value>
+            <value>
+                <fullName>Invoice Central Access</fullName>
+                <default>false</default>
+                <label>Invoice Central Access</label>
+            </value>
+            <value>
+                <fullName>Invoice Errors</fullName>
+                <default>false</default>
+                <label>Invoice Errors</label>
+            </value>
+            <value>
+                <fullName>Invoice or Credit Memo Copy</fullName>
+                <default>false</default>
+                <label>Invoice or Credit Memo Copy</label>
+            </value>
+            <value>
+                <fullName>Manual Billing</fullName>
+                <default>false</default>
+                <label>Manual Billing</label>
+            </value>
+            <value>
+                <fullName>Merge Accounts</fullName>
+                <default>false</default>
+                <label>Merge CFS Accounts</label>
+            </value>
+            <value>
+                <fullName>Missing Address</fullName>
+                <default>false</default>
+                <label>Missing Address</label>
+            </value>
+            <value>
+                <fullName>Missing Data</fullName>
+                <default>false</default>
+                <label>Missing Data</label>
+            </value>
+            <value>
+                <fullName>Missing Payment</fullName>
+                <default>false</default>
+                <label>Missing Payment</label>
+            </value>
+            <value>
+                <fullName>Need to Update Billing Features</fullName>
+                <default>false</default>
+                <label>Need to Update Billing Features</label>
+            </value>
+            <value>
+                <fullName>New Client</fullName>
+                <default>false</default>
+                <label>New Training Customer</label>
+            </value>
+            <value>
+                <fullName>Offering Closed</fullName>
+                <default>false</default>
+                <label>Offering Closed</label>
+            </value>
+            <value>
+                <fullName>Open Offering</fullName>
+                <default>false</default>
+                <label>Open Offering</label>
+            </value>
+            <value>
+                <fullName>Order Details</fullName>
+                <default>false</default>
+                <label>Order Details</label>
+            </value>
+            <value>
+                <fullName>Org ID Name Change</fullName>
+                <default>false</default>
+                <label>Org ID Name Change</label>
+            </value>
+            <value>
+                <fullName>Paid - Credit Card</fullName>
+                <default>false</default>
+                <label>Paid - Credit Card</label>
+            </value>
+            <value>
+                <fullName>PO not Followed</fullName>
+                <default>false</default>
+                <label>PO not Followed</label>
+            </value>
+            <value>
+                <fullName>Portal</fullName>
+                <default>false</default>
+                <label>Portal</label>
+            </value>
+            <value>
+                <fullName>Portal Billing</fullName>
+                <default>false</default>
+                <label>Portal Billing</label>
+            </value>
+            <value>
+                <fullName>Prepaid PO Issue</fullName>
+                <default>false</default>
+                <label>Prepaid PO Issue</label>
+            </value>
+            <value>
+                <fullName>Privileges Terminated</fullName>
+                <default>false</default>
+                <label>Privileges Terminated</label>
+            </value>
+            <value>
+                <fullName>Product/Course Not Accurate</fullName>
+                <default>false</default>
+                <label>Product/Course Not Accurate</label>
+            </value>
+            <value>
+                <fullName>Product/Delivery</fullName>
+                <default>false</default>
+                <label>Product/Delivery</label>
+            </value>
+            <value>
+                <fullName>Promise to Pay</fullName>
+                <default>false</default>
+                <label>Promise to Pay</label>
+            </value>
+            <value>
+                <fullName>QA Issue</fullName>
+                <default>false</default>
+                <label>QA Issue</label>
+            </value>
+            <value>
+                <fullName>Refund of Pre-paid Balance</fullName>
+                <default>false</default>
+                <label>Refund of Pre-paid Balance</label>
+            </value>
+            <value>
+                <fullName>Reorganize Info</fullName>
+                <default>false</default>
+                <label>Reorganize Info</label>
+            </value>
+            <value>
+                <fullName>Request IDM Change</fullName>
+                <default>false</default>
+                <label>Request IDM Change</label>
+            </value>
+            <value>
+                <fullName>Former Invoicing Privileges</fullName>
+                <default>false</default>
+                <label>Restore Invoicing Privileges</label>
+            </value>
+            <value>
+                <fullName>Return Freight Refund</fullName>
+                <default>false</default>
+                <label>Return Freight Refund</label>
+            </value>
+            <value>
+                <fullName>Return to Postal Mail</fullName>
+                <default>false</default>
+                <label>Return to Postal Mail</label>
+            </value>
+            <value>
+                <fullName>Review Available Credit</fullName>
+                <default>false</default>
+                <label>Review Available Credit</label>
+            </value>
+            <value>
+                <fullName>RTS (Col. Letter)</fullName>
+                <default>false</default>
+                <label>RTS (Dunning Letter)</label>
+            </value>
+            <value>
+                <fullName>RTS (Invoice/Statement)</fullName>
+                <default>false</default>
+                <label>RTS (Invoice/Statement)</label>
+            </value>
+            <value>
+                <fullName>RTS-NAT</fullName>
+                <default>false</default>
+                <label>RTS-NAT</label>
+            </value>
+            <value>
+                <fullName>Sales Tax</fullName>
+                <default>false</default>
+                <label>Sales Tax</label>
+            </value>
+            <value>
+                <fullName>SD Fee Not Accurate</fullName>
+                <default>false</default>
+                <label>SD Fee Not Accurate</label>
+            </value>
+            <value>
+                <fullName>Unaware of Policy Change</fullName>
+                <default>false</default>
+                <label>Unaware of Policy Change</label>
+            </value>
+            <value>
+                <fullName>Undeliverable eInvoice</fullName>
+                <default>false</default>
+                <label>Undeliverable eInvoice</label>
+            </value>
+            <value>
+                <fullName>Update RCS Bill To/Ship To</fullName>
+                <default>false</default>
+                <label>Update RCS Bill To/Ship To</label>
+            </value>
+            <value>
+                <fullName>Update RCS Login Email</fullName>
+                <default>false</default>
+                <label>Update RCS Login Email</label>
+            </value>
+            <value>
+                <fullName>Update RCS PO Amt/Date</fullName>
+                <default>false</default>
+                <label>Update RCS PO Amt/Date</label>
+            </value>
+            <value>
+                <fullName>Update Tax Exemption Status</fullName>
+                <default>false</default>
+                <label>Update Tax Exemption Status</label>
+            </value>
+            <value>
+                <fullName>W-9</fullName>
+                <default>false</default>
+                <label>W-9</label>
+            </value>
+            <value>
+                <fullName>Write Off</fullName>
+                <default>false</default>
+                <label>Write Off</label>
+            </value>
+            <value>
+                <fullName>Wrong Account</fullName>
+                <default>false</default>
+                <label>Wrong Account</label>
+            </value>
+            <value>
+                <fullName>Wrong Number of Students</fullName>
+                <default>false</default>
+                <label>Wrong Number of Students</label>
+            </value>
+            <value>
+                <fullName>Wrong Price per Student</fullName>
+                <default>false</default>
+                <label>Wrong Price per Student</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Paid - Check</fullName>
+                <default>false</default>
+                <label>Paid - Check</label>
+            </value>
+            <value>
+                <fullName>Portal Posting Request</fullName>
+                <default>false</default>
+                <label>Portal Posting Request</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>AR Exception</controllingFieldValue>
+            <valueName>Invoice Errors</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AR Exception</controllingFieldValue>
+            <valueName>Need to Update Billing Features</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AR Exception</controllingFieldValue>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <controllingFieldValue>Invoice Presentation</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Account Maintenance</controllingFieldValue>
+            <valueName>Change CFS Customer Class</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Account Maintenance</controllingFieldValue>
+            <valueName>Change Org ID/Name/Address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Account Maintenance</controllingFieldValue>
+            <valueName>Merge Accounts</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Account Maintenance</controllingFieldValue>
+            <valueName>Missing Data</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Account Maintenance</controllingFieldValue>
+            <valueName>Update RCS Bill To/Ship To</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Account Maintenance</controllingFieldValue>
+            <valueName>Update RCS Login Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Account Maintenance</controllingFieldValue>
+            <valueName>Update RCS PO Amt/Date</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Collections</controllingFieldValue>
+            <valueName>Collections</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Collections</controllingFieldValue>
+            <valueName>Missing Payment</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Retail Collections</controllingFieldValue>
+            <valueName>Product/Delivery</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Service Credit</controllingFieldValue>
+            <valueName>Credit Memo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Service Credit</controllingFieldValue>
+            <valueName>QA Issue</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Customer Service Credit</controllingFieldValue>
+            <valueName>Write Off</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Delivery Method</controllingFieldValue>
+            <valueName>Email</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Delivery Method</controllingFieldValue>
+            <valueName>Portal Billing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Delivery Method</controllingFieldValue>
+            <valueName>Return to Postal Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Coupon/Discount Not Applied</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>PO not Followed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Product/Course Not Accurate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Return Freight Refund</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>SD Fee Not Accurate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Wrong Number of Students</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Wrong Price per Student</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Copy of Statement/Invoice</controllingFieldValue>
+            <valueName>Billing &amp; Payment History</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Copy of Statement/Invoice</controllingFieldValue>
+            <valueName>Coupon Details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Copy of Statement/Invoice</controllingFieldValue>
+            <valueName>Credit Card Receipt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Copy of Statement/Invoice</controllingFieldValue>
+            <valueName>Invoice or Credit Memo Copy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Copy of Statement/Invoice</controllingFieldValue>
+            <valueName>Order Details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Presentation</controllingFieldValue>
+            <valueName>Add/Change PO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Presentation</controllingFieldValue>
+            <valueName>Deconsolidate/Consolidate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
+            <valueName>Change Payment Terms</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
+            <valueName>Credit Check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
+            <valueName>Customer PO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
+            <valueName>Increase Credit Limit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
+            <valueName>Former Invoicing Privileges</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
+            <valueName>Review Available Credit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Payments</controllingFieldValue>
+            <valueName>ACH Detail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Payments</controllingFieldValue>
+            <valueName>ACH Info Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Payments</controllingFieldValue>
+            <valueName>Credit Balance Application</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Payments</controllingFieldValue>
+            <valueName>Paid - Credit Card</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Payments</controllingFieldValue>
+            <valueName>Paid - Check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Invoice Payments</controllingFieldValue>
+            <valueName>Portal Posting Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Forms</controllingFieldValue>
+            <valueName>Customer Forms</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendor Forms</controllingFieldValue>
+            <valueName>W-9</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Wrong Organization</controllingFieldValue>
+            <valueName>Billed to Chapter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Wrong Organization</controllingFieldValue>
+            <valueName>Course Record</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Wrong Organization</controllingFieldValue>
+            <valueName>Offering Closed</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Wrong Organization</controllingFieldValue>
+            <valueName>Open Offering</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Address</controllingFieldValue>
+            <valueName>Missing Address</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Address</controllingFieldValue>
+            <valueName>RTS (Col. Letter)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Address</controllingFieldValue>
+            <valueName>RTS (Invoice/Statement)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Address</controllingFieldValue>
+            <valueName>RTS-NAT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bad Address</controllingFieldValue>
+            <valueName>Undeliverable eInvoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Collections</controllingFieldValue>
+            <valueName>Attempt to Collect</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Collections</controllingFieldValue>
+            <valueName>Bankruptcy Chp 7</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Collections</controllingFieldValue>
+            <valueName>Bankruptcy Chp 9 or 11</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misapplied Payment</controllingFieldValue>
+            <valueName>Correct Account Wrong Invoice</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Misapplied Payment</controllingFieldValue>
+            <valueName>Wrong Account</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

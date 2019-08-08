@@ -1,0 +1,334 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes"
+                controller="RCInstructorClassListCmpCtrl" >
+
+    <aura:attribute name="currentClasses"     type="Object[]"  default=""/>
+    <aura:attribute name="historyClasses"     type="Object[]"  default=""/>
+    <aura:attribute name="limitOffset"        type="Integer"   default="0"/>
+    <aura:attribute name="isHistory"          type="Boolean"   default="false"/>
+    <aura:attribute name="offset"             type="Integer"   default="0"/>
+    <aura:attribute name="recordId"           type="String"   default="" />
+    <aura:attribute name="selectedTab"        type="String"   default="current-classes" />
+    <aura:attribute name="isDataLoaded"        type="Boolean"   default="false" />
+
+    <aura:attribute name="sortField" type="String" default="startDate" />
+    <aura:attribute name="sortOrder" type="String" default="asc" />
+
+    <!--Labels-->
+    <aura:attribute name="label_Current_Classes"                type="String" default="{!$Label.c.Current_Classes}"/>
+    <aura:attribute name="label_Class_History"                  type="String" default="{!$Label.c.Class_History}"/>
+    <aura:attribute name="label_Request_Blended_Classes"        type="String" default="{!$Label.c.Request_Blended_Classes}"/>
+    <aura:attribute name="label_Course_Record_Entry"            type="String" default="{!$Label.c.Course_Record_Entry}"/>
+    <aura:attribute name="label_Course"                         type="String" default="{!$Label.c.Course}"/>
+    <aura:attribute name="label_Start_Date"                     type="String" default="{!$Label.c.Start_Date}"/>
+    <aura:attribute name="label_Time"                           type="String" default="{!$Label.c.Time}"/>
+    <aura:attribute name="label_Days"                           type="String" default="{!$Label.c.Days}"/>
+    <aura:attribute name="label_Company"                        type="String" default="{!$Label.c.Company}"/>
+    <aura:attribute name="label_Location"                       type="String" default="{!$Label.c.Location}"/>
+    <aura:attribute name="label_Class_Settings"                 type="String" default="{!$Label.c.Class_Setting}"/>
+    <aura:attribute name="label_Status"                         type="String" default="{!$Label.c.Status}"/>
+    <aura:attribute name="label_Items"                          type="String" default="{!$Label.c.items}"/>
+    <aura:attribute name="label_Item"                           type="String" default="{!$Label.c.item}"/>
+    <aura:attribute name="label_No_Classes"                     type="String" default="{!$Label.c.No_Classes}"/>
+
+    <ltng:require scripts="{!join(',',
+                                $Resource.RCUilib + '/jsLibs/moment-with-locales.min.js'
+                            )}"  afterScriptsLoaded="{!c.doInit}"/>
+
+
+    <div>
+        <!-- <div class="slds-grid slds-grid_align-end slds-size_1-of-1 btn-menu-container">
+            <c:CourseRecordEntry />
+            <c:RequestBlendedClass />
+            <lightning:button label="{!v.label_Request_Blended_Classes}"
+                              variant="brand" />
+            <lightning:button label="{!v.label_Course_Record_Entry}"
+                              variant="brand" />
+        </div> -->
+        
+        <lightning:tabset variant="default"  onselect="{! c.handleSelectTab }">
+            <lightning:tab title="Current Classes"
+                           id="current-classes">
+                <aura:set attribute="label">
+                    {!v.label_Current_Classes}
+                </aura:set>
+                <aura:if isTrue="{!v.currentClasses.length > 0}">
+                    <div>
+                        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-end slds-m-bottom_medium slds-p-left_x-small">
+                            <aura:if isTrue="{!v.currentClasses.length == 1}">
+                                <div>{!v.currentClasses.length + ' ' + v.label_Item}</div>
+                                <aura:set attribute="else">
+                                    <div>{!v.currentClasses.length + ' ' + v.label_Items}</div>
+                                </aura:set>
+                            </aura:if>
+                            <!-- <button class="slds-button slds-button_outline-brand btn-filter">
+                                <lightning:icon iconName="utility:filterList"
+                                                size="small"/>
+                            </button> -->
+                        </div>
+                        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout">
+                            <thead class="slds-color__background_gray-4">
+                                <tr class="slds-text-title_caps">
+                                    <th scope="col">
+                                        <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'className' ? 'sorting' : '')}">
+                                            <span class="table-title slds-truncate">{!v.label_Course}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="className" data-order="{!v.sortField == 'className' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'className' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colDate">
+                                        <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'startDate' ? 'sorting' : '')}">
+                                            <span class="table-title slds-truncate">{!v.label_Start_Date}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="startDate" data-order="{!v.sortField == 'startDate' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'startDate' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colTime">
+                                        <div  class="{! 'slds-truncate slds-grid' + (v.sortField == 'startTime' ? 'sorting' : '')}">
+                                            <span class="table-title slds-truncate">{!v.label_Time}</span>
+                                           <!--  <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="startTime" data-order="{!v.sortField == 'startTime' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'startTime' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div> -->
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colDays">
+                                        <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'days' ? 'sorting' : '')}">
+                                            <span class="table-title slds-truncate">{!v.label_Days}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="days" data-order="{!v.sortField == 'days' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'days' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colCompany">
+                                        <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'company' ? 'sorting' : '')}">
+                                            <span class="table-title slds-truncate">{!v.label_Company}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="company" data-order="{!v.sortField == 'company' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'company' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colLocation">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Location}</span>
+                                            <!--<lightning:buttonIcon iconName="utility:arrowdown" size="medium" variant="bare" class="btn-sort"/>-->
+                                        </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Class_Settings}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="classSettings" data-order="{!v.sortField == 'classSettings' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'classSettings' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" style="width: 90px;">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Status}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="status" data-order="{!v.sortField == 'status' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'status' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <aura:iteration items="{!v.currentClasses}" var="class">
+                                        <tr>
+                                            <td data-label="{!v.label_Course}">
+                                                <div class="slds-truncate">
+                                                    <a data-id="{!class.classId}" data-pid="{!class.lplanId}" onclick="{!c.goToDetail}">{!class.lpName}</a>
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Start_Date}">
+                                                <div class="slds-truncate">
+                                                    {!class.formattedStartDate}
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Time}">
+                                                <div class="slds-truncate">
+                                                    {!class.startTime}
+                                                    <aura:if isTrue="{!class.endTime.length}">
+                                                        - {!class.endTime}
+                                                    </aura:if>
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Days}">
+                                                <div class="slds-truncate">{!class.days}</div>
+                                            </td>
+                                            <td data-label="{!v.label_Company}">
+                                                <div class="slds-truncate">{!class.company}</div>
+                                            </td>
+                                            <td data-label="{!v.label_Location}">
+                                                <div class="slds-truncate">
+                                                    <lightning:formattedAddress street="{!class.location.address1}"
+                                                                                  city="{!class.location.city}"
+                                                                                  country="{!class.location.country}"
+                                                                                  province="{!class.location.province}"
+                                                                                  postalCode="{!class.location.postalCode}"
+                                                                                  class="slds-truncate address-link" />
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Class_Settings}">
+                                                <div class="slds-truncate">{!class.classSettings}</div>
+                                            </td>
+                                            <td data-label="{!v.label_Status}">
+                                                <div class="slds-truncate">{!class.status}</div>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                    <aura:set attribute="else">
+                        <p class="slds-align_absolute-center slds-p-around_small slds-text-heading_medium">{!v.label_No_Classes}</p>
+                    </aura:set>
+                </aura:if>
+
+            </lightning:tab>
+            <lightning:tab title="Class History"
+                           id="class-history">
+                <aura:set attribute="label">
+                    {!v.label_Class_History}
+                </aura:set>
+                <div>
+                    <aura:if isTrue="{!v.historyClasses.length > 0}">
+                        <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-end slds-m-bottom_medium slds-p-left_x-small">
+                            <aura:if isTrue="{!v.historyClasses.length == 1}">
+                                <div>{!v.historyClasses.length + ' ' + v.label_Item}</div>
+                                <aura:set attribute="else">
+                                    <div>{!v.historyClasses.length + ' ' + v.label_Items}</div>
+                                </aura:set>
+                            </aura:if>
+                            <!-- <button class="slds-button slds-button_outline-brand btn-filter">
+                                <lightning:icon iconName="utility:filterList"
+                                                size="small"/>
+                            </button> -->
+                        </div>
+                        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout">
+                            <thead class="slds-color__background_gray-4">
+                                <tr class="slds-text-title_caps">
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Course}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="history" data-field="className" data-order="{!v.sortField == 'className' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'className' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colDate">
+                                        <div class="slds-truncate slds-grid sorting">
+                                            <span class="table-title slds-truncate">{!v.label_Start_Date}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="history" data-field="startDate" data-order="{!v.sortField == 'startDate' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'startDate' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colTime">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Time}</span>
+                                            <!-- <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="history" data-field="startTime" data-order="{!v.sortField == 'startTime' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'startTime' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div> -->
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colDays">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Days}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="history" data-field="days" data-order="{!v.sortField == 'days' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'days' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colCompany">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Company}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="history" data-field="company" data-order="{!v.sortField == 'company' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'company' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="colLocation">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Location}</span>
+                                            <!-- <lightning:buttonIcon iconName="utility:arrowdown" size="medium" variant="bare" class="btn-sort"/> -->
+                                        </div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Class_Settings}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="history" data-field="classSettings" data-order="{!v.sortField == 'classSettings' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'classSettings' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th scope="col" style="width: 90px;">
+                                        <div class="slds-truncate slds-grid">
+                                            <span class="table-title slds-truncate">{!v.label_Status}</span>
+                                            <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="history" data-field="status" data-order="{!v.sortField == 'status' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                                <lightning:buttonIcon iconName="{!v.sortField == 'status' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <aura:iteration items="{!v.historyClasses}" var="class">
+                                        <tr>
+                                            <td data-label="{!v.label_Course}">
+                                                <div class="slds-truncate">
+                                                    <a data-id="{!class.classId}" data-pid="{!class.lplanId}" onclick="{!c.goToDetail}">{!class.lpName}</a>
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Start_Date}">
+                                                <div class="slds-truncate">
+                                                    {!class.formattedStartDate}
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Time}">
+                                                <div class="slds-truncate">
+                                                    {!class.startTime}
+                                                    <aura:if isTrue="{!class.endTime.length}">
+                                                        - {!class.endTime}
+                                                    </aura:if>
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Days}">
+                                                <div class="slds-truncate">{!class.days}</div>
+                                            </td>
+                                            <td data-label="{!v.label_Company}">
+                                                <div class="slds-truncate">{!class.company}</div>
+                                            </td>
+                                            <td data-label="{!v.label_Location}">
+                                                <div class="slds-truncate">
+                                                    <lightning:formattedAddress street="{!class.location.address1}"
+                                                                                  city="{!class.location.city}"
+                                                                                  country="{!class.location.country}"
+                                                                                  province="{!class.location.province}"
+                                                                                  class="slds-truncate address-link" />
+                                                </div>
+                                            </td>
+                                            <td data-label="{!v.label_Class_Settings}">
+                                                <div class="slds-truncate">{!class.classSettings}</div>
+                                            </td>
+                                            <td data-label="{!v.label_Status}">
+                                                <div class="slds-truncate">{!class.status}</div>
+                                            </td>
+                                        </tr>
+                                    </aura:iteration>
+                            </tbody>
+                        </table>
+                        <aura:set attribute="else">
+                            <p class="slds-align_absolute-center slds-p-around_small slds-text-heading_medium">{!v.label_No_Classes}</p>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </lightning:tab>
+        </lightning:tabset>
+        <aura:if isTrue="{! v.isDataLoaded}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+
+
+    </div>
+</aura:component>

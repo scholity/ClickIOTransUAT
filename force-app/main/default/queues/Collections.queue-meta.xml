@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>FIN Collections</name>
+    <queueMembers>
+        <users>
+            <user>brenda.fultz@redcross.org</user>
+            <user>brigitte.rogers@redcross.org</user>
+            <user>cierra.mcgill@redcross.org</user>
+            <user>craig.terrell@redcross.org</user>
+            <user>danielle.ansley3@redcross.org</user>
+            <user>demetria.champion@redcross.org</user>
+            <user>fabian.avigliano@redcross.org</user>
+            <user>jamie.stoutkennedy@redcross.org</user>
+            <user>josephine.walker2@redcross.org</user>
+            <user>judy.wesson@redcross.org</user>
+            <user>julie.kivett@redcross.org</user>
+            <user>kwesida.rhoney@redcross.org</user>
+            <user>mackenzie.chadwick@redcross.org</user>
+            <user>mary.sanderson@redcross.org</user>
+            <user>paulett.smith@redcross.org</user>
+            <user>queen.carr@redcross.org</user>
+            <user>stephen.feldstein@redcross.org</user>
+            <user>tara.smalls@redcross.org</user>
+            <user>tiajuana.cutner@redcross.org</user>
+            <user>wanda.pearson@redcross.org</user>
+            <user>wayne.bowling@redcross.org</user>
+            <user>william.whiteside@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

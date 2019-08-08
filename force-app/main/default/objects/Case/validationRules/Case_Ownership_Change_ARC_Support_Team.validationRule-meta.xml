@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case_Ownership_Change_ARC_Support_Team</fullName>
+    <active>true</active>
+    <description>This validation rules disallows TSC agent profile from changing the ownership of the case to the ARC Support Queue via manual case ownership change or using the follow up group drop down.</description>
+    <errorConditionFormula>OR(
+AND(
+OR($Profile.Id = &quot;00ed0000000Idqs&quot;),
+OR(ISPICKVAL(  Follow_Up_Group__c  , &quot;ARC Support Team&quot;)
+)
+),
+AND(
+OR($Profile.Id = &quot;00ed0000000Idqs&quot;),
+OR( OwnerId = &quot;00Gd0000000SYUo&quot;)
+)
+)
+
+/* TSC Agent Profile = 00ed0000000Idqs
+   OwnerID for the ARC Support Team Queue =00Gd0000000SYUo*/</errorConditionFormula>
+    <errorDisplayField>OwnerId</errorDisplayField>
+    <errorMessage>Agents are not permitted to reassign cases to the ARC Support Queue without first assigning a case to a TL or other Manager.</errorMessage>
+</ValidationRule>

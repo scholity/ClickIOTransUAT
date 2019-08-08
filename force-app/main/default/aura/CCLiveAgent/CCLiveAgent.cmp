@@ -1,0 +1,22 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="SS_CCUserProfileController"> 
+    <!-- External Parameters -->
+    <aura:attribute name="deploymentId" type="String" description="Live Agent Deployment Id"/>
+    <aura:attribute name="buttonId" type="String" description="Live Agent Button Id"/>
+    <aura:attribute name="orgId" type="String" description="Organization Id"/>
+    <aura:attribute name="liveagentInitUrl" type="String" description="Live Agent Init URL" default="https://d.la1s1.salesforceliveagent.com/chat"/>
+    <aura:attribute name="chatButtonLabel" type="String" description="Live Chat Button Label"/>
+    <aura:attribute name="agentBusyLabel" type="String" description="Agent Busy Label" default="All Agents are busy"/>
+    <aura:attribute name="debugMode" type="Boolean" description="If set to true, enables Live agent debug mode." default="false"/>
+    <aura:attribute name="popupContact" type="Boolean" description="If set to true, pops up contact to the agent." default="false"/>
+
+	<!-- Local Attributes -->
+    <aura:attribute name="onlineButtonId" type="String" default="{!'liveagent_button_online_' + v.buttonId}"/>
+    <aura:attribute name="offlineButtonId" type="String" default="{!'liveagent_button_offline_' + v.buttonId}"/>
+    <aura:attribute name="status_reason" type="String"/>
+    <aura:attribute name="buttonDisabled" type="Boolean" default="false"/>
+    
+    <ui:button class="isDisabled" aura:id="liveagent_btn" label='{!v.chatButtonLabel}' disabled="{!v.buttonDisabled}" press="{!c.startChat}"><span>{!v.status_reason}</span></ui:button>    
+    
+    <span id="{!v.onlineButtonId}"></span>
+    <span id="{!v.offlineButtonId}"></span>
+</aura:component>

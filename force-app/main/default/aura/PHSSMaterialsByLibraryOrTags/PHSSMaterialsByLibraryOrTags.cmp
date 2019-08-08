@@ -1,0 +1,44 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="PHSSProgramMaterialsApexController">
+	<aura:attribute name="libraryName" type="String" default=""/>
+	<aura:attribute name="tagsCsv" type="String" default=""/>
+    <aura:attribute name="url" type="String"/>
+
+	<aura:attribute name="isCandidateMaterial" type="Boolean" default="false"/>
+
+	<aura:attribute name="category" type="String" description="category of the material"/>
+    <aura:attribute name="type" type="String" description="type of the material"/>
+    <aura:attribute name="description" type="String" description="list name displayed at the top"/>
+	<aura:attribute name="initalDisplayNum" type="String" description="initial number of displayed records"/>
+	<aura:attribute name="searchTitle" type="String" default="Title Search"/>
+    <aura:attribute name="noResultsLabel" type="String" default="No results"/>
+    <aura:attribute name="materials" type="PHSS_Material__C[]" description="all materials in this category/type" default="[]"/>
+	<aura:attribute name="shouldProcess" type="Boolean" default="false"/>
+
+	<aura:attribute name="unavailablePreviewMessage" type="String" access="public" default="Preview of this file is not supported, please download"/>
+
+	<aura:attribute name="materialNameColumnLabel" type="String" access="public" default="Material Name"/>
+    <aura:attribute name="lastModifiedDateColumnLabel" type="String" access="public" default="Last Modified Date"/>
+    <aura:attribute name="materialTypeColumnLabel" type="String" access="public" default="Type"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<aura:registerEvent name="ProgramMaterialList" type="c:PHSS_ProgrammaterialListLocalLoadedEvent"/>
+
+
+	<c:PHSSProgramMaterialList category="{#v.category}"
+		type="{#v.type}"
+		description="{#v.description}"
+		initalDisplayNum="{#v.initalDisplayNum}"
+		searchTitle="{#v.searchTitle}"
+		noResultsLabel="{#v.noResultsLabel}"
+		isUsingGlobalEvent="false"
+		shouldProcess="{!v.shouldProcess}"
+		materials="{!v.materials}"
+		unavailablePreviewMessage="{#v.unavailablePreviewMessage}"
+		materialNameColumnLabel="{#v.materialNameColumnLabel}"
+		lastModifiedDateColumnLabel="{#v.lastModifiedDateColumnLabel}"
+		materialTypeColumnLabel="{#v.materialTypeColumnLabel}"
+       	url="{#v.url}"
+	/>
+
+</aura:component>

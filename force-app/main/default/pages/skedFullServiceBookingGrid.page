@@ -1,0 +1,74 @@
+<apex:page controller="skedFullServiceBookingGridController" extensions="skedScheduleAllocationController" sidebar="false" standardstylesheets="false" showheader="false" doctype="html-5.0">
+    
+<head>
+  <meta charset="UTF-8" />
+  <title>ARC - Full Service Booking Grid</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+  
+  <link rel="stylesheet" href="{!URLFOR($Resource.sked_ARC_Vendors, '/slds/styles/salesforce-lightning-design-system-vf.min.css')}" />
+  <link rel="stylesheet" href="{!URLFOR($Resource.sked_ARC_Vendors, '/jquery-ui-custom/jquery-ui.min.css')}" />
+  <link rel="stylesheet" href="{!URLFOR($Resource.sked_ARC_Vendors, '/jquery-ui-custom/jquery-ui.theme.min.css')}" />
+  <link rel="stylesheet" href="{!URLFOR($Resource.sked_ARC_Vendors, '/jquery-time-picker/jquery.timepicker.css')}" />
+
+  <!-- full-service-booking-grid.css -->
+  <link rel="stylesheet" href="{!URLFOR($Resource.sked_ARC_Dist, '/styles/full-service-booking-grid.css')}" />
+
+  <script>
+  var recordId = '{!JSENCODE($CurrentPage.parameters.id)}';
+  </script>
+  
+</head>
+
+<body style="margin: 0; padding: 0;">
+  <!-- app: learning-center-capacity -->
+  <div ng-app="arcApp" class="sked-slds ng-cloak">
+    <!-- main component -->
+    <full-service-booking-grid class="sked-modal-container" ></full-service-booking-grid>
+  </div>
+
+  <!-- jquery -->
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/jquery/jquery-3.1.1.min.js')}"></script>
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/jquery-ui-1.12.1.custom/jquery-ui.min.js')}"></script>
+  <!-- angularjs -->
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/angularjs/angular.min.js')}"></script>
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/angularjs/angular-sanitize.min.js')}"></script>
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/ng-jquery-ui-date-picker.js')}"></script>
+  <!-- clickoutside -->
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/clickoutside.directive.js')}"></script>
+  <!-- moment -->
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/momentjs/moment.min.js')}"></script>
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/momentjs/moment-timezone.js')}"></script>
+  <!-- angular google map -->
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/lodash.min.js')}"></script>
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/angular-simple-logger.min.js')}"></script>
+  <script src="{!URLFOR($Resource.sked_ARC_Vendors, '/angular-google-maps.min.js')}"></script>
+
+  <!-- app -->
+  <script src="{!URLFOR($Resource.sked_ARC_Dist, '/scripts/arc.js')}"></script>
+
+  <!-- app: project-details bootstrap -->
+  <script>
+    (function (angular, apiController) {
+      angular.module('skedApp.core')
+      .config([
+        'apiProvider',
+        'envProvider',
+        function (apiProvider, envProvider) {
+          apiProvider.setController(apiController);
+          apiProvider.setRemotingConfiguration({
+            escape: false,
+            buffer: false
+          });
+          apiProvider.enableDebug();
+          envProvider.setVariables({
+            RESOURCE_PATH: "{!URLFOR($Resource.sked_ARC_Vendors, '/')}"
+          });
+        }
+      ]);
+
+    })(angular, angular.merge({}, skedFullServiceBookingGridController, skedScheduleAllocationController));
+  </script>
+
+</body>
+  
+</apex:page>

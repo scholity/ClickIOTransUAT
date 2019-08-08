@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bankruptcy_Type_Approval</fullName>
+    <active>false</active>
+    <description>This VR defines that only specific users are able edit Bankruptcy Type field.</description>
+    <errorConditionFormula>AND(
+AND(
+ISCHANGED(Bankruptcy_Type__c),
+OR(
+ISPICKVAL(Bankruptcy_Type__c, &quot;Chapter 7 (out of business)&quot;),
+ISPICKVAL(Bankruptcy_Type__c, &quot;Chapter 9 (municipal)&quot;),
+ISPICKVAL(Bankruptcy_Type__c, &quot;Chapter 11 (restructure)&quot;))),
+
+AND(
+$User.Id != &quot;005d0000001WGso&quot;, /*Anne Hathaway*/
+$User.Id != &quot;005d0000001WGtI&quot;, /*Kwesida Rhoney*/
+$User.Id != &quot;005d0000001Vmik&quot;, /*Wendy Firdman*/
+$User.Id != &quot;0050V000006lVNt&quot;, /*Craig Terrell*/
+$User.Id != &quot;005d0000001Wyup&quot;, /*Kara Desmaris*/
+$User.Id != &quot;0050V000006jKNy&quot;, /*Nyle Grimes*/
+$User.Id != &quot;005d0000001WGrq&quot;, /*Mandy Skomorucha*/
+$User.Id != &quot;005d00000040uDS&quot;, /*Gita Borovsky*/
+$User.Id != &quot;005d0000005I9dx&quot; /*Mike A Smith*/
+),
+
+$Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>Bankruptcy_Type__c</errorDisplayField>
+    <errorMessage>You do not have permission to make this change. Contact Customer Ops if you are receiving this message in error.</errorMessage>
+</ValidationRule>

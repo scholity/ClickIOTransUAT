@@ -1,0 +1,52 @@
+<apex:page >
+
+<style>
+#application {
+    margin: 3em;
+}
+
+#header {
+    margin-bottom: 1em;
+    font-weight:bold;
+    font-size: 1.2em;
+}
+</style>
+
+<div id="application">
+    <div id="header">Welcome to American Red Cross. How may we help you?</div>
+    
+    <a id="liveagent_button_online_573d0000000PEc5" href="javascript://Chat" style="display: none;" onclick="liveagent.startChat('573d0000000PEc5')"> 
+        <img src="http://www.icyekenya.org/images/click-to-chat.png" style="width: 75px; height: 75px;"/>
+    </a>
+    
+    
+    <div id="liveagent_button_offline_573d0000000PEc5" style="display: none;">
+        <a href="/WebToCasePage"> Submit a Case</a>
+    </div>
+    
+    
+    
+    <script type="text/javascript">
+    
+if (!window._laq) { window._laq = []; }
+window._laq.push(function(){liveagent.showWhenOnline('573d0000000PEc5', document.getElementById('liveagent_button_online_573d0000000PEc5'));
+liveagent.showWhenOffline('573d0000000PEc5', document.getElementById('liveagent_button_offline_573d0000000PEc5'));
+});
+
+    </script>
+    
+    
+    <script type='text/javascript' src='https://c.la1w1.salesforceliveagent.com/content/g/deployment.js'></script>
+    
+    
+    <script type='text/javascript'>
+        liveagent.init('https://d.la1w1.salesforceliveagent.com/chat', '572d0000000PEcA', '00Dd0000000bxKz');
+        
+        
+    </script>
+    
+
+</div>
+
+
+</apex:page>

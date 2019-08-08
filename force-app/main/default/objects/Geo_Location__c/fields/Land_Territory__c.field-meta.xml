@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Land_Territory__c</fullName>
+    <description>Land Territory used for commissions on the Territory Revenue records</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Land Territory used for commissions on the Territory Revenue records</inlineHelpText>
+    <label>Land Territory</label>
+    <length>6</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

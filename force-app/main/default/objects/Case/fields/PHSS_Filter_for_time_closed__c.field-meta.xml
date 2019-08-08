@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PHSS_Filter_for_time_closed__c</fullName>
+    <externalId>false</externalId>
+    <formula>ClosedDate &gt;= (NOW() - 30)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Cases Closed in the last 30 days</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

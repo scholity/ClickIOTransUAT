@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tertiary_Close_Reason__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Additional clarification to the resolution of the case.</inlineHelpText>
+    <label>Tertiary Close Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Secondary_Close_Reason__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Required for Work</fullName>
+                <default>false</default>
+                <label>Required for Work</label>
+            </value>
+            <value>
+                <fullName>Required for School</fullName>
+                <default>false</default>
+                <label>Required for School</label>
+            </value>
+            <value>
+                <fullName>Required for Volunteer Position</fullName>
+                <default>false</default>
+                <label>Required for Volunteer Position</label>
+            </value>
+            <value>
+                <fullName>Personal Development</fullName>
+                <default>false</default>
+                <label>Personal Development</label>
+            </value>
+            <value>
+                <fullName>Time of Day</fullName>
+                <default>false</default>
+                <label>Time of Day</label>
+            </value>
+            <value>
+                <fullName>Day of Week</fullName>
+                <default>false</default>
+                <label>Day of Week</label>
+            </value>
+            <value>
+                <fullName>Too far out (2+ weeks)</fullName>
+                <default>false</default>
+                <label>Too far out (2+ weeks)</label>
+            </value>
+            <value>
+                <fullName>Course not offered at all</fullName>
+                <default>false</default>
+                <label>Course not offered at all</label>
+            </value>
+            <value>
+                <fullName>Credit Card not handy</fullName>
+                <default>false</default>
+                <label>Credit Card not handy</label>
+            </value>
+            <value>
+                <fullName>Funds not available</fullName>
+                <default>false</default>
+                <label>Funds not available</label>
+            </value>
+            <value>
+                <fullName>Could only Pay by Check</fullName>
+                <default>false</default>
+                <label>Could only Pay by Check</label>
+            </value>
+            <value>
+                <fullName>Wrong Number of Students</fullName>
+                <default>false</default>
+                <label>Wrong Number of Students</label>
+            </value>
+            <value>
+                <fullName>Wrong Price per Student</fullName>
+                <default>false</default>
+                <label>Wrong Price per Student</label>
+            </value>
+            <value>
+                <fullName>Product/Course Not Accurate</fullName>
+                <default>false</default>
+                <label>Product/Course Not Accurate</label>
+            </value>
+            <value>
+                <fullName>Customer Already Paid</fullName>
+                <default>false</default>
+                <label>Customer Already Paid</label>
+            </value>
+            <value>
+                <fullName>Coupon/Discount Not Applied</fullName>
+                <default>false</default>
+                <label>Coupon/Discount Not Applied</label>
+            </value>
+            <value>
+                <fullName>Coupon/Discount Expired</fullName>
+                <default>false</default>
+                <label>Coupon/Discount Expired</label>
+            </value>
+            <value>
+                <fullName>Undocumented Contract Change</fullName>
+                <default>false</default>
+                <label>Undocumented Contract Change</label>
+            </value>
+            <value>
+                <fullName>Military</fullName>
+                <default>false</default>
+                <label>Military</label>
+            </value>
+            <value>
+                <fullName>School</fullName>
+                <default>false</default>
+                <label>School</label>
+            </value>
+            <value>
+                <fullName>Government</fullName>
+                <default>false</default>
+                <label>Government</label>
+            </value>
+            <value>
+                <fullName>Required by Company</fullName>
+                <default>false</default>
+                <label>Required by Company</label>
+            </value>
+            <value>
+                <fullName>One Time Exception</fullName>
+                <default>false</default>
+                <label>One Time Exception</label>
+            </value>
+            <value>
+                <fullName>Required for Company</fullName>
+                <default>false</default>
+                <label>Required for Company</label>
+            </value>
+            <value>
+                <fullName>Sales Rep Override</fullName>
+                <default>false</default>
+                <label>Sales Rep Override</label>
+            </value>
+            <value>
+                <fullName>Not for Profit</fullName>
+                <default>false</default>
+                <label>Not for Profit</label>
+            </value>
+            <value>
+                <fullName>Government Agency</fullName>
+                <default>false</default>
+                <label>Government Agency</label>
+            </value>
+            <value>
+                <fullName>Did Not Meet Threshold or Exception Criteria</fullName>
+                <default>false</default>
+                <label>Did Not Meet Threshold or Exception Criteria</label>
+            </value>
+            <value>
+                <fullName>Accounts Receivable Outstanding</fullName>
+                <default>false</default>
+                <label>Accounts Receivable Outstanding</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Could only Pay by Cash</fullName>
+                <default>false</default>
+                <label>Could only Pay by Cash</label>
+            </value>
+            <value>
+                <fullName>Customer wanted to pay by PayPal</fullName>
+                <default>false</default>
+                <label>Customer wanted to pay by PayPal</label>
+            </value>
+            <value>
+                <fullName>Instructor</fullName>
+                <default>false</default>
+                <label>Instructor</label>
+            </value>
+            <value>
+                <fullName>Red Cross Employee</fullName>
+                <default>false</default>
+                <label>Red Cross Employee</label>
+            </value>
+            <value>
+                <fullName>Personal</fullName>
+                <default>false</default>
+                <label>Personal</label>
+            </value>
+            <value>
+                <fullName>Business</fullName>
+                <default>false</default>
+                <label>Business</label>
+            </value>
+            <value>
+                <fullName>Budget</fullName>
+                <default>false</default>
+                <label>Budget</label>
+            </value>
+            <value>
+                <fullName>Competition</fullName>
+                <default>false</default>
+                <label>Competition</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Exception Category</controllingFieldValue>
+            <valueName>Military</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Exception Category</controllingFieldValue>
+            <valueName>School</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Exception Category</controllingFieldValue>
+            <valueName>Government</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Exception Category</controllingFieldValue>
+            <valueName>Required by Company</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Exception Category</controllingFieldValue>
+            <controllingFieldValue>Privileges Granted Special Exception</controllingFieldValue>
+            <controllingFieldValue>Privileges Denied</controllingFieldValue>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Special Exception</controllingFieldValue>
+            <valueName>One Time Exception</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Special Exception</controllingFieldValue>
+            <valueName>Required for Company</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Special Exception</controllingFieldValue>
+            <valueName>Sales Rep Override</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Special Exception</controllingFieldValue>
+            <valueName>Not for Profit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Granted Special Exception</controllingFieldValue>
+            <valueName>Government Agency</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Denied</controllingFieldValue>
+            <valueName>Did Not Meet Threshold or Exception Criteria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privileges Denied</controllingFieldValue>
+            <valueName>Accounts Receivable Outstanding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Certification</controllingFieldValue>
+            <controllingFieldValue>Renewal of Certification</controllingFieldValue>
+            <valueName>Required for Work</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Certification</controllingFieldValue>
+            <controllingFieldValue>Renewal of Certification</controllingFieldValue>
+            <valueName>Required for School</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Certification</controllingFieldValue>
+            <controllingFieldValue>Renewal of Certification</controllingFieldValue>
+            <valueName>Required for Volunteer Position</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>New Certification</controllingFieldValue>
+            <controllingFieldValue>Renewal of Certification</controllingFieldValue>
+            <valueName>Personal Development</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Placed Order</controllingFieldValue>
+            <valueName>Instructor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Placed Order</controllingFieldValue>
+            <valueName>Red Cross Employee</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Placed Order</controllingFieldValue>
+            <valueName>Personal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Placed Order</controllingFieldValue>
+            <valueName>Business</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Availability</controllingFieldValue>
+            <valueName>Time of Day</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Availability</controllingFieldValue>
+            <valueName>Day of Week</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Availability</controllingFieldValue>
+            <valueName>Too far out (2+ weeks)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Course Availability</controllingFieldValue>
+            <valueName>Course not offered at all</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price too high</controllingFieldValue>
+            <valueName>Budget</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price too high</controllingFieldValue>
+            <valueName>Competition</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment issue</controllingFieldValue>
+            <valueName>Credit Card not handy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment issue</controllingFieldValue>
+            <valueName>Funds not available</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment issue</controllingFieldValue>
+            <valueName>Could only Pay by Check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Payment issue</controllingFieldValue>
+            <valueName>Could only Pay by Cash</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Wrong Number of Students</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Wrong Price per Student</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Product/Course Not Accurate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Customer Already Paid</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Coupon/Discount Not Applied</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Coupon/Discount Expired</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Price</controllingFieldValue>
+            <valueName>Undocumented Contract Change</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

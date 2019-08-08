@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Not_Converted_To_Sale_Reason__c</fullName>
+    <externalId>false</externalId>
+    <inlineHelpText>Please describe the reason you did not convert this new course registration call to a sale.</inlineHelpText>
+    <label>Not Converted To Sale Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>TextArea</type>
+</CustomField>

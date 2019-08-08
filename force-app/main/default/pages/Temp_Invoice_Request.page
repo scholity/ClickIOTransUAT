@@ -1,0 +1,34 @@
+<apex:page sidebar="false" showHeader="false">
+    
+    <html lang="en">
+  <head>
+      <meta charset="utf-8"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <meta name="description" content=""/>
+      <meta name="author" content=""/>
+
+    <title>PHSS Customer Invoice Inquiry Instructions</title>
+
+    <!-- Bootstrap core CSS -->
+      <apex:stylesheet value="{!URLFOR($Resource.bootstrap_static_resource, '/bootstrap-3.2.0-dist/css/bootstrap.min.css')}" />
+
+  </head>
+
+  <body>
+  
+
+              
+    <div class="container">
+            <br/><br/><br/><br/>
+            <h3>“The Customer Invoice Inquiry Form will be available upon release of the new Directive to the field.  Please continue submitting requests to billing@redcross.org until that time.”</h3>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>
+    
+</apex:page>

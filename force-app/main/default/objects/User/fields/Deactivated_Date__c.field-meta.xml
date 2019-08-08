@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deactivated_Date__c</fullName>
+    <description>Date user was deactivated</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This field is automatically filled out based on the date the &#39;Active&#39; box is unchecked.</inlineHelpText>
+    <label>Deactivated Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Date</type>
+</CustomField>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New</fullName>
+    <availability>online</availability>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>New</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <requireRowSelection>false</requireRowSelection>
+    <url>/00Q/e?CF00Nd00000040las={!Case.CaseNumber}
+&amp;CF00Nd00000040las_lkid={!Case.Id}
+&amp;retURL=%2F{!Case.Id}
+&amp;name_firstlea2={!Contact.FirstName}
+&amp;name_lastlea2={!Contact.LastName}
+&amp;lea5=TSC&amp;lea8={!Contact.Phone}
+&amp;lea9={!Contact.MobilePhone}
+&amp;lea11={!Contact.Email}
+&amp;lea16street={!Contact.MailingStreet}
+&amp;lea16city={!Contact.MailingCity}
+&amp;lea16state={!Contact.MailingState}
+&amp;lea16zip={!Contact.MailingPostalCode}
+&amp;lea16country={!Contact.MailingCountry}
+&amp;lea21=1
+&amp;saveURL=%2F{!Case.Id}</url>
+</WebLink>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Invalid_Billing_Contact_Last_Name</fullName>
+    <active>true</active>
+    <errorConditionFormula>And(
+OR( CONTAINS(Billing_Contact_Last_Name__c, &quot;ATTN&quot;) , 
+CONTAINS(Billing_Contact_Last_Name__c, &quot;ATTENTION&quot;)
+), RecordType.Name = &#39;RCS PO&#39;,
+!$Setup.Validation_Rules__c.Bypass_Rules__c = TRUE,
+ISPICKVAL(Status,&quot;PO On-Hold CFS&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Billing_Contact_Last_Name__c</errorDisplayField>
+    <errorMessage>Invalid Billing Contact Last Name.</errorMessage>
+</ValidationRule>

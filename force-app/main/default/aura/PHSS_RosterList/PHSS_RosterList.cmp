@@ -1,0 +1,83 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes"
+            controller="RCILTClassRosterListCmpCtrl" access="global">
+
+    <aura:attribute name="label_Students"        type="String" default="{!$Label.c.Students}" />
+    <aura:attribute name="label_New"             type="String" default="{!$Label.ltui.New}" />
+    <aura:attribute name="label_No_Records"      type="String" default="{!$Label.c.There_Are_No_Records}" />
+    <aura:attribute name="label_Name"            type="String" default="{!$Label.ltui.Name}" />
+    <aura:attribute name="label_Email"           type="String" default="{!$Label.redwing.ALMS_Email}" />
+    <aura:attribute name="label_Phone_Number"    type="String" default="{!$Label.c.Phone_Number}" />
+    <aura:attribute name="label_Online_Work"     type="String" default="{!$Label.c.Online_Work}" />
+
+    <aura:attribute name="recordId"     type="String"   default="" />
+    <aura:attribute name="students"     type="Object[]" default="" />
+    <aura:attribute name="colWidth"     type="String"   default="35" />
+
+    <aura:attribute name="showModal" type="Boolean" default="" />
+    
+    <aura:handler name="init" value="this" action="{!c.doInit}" />
+
+    <c:TemplateMainCmp aura:id="templateMainCmp" hasContent="{!!empty(v.students)}">
+        <div>
+            <div class="slds-grid slds-grid_align-spread slds-p-vertical_medium">
+                <div class="slds-text-heading_medium">
+                    <b>
+                        {!v.label_Students + ' (' + v.students.length + ')'}
+                    </b>
+                </div>
+            </div>
+
+            <div>
+                <aura:if isTrue="{!and(v.students, v.students.length > 0)}">
+                    <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout">
+                        <thead class="slds-color__background_gray-4">
+                            <tr class="slds-text-title_caps">
+                                <th scope="col" style="{! 'width:' + v.colWidth + 'px'}">
+                                    <div class="slds-truncate"></div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate">{!v.label_Name}</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate">{!v.label_Email}</div>
+                                </th>
+                                <th scope="col" style="width:140px">
+                                    <div class="slds-truncate">{!v.label_Phone_Number}</div>
+                                </th>
+                                <th scope="col" style="width:115px">
+                                    <div class="slds-truncate">{!v.label_Online_Work}</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.students}" var="student" indexVar="index">
+                                <tr>
+                                    <th scope="row" data-label="">
+                                        <div class="slds-truncate">{! (index + 1) }</div>
+                                    </th>
+                                    <td data-label="{!v.label_Name}">
+                                        <div class="slds-truncate">{!student.name}</div>
+                                    </td>
+                                    <td data-label="{!v.label_Email}">
+                                        <div class="slds-truncate">{!student.email}</div>
+                                    </td>
+                                    <td data-label="{!v.label_Phone_Number}">
+                                        <div class="slds-truncate">{!student.phone}</div>
+                                    </td>
+                                    <td data-label="{!v.label_Online_Work}">
+                                        <div class="slds-truncate">{!student.status}</div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                    <aura:set attribute="else">
+                        <div class="slds-text-heading_medium">{!v.label_No_Records}</div>
+                    </aura:set>
+                </aura:if>
+            </div>
+
+        </div>
+
+    </c:TemplateMainCmp>
+</aura:component>

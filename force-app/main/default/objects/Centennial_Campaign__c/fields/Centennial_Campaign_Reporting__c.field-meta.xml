@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Centennial_Campaign_Reporting__c</fullName>
+    <defaultValue>(&quot;The report below is for organizations participating in the Centennial Campaign and is intended to capture high-level participation numbers as a result of the Centennial Campaign collaboration. In addition, please be certain to formally report all of your course activity through normal processes of the Course Record Entry system.&quot;)</defaultValue>
+    <externalId>false</externalId>
+    <label>Centennial Campaign Reporting</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>10</visibleLines>
+</CustomField>

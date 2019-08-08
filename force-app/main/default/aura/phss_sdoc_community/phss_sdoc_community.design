@@ -1,0 +1,8 @@
+<design:component >
+	<design:attribute name="buttonTitle" label="Button Title" description="Label for Button" default="Submit"/>
+    <design:attribute name="buttonURL" label="Button URL" description="Target URL on Click"/>
+    <design:attribute name="object" label="Object name" description="Name of S-Docs base object"/>
+    <design:attribute name="doclist" label="S-Doc List" description="Comma delimited list of S-Docs to Print"/>
+    <design:attribute name="prepMail" label="Email" description="Send SDoc Email 0=No 1=Yes"/>
+
+</design:component>

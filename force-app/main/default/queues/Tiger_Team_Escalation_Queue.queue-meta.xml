@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>Tiger Team Escalation Queue</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>Problem_Resolution</publicGroup>
+        </publicGroups>
+        <roles>
+            <role>Back_Office</role>
+            <role>Back_Office_Agent_Role</role>
+            <role>Back_Office_Manager_Role</role>
+            <role>Back_Office_Team_Lead</role>
+            <role>Front_Office</role>
+            <role>Front_Office_Chat_Agent</role>
+            <role>Front_Office_At_Home_Agent_Role</role>
+            <role>Front_Office_Manager_Role</role>
+            <role>Front_Office_Uniontown_ATG</role>
+            <role>Front_Office_Uniontown_Agent_Role</role>
+            <role>Front_Office_Uniontown_Team_Lead_Role</role>
+            <role>Tier_III</role>
+            <role>Training_Support_Center</role>
+            <role>TSC_Management</role>
+        </roles>
+        <users>
+            <user>joy.zukauskas@redcross.org</user>
+            <user>loretta.stahl@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

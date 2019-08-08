@@ -1,0 +1,302 @@
+<aura:component controller = "CancelOrderItemController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name = "voucherList" 			type = "Object[]"/>
+    <aura:attribute name = "stepNumber"				type = "String" 				default = "Zero" />
+    <aura:attribute name = "isSubmitted" 			type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "spinner"				type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "isPrompt" 				type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "isCourse" 				type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "countError" 			type = "Boolean" 				default = "false"/>
+    <aura:attribute name = "orderItemList"			type = "ccrz__E_OrderItem__c[]"/>
+    <aura:attribute name = "objDetail"				type = "ccrz__E_OrderItem__c"	default = "{sobjectType:'ccrz__E_OrderItem__c'}" />
+    <aura:attribute name = "listControllingValues"	type = "list"					default = "[]"/>
+    <aura:attribute name = "listDependingValues"	type = "list"					default = "['--- None ---']"/>
+    <aura:attribute name = "depnedentFieldMap"		type = "map"/>
+    <aura:attribute name = "bDisabledDependentFld"	type = "boolean"				default = "true"/> 
+    <aura:attribute name = "controllingFieldAPI"	type = "string"					default = "Adjustment_Types__c"/>
+    <aura:attribute name = "dependingFieldAPI"		type = "string"					default = "Reason_Codes__c"/>
+    <aura:attribute name = "explnation"				type = "String"/>
+    <aura:attribute name = "qty"					type = "String"/>
+    <aura:attribute name = "price"					type = "String"/>
+    <aura:attribute name = "oId"					type = "String"/>
+    <aura:attribute name = "actualPrice"			type = "String"/>
+    <aura:attribute name = "itemTotal"				type = "String"/>
+    <aura:attribute name = "CreditLeft"				type = "String"					default = "0"/>
+    <aura:attribute name = "maxPrice"				type = "String"/>
+    <aura:attribute name = "percentDiscount"		type = "String"/>
+    <aura:attribute name = "adjPercentDiscount"		type = "String"/>
+    <!--<aura:attribute name = "subAmount"				type = "String"/> -->
+    <aura:attribute name = "extAmount"				type = "String"/>
+    <aura:attribute name = "orderAdjustmentType"	type = "String"/>
+    <aura:attribute name = "reasonCodes"			type = "String"/>
+    <aura:attribute name = "explanation"			type = "String"/>
+    <aura:attribute name = "previousCredit"			type = "String"/>
+    <aura:attribute name = "percentForCnclPlcy"		type = "decimal"/>
+    <aura:attribute name = "adjError" 				type = "boolean" 				default = "false"/>
+    <aura:attribute name = "rCodeError" 			type = "boolean" 				default = "false"/>
+    <aura:attribute name = "otherError" 			type = "boolean" 				default = "false"/>
+    <aura:attribute name = "isOther" 				type = "boolean" 				default = "true"/>
+    <aura:attribute name = "hasGraterPercent" 		type = "boolean" 				default = "false"/>
+    <aura:attribute name = "hasGraterDiscount" 		type = "boolean" 				default = "false"/>
+    <aura:attribute name = "hasPreviousDiscount"	type = "boolean"				default	= "false"/>
+    <aura:attribute name = "buttonDisable"			type = "boolean" 				default = "false"/>
+    <aura:attribute name = "hasPolicy"				type = "boolean" 				default = "false"/>
+    
+    <aura:handler 	name = "init" 			   value = "{!this}" 				    action = "{!c.doInit}"/>
+    <aura:handler 	event= "force:refreshView" action= "{!c.isRefreshed}" /> 
+    
+    
+    <!--
+    <aura:handler event = "aura:waiting"		action = "{!c.showSpinner}" />
+    <aura:handler event = "aura:doneWaiting" 	action = "{!c.hideSpinner}" /> -->
+    
+    
+    <aura:if isTrue="{!v.stepNumber == 'Zero'}" >
+        <lightning:button label		= "DROP LEARNER"
+                          title		= "DROP LEARNER"
+                          onclick	= "{!c.showStep1}"
+                          class		= "slds-button_brand intialButton"/>
+    </aura:if>
+    
+    <aura:if isTrue = "{!v.stepNumber != 'Zero'}" >
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        
+                        <lightning:buttonIcon iconName			= "utility:close"
+                                              onclick			= "{!c.cancel}"
+                                              alternativeText	= "close"
+                                              variant			= "bare-inverse"
+                                              class				= "slds-modal__close"/>
+                        
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">DROP LEARNER</h2>
+                        <aura:if isTrue = "{!v.countError}" >
+                            <div Style = "color:red;">
+                                Please select at least one learner.
+                            </div>
+                        </aura:if>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <aura:if isTrue="{!v.stepNumber == 'One'}" >
+                            <p class="slds-text-heading_medium">
+                                STEP 1: Select the learner needs to drop
+                            </p>
+                            
+                            <br/>
+                            
+                            <div>
+                                <table class="slds-table slds-table--cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title--caps">
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Voucher Name">Voucher Name</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Voucher Claim">Voucher Claim</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Student Name">Student Name</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Select">Select</div>
+                                            </th>                                        
+                                        </tr> 
+                                    </thead>
+                                    
+                                    <tbody>
+                                        
+                                        <aura:iteration items="{!v.voucherList}" var="item" indexVar="index">
+                                            
+                                            <tr>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="{!item.Name}">{!item.voucherName}</div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="{!item.Voucher_Claim__c}">{!item.voucherClaim}</div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="{!item.User}">{!item.user}</div>
+                                                </th>
+                                                <th scope="row">
+                                                    <ui:inputCheckbox value = "{!item.isSelected}" aura:id = "checkbox" change = "{!c.onCheck}"/>
+                                                </th>
+                                                
+                                            </tr>
+                                            
+                                        </aura:iteration>
+                                        
+                                    </tbody>
+                                    
+                                </table><br/><br/><br/><br/>
+                                
+                                
+                            </div>
+                        </aura:if>
+                        
+                        <!-- Step 1 END -->
+                        
+                        <!-- Step 2 START -->
+                        
+                        <aura:if isTrue="{!v.stepNumber == 'Two'}" >
+                            <p class="slds-text-heading_medium slds-p-bottom_small">
+                                STEP 2: Apply Adjustment
+                            </p>
+                            
+                            <aura:if isTrue="{!v.hasPreviousDiscount}">
+                                <div class = "slds-p-top_large slds-p-bottom_large" style = "color:red;">
+                                    Previously ${!v.previousCredit} was credited on this order item. You are only allowed to give ${!v.CreditLeft} as a credit.
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.hasPolicy}">
+                                <div class = "slds-p-top_small slds-p-bottom_small slds-box slds-theme_shade slds-theme_alert-texture slds-align_absolute-center" style = "color:red;">
+                                    Cancellation policy has applied to this return. {!v.percentForCnclPlcy}% Fees deducted from the price paid. <br/><c:CancellationPolicy/>&nbsp; to see Cancellation Policy Fee Table.
+                                </div>
+                                
+                                <br/>
+                            </aura:if>
+                            <div>
+                                <div class="slds-grid slds-border_top slds-border_bottom" >
+                                    <div class="slds-size_2-of-12 slds-m-around_x-small columnHeaders">Product SKU</div>
+                                    <div class="slds-size_4-of-12 slds-m-around_x-small columnHeaders">Name</div>
+                                    <div class="slds-size_1-of-12 slds-m-around_x-small columnHeaders">Qty</div> 
+                                    <div class="slds-size_2-of-12 slds-m-around_x-small columnHeaders">Price</div>
+                                    <div class="slds-size_3-of-12 slds-m-around_x-small columnHeaders">Extended Amount</div>
+                                </div>
+                                <aura:iteration items="{!v.orderItemList}" var="oItem">
+                                    <div class="slds-grid slds-border_bottom">
+                                        <div class="slds-size_2-of-12 slds-m-around_x-small">
+                                            <lightning:input value="{!oItem.ccrz__Product__r.ccrz__SKU__c}" readonly="true" />
+                                        </div>
+                                        <div class="slds-size_4-of-12 slds-m-around_x-small">
+                                            <lightning:input value="{!oItem.ccrz__Product_Name__c}" readonly="true" />
+                                        </div>
+                                        <div class="slds-size_1-of-12 slds-m-around_x-small">
+                                            <lightning:input value="{!v.qty}" readonly="true"/>
+                                        </div> 
+                                        <div class="slds-size_2-of-12 slds-m-around_x-small">
+                                            <lightning:input value="{!v.price}" readonly="true" type="number" formatter="currency" step="0.01"/>
+                                        </div>
+                                        <div class="slds-size_3-of-12 slds-m-around_x-small">
+                                            <lightning:input value="{!v.extAmount}" readonly="true" type="number" formatter="currency" step="0.01"/>
+                                        </div>
+                                    </div>
+                                </aura:iteration>
+                                <br/>
+                                <div class="slds-align_absolute-center">
+                                    <c:ApplyAdjustmentOnDropLerner adjPercentDiscount 	= "{!v.price}"
+                                                                   qty					= "{!v.qty}"
+                                                                   isDisabled			= "{!v.buttonDisable}"
+                                                                   method				= "{!c.processAdj}"
+                                                                   maxDisAllowed		= "{!v.maxPrice}"
+                                                                   percentDiscount		= "{!v.percentForCnclPlcy}"
+                                                                   aura:id				= "adj"
+                                                                   oId					= "{!v.oId}"/>
+                                </div>
+                                <br/><br/>
+
+                                <div class = "slds-align_absolute-left">
+                                    <lightning:layoutItem size="12" padding="around-small">    
+                                        <lightning:select name	 	= "controllerFld"
+                                                          value	 	= "{!v.objDetail.Adjustment_Types__c}"
+                                                          label	 	= "Order Adjustment Type"
+                                                          onchange	= "{!c.onControllerFieldChange}"
+                                                          required	= "true"
+                                                          aura:id	= "adjField">
+                                            <aura:iteration items="{!v.listControllingValues}" var="val">
+                                                <option value="{!val}">{!val}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        
+                                        <aura:if isTrue="{!v.adjError}">
+                                            <div style = "color:red;">
+                                                Complete this field 
+                                            </div>
+                                        </aura:if> 
+                                        
+                                    </lightning:layoutItem>
+                                    
+                                    <lightning:layoutItem size="12" padding="around-small">
+                                        <lightning:select name		= "dependentFld"
+                                                          value		= "{!v.objDetail.Reason_Codes__c}"
+                                                          label		= "Reason Codes"
+                                                          disabled	= "{!v.bDisabledDependentFld}"
+                                                          required	= "true"
+                                                          onchange	= "{!c.onReasonCodeChange}"
+                                                          aura:id	= "rCodeField">
+                                            <aura:iteration items="{!v.listDependingValues}" var="val">
+                                                <option value="{!val}">{!val}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                        <aura:if isTrue="{!v.rCodeError}">
+                                            <div style = "color:red;">
+                                                Complete this field 
+                                            </div>
+                                        </aura:if> 
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="12" padding="around-small">
+                                        <lightning:input value		 =	"{!v.explnation}"
+                                                         label		 =	"Explanation"
+                                                         placeholder =	"Other Only"
+                                                         disabled	 =  "{!v.isOther}"/>
+                                        <aura:if isTrue="{!v.otherError}">
+                                            <div style = "color:red;">
+                                                Explanation is required when Other is selected as Reason Code. 
+                                            </div>
+                                        </aura:if>
+                                    </lightning:layoutItem>
+                                    <br/> 
+                                </div>
+                                <div>
+                                    
+                                    
+                                </div>
+                                
+                            </div>
+                        </aura:if>
+                        <!-- Step 2 END -->
+                        
+                    </div>
+                    <footer class="slds-modal__footer slds-grid slds-grid_align-spread">
+                        <div class="slds-col">
+                            <button class="slds-button slds-button_neutral customButtonRed" onclick="{!c.cancel}">Cancel</button>
+                        </div>
+                        <div class="slds-col slds-size_2-of-3 " >
+                            <lightning:progressIndicator currentStep="{!v.stepNumber}" type="base">
+                                
+                                <lightning:progressStep label	= "Step 1"
+                                                        value	= "One"
+                                                        onclick	= "{!c.showStep1}"/>
+                                
+                                <lightning:progressStep label	= "Step 2"
+                                                        value	= "Two"/>
+                                
+                            </lightning:progressIndicator>
+                        </div>
+                        <aura:if isTrue="{!v.stepNumber == 'Two'}">
+                            
+                            <div class="slds-col">
+                                <button class="slds-button slds-button_brand"
+                                        onclick="{!c.processSubmit}"
+                                        disabled = "{!v.buttonDisable}">
+                                    Submit
+                                </button>
+                            </div>
+                            
+                            <aura:set attribute="else">
+                                <div class="slds-col">			       
+                                    <button class="slds-button slds-button_brand"
+                                            onclick="{!c.onclickNext}" >
+                                        Next
+                                    </button>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+        
+    </aura:if>
+</aura:component>

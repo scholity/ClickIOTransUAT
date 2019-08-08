@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AQ_Territory__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <label>AQ Territory</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Territory__c.Territory_Type__c</field>
+            <operation>equals</operation>
+            <value>AQ</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Territory__c</referenceTo>
+    <relationshipLabel>AQ Accounts</relationshipLabel>
+    <relationshipName>AQ_Accounts</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Collections_Email__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This field is marked from apex code when an inbound email opens a case in salesforce and was sent to collections@redcross.org (the email address is subject to a change)</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This field is marked from apex code when an inbound email opens a case in salesforce and was sent to collections@redcross.org (the email address is subject to a change)</inlineHelpText>
+    <label>Collections Email</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

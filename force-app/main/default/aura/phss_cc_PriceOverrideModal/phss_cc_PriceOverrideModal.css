@@ -1,0 +1,9 @@
+/**
+ * Created by jbarker on 11/7/18.
+ */
+.THIS .loadingSpinner {
+    position: relative;
+    display: inline-block;
+    height: 80px;
+    width: 80px;
+}

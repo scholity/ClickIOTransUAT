@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Match_Status__c</fullName>
+    <description>This is a temporary field used to reconcile users between the training and production environments.  This field should be deleted after all initial users are reconciled and loaded into production.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>This is a temporary field used to reconcile users between the training and production environments.  This field should be deleted after all initial users are reconciled and loaded into production.</inlineHelpText>
+    <label>Match Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Matched</fullName>
+                <default>false</default>
+                <label>Matched</label>
+            </value>
+            <value>
+                <fullName>Training Only</fullName>
+                <default>false</default>
+                <label>Training Only</label>
+            </value>
+            <value>
+                <fullName>Prod Only</fullName>
+                <default>false</default>
+                <label>Prod Only</label>
+            </value>
+            <value>
+                <fullName>Duplicate</fullName>
+                <default>false</default>
+                <label>Duplicate</label>
+            </value>
+            <value>
+                <fullName>New</fullName>
+                <default>false</default>
+                <label>New</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

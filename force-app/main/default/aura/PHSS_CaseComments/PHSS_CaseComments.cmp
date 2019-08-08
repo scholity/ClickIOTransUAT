@@ -1,0 +1,71 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" controller="PHSS_CaseCommentsController" access="global">
+	<aura:attribute name="columnName1" type="String" required="true"/>
+	<aura:attribute name="columnName2" type="String" required="true"/>
+	<aura:attribute name="columnName3" type="String" required="true"/>
+	<aura:attribute name="numberOfElements" type="Integer" required="true"/>
+	<aura:attribute name="recordId" type="String" default="" required="true"/>
+	<aura:attribute name="noResultLabel" type="String" required="true"/>
+
+	<aura:attribute name="modalTitle" type="String" required="true"/>
+	<aura:attribute name="title" type="String" required="true"/>
+
+	<aura:attribute name="caseComments" type="Object[]" default="[]"/>
+	<aura:attribute name="isAll" type="Boolean" default="false"/>
+
+	<aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+	<aura:handler name="caseCommentAction" event="c:PHSS_CaseCommentAction" action="{!c.onCommentAction}"/>
+	<aura:handler name="caseCommentModalSave" event="c:PHSS_CaseCommentModalSave" action="{!c.onModalSave}"/>
+
+	<div class="slds-clearfix">
+		<h2 class="slds-float--left slds-m-around--small">{#v.title}</h2>
+    	<lightning:button iconName="action:new" label="Create" onclick="{!c.createNewComment}" class="slds-float--right slds-m-around--small"/>
+    </div>
+	<table class="slds-table slds-table--bordered slds-table--cell-buffer">
+		<thead>
+			<tr class="slds-text-title">
+				<th scope="col">
+					<div class="slds-truncate" title="{#v.columnName1}">{#v.columnName1}</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="{#v.columnName2}">{#v.columnName2}</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="{#v.columnName3}">{#v.columnName3}</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<aura:if isTrue="{!empty(v.caseComments)}">
+				<tr>
+					<td></td>
+					<td>
+						<a class="no-pointer">{#v.noResultLabel}</a>
+					</td>
+					<td></td>
+				</tr>
+				<aura:set attribute="else">
+					<aura:iteration items="{!v.caseComments}" var="caseComment" indexVar="index">
+						<c:PHSS_CaseCommentsItem caseComment="{!caseComment}" 
+							columnName1="{#v.columnName1}" 
+							columnName2="{#v.columnName2}" 
+							columnName3="{#v.columnName3}"
+							index="{!index}"
+						/>
+					</aura:iteration>
+					<aura:if isTrue="{!!v.isAll}">
+						<tr>
+							<td>
+								<a onclick="{!c.getAll}">View All</a>
+							</td>
+							<td></td>
+							<td></td>
+						</tr>
+					</aura:if>
+				</aura:set>
+			</aura:if>
+		</tbody>
+	</table>
+	<c:PHSS_CaseCommentActionModal aura:id="modal" 
+		title="{#v.modalTitle}"
+	/>
+</aura:component>

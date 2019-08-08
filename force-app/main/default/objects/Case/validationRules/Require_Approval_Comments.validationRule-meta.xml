@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Require_Approval_Comments</fullName>
+    <active>false</active>
+    <description>The Approval Comments field is required when the Business Approval field is populated</description>
+    <errorConditionFormula>OR( 
+AND( 
+ISPICKVAL( BOS_Approval__c , &#39;Approved As Is&#39;), 
+ISBLANK(Approval_Comments__c) 
+), 
+AND( 
+ISPICKVAL( BOS_Approval__c , &#39;Approved With Changes&#39;), 
+ISBLANK(Approval_Comments__c) 
+), 
+AND ( 
+ISPICKVAL( BOS_Approval__c , &#39;Not Approved&#39;), 
+ISBLANK ( Approval_Comments__c ) 
+) 
+)</errorConditionFormula>
+    <errorDisplayField>Approval_Comments__c</errorDisplayField>
+    <errorMessage>Please fill in Approval Comments</errorMessage>
+</ValidationRule>

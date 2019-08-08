@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Preferred_Payment_Type</fullName>
+    <active>false</active>
+    <description>If preferred payment type = Invoice, then RedCross PO # and Expiration Date must be required.</description>
+    <errorConditionFormula>AND( ISPICKVAL(Preferred_Payment_type__c, &quot;Invoice&quot;),  
+ISPICKVAL( Payment_Status__c , &quot;&quot;) ,
+$Setup.Validation_Rules__c.Bypass_Rules__c = False)</errorConditionFormula>
+    <errorDisplayField>Preferred_Payment_type__c</errorDisplayField>
+    <errorMessage>Since Invoice has been selected as the &#39;Preferred Payment Type&#39; , the &#39;Payment Status&#39;  field must also be populated.</errorMessage>
+</ValidationRule>

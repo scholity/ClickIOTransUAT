@@ -1,0 +1,16 @@
+.THIS {
+    border-radius: 2px;
+    padding: 15px 0;
+    background-color: rgb(4, 132, 75);
+    border: none;
+    font-weight: 700;
+    color: #ffffff;
+    font-size: 1em;
+    width: 100%;
+    -webkit-transition: background .8s ease;
+    transition: background .8s ease;
+}
+
+.THIS.isDisabled {
+    background-color: #c6c6c6;
+}

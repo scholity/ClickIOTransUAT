@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cant_Activate_Blocked_User</fullName>
+    <active>true</active>
+    <description>Validation Rule to prevent users from reactivating Blocked Community Users.</description>
+    <errorConditionFormula>AND(ISPICKVAL(Deactivation_Reason__c, &quot;Blocked&quot;),
+(IsActive = TRUE))</errorConditionFormula>
+    <errorDisplayField>Deactivation_Reason__c</errorDisplayField>
+    <errorMessage>This Community User has been Blocked, please review and update Community User Deactivation Reason to another value if you&#39;d like to reactivate the User.</errorMessage>
+</ValidationRule>

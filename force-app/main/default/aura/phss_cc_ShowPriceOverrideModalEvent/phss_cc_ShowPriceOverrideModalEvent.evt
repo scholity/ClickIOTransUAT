@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="opportunitySfid" type="String"/>
+    <aura:attribute name="productSfid" type="String"/>
+</aura:event>

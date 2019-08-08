@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_per_Student__c</fullName>
+    <description>To be used in Service Cases with Type Invoicing</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Amount per student on the invoice in question.</inlineHelpText>
+    <label>Current Price per Student</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

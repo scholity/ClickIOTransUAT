@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Time_Until_Follow_Up__c</fullName>
+    <description>This field is being used to display a user friendly text value on the dashboards for Team Leads.</description>
+    <externalId>false</externalId>
+    <formula>IF ( 
+NOT(IsClosed),
+TEXT( FLOOR( 24 * ( D4_sub_D3__c - FLOOR(D4_sub_D3__c ) ))) &amp; &quot; Hours &quot; &amp;
+TEXT( ROUND(60 * (ROUND( 24 * ( D4_sub_D3__c - FLOOR(D4_sub_D3__c ) ),8) - FLOOR(
+ROUND( 24 * ( D4_sub_D3__c - FLOOR(D4_sub_D3__c ) ),8)) ),0)) &amp; &quot; Min&quot;
+, &quot;Case is Closed&quot;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Time Until Follow Up</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

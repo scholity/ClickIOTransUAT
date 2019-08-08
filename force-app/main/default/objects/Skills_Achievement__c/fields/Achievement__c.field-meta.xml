@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Achievement__c</fullName>
+    <externalId>false</externalId>
+    <label>Achievement</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>redwing__Achievement__c.redwing__Type__c</field>
+            <operation>equals</operation>
+            <value>Certifications, CEU</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>redwing__Achievement__c</referenceTo>
+    <relationshipLabel>Associated Skills</relationshipLabel>
+    <relationshipName>Skills_Achievements</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

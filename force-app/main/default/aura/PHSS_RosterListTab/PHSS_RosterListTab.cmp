@@ -1,0 +1,92 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes"
+            controller="PHSS_RosterListController" access="global">
+    
+    <!--ltng:require scripts="{!$Resource.printDiv}" />--> 
+    <!-- attribute to accept Visualforce page's javascript method -->
+    <aura:attribute name="sendData" type="object"/>   
+
+    <aura:attribute name="label_No_Records"          type="String" default="There are no records" />
+    <aura:attribute name="label_Name"                type="String" default="Name" />
+    <aura:attribute name="label_Email"               type="String" default="Email" />
+    <aura:attribute name="label_Online_Work_Status"  type="String" default="Online Work Status" /> 
+    <aura:attribute name="label_Status" 			 type="String" default="Status" />     
+    <aura:attribute name="label_Evaluation"          type="String" default="Evaluation" />
+    <aura:attribute name="label_Unsuccessful_Reason" type="String" default="Unsuccessful Reason" />
+	<aura:attribute name="label_Additional_Info"     type="String" default="Additional Info" />
+
+    <aura:attribute name="recordId"     type="String"   default="" />
+    <aura:attribute name="rosters"     type="Object[]" default="" />
+    <aura:attribute name="colWidth"     type="String"   default="35" />
+
+    <aura:handler name="init" value="this" action="{!c.doInit}" />
+    
+    <div id="mainDiv">
+      <div id="print-area" class="print-area">
+        
+        <div>
+            <aura:if isTrue="{!and(v.rosters, v.rosters.length > 0)}">
+				<ui:button label="Print" press="{!c.generatePDF}"/>                
+    			           
+                <table class="slds-table slds-table_bordered slds-table_fixed-layout">
+                    <thead class="slds-color__background_gray-4">
+                        <tr class="slds-text-title_caps">
+                            <th scope="col" style="width:100px">
+                                <div class="slds-truncate">{!v.label_Name}</div>
+                            </th>
+                            <th scope="col" style="width:150px">
+                                <div class="slds-truncate">{!v.label_Email}</div>
+                            </th>
+                            <th scope="col" style="width:100px">
+                                <div class="slds-truncate">{!v.label_Evaluation}</div>
+                            </th>
+                            <!--<th scope="col">
+                                <div class="slds-truncate">{!v.label_Online_Work_Status}</div>
+                            </th>-->
+                            <th scope="col">
+                                <div class="slds-truncate">{!v.label_Status}</div>
+                            </th>                            
+                            <th scope="col">
+                                <div class="slds-truncate">{!v.label_Unsuccessful_Reason}</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate">{!v.label_Additional_Info}</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>                       
+                        <aura:iteration items="{!v.rosters}" var="rost" indexVar="index">                            
+                            <tr>
+                                <td data-label="{!v.label_Name}">
+                                    <div class="slds-truncate">{!rost.Firstname +' '+ rost.Lastname}</div>
+                                </td>
+                                <td data-label="{!v.label_Email}">
+                                    <div class="slds-truncate">{!rost.Email}</div>
+                                </td>
+                                <!--<td data-label="{!v.label_Online_Work_Status}">
+                                    <div class="slds-truncate">{!rost.redwing__User__r.Email}</div>
+                                </td>-->
+                                <td data-label="{!v.label_Status}">
+                                    <div class="slds-truncate">{!rost.Evaluation_Result}</div>
+                                </td>                                
+                                <td data-label="{!v.label_Evaluation}">
+                                    <div class="slds-truncate">{!rost.Status}</div>
+                                </td>
+                                <td data-label="{!v.label_Unsuccessful_Reason}">
+                                    <div class="slds-truncate">{!rost.Grade_Reason}</div>
+                                </td>
+                                <td data-label="{!v.label_Additional_Info}">
+                                    <div class="slds-truncate">{!rost.Grade_Additional_Info}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <aura:set attribute="else">
+                    <div class="slds-text-heading_medium">{!v.label_No_Records}</div>
+                </aura:set>
+            </aura:if>
+        </div>
+      </div> 
+    </div>
+     <!--<iframe id="printing-frame" name="printing-frame" src="https://transdev1-americanredcross.cs52.force.com/learner/resource/1541054037000/PHSS_RedCrossLogo"></iframe>-->
+</aura:component>

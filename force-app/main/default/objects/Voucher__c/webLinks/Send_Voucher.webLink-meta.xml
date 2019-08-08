@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_Voucher</fullName>
+    <availability>online</availability>
+    <description>Send single voucher to a contact</description>
+    <displayType>massActionButton</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Send Voucher</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+    <url>/apex/SDOC__SDCreate1?id={!Voucher__c.Id}
+&amp;Object=Voucher__c
+&amp;doclist=a2u210000016SvBAAU
+&amp;prepemail=1</url>
+</WebLink>

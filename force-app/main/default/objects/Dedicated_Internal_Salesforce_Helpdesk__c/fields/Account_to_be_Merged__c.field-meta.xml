@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_to_be_Merged__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalId>false</externalId>
+    <inlineHelpText>This account will be merged into the Primary Account</inlineHelpText>
+    <label>Account to be Merged</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>D.I.S.H. (Account to be Merged)</relationshipLabel>
+    <relationshipName>D_I_S_H1</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

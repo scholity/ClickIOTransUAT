@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tag__c</fullName>
+    <externalId>false</externalId>
+    <label>Tag</label>
+    <referenceTo>sked__Tag__c</referenceTo>
+    <relationshipLabel>Course Catalog Tags</relationshipLabel>
+    <relationshipName>Course_Catalog_Tags</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

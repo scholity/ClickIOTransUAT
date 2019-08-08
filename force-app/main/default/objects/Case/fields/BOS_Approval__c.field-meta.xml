@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BOS_Approval__c</fullName>
+    <description>To be used in Service Cases with Type Invoicing</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select approval type</inlineHelpText>
+    <label>Approval</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Approved: Less than $50</fullName>
+                <default>false</default>
+                <label>Approved: Less than $50</label>
+            </value>
+            <value>
+                <fullName>Approved As Is</fullName>
+                <default>false</default>
+                <label>Approved As Is</label>
+            </value>
+            <value>
+                <fullName>Approved With Changes</fullName>
+                <default>false</default>
+                <label>Approved With Changes</label>
+            </value>
+            <value>
+                <fullName>Not Approved</fullName>
+                <default>false</default>
+                <label>Not Approved</label>
+            </value>
+            <value>
+                <fullName>Resolution Approval Not Received</fullName>
+                <default>false</default>
+                <label>Resolution Approval Not Received</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

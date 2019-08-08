@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IRT_Case_Compact_Layout</fullName>
+    <fields>Dispute_Issue__c</fields>
+    <fields>Priority</fields>
+    <fields>CaseNumber</fields>
+    <fields>OwnerId</fields>
+    <fields>Subject</fields>
+    <fields>ContactId</fields>
+    <label>IRT Case Compact Layout</label>
+</CompactLayout>

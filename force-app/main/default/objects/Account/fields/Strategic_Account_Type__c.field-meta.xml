@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Strategic_Account_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Strategic Account Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Strategic_Account__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Enhanced Support</fullName>
+                <default>false</default>
+                <label>Enhanced Support</label>
+            </value>
+            <value>
+                <fullName>Special Handling</fullName>
+                <default>false</default>
+                <label>Special Handling - SCC</label>
+            </value>
+            <value>
+                <fullName>Special Handling - Field</fullName>
+                <default>false</default>
+                <label>Special Handling - Field</label>
+            </value>
+            <value>
+                <fullName>SCC Scheduling</fullName>
+                <default>false</default>
+                <label>SCC Scheduling</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Enhanced Support</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Special Handling</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>Special Handling - Field</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>checked</controllingFieldValue>
+            <valueName>SCC Scheduling</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

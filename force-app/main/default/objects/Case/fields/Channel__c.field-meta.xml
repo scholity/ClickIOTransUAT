@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel__c</fullName>
+    <externalId>false</externalId>
+    <label>Channel</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Authorized Provider</fullName>
+                <default>false</default>
+                <label>Authorized Provider</label>
+            </value>
+            <value>
+                <fullName>Licensed Training Partner</fullName>
+                <default>false</default>
+                <label>Licensed Training Partner</label>
+            </value>
+            <value>
+                <fullName>Full Service</fullName>
+                <default>false</default>
+                <label>Full Service</label>
+            </value>
+            <value>
+                <fullName>Community</fullName>
+                <default>false</default>
+                <label>Community</label>
+            </value>
+            <value>
+                <fullName>RCS Distributor</fullName>
+                <default>false</default>
+                <label>RCS Distributor</label>
+            </value>
+            <value>
+                <fullName>RCS Retail</fullName>
+                <default>false</default>
+                <label>RCS Retail</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

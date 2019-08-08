@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_for_No_Proof_of_Payment_Attache</fullName>
+    <active>true</active>
+    <description>required When Invoicing Case Type = Missing Payment</description>
+    <errorConditionFormula>AND( 
+RecordType.DeveloperName = &#39;Invoicing&#39;, 
+ISPICKVAL(Type , &#39;Invoicing&#39;), 
+OR(NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)), OwnerId = &#39;00Gd0000000SdP5&#39;), 
+ISPICKVAL(Dispute_Issue__c , &#39;Missing Payment&#39;), 
+ISPICKVAL(Proof_Of_Payment_Attached__c , &#39;No&#39;), 
+ISBLANK(Why_No_Proof_of_Payment_Attached__c), 
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE 
+)</errorConditionFormula>
+    <errorDisplayField>Why_No_Proof_of_Payment_Attached__c</errorDisplayField>
+    <errorMessage>Please select whether or not Proof of Payment has been provided</errorMessage>
+</ValidationRule>
