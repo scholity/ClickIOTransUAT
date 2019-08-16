@@ -8,12 +8,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Calendar_Year__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Dispute_Issue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ILT_Class__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Independent_Mission__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29,6 +39,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Invoice_delivery_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Lifeguard_on_Staff__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Number_of_Enrollees__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

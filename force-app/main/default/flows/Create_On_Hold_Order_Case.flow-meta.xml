@@ -184,6 +184,13 @@
                 <elementReference>fDescription</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sCase.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrder.ccrz__Account__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_NEW_On_Hold_Case</targetReference>
         </connector>

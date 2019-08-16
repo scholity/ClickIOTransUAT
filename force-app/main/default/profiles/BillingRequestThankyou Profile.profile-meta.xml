@@ -1479,6 +1479,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_OnAccountBalanceControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_OpportunityUtil</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1496,6 +1500,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_PriceOverrideModalController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_PriceOverrideModalControllerText</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1527,6 +1535,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_StoredPaymentUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_StoredPaymentUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_TestDataFactory</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1548,6 +1564,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_hk_Order</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_hk_OrderTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -7694,6 +7714,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Coupon__c.Active__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Course_Catalog__c.Break_Duration__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10225,6 +10250,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Number_in_Class__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Number_of_Additional_Videos__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Number_of_Additional_Visits__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14166,6 +14201,9 @@
         <layout>ContractLineItem-Contract Line Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Coupon__c-Coupon Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Course_Catalog_Tag__c-Course Catalog Tag Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -15208,6 +15246,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Community_Scheduling</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Coupon__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

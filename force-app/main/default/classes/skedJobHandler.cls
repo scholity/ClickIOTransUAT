@@ -18,7 +18,7 @@ public class skedJobHandler {
         updateGeoLocation(updatedRecords, newRecords);
         updateResourceScheduledHours(updatedRecords, newRecords);
         captureEventsOnUpdate(updatedRecords, newRecords);
-        updateSubClassStatus(updatedRecords, newRecords);
+        updateSubClassDetails(updatedRecords, newRecords);
         notifyJobUpdates(updatedRecords, newRecords);
     }
     
@@ -373,26 +373,49 @@ public class skedJobHandler {
         }
     }
     
-    private static void updateSubClassStatus(Map<Id, sked__Job__c> updatedRecords, List<sked__Job__c> newRecords) {
+    private static void updateSubClassDetails(Map<Id, sked__Job__c> updatedRecords, List<sked__Job__c> newRecords) {
         Map<Id, sked__Job__c> mapMasterClass = new Map<Id, sked__Job__c>();
         for (sked__Job__c newRecord : newRecords) {
             sked__Job__c oldData = updatedRecords.get(newRecord.Id);
-            if (newRecord.Is_Master_Class__c == TRUE && newRecord.sked__Job_Status__c != oldData.sked__Job_Status__c) {
-                mapMasterClass.put(newRecord.Id, newRecord);
+            if (newRecord.Is_Master_Class__c == TRUE) {
+                if (newRecord.sked__Start__c != oldData.sked__Start__c
+                   || newRecord.sked__Finish__c != oldData.sked__Finish__c
+                   || newRecord.sked__Location__c != oldData.sked__Location__c
+                   || newRecord.sked__GeoLocation__Latitude__s != oldData.sked__GeoLocation__Latitude__s
+                   || newRecord.sked__GeoLocation__Longitude__s != oldData.sked__GeoLocation__Longitude__s
+                   || newRecord.sked__Address__c != oldData.sked__Address__c
+                   || newRecord.sked__Job_Status__c != oldData.sked__Job_Status__c) {
+                    mapMasterClass.put(newRecord.Id, newRecord);
+                }
             }
         }
         if (!mapMasterClass.isEmpty()) {
-            List<sked__Job__c> skedSubClasses = [SELECT Id, sked__Job_Status__c, sked__Parent__c
+            List<sked__Job__c> skedSubClasses = [SELECT Id, sked__Start__c, sked__Finish__c, sked__Job_Status__c, sked__Parent__c, sked__Timezone__c,
+                                                 sked__Address__c, sked__Location__c, sked__GeoLocation__Latitude__s, sked__GeoLocation__Longitude__s
                                                  FROM sked__Job__c
                                                  WHERE sked__Parent__c IN :mapMasterClass.keySet()];
             if (!skedSubClasses.isEmpty()) {
                 for (sked__Job__c skedSubClass : skedSubClasses) {
                     sked__Job__c skedMasterClass = mapMasterClass.get(skedSubClass.sked__Parent__c);
+                    sked__Job__c oldMasterClass = updatedRecords.get(skedMasterClass.Id);
+                    
+                    integer startDifferentMinutes = integer.valueOf((skedMasterClass.sked__Start__c.getTime() - oldMasterClass.sked__Start__c.getTime()) / 60000);
+                    integer finishDifferentMinutes = integer.valueOf((skedMasterClass.sked__Finish__c.getTime() - oldMasterClass.sked__Finish__c.getTime()) / 60000);
+                    
+                    skedSubClass.sked__Start__c = skedDateTimeUtils.addMinutes(skedSubClass.sked__Start__c, startDifferentMinutes, skedSubClass.sked__Timezone__c);
+                    skedSubClass.sked__Finish__c = skedDateTimeUtils.addMinutes(skedSubClass.sked__Finish__c, finishDifferentMinutes, skedSubClass.sked__Timezone__c);
+                    
+                    skedSubClass.sked__Address__c = skedMasterClass.sked__Address__c;
+                    skedSubClass.sked__Location__c = skedMasterClass.sked__Location__c;
+                    skedSubClass.sked__GeoLocation__Latitude__s = skedMasterClass.sked__GeoLocation__Latitude__s;
+                    skedSubClass.sked__GeoLocation__Longitude__s = skedMasterClass.sked__GeoLocation__Longitude__s;
                     skedSubClass.sked__Job_Status__c = skedMasterClass.sked__Job_Status__c;
                 }
                 update skedSubClasses;
             }
         }
     }
+
+
 
 }

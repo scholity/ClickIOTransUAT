@@ -218,3 +218,13 @@
     margin-left: 10px;
 
 }
+
+.THIS .technicalsupport a:hover {
+    color: grey;
+}
+
+.THIS .technicalsupport a{
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}

@@ -10,7 +10,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
     global Integer recordsProcessed;   
     
     global PHSS_GenerateCSVFileBatch() { 
-    	//csvRowValues = new List<String>();
+        //csvRowValues = new List<String>();
         fulfillmentItemList = new List<Fulfillment_Item__c>();
         errorItemList = new List<errorItem>();
         sequenceNumber = 2;
@@ -61,15 +61,15 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
         if(todayMin.length()<2) { todayMin = '0'+ todayMin; }
         if(todaySec.length()<2) { todaySec = '0'+ todaySec; }        
         documentName = 'ARCINVC_'+String.valueOf(Date.today().year())+'-'+todayMonth+'-'+todayDay+'-'+todayHour+'-'+todayMin+'-'+todaySec+'.csv';
-    	// Insert Header record
-    	try {
-			insert(new Integration_Files__c(File_Name__c=documentName, Record_Data__c=csvHeader, Sequence_Number__c=1, Target_System__c='CFS'));
+        // Insert Header record
+        try {
+            insert(new Integration_Files__c(File_Name__c=documentName, Record_Data__c=csvHeader, Sequence_Number__c=1, Target_System__c='CFS'));
         } catch (exception e) {
           
         }        
     }
     
-	global Database.QueryLocator start(Database.BatchableContext BC) {
+    global Database.QueryLocator start(Database.BatchableContext BC) {
         String query = 'SELECT Name,Transaction_Date__c,' +
                               'Order_Item__r.Unit_Code__c,' +
                               'Order__r.FOCIS_Category__c,' +
@@ -90,18 +90,18 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                               'Fulfillment_Item_Total__c,' +
                               'Order__r.ccrz__Account__r.SABA_LMS_Code__c,' +
                               'Order__r.ccrz__Account__r.Billing_Contact__c,Order__r.ccrz__Account__r.Billing_Contact__r.FirstName,Order__r.ccrz__Account__r.Billing_Contact__r.LastName,' +
-            				  'Order_Item__r.Payment_Category__c,' +
+                              'Order_Item__r.Payment_Category__c,' +
                               'Order__r.ccrz__PONumber__c,Order__r.Order_Number_Text__c,' +
                               // FUTURE - Full Name
                               'Fulfillment__r.Name,ILT_Class__r.Offering_ID__c,' +
                               'Order_Item__r.ccrz__Price__c,' +
                               'Quantity__c,Order__r.ccrz__Account__r.SABA_Org_Type__c,' +
-            				  // FUTURE/TBD - Org Type
+                              // FUTURE/TBD - Org Type
                               'Id,' +
                               'Order__r.ccrz__Account__r.SABA_Name__c,Order__r.ccrz__Account__r.Id,' +
                               'ILT_Class__c,' +
                               'CC_Product__r.AP_Code__c ' +
-            			'FROM Fulfillment_Item__c WHERE Status__c=\'Ready\' AND Fulfillment__r.Type__c!=\'Receipt\'';
+                        'FROM Fulfillment_Item__c WHERE Status__c=\'Ready\' AND Fulfillment__r.Type__c!=\'Receipt\'';
         system.debug('Query: '+query);
         return Database.getQueryLocator(query);
     }
@@ -150,7 +150,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // Unit Code
             String unitCode = '';
             if(fi.Order_Item__r.Unit_Code__c!=null) {
-            	unitCode='"' + fi.Order_Item__r.Unit_Code__c + '"';
+                unitCode='"' + fi.Order_Item__r.Unit_Code__c + '"';
             }
             // FOCIS Category GL
             String focis = '';
@@ -167,7 +167,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 accountName = fi.Order__r.ccrz__Account__r.Name;
                 accountName = accountName.replaceAll(regExp, '');
                 if(accountName.length()>60) {accountName=accountName.left(60);}
-            	accountName='"' + accountName + '"';
+                accountName='"' + accountName + '"';
             }
             // Bill To Org Address - No more than 40 characters, check for special characters
             // Bill To Org Address 2 - No more than 40 characters, check for special characters
@@ -193,7 +193,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                     if(!String.isEmpty(street) && street.length()>41) {
                         street1 = street.left(40);
                     }
-                	if(!String.isEmpty(stringList[1])) {
+                    if(!String.isEmpty(stringList[1])) {
                         street2 = stringList[1].replaceAll(regExp, '');
                         if(street2.length()>40) {
                             street2 = stringList[1].left(40);
@@ -226,7 +226,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 if(state.length()>2) {
                     isError = true;
                     if(errString!='') {errString=errString+';';}
-                	errString = errString + 'Order-Account-Billing State';
+                    errString = errString + 'Order-Account-Billing State';
                 } else {
                     state = '"' + state + '"';
                 } 
@@ -239,7 +239,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             String postalCode = '';
             if(fi.Order__r.ccrz__Account__r.BillingPostalCode!=null) {
                 postalCode = fi.Order__r.ccrz__Account__r.BillingPostalCode;
-            	if(postalCode.length()>10) {postalCode=postalCode.left(10);}
+                if(postalCode.length()>10) {postalCode=postalCode.left(10);}
                 postalCode = '"' + postalCode + '"';
             } else {
                 isError = true;
@@ -254,7 +254,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 if(country.length()>2) {
                     isError = true;
                     if(errString!='') {errString=errString+';';}
-                	errString = errString + 'Order-Account-Billing Country';
+                    errString = errString + 'Order-Account-Billing Country';
                 } else {
                     country = '"' + country + '"';
                 }
@@ -262,7 +262,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // Bill To Org User Field3
             String sInvoicing = '';
             if(!String.isEmpty(fi.Order__r.ccrz__Account__r.Special_Invoicing__c)) {
-            	sInvoicing = '"' + fi.Order__r.ccrz__Account__r.Special_Invoicing__c + '"';
+                sInvoicing = '"' + fi.Order__r.ccrz__Account__r.Special_Invoicing__c + '"';
             }
             // Bill To Org Primary Phone
             String phone = '';
@@ -425,7 +425,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
 
 
             }
-            String transactionString =	transactionDate+','+unitCode+','+focis+','+accountName+','+street1+','+
+            String transactionString =  transactionDate+','+unitCode+','+focis+','+accountName+','+street1+','+
                                         city+','+state+','+postalCode+','+country+','+sInvoicing+','+
                                         phone+','+courseNum+','+courseName+','+endDate+','+crsComments+','+
                                         orderNum+','+terms+','+transactionAmt+','+billToOrgId+','+street2+','+
@@ -445,12 +445,12 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 //errorItemList.add(new errorItem(fi.Id,fi.Name,fi.Fulfillment_Item_Total__c,errorDetails));
             } else {
                 //csvRowValues.add(transactionString);
-           		integrationFiles.add(new Integration_Files__c(File_Name__c=documentName, Record_Data__c=transactionString, Sequence_Number__c=sequenceNumber, Target_System__c='CFS'));
-            	fulfillmentItemList.add(fi);
+                integrationFiles.add(new Integration_Files__c(File_Name__c=documentName, Record_Data__c=transactionString, Sequence_Number__c=sequenceNumber, Target_System__c='CFS'));
+                fulfillmentItemList.add(fi);
                 sequenceNumber++;
             }  
         }
-		try {
+        try {
             for(Fulfillment_Item__c fi: fulfillmentItemList) {
                 fi.Status__c='Complete';
             }
@@ -466,12 +466,12 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
     global void finish(Database.BatchableContext BC) {
         System.debug(recordsProcessed + ' records processed.');
 /*        AsyncApexJob job = [SELECT Id,Status,NumberOfErrors,JobItemsProcessed,TotalJobItems,CreatedBy.Email
-            				FROM AsyncApexJob 
+                            FROM AsyncApexJob 
                             WHERE Id = :bc.getJobId()];
         
         // SAVE FILE TO FOLDER   
         // Create CSV file
-		ContentVersion cv = new ContentVersion();
+        ContentVersion cv = new ContentVersion();
         cv.ContentLocation = 'S';
         cv.VersionData = Blob.valueOf(csvHeader + String.join(csvRowValues,'\n'));
         cv.Title = documentName;
@@ -493,7 +493,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             List<ContentFolderMember> cfmList = new List<ContentFolderMember>([SELECT Id, ParentContentFolderId FROM ContentFolderMember WHERE ChildRecordId =:cds[0].Id LIMIT 1]);
             if(!cfmList.isEmpty()) {
                 cfmList[0].ParentContentFolderId=folders[0].Id;
-            	update cfmList[0];
+                update cfmList[0];
             }            
         }        
 */
@@ -505,7 +505,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 csvFileString = csvFileString + e.fiId + ',' + e.fiName + ',' + e.fiAmount + ',' + e.errorDetails + '\n';
             }
             String body = 'The batch job PHSS_GenerateCSVFileBatch has finished. \n' +
-              		      'Attached you will find a list of Fulfillment Item Ids that need data verified.';
+                          'Attached you will find a list of Fulfillment Item Ids that need data verified.';
             String subject = 'Apex Batch Result for PHSS_GenerateCSVFileBatch - Fulfillment Items Not Processed';
             // Create email attachment    
             Messaging.EmailFileAttachment[] emailAttList = new List<Messaging.EmailFileAttachment>();
@@ -516,13 +516,13 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // Create email
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setSubject( subject );
-            email.setToAddresses( new String[] {'a.ortiz@salesforce.com'} );
+            email.setToAddresses( new String[] {'TSInvTransErrors@redcross.org'} );
             // email.setToAddresses( new String[] {'reportscoa@redcross.org'} );
             email.setPlainTextBody( body );
             email.setFileAttachments(emailAttList);
             Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
         }
-	}
+    }
     global class errorItem {
         public Id fiId {get; set;}
         public String fiName {get; set;}

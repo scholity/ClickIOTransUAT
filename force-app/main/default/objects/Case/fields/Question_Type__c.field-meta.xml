@@ -96,6 +96,11 @@
                 <default>false</default>
                 <label>Customer Feedback</label>
             </value>
+            <value>
+                <fullName>Customer Comments</fullName>
+                <default>false</default>
+                <label>Customer Comments</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

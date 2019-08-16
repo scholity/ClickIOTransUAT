@@ -175,18 +175,6 @@
         <visibility>ALL</visibility>
     </categoryGroupVisibilities>
     <classAccesses>
-        <apexClass>phss_cc_OnAccountBalanceControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>phss_cc_StoredPaymentUtil</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>phss_cc_StoredPaymentUtilTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AccountPricingAgreementCleanUpBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1495,6 +1483,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_OnAccountBalanceControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_OpportunityUtil</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1512,6 +1504,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_PriceOverrideModalController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_PriceOverrideModalControllerText</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1543,6 +1539,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_StoredPaymentUtil</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_StoredPaymentUtilTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_TestDataFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1564,6 +1568,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_hk_Order</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_hk_OrderTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1883,21 +1891,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Coupon__c.Active__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ccrz__E_CartItem__c.Coupon__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ccrz__E_OrderItem__c.Coupon__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.AP_Territory_Owner__c</field>
@@ -7724,6 +7717,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Coupon__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Course_Catalog__c.Break_Duration__c</field>
         <readable>true</readable>
@@ -10256,6 +10254,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.Number_in_Class__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Number_of_Additional_Videos__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Number_of_Additional_Visits__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13909,12 +13917,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
-        <layout>Coupon__c-Coupon Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ccrz__E_CartItem__c-PHSS CC Cart Item Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Account-Account Layout BI</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -14285,6 +14287,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContractLineItem-Contract Line Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Coupon__c-Coupon Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Course_Catalog_Tag__c-Course Catalog Tag Layout</layout>
@@ -14711,6 +14716,9 @@
         <layout>WorkBadgeDefinition-Badge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ccrz__E_CartItem__c-PHSS CC Cart Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ccrz__E_Cart__c-PHSS CC Cart Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -14809,15 +14817,6 @@
     <layoutAssignments>
         <layout>redwing__User_Certification__c-PHSS User Certification Layout</layout>
     </layoutAssignments>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>Coupon__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -15257,6 +15256,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>ContractLineItem</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>Coupon__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -16591,10 +16599,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
-        <tab>Coupon__c</tab>
-        <visibility>DefaultOn</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>Associated_Orders__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
@@ -16652,6 +16656,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Community_Scheduling</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Coupon__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

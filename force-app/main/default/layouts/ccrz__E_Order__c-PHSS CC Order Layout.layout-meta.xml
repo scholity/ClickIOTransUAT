@@ -340,6 +340,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>1</sortOrder>
@@ -375,19 +380,14 @@
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
+            <actionName>ChangeRecordType</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Share</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ChangeRecordType</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Submit</actionName>
@@ -434,9 +434,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ccrz__Product__c</fields>
-        <fields>ccrz__Price__c</fields>
-        <fields>ccrz__SubAmount__c</fields>
         <fields>ccrz__OrderItemStatus__c</fields>
+        <fields>ccrz__Price__c</fields>
         <fields>ccrz__Quantity__c</fields>
         <fields>ccrz__ItemTotal__c</fields>
         <relatedList>ccrz__E_OrderItem__c.ccrz__Order__c</relatedList>
@@ -460,8 +459,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>ccrz__AccountNumber__c</fields>
-        <fields>ccrz__PaymentType__c</fields>
+        <fields>ccrz__AccountType__c</fields>
+        <fields>ccrz__TransactionType__c</fields>
         <fields>ccrz__StoredPayment__c</fields>
         <fields>ccrz__Amount__c</fields>
         <relatedList>ccrz__E_TransactionPayment__c.ccrz__CCOrder__c</relatedList>
@@ -531,10 +530,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>OWNER.ALIAS</fields>
-        <fields>CREATED_DATE</fields>
         <fields>ccrz__OrderDate__c</fields>
+        <fields>ccrz__AdjustmentAmount__c</fields>
         <fields>ccrz__OrderStatus__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>ccrz__E_Order__c.ccrz__Order__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -567,7 +566,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1k000000N5KR</masterLabel>
+        <masterLabel>00h21000000S90f</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

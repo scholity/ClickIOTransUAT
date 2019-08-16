@@ -82,11 +82,10 @@ public class SubmitOrderCreditController
 											  WHERE	Id =: ccOrder.ccrz__TransactionPayments__r[0].Id];
             
             
+            ccrz__E_StoredPayment__c storedPymt = new ccrz__E_StoredPayment__c ();
             
             if(hasCreditOnAccount)
             {   
-                ccrz__E_StoredPayment__c storedPymt = new ccrz__E_StoredPayment__c ();
-                 
                 	storedPymt.ccrz__Account__c				= ccOrder.ccrz__Account__c;
 					storedPymt.ccrz__AccountType__c			= 'cb';
 					storedPymt.ccrz__DisplayName__c			= 'Order ' +ccOrder.Name;
@@ -99,24 +98,29 @@ public class SubmitOrderCreditController
                 
                 insert storedPymt;
             }
-            else
-            {
-            	ccrz__E_TransactionPayment__c newTransPayment = tPayment.clone(false,false,false,false);
+            system.debug('$$$tPayment$$$'+tPayment);
+            ccrz__E_TransactionPayment__c newTransPayment = tPayment.clone(false,false,false,false);
             
-	        	newTransPayment.ccrz__CCOrder__c					= orderId;
-	        	newTransPayment.ccrz__ParentTransactionPayment__c 	= tPayment.Id; 
-                newTransPayment.ccrz__Amount__c 					= ccCreditOrder.ccrz__SubtotalAmount__c;
-                
-                insert newTransPayment;
-                
-                Map<String, Object> myMap = new Map<String, Object>();
-                
-                myMap.put('frmOrderId', orderId);
-                
-                Flow.Interview.Manage_Credit_Status  myFlow = new Flow.Interview.Manage_Credit_Status (myMap);
-                
-                myFlow.start();
+            newTransPayment.ccrz__CCOrder__c					= orderId;
+            newTransPayment.ccrz__ParentTransactionPayment__c 	= tPayment.Id; 
+            newTransPayment.ccrz__Amount__c 					= ccCreditOrder.ccrz__SubtotalAmount__c;
+            
+            if(hasCreditOnAccount)
+            {
+                newTransPayment.ccrz__AccountType__c 			= 'cb';
+                newTransPayment.ccrz__StoredPayment__c 			= storedPymt.Id; 
             }
+            
+            insert newTransPayment;
+            
+            Map<String, Object> myMap = new Map<String, Object>();
+            
+            myMap.put('frmOrderId', orderId);
+            
+            Flow.Interview.Manage_Credit_Status  myFlow = new Flow.Interview.Manage_Credit_Status (myMap);
+            
+            myFlow.start();
+        
         }
     }
 }

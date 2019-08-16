@@ -38,6 +38,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Coupon__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Fulfillment_Item__c.AP_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -568,6 +573,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ccrz__E_OrderItem__c.Coupon__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ccrz__E_OrderItem__c.Error_Message__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -584,6 +594,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ccrz__E_OrderItem__c.Inventory_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ccrz__E_OrderItem__c.Is_Return__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2401,6 +2416,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>Account</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Coupon__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>

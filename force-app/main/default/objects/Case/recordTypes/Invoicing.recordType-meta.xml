@@ -2851,6 +2851,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Comments</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>First Aid and CPR</fullName>
             <default>false</default>
         </values>

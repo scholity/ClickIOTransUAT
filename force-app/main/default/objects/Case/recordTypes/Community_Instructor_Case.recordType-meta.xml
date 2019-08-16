@@ -2878,6 +2878,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Comments</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>

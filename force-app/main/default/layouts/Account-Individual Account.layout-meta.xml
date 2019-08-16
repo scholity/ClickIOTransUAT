@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -138,16 +135,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>CallHighlightAction</actionName>
-            <actionType>ProductivityAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>SmsHighlightAction</actionName>
-            <actionType>ProductivityAction</actionType>
-            <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -191,6 +178,16 @@
             <actionName>ChangeRecordType</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CallHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SmsHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>EmailHighlightAction</actionName>
@@ -264,10 +261,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>ILT_Class__c</fields>
+        <fields>Learning_Plan__c</fields>
+        <fields>Start_Date_of_Class__c</fields>
         <relatedList>Voucher__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>ccrz__AccountType__c</fields>
+        <fields>ccrz__DisplayName__c</fields>
+        <fields>Original_PO_Amount__c</fields>
         <relatedList>ccrz__E_StoredPayment__c.ccrz__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -323,6 +326,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Achievement_Type__c</fields>
+        <fields>redwing__Contact__c</fields>
+        <fields>redwing__Achievement__c</fields>
+        <fields>redwing__Expiration_Date__c</fields>
         <relatedList>redwing__Achievement_Assignment__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>

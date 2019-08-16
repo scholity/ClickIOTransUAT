@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Features_Attractions_Description__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText># of features, attractions, and number/types of bodies water, including whether indoor/outdoor</inlineHelpText>
     <label>Features/Attractions Description</label>
     <length>32768</length>
     <trackFeedHistory>false</trackFeedHistory>

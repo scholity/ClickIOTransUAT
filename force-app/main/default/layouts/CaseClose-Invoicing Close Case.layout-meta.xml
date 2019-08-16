@@ -18,10 +18,6 @@
                 <behavior>Edit</behavior>
                 <field>Root_Cause__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Contact_Billing_State__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -45,7 +41,7 @@
     <showSolutionSection>true</showSolutionSection>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1k000000IwT1</masterLabel>
+        <masterLabel>00h21000000SEVb</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

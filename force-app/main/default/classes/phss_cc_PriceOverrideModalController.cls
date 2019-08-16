@@ -247,6 +247,10 @@ public class phss_cc_PriceOverrideModalController {
                 cartItem.ccrz__SubAmount__c = cartItem.ccrz__Price__c * cartItem.ccrz__Quantity__c - cartItem.ccrz__AdjustmentAmount__c;
                 cartItem.ccrz__PricingType__c = EXTERNAL_PRICING_TYPE;
                 cartItem.Coupon__c = couponId;
+                if(couponId != null && couponId != '')
+                {
+                    cartItem.Coupon_Used__c = true;
+                }
                 update cartItem;
 
                 result.put(CART_ITEM_KEY, cartItem);
@@ -285,6 +289,7 @@ public class phss_cc_PriceOverrideModalController {
                 cartItem.Coupon__c 					= null;
                 cartItem.ccrz__PercentDiscount__c 	= null;
                 cartItem.ccrz__PricingType__c 		= 'auto';
+                cartItem.Coupon_Used__c		 		= false;
                 
                 update cartItem;
 

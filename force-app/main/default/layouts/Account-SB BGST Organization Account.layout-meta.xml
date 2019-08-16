@@ -76,18 +76,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Credit_Limit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Credit_Available__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Open_Order_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Active_Contract_Exception__c</field>
             </layoutItems>
             <layoutItems>
@@ -243,33 +231,22 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Preferred_Payment_type__c</field>
+                <field>Credit_Limit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Credit_Available__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Payment_Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Termination_Reason__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Terminate_Reinstate_Date__c</field>
+                <field>Open_Order_Amount__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax_Exempt__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax_ID_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Readonly</behavior>
+                <field>Total_AR__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -307,15 +284,23 @@
                 <behavior>Readonly</behavior>
                 <field>AR_180_Days__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Total_AR__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Customer_PO_Expiration_Date__c</field>
+                <field>Preferred_Payment_type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Termination_Reason__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Terminate_Reinstate_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -329,33 +314,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Coupon_Code_1__c</field>
+                <field>Tax_Exempt__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Coupon_1_Expiration__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Coupon_Code_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Coupon_2_Expiration__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Coupon_Code_3__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Coupon_3_Expiration__c</field>
+                <field>Tax_ID_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>Bankruptcy_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bankruptcy_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -604,13 +578,6 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
-        <fields>ccrz__E_PriceGroup__c.NAME</fields>
-        <fields>ccrz__Storefront__c</fields>
-        <fields>ccrz__EffectiveStart__c</fields>
-        <fields>ccrz__EffectiveEnd__c</fields>
-        <relatedList>ccrz__E_PriceGroupAccount__c.ccrz__Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>OWNER.ALIAS</fields>
         <fields>ccrz__CartStatus__c</fields>
@@ -619,6 +586,13 @@
         <fields>ccrz__TotalDiscount__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>ccrz__E_Cart__c.ccrz__Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ccrz__E_PriceGroup__c.NAME</fields>
+        <fields>ccrz__Storefront__c</fields>
+        <fields>ccrz__EffectiveStart__c</fields>
+        <fields>ccrz__EffectiveEnd__c</fields>
+        <relatedList>ccrz__E_PriceGroupAccount__c.ccrz__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -633,6 +607,10 @@
         <fields>CONTACT.EMAIL</fields>
         <fields>ACCCONRELATION.ROLES</fields>
         <relatedList>RelatedAccountContactRelationList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ccrz__E_StoredPayment__c.ccrz__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <excludeButtons>MailMerge</excludeButtons>

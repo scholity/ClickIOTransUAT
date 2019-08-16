@@ -82,7 +82,7 @@
         <actionName>Update_Account_Groups</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myRule_1_A2</targetReference>
+            <targetReference>myDecision2</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -1042,7 +1042,7 @@
         </rules>
     </decisions>
     <description>Update of Account Information - Execute Changes</description>
-    <interviewLabel>Account_Controller-14_InterviewLabel</interviewLabel>
+    <interviewLabel>Account_Controller-15_InterviewLabel</interviewLabel>
     <label>Account Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1436,89 +1436,6 @@
             <field>Phone</field>
             <value>
                 <elementReference>myVariable_current.New_TSC_Contact__r.Phone</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Account</object>
-    </recordUpdates>
-    <recordUpdates>
-        <processMetadataValues>
-            <name>evaluationType</name>
-            <value>
-                <stringValue>always</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>extraTypeInfo</name>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>isChildRelationship</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>reference</name>
-            <value>
-                <stringValue>[Account]</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>referenceTargetField</name>
-        </processMetadataValues>
-        <name>myRule_1_A2</name>
-        <label>Set Credit Limit</label>
-        <locationX>100</locationX>
-        <locationY>300</locationY>
-        <connector>
-            <targetReference>myDecision2</targetReference>
-        </connector>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>Currency</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Credit Limit</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Currency</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Credit_Limit__c</field>
-            <value>
-                <numberValue>10000.0</numberValue>
             </value>
         </inputAssignments>
         <object>Account</object>

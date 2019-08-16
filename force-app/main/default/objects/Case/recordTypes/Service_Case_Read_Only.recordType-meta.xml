@@ -3100,6 +3100,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Customer Comments</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Customer Feedback</fullName>
             <default>false</default>
         </values>
@@ -3368,6 +3372,13 @@
         </values>
         <values>
             <fullName>Write Off</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Question_Type__c</picklist>
+        <values>
+            <fullName>Customer Comments</fullName>
             <default>false</default>
         </values>
     </picklistValues>
