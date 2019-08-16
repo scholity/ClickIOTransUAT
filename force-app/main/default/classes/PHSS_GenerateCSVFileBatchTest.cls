@@ -133,7 +133,8 @@ public class PHSS_GenerateCSVFileBatchTest {
         ccrz__E_Order__c testOrder = new ccrz__E_Order__c(
             NSSCCConnector_SFCC_Order_Number__c = '3114226',
             NSSCCConnector_from_SFCC__c = true,
-            ccrz__Account__c = testAccount.Id
+            ccrz__Account__c = testAccount.Id,
+            ccrz__OrderStatus__c = 'Open'
         );
         insert testOrder;
         

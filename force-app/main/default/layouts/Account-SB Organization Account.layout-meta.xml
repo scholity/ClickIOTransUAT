@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -340,10 +343,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Tax_ID_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Tax_Exempt_Cert_Expiry_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -792,6 +791,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Achievement_Type__c</fields>
+        <fields>redwing__Contact__c</fields>
+        <fields>redwing__Achievement__c</fields>
+        <fields>redwing__Expiration_Date__c</fields>
         <relatedList>redwing__Achievement_Assignment__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -2610,4 +2610,11 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>Question_Type__c</picklist>
+        <values>
+            <fullName>Customer Comments</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

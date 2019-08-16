@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_Additional_Visits__c</fullName>
+    <description>Number of visits requested IN ADDITION to what is provided in initial package</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Number of visits requested IN ADDITION to what is provided in initial package</inlineHelpText>
+    <label>Number of Additional Visits</label>
+    <precision>4</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

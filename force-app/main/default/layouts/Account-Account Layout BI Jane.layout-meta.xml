@@ -801,6 +801,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Achievement_Type__c</fields>
+        <fields>redwing__Contact__c</fields>
+        <fields>redwing__Achievement__c</fields>
+        <fields>redwing__Expiration_Date__c</fields>
         <relatedList>redwing__Achievement_Assignment__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -64,9 +64,25 @@
             {
                 if (priceA !== "")
                 {
-                    if(!isNaN(total))
+                    if(priceA < 0)
                     {
-                        if(priceP <= total)
+                        if(!isNaN(total))
+                        {
+                            if(priceP <= total)
+                            {
+                                component.set("v.newPrice",priceA);
+                                component.set("v.isPrompt", false);
+                                
+                                var vx = component.get("v.method");
+                                $A.enqueueAction(vx);
+                            }
+                            else
+                            {
+                                component.set("v.hasGraterDiscount", true);
+                                component.set("v.prMsg","Can't exceed the purchase price.")
+                            }
+                        }
+                        else
                         {
                             component.set("v.newPrice",priceA);
                             component.set("v.isPrompt", false);
@@ -74,19 +90,11 @@
                             var vx = component.get("v.method");
                             $A.enqueueAction(vx);
                         }
-                        else
-                        {
-                            component.set("v.hasGraterDiscount", true);
-                            component.set("v.prMsg","Can't exceed the purchase price.")
-                        }
                     }
                     else
                     {
-                        component.set("v.newPrice",priceA);
-                        component.set("v.isPrompt", false);
-                        
-                        var vx = component.get("v.method");
-                        $A.enqueueAction(vx);
+                        component.set("v.hasGraterDiscount", true);
+                        component.set("v.prMsg","The amount must be negative.")
                     }
                 }
                 else

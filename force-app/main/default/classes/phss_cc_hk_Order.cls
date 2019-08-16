@@ -83,7 +83,8 @@ global with sharing class phss_cc_hk_Order extends ccrz.cc_hk_Order {
             ccrz__E_CartItem__c cartItem = cartItemsMap.get(orderItem.ccrz__Product__r.ccrz__SKU__c);
             
             if (cartItem != null && cartItem.Coupon__c != null) {
-            	orderItem.Coupon__c	   = cartItem.Coupon__c;
+            	orderItem.Coupon__c	     = cartItem.Coupon__c;
+                orderItem.Coupon_Used__c = true;
             }
             
             if (cartItem != null && cartItem.ILT_Class__c != null) {

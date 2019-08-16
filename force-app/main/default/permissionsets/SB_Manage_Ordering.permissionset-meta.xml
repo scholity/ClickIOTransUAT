@@ -687,6 +687,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ccrz__E_OrderItem__c.Is_Return__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ccrz__E_OrderItem__c.Opportunity__c</field>
         <readable>true</readable>

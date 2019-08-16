@@ -344,7 +344,7 @@
         <componentInstances>
             <componentName>RefundOrderItem</componentName>
             <visibilityRule>
-                <booleanFilter>1 OR 2</booleanFilter>
+                <booleanFilter>1 OR 2 OR 3</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.ccrz__OrderItemStatus__c}</leftValue>
                     <operator>EQUAL</operator>
@@ -354,6 +354,11 @@
                     <leftValue>{!Record.ccrz__OrderItemStatus__c}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>Shipped</rightValue>
+                </criteria>
+                <criteria>
+                    <leftValue>{!Record.ccrz__OrderItemStatus__c}</leftValue>
+                    <operator>EQUAL</operator>
+                    <rightValue>Partial Returned</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>

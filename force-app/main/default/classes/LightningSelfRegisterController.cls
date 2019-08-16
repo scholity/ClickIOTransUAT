@@ -32,7 +32,7 @@ global without sharing class LightningSelfRegisterController {
         // check if email provided exists already as username
         List<User> users = [SELECT Id FROM User WHERE Username = :email];
         if (users.size() > 0) {
-            return 'A user with this email address already exists. Contact Red Cross Technical Support Team for assistance.';
+            return 'A user with this email address already exists. Click here to contact Red Cross Technical Support Team for assistance.';
         }
 
         Savepoint sp = null;

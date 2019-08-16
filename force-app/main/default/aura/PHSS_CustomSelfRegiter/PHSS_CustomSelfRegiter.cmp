@@ -43,9 +43,10 @@
         </aura:if>
 
         <aura:renderIf isTrue="{!v.showError}">
-            <div id="error" class="slds-p-vertical_x-large">
-                <ui:outputRichText value="{!v.errorMessage}"/>
+            <div id="error" class="technicalsupport slds-p-vertical_x-large"  >
+                <a href="https://www.redcross.org/take-a-class/customers-service"  >{!v.errorMessage}</a>
             </div>
+
         </aura:renderIf>
 
         <div id="sfdc_username_container" aura:id="firstname_div" class="sfdc inputfield" >

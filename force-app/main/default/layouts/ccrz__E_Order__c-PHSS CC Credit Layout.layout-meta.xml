@@ -440,8 +440,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>ccrz__AccountNumber__c</fields>
-        <fields>ccrz__PaymentType__c</fields>
+        <fields>ccrz__AccountType__c</fields>
+        <fields>ccrz__TransactionType__c</fields>
         <fields>ccrz__StoredPayment__c</fields>
         <fields>ccrz__Amount__c</fields>
         <relatedList>ccrz__E_TransactionPayment__c.ccrz__CCOrder__c</relatedList>
@@ -485,10 +485,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>OWNER.ALIAS</fields>
-        <fields>CREATED_DATE</fields>
         <fields>ccrz__OrderDate__c</fields>
+        <fields>ccrz__AdjustmentAmount__c</fields>
         <fields>ccrz__OrderStatus__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>ccrz__E_Order__c.ccrz__Order__c</relatedList>
     </relatedLists>
     <relatedLists>

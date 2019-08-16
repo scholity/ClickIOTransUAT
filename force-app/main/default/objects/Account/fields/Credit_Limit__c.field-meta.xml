@@ -5,9 +5,9 @@
     <externalId>false</externalId>
     <inlineHelpText>Amount of credit extended to a customer for invoicing purposes. Automatically defaulted to $10,000 when the Prefered Payment Method is set to Invoice or $0 if the Prefered Payment method is set to Credit Card. Once saved, you may updated the credit limit.</inlineHelpText>
     <label>Credit Limit</label>
-    <precision>12</precision>
+    <precision>14</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>2</scale>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Currency</type>
