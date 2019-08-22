@@ -104,34 +104,33 @@ public with sharing class phss_cc_StoredPaymentUtil {
     }
 
     /**
-     * @description Fetches the remaining amount of credit from the specified stored payments
+     * @description Fetches the remaining amount of credit from the specified stored payments where the stored payment's remaining amount is greater than 0.
      *
      * @param storedPayments
      *
      * @return
      */
-    public static Decimal getRemainingCreditAmount(List<String> storedPaymentIDs) {
-        Decimal creditAmount = 0.0;
+    public static List<ccrz__E_StoredPayment__c> getStoredPayments(List<String> identifiers) {
+        List<ccrz__E_StoredPayment__c> storedPayments;
 
         try {
-            if (storedPaymentIDs != null && storedPaymentIDs.size() > 0) {
-                List<ccrz__E_StoredPayment__c> storedPayments = [
+            if (identifiers != null && identifiers.size() > 0) {
+                storedPayments = [
                         SELECT  Id,
+                                ccrz__Account__c,
+                                ccrz__ExpMonth__c,
+                                ccrz__ExpYear__c,
+                                ccrz__Token__c,
                                 Remaining_PO_Amount__c
                         FROM    ccrz__E_StoredPayment__c
-                        WHERE   Id IN :storedPaymentIDs
+                        WHERE   Id IN :identifiers
                 ];
-                if (storedPayments != null && storedPayments.size() > 0) {
-                    for (ccrz__E_StoredPayment__c storedPayment : storedPayments) {
-                        creditAmount += storedPayment.Remaining_PO_Amount__c;
-                    }
-                }
             }
 
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_GET_APPLICABLE_CREDIT, e);
         }
 
-        return creditAmount;
+        return storedPayments;
     }
 }

@@ -125,6 +125,9 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
             Decimal refundAmount = Decimal.valueOf((String) refundAmountDetails.get(REFUND_AMOUNT_KEY));
 
             ccrz__E_TransactionPayment__c authTxn = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(sourceTransactionPaymentId);
+            authTxn.ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE;
+            update authTxn;
+
             ccrz__E_TransactionPayment__c captureTxn = new ccrz__E_TransactionPayment__c();
             captureTxn.ccrz__Account__c = authTxn.ccrz__Account__c;
             captureTxn.ccrz__AccountType__c = authTxn.ccrz__AccountType__c;
@@ -138,9 +141,8 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
             captureTxn.ccrz__TransactionPaymentId__c = (String) data.get(TRANSACTION_ID_KEY);
             captureTxn.ccrz__TransactionTS__c = DatetimeUtil.parse((String) data.get(SUBMIT_TIME_UTC_KEY), DatetimeUtil.format.YYYY_MM_DDTHH_MM_SSZ);
             captureTxn.ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE;
-
             insert captureTxn;
-		
+
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_SAVE_REFUND_CAPTURE_RESPONSE, e);
         }
@@ -154,7 +156,8 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
                         CC_Transaction_Payment__c,
                         CC_Transaction_Payment__r.ccrz__Amount__c,
                         CC_Transaction_Payment__r.ccrz__CurrencyISOCode__c,
-                        CC_Transaction_Payment__r.ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c
+                        CC_Transaction_Payment__r.ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c,
+                        CC_Transaction_Payment__r.ccrz__Comments__c
                 FROM Fulfillment__c
                 WHERE Id = :fulfillmentId
         ];
@@ -171,7 +174,8 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
      * @param objectMap
      */
     @TestVisible
-    private static void getTransactionPaymentDataForOrder(String orderId, Map<String, Object> objectMap) {
+    private static void
+    getTransactionPaymentDataForOrder(String orderId, Map<String, Object> objectMap) {
         try {
             List<ccrz__E_TransactionPayment__c> transactionPayments = [
                     SELECT Id, ccrz__TransactionPaymentId__c, ccrz__TransactionType__c, Name
@@ -202,8 +206,9 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
 
 
     @TestVisible
-    private static void getFulfillmentData(String fulfillmentId, Map<String, Object> objectMap) {
+    public static void getFulfillmentData(String fulfillmentId, Map<String, Object> objectMap) {
         try {
+            String orderId = null;
             Fulfillment__c fulfillment = fetchFulfillment(fulfillmentId);
             if (fulfillment == null) {
                 throw new phss_cc_Exception(FAILED_TO_FETCH_FULFILLMENT);
@@ -224,14 +229,29 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
                 throw new phss_cc_Exception(MISSING_CURRENCY_CODE);
             }
             if (String.isBlank(fulfillment.CC_Transaction_Payment__r.ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c)) {
-                throw new phss_cc_Exception(MISSING_PARENT_TRANSACTION_PAYMENT);
+                String comments = fulfillment.CC_Transaction_Payment__r.ccrz__Comments__c;
+                String prefixStr = phss_cc_OrderUtil.REFUND_COMMENT;
+                if (String.isNotEmpty(comments) && comments.startsWith(prefixStr)) {
+                    comments = comments.removeStart(prefixStr);
+                    Id storedPaymentId = Id.valueOf(comments);
+                    if (storedPaymentId != null) {
+                        orderId = phss_cc_OrderUtil.getOriginalOrderForStoredPayment(String.valueOf(storedPaymentId));
+                    }
+                }
+
+                if (orderId == null) {
+                    throw new phss_cc_Exception(MISSING_PARENT_TRANSACTION_PAYMENT);
+                }
+
+            } else {
+                orderId = fulfillment.CC_Transaction_Payment__r.ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c;
             }
 
             objectMap.put(STOREFRONT_KEY, fulfillment.Order__r.ccrz__Storefront__c);
             objectMap.put(TRANSACTION_PAYMENT_ID_KEY, fulfillment.CC_Transaction_Payment__c);
             objectMap.put(TRANSACTION_PAYMENT_AMOUNT_KEY, fulfillment.CC_Transaction_Payment__r.ccrz__Amount__c);
             objectMap.put(CURRENCY_CODE_KEY, fulfillment.CC_Transaction_Payment__r.ccrz__CurrencyISOCode__c);
-            objectMap.put(ORDER_KEY, fulfillment.CC_Transaction_Payment__r.ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c);
+            objectMap.put(ORDER_KEY, orderId);
 
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_GET_FULFILLMENT_DATA, e);

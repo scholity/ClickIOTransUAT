@@ -285,6 +285,37 @@
                     <stringValue>Individual_Account</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Account_Record_Type__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Organization_Account</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_3_A1</targetReference>
             </connector>
@@ -303,7 +334,7 @@
         <dataType>Boolean</dataType>
         <expression>OR( {!myVariable_current.Account.Name} =&quot;Bucket Account&quot;,  (ISBLANK({!myVariable_current.Account.Name} )))</expression>
     </formulas>
-    <interviewLabel>Contact_Controller_Create-3_InterviewLabel</interviewLabel>
+    <interviewLabel>Contact_Controller_Create-4_InterviewLabel</interviewLabel>
     <label>Contact Controller - Create</label>
     <processMetadataValues>
         <name>ObjectType</name>

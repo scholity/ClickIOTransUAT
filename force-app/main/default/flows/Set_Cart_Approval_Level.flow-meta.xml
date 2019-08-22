@@ -3,7 +3,7 @@
     <assignments>
         <name>Set_Exec_Dir</name>
         <label>Set Exec Dir</label>
-        <locationX>999</locationX>
+        <locationX>1122</locationX>
         <locationY>622</locationY>
         <assignmentItems>
             <assignToReference>sOppurtunity.Pricing_Approval_Level__c</assignToReference>
@@ -17,15 +17,22 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Highest_Discount_from_Opp</name>
-        <label>Set Highest Discount from Opp</label>
-        <locationX>416</locationX>
+        <name>Set_Highest_Discount_from_Cart</name>
+        <label>Set Highest Discount from Cart</label>
+        <locationX>539</locationX>
         <locationY>88</locationY>
         <assignmentItems>
             <assignToReference>HighestDiscount</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>sOppurtunity.Highest_Product_Discount__c</elementReference>
+                <elementReference>sCart.Highest_Cart_Discount__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sOppurtunity.Highest_Product_Discount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sCart.Highest_Cart_Discount__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -35,7 +42,7 @@
     <assignments>
         <name>Set_MOM</name>
         <label>Set MOM</label>
-        <locationX>43</locationX>
+        <locationX>166</locationX>
         <locationY>629</locationY>
         <assignmentItems>
             <assignToReference>sOppurtunity.Pricing_Approval_Level__c</assignToReference>
@@ -51,7 +58,7 @@
     <assignments>
         <name>Set_No_Approval</name>
         <label>Set No Approval</label>
-        <locationX>735</locationX>
+        <locationX>858</locationX>
         <locationY>633</locationY>
         <assignmentItems>
             <assignToReference>sOppurtunity.Pricing_Approval_Level__c</assignToReference>
@@ -67,7 +74,7 @@
     <assignments>
         <name>Set_Sales_Director</name>
         <label>Set Sales Director</label>
-        <locationX>264</locationX>
+        <locationX>387</locationX>
         <locationY>631</locationY>
         <assignmentItems>
             <assignToReference>sOppurtunity.Pricing_Approval_Level__c</assignToReference>
@@ -83,7 +90,7 @@
     <assignments>
         <name>Set_Sales_Manager</name>
         <label>Set Sales Manager</label>
-        <locationX>477</locationX>
+        <locationX>600</locationX>
         <locationY>636</locationY>
         <assignmentItems>
             <assignToReference>sOppurtunity.Pricing_Approval_Level__c</assignToReference>
@@ -162,7 +169,7 @@
     <decisions>
         <name>Approval1015</name>
         <label>Approval1015</label>
-        <locationX>1039</locationX>
+        <locationX>1162</locationX>
         <locationY>410</locationY>
         <defaultConnector>
             <targetReference>Set_Sales_Manager</targetReference>
@@ -187,7 +194,7 @@
     <decisions>
         <name>Approval_1520</name>
         <label>Approval 1520</label>
-        <locationX>733</locationX>
+        <locationX>856</locationX>
         <locationY>416</locationY>
         <defaultConnector>
             <targetReference>Set_Sales_Manager</targetReference>
@@ -234,7 +241,7 @@
     <decisions>
         <name>Approval_20_to_30</name>
         <label>Approval 20 to 30</label>
-        <locationX>396</locationX>
+        <locationX>519</locationX>
         <locationY>413</locationY>
         <defaultConnector>
             <targetReference>Set_Sales_Director</targetReference>
@@ -259,7 +266,7 @@
     <decisions>
         <name>Approval_Levels</name>
         <label>Approval Levels</label>
-        <locationX>416</locationX>
+        <locationX>539</locationX>
         <locationY>254</locationY>
         <defaultConnector>
             <targetReference>Set_No_Approval</targetReference>
@@ -350,7 +357,7 @@
     <decisions>
         <name>X30Approval_Split</name>
         <label>30Approval Split</label>
-        <locationX>153</locationX>
+        <locationX>276</locationX>
         <locationY>410</locationY>
         <defaultConnector>
             <targetReference>Set_MOM</targetReference>
@@ -394,7 +401,7 @@
             <label>SCC30</label>
         </rules>
     </decisions>
-    <description>Cart approval level flow executed from Cart Controller Process Builder</description>
+    <description>Cart approval level flow executed from Cart Controller Process Builder - Update to use CART for highest discount</description>
     <formulas>
         <name>calcLineItemDiscount</name>
         <dataType>Number</dataType>
@@ -421,11 +428,17 @@
     </formulas>
     <interviewLabel>Set Cart Approval Level {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Set Cart Approval Level</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
         <name>Get_Cart</name>
         <label>Get Cart</label>
-        <locationX>57</locationX>
+        <locationX>180</locationX>
         <locationY>81</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -448,11 +461,11 @@
     <recordLookups>
         <name>Get_Oppurtunity</name>
         <label>Get Oppurtunity</label>
-        <locationX>236</locationX>
+        <locationX>359</locationX>
         <locationY>84</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Highest_Discount_from_Opp</targetReference>
+            <targetReference>Set_Highest_Discount_from_Cart</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -473,7 +486,7 @@
     <recordUpdates>
         <name>Update_Oppurtunity_Approval</name>
         <label>Update Oppurtunity Approval</label>
-        <locationX>474</locationX>
+        <locationX>597</locationX>
         <locationY>799</locationY>
         <inputReference>sOppurtunity</inputReference>
     </recordUpdates>

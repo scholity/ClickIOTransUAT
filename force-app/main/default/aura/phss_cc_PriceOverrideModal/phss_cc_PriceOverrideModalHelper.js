@@ -122,6 +122,7 @@
                     var cartItem = returnValue.cartItem;
                     if (typeof cartItem !== 'undefined') {
                         component.set('v.isShown', false);
+                        component.set("v.options","");
                         this.showToast('success', 'Coupon emoved successfully');
                         var updateEvent = $A.get('e.c:phss_cc_RefreshComponentEvent');
                         updateEvent.fire();

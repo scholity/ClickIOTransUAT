@@ -306,6 +306,7 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
         }
                     
         // Build list of active community classes and CPS requests to be displayed on eCommerce site
+        // US1562 - Include cancelled community classes in export to DemandWare (to enable visibility flags to be reset)
             
         String theClassQuery = 'Select Id, CreatedDate, redwing__Learning__c, Learning_Plan__r.Id, Learning_Plan__r.Name, ';
             theClassQuery += 'Learning_Plan__r.CreatedDate, Learning_Plan__r.redwing__End_Date__c, Class_Online__c, Class_Online_From__c, ';
@@ -317,7 +318,9 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             theClassQuery += 'From redwing__ILT_Class__c ';
             theClassQuery += 'Where ((Request_Type__c = \'Community\' And Skedulo_Job_Active__c = true) ';
             theClassQuery += 'OR (Request_Type__c = \'Nurse Assistant Testing\' And Skedulo_Job_Active__c = true And ((Is_Stacked_Class__c = false) OR (Is_Stacked_Class__c = true And Is_Master_Class__c = true))) '; 
-            theClassQuery += 'OR (Request_Type__c = \'CPS\'))';
+            theClassQuery += 'OR (Request_Type__c = \'CPS\') ';
+            // US1562 - Export community class if cancelled so DemandWare product can be updated appropriately
+            theClassQuery += 'OR (Request_Type__c IN (\'Community\',\'Nurse Assistant Testing\') And Skedulo_Job_Status__c = \'Cancelled\')) ';
             theClassQuery += incrementalExport;
         
         activeCommunityClasses = Database.query(theClassQuery);
