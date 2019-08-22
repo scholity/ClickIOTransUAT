@@ -13,6 +13,12 @@ public with sharing class phss_cc_CartControllerTest {
     public static List<ccrz__E_StoredPayment__c> testStoredPayments;
     public static Map<String, Object> productQuantityMap;
 
+    public static Account testAccount;
+    public static Geo_Location__c testLocation;
+    public static redwing__ILT_Class__c testIltClass;
+    public static ccrz__E_Product__c testProduct;
+    public static ccrz__E_CartItem__c testCartItem;
+
     /**
      * @description Creates the basic testdata.
      */
@@ -29,8 +35,87 @@ public with sharing class phss_cc_CartControllerTest {
             productQuantityMap.put(productSfid, 2);
         }
 
+        productQuantityMap = new Map<String, Object>();
+        for (ccrz__E_Product__c product : products) {
+            String productSfid = String.valueOf(product.Id);
+            productQuantityMap.put(productSfid, 2);
+        }
+
         testCart = testCarts[0];
         testStoredPayments = phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
+    }
+
+    public static void setupAdditional() {
+
+        testAccount = (Account) testData.get(phss_cc_TestDataFactory.TEST_ACCOUNT);
+        testOpportunity = phss_cc_TestDataFactory.createInsertTestOpportunity(testAccount);
+        testLocation = phss_cc_TestDataFactory.createInsertTestGeoLocation();
+
+        Map<String, Object> learningData = phss_cc_TestDataFactory.createInsertTestLearningObjects();
+        redwing__Training_Plan__c trainingPlan = (redwing__Training_Plan__c) learningData.get(phss_cc_TestDataFactory.TEST_TRAINING_PLAN);
+        trainingPlan.Classroom_Setting__c = 'Online';
+        trainingPlan.redwing__Status__c = 'Active';
+        update trainingPlan;
+
+        Course_Catalog__c catalog = new Course_Catalog__c();
+        catalog.Name = 'Test Catalog';
+        catalog.Number_of_Students__c = 5;
+        insert catalog;
+
+        sked__Job__c job = (sked__Job__c) learningData.get(phss_cc_TestDataFactory.TEST_SKEDULO_JOB);
+        job.Temp_Course__c = catalog.Name;
+
+        products = (List<ccrz__E_Product__c>) testData.get(phss_cc_TestDataFactory.TEST_PRODUCTS);
+        testProduct = products[0];
+        testProduct.ccrz__InventoryType__c = 'COMMUNITY';
+        testProduct.LMS_Learning_Plan__c = trainingPlan.Id;
+        testProduct.Course_Catalog__c = catalog.Id;
+        update testProduct;
+        testIltClass = (redwing__ILT_Class__c) learningData.get(phss_cc_TestDataFactory.TEST_ILT_CLASS);
+
+        testCart.Opportunity__c = testOpportunity.Id;
+        update testCart;
+
+        List<ccrz__E_CartItem__c> cartItems = [SELECT Id, ccrz__Product__c, ILT_Class__c
+                        FROM ccrz__E_CartItem__c
+                        WHERE ccrz__Cart__r.Opportunity__c = :testOpportunity.Id];
+        for (ccrz__E_CartItem__c cartItem : cartItems) {
+            cartItem.ccrz__Product__c = testProduct.Id;
+            cartItem.ILT_Class__c = testIltClass.Id;
+            System.debug('CartItem: ' + CartItem);
+            testCartItem = cartItem;
+        }
+
+        update cartItems;
+
+        List<Voucher__c> vs = new List<Voucher__c>();
+        Voucher__c v1 = new Voucher__c();
+        v1.ILT_Class__c = testIltClass.id;
+        v1.Learning_Plan__c = trainingPlan.Id;
+        v1.CC_Product__c = testProduct.Id;
+        v1.Status__c = 'Temp Hold';
+        vs.add(v1);
+
+        Voucher__c v2 = new Voucher__c();
+        v2.ILT_Class__c = testIltClass.id;
+        v2.Learning_Plan__c = trainingPlan.Id;
+        v2.Status__c = 'Temp Hold';
+        vs.add(v2);
+
+        Voucher__c v3 = new Voucher__c();
+        v3.ILT_Class__c = testIltClass.id;
+        v3.Learning_Plan__c = trainingPlan.Id;
+        v3.Status__c = 'Issued';
+        vs.add(v3);
+
+        Voucher__c v4 = new Voucher__c();
+        v4.ILT_Class__c = testIltClass.id;
+        v4.Learning_Plan__c = trainingPlan.Id;
+        v4.Status__c = 'Issued';
+        vs.add(v4);
+
+        insert vs;
+
     }
 
     @isTest
@@ -50,7 +135,50 @@ public with sharing class phss_cc_CartControllerTest {
         setupTestData();
 
         Test.startTest();
-        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(null, null);
+
+        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+        for (ccrz__E_Product__c product : products) {
+            String productSfid = String.valueOf(product.Id);
+            productQuantityMap.put(productSfid, 2);
+        }
+        Test.stopTest();
+
+        System.assertNotEquals(null, updateCartProductsResult);
+    }
+
+    @isTest
+    public static void updateCartProductsWithAddingVouchers() {
+        setupTestData();
+        setupAdditional();
+
+        Test.startTest();
+
+        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+
+        for (ccrz__E_Product__c product : products) {
+            String productSfid = String.valueOf(product.Id);
+            productQuantityMap.put(productSfid, 3);
+        }
+        updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+
+        Test.stopTest();
+
+        System.assertNotEquals(null, updateCartProductsResult);
+    }
+
+    @isTest
+    public static void updateCartProductsWithSubtractingVouchers() {
+        setupTestData();
+        setupAdditional();
+
+        Test.startTest();
+
+        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+
+        for (ccrz__E_Product__c product : products) {
+            String productSfid = String.valueOf(product.Id);
+            productQuantityMap.put(productSfid, 1);
+        }
         updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
         Test.stopTest();
 

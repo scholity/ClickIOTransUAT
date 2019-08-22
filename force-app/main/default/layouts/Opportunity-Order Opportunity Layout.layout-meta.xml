@@ -253,7 +253,7 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ILT_Class__c</fields>
-        <fields>Learning_Plan__c</fields>
+        <fields>User__c</fields>
         <fields>Status__c</fields>
         <relatedList>Voucher__c.Opportunity__c</relatedList>
     </relatedLists>

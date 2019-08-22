@@ -109,13 +109,6 @@
                 <elementReference>sOrder.Id</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>sFulfillmentItem.ILT_Class__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>sOrderItem.ILT_Class__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Add_OrderFulfillment_Collection</targetReference>
         </connector>
@@ -384,8 +377,8 @@
     <assignments>
         <name>Set_Order_Item_Status</name>
         <label>Set Order Item Status</label>
-        <locationX>558</locationX>
-        <locationY>1134</locationY>
+        <locationX>556</locationX>
+        <locationY>1124</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.ccrz__OrderItemStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -686,7 +679,7 @@
         <defaultConnectorLabel>Over Available Credit Limit</defaultConnectorLabel>
         <rules>
             <name>Has_Available_Credit</name>
-            <conditionLogic>((1 AND 3 ) OR 2 OR 4)</conditionLogic>
+            <conditionLogic>(1 AND 3) OR 2</conditionLogic>
             <conditions>
                 <leftValueReference>sOrder.ccrz__TotalAmount__c</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
@@ -706,13 +699,6 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>cc</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>sOrder.ccrz__TotalAmount__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -789,8 +775,8 @@
     <decisions>
         <name>Count_Course_Records</name>
         <label>Count Course Records</label>
-        <locationX>347</locationX>
-        <locationY>1038</locationY>
+        <locationX>343</locationX>
+        <locationY>1028</locationY>
         <defaultConnector>
             <targetReference>Set_to_Submitted</targetReference>
         </defaultConnector>
@@ -825,8 +811,22 @@
             <label>Is Course Record</label>
         </rules>
         <rules>
-            <name>Is_Fee</name>
+            <name>Is_Fee_not_Course_Kit</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Student</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Class</stringValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>sOrderItem.Inventory_Type__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -837,7 +837,36 @@
             <connector>
                 <targetReference>Assign_Order_Fulfillment_Item</targetReference>
             </connector>
-            <label>Is Fee</label>
+            <label>Is Fee not Course - Kit</label>
+        </rules>
+        <rules>
+            <name>Is_Fee_for_Course_Kit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sOrderItem.Inventory_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FEE</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Student</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Class</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Order_Item_Status</targetReference>
+            </connector>
+            <label>Is Fee for Course - Kit</label>
         </rules>
         <rules>
             <name>Is_Community_Class</name>
@@ -961,10 +990,56 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Order_In_Process</name>
+        <label>Is Order In Process</label>
+        <locationX>733</locationX>
+        <locationY>93</locationY>
+        <defaultConnector>
+            <targetReference>Set_Child_Account_for_Lookup</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>In_Process</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sOrder.ccrz__OrderStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>On Hold</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrder.ccrz__OrderStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Open</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrder.ccrz__OrderStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Order Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrder.ccrz__OrderStatus__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Reservation</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Product_Item_Type</targetReference>
+            </connector>
+            <label>In Process</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Valid_Contract_with_Override</name>
         <label>Is Valid Contract with Override</label>
-        <locationX>55</locationX>
-        <locationY>381</locationY>
+        <locationX>60</locationX>
+        <locationY>382</locationY>
         <defaultConnector>
             <targetReference>Set_Invalid_Contract_Error</targetReference>
         </defaultConnector>
@@ -1147,7 +1222,7 @@
             <label>IfReserved</label>
         </rules>
     </decisions>
-    <description>Changed Contract Sort - to find Active Contract First</description>
+    <description>Added Individual Account Record Type Check - Added Order already In Process check</description>
     <formulas>
         <name>AddtoCourse</name>
         <dataType>Number</dataType>
@@ -1299,7 +1374,7 @@
         <name>Get_Active_Contract</name>
         <label>Get Active Contract</label>
         <locationX>526</locationX>
-        <locationY>304</locationY>
+        <locationY>305</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Child_Set_Credit_Limit</targetReference>
@@ -1332,13 +1407,6 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>Status</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Activated</stringValue>
-            </value>
-        </filters>
         <object>Contract</object>
         <outputReference>sContract</outputReference>
         <queriedFields>Account__c</queriedFields>
@@ -1347,8 +1415,6 @@
         <queriedFields>Status</queriedFields>
         <queriedFields>EndDate</queriedFields>
         <queriedFields>StartDate</queriedFields>
-        <sortField>StartDate</sortField>
-        <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
         <name>Get_All_Training_Events_on_Order</name>
@@ -1357,7 +1423,7 @@
         <locationY>36</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Child_Account_for_Lookup</targetReference>
+            <targetReference>Is_Order_In_Process</targetReference>
         </connector>
         <filters>
             <field>CC_Order__c</field>
@@ -1443,7 +1509,7 @@
         <queriedFields>Error_Message__c</queriedFields>
         <queriedFields>Inventory_Type__c</queriedFields>
         <queriedFields>ccrz__PercentDiscount__c</queriedFields>
-        <queriedFields>ILT_Class__c</queriedFields>
+        <queriedFields>ccrz__UnitOfMeasure__c</queriedFields>
         <sortField>Id</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>

@@ -408,6 +408,7 @@ public class CancelOrderItemController {
 	        newOdrItm.ccrz__OrderItemStatus__c 	= 'Return Submitted';
 	        newOdrItm.ccrz__ParentOrderItem__c	= oItm.Id;
 	        newOdrItm.Is_Return__c				= true;
+            newOdrItm.Payment_Category__c		= '48150';
             /*
             if (isPartialReturn)
 	        {
@@ -586,84 +587,86 @@ public class CancelOrderItemController {
         system.debug('***orderItemId***'+orderItemId);
         decimal percentCharge = 0;
         
-        
-         ccrz__E_OrderItem__c oItm = [SELECT Id,
-                                             ccrz__Order__c,
-                                             ccrz__Price__c,
-                                             ccrz__Quantity__c,
-                                             ccrz__SubAmount__c,
-                                      		 CreatedDate,
-                                      		 ILT_Class__c,
-                                      		 ILT_Class__r.redwing__Start_Date__c,
-                                      		 ILT_Class__r.Classroom_Setting__c 
-                                        FROM ccrz__E_OrderItem__c
-                                       WHERE Id =: orderItemId LIMIT 1];
+        ccrz__E_OrderItem__c oItm = [SELECT Id,
+                                            ccrz__Order__c,
+                                            ccrz__Price__c,
+                                            ccrz__Quantity__c,
+                                            ccrz__SubAmount__c,
+                                      		CreatedDate,
+                                      		ILT_Class__c,
+                                      		ILT_Class__r.redwing__Start_Date__c,
+                                      		ILT_Class__r.Classroom_Setting__c 
+                                       FROM ccrz__E_OrderItem__c
+                                      WHERE Id =: orderItemId LIMIT 1];
         
         system.debug('oItm'+oItm);
         
-        system.debug('oItm ILT START DATE'+oItm.ILT_Class__r.redwing__Start_Date__c );
-        
-        //calculate days betwen today and start date
-        Date todaysDay = date.today();
-        
-        Integer noOfDays = todaysDay.daysBetween(oItm.ILT_Class__r.redwing__Start_Date__c );
-        
-        system.debug('***noOfDays***'+noOfDays);
-        
-        string daysBlock  = '';
-        system.debug('***oItm.ILT_Class__r.Classroom_Setting__c***'+oItm.ILT_Class__r.Classroom_Setting__c);
-        if (oItm.ILT_Class__r.Classroom_Setting__c != 'Online')
+        if(oItm != null)
         {
-            if(noOfDays > 14)
+            system.debug('oItm ILT START DATE'+oItm.ILT_Class__r.redwing__Start_Date__c );
+            
+            //calculate days betwen today and start date
+            Date todaysDay = date.today();
+            
+            Integer noOfDays = todaysDay.daysBetween(oItm.ILT_Class__r.redwing__Start_Date__c );
+            
+            system.debug('***noOfDays***'+noOfDays);
+            
+            string daysBlock  = '';
+            system.debug('***oItm.ILT_Class__r.Classroom_Setting__c***'+oItm.ILT_Class__r.Classroom_Setting__c);
+            if (oItm.ILT_Class__r.Classroom_Setting__c != 'Online')
             {
-                daysBlock = 'DayAny';
-            }
-            else if (noOfDays <= 14 && noOfDays > 7)
-            {
-                daysBlock = 'Days14';
-            }
-            else if (noOfDays <= 7 && noOfDays > 2)
-            {
-                daysBlock = 'Days7';
-            }
-            else if (noOfDays <= 2 && noOfDays > 0)
-            {
-                daysBlock = 'Days2';
+                if(noOfDays > 14)
+                {
+                    daysBlock = 'DayAny';
+                }
+                else if (noOfDays <= 14 && noOfDays > 7)
+                {
+                    daysBlock = 'Days14';
+                }
+                else if (noOfDays <= 7 && noOfDays > 2)
+                {
+                    daysBlock = 'Days7';
+                }
+                else if (noOfDays <= 2 && noOfDays > 0)
+                {
+                    daysBlock = 'Days2';
+                }
+                else
+                {
+                    daysBlock = 'Day0';
+                }
+                
+                system.debug('***daysBlock***'+daysBlock);
+                
+                List<CommunityClassCancellationPolicy__mdt> mtd = [SELECT MasterLabel,
+                                                                   Percent_Value__c
+                                                                   FROM CommunityClassCancellationPolicy__mdt
+                                                                   WHERE MasterLabel =: daysBlock];
+                
+                system.debug('***mtd[0].Percent_Value__c***'+mtd[0].Percent_Value__c);
+                
+                percentCharge = mtd[0].Percent_Value__c;
             }
             else
-            {
-                daysBlock = 'Day0';
+            {   
+                DateTime dt  = oItm.CreatedDate;
+                Date odrDate = dt.date();
+    
+                Integer noOfDaysForOnline = todaysDay.daysBetween(odrDate);
+                
+                system.debug('noOfDaysForOnline-->'+noOfDaysForOnline);
+                
+                if(noOfDaysForOnline >= 0 && noOfDaysForOnline <= 2)
+                {
+                    percentCharge = 0;
+                }
+                else
+                {
+                    percentCharge = 100;
+                }
             }
-            
-            system.debug('***daysBlock***'+daysBlock);
-            
-            List<CommunityClassCancellationPolicy__mdt> mtd = [SELECT MasterLabel,
-                                                               Percent_Value__c
-                                                               FROM CommunityClassCancellationPolicy__mdt
-                                                               WHERE MasterLabel =: daysBlock];
-            
-            system.debug('***mtd[0].Percent_Value__c***'+mtd[0].Percent_Value__c);
-            
-            percentCharge = mtd[0].Percent_Value__c;
-        }
-        else
-        {   
-            DateTime dt  = oItm.CreatedDate;
-			Date odrDate = dt.date();
-
-            Integer noOfDaysForOnline = todaysDay.daysBetween(odrDate);
-            
-            system.debug('noOfDaysForOnline-->'+noOfDaysForOnline);
-            
-            if(noOfDaysForOnline >= 0 && noOfDaysForOnline <= 2)
-        	{
-            	percentCharge = 0;
-        	}
-        	else
-        	{
-            	percentCharge = 100;
-        	}
-        }
+    	}
         
         return percentCharge;
         

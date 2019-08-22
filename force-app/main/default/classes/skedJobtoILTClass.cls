@@ -4,51 +4,35 @@ public without sharing class skedJobtoILTClass {
     public static Boolean initSkedJobtoILTClassUpdate = true;
 
     public  void afterInsert(List<sked__Job__c> newRecords) {
-
         // call checkEligibility method to make sure the user is eligible to trigger the logic
-        Boolean eligible = checkEligibility();
-        if (!eligible) {
+        if (!checkEligibility()) {
             System.debug('eligibility check negative');
             return;
         }
         System.debug('eligibility check positive');
 
-        System.debug('lstnewrecords is new '+newRecords);
         updateRecords = false;
         
         List<sked__Job__c> lstnewRecords = new List<sked__Job__c>();
             
         for(sked__Job__c jobRecord : newRecords){
-            //****************************************************************************
-            // US1539 - Prevent creation of ILT Class under specific conditions
-            // (1) For community classes, do not create ILT Class until location is confirmed
-            // (2) For CEP classes (Nurse Assistant Testing), do not create ILT Class until Ready to Publish = True
-            //****************************************************************************
-            Boolean locationConfirmed = jobRecord.Location_Confirmed__c;
-            Boolean readyToPublish = jobRecord.Ready_to_Publish__c;
-            String jobType = jobRecord.sked__Type__c;
-            
-            // Skip community class creation if location not confirmed           
-            if (jobType == 'Community' && !locationConfirmed) continue;
-            // Skip CEP class creation if not ready to publish
-            if (jobType == 'Nurse Assistant Testing' && !readyToPublish) continue;     
-            
-            lstnewRecords.add(jobRecord);
+            if (checkJobStatus(jobRecord)) lstnewRecords.add(jobRecord);
         }        
         upsertILTClass(lstnewRecords);
+
+        System.debug('lstnewrecords is new '+lstnewRecords);
     }
     
     public  void afterUpdate(List<sked__Job__c> newRecords, Map<Id, sked__Job__c> updatedRecords) {
-
         // call checkEligibility method to make sure the user is eligible to trigger the logic
-        Boolean eligible = checkEligibility();
-        if (!eligible) {
+        if (!checkEligibility()) {
             System.debug('eligibility check negative');
             return;
         }
         System.debug('eligibility check positive');
 
         updateRecords = true;
+
         List<sked__Job__c> lstnewRecords = new List<sked__Job__c>();
         Map<Id, sked__Job__c> mapCanceledJobs = new Map<Id, sked__Job__c>();
             
@@ -58,21 +42,7 @@ public without sharing class skedJobtoILTClass {
                 mapCanceledJobs.put(jobRecord.Id, jobRecord);
             } 
             else if(jobRecord.sked__Job_Status__c != 'Cancelled'){
-                //****************************************************************************
-                // US1539 - Prevent creation of ILT Class under specific conditions
-                // (1) For community classes, do not create ILT Class until location is confirmed
-                // (2) For CEP classes (Nurse Assistant Testing), do not create ILT Class until Ready to Publish = True
-                //****************************************************************************
-                Boolean locationConfirmed = jobRecord.Location_Confirmed__c;
-                Boolean readyToPublish = jobRecord.Ready_to_Publish__c;
-                String jobType = jobRecord.sked__Type__c;
-                
-                // Skip community class creation if location not confirmed           
-                if (jobType == 'Community' && !locationConfirmed) continue;
-                // Skip CEP class creation if not ready to publish
-                if (jobType == 'Nurse Assistant Testing' && !readyToPublish) continue;     
-                
-                lstnewRecords.add(jobRecord);
+                if (checkJobStatus(jobRecord)) lstnewRecords.add(jobRecord);
             }
         }
         System.debug('lstnewrecords is '+lstnewRecords);           
@@ -189,7 +159,7 @@ public without sharing class skedJobtoILTClass {
         // Build a Map of Skedulo Course Catalog Id to Job Id, and all Locations and Jobs in Scope
         
         // Get a map of all course catalog available to match it with course code in Stacked class
-        for(Course_Catalog__c cc:[SELECT Name, id FROM Course_Catalog__c where Type__c!=null limit 40000])
+        for(Course_Catalog__c cc:[SELECT Name, id FROM Course_Catalog__c where Type__c!=null limit 10000])
         {
             CCwithIds.put(cc.name, cc.id);
         }
@@ -615,14 +585,58 @@ public without sharing class skedJobtoILTClass {
         List<Training_Events__c> trainingEvents = [Select Id, Supp_Info__c from Training_Events__c Where Id In :setTrainingEvents];
         for (Training_Events__c theTrainingEvent : trainingEvents) {
             if (String.isNotBlank(theTrainingEvent.Supp_Info__c)) suppInfoMap.put(theTrainingEvent.Id, theTrainingEvent.Supp_Info__c);
-        } 
+        }
+
+        // **** logic to populate Opp Id on Full Service class
+
+        List<redwing__ILT_Class__c> updateclassreclist = new List<redwing__ILT_Class__c>();
+        // query opportunity IDs, map - dependency map between job and opp Id
+        Map<Id, Id> JobIdOppIdMap = new Map<Id, Id>();
+        Set<Id> jobIdSet = new Set<Id>();
+        for (sked__Job__c curJobRecord : newRecords) {
+            jobIdSet.add(curJobRecord.Id);
+        }
+
+        Map<Id, sked__Job__c> skedJobsMap = new Map<Id, sked__Job__c>([SELECT Id, Training_Event__r.Opportunity__c, Training_Event__r.CC_Order__c FROM sked__Job__c WHERE Id IN:jobIdSet]);
+        // ****
+
+
+        // *** get order items to populate them with ILT class Id.
+        Map<Id, Id> orderIDsMap = new Map<Id, Id>(); // key: order Id, value: skedulo Job Id
+        Set<Id> orderIdSet = new Set<Id>();
+        for (Id id : skedJobsMap.keySet()) {
+            Id orderId = skedJobsMap.get(id).Training_Event__r.CC_Order__c;
+            orderIDsMap.put(orderid, id);
+            orderIdSet.add(orderId);
+        }
+
+        List<ccrz__E_OrderItem__c> orderItems = [SELECT Id, ILT_Class__c, ccrz__Order__c FROM ccrz__E_OrderItem__c WHERE ccrz__Order__c IN :orderIdSet];
+
+        Map<Id, Set<ccrz__E_OrderItem__c>> jobIdOrderItems = new Map<Id, Set<ccrz__E_OrderItem__c>>(); // skedulo job Id as key, set of related order items as value
+
+        for (ccrz__E_OrderItem__c item : orderItems) {
+
+            Id skeduloJobId = orderIDsMap.get(item.ccrz__Order__c);
+
+            if (skeduloJobId != null) {
+                if (jobIdOrderItems.keySet().contains(skeduloJobId)) {
+                    // if the skedulo job exists as key already, add the order item to exsiting set
+                    Set<ccrz__E_OrderItem__c> orderItemSet = jobIdOrderItems.get(skeduloJobId);
+                    orderItemSet.add(item);
+                } else {
+                    // if the skedulo job does not exist as key, create set and add to the map
+                    Set<ccrz__E_OrderItem__c> orderItemSet = new Set<ccrz__E_OrderItem__c>{item};
+                    jobIdOrderItems.put(skeduloJobId, orderItemSet);
+                }
+            }
+        }
+        List<ccrz__E_OrderItem__c> lstOrderItems = new List<ccrz__E_OrderItem__c>(); // list to be populated with order items after ILT class is added
+        // ****
 
         // **************************************************************************************************************   
         // Main loop of method - iterate across all incoming jobs
-        // **************************************************************************************************************   
+        // **************************************************************************************************************
 
-        List<redwing__ILT_Class__c> updateclassreclist = new List<redwing__ILT_Class__c>();
-        
         for(sked__Job__c curJobRecord : newRecords) {
             // Determine if this is an updated job record for which an ILT class record does not already exist
             // If so, treat as an insert not an update
@@ -692,7 +706,13 @@ public without sharing class skedJobtoILTClass {
 
                     clsRecord.Class_Online__c = true;
                     clsRecord.Course_Class_Type__c = curJobRecord.Course_Class_Type__c;
-                    
+
+                    if (curJobRecord.sked__Type__c == 'Full Service') {
+                        if (skedJobsMap.get(curJobRecord.Id) != null && skedJobsMap.get(curJobRecord.Id).Training_Event__c != null) {
+                            clsRecord.Opportunity__c = skedJobsMap.get(curJobRecord.Id).Training_Event__r.Opportunity__c;
+                        }
+                    }
+
                     Integer nTotalStudents = 0;
                     String instructorStudentRatio = '';                                     
                     if(curJobRecord.Is_Stacked_Class__c==true) {
@@ -1072,7 +1092,7 @@ public without sharing class skedJobtoILTClass {
             //if(!updateRecords){
             list<Voucher__c> voucherList = new list<Voucher__c>();             
             for (Integer nILTClass=0; nILTClass < results.size(); nILTClass++) {  
-                redwing__ILT_Class__c clsRecord = lstILTClass[nILTClass];               
+                redwing__ILT_Class__c clsRecord = lstILTClass[nILTClass];
                 if (results[nILTClass].isCreated()) { 
                     // Create vouchers only for new ILT Class records                           
                     // for(redwing__ILT_Class__c clsRecord : lstILTClass){
@@ -1091,6 +1111,7 @@ public without sharing class skedJobtoILTClass {
                             }
                         }
                     }
+
                 //}                    
                 } else {
                     // For updated (existing) ILT Class records determine if voucher count is still valid
@@ -1098,12 +1119,39 @@ public without sharing class skedJobtoILTClass {
                 
                     // To be completed at future date
                 }
+
+                if (results[nILTClass].isSuccess()) {
+                    // *** populate order items for FS class with the ILT class
+
+                    // for every successful inserted class check if it is FS
+                    // get set of order items
+                    // iterate through order items, populate ILT class, add to the order items List
+                    // update order items
+
+                    if (clsRecord.Request_Type__c == 'Full Service') {
+                        Set<ccrz__E_OrderItem__c> orderItemSet = jobIdOrderItems.get(clsRecord.Skedulo_Job_Id__c);
+                        if (!orderItemSet.isEmpty()) {
+                            for (ccrz__E_OrderItem__c oi : orderItemSet) {
+                                if (oi.ILT_Class__c == null) {
+                                    oi.ILT_Class__c = clsRecord.Id;
+                                    lstOrderItems.add(oi);
+                                }
+                            }
+                        }
+                    }
+                    // ****
+                }
             }   
                     
             if(voucherList.size() > 0)
                 insert voucherList;
             //}
-        } 
+        }
+
+        if (lstOrderItems.size() > 0) {
+            System.debug('lstOrderItems='+lstOrderItems);
+            List<Database.SaveResult> sresult = Database.update(lstOrderItems, false);
+        }
 
         if(lstILTSession.size() > 0) {
             System.debug('listILTSession='+lstILTSession);
@@ -1175,7 +1223,7 @@ public without sharing class skedJobtoILTClass {
         }          
     }
     
-    public  void cancelRelatedRecords(Map<Id, sked__Job__c> mapCanceledJobs){
+    public  void cancelRelatedRecords(Map<Id, sked__Job__c> mapCanceledJobs) {
         
         // Implementing the Isactive and deletion Logic
 
@@ -1196,7 +1244,8 @@ public without sharing class skedJobtoILTClass {
 
         List<redwing__ILT_Session__c> updSessionRecords = new list<redwing__ILT_Session__c>();
         //Update Session with job Active field if students are registered
-        for(redwing__ILT_Session__c sesRec : [Select id, Skedulo_Job_Status__c, Skedulo_Job_Id_External__c, Skedulo_Job_Active__c from redwing__ILT_Session__c where Skedulo_Job_Id_External__c IN: mapCanceledJobs.keyset()]){
+        for(redwing__ILT_Session__c sesRec : [Select id, Skedulo_Job_Status__c, Skedulo_Job_Id_External__c, Skedulo_Job_Active__c
+            From redwing__ILT_Session__c Where Skedulo_Job_Id_External__c IN: mapCanceledJobs.keyset()]){
             sesRec.Skedulo_Job_Active__c = false;
             sesRec.Skedulo_Job_Status__c = 'Cancelled';
             updSessionRecords.add(sesRec); 
@@ -1224,7 +1273,6 @@ public without sharing class skedJobtoILTClass {
                 if(clsRec.redwing__ILT_Sessions__r.isEmpty()){
                     clsRecIds.add(clsRec.Id);
                 }
-                
             }
         }
         if(!setJobIds.isEmpty()){
@@ -1240,16 +1288,30 @@ public without sharing class skedJobtoILTClass {
         // *** US1517 - Deactivate all remaining (unused) vouchers for this class
         // *** US1562 - Deactivate all remaining (unused) vouchers (status = 'Void')
         // *** US1562 - Change status of assigned vouchers (status = 'Pending Cancellation')
+        // *** US1562 - Change status of outstanding rosters (status = 'Cancelled')
 
         // Generate list of both claimed and unused vouchers for this class
         String claimedStatuses = 'Reserved, Claimed';
         //List<String> ClaimedStatuses = System.label.ClaimedVoucherTypes.split(';');
+
         List<Voucher__c> lstVouchersToUpdate = new List<Voucher__c>();
+        List<redwing__ILT_Roster__c> lstRostersToUpdate = new List<redwing__ILT_Roster__c>();
+        List<redwing__Learning_Assignment__c> lstLearningAssignmentsToUpdate = new List<redwing__Learning_Assignment__c>();
+
+        Set<Id> lstRosterUsers = new Set<Id>();
+        Set<Id> lstRosterLearningAssignments = new Set<Id>();
+
+        String cancelReason = 'Course Cancelled';
 
         if (clsRecIds.size() > 0) {
             List<Voucher__c> classVouchers = [Select Id, Name, Status__c From Voucher__c
             Where ILT_Class__c In :clsRecIds];
             //  And Status__c Not In :ClaimedStatuses];
+
+            List<redwing__ILT_Roster__c> classRosters = [Select Id, redwing__User__c, redwing__ILT_Class__r.Learning_Plan__c, redwing__ILT_Class__c, redwing__Learning_Assignment__c
+            From redwing__ILT_Roster__c Where redwing__ILT_Class__c In :clsRecIds];
+
+            // Update impacted Vouchers - status 'Pending Cancellation' or 'Void' as appropriate
 
             for (Voucher__c theVoucher : classVouchers) {
                 voucher__c theUpdatedVoucher = new voucher__c();
@@ -1263,8 +1325,62 @@ public without sharing class skedJobtoILTClass {
                 lstVouchersToUpdate.add(theUpdatedVoucher);
             }
 
-            if(lstVouchersToUpdate.size() > 0) {
+            if (lstVouchersToUpdate.size() > 0) {
                 update lstVouchersToUpdate;
+            }
+
+            // Update impacted Rosters - status 'Cancelled' , Cancellation Date and Reason
+
+            for (redwing__ILT_Roster__c theRoster : classRosters) {
+                redwing__ILT_Roster__c theUpdatedRoster = new redwing__ILT_Roster__c();
+                theUpdatedRoster.Id = theRoster.Id;
+                theUpdatedRoster.redwing__Status__c = 'Cancelled';
+                theUpdatedRoster.Cancellation_Date__c = System.today();
+                theUpdatedRoster.Cancellation_Reason__c = cancelReason;
+
+                lstRostersToUpdate.add(theUpdatedRoster);
+                lstRosterLearningAssignments.add(theRoster.redwing__Learning_Assignment__c);
+                lstRosterUsers.add(theRoster.redwing__User__c);
+            }
+
+            if (lstRostersToUpdate.size() > 0) {
+                update lstRostersToUpdate;
+
+                if (String.isNotBlank(classRosters[0].redwing__ILT_Class__r.Learning_Plan__c)) {
+                    // Get Learning Plan Assignments for Rosters
+                    List<redwing__Training_Plan_Assignment__c> lstRosterLearningPlanAssignments = [
+                            Select Id, redwing__User__c
+                            From redwing__Training_Plan_Assignment__c
+                            Where redwing__User__c In :lstRosterUsers And redwing__Training_Plan__c = :classRosters[0].redwing__ILT_Class__r.Learning_Plan__c
+                    ];
+
+                    // Get Learning Plan Achievements for Rosters
+                    List<redwing__Training_Plan_Achievement__c> lstLearningPlanAchievements = [
+                            Select Id, redwing__Training_Plan__c
+                            From redwing__Training_Plan_Achievement__c
+                            Where redwing__Training_Plan__c = :classRosters[0].redwing__ILT_Class__r.Learning_Plan__c
+                    ];
+
+                    // Get Achievement assignments for Rosters
+                    List<redwing__Achievement_Assignment__c> lstRosterAchievementAssignments = [
+                            Select Id, redwing__User__c
+                            From redwing__Achievement_Assignment__c
+                            Where redwing__User__c In :lstRosterUsers And redwing__Status__c Not In ('Acquired', 'Expired')
+                            And redwing__Training_Plan_Achievement__c IN :lstLearningPlanAchievements
+                    ];
+
+                    delete lstRosterLearningPlanAssignments;
+                    delete lstRosterAchievementAssignments;
+                }
+
+                // US1555 - 'Cancelled' should appear on Roster (Student) list in the Online Work column if the enrollment was cancelled
+                for (Id theLearningAssignment : lstRosterLearningAssignments) {
+                    redwing__Learning_Assignment__c theUpdatedLearningAssignment = new redwing__Learning_Assignment__c();
+                    theUpdatedLearningAssignment.Id = theLearningAssignment;
+                    theUpdatedLearningAssignment.redwing__Progress__c = 'Cancelled';
+                    lstLearningAssignmentsToUpdate.add(theUpdatedLearningAssignment);
+                }
+                update lstLearningAssignmentsToUpdate;
             }
         }
 
@@ -1292,6 +1408,7 @@ public without sharing class skedJobtoILTClass {
     }
 
     private static Boolean checkEligibility() {
+
         if(Test.isRunningTest()) {return true;}
         
         // load string from custom label
@@ -1309,6 +1426,26 @@ public without sharing class skedJobtoILTClass {
             return true; // Eligible, profile in included list
         } else {
             return false; // Not eligible, profile not in included list
+        }
+    }
+
+    private static Boolean checkJobStatus(sked__Job__c jobRecord) {
+        //****************************************************************************
+        // US1539 - Prevent creation of ILT Class under specific conditions
+        // (1) For community classes, do not create ILT Class until location is confirmed
+        // (2) For CEP classes (Nurse Assistant Testing), do not create ILT Class until Ready to Publish = True
+        //****************************************************************************
+        Boolean locationConfirmed = jobRecord.Location_Confirmed__c;
+        Boolean readyToPublish = jobRecord.Ready_to_Publish__c;
+        String jobType = jobRecord.sked__Type__c;
+
+        // Skip community class creation if location not confirmed
+        if (((jobType == 'Community') && !locationConfirmed) ||
+                // Skip CEP class creation if not ready to publish
+                ((jobType == 'Nurse Assistant Testing') && !readyToPublish)) {
+            return false; // Take no action on this job
+        } else {
+            return true;  // Process this job
         }
     }
 }

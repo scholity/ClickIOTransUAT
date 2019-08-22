@@ -66,6 +66,45 @@
         <template>All/Case_with_No_priority</template>
     </alerts>
     <alerts>
+        <fullName>GetFeedback_respoce_Workflow</fullName>
+        <description>GetFeedback respoce Workflow</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <recipient>rsguser@redcross.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sfdcsudhir@redcross.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Survey_Templates/getFeedbackTest</template>
+    </alerts>
+    <alerts>
+        <fullName>LTS_Registration_Using_Credit_Card</fullName>
+        <description>LTS Registration Using Credit Card</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/LTS_Registration_using_credit_card</template>
+    </alerts>
+    <alerts>
+        <fullName>LTS_Registration_Using_Invoice</fullName>
+        <description>LTS Registration Using Invoice</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/LTS_Registration_using_Invoice</template>
+    </alerts>
+    <alerts>
         <fullName>Send_Closed_Case_Survey</fullName>
         <description>Send Closed Case Survey</description>
         <protected>false</protected>
@@ -4682,5 +4721,19 @@ Learn To Swim Facility Registration - Account Name</description>
         </criteriaItems>
         <description>Work flow that fires when case has been created from WEB.</description>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>getFeedbacsurvey</fullName>
+        <actions>
+            <name>GetFeedback_respoce_Workflow</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>contains</operation>
+            <value>Closed - Resolved,Closed - Invoicing,Closed - Product Sales Referral,Closed - Group Sales Referal</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

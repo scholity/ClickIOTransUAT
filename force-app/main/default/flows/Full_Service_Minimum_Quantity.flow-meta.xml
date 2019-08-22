@@ -401,7 +401,7 @@
         <inputAssignments>
             <field>ccrz__ParentOrderItem__c</field>
             <value>
-                <elementReference>spOrderItem.Id</elementReference>
+                <elementReference>sOrderItem.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

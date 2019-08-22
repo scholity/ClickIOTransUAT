@@ -91,7 +91,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                               'Order__r.ccrz__Account__r.SABA_LMS_Code__c,' +
                               'Order__r.ccrz__Account__r.Billing_Contact__c,Order__r.ccrz__Account__r.Billing_Contact__r.FirstName,Order__r.ccrz__Account__r.Billing_Contact__r.LastName,' +
                               'Order_Item__r.Payment_Category__c,' +
-                              'Order__r.ccrz__PONumber__c,Order__r.Order_Number_Text__c,' +
+                              'Order__r.ccrz__PONumber__c,' +
                               // FUTURE - Full Name
                               'Fulfillment__r.Name,ILT_Class__r.Offering_ID__c,' +
                               'Order_Item__r.ccrz__Price__c,' +
@@ -304,9 +304,9 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             // Order Num
             String orderNum = '';
-            //DE1194 Order_Number_Text__c for orderNum
-            if(fi.Order__r.Order_Number_Text__c!=null) {
-                orderNum = '"' + fi.Order__r.Order_Number_Text__c + '"';
+            //US1581 - change the Order Number to the CC Order.Name
+            if(fi.Order__r.Name!=null) {
+                orderNum = '"' + fi.Order__r.Name.replaceAll(regExp, '') + '"';
             }
             // Terms
             String terms = '';
@@ -357,8 +357,6 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             if(fi.Order__r.ccrz__PONumber__c!=null) {
                 po = '"' + fi.Order__r.ccrz__PONumber__c.replaceAll(regExp, '') + '"';
             }
-            // TODO - FUTURE: Full Name
-            String fullName = '';            
             // CRS/Offering ID
             String offeringId = fi.ILT_Class__r.Offering_ID__c;
             // Per Person Fee
@@ -390,6 +388,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             if(!String.isEmpty(fi.CC_Product__r.AP_Code__c)) {
                 apCode='"'+fi.CC_Product__r.AP_Code__c+'"';
             }
+            String fullName = '';
             // Max Instructor Full Name
             String instructorName = '';
             // DE1194 For the following conditions, supply the student name (should be only one)
@@ -400,7 +399,8 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                     FROM redwing__ILT_Roster__c
                     WHERE redwing__ILT_Class__c =:fi.ILT_Class__c]);
                 }
-                    instructorName = rosters[0].Name.replaceAll(regExp, '');
+                instructorName = '"' + rosters[0].Name.replaceAll(regExp, '') + '"';
+                fullName = instructorName;
             } else if (fi.ILT_Class__c!=null && iltCIMap.containsKey(fi.ILT_Class__c) && iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__c!=null) {
                 instructorName = '"';
                 if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.FirstName!=null) {
@@ -516,7 +516,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // Create email
             Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
             email.setSubject( subject );
-            email.setToAddresses( new String[] {'TSInvTransErrors@redcross.org'} );
+            email.setToAddresses( new String[] {'tsinvtranserrors@redcross.org'} );
             // email.setToAddresses( new String[] {'reportscoa@redcross.org'} );
             email.setPlainTextBody( body );
             email.setFileAttachments(emailAttList);

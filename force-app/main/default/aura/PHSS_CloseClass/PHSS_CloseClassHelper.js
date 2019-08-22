@@ -130,6 +130,9 @@
                 component.set("v.opportunityId",storeResponse.oppId);
                 component.set("v.cloudCrazeProdId",storeResponse.ccProdId);
                 console.log('close clas value..'+component.get("v.Emptystudentlist"));
+
+                component.set("v.requestType", storeResponse.RequestType);
+                component.set("v.trainingEventId", storeResponse.TrainingEventId);
             }
             else if (state === "ERROR") {
                 // Process error returned by server
@@ -256,5 +259,31 @@
                 cmp.set("v.showError",true);
             }
         }
+    },
+
+    updateOrder : function(cmp, event) {
+
+
+         var studentCount = cmp.get("v.numberOfStudentsList").length;
+         console.log('studentCount '+studentCount);
+
+         var classId = cmp.get("v.recordId");
+         console.log('classId '+classId);
+
+         var trainingEventId = cmp.get("v.trainingEventId");
+         console.log('trainingEventId '+trainingEventId);
+
+         var action = cmp.get("c.handleFullServiceClass");
+         action.setParams({
+             classId : classId, studentCount : studentCount, trainingEventId : trainingEventId
+         });
+
+         action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                console.log("Response message from handle order: "+response.getReturnValue());
+            }
+         });
+         $A.enqueueAction(action);
     }
 })

@@ -34,7 +34,7 @@
         <name>Assign_Account_Info</name>
         <label>Assign Account Info</label>
         <locationX>404</locationX>
-        <locationY>188</locationY>
+        <locationY>187</locationY>
         <assignmentItems>
             <assignToReference>sAccount.Name</assignToReference>
             <operator>Assign</operator>
@@ -47,6 +47,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>sContact.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sAccount.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sRecordType.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -166,7 +173,7 @@
     <recordLookups>
         <name>Get_Account_Contact_Relationship</name>
         <label>Get Account Contact Relationship</label>
-        <locationX>821</locationX>
+        <locationX>822</locationX>
         <locationY>59</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -202,7 +209,7 @@
         <locationY>51</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Account_Flow</targetReference>
+            <targetReference>Get_Individual_Record_Type</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -216,6 +223,33 @@
         <queriedFields>LastName</queriedFields>
         <queriedFields>AccountId</queriedFields>
         <queriedFields>FirstName</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Individual_Record_Type</name>
+        <label>Get Individual Record Type</label>
+        <locationX>169</locationX>
+        <locationY>213</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account_Flow</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Individual_Account</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputReference>sRecordType</outputReference>
+        <queriedFields>Id</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Organization_Account</name>

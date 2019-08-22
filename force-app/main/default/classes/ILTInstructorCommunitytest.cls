@@ -1171,4 +1171,23 @@ private without sharing class ILTInstructorCommunitytest {
         RBCWrapper wrapper = ILTInstructorCommunity.initWrapper();
         Test.stopTest();
     }
+
+    static testMethod void test_handleFullServiceClass() {
+
+
+        Map<String, Object> data = phss_cc_TestDataFactory.createInsertTestLearningObjects();
+        redwing__ILT_Class__c iltClass = (redwing__ILT_Class__c) data.get(phss_cc_TestDataFactory.TEST_ILT_CLASS);
+
+        // FS test data - obtain training event
+        Map<String, Object> fsMapData = skedDataSetup.setupFullServiceTestData();
+
+        // TO DO: create transaction payment
+
+        Training_Events__c te = [SELECT Id FROM Training_Events__c LIMIT 1];
+
+        Test.startTest();
+        ILTInstructorCommunity.handleFullServiceClass(iltClass.Id, 2, te.Id);
+        Test.stopTest();
+
+    }
 }

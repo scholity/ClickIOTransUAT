@@ -365,6 +365,28 @@
 
     },
 
+    handleTimeZoneEvent: function (component, event, helper) {
+        console.log("Here handleTimeZoneEvent");
+        var instanceID = event.getParam('instanceID');
+        if (instanceID.includes('Instructor')) {
+            var itemNumber = parseInt(instanceID.slice(10));
+            var addInstr = component.get("v.AdditionalInstructors");
+            if (event.getParam('isClear')) {
+                //addInstr[itemNumber-1] = null;
+                delete addInstr[itemNumber - 1];
+                //component.set("v.AdditionalInstructors",addInstr);
+                console.log('OnDelete-->');
+                console.log(component.get("v.AdditionalInstructors"));
+            } else {
+                addInstr[itemNumber - 1] = event.getParam('SelectedValue');
+                //component.set("v.AdditionalInstructors",addInstr);
+                console.log('OnAdd-->');
+                console.log(component.get("v.AdditionalInstructors"));
+            }
+        }
+
+    },
+
     classSelected : function (component,event) {
         var classId = component.get("v.selectedLookUpRecord5").Id;
         var selectedClass = component.get("v.selectedLookUpRecord5");
@@ -546,7 +568,8 @@
         var tempList = component.get("v.cpsWrap.sessionList");
         tempList.push({'classDate':'',
             'startTime':'',
-            'endTime':''});
+            'endTime':''
+            });
         component.set("v.cpsWrap.sessionList",tempList);
 
         helper.requiredSchedule(component,event,helper);
@@ -565,36 +588,26 @@
 
     },
 
-    // onAddressChange : function (component, event, helper) {
-    //     if(component.get("v.cpsWrap.address1") &&
-    //         component.get("v.cpsWrap.city") &&
-    //         component.get("v.cpsWrap.state") &&
-    //         component.get("v.cpsWrap.zip"))
-    //         helper.getGeocode(component,event,helper);
-    // },
-    // onFormatChange : function(component, event, helper) {
-    //     component.set("v.formatError",false);
-    //
-    //     // Class format validation
-    //     var format = document.getElementById('formatSelect').value;
-    //     component.set("v.cpsWrap.classFormat",format);
-    //     if(component.get("v.cpsWrap.classFormat")) {
-    //         document.getElementById('formatSelect').classList.remove('requiredSelect');
-    //     }
-    //     else {
-    //         component.set("v.formatError",true);
-    //         document.getElementById('formatSelect').classList.add('requiredSelect');
-    //     }
-    // },
-
     onZoneChange : function(component, event, helper) {
         helper.requiredSchedule(component,event,helper);
         component.set("v.zoneError",false);
 
-        // Time Zone validation
-        var tempList = component.get("v.cpsWrap.sessionList");
+
+        var cpsWrap = component.get("v.cpsWrap");
+        var target = event.target;
+        var values = target.value.split(",");
+        var index = values[0];
+        var value = values[1];
+
+        component.set("v.cpsWrap", cpsWrap);
+
+        cpsWrap.sessionList[index].timeZone = value;
+
         tempList.forEach(function(session) {
             session.timeZone = document.getElementById('zoneSelect').value;
+
+            var temp = document.getElementById('zoneSelect');
+
             if(session.timeZone) {
                 document.getElementById('zoneSelect').classList.remove('requiredSelect');
             }
@@ -604,7 +617,10 @@
             }
         });
         component.set("v.cpsWrap.sessionList",tempList);
+    },
+
+    zoneUpdate : function(component, event, helper) {
+        console.log('zoneUpdate method');
+
     }
-   
-    
 })
