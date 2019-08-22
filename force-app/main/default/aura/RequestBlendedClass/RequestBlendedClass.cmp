@@ -104,12 +104,13 @@
 
     <aura:attribute name = "locationId" type="String" description="ILT Location Id return by apex controller's method createIltLocation" />
 
+    <aura:handler name="change" value="{!v.zoneIndex}" action="{!c.zoneUpdate}" />
     <aura:handler name="change" value="{!v.CCProductId}" action="{!c.calculateStudentInstructorRatio}" />
     <aura:handler name="change" value="{!v.Students}" action="{!c.calculateStudentInstructorRatio}" /> 
     <aura:handler name="change" value="{!v.Vouchers}" action="{!c.calculateStudentInstructorRatio}" />
     
     <aura:handler name="selectionEvent" event="c:CustomLookupSelectionEvent" action="{!c.handleComponentEvent}"/>
-    
+
     <aura:if isTrue="{!v.stepNumber == 'Zero'}" >
         <div> 
             <lightning:button label		= "Request Blended Class"
@@ -235,8 +236,9 @@
                                 </div>
                                 <br/>
 
-                               <div class="slds-size_3-of-6 slds-p-top_small">
-                                   <label class="slds-text-heading_small">Session</label>
+                               <div>
+                                   <label class="slds-form-element__label">Session</label>
+                                   <lightning:helptext content="Please enter the dates and times for each class session." />
                                </div>
 
                                <!--
@@ -275,13 +277,12 @@
                                        <div class="slds-col slds-size_1-of-5">
                                            <label class="slds-required">*</label>
                                            <label class="slds-form-element__label">Time Zone</label><br/>
-                                           <select id="zoneSelect" class="slds-select"
-                                                   onchange="{!c.onZoneChange}">
+                                           <select name="zoneSelect" class="slds-select"
+                                                   onchange="{!c.onZoneChange}" value="{!v.zoneIndex}">
                                                <option value=""> Select a Time Zone</option>
                                                <aura:iteration items="{!v.zoneList}" var="zone"
                                                                indexVar="key">
-                                                   <option value="{!zone.key}"
-                                                           selected="{!v.cpsWrap.sessionList[0].timeZone == zone.key}"> {!zone.key} </option>
+                                                   <option value="{!index + ',' + zone.key}" selected="{v.cpsWrap.sessionList[0]}"> {!zone.key} </option>
                                                </aura:iteration>
                                            </select>
                                            <aura:if isTrue="{!v.zoneError}">

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>LTS Invoice</name>
+    <queueMembers>
+        <roleAndSubordinatesInternal>
+            <roleAndSubordinateInternal>Registration_Support_Group_Agent_Role</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>Registration_Support_Group_Team_Lead_Role</roleAndSubordinateInternal>
+            <roleAndSubordinateInternal>Training_Support_Center</roleAndSubordinateInternal>
+        </roleAndSubordinatesInternal>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

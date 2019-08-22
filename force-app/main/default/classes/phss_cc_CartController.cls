@@ -16,7 +16,9 @@ public with sharing class phss_cc_CartController {
         Map<String, Object> fetchCartResponse;
         
         try{
+
             fetchCartResponse = phss_cc_CartUtil.fetchActiveCart(opportunitySfid,true);
+
         }catch (Exception e){
             fetchCartResponse = phss_cc_Exception.getErrorMessageMap(e.getMessage());
         }
@@ -35,11 +37,67 @@ public with sharing class phss_cc_CartController {
     public static Map<String, Object> updateCartProducts(String opportunitySfid, Map<String, Object> productQuantityMap) {
         Map<String, Object> addToCartResult;
         try {
+            Map<Id, Id> productClassIdMap = getProductClassIdMap(opportunitySfid);
+
+            System.debug('productClassIdMap: ' + productClassIdMap);
+
+            // Request available vouchers BEFORE creating cart line items.
+            Map<String, List<Voucher__c>> voucherMap = phss_cc_VoucherUtil.reserveVouchersForOpportunity(productClassIdMap, productQuantityMap, opportunitySfid);
+
+            System.debug('voucherMap: ' + voucherMap);
+
             addToCartResult = phss_cc_CartUtil.addProductsToCart(opportunitySfid,productQuantityMap,true);
+            System.debug('addToCartResult: ' + addToCartResult);
+
+            Map<String, String> productCartItemMap = getProductCartItemMap(opportunitySfid, productClassIdMap);
+
+            phss_cc_VoucherUtil.reserveVouchersForOpportunity(productClassIdMap, productQuantityMap, voucherMap, opportunitySfid, productCartItemMap);
+
         } catch (Exception e) {
             addToCartResult = phss_cc_Exception.getErrorMessageMap(e.getMessage());
         }
         return addToCartResult;
+    }
+
+    private static Map<String, String> getProductCartItemMap(String opportunitySfid, Map<Id, Id> productClassIdMap) {
+        Map<String, String> productCartItemMap = new Map<String, String>();
+        List<ccrz__E_CartItem__c> updateCartItemList = new List<ccrz__E_CartItem__c>();
+        List<ccrz__E_CartItem__c> cartItemList = [
+                SELECT Id, ccrz__Cart__r.Opportunity__c, ccrz__Product__c, ILT_Class__c
+                FROM ccrz__E_CartItem__c
+                WHERE ccrz__Cart__r.Opportunity__c = :opportunitySfid
+        ];
+        System.debug('cartItemList: ' + cartItemList);
+        for (ccrz__E_CartItem__c theCartItem : cartItemList) {
+            System.debug('cartItem: ' + theCartItem);
+            Id cartItemProductId = theCartItem.ccrz__Product__c;
+            if (productClassIdMap.containsKey(cartItemProductId)) {
+                ccrz__E_CartItem__c updateCartItem = new ccrz__E_CartItem__c();
+                updateCartItem.Id = theCartItem.Id;
+                updateCartItem.ILT_Class__c = productClassIdMap.get(cartItemProductId);
+                updateCartItemList.add(updateCartItem);
+                productCartItemMap.put(cartItemProductId, theCartItem.Id);
+            }
+        }
+        System.debug('updateCartItemList: ' + updateCartItemList);
+        if (updateCartItemList.size() > 0) {
+            upsert updateCartItemList;
+        }
+        return productCartItemMap;
+    }
+
+    private static Map<Id, Id> getProductClassIdMap(String opportunitySfid) {
+        Map<Id, Id> productClassIdMap = new Map<Id, Id>();
+        for (ccrz__E_CartItem__c theCartItem : [
+                SELECT Id, ccrz__Cart__r.Opportunity__c, ccrz__Product__c, ILT_Class__c
+                FROM ccrz__E_CartItem__c
+                WHERE ccrz__Cart__r.Opportunity__c = :opportunitySfid
+        ]) {
+            if (String.isNotBlank(theCartItem.ccrz__Product__c) && String.isNotBlank(theCartItem.ILT_Class__c)) {
+                productClassIdMap.put(theCartItem.ccrz__Product__c, theCartItem.ILT_Class__c);
+            }
+        }
+        return productClassIdMap;
     }
 
     /**

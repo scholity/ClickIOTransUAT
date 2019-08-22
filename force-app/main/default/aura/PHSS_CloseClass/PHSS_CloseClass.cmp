@@ -32,6 +32,10 @@
     <aura:attribute name = "cloudCrazeEncryptedId"		type = "String"		default = "" />
     <aura:attribute name="showError" type="Boolean" required="true" description="" default="false"/>
     <aura:attribute name="errorMessage" type="String" required="false" description="" default="" />
+    <aura:attribute name="requestType" type="String" />
+    <!--<aura:attribute name="ccOrderId" type="String" />-->
+    <aura:attribute name="trainingEventId" type="String" description="Skedule training event Id" />
+    <aura:attribute name="eligibleForClose" type="Boolean" default="{! or(v.IsCarActive == true, v.requestType == 'Full Service')}" />
     
     <aura:attribute name = "helpText" type = "String" default = "You must complete and submit this Close a Course entry. The information will not be saved to complete later."/> 
 
@@ -112,14 +116,14 @@
                     </button>
                     <h2 id		= "header43"
                         class	= "slds-text-heading_medium">
-                        Close ClassPH
+                        Close ClassPH Test: {!v.eligibleForClose}
                     </h2>
                     <aura:renderIf isTrue="{!v.showError}">
                         <div class="errMsg">
                             <ui:outputRichText value="{!v.errorMessage}"/>
                         </div>
             		</aura:renderIf>
-                    <aura:if isTrue="{!!v.IsCarActive}" >
+                    <aura:if isTrue="{! !v.eligibleForClose}" >
                 	<div class="slds-text-align_center slds-text-heading_medium" style = "color:red;">Your cart is inactive or invalid.  Contact support desk for assistance.</div>
                     <div class="slds-text-align_center slds-text-heading_medium" style = "color:red;">{!v.cartErrorMessage}</div>
                 </aura:if>
@@ -130,7 +134,8 @@
                 <!-- Body - Start -->
                 
                 <!-- Step 1 - Start -->
-                <aura:if isTrue="{!v.IsCarActive}" >
+
+                <aura:if isTrue="{! v.eligibleForClose}" >
                 	<aura:if isTrue="{!v.stepNumber == 'One'}" >
                    
                     <div class="slds-modal__content slds-grow slds-p-around_medium" id="modal-content-id-1">
@@ -250,7 +255,7 @@
                         <div class="slds-text-align_center slds-text-heading_medium" style = "color:red;">{!v.helpText}</div>
                        
                         	<p class="slds-text-heading_medium">STEP 2: Review</p><br/>
-                        	
+
                         
                         <p>Review that all information has been entered correctly and opt-in to the legal agreement before submitting</p><br/>
                         
@@ -412,7 +417,7 @@
                 <!-- Body - End -->
                 
                 <!-- Footer - Start -->
-                <aura:if isTrue="{!v.IsCarActive}" >
+                <aura:if isTrue="{! v.eligibleForClose}" >
                 <footer class="slds-modal__footer slds-grid slds-grid_align-spread progIndicator">
                     
                     <div class="slds-col">

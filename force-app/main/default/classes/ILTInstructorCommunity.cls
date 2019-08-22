@@ -1724,7 +1724,7 @@ public without sharing class ILTInstructorCommunity{
         objcourse.lsgralist= new List<String>();
         objcourse.lsrealist = new List<String>();
         list<Redwing__ILT_Class__c> lstClass = [Select Id, Skedulo_Account__c, Skedulo_Account__r.Name, redwing__End_Date__c, redwing__Learning__c, 
-                                                redwing__Learning__r.Name,Request_Type__c, 
+                                                redwing__Learning__r.Name,Request_Type__c, CC_Order_Number__c, 	Skedulo_Training_Event__c,
                                                 Class_Closed_Date__c,Opportunity__c,opportunity__r.CloseDate,Cloud_Craze_Product__c,Supplemental_Information__c,
                                                 Site_Address_1__c,Site_Address_2__c,Site_City__c,State__c,Site_Postal_Code__c
                                                 from Redwing__ILT_Class__c where id=:ClassId limit 1];
@@ -1829,6 +1829,8 @@ public without sharing class ILTInstructorCommunity{
             objcourse.oppId = lstClass[0].Opportunity__c;
             objcourse.ccProdId = lstClass[0].Cloud_Craze_Product__c;
             objcourse.suppInfo = lstClass[0].Supplemental_Information__c;
+            objcourse.RequestType = lstClass[0].Request_Type__c;
+            objcourse.TrainingEventId = lstClass[0].Skedulo_Training_Event__c;
             
         }    
         return objCourse;
@@ -2256,9 +2258,10 @@ public without sharing class ILTInstructorCommunity{
     public static Boolean getDisplayPaymentInfo(String opportunityId) {
         User u = fetchUser();
         List<Opportunity> opp = [Select Id,AccountId From Opportunity WHERE Id = :opportunityId];
+        System.debug('opportunity in getDisplayPaymentInfo: '+opp);
         if(!opp.isEmpty()) {
-            List<AccountContactRelation> accConRel = [SELECT AccountId, Display_Payment_Info__c FROM AccountContactRelation WHERE ContactId = : u.ContactId and AccountId =: opp[0].AccountId]; 
-            if(!accConRel.isEmpty()) {
+            List<AccountContactRelation> accConRel = [SELECT AccountId, Display_Payment_Info__c FROM AccountContactRelation WHERE ContactId = :u.ContactId and AccountId = :opp[0].AccountId];
+            if (!accConRel.isEmpty()) {
                 return accConRel[0].Display_Payment_Info__c;
             }
         }
@@ -2614,6 +2617,67 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
         return loc.Id;
     }
 
+//    @AuraEnabled
+//    public static void handleFullServiceClass(String orderId, Integer studentCount) {
+//
+//        List<ccrz__E_OrderItem__c> orderItems = [SELECT Id, ccrz__Price__c, ccrz__SubAmount__c, ccrz__UnitOfMeasure__c, ccrz__Quantity__c, ccrz__ItemStatus__c FROM ccrz__E_OrderItem__c WHERE ccrz__Order__c =:orderId AND ccrz__UnitOfMeasure__c = 'Student'];
+//
+//        for (ccrz__E_OrderItem__c item : orderItems) {
+//            item.ccrz__Quantity__c = studentCount;
+//            item.ccrz__SubAmount__c = studentCount * item.ccrz__Price__c;
+//            item.ccrz__OrderItemStatus__c = 'Shipped';
+//        }
+//
+//        update orderItems;
+//
+//    }
+
+
+    @AuraEnabled
+    public static String handleFullServiceClass(String classId, Integer studentCount, String trainingEventId) {
+
+        // query for opp with the same training event
+        List<Training_Events__c> trainingEvents = [SELECT Id, CC_Order__c FROM Training_Events__c WHERE Id = :trainingEventId];
+        Training_Events__c te = trainingEvents[0];
+
+        Set<String> unitsOfMeassure = new Set<String>{'Student', 'Each'};
+        List<ccrz__E_OrderItem__c> orderItems = [SELECT Id, ccrz__Price__c, ccrz__SubAmount__c, ccrz__UnitOfMeasure__c, ccrz__Quantity__c, ccrz__ItemStatus__c FROM ccrz__E_OrderItem__c
+                                                    WHERE ccrz__Order__c = :te.CC_Order__c AND ccrz__UnitOfMeasure__c IN :unitsOfMeassure ];
+
+        for (ccrz__E_OrderItem__c item : orderItems) {
+
+            item.ccrz__Quantity__c = studentCount;
+            item.ccrz__SubAmount__c = studentCount * item.ccrz__Price__c;
+            item.ccrz__OrderItemStatus__c = 'Shipped';
+        }
+
+        String resMessage;
+        try {
+            update orderItems;
+
+            ccrz__E_Order__c ord = [SELECT Id, ccrz__TotalAmount__c, (SELECT Id, ccrz__Amount__c FROM ccrz__TransactionPayments__r) FROM ccrz__E_Order__c WHERE Id = :te.CC_Order__c LIMIT 1];
+
+            // update transaction amount from order amount
+            for (ccrz__E_TransactionPayment__c tp : ord.ccrz__TransactionPayments__r) {
+                tp.ccrz__Amount__c = ord.ccrz__TotalAmount__c;
+            }
+            update ord.ccrz__TransactionPayments__r;
+
+            resMessage = 'Order items successfully updated';
+
+        } catch (Exception e) {
+
+            System.debug('lineNumber=' + e.getLineNumber());
+            System.debug('stackTrace=' + e.getStackTraceString());
+            System.debug('error message: '+ e.getMessage());
+
+            resMessage = e.getMessage();
+        }
+
+        return resMessage;
+
+    }
+
     
     public class CourseInfo{
         @AuraEnabled public String CourseName {get; set;}
@@ -2632,6 +2696,9 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
         @AuraEnabled public list<String> lsrealist{get; set;}
         @AuraEnabled public String oppId {get;set;}
         @AuraEnabled public String ccProdId {get;set;}
+        @AuraEnabled public String RequestType {get; set;}
+        @AuraEnabled public String CCOrderId {get; set;}
+        @AuraEnabled public String TrainingEventId {get; set;}
     }
     
     

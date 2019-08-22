@@ -275,6 +275,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CancelOrderItemControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CaseAPIToCreateAttachments</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -811,14 +815,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PHSS_RegistrationController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_RegistrationControllerTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PHSS_RosterListController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -904,14 +900,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_eCommerceIntegrationFilesTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletion</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletionTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1556,6 +1544,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_VoucherUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_VoucherUtilTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2712,7 +2704,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.SABA_Org_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5458,6 +5450,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Facility_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Feedback_Individual_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5580,6 +5577,11 @@
         <editable>false</editable>
         <field>Case.Instructors_Name__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Intended_form_of_payment__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -6184,6 +6186,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Shipping_Contact_Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Shipping_Contact_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14685,10 +14692,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Training_Events__c-SB Training Event Layout</layout>
-        <recordType>Training_Events__c.SB_Training_Event</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Training_Events__c-Training Event Layout</layout>
+        <layout>Training_Events__c-SB Training Event Layout</layout>
+        <recordType>Training_Events__c.SB_Training_Event</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Training_Events__c-Training Event Layout</layout>

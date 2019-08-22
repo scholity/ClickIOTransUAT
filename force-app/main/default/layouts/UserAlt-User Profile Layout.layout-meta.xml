@@ -16,11 +16,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AboutMe</field>
+                <field>Deactivated_Date__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Deactivated_Date__c</field>
+                <field>AboutMe</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

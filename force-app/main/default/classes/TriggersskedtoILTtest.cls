@@ -67,7 +67,7 @@ private class TriggersskedtoILTtest {
         // Enable Job Integration
         PHSS_TriggerSettings__c triggerSettings = PHSS_TriggerSettings__c.getOrgDefaults();
         triggerSettings.skedJobtoILTClassTriggerDisabled__c = false;
-        upsert triggerSettings;           
+        upsert triggerSettings;        
 
         redwing__Learning__c learning = new redwing__Learning__c();
         learning.Name = 'Test learning';
@@ -190,5 +190,14 @@ private class TriggersskedtoILTtest {
         
         
 
+    }
+
+    static testMethod void unitTest4_FullServiceClass() {
+
+        Map<String, Object> data = phss_cc_TestDataFactory.createInsertTestLearningObjects();
+        redwing__ILT_Class__c iltClass = (redwing__ILT_Class__c) data.get(phss_cc_TestDataFactory.TEST_ILT_CLASS);
+
+        // FS test data - obtain training event
+        Map<String, Object> fsMapData = skedDataSetup.setupFullServiceTestData();
     }
 }

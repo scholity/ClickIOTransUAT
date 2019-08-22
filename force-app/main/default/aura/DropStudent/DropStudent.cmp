@@ -52,8 +52,8 @@
     
     
     <aura:if isTrue="{!v.stepNumber == 'Zero'}" >
-        <lightning:button label		= "DROP LEARNER"
-                          title		= "DROP LEARNER"
+        <lightning:button label		= "Transfer OR Cancel"
+                          title		= "Transfer OR Cancel"
                           onclick	= "{!c.showStep1}"
                           class		= "slds-button_brand intialButton"/>
     </aura:if>

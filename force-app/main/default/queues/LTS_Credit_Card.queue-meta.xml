@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>LTS Credit Card</name>
+    <queueMembers>
+        <roleAndSubordinates>
+            <roleAndSubordinate>Registration_Support_Group_Agent_Role</roleAndSubordinate>
+            <roleAndSubordinate>Registration_Support_Group_Team_Lead_Role</roleAndSubordinate>
+            <roleAndSubordinate>Training_Support_Center</roleAndSubordinate>
+            <roleAndSubordinate>TSC_Management</roleAndSubordinate>
+        </roleAndSubordinates>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

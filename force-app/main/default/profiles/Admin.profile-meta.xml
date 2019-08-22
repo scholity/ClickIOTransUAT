@@ -275,6 +275,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CancelOrderItemControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CaseAPIToCreateAttachments</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -811,14 +815,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PHSS_RegistrationController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_RegistrationControllerTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PHSS_RosterListController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -904,14 +900,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_eCommerceIntegrationFilesTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletion</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletionTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1556,6 +1544,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_VoucherUtil</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_VoucherUtilTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -5458,6 +5450,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Facility_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Feedback_Individual_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5579,6 +5576,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Instructors_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Intended_form_of_payment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6184,6 +6186,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Shipping_Contact_Last_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Shipping_Contact_Name__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

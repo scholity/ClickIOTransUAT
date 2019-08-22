@@ -132,16 +132,23 @@
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
-                    <label>Learn to Swim/Safety Outreach</label>
+                    <label>Safety Outreach</label>
                     <position>7</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>/learn-to-swim</target>
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
+                    <label>Learn to Swim/ Safety Outreach</label>
+                    <position>8</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/safety-outreach-learn-to-swim</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
                     <defaultListViewId>All</defaultListViewId>
                     <label>Centennial Campaign</label>
-                    <position>8</position>
+                    <position>9</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>Centennial_Campaign__c</target>
                     <type>SalesforceObject</type>

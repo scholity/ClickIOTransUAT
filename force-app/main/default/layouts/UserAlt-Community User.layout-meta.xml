@@ -27,11 +27,11 @@
                 <field>PHSS_IC_Email__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Phone</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Address</field>
             </layoutItems>
             <layoutItems>

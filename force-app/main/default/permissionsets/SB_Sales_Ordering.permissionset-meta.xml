@@ -2842,6 +2842,10 @@
         <visibility>Available</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>Voucher__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>ccrz__E_Category__c</tab>
         <visibility>Available</visibility>
     </tabSettings>

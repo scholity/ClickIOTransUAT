@@ -702,7 +702,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Full_Service_Minimum_Quantity-1</fullName>
+            <fullName>Full_Service_Minimum_Quantity-2</fullName>
         </flows>
         <fullName>Full_Service_Minimum_Quantity</fullName>
     </flowDefinitions>
@@ -720,7 +720,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Account_When_Missing_on_Contact-5</fullName>
+            <fullName>Create_Account_When_Missing_on_Contact-6</fullName>
         </flows>
         <fullName>Create_Account_When_Missing_on_Contact</fullName>
     </flowDefinitions>
@@ -823,7 +823,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Manage_Order_Status-47</fullName>
+            <fullName>Manage_Order_Status-48</fullName>
         </flows>
         <fullName>Manage_Order_Status</fullName>
     </flowDefinitions>
@@ -1018,7 +1018,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Order_Item_Status_Controller_Change-10</fullName>
+            <fullName>Order_Item_Status_Controller_Change-11</fullName>
         </flows>
         <fullName>Order_Item_Status_Controller_Change</fullName>
     </flowDefinitions>
@@ -1084,6 +1084,27 @@
             <fullName>Update_Case_Resolution-2</fullName>
         </flows>
         <fullName>Update_Case_Resolution</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Add_PO_to_Order_from_Training_Event-1</fullName>
+            <screens>
+                <fields>
+                    <name>SelectPO</name>
+                </fields>
+                <fields>
+                    <name>dspCurrentPO</name>
+                </fields>
+                <name>Add_PO_to_Training_Event</name>
+            </screens>
+        </flows>
+        <fullName>Add_PO_to_Order_from_Training_Event</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Learn_to_Swim_Facility_Registration_Routing-3</fullName>
+        </flows>
+        <fullName>Learn_to_Swim_Facility_Registration_Routing</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
