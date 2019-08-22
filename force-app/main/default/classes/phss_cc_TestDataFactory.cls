@@ -47,6 +47,14 @@ public with sharing class phss_cc_TestDataFactory {
     public static final String TEST_BILLING_CONTACT = 'TestBillingContact';
     public static final String TEST_PRODUCTS = 'TestProducts';
     public static final String TEST_PRICELIST = 'TestPriceList';
+    public static final String TEST_ORDER = 'TestOrder';
+    public static final String TEST_CREDIT_ORDER = 'TestCreditOrder';
+    public static final String TEST_ORDER_WITH_APPLIED_CREDIT = 'TestOrderWithAppliedCredit';
+    public static final String TEST_AUTH_TRANSACTION_PAYMENT = 'TestAuthTransactionPayment';
+    public static final String TEST_CAPTURE_TRANSACTION_PAYMENT = 'TestCaptureTransactionPayment';
+    public static final String TEST_CREDIT_BALANCE_TRANSACTION_PAYMENT = 'TestCreditBalanceTransactionPayment';
+    public static final String TEST_REFUND_TRANSACTION_PAYMENT = 'TestRefundTransactionPayment';
+    public static final String TEST_STORED_PAYMENT = 'TestStoredPayment';
     public static final String TEST_ENCRYPTED_ID_CART = 'encid-';
     private static final String CART_AUTH_USER_VALIDATED = 'CartAuthUserValidated';
     private static final String CART_STATUS_OPEN = 'Open';
@@ -106,11 +114,12 @@ public with sharing class phss_cc_TestDataFactory {
         return testOpportunity;
     }
 
-    /**
-     * @description Returns a test Account.
-     *
-     * @return
-     */
+
+        /**
+         * @description Returns a test Account.
+         *
+         * @return
+         */
     public static Account createInsertTestAccount(ccrz__E_AccountGroup__c accountGroup) {
         Account testAcc = new Account(
                 Name = TEST_ACC_FIRSTNAME + ' ' + TEST_ACC_LASTNAME,
@@ -358,6 +367,88 @@ public with sharing class phss_cc_TestDataFactory {
         }
         insert sps;
         return sps;
+    }
+
+    /**
+     * @description Creates orders with transaction payments and a stored payment
+     *
+     * @param account
+     *
+     * @return
+     */
+    public static Map<String, Object> createInsertOrderWithCredit(Account account) {
+        ccrz__E_Order__c order = new ccrz__E_Order__c(
+                ccrz__Account__c = account.Id,
+                NSSCCConnector_SFCC_Order_Number__c = '3114226',
+                NSSCCConnector_from_SFCC__c = true
+        );
+        insert order;
+
+        ccrz__E_TransactionPayment__c authTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
+                ccrz__CCOrder__c = order.Id,
+                ccrz__Token__c = 'testToken'
+        );
+        insert authTransactionPayment;
+
+        ccrz__E_TransactionPayment__c captureTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
+                ccrz__CCOrder__c = order.Id,
+                ccrz__Token__c = 'testToken',
+                ccrz__SourceTransactionPayment__c = authTransactionPayment.Id
+        );
+        insert captureTransactionPayment;
+
+        ccrz__E_Order__c creditOrder = new ccrz__E_Order__c(
+                ccrz__Account__c = account.Id,
+                ccrz__OrderId__c = order.Id,
+                NSSCCConnector_SFCC_Order_Number__c = '3114227',
+                NSSCCConnector_from_SFCC__c = true
+        );
+        insert creditOrder;
+
+        ccrz__E_StoredPayment__c storedPayment = new ccrz__E_StoredPayment__c(
+                ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_BALANCE,
+                Original_PO_Amount__c = 150.0,
+                Remaining_PO_Amount__c = 150.0
+        );
+        insert storedPayment;
+
+        ccrz__E_TransactionPayment__c creditTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_BALANCE,
+                ccrz__CCOrder__c = creditOrder.Id,
+                ccrz__ParentTransactionPayment__c = authTransactionPayment.Id,
+                ccrz__StoredPayment__c = storedPayment.Id,
+                ccrz__Token__c = 'testToken'
+        );
+        insert creditTransactionPayment;
+
+        ccrz__E_Order__c appliedCreditOrder = new ccrz__E_Order__c(
+                ccrz__Account__c = account.Id,
+                NSSCCConnector_SFCC_Order_Number__c = '3114228',
+                NSSCCConnector_from_SFCC__c = true
+        );
+        insert appliedCreditOrder;
+
+        ccrz__E_TransactionPayment__c refundTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
+                ccrz__CCOrder__c = appliedCreditOrder.Id,
+                ccrz__Comments__c = phss_cc_OrderUtil.REFUND_COMMENT + storedPayment.Id,
+                ccrz__Token__c = 'testToken'
+        );
+        insert refundTransactionPayment;
+
+        Map<String, Object> outputMap = new Map<String, Object>{
+                TEST_ORDER => order,
+                TEST_CREDIT_ORDER => creditOrder,
+                TEST_ORDER_WITH_APPLIED_CREDIT => appliedCreditOrder,
+                TEST_AUTH_TRANSACTION_PAYMENT => authTransactionPayment,
+                TEST_CAPTURE_TRANSACTION_PAYMENT => captureTransactionPayment,
+                TEST_CREDIT_BALANCE_TRANSACTION_PAYMENT => creditTransactionPayment,
+                TEST_REFUND_TRANSACTION_PAYMENT => refundTransactionPayment,
+                TEST_STORED_PAYMENT => storedPayment
+        };
+        return outputMap;
     }
 
     /**
@@ -617,6 +708,44 @@ public with sharing class phss_cc_TestDataFactory {
         insert location;
 
         return location;
+    }
+
+    public static Case createInsertTestCase(Account testAccount, Contact billingContact, Contact shippingContact) {
+        System.debug('JASON: getting recordTypeId');
+        Id caseRecordTypeId = Schema.SObjectType.Case.RecordTypeInfosByName.get('Service Case Read Only').RecordTypeId;
+        System.debug('JASON: recordTypeId=' + caseRecordTypeId);
+
+        Switch__c  sw = new Switch__c ();
+        sw.Name = 'CaseOwnerHistorySwitch';
+        sw.Switch__c = false;
+        sw.Switch_Description__c = 'Test';
+        insert sw;
+        System.debug('JASON: switch inserted: ' + sw);
+
+        //for Validation rule
+        Validation_Rules__c supportConfig = Validation_Rules__c.getOrgDefaults();
+        supportConfig.Bypass_Rules__c = false;
+        upsert supportConfig Validation_Rules__c.Id;
+        System.debug('JASON: supportConfig=' + supportConfig);
+
+        try {
+            Case testCase = new Case(
+                    ContactId = billingContact.Id,
+                    Status = 'New',
+                    Priority = 'Medium',
+                    Type = 'Certificates',
+                    Origin = 'Phone',
+                    Subject = 'TestCase1',
+                    Description = 'This is a test Case',
+                    RecordTypeId = caseRecordTypeId
+            );
+            insert testCase;
+            return testCase;
+
+        } catch (Exception e) {
+            System.debug('JASON: exception caught: ' + e.getMessage() + ' lineNumber=' + e.getLineNumber() + ' stackTrace=' + e.getStackTraceString());
+            throw e;
+        }
     }
 
     /**

@@ -208,7 +208,8 @@
                     <div class="slds-col slds-size--6-of-12">
                         <lightning:input aura:id="payment_form" name="bill_to_address_country"
                                          label="Country"
-                                         required="true" value="{!v.bill_to_address_country}"/>
+                                         required="true" value="{!v.bill_to_address_country}"
+                                         maxlength="2"/>
                     </div>
                     <div class="slds-col slds-size--6-of-12">
                         <lightning:input aura:id="payment_form" name="bill_to_address_postal_code"

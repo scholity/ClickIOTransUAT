@@ -97,9 +97,10 @@ public without sharing class PHSS_CancelEnrollmentController {
 	                                                                      Learning_Plan__c = :LearningAssignmentList[0].redwing__Training_Plan__c AND 
 	                                                                      ILT_Class__c = :rosterList[0].redwing__ILT_Class__c];
 	        if(!voucherList.isEmpty()) {
-	            // Keep voucher on cancel to retain financial information        	
-	            Voucher__c vouch = voucherList[0];
-	            vouch.Status__c = 'Void';
+	            // Keep voucher on cancel to retain financial information
+				Voucher__c updatedVoucher = new Voucher__c();
+	            updatedVoucher.Id = voucherList[0].Id;
+	            updatedVoucher.Status__c = 'Void';
 	            
 	            /*	           
 	            vouch.User__c = null;
@@ -113,7 +114,7 @@ public without sharing class PHSS_CancelEnrollmentController {
 	            vouch.Opportunity__c = null;
 				*/
 				
-	            update vouch;
+	            update updatedVoucher;
 	            
 	            // Generate replacement voucher for seat that has just opened in class - this will keep inventory valid
 	            Voucher__c newVoucher = new Voucher__c();
@@ -131,7 +132,8 @@ public without sharing class PHSS_CancelEnrollmentController {
 	        roster.redwing__Status__c = 'Cancelled';
 	        roster.Cancellation_Date__c = System.today();
 	        roster.Cancellation_Reason__c = cancelReason;
-	        roster.Voucher_Id__c = null;
+	        // Retain voucher relationship
+			// roster.Voucher_Id__c = null;
 	        
 	        update roster; 
 	        

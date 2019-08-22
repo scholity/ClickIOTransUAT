@@ -714,6 +714,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_FetchCompletionRestService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_FetchCompletionRestServiceTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_FutureActions</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -815,6 +823,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_PublishCertificates_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_RegistrationRestService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_RegistrationRestServiceTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

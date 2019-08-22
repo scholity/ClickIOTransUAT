@@ -46,25 +46,34 @@ public with sharing class phss_cc_FulfillmentUtil {
      * @param fulfillmentId
      */
     public static Fulfillment__c completeFulfillment(String fulfillmentId, String transactionPaymentId) {
-
+        System.debug('JASON: completeFulfillment()');
+        
         List<Fulfillment_Item__c> fulfillmentItems = getFulfillmentItems(fulfillmentId);
         List<Fulfillment_Item__c> updatedItems = new List<Fulfillment_Item__c>();
 
         try {
+            System.debug('JASON: getting fulfillment (Id=' + fulfillmentId + ')');
             Fulfillment__c fulfillment = getFulfillment(fulfillmentId);
+            System.debug('JASON: got fulfillment record: ' + fulfillment);
 
             if (String.isNotBlank(transactionPaymentId)) {
+                System.debug('JASON: setting CC_Transaction_Payment__c (Id=' + transactionPaymentId + ')');
                 fulfillment.CC_Transaction_Payment__c = transactionPaymentId;
                 update fulfillment;
+                System.debug('JASON: did set CC_Transaction_Payment__c');
             }
 
+            System.debug('JASON: number of fulfillment items: ' + fulfillmentItems.size());
             for (Fulfillment_Item__c item : fulfillmentItems) {
                 if (item.Status__c == FULFILLMENT_ITEM_STATUS_READY) {
+                    System.debug('JASON: changing status to complete, Fulfillment_Item__c.Id=' + item.Id);
                     item.Status__c = FULFILLMENT_ITEM_STATUS_COMPLETE;
                     updatedItems.add(item);
                 }
             }
+            System.debug('JASON: updating fulfillment items');
             update updatedItems;
+            System.debug('JASON: fulfillment items updated');
 
             return fulfillment;
 

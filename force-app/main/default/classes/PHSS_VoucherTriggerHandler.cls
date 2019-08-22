@@ -146,7 +146,7 @@ public class PHSS_VoucherTriggerHandler {
                 list<string> ClaimedStatuses = system.label.ClaimedVoucherTypes.split(';');
                 
                 // Count the number of claimed vouchers for every stacked job
-                list<voucher__c> lstvchrs = [select id, status__c, ILT_Class__r.Skedulo_Job_Id__c, ILT_Class__r.Skedulo_Parent_Job__c from voucher__c where ILT_Class__r.Skedulo_Parent_Job__c IN :setParentJobIds];
+                list<voucher__c> lstvchrs = [select id, status__c, User__c, ILT_Class__r.Skedulo_Job_Id__c, ILT_Class__r.Skedulo_Parent_Job__c from voucher__c where ILT_Class__r.Skedulo_Parent_Job__c IN :setParentJobIds];
                 System.debug('+++lstvchrs='+lstvchrs);
                 for(voucher__c ar : lstvchrs){
                     if(ClaimedStatuses.contains(ar.status__c)){
@@ -228,7 +228,7 @@ public class PHSS_VoucherTriggerHandler {
                 
                 list<voucher__c> lstVouchersToUpdate = new list<voucher__c>();
                 for(voucher__c vcr : lstvchrs){	
-                    if(vcr.Status__c =='Issued' || vcr.Status__c =='Blocked' || vcr.Status__c == 'Void'){
+                    if ((vcr.Status__c =='Issued' || vcr.Status__c =='Blocked' || vcr.Status__c == 'Void') && String.isBlank(vcr.User__c)) {
                     	if (vcr.ILT_Class__c != null && vcr.ILT_Class__r.Skedulo_Parent_Job__c != null) {
 	                		// Block the remaining vouchers (Issued) for each oversold class in stack                     	
 	                        if(OversoldParentJobIds.contains(vcr.ILT_Class__r.Skedulo_Parent_Job__c) && vcr.status__c =='Issued'){

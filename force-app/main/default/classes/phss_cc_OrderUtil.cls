@@ -31,12 +31,22 @@ public with sharing class phss_cc_OrderUtil {
     private static final String PAYMENT_TOKEN_KEY = 'token';
     private static final String EXPIRATION_MONTH_KEY = 'expirationMonth';
     private static final String EXPIRATION_YEAR_KEY = 'expirationYear';
-    private static final String CREDIT_AMOUNT_KEY = 'creditAmount';
     private static final String ACCOUNT_TYPE_KEY = 'accountType';
-    private static final String ACCOUNT_TYPE_CREDIT_BALANCE = 'cb';
-    private static final String ACCOUNT_TYPE_CREDIT_CARD = 'cc';
-    private static final String ACCOUNT_TYPE_PURCHASE_ORDER = 'po';
+    private static final String AMOUNT_KEY = 'amount';
+    private static final String COMMENTS_KEY = 'comments';
+    private static final String REQUEST_AMOUNT_KEY = 'requestAmount';
+    @TestVisible private static final String ACCOUNT_TYPE_CREDIT_BALANCE = 'cb';
+    @TestVisible private static final String ACCOUNT_TYPE_CREDIT_CARD = 'cc';
+    @TestVisible private static final String ACCOUNT_TYPE_PURCHASE_ORDER = 'po';
+    public static final String REFUND_COMMENT = 'Refund for Stored Payment. Id=';
     @TestVisible private static final String SUCCESS_KEY = 'success';
+
+    // Credit response keys
+    private static final String CREDIT_AMOUNT_KEY = 'creditAmount';
+    private static final String STORED_PAYMENTS_KEY = 'storedPayments';
+    private static final String APPLICABLE_STORED_PAYMENTS_KEY = 'applicableStoredPayments';
+    private static final String SURPLUS_CREDIT_AMOUNT_KEY = 'surplusCreditAmount';
+    private static final String REFUNDABLE_STORED_PAYMENT_KEY = 'refundableStoredPayment';
 
     //
     private static final String DEFAULT_APPLIED_CREDIT_REASON = 'Using on balance amount';
@@ -75,10 +85,16 @@ public with sharing class phss_cc_OrderUtil {
     private static final String FAILED_TO_PLACE_ORDER_PO = 'Failed to place order using PO.';
     private static final String FAILED_TO_DETECT_REASON_OF_PAYMENT_FAILURE = 'Failed to detect reason of payment failure.';
     private static final String SUCCESSFULLY_CREATED_AN_ORDER = 'Successfully created an Order.';
+    private static final String FAILED_TO_CONVERT_TRANSACTION_PAYMENT_DATA = 'Failed to convert the transaction payment data.';
     private static final String FAILED_TO_CREATE_A_TRANSACTION_RECORD_ON_THE_ORDER = 'Failed to create a transaction record on the order.';
+    private static final String FAILED_TO_CREATE_CREDIT_BALANCE_TRANSACTION_PAYMENT = 'Failed to create credit balance transaction payment.';
+    private static final String FAILED_TO_GET_ORIGINAL_ORDER_FOR_STORED_PAYMENT = 'Failed to get original order for stored payment.';
     private static final String FAILED_TO_PARSE_PAYMENT_DATA = 'Failed to parse payment data.';
     private static final String FAILED_TO_FETCH_STORED_PAYMENT = 'Failed to fetch stored payment.';
+    private static final String FAILED_TO_ASSIGN_CASE_CONTACT_TO_ORDER = 'Failed to assign case contact to order.';
+    private static final String FAILED_TO_IDENTIFY_ORDER_ASSOCIATION_TO_CASE = 'Failed to identify an association between an order and a case.';
     private static final String FAILED_TO_UPDATE_STORED_PAYMENT = 'Failed to update stored payment.';
+    private static final String FAILED_TO_REFUND_CREDIT = 'Failed to refund credit';
     private static final String PO_INSUFFICIENT_FUNDS_AVAILABLE = 'The balance of this Purchase Order does not cover your order. Please update value or set up a new Purchase Order to complete your order.';
 
     /**
@@ -123,6 +139,21 @@ public with sharing class phss_cc_OrderUtil {
                 paymentDataMap.put(STORED_PAYMENT_PO_END_DATE, Date.today());
                 paymentDataMap.put(STORED_PAYMENT_SAVE_AS_STORED_PAYMENT, false);
 
+            } else if (inputData.containsKey(SURPLUS_CREDIT_AMOUNT_KEY)) {
+                ccrz__E_StoredPayment__c storedPayment = (ccrz__E_StoredPayment__c) inputData.get(REFUNDABLE_STORED_PAYMENT_KEY);
+                Decimal requestAmount = (Decimal) inputData.get(SURPLUS_CREDIT_AMOUNT_KEY);
+                requestAmount *= -1;
+
+                paymentDataMap = new Map<String, Object>{
+                        ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_CARD,
+                        EXPIRATION_MONTH_KEY => storedPayment.ccrz__ExpMonth__c,
+                        EXPIRATION_YEAR_KEY => storedPayment.ccrz__ExpYear__c,
+                        PAYMENT_TOKEN_KEY => storedPayment.ccrz__Token__c,
+                        REQUEST_AMOUNT_KEY => requestAmount,
+                        AMOUNT_KEY => requestAmount,
+                        COMMENTS_KEY => REFUND_COMMENT + storedPayment.Id
+                };
+
             } else {
                 paymentDataMap = new Map<String, Object>();
                 paymentDataMap.put(STORED_PAYMENT_ACCOUNT_TYPE, STORED_PAYMENT_TYPE_PO);
@@ -142,7 +173,8 @@ public with sharing class phss_cc_OrderUtil {
             }
             return JSON.serialize(paymentDataMap);
         } catch (Exception e) {
-            throw new phss_cc_Exception(FAILED_TO_PARSE_PAYMENT_DATA);
+            System.debug('exception caught in getPaymentDataJSONString(): ' + e.getMessage() + ' lineNumber=' + e.getLineNumber() + ' stackTrace=' + e.getStackTraceString());
+            throw new phss_cc_Exception(FAILED_TO_PARSE_PAYMENT_DATA, e);
         }
     }
 
@@ -188,6 +220,7 @@ public with sharing class phss_cc_OrderUtil {
      * @param paymentData
      */
     private static void registerTransactionOnOrder(Map<String, Object> orderPlaceResponse, Map<String, Object> paymentResult, Object transactionPaymentData, String paymentData) {
+
         try {
             final String payAccountType = (String) paymentResult.get(ccrz.cc_hk_Payment.PARAM_ACCOUNT_TYPE);
             final ccrz.ccPaymentProcessor payProcessor = (ccrz.ccPaymentProcessor) paymentResult.get(ccrz.cc_hk_Payment.PARAM_PAYMENT_PROCESSOR);
@@ -207,21 +240,10 @@ public with sharing class phss_cc_OrderUtil {
                     ccrz.cc_hk_Payment.PARAM_SUCCESS => true
             };
 
-            System.debug('JASON: registerTransactionOnOrder()');
-            for (String key : postProcessRequest.keySet()) {
-                System.debug(key + ': ' + postProcessRequest.get(key));
-                Object obj = postProcessRequest.get(key);
-                if (obj instanceof Map<String, Object>) {
-                    Map<String, Object> m = (Map<String, Object>) obj;
-                    for (String k : m.keySet()) {
-                        System.debug('---> ' + k + ': ' + m.get(k));
-                    }
-                }
-            }
-
             if (payProcessor != null) {
                 payProcessor.postProcess(postProcessRequest);
             }
+
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_CREATE_A_TRANSACTION_RECORD_ON_THE_ORDER);
         }
@@ -253,7 +275,8 @@ public with sharing class phss_cc_OrderUtil {
             if (isSuccess) {
                 orderId = (String) placeOrderResponse.get(ccrz.ccApiCart.ORDER_ID);
                 message = SUCCESSFULLY_CREATED_AN_ORDER;
-            } else{
+                assignCaseContactToOrder(orderId);
+            } else {
                 message = ERROR_MESSAGE_FAILED_TO_CREATE_ORDER;
             }
             return new Map<String, Object>{
@@ -356,29 +379,61 @@ public with sharing class phss_cc_OrderUtil {
      *
      * @param opportunitySfid
      * @param encryptedCartId
-     * @param storedPayments
+     * @param storedPaymentIdentifiers
      *
      * @return
      */
-    public static Map<String, Object> placeOrderOnCartCB(String opportunitySfid, String encryptedCartId, List<String> storedPayments) {
+    public static Map<String, Object> placeOrderOnCartCB(String opportunitySfid, String encryptedCartId, List<String> storedPaymentIdentifiers) {
         phss_cc_Context.setContext(opportunitySfid);
         Map<String, Object> response;
 
         try {
-            Map<String, Object> creditResult = applyCredit(encryptedCartId, storedPayments);
-            if (storedPayments != null && storedPayments.size() > 0 && creditResult.containsKey(CREDIT_AMOUNT_KEY)) {
-                for (String storedPaymentId : storedPayments) {
+            Map<String, Object> creditResult;
+            if (storedPaymentIdentifiers != null && storedPaymentIdentifiers.size() > 0) {
+                creditResult = applyCredit(encryptedCartId, storedPaymentIdentifiers);
+            }
+
+            Map<String, Object> paymentInputData;
+            if (creditResult != null && creditResult.containsKey(SURPLUS_CREDIT_AMOUNT_KEY)) {
+                // credit card refund
+                paymentInputData = creditResult;
+
+            } else {
+                // credit balance
+                paymentInputData = new Map<String, Object>{ ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_BALANCE };
+            }
+
+            String paymentData = getPaymentDataJSONString(paymentInputData);
+            Map<String, Object> paymentResult = processPayment(encryptedCartId, paymentData);
+
+            Object transactionPaymentData = paymentResult.get(ccrz.cc_hk_Payment.PARAM_TRANSACTION_PROCESSED_DATA);
+            if (creditResult != null && creditResult.containsKey(SURPLUS_CREDIT_AMOUNT_KEY)) {
+                if (transactionPaymentData instanceof ccrz.cc_hk_Payment.TransactionPaymentParams) {
+                    ccrz.cc_hk_Payment.TransactionPaymentParams params = (ccrz.cc_hk_Payment.TransactionPaymentParams) transactionPaymentData;
+                    Decimal creditAmount = (Decimal) creditResult.get(SURPLUS_CREDIT_AMOUNT_KEY);
+                    params.amount = creditAmount * -1;
+
+                } else {
+                    throw new phss_cc_Exception(FAILED_TO_CONVERT_TRANSACTION_PAYMENT_DATA);
+                }
+            }
+
+            Map<String, Object> placeOrderResponse = cartPlace(encryptedCartId, paymentResult, transactionPaymentData, paymentData);
+
+            if (creditResult != null && creditResult.containsKey(CREDIT_AMOUNT_KEY)) {
+                for (String storedPaymentId : storedPaymentIdentifiers) {
                     updateRemainingPOAmount(storedPaymentId, '0');
                 }
             }
 
-            Map<String, Object> paymentInputData = new Map<String, Object>{ ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_BALANCE };
-            String paymentData = getPaymentDataJSONString(paymentInputData);
-            Map<String, Object> paymentResult = processPayment(encryptedCartId, paymentData);
-            Object transactionPaymentData = paymentResult.get(ccrz.cc_hk_Payment.PARAM_TRANSACTION_PROCESSED_DATA);
-            Map<String, Object> placeOrderResponse = cartPlace(encryptedCartId, paymentResult, transactionPaymentData, paymentData);
             registerTransactionOnOrder(placeOrderResponse, paymentResult, transactionPaymentData, paymentData);
             response = placeOrderResponse;
+
+            if (creditResult != null && creditResult.containsKey(CREDIT_AMOUNT_KEY)) {
+                String orderId = (String) placeOrderResponse.get(ORDER_ID);
+                List<ccrz__E_StoredPayment__c> storedPayments = (List<ccrz__E_StoredPayment__c>) creditResult.get(STORED_PAYMENTS_KEY);
+                createCreditBalanceTransactionPayments(orderId, storedPayments);
+            }
 
         } catch (Exception e) {
             System.debug('Exception caught: message=' + e.getMessage() + ' lineNumber=' + e.getLineNumber() + ' stackTrace=' + e.getStackTraceString());
@@ -388,15 +443,35 @@ public with sharing class phss_cc_OrderUtil {
         return response;
     }
 
-    private static Map<String, Object> applyCredit(String encryptedCartId, List<String> storedPayments) {
+    /**
+     * @description Applies stored payments to the cart total
+     *
+     * @param encryptedCartId
+     * @param storedPaymentIDs
+     *
+     * @return
+     */
+    private static Map<String, Object> applyCredit(String encryptedCartId, List<String> storedPaymentIDs) {
         Map<String, Object> result = new Map<String, Object>();
 
         try {
-            Decimal creditAmount = phss_cc_StoredPaymentUtil.getRemainingCreditAmount(storedPayments);
-            if (creditAmount > 0) {
+            List<ccrz__E_StoredPayment__c> storedPayments = phss_cc_StoredPaymentUtil.getStoredPayments(storedPaymentIDs);
+            if (storedPayments != null && storedPayments.size() > 0) {
+
+                Decimal creditAmount = 0;
+                List<ccrz__E_StoredPayment__c> applicablePayments = new List<ccrz__E_StoredPayment__c>();
+                for (ccrz__E_StoredPayment__c storedPayment : storedPayments) {
+                    if (storedPayment.Remaining_PO_Amount__c > 0) {
+                        applicablePayments.add(storedPayment);
+                        creditAmount += storedPayment.Remaining_PO_Amount__c;
+                    }
+                }
+
                 ccrz__E_Cart__c cart = phss_cc_CartUtil.fetchCart(encryptedCartId);
                 if (cart != null) {
                     if (creditAmount > cart.ccrz__TotalAmount__c) {
+                        Decimal surplusCredit = creditAmount - cart.ccrz__TotalAmount__c;
+                        result.put(SURPLUS_CREDIT_AMOUNT_KEY, surplusCredit);
                         creditAmount = cart.ccrz__TotalAmount__c;
                     }
 
@@ -406,6 +481,24 @@ public with sharing class phss_cc_OrderUtil {
 
                     result.put(CREDIT_AMOUNT_KEY, creditAmount);
                 }
+
+                if (applicablePayments.size() > 0) {
+                    result.put(APPLICABLE_STORED_PAYMENTS_KEY, applicablePayments);
+                }
+
+                result.put(STORED_PAYMENTS_KEY, storedPayments);
+
+                if (result.containsKey(SURPLUS_CREDIT_AMOUNT_KEY)) {
+                    ccrz__E_StoredPayment__c storedPaymentWithGreatestBalance = storedPayments[0];
+                    for (ccrz__E_StoredPayment__c storedPayment : storedPayments) {
+                        if (storedPayment.Remaining_PO_Amount__c > storedPaymentWithGreatestBalance.Remaining_PO_Amount__c) {
+                            storedPaymentWithGreatestBalance = storedPayment;
+                        }
+                    }
+
+                    // Capture the stored payment that can be used for applying the refund
+                    result.put(REFUNDABLE_STORED_PAYMENT_KEY, storedPaymentWithGreatestBalance);
+                }
             }
 
         } catch (Exception e) {
@@ -413,6 +506,81 @@ public with sharing class phss_cc_OrderUtil {
         }
 
         return result;
+    }
+
+    /**
+     * @description Creates credit balance 'cb' transaction payments based on the applied stored payments
+     *
+     * @param orderId
+     * @param storedPayments
+     * @param creditData
+     */
+    private static void createCreditBalanceTransactionPayments(String orderId, List<ccrz__E_StoredPayment__c> storedPayments) {
+        try {
+            List<ccrz__E_TransactionPayment__c> transactionPayments = new List<ccrz__E_TransactionPayment__c>();
+
+            if (storedPayments != null) {
+                for (ccrz__E_StoredPayment__c storedPayment : storedPayments) {
+                    List<ccrz__E_TransactionPayment__c> txnPayments = phss_cc_TransactionPaymentUtil.getTransactionPaymentsForStoredPayment(storedPayment.Id);
+                    if (txnPayments != null && txnPayments.size() > 0) {
+                        ccrz__E_TransactionPayment__c transactionPayment = new ccrz__E_TransactionPayment__c(
+                                ccrz__Account__c = storedPayment.ccrz__Account__c,
+                                ccrz__AccountType__c = ACCOUNT_TYPE_CREDIT_BALANCE,
+                                ccrz__Amount__c = storedPayment.Remaining_PO_Amount__c,
+                                ccrz__BillTo__c = txnPayments[0].ccrz__BillTo__c,
+                                ccrz__CurrencyISOCode__c = txnPayments[0].ccrz__CurrencyISOCode__c,
+                                ccrz__CCOrder__c = orderId,
+                                ccrz__ParentTransactionPayment__c = txnPayments[0].Id,
+                                ccrz__StoredPayment__c = storedPayment.Id,
+                                ccrz__Storefront__c = txnPayments[0].ccrz__Storefront__c,
+                                ccrz__Token__c = storedPayment.ccrz__Token__c
+                        );
+                        transactionPayments.add(transactionPayment);
+                    }
+                }
+            }
+
+            if (transactionPayments.size() > 0) {
+                insert transactionPayments;
+            }
+
+        } catch (Exception e) {
+            System.debug('createCreditBalanceTransactionPayments()  --  exception caught: ' + e.getMessage() + ' lineNumber=' + e.getLineNumber() + ' stackTrace=' + e.getStackTraceString());
+            throw new phss_cc_Exception(FAILED_TO_CREATE_CREDIT_BALANCE_TRANSACTION_PAYMENT, e);
+        }
+    }
+
+    /**
+     * @description Returns the order ID for the original order related to a stored payment.
+     *
+     * @param storedPaymentId
+     *
+     * @return
+     */
+    public static String getOriginalOrderForStoredPayment(String storedPaymentId) {
+        String orderId = null;
+        try {
+            List<ccrz__E_TransactionPayment__c> transactionPayments = [
+                    SELECT  Id,
+                            ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c
+                    FROM    ccrz__E_TransactionPayment__c
+                    WHERE   ccrz__StoredPayment__c = :storedPaymentId
+            ];
+
+            if (transactionPayments != null) {
+                for (ccrz__E_TransactionPayment__c transactionPayment : transactionPayments) {
+                    if (String.isNotEmpty(transactionPayment.ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c)) {
+                        orderId = transactionPayment.ccrz__ParentTransactionPayment__r.ccrz__CCOrder__c;
+                        break;
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_GET_ORIGINAL_ORDER_FOR_STORED_PAYMENT, e);
+        }
+
+        return orderId;
     }
 
     /**
@@ -565,6 +733,30 @@ public with sharing class phss_cc_OrderUtil {
 
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_CREATE_A_TRANSACTION_RECORD_ON_THE_ORDER);
+        }
+    }
+
+    /**
+     * @description Assigns the contact on the case (if associated to one) to the order
+     *
+     * @param orderId
+     */
+    @TestVisible
+    private static void assignCaseContactToOrder(String orderId) {
+        try {
+            ccrz__E_Order__c order = [
+                    SELECT  Opportunity_Order__r.Case__r.ContactId,
+                            ccrz__Contact__c
+                    FROM    ccrz__E_Order__c
+                    WHERE   Id = :orderId
+            ];
+            if (order != null && order.Opportunity_Order__r.Case__r.ContactId != null && order.ccrz__Contact__c == null) {
+                order.ccrz__Contact__c = order.Opportunity_Order__r.Case__r.ContactId;
+                update order;
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_ASSIGN_CASE_CONTACT_TO_ORDER, e); 
         }
     }
 
