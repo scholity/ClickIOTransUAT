@@ -138,7 +138,7 @@
     <applicationVisibilities>
         <application>standard__LightningService</application>
         <default>false</default>
-        <visible>false</visible>
+        <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__Marketing</application>
@@ -764,6 +764,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_InstructorCertificationController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_LearningTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1411,6 +1415,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_CartItemUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_CartItemUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_CartUtil</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1504,6 +1516,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_PriceOverrideModalController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_PriceOverrideModalControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -4906,9 +4922,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Agreement_Other__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -14161,6 +14177,50 @@
         <recordType>Case.Social_Case</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.CRE_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Community_Instructor_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Community_Learner_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Community_Partner_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Data_Quality_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Learn_to_Swim_Facility_Registration</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Non_Training_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.RBC_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Read_Only_Non_Training_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Read_Only_Troubleshooting_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Troubleshooting_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-RCS PO Case Close Layout</layout>
         <recordType>Case.Invoicing</recordType>
     </layoutAssignments>
@@ -14670,7 +14730,7 @@
         <recordType>Training_Events__c.Training_Event</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>User-User Layout</layout>
+        <layout>User-User Layout Update</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>UserAlt-User Profile Layout</layout>
@@ -14812,7 +14872,7 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
@@ -15451,7 +15511,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Opportunity.Aquatics_Examiner_Service</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -15470,6 +15530,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Opportunity.Standard</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -15625,6 +15686,10 @@
     <tabVisibilities>
         <tab>Centennial_Campaign__c</tab>
         <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Channel_Compensation__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Chat_Supervisor_Console</tab>

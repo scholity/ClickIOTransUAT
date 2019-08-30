@@ -1,0 +1,130 @@
+<!--
+ - Created by jbarker on 2019-08-26.
+ -->
+
+<aura:component description="phss_cc_CartItem" implements="force:hasRecordId">
+
+    <!--attributes-->
+    <aura:attribute name="cartItems" type="Map"/>
+    <aura:attribute name="cartItem" type="Map"/>
+    <aura:attribute name="quantity" type="Integer"/>
+    <aura:attribute name="componentIDs" type="List"/>
+    <aura:attribute name="componentItems" type="Map"/>
+    <aura:attribute name="productMap" type="Map"/>
+    <aura:attribute name="productQuantityMap" type="Map"/>
+
+    <!--UI rendering-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="allowsPriceOverride" type="Boolean" default="false"/>
+
+    <!--initializer-->
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+
+    <!--events-->
+    <aura:registerEvent name="incrementProductCount" type="c:phss_cc_ProductCountUpdate"/>
+    <aura:registerEvent name="decrementProductCount" type="c:phss_cc_ProductCountUpdate"/>
+    <aura:registerEvent name="showPriceOverrideModal" type="c:phss_cc_ShowPriceOverrideModalEvent"/>
+
+
+    <aura:if isTrue="{! v.renderComplete }">
+        <div class="slds-border--bottom">
+            <div class="slds-grid slds-p-bottom--medium slds-p-top--medium cellProperties">
+
+                <!--SKU column-->
+                <div class="slds-size_2-of-12">
+                    <lightning:formattedText value="{!v.cartItem.ccrz__Product__r.ccrz__SKU__c}"/>
+                </div>
+
+                <!--name column-->
+                <div class="slds-size_4-of-12">
+                    <lightning:formattedText value="{!v.cartItem.ccrz__Product__r.Name}"/>
+                </div>
+
+                <!--list price column-->
+                <div class="slds-size_1-of-12 slds-align_absolute-center">
+                    <aura:if isTrue="{! v.allowsPriceOverride }">
+                        <a onclick="{! c.handlePriceOverrideClick }" class="priceOverrideLink">
+                            <lightning:formattedNumber style="currency"
+                                                       currencyCode="{! $Locale.currencyCode }"
+                                                       currencyDisplayAs="symbol"
+                                                       value="{! v.cartItem.ccrz__OriginalItemPrice__c }"/>
+                        </a>
+                    </aura:if>
+                </div>
+
+                <!--discount price column-->
+                <div class="slds-size_1-of-12 slds-align_absolute-center">
+                    <aura:if isTrue="{! v.allowsPriceOverride }">
+                        <a onclick="{! c.handlePriceOverrideClick }" class="priceOverrideLink">
+                            <aura:if isTrue="{! equals(v.cartItem.ccrz__PricingType__c, 'external') }">
+                                <lightning:formattedNumber style="currency"
+                                                           currencyCode="{! $Locale.currencyCode }"
+                                                           currencyDisplayAs="symbol"
+                                                           value="{! v.cartItem.ccrz__Price__c }"/>
+                            </aura:if>
+                        </a>
+
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{! equals(v.cartItem.ccrz__PricingType__c, 'external') }">
+                                <lightning:formattedNumber style="currency"
+                                                           currencyCode="{! $Locale.currencyCode }"
+                                                           currencyDisplayAs="symbol"
+                                                           value="{! v.cartItem.ccrz__Price__c }"/>
+                            </aura:if>
+                        </aura:set>
+                    </aura:if>
+                </div>
+
+                <!--discount percentage column-->
+                <div class="slds-size_1-of-12 slds-align_absolute-center">
+                    <aura:if isTrue="{! v.allowsPriceOverride }">
+                        <a onclick="{! c.handlePriceOverrideClick }" class="priceOverrideLink">
+                            <aura:if isTrue="{! equals(v.cartItem.ccrz__PricingType__c, 'external') }">
+                                <lightning:formattedNumber value="{! v.cartItem.ccrz__PercentDiscount__c / 100.0 }"
+                                                           style="percent"
+                                                           maximumFractionDigits="1"/>
+                                <img src="{! $Resource.AttentionIcon }" class="attentionIcon" alt="Price has been overridden"/>
+                            </aura:if>
+                        </a>
+
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{! equals(v.cartItem.ccrz__PricingType__c, 'external') }">
+                                <lightning:formattedNumber value="{! v.cartItem.ccrz__PercentDiscount__c / 100.0 }"
+                                                           style="percent"
+                                                           maximumFractionDigits="1"/>
+                                <img src="{! $Resource.AttentionIcon }" class="attentionIcon" alt="Price has been overridden"/>
+                            </aura:if>
+                        </aura:set>
+                    </aura:if>
+                </div>
+
+                <!--empty column-->
+                <div class="slds-size_1-of-12 slds-text-align_left"></div>
+
+                <!--quantity column-->
+                <div class="slds-size_2-of-12 slds-align_absolute-center">
+                    <lightning:layout horizontalAlign="spread">
+                        <lightning:layoutItem>
+                            <lightning:buttonIcon iconName="utility:dash" alternativeText="Remove"
+                                                  onclick="{!c.decrementQuantity}"/>
+                        </lightning:layoutItem>
+
+                        <lightning:layoutItem class="slds-m-left--large slds-m-right--large slds-p-top--xx-small">
+                            <ui:outputNumber value="{!v.quantity}"/>
+                        </lightning:layoutItem>
+
+                        <lightning:layoutItem>
+                            <lightning:buttonIcon iconName="utility:add" alternativeText="Add"
+                                                  onclick="{!c.incrementQuantity}"/>
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div>
+            </div>
+
+            <aura:iteration items="{!v.componentIDs}" var="component">
+                <c:phss_cc_CartItemComponent recordId="{! component }" cartItems="{! v.componentItems }"/>
+            </aura:iteration>
+
+        </div>
+    </aura:if>
+</aura:component>

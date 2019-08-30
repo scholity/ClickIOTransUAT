@@ -634,6 +634,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Intended_form_of_payment__c</picklist>
+        <values>
+            <fullName>Credit Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Invoice_Case_Sub_Type__c</picklist>
         <values>
             <fullName>Authorized Provider</fullName>
@@ -1612,6 +1623,13 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Question_Type__c</picklist>
+        <values>
+            <fullName>Customer Comments</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2607,24 +2625,6 @@
         </values>
         <values>
             <fullName>Wrong Price per Student</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Question_Type__c</picklist>
-        <values>
-            <fullName>Customer Comments</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Intended_form_of_payment__c</picklist>
-        <values>
-            <fullName>Credit Card</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Invoice</fullName>
             <default>false</default>
         </values>
     </picklistValues>

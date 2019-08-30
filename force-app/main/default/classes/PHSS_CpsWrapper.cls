@@ -6,7 +6,9 @@ public class PHSS_CpsWrapper {
     @AuraEnabled
     public String accId {get;set;}
     @AuraEnabled
-    public String courseId {get;set;}
+    public String courseId {get;set;}    
+    @AuraEnabled
+    public String oppId {get;set;}
     @AuraEnabled
     public String classFormat {get;set;}
     @AuraEnabled

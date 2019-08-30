@@ -880,7 +880,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Skedulo_Job_Id__c</fields>
+        <fields>Request_Type__c</fields>
         <fields>redwing__Learning__c</fields>
         <fields>redwing__Location__c</fields>
         <fields>redwing__Start_Date__c</fields>

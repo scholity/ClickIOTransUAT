@@ -50,8 +50,8 @@
     
     <aura:if isTrue="{!v.stepNumber == 'Zero'}" >
         <aura:if isTrue="{!v.isCourse}">
-            <lightning:button label		= "Credit OR Refund"
-                              title		= "Credit OR Refund"
+            <lightning:button label		= "Credit or Refund"
+                              title		= "Credit or Refund"
                               onclick	= "{!c.showStep1}"
                               class		= "slds-button_brand intialButton"/>
             

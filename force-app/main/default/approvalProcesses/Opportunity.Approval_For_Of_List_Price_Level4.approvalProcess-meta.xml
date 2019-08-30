@@ -124,6 +124,7 @@
     <description>update to workflow to add level 4 and redistribute % to include ED</description>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5</booleanFilter>
         <criteriaItems>
             <field>Opportunity.Pricing_Approval_Level__c</field>
             <operation>notEqual</operation>
@@ -141,12 +142,12 @@
         </criteriaItems>
         <criteriaItems>
             <field>Opportunity.Owner_Profile__c</field>
-            <operation>notEqual</operation>
+            <operation>notContain</operation>
             <value>ARC BGST Sales User</value>
         </criteriaItems>
         <criteriaItems>
             <field>Opportunity.Owner_Profile__c</field>
-            <operation>notEqual</operation>
+            <operation>notContain</operation>
             <value>ARC BGST Sales Admin</value>
         </criteriaItems>
     </entryCriteria>

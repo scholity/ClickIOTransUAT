@@ -76,8 +76,8 @@
         component.set('v.isShown', true);
 
         var opportunitySfid = event.getParam('opportunitySfid');
-        var productSfid = event.getParam('productSfid');
-        helper.getCartItemForProduct(component, productSfid, opportunitySfid);
+        var cartItemId = event.getParam('cartItemId');
+        helper.getCartItemForOpportunity(component, cartItemId, opportunitySfid);
     },
 
     overrideSelected: function (component, event, helper) {

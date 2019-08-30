@@ -6,7 +6,9 @@
 abbreviation if Billing Country is US, USA, or blank.</description>
     <errorConditionFormula>AND( 
 $User.ProfileId = &#39;00ed0000000IUFH&#39;, 
-RecordTypeId != &#39;012d000000098Wt&#39;, 
+RecordType.DeveloperName != &quot;SB_Household_Account&quot;, 
+RecordType.DeveloperName != &quot;Individual_Account&quot;, 
+RecordType.DeveloperName != &quot;Bucket_Account&quot;, 
 $Setup.Validation_Rules__c.Bypass_Rules__c = false, 
 OR(BillingCountry = &quot;US&quot;, BillingCountry=&quot;USA&quot;, 
 LEN(BillingCountry)=0), 

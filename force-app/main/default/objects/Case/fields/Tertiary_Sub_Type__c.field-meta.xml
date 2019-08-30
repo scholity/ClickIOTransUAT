@@ -362,6 +362,26 @@
                 <default>false</default>
                 <label>Roster</label>
             </value>
+            <value>
+                <fullName>Add Portal Access</fullName>
+                <default>false</default>
+                <label>Add Portal Access</label>
+            </value>
+            <value>
+                <fullName>Portal Access - need additional information</fullName>
+                <default>false</default>
+                <label>Portal Access - need additional information</label>
+            </value>
+            <value>
+                <fullName>Portal Access - referred to Sales</fullName>
+                <default>false</default>
+                <label>Portal Access - referred to Sales</label>
+            </value>
+            <value>
+                <fullName>Remove Portal Access</fullName>
+                <default>false</default>
+                <label>Remove Portal Access</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Granted Grace Period for Expired Base Level Cert</controllingFieldValue>
@@ -397,6 +417,22 @@
         <valueSettings>
             <controllingFieldValue>MTN</controllingFieldValue>
             <valueName>Roster</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Partner Profile Update</controllingFieldValue>
+            <valueName>Add Portal Access</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Partner Profile Update</controllingFieldValue>
+            <valueName>Portal Access - need additional information</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Partner Profile Update</controllingFieldValue>
+            <valueName>Portal Access - referred to Sales</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Partner Profile Update</controllingFieldValue>
+            <valueName>Remove Portal Access</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Quick Start</controllingFieldValue>

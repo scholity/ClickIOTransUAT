@@ -6,7 +6,7 @@
     <inlineHelpText>Contact responsible for billing questions</inlineHelpText>
     <label>Billing Contact</label>
     <lookupFilter>
-        <active>true</active>
+        <active>false</active>
         <filterItems>
             <field>Contact.AccountId</field>
             <operation>equals</operation>

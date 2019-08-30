@@ -137,7 +137,8 @@ public without sharing class skedJobtoILTClass {
     public  Map<Id, String> locationToILTLocationZip = new Map<Id, String>();  
     public  Map<Id, Id> resourceToInstructorMap = new Map<Id, Id>();
     public  Map<Id, Decimal> jobPriceOverrIdeMap = new Map<Id, Decimal>();
-    public  Map<Id, Id> jobToClassMap = new Map<Id, Id>();
+    public  Map<Id, redwing__ILT_Class__c> jobToClassMap = new Map<Id, redwing__ILT_Class__c>();
+    public  Map<Id, redwing__ILT_Class__c> newJobToClassMap = new Map<Id, redwing__ILT_Class__c>();
     
     public  List<sked__Job_Allocation__c> jobAllocationList = new List<sked__Job_Allocation__c>();   
     public  List<redwing__ILT_Instructor__c> jobInstructorList = new List<redwing__ILT_Instructor__c>();      
@@ -453,7 +454,8 @@ public without sharing class skedJobtoILTClass {
         Map<String,redwing__Learning_Version__c> lVersions = new Map<String,redwing__Learning_Version__c>();
         Map<Id,Id> insertedclassId = new Map<Id,Id>();
         Map<Id, Id> JobIdOppIdMap = new Map<Id, Id>();
-        Map<Id, Id> orderIDsMap = new Map<Id, Id>(); // key: order Id, value: skedulo Job Id
+        Map<Id, Id> orderIdJobIdMap = new Map<Id, Id>(); // key: order Id, value: skedulo Job Id
+        Map<Id, Id> jobIdOrderIdMap = new Map<Id, Id>(); // key: skedulo Job Id , value: order Id
         Map<Id, Set<ccrz__E_OrderItem__c>> jobIdOrderItems = new Map<Id, Set<ccrz__E_OrderItem__c>>(); // skedulo job Id as key, Set of related order items as value
 
         List<redwing__Learning__c> lstLearning = new List<redwing__Learning__c>();
@@ -464,7 +466,9 @@ public without sharing class skedJobtoILTClass {
         List<redwing__Learning__c> insertedLearnings = new List<redwing__Learning__c>();
         List<redwing__ILT_Class__c> updateclassrecList = new List<redwing__ILT_Class__c>();
         List<ccrz__E_OrderItem__c> lstOrderItems = new List<ccrz__E_OrderItem__c>(); // List to be populated with order items after ILT class is added
+        List<ccrz__E_Order__c> lstOrders = new List<ccrz__E_Order__c>(); // List to be populated with CRE Request Processed flag
         List<ccrz__E_OrderItem__c> orderItems = new List<ccrz__E_OrderItem__c>();
+        List<Voucher__c> voucherList = new List<Voucher__c>();
 
         Set<Id> SetJob = new Set<Id>();
         Set<Id> SetTrainingEvents = new Set<Id>();
@@ -489,8 +493,8 @@ public without sharing class skedJobtoILTClass {
         // to result in creation of new ILT Class record since when they are created the location may not be confirmed)
 
         if (updateRecords){
-            for(redwing__ILT_Class__c theClass : [Select Id, Skedulo_Job_Id__c from redwing__ILT_Class__c where Skedulo_Job_Id__c IN: SetJob]) {
-                jobToClassMap.put(theClass.Skedulo_Job_Id__c, theClass.Id);
+            for(redwing__ILT_Class__c theClass : [Select Id, Skedulo_Job_Id__c, redwing__Max_Seats__c from redwing__ILT_Class__c where Skedulo_Job_Id__c IN: SetJob]) {
+                jobToClassMap.put(theClass.Skedulo_Job_Id__c, theClass);
             }
         }
 
@@ -523,14 +527,15 @@ public without sharing class skedJobtoILTClass {
 
         for (Id Id : skedJobsMap.keySet()) {
             Id orderId = skedJobsMap.get(Id).Training_Event__r.CC_Order__c;
-            orderIDsMap.put(orderId, Id);
+            orderIdJobIdMap.put(orderId, Id);
+            jobIdOrderIdMap.put(Id, orderId);
             orderIdSet.add(orderId);
         }
 
         orderItems = [SELECT Id, ILT_Class__c, ccrz__Order__c FROM ccrz__E_OrderItem__c WHERE ccrz__Order__c IN :orderIdSet];
 
         for (ccrz__E_OrderItem__c item : orderItems) {
-            Id skeduloJobId = orderIDsMap.get(item.ccrz__Order__c);
+            Id skeduloJobId = orderIdJobIdMap.get(item.ccrz__Order__c);
 
             if (skeduloJobId != null) {
                 if (jobIdOrderItems.keySet().contains(skeduloJobId)) {
@@ -557,7 +562,11 @@ public without sharing class skedJobtoILTClass {
             // Determine if this is an updated job record for which an ILT class record does not already exist
             // If so, treat as an insert not an update
 
-            if (jobToClassMap.containsKey(curJobRecord.Id)) classExists = true; else classExists = false;
+            if (jobToClassMap.containsKey(curJobRecord.Id)) {
+                classExists = true;
+            } else {
+                classExists = false;
+            }
 
             // Determine if there is an existing class with this recurring schedule Id - if so do not create or modify ILT Class record
             if (curJobRecord.sked__Recurring_Schedule__c != null && MapScheduleToExistingClass.containsKey(curJobRecord.sked__Recurring_Schedule__c)) {
@@ -608,7 +617,7 @@ public without sharing class skedJobtoILTClass {
                 // an update for the first class in a recurring job,
                 // or an update with at least one field change that impacts the ILT Class record
 
-                if(!updateRecords || ((!classExists || checkClassJobFields(curJobRecord, oldJobRecord)) && !recurringJob)) {
+                if(!recurringJob) {
                     // **************************************************************************************************************                   
                     // Step 1 - Create ILT Class record for this Skedulo Job (may exist from previous requests)
                     // Note: The Skedulo Job Id binds the ILT Class, Session, Learning Object, and EventClass records together      
@@ -668,12 +677,15 @@ public without sharing class skedJobtoILTClass {
                                 }
 
                                 Set<Id> nAllocations = jobAllocationMap.get(jobAllocationId);
-                                
-                                if (nAllocations != null) {
-                                    nTotalStudents = Integer.valueOf(Math.ceil((nStudent/nInstructor) * nAllocations.size()));                                  
+                                Integer nAllocatedInstructors;
+                                // Default to one instructor if none have been allocated yet
+                                if (nAllocations == null || nAllocations.size() == 0) {
+                                    nAllocatedInstructors = 1;
                                 } else {
-                                    nTotalStudents = nStudent; // Default to one instructor if none have been allocated yet
+                                    nAllocatedInstructors = nAllocations.size();
                                 }
+
+                                nTotalStudents = Integer.valueOf(Math.ceil((nStudent/nInstructor) * nAllocatedInstructors));
                             }
                         } else {
                             nTotalStudents = 12;
@@ -1029,44 +1041,14 @@ public without sharing class skedJobtoILTClass {
         }        
                  
         if(lstILTClass.size() > 0) {
-            Schema.SObjectField f = redwing__ILT_Class__c.Fields.Skedulo_Job_Id_External__c;       
+            Schema.SObjectField f = redwing__ILT_Class__c.Fields.Skedulo_Job_Id_External__c;
             database.UpsertResult[] results = Database.upsert(lstILTClass, f, false);
-            System.debug('Class created results' +results);
-           
-            // Voucher creation (for new ILT Class records only - skip if update)
+            System.debug('Class created results' + results);
 
-            //if(!updateRecords){
-            List<Voucher__c> voucherList = new List<Voucher__c>();             
-            for (Integer nILTClass=0; nILTClass < results.size(); nILTClass++) {  
-                redwing__ILT_Class__c clsRecord = lstILTClass[nILTClass];
-                if (results[nILTClass].isCreated()) { 
-                    // Create vouchers only for new ILT Class records                           
-                    // for(redwing__ILT_Class__c clsRecord : lstILTClass){
-                    
-                    // insertedclassId.put(clsRecord.redwing__Learning__c, clsRecord.Id);
-                    
-                    if(catalogIds.get(jobCatalogMap.get(clsRecord.Skedulo_Job_Id__c)) != null) {
-                        Integer nTotalStudents = Integer.valueOf(clsRecord.redwing__Max_Seats__c);
-                        if (nTotalStudents != null && nTotalStudents > 0) {                     
-                            // Integer j = Integer.ValueOf(catalogIds.get(jobCatalogMap.get(clsRecord.Skedulo_Job_Id__c)).Course_Catalog__r.Number_of_Students__c);
-                            for(Integer i = 0; i < nTotalStudents; i++){
-                                Voucher__c objVoucher = new Voucher__c();
-                                objVoucher.ILT_Class__c = clsRecord.Id;
-                                objVoucher.Learning_Plan__c = catalogIds.get(jobCatalogMap.get(clsRecord.Skedulo_Job_Id__c)).LMS_Learning_Plan__c;
-                                voucherList.add(objVoucher);
-                            }
-                        }
-                    }
-
-                //}                    
-                } else {
-                    // For updated (existing) ILT Class records determine if voucher count is still valId
-                    // Total number of vouchers = # allocated instructors * course catalog number of students
-                
-                    // To be completed at future date
-                }
-
+            for (Integer nILTClass=0; nILTClass < results.size(); nILTClass++) {
                 if (results[nILTClass].isSuccess()) {
+                    redwing__ILT_Class__c clsRecord = lstILTClass[nILTClass];
+                    newJobToClassMap.put(clsRecord.Skedulo_Job_Id__c, clsRecord);
                     // *** populate order items for FS class with the ILT class
 
                     // for every successful inserted class check if it is FS
@@ -1077,21 +1059,60 @@ public without sharing class skedJobtoILTClass {
                     if (clsRecord.Request_Type__c == 'Full Service') {
                         Set<ccrz__E_OrderItem__c> orderItemSet = jobIdOrderItems.get(clsRecord.Skedulo_Job_Id__c);
                         if (!orderItemSet.isEmpty()) {
+                            Id theOrderId;
                             for (ccrz__E_OrderItem__c oi : orderItemSet) {
                                 if (oi.ILT_Class__c == null) {
                                     oi.ILT_Class__c = clsRecord.Id;
                                     lstOrderItems.add(oi);
                                 }
+                                theOrderId = oi.ccrz__Order__c;
                             }
+                            ccrz__E_Order__c theOrder = new ccrz__E_Order__c();
+                            theOrder.Id = theOrderId;
+                            theOrder.CRE_Request_Processed__c = true;
+                            lstOrders.add(theOrder);
                         }
                     }
-                    // ****
                 }
-            }   
+            }
+        }
+           
+        // Voucher creation (newJobToClassMap now contains a mapping of Job Id to ILT Class for both new and existing classes)
+        // We must iterate over old and new to determine if class size has changed based on job allocation or ratio change
+
+        for (redwing__ILT_Class__c theClass :  newJobToClassMap.values()) {
+            // Insure that the Learning Plan Id will be available if we need to create voucher, otherwise need to skip
+            if (catalogIds.get(jobCatalogMap.get(theClass.Skedulo_Job_Id__c)) != null) {
+                // For new ILT Class records use the previously calculated max seats(number of students) for voucher count
+                // For updated (existing) ILT Class records determine if voucher count is still valid (max seats)
+                Integer nTotalStudentsOld = 0;
+                Integer nTotalStudents = Integer.valueOf(theClass.redwing__Max_Seats__c);
+
+                if (jobToClassMap.containsKey(theClass.Skedulo_Job_Id__c)) {
+                    nTotalStudentsOld = Integer.valueOf(jobToClassMap.get(theClass.Skedulo_Job_Id__c).redwing__Max_Seats__c);
+                }
+
+                System.debug('*** nTotalStudentsOld='+nTotalStudentsOld+' nTotalStudents='+nTotalStudents);
+                if (nTotalStudents > nTotalStudentsOld) {
+                    for (Integer i = 0; i < (nTotalStudents - nTotalStudentsOld); i++) {
+                        Voucher__c objVoucher = new Voucher__c();
+                        objVoucher.ILT_Class__c = theClass.Id;
+                        objVoucher.Learning_Plan__c = catalogIds.get(jobCatalogMap.get(theClass.Skedulo_Job_Id__c)).LMS_Learning_Plan__c;
+                        voucherList.add(objVoucher);
+                    }
+                }
+                // What about reductions in max class size?  Are vouchers to be removed?
+            }
+        }
                     
-            if(voucherList.size() > 0)
-                insert voucherList;
-            //}
+        if(voucherList.size() > 0) {
+            System.debug('voucherList='+voucherList);
+            List<Database.SaveResult> sresult = Database.insert(voucherList, false);
+        }
+
+        if (lstOrders.size() > 0) {
+            System.debug('lstOrders='+lstOrders);
+            List<Database.SaveResult> sresult = Database.update(lstOrders, false);
         }
 
         if (lstOrderItems.size() > 0) {

@@ -1852,9 +1852,10 @@ public without sharing class ILTInstructorCommunity{
         Integer noofdays;
         Integer totaldays;
         
-        List<redwing__Learning__c> learninglistver = new list<redwing__Learning__c>();
-        List<ccrz__E_CartItem__c> updatedCartItems = new list<ccrz__E_CartItem__c>();
-        List<ccrz__E_OrderItem__c> updatedOrderItems = new list<ccrz__E_OrderItem__c>();        
+        List<redwing__Learning__c> learninglistver = new List<redwing__Learning__c>();
+        List<ccrz__E_CartItem__c> updatedCartItems = new List<ccrz__E_CartItem__c>();
+        List<ccrz__E_OrderItem__c> updatedOrderItems = new List<ccrz__E_OrderItem__c>();
+        List<ccrz__E_Order__c> updatedOrders = new List<ccrz__E_Order__c>();
         
         Map<id,id> insertedclassid = new Map<id,id>();
         Map<String,redwing__Learning_Version__c> lVersions = new Map<String,redwing__Learning_Version__c>();
@@ -1864,7 +1865,7 @@ public without sharing class ILTInstructorCommunity{
         
         try {
             if(objClassDetails != null){       
-                
+                System.debug('***** Processing objClassDetails:'+objClassDetails);
                 // Step 1 - Get Learning plan name 
                 
                 learningPlanId = objClassDetails.Course;                
@@ -2096,13 +2097,20 @@ public without sharing class ILTInstructorCommunity{
 	                // US1521 - If this is CRE, Order Lines will already be created
 	                // In this case, we need to write ILT Class Id on Order Item record(s)
 
-	                for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c From ccrz__E_OrderItem__c
+	                for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c From ccrz__E_OrderItem__c
 	                	Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :clsRecord.Opportunity__c]) {
 	                		
                 		ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
                 		newOrderItem.Id = theOrderItem.Id;	
                 		newOrderItem.ILT_Class__c = classId;
-                		updatedOrderItems.add(newOrderItem);                		
+                		updatedOrderItems.add(newOrderItem);
+
+                        // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
+                        // boolean on order header record
+                        ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                        newOrder.Id = theOrderItem.ccrz__Order__c;
+                        newOrder.CRE_Request_Processed__c = true;
+                        updatedOrders.add(newOrder);
 	                }
                 }                
                 
@@ -2234,8 +2242,11 @@ public without sharing class ILTInstructorCommunity{
                 
                 if (updatedOrderItems.size() > 0) {
                 	update updatedOrderItems;
-                }                
-                
+                }
+
+                if (updatedOrders.size() > 0) {
+                    update updatedOrders;
+                }
             }
             
         }catch (Exception e) {

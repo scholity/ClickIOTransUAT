@@ -186,7 +186,7 @@
             var showEvent = $A.get('e.c:phss_cc_ShowPriceOverrideModalEvent');
             showEvent.setParams({
                 'opportunitySfid': component.get('v.recordId'),
-                'productSfid': event.getParam('productSfid')
+                'cartItemId': event.getParam('cartItemId')
             });
             showEvent.fire();
         }

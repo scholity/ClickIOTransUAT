@@ -1372,7 +1372,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ccrz__E_StoredPayment__c.Remaining_PO_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2599,10 +2599,10 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
+        <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>ccrz__E_StoredPayment__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

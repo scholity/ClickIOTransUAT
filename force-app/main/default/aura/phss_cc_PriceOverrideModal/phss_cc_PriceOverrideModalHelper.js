@@ -2,11 +2,11 @@
  * Created by jbarker on 11/2/18.
  */
 ({
-    getCartItemForProduct: function (component, productSfid, opportunitySfid) {
+    getCartItemForOpportunity: function (component, cartItemId, opportunitySfid) {
         var action = component.get('c.getCartItem');
         console.log("Test1");
         action.setParams({
-            'productSfid': productSfid,
+            'cartItemId': cartItemId,
             'opportunitySfid': opportunitySfid
         });
         action.setCallback(this, function (response) {

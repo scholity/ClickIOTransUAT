@@ -121,7 +121,7 @@
         <pageOrSobjectType>Opportunity</pageOrSobjectType>
         <recordType>Opportunity.Contract</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -375,7 +375,7 @@
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Account</pageOrSobjectType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -458,7 +458,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.SB_Household_Account</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -565,7 +565,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.Facility_Billing_Accounts_in_Account_Hierarchy</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -700,7 +700,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.Individual_Account</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -790,7 +790,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.Bucket_Account</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -817,7 +817,7 @@
         <pageOrSobjectType>Account</pageOrSobjectType>
         <recordType>Account.SB_Organization_Account</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Feed</tabs>
