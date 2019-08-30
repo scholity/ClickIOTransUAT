@@ -488,6 +488,11 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>Partner Profile Update</fullName>
+                <default>false</default>
+                <label>Partner Profile Update</label>
+            </value>
+            <value>
                 <fullName>PDF of Certs Sent</fullName>
                 <default>false</default>
                 <label>PDF of Certs Sent</label>
@@ -1225,6 +1230,10 @@
         <valueSettings>
             <controllingFieldValue>User Account Maintenance</controllingFieldValue>
             <valueName>Learner Profile Update</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>User Account Maintenance</controllingFieldValue>
+            <valueName>Partner Profile Update</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>AP Blended Learning</controllingFieldValue>

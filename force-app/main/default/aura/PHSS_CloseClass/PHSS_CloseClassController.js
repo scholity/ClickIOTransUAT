@@ -8,8 +8,8 @@
     showStep1 : function(component,event,helper){
 
         // add logic to differentiate - validateCart or find order
-        var reqType = component.get("v.requestType");
-        if (reqType !== "Full Service") {
+        var requestType = component.get("v.requestType");
+        if ((requestType !== "Full Service" && requestType !== "Community")) {
             helper.validateCart(component, event, helper);
         }
 
@@ -70,7 +70,7 @@
                            // if(isLegalCheckednext){
 
                 var requestType = component.get("v.requestType");
-                if (requestType != "Full Service") {
+                if (requestType != "Full Service" && requestType !== "Community") {
                     var action = component.get("c.updateCartProducts");
 
                     action.setParams({opportunitySfid : component.get("v.opportunityId"),
@@ -217,13 +217,16 @@
     closefinalClass : function(cmp, event, helper){
     	cmp.set("v.stepNumber", "Zero");
 
-    	var reqType = cmp.get("v.requestType");
-    	console.log(reqType);
+    	var requestType = cmp.get("v.requestType");
+    	console.log(requestType);
     	debugger;
 
-        if (reqType === "Full Service") {
-            console.log('running close class FS');
+        if (requestType === "Full Service") {
+            console.log('running update order FS');
             helper.updateOrder(cmp, event);
+        }
+        if (requestType === "Full Service" || requestType === "Community") {
+            console.log('running close class FS/Community');            
             helper.closingClass(cmp, event, helper);
         }
 

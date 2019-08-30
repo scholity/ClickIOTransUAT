@@ -421,7 +421,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.RBC_Case</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
@@ -475,7 +475,7 @@
         <pageOrSobjectType>Case</pageOrSobjectType>
         <recordType>Case.CRE_Case</recordType>
         <type>Flexipage</type>
-        <profile>SB ARC NAT Team</profile>
+        <profile>SB ARC NAT Team-OLD</profile>
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>

@@ -116,7 +116,7 @@
                     </button>
                     <h2 id		= "header43"
                         class	= "slds-text-heading_medium">
-                        Close ClassPH Test: {!v.eligibleForClose}
+                        Close Class
                     </h2>
                     <aura:renderIf isTrue="{!v.showError}">
                         <div class="errMsg">

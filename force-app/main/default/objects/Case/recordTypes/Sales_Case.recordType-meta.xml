@@ -474,6 +474,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Intended_form_of_payment__c</picklist>
+        <values>
+            <fullName>Credit Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Lifeguard_on_Staff__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -1359,6 +1370,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Question_Type__c</picklist>
+        <values>
+            <fullName>Customer Comments</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Quick_Start_Progress__c</picklist>
         <values>
             <fullName>14 Day Reminder sent</fullName>
@@ -2028,24 +2046,6 @@
         </values>
         <values>
             <fullName>Product%2FDelivery</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Question_Type__c</picklist>
-        <values>
-            <fullName>Customer Comments</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Intended_form_of_payment__c</picklist>
-        <values>
-            <fullName>Credit Card</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Invoice</fullName>
             <default>false</default>
         </values>
     </picklistValues>

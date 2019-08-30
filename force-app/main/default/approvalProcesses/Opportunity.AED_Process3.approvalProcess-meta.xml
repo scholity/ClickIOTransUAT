@@ -70,12 +70,12 @@
         </criteriaItems>
         <criteriaItems>
             <field>Opportunity.Owner_Profile__c</field>
-            <operation>notEqual</operation>
+            <operation>notContain</operation>
             <value>ARC BGST Sales Admin</value>
         </criteriaItems>
         <criteriaItems>
             <field>Opportunity.Owner_Profile__c</field>
-            <operation>notEqual</operation>
+            <operation>notContain</operation>
             <value>ARC BGST Sales User</value>
         </criteriaItems>
     </entryCriteria>

@@ -65,8 +65,8 @@
     <assignments>
         <name>Assign_Order_Fulfillment_Item</name>
         <label>Assign Order Fulfillment Item</label>
-        <locationX>349</locationX>
-        <locationY>1222</locationY>
+        <locationX>353</locationX>
+        <locationY>1229</locationY>
         <assignmentItems>
             <assignToReference>sFulfillmentItem.Quantity__c</assignToReference>
             <operator>Assign</operator>
@@ -107,6 +107,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>sOrder.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFulfillmentItem.ILT_Class__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.ILT_Class__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFulfillmentItem.Supplemental_Information__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.Supplemental_Information__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -343,6 +357,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Set_Fulfillment_Type</name>
+        <label>Set Fulfillment Type</label>
+        <locationX>1849</locationX>
+        <locationY>571</locationY>
+        <assignmentItems>
+            <assignToReference>vFulfillmentType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Receipt</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Order_Fulfillment</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_In_Process_Flag</name>
         <label>Set In Process Flag</label>
         <locationX>720</locationX>
@@ -478,8 +508,8 @@
     <assignments>
         <name>Set_Shipped</name>
         <label>Set Shipped</label>
-        <locationX>767</locationX>
-        <locationY>1224</locationY>
+        <locationX>765</locationX>
+        <locationY>1228</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.ccrz__OrderItemStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -502,7 +532,7 @@
         <name>Set_to_Submitted</name>
         <label>Set to Submitted</label>
         <locationX>565</locationX>
-        <locationY>1028</locationY>
+        <locationY>1027</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.ccrz__OrderItemStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -835,8 +865,8 @@
     <decisions>
         <name>Count_Course_Records</name>
         <label>Count Course Records</label>
-        <locationX>343</locationX>
-        <locationY>1028</locationY>
+        <locationX>341</locationX>
+        <locationY>1026</locationY>
         <defaultConnector>
             <targetReference>Set_to_Submitted</targetReference>
         </defaultConnector>
@@ -1004,10 +1034,39 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>sTransactionPayment.ccrz__AccountType__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>cc</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Create_Order_Fulfillment</targetReference>
             </connector>
             <label>Fulfillment Items Exist?</label>
+        </rules>
+        <rules>
+            <name>Fulfillment_Items_Exist_and_CC</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sTransactionPayment.ccrz__AccountType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>cc</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>WriteFulfillmentRecords</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Fulfillment_Type</targetReference>
+            </connector>
+            <label>Fulfillment Items Exist and CC</label>
         </rules>
     </decisions>
     <decisions>
@@ -1387,7 +1446,7 @@
         <name>Create_Order_Fulfillment</name>
         <label>Create Order Fulfillment</label>
         <locationX>1688</locationX>
-        <locationY>567</locationY>
+        <locationY>566</locationY>
         <assignRecordIdToReference>frmOrderFulfillmentD</assignRecordIdToReference>
         <connector>
             <targetReference>Loop_to_Set_Order_Fulfillment_Header</targetReference>
@@ -1425,7 +1484,7 @@
         <inputAssignments>
             <field>Type__c</field>
             <value>
-                <stringValue>Invoice</stringValue>
+                <elementReference>vFulfillmentType</elementReference>
             </value>
         </inputAssignments>
         <object>Fulfillment__c</object>
@@ -1577,14 +1636,16 @@
         <queriedFields>Inventory_Type__c</queriedFields>
         <queriedFields>ccrz__PercentDiscount__c</queriedFields>
         <queriedFields>ccrz__UnitOfMeasure__c</queriedFields>
+        <queriedFields>ILT_Class__c</queriedFields>
+        <queriedFields>Supplemental_Information__c</queriedFields>
         <sortField>Id</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
         <name>Get_PO_Payment_Amount_Request</name>
         <label>Get PO Payment Amount Request</label>
-        <locationX>203</locationX>
-        <locationY>643</locationY>
+        <locationX>211</locationX>
+        <locationY>642</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Missing_Transaction_Payment</targetReference>
@@ -2113,6 +2174,16 @@
         <scale>2</scale>
         <value>
             <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>vFulfillmentType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Invoice</stringValue>
         </value>
     </variables>
     <variables>

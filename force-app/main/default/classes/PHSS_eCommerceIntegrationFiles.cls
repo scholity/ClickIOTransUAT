@@ -517,7 +517,9 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             if (CPS) {
                 pricebookXMLList.add(getPricebookXml(theClass, Double.valueOf(theClass.Registration_Fee__c)));              
             } else {
-                pricebookXMLList.add(getPricebookXml(theClass, classPriceMap.get(theClass.Id)));
+                if (classPriceMap.containsKey(theClass.Id)) {
+                    pricebookXMLList.add(getPricebookXml(theClass, classPriceMap.get(theClass.Id)));
+                }
             }
         }                         
         
@@ -566,7 +568,9 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
          
             siteCatalogXMLMap.put(theLearningObject.Id, getSiteCatalogXml(theLearningObject));
             inventoryXMLList.add(getInventoryXml(theLearningObject, 9999999, true));
-            pricebookXMLList.add(getPricebookXml(theLearningObject, classPriceMap.get(theLearningObject.Id)));
+            if (classPriceMap.containsKey(theLearningObject.Id)) {
+                pricebookXMLList.add(getPricebookXml(theLearningObject, classPriceMap.get(theLearningObject.Id)));
+            }
         }                              
         
         // Generate and Upload XML files to platform
@@ -1055,7 +1059,6 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
        
        // Fetch price overrides (if defined) for each community course
        Map<Id, Double> theCommunityPriceList = new Map<Id, Double>();
-       
        theCommunityPriceList = getPriceOverrides(communityCourseSet, communityClassList);
        
        // Remove classes with price overrides from communityCourseSet

@@ -20,6 +20,8 @@ public with sharing class phss_cc_CartUtil {
     private static final String CART_ITEM_ORIGINAL_ITEM_PRICE_KEY = 'originalItemPrice';
     private static final String CART_ITEM_PERCENT_DISCOUNT_KEY = 'percentDiscount';
 
+    private static final String CART_ITEM_LIST = 'cartItemList';
+    private static final String CART_ITEM_MAP = 'cartItemMap';
     private static final String CART_ITEMS_KEY = 'ECartItemsS';
     private static final String CART_TOTAL_AMOUNT_KEY = 'totalAmount';
     private static final String PRODUCT_PRICE_KEY = 'price';
@@ -45,6 +47,7 @@ public with sharing class phss_cc_CartUtil {
     private static final String FAILED_TO_CREATE_MINOR_PRODUCT_QUANTITY_MAP = 'Failed to create minor Product Quantities Map.';
     private static final String FAILED_TO_FETCH_CART = 'Failed to fetch cart.';
     private static final String FAILED_TO_FETCH_THE_ACTIVE_CART = 'Failed to fetch the active cart.';
+    private static final String FAILED_TO_FETCH_THE_ACTIVE_CART_ITEMS = 'Failed to fetch the active cart items.';
     private static final String FAILED_TO_FETCH_PRICE_FROM_CART = 'Failed to fetch price from cart.';
     private static final String FAILED_TO_PARSE_DETAILS_FROM_CART = 'Failed to parse details from Cart.';
     private static final String FAILED_TO_SET_THE_ADDRESS_ON_THE_CART = 'Failed to set the address on the cart.';
@@ -186,6 +189,11 @@ public with sharing class phss_cc_CartUtil {
      * @return
      */
     public static Map<String, Object> addProductsToCart(String opportunitySfid, Map<String, Object> productQuantityMap, Boolean fetchMinorItems) {
+        System.debug('JASON: addProductsToCart()');
+        System.debug('opportunitySfid=' + opportunitySfid);
+        System.debug('productQuantityMap=' + productQuantityMap);
+        System.debug('fetchMinorItems=' + fetchMinorItems);
+
         try {
             phss_cc_Context.setContext(opportunitySfid);
             
@@ -219,9 +227,9 @@ public with sharing class phss_cc_CartUtil {
     }
 
     /**
-     * @description Create a Map<String,Object> of product quanities keyed to product sfid.
+     * @description Create a Map<String,Object> of product quantities keyed to product sfid.
      *
-     * @return Map<String,Object> Containing Product SFID and associated quanity on cart.
+     * @return Map<String,Object> Containing Product SFID and associated quantity on cart.
      */
     public static Map<String, Object> getProductQuantitiesMapFromCart(Map<String, Object> currCart, Map<String, Object> majorCartItemToProductSfid, List<String> productListMajorItems, List<String> fullProductList) {
         try {
@@ -414,17 +422,92 @@ public with sharing class phss_cc_CartUtil {
             Map<String, Object> fetchCartResponse;
 
             ccrz__E_Cart__c cart = phss_cc_Context.currCart;
-			system.debug(phss_cc_Context.currCart + 'This is the current cart');
             if (cart != null && !String.isEmpty(cart.ccrz__EncryptedId__c)) {
                 String currCartEncId = cart.ccrz__EncryptedId__c;
                 Map<String, Object> cartDetails = cartFetch(currCartEncId, false);
-                system.debug('This is cart details'+cartDetails);
                 fetchCartResponse = retrieveLineItemsAndTotalAmountFromCart(cartDetails, fetchMinorItems);
+
+                Map<String, Object> cartItems = fetchCartItems(phss_cc_Context.currCart.Id);
+                if (cartItems != null && cartItems.size() > 0) {
+                    fetchCartResponse.put(CART_ITEM_LIST, cartItems.keySet());
+                    fetchCartResponse.put(CART_ITEM_MAP, cartItems);
+                }
             }
             return fetchCartResponse;
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_FETCH_THE_ACTIVE_CART);
         }
+    }
+
+    /**
+     * @description Fetches the cart items from the active cart associated with the specified opportunity
+     *
+     * @param opportunityId
+     *
+     * @return
+     */
+    public static Map<String, Object> fetchCartItems(String cartId) {
+
+        Map<String, Object> cartItemMap = new Map<String, Object>();
+
+        try {
+            if (String.isNotEmpty(cartId)) {
+                List<ccrz__E_CartItem__c> cartItems = [
+                        SELECT
+                                Id,
+                                ccrz__ItemTotal__c,
+                                ccrz__OriginalItemPrice__c,
+                                ccrz__OriginalQuantity__c,
+                                ccrz__ParentCartItem__c,
+                                ccrz__PercentDiscount__c,
+                                ccrz__Price__c,
+                                ccrz__PricingType__c,
+                                ccrz__Product__c,
+                                ccrz__Product__r.Name,
+                                ccrz__Product__r.ccrz__SKU__c,
+                                ccrz__ProductType__c,
+                                ccrz__Quantity__c,
+                                ccrz__SubAmount__c,
+                                ccrz__UnitOfMeasure__c,
+                                Coupon__c,
+                                ILT_Class__c
+                        FROM
+                                ccrz__E_CartItem__c
+                        WHERE
+                                ccrz__Cart__c = :cartId
+                        ORDER BY
+                                ccrz__ParentCartItem__c NULLS FIRST,
+                                Id
+                ];
+                if (cartItems != null) {
+                    for (ccrz__E_CartItem__c cartItem : cartItems) {
+                        if (cartItem.ccrz__ParentCartItem__c != null) {
+                            Map<String, Object> parentCartItem = (Map<String, Object>) cartItemMap.get(cartItem.ccrz__ParentCartItem__c);
+                            if (parentCartItem != null) {
+                                Map<String, Object> minorCartItems = (Map<String, Object>) parentCartItem.get(CART_ITEM_MAP);
+                                if (minorCartItems == null) {
+                                    minorCartItems = new Map<String, Object>();
+                                    parentCartItem.put(CART_ITEM_MAP, minorCartItems);
+                                }
+                                
+                                Map<String, Object> itemMap = new Map<String, Object>(cartItem.getPopulatedFieldsAsMap());
+                                minorCartItems.put(cartItem.Id, itemMap);
+                                parentCartItem.put(CART_ITEM_LIST, minorCartItems.keySet());
+                            }
+
+                        } else {
+                            Map<String, Object> itemMap = new Map<String, Object>(cartItem.getPopulatedFieldsAsMap());
+                            cartItemMap.put(cartItem.Id, itemMap);
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_FETCH_THE_ACTIVE_CART_ITEMS, e);
+        }
+
+        return cartItemMap;
     }
 
     /**

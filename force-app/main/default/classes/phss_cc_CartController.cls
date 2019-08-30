@@ -42,12 +42,9 @@ public with sharing class phss_cc_CartController {
             System.debug('productClassIdMap: ' + productClassIdMap);
 
             // Request available vouchers BEFORE creating cart line items.
-            Map<String, List<Voucher__c>> voucherMap = phss_cc_VoucherUtil.reserveVouchersForOpportunity(productClassIdMap, productQuantityMap, opportunitySfid);
-
-            System.debug('voucherMap: ' + voucherMap);
+            Map<String, List<Voucher__c>> voucherMap = phss_cc_VoucherUtil.requestVouchersForOpportunity(productClassIdMap, productQuantityMap, opportunitySfid);
 
             addToCartResult = phss_cc_CartUtil.addProductsToCart(opportunitySfid,productQuantityMap,true);
-            System.debug('addToCartResult: ' + addToCartResult);
 
             Map<String, String> productCartItemMap = getProductCartItemMap(opportunitySfid, productClassIdMap);
 

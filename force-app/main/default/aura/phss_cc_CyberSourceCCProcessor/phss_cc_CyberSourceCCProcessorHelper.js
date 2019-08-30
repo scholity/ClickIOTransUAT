@@ -105,7 +105,7 @@
             component.set('v.bill_to_address_state', cybersourceHostedFormData.state);
             component.set('v.bill_to_address_postal_code', cybersourceHostedFormData.zipcode);
 */        }
-        component.set('v.bill_to_address_country', cybersourceHostedFormData.country);
+        // component.set('v.bill_to_address_country', cybersourceHostedFormData.country);
         component.set('v.showForm', true);
     },
 

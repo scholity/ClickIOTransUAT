@@ -33,46 +33,61 @@ public class PHSS_VoucherTriggerHandler {
         
         //find out the vouchers which have a status change away from 'Issued'
         for(Voucher__c vcr : newVouchers){
-            //check the status in old map and new map to identify the change in voucher status
-            if(oldVoucherMap.get(vcr.id).status__c == 'Issued' && 
-            	newVoucherMap.get(vcr.id).status__c != oldVoucherMap.get(vcr.id).status__c) {
-                // Vouchers for Online Classes will have Online_Class__c lookup populated (ILT Class vouchers will not)
-                if (vcr.Online_Class__c != null) {  
-                	classLearningPlan.put(vcr.Online_Class__c, vcr.Learning_Plan__c);
-                	onlineClasses.add(vcr.Online_Class__c);
-                	classIssuedVouchers.put(vcr.Online_Class__c, 0);
+            if (oldVouchers != null && !oldVouchers.isEmpty()) {
+                //check the status in old map and new map to identify the change in voucher status
+                if (oldVoucherMap.get(vcr.id).status__c == 'Issued' &&
+                        newVoucherMap.get(vcr.id).status__c != oldVoucherMap.get(vcr.id).status__c) {
+                    // Vouchers for Online Classes will have Online_Class__c lookup populated (ILT Class vouchers will not)
+                    if (vcr.Online_Class__c != null) {
+                        classLearningPlan.put(vcr.Online_Class__c, vcr.Learning_Plan__c);
+                        onlineClasses.add(vcr.Online_Class__c);
+                        classIssuedVouchers.put(vcr.Online_Class__c, 0); // Covers case in which no Issued vouchers remain
+                    }
                 }
-            } 
+            } else {
+                // this handles insert of new voucher - insure number of Issued vouchers is at the high water mark
+                if (vcr.Online_Class__c != null) {
+                    classLearningPlan.put(vcr.Online_Class__c, vcr.Learning_Plan__c);
+                    onlineClasses.add(vcr.Online_Class__c);
+                    classIssuedVouchers.put(vcr.Online_Class__c, 0); // Covers case in which no Issued vouchers remain
+                }
+            }
         }
         System.debug('classLearningPlan='+classLearningPlan);
         System.debug('onlineClasses='+onlineClasses);
         
-        // Determine the total number of available (Issued) vouchers for each online class impacted by voucher status changes
-        List<AggregateResult> issuedVoucherCounts = [Select Online_Class__c, Count(Id) vCount From Voucher__c 
-        	Where Online_Class__c In :onlineClasses And Status__c = 'Issued' Group by Online_Class__c];
-        System.debug('issuedVoucherCounts='+issuedVoucherCounts);
-        
-        For(AggregateResult theCount : issuedVoucherCounts) {
-        	Integer classIssuedVoucherCount = (Integer)theCount.get('vCount');
-        	Id theOnlineClass = (Id)theCount.get('Online_Class__c');
-        	System.debug('classIssuedVoucherCount='+classIssuedVoucherCount);
-        	
-        	classIssuedVouchers.put(theOnlineClass, classIssuedVoucherCount);
+        if (!onlineClasses.isEmpty()) {
+            // Determine the total number of available (Issued) vouchers for each online class impacted by voucher status changes
+            List<AggregateResult> issuedVoucherCounts = [
+                    Select Online_Class__c, Count(Id) vCount
+                    From Voucher__c
+                    Where Online_Class__c In :onlineClasses And Status__c = 'Issued'
+                    Group by Online_Class__c
+            ];
+            System.debug('issuedVoucherCounts=' + issuedVoucherCounts);
+
+            For (AggregateResult theCount : issuedVoucherCounts) {
+                Integer classIssuedVoucherCount = (Integer) theCount.get('vCount');
+                Id theOnlineClass = (Id) theCount.get('Online_Class__c');
+                System.debug('classIssuedVoucherCount=' + classIssuedVoucherCount);
+
+                classIssuedVouchers.put(theOnlineClass, classIssuedVoucherCount);
+            }
+
+            For (Id theOnlineClass : classIssuedVouchers.keySet()) {
+                Integer classIssuedVoucherCount = classIssuedVouchers.get(theOnlineClass);
+                // Determine if number of Issued vouchers for each online class is below lower limit
+                if (classIssuedVoucherCount < voucherFloor) {
+                    Id theLearningPlan = classLearningPlan.get(theOnlineClass);
+                    // Generate additional vouchers to bring the total Issued vouchers up to the defined upper limit
+                    addVouchers.addAll(createVouchers(theOnlineClass, theLearningPlan, voucherCeiling - classIssuedVoucherCount));
+                }
+            }
+
+            if (!addVouchers.isEmpty()) {
+                insert addVouchers;
+            }
         }
-        
-        For(Id theOnlineClass : classIssuedVouchers.keySet()) {
-        	Integer classIssuedVoucherCount = classIssuedVouchers.get(theOnlineClass);
-        	// Determine if number of Issued vouchers for each online class is below lower limit
-        	if (classIssuedVoucherCount < voucherFloor) {
-        		Id theLearningPlan = classLearningPlan.get(theOnlineClass);
-        		// Generate additional vouchers to bring the total Issued vouchers up to the defined upper limit
-        		addVouchers.addAll(createVouchers(theOnlineClass, theLearningPlan, voucherCeiling-classIssuedVoucherCount));
-        	}
-        }
-        
-        if(!addVouchers.isEmpty()){
-            insert addVouchers; 
-        }       
     }
 	
 	private List<Voucher__c> createVouchers(Id onlineClassId, Id learningPlanId, Integer numberOfVouchers) {

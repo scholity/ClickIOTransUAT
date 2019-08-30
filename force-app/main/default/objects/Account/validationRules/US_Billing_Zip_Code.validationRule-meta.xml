@@ -5,6 +5,9 @@
     <description>Validates that the account Billing Zip/Postal Code is in 99999 or 99999-9999
 format if Billing Country is USA or US.</description>
     <errorConditionFormula>AND(
+RecordType.DeveloperName != &quot;SB_Household_Account&quot;, 
+RecordType.DeveloperName != &quot;Individual_Account&quot;, 
+RecordType.DeveloperName != &quot;Bucket_Account&quot;, 
 OR(BillingCountry = &quot;USA&quot;, BillingCountry = &quot;US&quot;),
 NOT(REGEX( BillingPostalCode , &quot;\\d{5}(-\\d{4})?&quot;)),
 !$Setup.Validation_Rules__c.Bypass_Rules__c 

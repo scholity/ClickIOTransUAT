@@ -383,7 +383,7 @@
                 <criteria>
                     <leftValue>{!Record.ccrz__OrderStatus__c}</leftValue>
                     <operator>EQUAL</operator>
-                    <rightValue>Returned</rightValue>
+                    <rightValue>Return Submitted</rightValue>
                 </criteria>
                 <criteria>
                     <leftValue>{!Record.Is_Return_Order__c}</leftValue>

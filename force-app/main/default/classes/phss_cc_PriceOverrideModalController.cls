@@ -39,31 +39,37 @@ public class phss_cc_PriceOverrideModalController {
      * @return
      */
     @AuraEnabled
-    public static Map<String, Object> getCartItem(String productSfid, String opportunitySfid) {
+    public static Map<String, Object> getCartItem(String cartItemId, String opportunitySfid) {
 
         Map<String, Object> result = new Map<String, Object>();
 
         try {
             phss_cc_Context.setContext(opportunitySfid);
 
-            ccrz__E_Cart__c cart = phss_cc_Context.currCart;
-
-            if (cart != null && String.isNotBlank(cart.ccrz__EncryptedId__c)) {
-                Map<String, Object> cartDetails = phss_cc_CartUtil.cartFetch(cart.ccrz__EncryptedId__c, false);
-                List<Map<String, Object>> cartItems = getItemsFromCartDetails(cartDetails);
-                for (Map<String, Object> cartItemDetails : cartItems) {
-                    if (cartItemDetails.get(PRODUCT_ID_KEY) == productSfid) {
-                        String cartItemSfid = (String) cartItemDetails.get(SFID_KEY);
-                        ccrz__E_CartItem__c cartItem = cartItemFetch(cartItemSfid);
-                        Map<String, Object> item = buildCartItemMap(cartItem);
-                        system.debug('item^^^'+item);
-                        if (item != null) {
-                            result.put(CART_ITEM_KEY, item);
-                            break;
-                        }
-                    }
-                }
+            ccrz__E_CartItem__c cartItem = phss_cc_CartItemUtil.getCartItem(cartItemId);
+            if (cartItem != null) {
+                Map<String, Object> cartItemMap = buildCartItemMap(cartItem);
+                result.put(CART_ITEM_KEY, cartItemMap);
             }
+
+//            ccrz__E_Cart__c cart = phss_cc_Context.currCart;
+//
+//            if (cart != null && String.isNotBlank(cart.ccrz__EncryptedId__c)) {
+//                Map<String, Object> cartDetails = phss_cc_CartUtil.cartFetch(cart.ccrz__EncryptedId__c, false);
+//                List<Map<String, Object>> cartItems = getItemsFromCartDetails(cartDetails);
+//                for (Map<String, Object> cartItemDetails : cartItems) {
+//                    if (cartItemDetails.get(PRODUCT_ID_KEY) == productSfid) {
+//                        String cartItemSfid = (String) cartItemDetails.get(SFID_KEY);
+//                        ccrz__E_CartItem__c cartItem = cartItemFetch(cartItemSfid);
+//                        Map<String, Object> item = buildCartItemMap(cartItem);
+//                        system.debug('item^^^'+item);
+//                        if (item != null) {
+//                            result.put(CART_ITEM_KEY, item);
+//                            break;
+//                        }
+//                    }
+//                }
+//            }
 
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_GET_CART_ITEM, e);
@@ -141,66 +147,66 @@ public class phss_cc_PriceOverrideModalController {
         return item;
     }
 
-    /**
-     * @description Fetches the cart item specified by its ID
-     *
-     * @param identifier
-     *
-     * @return
-     */
-    private static ccrz__E_CartItem__c cartItemFetch(String identifier) {
-        ccrz__E_CartItem__c cartItem;
+//    /**
+//     * @description Fetches the cart item specified by its ID
+//     *
+//     * @param identifier
+//     *
+//     * @return
+//     */
+//    private static ccrz__E_CartItem__c cartItemFetch(String identifier) {
+//        ccrz__E_CartItem__c cartItem;
+//
+//        try {
+//            cartItem = [
+//                    SELECT Id,
+//                            ccrz__AdjustmentAmount__c,
+//                            ccrz__ItemTotal__c,
+//                            ccrz__OriginalItemPrice__c,
+//                            ccrz__Price__c,
+//                            ccrz__PricingType__c,
+//                            ccrz__PercentDiscount__c,
+//                            ccrz__Quantity__c,
+//                            ccrz__Product__r.Id,
+//                            ccrz__Product__r.Name,
+//                            ccrz__Product__r.ccrz__SKU__c,
+//                            ccrz__SubAmount__c,
+//                			Coupon__c,
+//                			Coupon__r.Display_Name__c
+//                    FROM ccrz__E_CartItem__c
+//                    WHERE Id = :identifier
+//            ];
+//
+//        } catch (Exception e) {
+//            throw new phss_cc_Exception(FAILED_TO_GET_CART_ITEM, e);
+//        }
+//
+//        return cartItem;
+//    }
 
-        try {
-            cartItem = [
-                    SELECT Id,
-                            ccrz__AdjustmentAmount__c,
-                            ccrz__ItemTotal__c,
-                            ccrz__OriginalItemPrice__c,
-                            ccrz__Price__c,
-                            ccrz__PricingType__c,
-                            ccrz__PercentDiscount__c,
-                            ccrz__Quantity__c,
-                            ccrz__Product__r.Id,
-                            ccrz__Product__r.Name,
-                            ccrz__Product__r.ccrz__SKU__c,
-                            ccrz__SubAmount__c,
-                			Coupon__c,
-                			Coupon__r.Display_Name__c 
-                    FROM ccrz__E_CartItem__c
-                    WHERE Id = :identifier
-            ];
-
-        } catch (Exception e) {
-            throw new phss_cc_Exception(FAILED_TO_GET_CART_ITEM, e);
-        }
-
-        return cartItem;
-    }
-
-    /**
-     * @description Returns a list of cart items
-     *
-     * @param cartDetails
-     *
-     * @return
-     */
-    private static List<Map<String, Object>> getItemsFromCartDetails(Map<String, Object> cartDetails) {
-
-        List<Map<String, Object>> cartItems = new List<Map<String, Object>>();
-
-        if (cartDetails.containsKey(ccrz.ccApiCart.CART_OBJLIST)) {
-            List<Map<String, Object>> cartDetailsList = (List<Map<String, Object>>) cartDetails.get(ccrz.ccApiCart.CART_OBJLIST);
-            for (Map<String, Object> cartDetail : cartDetailsList) {
-                List<Map<String, Object>> cartItemList = (List<Map<String, Object>>) cartDetail.get(CART_ITEMS_KEY);
-                if (cartItemList != null && cartItemList.size() > 0) {
-                    cartItems.addAll(cartItemList);
-                }
-            }
-        }
-
-        return cartItems;
-    }
+//    /**
+//     * @description Returns a list of cart items
+//     *
+//     * @param cartDetails
+//     *
+//     * @return
+//     */
+//    private static List<Map<String, Object>> getItemsFromCartDetails(Map<String, Object> cartDetails) {
+//
+//        List<Map<String, Object>> cartItems = new List<Map<String, Object>>();
+//
+//        if (cartDetails.containsKey(ccrz.ccApiCart.CART_OBJLIST)) {
+//            List<Map<String, Object>> cartDetailsList = (List<Map<String, Object>>) cartDetails.get(ccrz.ccApiCart.CART_OBJLIST);
+//            for (Map<String, Object> cartDetail : cartDetailsList) {
+//                List<Map<String, Object>> cartItemList = (List<Map<String, Object>>) cartDetail.get(CART_ITEMS_KEY);
+//                if (cartItemList != null && cartItemList.size() > 0) {
+//                    cartItems.addAll(cartItemList);
+//                }
+//            }
+//        }
+//
+//        return cartItems;
+//    }
 
     /**
      * @description Overrides the price of a cart item.
@@ -221,7 +227,7 @@ public class phss_cc_PriceOverrideModalController {
         }
 
         try {
-            ccrz__E_CartItem__c cartItem = cartItemFetch(cartItemSfid);
+            ccrz__E_CartItem__c cartItem = phss_cc_CartItemUtil.getCartItem(cartItemSfid);
             if (cartItem != null) {
                 if (overrideType == UNIT_PRICE_OVERRIDE_TYPE) {
                     Decimal price = Decimal.valueOf(overrideValue);
@@ -275,7 +281,7 @@ public class phss_cc_PriceOverrideModalController {
 
         try
         {
-            ccrz__E_CartItem__c cartItem = cartItemFetch(cartItemSfid);
+            ccrz__E_CartItem__c cartItem = phss_cc_CartItemUtil.getCartItem(cartItemSfid);
             
             if (cartItem != null)
             {

@@ -43,7 +43,11 @@
                     component.set('v.productList', returnValue.productList);
                     component.set('v.productsMap', returnValue.productMap);
                     component.set('v.productQuantityMap', returnValue.productQuantityMap);
+                    component.set('v.cartItemList', returnValue.cartItemList);
+                    component.set('v.cartItemMap', returnValue.cartItemMap);
                     component.set('v.renderComplete', true);
+                    console.log('getActiveCart');
+                    console.log(JSON.stringify(returnValue));
                 } else if (returnValue != null && returnValue.Error != null) {
                     this.showToastMessage('Error Fetching Cart', returnValue.Error, 'Error')
                 }
@@ -69,6 +73,10 @@
             return;
         }
         component.set('v.renderComplete', false);
+        console.log('recordId');
+        console.log(component.get('v.recordId'));
+        console.log('cartItems');
+        console.log(JSON.stringify(component.get('v.productQuantityMap')));
         var productQuantityMap = component.get('v.productQuantityMap');
         var opportunitySfid = component.get('v.recordId');
         var encryptedCartId = component.get('v.encryptedCartId');

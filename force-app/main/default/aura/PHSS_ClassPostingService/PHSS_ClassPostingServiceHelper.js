@@ -42,6 +42,7 @@
         component.set("v.courseError",false);
         component.set("v.formatError",false);
         component.set("v.zoneError",false);
+        component.set("v.scheduleError",false);
         component.set("v.showError",false);
         component.set("v.errorMessage","");
         
@@ -77,32 +78,44 @@
         });
         $A.enqueueAction(action);
         
-        // Class format validation
-        component.set("v.cpsWrap.classFormat",document.getElementById('formatSelect').value);
-        
-        if(component.get("v.cpsWrap.classFormat")) {
-            document.getElementById('formatSelect').classList.remove('requiredSelect');    
-        }
-        else {
-            component.set("v.formatError",true);
+        // Class Schedule validation
+		console.log(component.get("v.LPDuration") +" "+ component.get("v.ScheduledTime") );
+        if(component.get("v.ScheduledTime") < component.get("v.LPDuration")){
+        	component.set("v.scheduleError",true);
         	component.set("v.allValid",false);
-            document.getElementById('formatSelect').classList.add('requiredSelect');
         }
+        
+        // Class format validation
+        component.set("v.cpsWrap.classFormat",component.get("v.LPClassroomSetting"));
+        console.log("Class Format " + component.get("v.cpsWrap.classFormat"));
+		
+        //if(component.get("v.cpsWrap.classFormat")) {
+        //    document.getElementById('formatSelect').classList.remove('requiredSelect');    
+        //}
+        //else {
+        //    component.set("v.formatError",true);
+        //	  component.set("v.allValid",false);
+        //    document.getElementById('formatSelect').classList.add('requiredSelect');
+        //}
         
         // Time Zone validation
         var tempList = component.get("v.cpsWrap.sessionList");
-        tempList[0].timeZone = document.getElementById('zoneSelect').value;
+        tempList.forEach(function(session) {
+        	session.timeZone = document.getElementById('zoneSelect').value;
+
+            if(session.timeZone) {
+            	document.getElementById('zoneSelect').classList.remove('requiredSelect');    
+        	}
+        	else {
+            	component.set("v.zoneError",true);
+        		component.set("v.allValid",false);
+            	document.getElementById('zoneSelect').classList.add('requiredSelect');
+            	console.log('classes..'+document.getElementById('zoneSelect').classList);
+        	}
+
+        });    
         component.set("v.cpsWrap.sessionList",tempList);
         
-        if(component.get("v.cpsWrap.sessionList")[0].timeZone) {
-            document.getElementById('zoneSelect').classList.remove('requiredSelect');    
-        }
-        else {
-            component.set("v.zoneError",true);
-        	component.set("v.allValid",false);
-            document.getElementById('zoneSelect').classList.add('requiredSelect');
-            console.log('classes..'+document.getElementById('zoneSelect').classList);
-        }
         
         // Other fields validation
         var allValid = component.find('field').reduce(function (validSoFar, inputCmp) {
@@ -129,61 +142,70 @@
         
     },
     
-    formatTime : function(component, event, helper) {
+formatTime : function(component, event, helper) {
     	// Format Start Time and End Time
-        var startTime = component.get("v.cpsWrap.sessionList")[0].startTime;
-        var startTimeHrs = startTime.substring(0,2);
-        var startTimeAmOrPm;
-        console.log('startTimeHrs..'+startTimeHrs);
-        console.log('con..'+(startTimeHrs == '00'));
-        console.log('parsed..'+parseInt(startTimeHrs));
-        
-        if(startTimeHrs == '12') {
-            startTimeAmOrPm = 'PM';
-        }
-        else if(startTimeHrs == '00') {
-            startTimeHrs = '12';
-            startTimeAmOrPm = 'AM';
-        }
-        else if(parseInt(startTimeHrs) > 12 && parseInt(startTimeHrs) < 24) {
-    		startTimeHrs = parseInt(startTimeHrs) - 12; 
-            startTimeAmOrPm = 'PM';
-        }
-        else {
-        	startTimeAmOrPm = 'AM';
-        }
-        startTime = startTimeHrs + ':' + startTime.substring(3,5) + ' ' + startTimeAmOrPm;
-        console.log('startTime..'+startTime);  
-        component.set("v.formattedStartTime",startTime);
-        
-        var endTime = component.get("v.cpsWrap.sessionList")[0].endTime;
-        var endTimeHrs = endTime.substring(0,2);
-        var endTimeAmOrPm;
-        console.log('endTimeHrs..'+endTimeHrs);
-        console.log('con..'+(endTimeHrs == '00'));
-        console.log('parsed..'+parseInt(endTimeHrs));
-        
-        if(endTimeHrs == '12') {
-            endTimeAmOrPm = 'PM';
-        }
-        else if(endTimeHrs == '00') {
-            endTimeHrs = '12';
-            endTimeAmOrPm = 'AM';
-        }
-        else if(parseInt(endTimeHrs) > 12 && parseInt(endTimeHrs) < 24) {
-    		endTimeHrs = parseInt(endTimeHrs) - 12; 
-            endTimeAmOrPm = 'PM';
-        }
-        else {
-        	endTimeAmOrPm = 'AM';
-        }
-        endTime = endTimeHrs + ':' + endTime.substring(3,5) + ' ' + endTimeAmOrPm;
-        console.log('endTime..'+endTime); 
-        component.set("v.formattedEndTime",endTime);
+		var updatedSessions = [];
+		component.get("v.cpsWrap.sessionList").forEach(function(session) {
+			console.log(session);
+            var startTime = session.startTime;
+            var startTimeHrs = startTime.substring(0,2);
+            var startTimeAmOrPm;
+            console.log('startTimeHrs..'+startTimeHrs);
+            console.log('con..'+(startTimeHrs == '00'));
+            console.log('parsed..'+parseInt(startTimeHrs));
+            
+            if(startTimeHrs == '12') {
+                startTimeAmOrPm = 'PM';
+            }
+            else if(startTimeHrs == '00') {
+                startTimeHrs = '12';
+                startTimeAmOrPm = 'AM';
+            }
+            else if(parseInt(startTimeHrs) > 12 && parseInt(startTimeHrs) < 24) {
+                    startTimeHrs = parseInt(startTimeHrs) - 12; 
+                startTimeAmOrPm = 'PM';
+            }
+            else {
+                startTimeAmOrPm = 'AM';
+            }
+            startTime = startTimeHrs + ':' + startTime.substring(3,5) + ' ' + startTimeAmOrPm;
+            console.log('startTime..'+startTime);  
+            // component.set("v.formattedStartTime",startTime);
+            // session.startTime = startTime;
+            session.formattedStartTime = startTime;
+            var endTime = session.endTime;
+            var endTimeHrs = endTime.substring(0,2);
+            var endTimeAmOrPm;
+            console.log('endTimeHrs..'+endTimeHrs);
+            console.log('con..'+(endTimeHrs == '00'));
+            console.log('parsed..'+parseInt(endTimeHrs));
+            
+            if(endTimeHrs == '12') {
+                endTimeAmOrPm = 'PM';
+            }
+            else if(endTimeHrs == '00') {
+                endTimeHrs = '12';
+                endTimeAmOrPm = 'AM';
+            }
+            else if(parseInt(endTimeHrs) > 12 && parseInt(endTimeHrs) < 24) {
+                    endTimeHrs = parseInt(endTimeHrs) - 12; 
+                endTimeAmOrPm = 'PM';
+            }
+            else {
+                endTimeAmOrPm = 'AM';
+            }
+            endTime = endTimeHrs + ':' + endTime.substring(3,5) + ' ' + endTimeAmOrPm;
+            console.log('endTime..'+endTime); 
+            //component.set("v.formattedEndTime",endTime);
+            // session.endTime = endTime; 
+            session.formattedEndTime = endTime;
+	    	updatedSessions.push(session);
+        });
+		component.set("v.cpsWrap.sessionList", updatedSessions);
     },
     
     createClass : function(component, event, helper) {
-        console.log('wrap..'+JSON.stringify(component.get("v.cpsWrap")));
+        console.log('***wrap..'+JSON.stringify(component.get("v.cpsWrap")));
         
         var action = component.get("c.postClass");
         action.setParams({ jsonStr : JSON.stringify(component.get("v.cpsWrap")) });
@@ -210,6 +232,215 @@
                 } else {
                     console.log("Unknown error");
                 }
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
+    getLearningPlanAttributes : function(component, event, helper) {
+        var action = component.get("c.getLearningPlanAttributes");
+        action.setParams({ccProdId : component.get("v.CCProductId")});
+
+        action.setCallback(this, function(response) {
+            //var state = response.getState();
+            //if (state === "SUCCESS") {
+
+                var getResponse = response.getReturnValue();
+
+                var learningPlan = getResponse.LMS_Learning_Plan__c;
+
+                if (learningPlan != undefined) {
+                    var courseName = getResponse.LMS_Learning_Plan__r.Name;
+                    var courseFormat = getResponse.LMS_Learning_Plan__r.Classroom_Setting__c;
+                    var courseDuration = getResponse.LMS_Learning_Plan__r.redwing__Duration__c;
+                    
+                    //console.log("ccProdId " + component.get("v.CCProductId"));
+        			//console.log("courseName " + courseName);
+        			//console.log("courseFormat " + courseFormat);
+        			//console.log("courseDuration " + courseDuration);
+
+                    component.set("v.cpsWrap.courseId", learningPlan);
+                    component.set("v.cpsWrap.courseName", getResponse.LMS_Learning_Plan__r.Name);
+
+                    component.set("v.LPName", courseName);
+                    component.set("v.LPClassroomSetting", courseFormat);
+                    var hours = Math.floor(courseDuration / 60); 
+                	console.log("Hours: " + hours);
+                    component.set("v.LPDuration", hours);
+                    //component.set("v.ScheduledTime", hours);
+                } else {
+                    component.set("v.cpsWrap.courseId", '');
+                    component.set("v.cpsWrap.courseName", 'Not Found');
+
+                    component.set("v.LPName", 'Not Found');
+                    component.set("v.LPClassroomSetting", '');
+                    component.set("v.LPDuration", '');
+                }
+            //}
+        });
+        $A.enqueueAction(action);
+    },
+    clearForm : function(component,event,helper) {
+		
+        //component.set("v.cpsWrap.accId","");
+        //component.set("v.cpsWrap.accName","");
+        component.set("v.showError","false");
+        component.set("v.errorMessage","");
+        component.set("v.selectedCourse",null);
+        component.set("v.LPClassroomSetting","");
+        component.set("v.LPDuration","");
+        component.set("v.ScheduledTime","");
+        component.set("v.cpsWrap.classFormat","");
+        component.set("v.cpsWrap.sessionList",[]);
+        var tempList = component.get("v.cpsWrap.sessionList");
+        tempList.push({'classDate':'',
+                       'startTime':'',
+                       'endTime':''});
+        component.set("v.cpsWrap.sessionList",tempList);
+        component.set("v.cpsWrap.siteName","");
+        component.set("v.cpsWrap.address1","");
+        component.set("v.cpsWrap.address2","");
+        component.set("v.cpsWrap.city","");
+        component.set("v.cpsWrap.state","");
+        component.set("v.cpsWrap.zip","");
+        component.set("v.cpsWrap.regUrl","");
+        component.set("v.cpsWrap.regPhone","");
+        component.set("v.cpsWrap.regFee","");
+        component.set("v.selectedLookUpRecord5","");
+        component.set("v.selectedLookUpRecord1","");
+        
+        //$A.get("e.force:refreshView").fire();
+        //component.destroy();
+	
+    },
+    requiredSchedule : function(component,event,helper){
+        
+        // Required Time Counter decrement value
+        var required_time = component.get('v.LPDuration');
+        component.set("v.ScheduledTime",0);
+        component.get("v.cpsWrap.sessionList").forEach(function(session) { 
+            if(session.classDate && session.startTime && session.endTime){
+                var diff = Math.abs(new Date(session.classDate + " " + session.startTime) - new Date(session.classDate + " " + session.endTime)); 
+                var minutes = Math.floor(diff/60000);
+                // console.log("Minutes: " + minutes);
+                var hours = Math.floor(minutes / 60); 
+                // console.log("Hours: " + hours);
+                var timeScheduled = (component.get('v.ScheduledTime') +  hours);
+                if(timeScheduled >= required_time){ 
+                    component.set("v.scheduleError",false);
+                } else {
+                    component.set("v.scheduleError",true);
+                }
+                
+                component.set("v.ScheduledTime",timeScheduled);
+           	}
+            
+     	});
+    },
+    getGeocode : function(component, event, helper){
+        var address = this.getFullAddress(component, event, helper);
+        
+        var xmlHttp = new XMLHttpRequest();
+        var url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+address+',+CA&key=AIzaSyAbiSkystXXjCtlOAtH6H-4Ej2GLn_EbNM';
+        //var url = 'http://maps.googleapis.com/maps/api/geocode/json?address='+address+',+CA&key=AIzaSyAbiSkystXXjCtlOAtH6H-4Ej2GLn_EbNM';
+
+        console.log(encodeURI(url));
+    	xmlHttp.open( "GET", encodeURI(url), true );
+	    //xmlHttp.setRequestHeader('Content-Type', 'application/json');
+		xmlHttp.responseType = 'json';
+		xmlHttp.onload = function () {
+    	    console.log("onload");
+        	console.log(xmlHttp.readyState);
+        	console.log(xmlHttp.status);
+    		if (xmlHttp.readyState === 4) {
+    	    	if (xmlHttp.status === 200) {
+                    console.log("Response: " + JSON.stringify(xmlHttp.response));
+                    //console.log("Response Text: " + JSON.stringify(xmlHttp.responseText));
+                    console.log("Step 1");
+                    if(xmlHttp.response.results[0] && xmlHttp.response.results[0].geometry){
+                    	var lat = 0;
+                        var lng = 0;
+                    	console.log("Step 2 " + JSON.stringify(xmlHttp.response.results[0].geometry.location));
+                        
+                        if(xmlHttp.response.results[0].geometry.location.lat)
+                            lat = xmlHttp.response.results[0].geometry.location.lat;
+                        else 
+                            lat = 'undefined';
+                        console.log("Step 3 " + lat);
+                        document.getElementById('geoCodeLat').value = lat;
+                        
+                        if(xmlHttp.response.results[0].geometry.location.lng)
+                        	lng = xmlHttp.response.results[0].geometry.location.lng;
+                        else
+                            lng = 'undefined';
+                        
+                        console.log("Step 4 " + lng);
+                        document.getElementById('geoCodeLng').value = lng;
+						console.log("Lat: " + document.getElementById('geoCodeLat').value + " Lng: " + document.getElementById('geoCodeLng').value);
+                        //console.log("Returned GEO Codes Lat: " + component.get("v.geoLat") + " Long:" + component.get("v.geoLong") );
+                    }
+
+		        }
+	    	}
+		};
+	    xmlHttp.send( null );
+	    console.log("Request sent");
+         
+        /*
+        if (navigator.geolocation) {
+        	navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            var action = component.get("c.getCityName");
+            action.setParams({
+                "latitude": lat,
+                "longitude": lon
+            });
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    var location = response.getReturnValue();
+                    return location;
+                }
+            });
+            $A.enqueueAction(action);
+        	});
+    	 } else {
+        	return('Your browser does not support GeoLocation');
+  
+         
+    }
+       */  
+    }, 
+     getFullAddress : function(component, event, helper){
+            return ('"' + component.get("v.cpsWrap.address1") + ',' + component.get("v.cpsWrap.city") + ',' + component.get("v.cpsWrap.state")  + ',' +  component.get("v.cpsWrap.zip") + '"');
+    },
+    updateGeoLatLong : function (component, event, helper) {
+    		component.set("v.cpsWrap.geoLat", document.getElementById('geoCodeLat').value);
+            component.set("v.cpsWrap.geoLng", document.getElementById('geoCodeLng').value);              
+    },
+    createIltLocation : function(component) {
+
+        // call apex method with the respective parameters
+        var action = component.get('c.createIltLocation');
+        action.setParams({
+            accountId: component.get('v.cpsWrap.accId'),
+            name: component.get('v.cpsWrap.siteName'),
+            address1: component.get('v.cpsWrap.address1'),
+            address2: component.get('v.cpsWrap.address2'),
+            postcode: component.get('v.cpsWrap.zip'),
+            state: component.get('v.cpsWrap.state'),
+            city: component.get('v.cpsWrap.city'),
+            lat: component.get('v.cpsWrap.geoLat'),
+            lng: component.get('v.cpsWrap.geoLng')
+        });
+
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === 'SUCCESS') {
+                var storeResponse = response.getReturnValue();
+                console.log('response from createIltLocation: '+ storeResponse);
+                component.set('v.locationId', storeResponse);
             }
         });
         $A.enqueueAction(action);

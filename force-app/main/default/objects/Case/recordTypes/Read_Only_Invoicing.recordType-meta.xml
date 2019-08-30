@@ -1561,6 +1561,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Intended_form_of_payment__c</picklist>
+        <values>
+            <fullName>Credit Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invoice</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Invoice_Case_Sub_Type__c</picklist>
         <values>
             <fullName>Authorized Provider</fullName>
@@ -5750,17 +5761,6 @@
         </values>
         <values>
             <fullName>SHIP TO</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Intended_form_of_payment__c</picklist>
-        <values>
-            <fullName>Credit Card</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Invoice</fullName>
             <default>false</default>
         </values>
     </picklistValues>

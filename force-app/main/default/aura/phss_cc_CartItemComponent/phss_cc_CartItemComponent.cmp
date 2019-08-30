@@ -1,0 +1,110 @@
+<!--
+ - Created by jbarker on 2019-08-26.
+ -->
+
+<aura:component description="phss_cc_CartItemComponent" implements="force:hasRecordId">
+
+    <!--attributes-->
+    <aura:attribute name="cartItems" type="Map"/>
+    <aura:attribute name="cartItem" type="Map"/>
+
+    <!--UI rendering-->
+    <aura:attribute name="renderComplete" type="Boolean" default="false"/>
+    <aura:attribute name="allowsPriceOverride" type="Boolean" default="false"/>
+
+    <!--events-->
+    <aura:registerEvent name="showPriceOverrideModal" type="c:phss_cc_ShowPriceOverrideModalEvent"/>
+
+    <!--initializer-->
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+
+
+    <aura:if isTrue="{! v.renderComplete }">
+        <div class="slds-grid slds-p-bottom--medium slds-p-top--medium">
+
+            <!--empty column-->
+            <div class="slds-size_2-of-12"></div>
+
+            <!--name column-->
+            <div class="slds-p-left--x-large slds-size_4-of-12 cellProperties">
+                <lightning:formattedText value="{! v.cartItem.ccrz__Product__r.Name }"/>
+            </div>
+
+            <!--list price column-->
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <aura:if isTrue="{! v.allowsPriceOverride }">
+                    <a onclick="{! c.handlePriceOverrideClick }" class="priceOverrideLink">
+                        <lightning:formattedNumber style="currency"
+                                                   currencyCode="{! $Locale.currencyCode }"
+                                                   currencyDisplayAs="symbol"
+                                                   value="{! v.cartItem.ccrz__OriginalItemPrice__c }"/>
+                    </a>
+
+                    <aura:set attribute="else">
+                        <lightning:formattedNumber style="currency"
+                                                   currencyCode="{! $Locale.currencyCode }"
+                                                   currencyDisplayAs="symbol"
+                                                   value="{! v.cartItem.ccrz__OriginalItemPrice__c }"/>
+                    </aura:set>
+                </aura:if>
+            </div>
+
+            <!--discount price column-->
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <aura:if isTrue="{! equals(v.cartItem.ccrz__PricingType__c, 'external') }">
+                    <aura:if isTrue="{! v.allowsPriceOverride }">
+                        <a onclick="{! c.handlePriceOverrideClick }" class="priceOverrideLink">
+                            <lightning:formattedNumber style="currency"
+                                                       currencyCode="{! $Locale.currencyCode }"
+                                                       currencyDisplayAs="symbol"
+                                                       value="{! v.cartItem.ccrz__Price__c }"/>
+                        </a>
+
+                        <aura:set attribute="else">
+                            <lightning:formattedNumber style="currency"
+                                                       currencyCode="{! $Locale.currencyCode }"
+                                                       currencyDisplayAs="symbol"
+                                                       value="{! v.cartItem.ccrz__Price__c }"/>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+            </div>
+
+            <!--discount percentage column-->
+            <div class="slds-size_1-of-12 slds-align_absolute-center cellProperties">
+                <aura:if isTrue="{! equals(v.cartItem.ccrz__PricingType__c, 'external') }">
+                    <aura:if isTrue="{! v.allowsPriceOverride }">
+                        <a onclick="{! c.handlePriceOverrideClick }" class="priceOverrideLink">
+                            <lightning:formattedNumber value="{! v.cartItem.ccrz__PercentDiscount__c / 100.0 }"
+                                                       style="percent"
+                                                       maximumFractionDigits="1"/>
+                            <img src="{! $Resource.AttentionIcon }" class="attentionIcon" alt="Price has been overridden"/>
+                        </a>
+
+                        <aura:set attribute="else">
+                            <lightning:formattedNumber value="{! v.cartItem.ccrz__PercentDiscount__c / 100.0 }"
+                                                       style="percent"
+                                                       maximumFractionDigits="1"/>
+                            <img src="{! $Resource.AttentionIcon }" class="attentionIcon" alt="Price has been overridden"/>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+            </div>
+
+            <!--empty column-->
+            <div class="slds-size_1-of-12">&nbsp;</div>
+
+            <!--quantity column-->
+            <div class="slds-size_2-of-12 slds-align_absolute-center cellProperties">
+                <lightning:layout horizontalAlign="center">
+                    <lightning:layoutItem class="slds-m-left_large slds-m-right_large">
+                        <aura:if isTrue="{! v.cartItem != null }">
+                            <ui:outputNumber value="{! v.cartItem.ccrz__Quantity__c }"/>
+                        </aura:if>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </div>
+    </aura:if>
+
+</aura:component>

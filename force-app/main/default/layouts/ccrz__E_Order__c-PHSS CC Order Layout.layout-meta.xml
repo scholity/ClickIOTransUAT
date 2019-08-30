@@ -84,6 +84,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>CRE_Request_Processed__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>NSSCCConnector_Order_SCCSync_Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -460,7 +464,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>ccrz__AccountType__c</fields>
-        <fields>ccrz__TransactionType__c</fields>
         <fields>ccrz__StoredPayment__c</fields>
         <fields>ccrz__Amount__c</fields>
         <relatedList>ccrz__E_TransactionPayment__c.ccrz__CCOrder__c</relatedList>
@@ -530,10 +533,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>ccrz__OrderDate__c</fields>
-        <fields>ccrz__AdjustmentAmount__c</fields>
-        <fields>ccrz__OrderStatus__c</fields>
+        <fields>OWNER.ALIAS</fields>
         <fields>CREATED_DATE</fields>
+        <fields>ccrz__OrderDate__c</fields>
+        <fields>ccrz__OrderStatus__c</fields>
         <relatedList>ccrz__E_Order__c.ccrz__Order__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -566,7 +569,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h21000000S90f</masterLabel>
+        <masterLabel>00h5B000000HZVx</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

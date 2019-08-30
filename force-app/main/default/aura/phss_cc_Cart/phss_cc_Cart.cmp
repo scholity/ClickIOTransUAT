@@ -19,6 +19,8 @@
     <!--Retrieved from Server-->
     <aura:attribute name="productList" type="List"/>
     <aura:attribute name="productsMap" type="Map"/>
+    <aura:attribute name="cartItemList" type="List"/>
+    <aura:attribute name="cartItemMap" type="Map"/>
     <aura:attribute name="cartTotal" type="Decimal" default="0.00"/>
     <aura:attribute name="storedPayments" type="List"/>
 
@@ -101,7 +103,7 @@
             <div class="slds-size_2-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>
         </div>
 
-        <aura:if isTrue="{!v.productList.length==0}">
+        <aura:if isTrue="{!v.cartItemList.length==0}">
             <lightning:formattedText class="slds-align_absolute-center slds-text-heading--small"
                                      value="Cart is empty."/>
             <lightning:button iconName="utility:refresh" variant="brand"
@@ -109,15 +111,16 @@
                               onclick="{!c.reloadCart}" label="Reload Cart"/>
         </aura:if>
 
-        <aura:if isTrue="{!v.productList.length!=0}">
+        <aura:if isTrue="{! v.cartItemList.length != 0 }">
             <div class="slds-scrollable--y" style="max-height: 20rem; height: auto;">
-                <aura:iteration items="{!v.productList}" var="product">
-                    <c:phss_cc_ProductDetail productSfid="{!product}" productMap="{!v.productsMap}"
-                                             productQuantityMap="{!v.productQuantityMap}"
-                                             allowsPriceOverride="true"
-                                             showDiscountPricing="true"/>
+                <aura:iteration items="{! v.cartItemList }" var="cartItem">
+                    <c:phss_cc_CartItem recordId="{! cartItem }"
+                                        cartItems="{! v.cartItemMap }"
+                                        productMap="{! v.productsMap }"
+                                        productQuantityMap="{! v.productQuantityMap }"/>
                 </aura:iteration>
             </div>
+
 
             <!--Cart Total-->
             <div class="slds-grid slds-p-bottom--medium slds-p-top--medium slds-border--top">

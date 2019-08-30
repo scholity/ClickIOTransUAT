@@ -3,13 +3,17 @@
     <fullName>US_Phone_Number_with_10_Digits</fullName>
     <active>true</active>
     <description>US Phone number with 10 Digits</description>
-    <errorConditionFormula>IF( 
+    <errorConditionFormula>AND(
+RecordType.DeveloperName != &quot;SB_Household_Account&quot;, 
+RecordType.DeveloperName != &quot;Individual_Account&quot;, 
+RecordType.DeveloperName != &quot;Bucket_Account&quot;,
+IF( 
 
 OR (ISBLANK(Phone),   $Setup.Validation_Rules__c.Bypass_Rules__c), false, 
 
 NOT(REGEX(Phone, &quot;\\D*?(\\d\\D*?){10}&quot;))
 
-)</errorConditionFormula>
+))</errorConditionFormula>
     <errorDisplayField>Phone</errorDisplayField>
     <errorMessage>US Phone numbers should be in this format: (999) 999-9999</errorMessage>
 </ValidationRule>

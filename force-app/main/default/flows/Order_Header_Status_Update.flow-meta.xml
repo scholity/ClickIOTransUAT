@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>DoNothing</name>
+        <label>DoNothing</label>
+        <locationX>184</locationX>
+        <locationY>34</locationY>
+        <actionName>Donothing</actionName>
+        <actionType>apex</actionType>
+    </actionCalls>
     <assignments>
         <name>CancelCount</name>
         <label>CancelCount</label>
@@ -51,8 +59,8 @@
     <assignments>
         <name>ReturnCount</name>
         <label>ReturnCount</label>
-        <locationX>416</locationX>
-        <locationY>482</locationY>
+        <locationX>423</locationX>
+        <locationY>481</locationY>
         <assignmentItems>
             <assignToReference>cntReturn</assignToReference>
             <operator>Assign</operator>
@@ -83,8 +91,8 @@
     <assignments>
         <name>Set_In_Process</name>
         <label>Set In Process</label>
-        <locationX>1018</locationX>
-        <locationY>392</locationY>
+        <locationX>1272</locationX>
+        <locationY>369</locationY>
         <assignmentItems>
             <assignToReference>sOrder.ccrz__OrderStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -336,6 +344,31 @@
             <label>Complete Override</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Is_Status_for_Processing</name>
+        <label>Is Status for Processing</label>
+        <locationX>274</locationX>
+        <locationY>104</locationY>
+        <defaultConnector>
+            <targetReference>Get_Order_Items</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Return_Submitted_Status</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sOrder.ccrz__OrderStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Return Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DoNothing</targetReference>
+            </connector>
+            <label>Is Return Submitted Status</label>
+        </rules>
+    </decisions>
     <description>Updates the Order Header status based on the order item conditions</description>
     <formulas>
         <name>fCancelReturn</name>
@@ -418,11 +451,11 @@
     <recordLookups>
         <name>Get_Order</name>
         <label>Get Order</label>
-        <locationX>158</locationX>
-        <locationY>52</locationY>
+        <locationX>61</locationX>
+        <locationY>157</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Order_Items</targetReference>
+            <targetReference>Is_Status_for_Processing</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -439,8 +472,8 @@
     <recordLookups>
         <name>Get_Order_Items</name>
         <label>Get Order Items</label>
-        <locationX>288</locationX>
-        <locationY>55</locationY>
+        <locationX>520</locationX>
+        <locationY>59</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_through_Order_Items</targetReference>
