@@ -8,11 +8,19 @@
         <actionName>Donothing</actionName>
         <actionType>apex</actionType>
     </actionCalls>
+    <actionCalls>
+        <name>DoNothing</name>
+        <label>DoNothing</label>
+        <locationX>711</locationX>
+        <locationY>533</locationY>
+        <actionName>Donothing</actionName>
+        <actionType>apex</actionType>
+    </actionCalls>
     <assignments>
         <name>Add_to_Output_Collection</name>
         <label>Add to Output Collection</label>
-        <locationX>282</locationX>
-        <locationY>506</locationY>
+        <locationX>169</locationX>
+        <locationY>556</locationY>
         <assignmentItems>
             <assignToReference>outAchievementAssignments</assignToReference>
             <operator>Add</operator>
@@ -26,9 +34,9 @@
     </assignments>
     <assignments>
         <name>Set_Achievement_Assignmetns</name>
-        <label>Set Achievement Assignmetns</label>
-        <locationX>433</locationX>
-        <locationY>506</locationY>
+        <label>Set Achievement Assignments</label>
+        <locationX>476</locationX>
+        <locationY>554</locationY>
         <assignmentItems>
             <assignToReference>sAchievementAssighments.redwing__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -40,6 +48,31 @@
             <targetReference>Add_to_Output_Collection</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Needs_Update</name>
+        <label>Need Update</label>
+        <locationX>356</locationX>
+        <locationY>479</locationY>
+        <defaultConnector>
+            <targetReference>Loop_through_Achievements</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Status_Check</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sAchievementAssighments.redwing__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OnHold</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Achievement_Assignmetns</targetReference>
+            </connector>
+            <label>Status Check</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Release_Achievements</name>
         <label>Release Achievements</label>
@@ -94,6 +127,31 @@
             <label>isCommunityClass</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>UpdateNeeded</name>
+        <label>UpdateNeeded</label>
+        <locationX>702</locationX>
+        <locationY>377</locationY>
+        <defaultConnector>
+            <targetReference>DoNothing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>outAchievementAssignments</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Achievement_Assignments</targetReference>
+            </connector>
+            <label>isNotNull</label>
+        </rules>
+    </decisions>
     <interviewLabel>Release Achievement Assignments {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Release Achievement Assignments</label>
     <loops>
@@ -105,10 +163,10 @@
         <collectionReference>colAchievementAssignment</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Set_Achievement_Assignmetns</targetReference>
+            <targetReference>Needs_Update</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_Achievement_Assignments</targetReference>
+            <targetReference>UpdateNeeded</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -128,7 +186,7 @@
         <name>Get_Achievement_Assignments</name>
         <label>Get Achievement Assignments</label>
         <locationX>361</locationX>
-        <locationY>219</locationY>
+        <locationY>218</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_through_Achievements</targetReference>
@@ -216,8 +274,8 @@
     <recordUpdates>
         <name>Update_Achievement_Assignments</name>
         <label>Update Achievement Assignments</label>
-        <locationX>173</locationX>
-        <locationY>379</locationY>
+        <locationX>946</locationX>
+        <locationY>377</locationY>
         <inputReference>outAchievementAssignments</inputReference>
     </recordUpdates>
     <startElementReference>Get_Fulfillment_Item</startElementReference>

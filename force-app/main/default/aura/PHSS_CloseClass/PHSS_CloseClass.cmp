@@ -241,6 +241,7 @@
                             <c:phss_cc_Cart_Clone recordId = "{!v.opportunityId}"
                                                   hideQuantityForLms = "true"
                                                   hideCreditCard = "{!v.displayPaymentInfo}"
+                                                  showExtendedPrice="{! not(v.displayPaymentInfo) }"
                                                   cartContainsLearnToSwimProduct = "{! v.isLearnToSwimClass }"/>
                             
                         </div>

@@ -210,8 +210,8 @@
         <description>Credit Balance Record is a CC Stored Payment Record</description>
         <name>Create_Credit_Balance_Record</name>
         <label>Create Credit Balance Record</label>
-        <locationX>352</locationX>
-        <locationY>60</locationY>
+        <locationX>355</locationX>
+        <locationY>52</locationY>
         <assignRecordIdToReference>vCCStoredPaymentID</assignRecordIdToReference>
         <connector>
             <targetReference>Get_Product_Record</targetReference>
@@ -347,8 +347,8 @@
         <description>Get the newly approved Grant Claim</description>
         <name>Get_Grant_Claim</name>
         <label>Get Grant Claim</label>
-        <locationX>192</locationX>
-        <locationY>64</locationY>
+        <locationX>194</locationX>
+        <locationY>51</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Credit_Balance_Record</targetReference>
@@ -431,9 +431,6 @@
         <label>Update Grant Claim</label>
         <locationX>975</locationX>
         <locationY>75</locationY>
-        <connector>
-            <targetReference>Create_Credit_Records_In_Fulfillment</targetReference>
-        </connector>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -475,19 +472,6 @@
     </recordUpdates>
     <startElementReference>Get_Grant_Claim</startElementReference>
     <status>Active</status>
-    <subflows>
-        <name>Create_Credit_Records_In_Fulfillment</name>
-        <label>Create Credit Records In Fulfillment</label>
-        <locationX>1153</locationX>
-        <locationY>83</locationY>
-        <flowName>Create_Credit_Records</flowName>
-        <inputAssignments>
-            <name>frmOrder</name>
-            <value>
-                <elementReference>iOrder</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
     <variables>
         <name>frmGrantClaim</name>
         <dataType>String</dataType>

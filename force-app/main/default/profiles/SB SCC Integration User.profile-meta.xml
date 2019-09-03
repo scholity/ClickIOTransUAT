@@ -220,7 +220,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AssignmentRulesonCaseTrigger_TEST</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AutoFixMentions</apexClass>
@@ -640,7 +640,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_CaseCommentsController_TEST</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_CaseFormWrapper</apexClass>
@@ -652,7 +652,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_CaseHandler_TEST</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_CertificationProvHandler_TEST</apexClass>
@@ -1136,7 +1136,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestEmailMessageServices</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TestErrorHandling</apexClass>
@@ -1196,7 +1196,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestUpdatedEmailMessageServices</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TestUserUtils</apexClass>
@@ -1888,7 +1888,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>skedSupportImportTriggerTests</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>skedTravelTimeService</apexClass>
@@ -2344,6 +2344,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Flagged_For_Deletion__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Force_Approve__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6974,6 +6979,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Email</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Email_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13951,6 +13961,26 @@
         <field>sked__Change_Event__e.sked__Data__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Parameter1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Parameter2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Processed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Account-Account Layout BI</layout>
     </layoutAssignments>
@@ -14787,6 +14817,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>redwing__User_Certification__c-PHSS User Certification Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>zConversion__c-zConversion Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -16010,6 +16043,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>sked__Change_Event__e</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>zConversion__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <pageAccesses>

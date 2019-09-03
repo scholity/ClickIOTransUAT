@@ -37,18 +37,19 @@
                 <div class="slds-size_4-of-12">
                     <lightning:formattedText value="{!v.product.sfdcName}"/>
                 </div>
-				
+
                 <aura:if isTrue="{!v.showPayment}">
                     <aura:if isTrue="{!not(v.showDiscountPricing)}">
                         <div class="slds-size_1-of-12 slds-align_absolute-center"></div>
                     </aura:if>
 
                     <aura:if isTrue="{!v.showDiscountPricing}">
-                        <div class="slds-size_1-of-12 slds-align_absolute-center">
-                            <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
-                                                       currencyDisplayAs="symbol" value="{!v.product.price}"/>
-                        </div>
-
+                        <aura:if isTrue="{! v.showExtendedPrice }">
+                            <div class="slds-size_1-of-12 slds-align_absolute-center">
+                                <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                           currencyDisplayAs="symbol" value="{!v.product.price}"/>
+                            </div>
+                        </aura:if>
                     </aura:if>
                 </aura:if>
 

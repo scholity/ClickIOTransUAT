@@ -86,7 +86,7 @@ public with sharing class cls_Channel_Compensation {
                             
                 c.DWH_ID__c = c.Org_Id__c + '_' + c.Org_Type__c + '_' + c.BATCH_Id__c + '_' + c.Sales_Module__c + '_' + c.Territory_Code__c + '_' +
                               c.State__c + '_' + c.Fiscal_Month_Abbr__c + '_' + c.Fiscal_Year__c + '_' + c.FOCIS_Category__c + '_' +
-                              c.FOCIS_Subject_Area__c + '_' + c.Focis_Location__c + '_' + c.User_Field__c + '_' + c.SubPG__c + '_' + c.Focis_Program__c + '_' + c.Channel__c+ '_' + c.End_Date__c;
+                              c.FOCIS_Subject_Area__c + '_' + c.Focis_Location__c + '_' + c.User_Field__c + '_' + c.SubPG__c + '_' + c.Focis_Program__c + '_' + c.Channel__c+ '_' + c.End_Date__c + '_' + c.Fulfillment_Item__c;
             }
             
         }catch (System.Exception ex) {

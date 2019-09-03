@@ -2347,6 +2347,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Force_Approve__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.HQ_Account__c</field>
         <readable>true</readable>
@@ -6975,6 +6980,11 @@
         <editable>true</editable>
         <field>Contact.Email</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Email_Account__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13951,6 +13961,26 @@
         <field>sked__Change_Event__e.sked__Data__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Parameter1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Parameter2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Processed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Account-Bucket Account Page Layout</layout>
         <recordType>Account.Bucket_Account</recordType>
@@ -13979,7 +14009,7 @@
         <layout>Account-SB Account_Admin layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Account-SB Organization Account</layout>
+        <layout>Account-SB BGST Organization Account</layout>
         <recordType>Account.SB_Organization_Account</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -14787,6 +14817,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>redwing__User_Certification__c-PHSS User Certification Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>zConversion__c-zConversion Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>

@@ -10,6 +10,8 @@ public class PHSS_CpsWrapper {
     @AuraEnabled
     public String oppId {get;set;}
     @AuraEnabled
+    public String locationId {get;set;}
+    @AuraEnabled
     public String classFormat {get;set;}
     @AuraEnabled
     public List<String> classFormatList {get;set;}

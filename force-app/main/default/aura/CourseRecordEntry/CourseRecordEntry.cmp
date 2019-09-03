@@ -306,7 +306,7 @@
                                                      /> 
                                 </div><br/>  
                                 <div class = "slds-m-around_x-small">
-                                    <lightning:input value="{!v.SupplementInfo}" label="Supplemental Information" pattern="^[a-zA-Z0-9_\s]*" messageWhenPatternMismatch	= "No Special Characters or spaces allowed in the Supplemental info field"  aura:id = "field" fieldLevelHelp = "If your organization requires this field to be completed for invoicing purposes, enter details here"/>
+                                    <lightning:input value="{!v.SupplementInfo}" label="Supplemental Information" pattern="^[a-zA-Z0-9_\s]*" messageWhenPatternMismatch	= "No Special Characters or spaces allowed in the Supplemental info field"  aura:id = "field" fieldLevelHelp = "If your organization requires this field to be completed for invoicing purposes, enter details here" maxlength="50"/>
                                     </div><br/> 
                             </div>
                             
@@ -401,7 +401,7 @@
                                     </div>
 
                                     <div class = "slds-m-around_x-small">
-                                        <lightning:input value="{!v.SiteName}" label="Site Name"  required	= "true" aura:id	=	"field"/>
+                                        <lightning:input value="{!v.SiteName}" label="Site Name"  required	= "true" aura:id	=	"field" maxlength="50"/>
                                     </div>
                                     <div class = "slds-m-around_x-small">
                                         <lightning:input value="{!v.Address1}" label="Address Line 1"  required	=	"true" aura:id	=	"field"/>
@@ -602,7 +602,7 @@
                                         </div>
                                         <div class="slds-size_5-of-12 slds-m-around_x-small">
                                             <lightning:input value	= "{!item.AdditionalInfo}"
-                                                             label	= "Additional Information"/>
+                                                             label	= "Additional Information" maxlength="50"/>
                                         </div>
 
                                     </div>
@@ -626,11 +626,12 @@
                             <div class = "slds-box slds-theme_shade">
                                 Payment
                             </div><br/>
-                            
+
                             <!--<c:phss_cc_Cart recordId = "{!v.oppIdParent}" />-->
 							<c:phss_cc_Cart_Clone recordId="{!v.oppIdParent}"
                                                   hideQuantityForLms="true"
                                                   hideCreditCard="{!v.displayPaymentInfo}"
+                                                  showExtendedPrice="{! v.displayPaymentInfo }"
                                                   allowCartReload="false"
                                                   cartContainsLearnToSwimProduct="{! v.isLearnToSwimProduct }" />
                             
@@ -765,7 +766,7 @@
                                     </div>
 
                                     <div class="slds-p-top_small">
-                                        <lightning:input label="Supplemental Information" value="{! v.SupplementInfo }" readonly="true"/>
+                                        <lightning:input label="Supplemental Information" value="{! v.SupplementInfo }" readonly="true" />
                                     </div>
 
                                     <div class="slds-p-top_small">
@@ -868,7 +869,7 @@
                                                         <div class="slds-truncate" title="{!item.Fail_Reason}">{!item.Fail_Reason}</div>
                                                     </th>
                                                     <th scope="row">
-                                                        <div class="slds-truncate" title="{!item.AdditionalInfo}">{!item.AdditionalInfo}</div>
+                                                        <div class="slds-truncate" title="{!item.AdditionalInfo}">{!item.AdditionalInfo} maxLength="50"</div>
                                                     </th>
                                                 </tr>
                                             </aura:iteration>

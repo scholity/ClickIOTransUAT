@@ -56,6 +56,13 @@
                 <elementReference>sRecordType.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sAccount.Preferred_Payment_type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Credit/Debit Card</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Account</targetReference>
         </connector>
@@ -74,6 +81,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Update_Contact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Contact_Information</name>
+        <label>Set Contact Information</label>
+        <locationX>189</locationX>
+        <locationY>336</locationY>
+        <assignmentItems>
+            <assignToReference>sContact.NSSCCConnector__Contact_Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Created</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Individual_Record_Type</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -131,6 +154,31 @@
                 <targetReference>Assign_Account_Info</targetReference>
             </connector>
             <label>Exists</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Contact_Status</name>
+        <label>Check Contact Status</label>
+        <locationX>170</locationX>
+        <locationY>189</locationY>
+        <defaultConnector>
+            <targetReference>Get_Individual_Record_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Blank</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sContact.NSSCCConnector__Contact_Status__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Contact_Information</targetReference>
+            </connector>
+            <label>Is Blank</label>
         </rules>
     </decisions>
     <formulas>
@@ -209,7 +257,7 @@
         <locationY>51</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Individual_Record_Type</targetReference>
+            <targetReference>Check_Contact_Status</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -223,12 +271,13 @@
         <queriedFields>LastName</queriedFields>
         <queriedFields>AccountId</queriedFields>
         <queriedFields>FirstName</queriedFields>
+        <queriedFields>NSSCCConnector__Contact_Status__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Individual_Record_Type</name>
         <label>Get Individual Record Type</label>
-        <locationX>169</locationX>
-        <locationY>213</locationY>
+        <locationX>300</locationX>
+        <locationY>86</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Account_Flow</targetReference>
@@ -275,7 +324,7 @@
     <recordUpdates>
         <name>Update_Contact</name>
         <label>Update Contact</label>
-        <locationX>399</locationX>
+        <locationX>401</locationX>
         <locationY>586</locationY>
         <inputReference>sContact</inputReference>
     </recordUpdates>

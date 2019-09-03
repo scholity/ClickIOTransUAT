@@ -1,83 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <processMetadataValues>
-            <name>ActionCallType</name>
-            <value>
-                <stringValue>flow</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>flowSelection</name>
-            <value>
-                <stringValue>Set Cart Approval Level</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_4_A2</name>
-        <label>Check for Cart Approval</label>
-        <locationX>400</locationX>
-        <locationY>300</locationY>
-        <actionName>Set_Cart_Approval_Level</actionName>
-        <actionType>flow</actionType>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>frmCart</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Reference</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>frmCart</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <assignments>
-        <name>myVariable_waitStartTimeAssignment</name>
-        <label>myVariable_waitStartTimeAssignment</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>myVariable_waitStartTimeVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>isChangedDecision2_myRule_1_ccrz_TotalAmount_c</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>isChangedDecision2_myRule_1_ccrz_TotalAmount_c</name>
         <label>isChangedDecision2_myRule_1_ccrz_TotalAmount_c</label>
@@ -344,7 +266,7 @@
         </rules>
     </decisions>
     <description>Manages updates on cart</description>
-    <interviewLabel>Cart_Controller-12_InterviewLabel</interviewLabel>
+    <interviewLabel>Cart_Controller-9_InterviewLabel</interviewLabel>
     <label>Cart Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -379,6 +301,9 @@
             </value>
         </processMetadataValues>
         <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
             <name>isChildRelationship</name>
             <value>
                 <booleanValue>false</booleanValue>
@@ -389,6 +314,9 @@
             <value>
                 <stringValue>[ccrz__E_Cart__c].Opportunity</stringValue>
             </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
         </processMetadataValues>
         <name>myRule_1_A1</name>
         <label>Update Oppt</label>
@@ -489,6 +417,9 @@
             </value>
         </processMetadataValues>
         <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
             <name>isChildRelationship</name>
             <value>
                 <booleanValue>false</booleanValue>
@@ -500,13 +431,13 @@
                 <stringValue>[ccrz__E_Cart__c].Opportunity</stringValue>
             </value>
         </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
         <name>myRule_4_A1</name>
         <label>Update Oppt Amount</label>
         <locationX>400</locationX>
         <locationY>200</locationY>
-        <connector>
-            <targetReference>myRule_4_A2</targetReference>
-        </connector>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -594,7 +525,7 @@
         </inputAssignments>
         <object>Opportunity</object>
     </recordUpdates>
-    <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
+    <startElementReference>isChangedDecision2_myRule_1_ccrz_TotalAmount_c</startElementReference>
     <status>Active</status>
     <variables>
         <name>myVariable_current</name>
@@ -611,15 +542,5 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>ccrz__E_Cart__c</objectType>
-    </variables>
-    <variables>
-        <name>myVariable_waitStartTimeVariable</name>
-        <dataType>DateTime</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>$Flow.CurrentDateTime</elementReference>
-        </value>
     </variables>
 </Flow>
