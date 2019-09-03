@@ -120,7 +120,9 @@
         <div class="slds-grid slds-border--top slds-border--bottom slds-m-bottom--small">
             <div class="slds-size_2-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_SKU}</div>
             <div class="slds-size_4-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_Name}</div>
-            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_ListPrice}</div>
+            <aura:if isTrue="{! v.showExtendedPrice }">
+                <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_ListPrice}</div>
+            </aura:if>
             <aura:if isTrue="{!!v.hideQuantityForLms}">
                 <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_DiscountPrice}</div>
                 <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_DiscountPercentage}</div>
@@ -158,18 +160,15 @@
             </div>
 
             <!--Cart Total-->
-            <div class="slds-grid slds-p-bottom--medium slds-no-flex slds-p-top--medium slds-border--top">
-                <div class="slds-size_11-of-12 slds-text-heading--medium" style="font-weight: bold;width:90%;">Total:</div>
-                
-                    
-                <div class="slds-size_1-of-12 slds-no-flex slds-text-heading--medium" style="font-weight: bold;">
-                  
-                    <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
-                                               currencyDisplayAs="symbol" value="{!v.cartTotal}"/>
-                                    </div>
-                   
-                
-            </div>
+            <aura:if isTrue="{! v.showExtendedPrice }">
+                <div class="slds-grid slds-p-bottom--medium slds-no-flex slds-p-top--medium slds-border--top">
+                    <div class="slds-size_11-of-12 slds-text-heading--medium" style="font-weight: bold;width:90%;">Total:</div>
+                    <div class="slds-size_1-of-12 slds-no-flex slds-text-heading--medium" style="font-weight: bold;">
+                        <lightning:formattedNumber style="currency" currencyCode="{!$Locale.currencyCode}"
+                                                   currencyDisplayAs="symbol" value="{!v.cartTotal}"/>
+                    </div>
+                </div>
+            </aura:if>
 
             <!--Cart Buttons-->
             <div align="center" class="slds-m-top--large">

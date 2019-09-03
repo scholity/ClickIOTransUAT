@@ -626,7 +626,6 @@
         helper.requiredSchedule(component,event,helper);
         component.set("v.zoneError",false);
 
-
         var cpsWrap = component.get("v.cpsWrap");
         var target = event.target;
         var values = target.value.split(",");
@@ -637,6 +636,8 @@
 
         cpsWrap.sessionList[index].timeZone = value;
 
+        // Time Zone validation
+        var tempList = component.get("v.cpsWrap.sessionList");
         tempList.forEach(function(session) {
             session.timeZone = document.getElementById('zoneSelect').value;
 

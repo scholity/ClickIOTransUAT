@@ -2353,6 +2353,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Force_Approve__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.HQ_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5122,9 +5127,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Calendar_Year__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -5717,9 +5722,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Lifeguard_on_Staff__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5787,9 +5792,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Number_of_Enrollees__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -6192,19 +6197,19 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Shipping_Address_1__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Shipping_Address_2__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Shipping_City__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6222,9 +6227,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.Shipping_Contact_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6232,9 +6237,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Shipping_Contact__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6247,14 +6252,14 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Shipping_State__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.Shipping_Zip__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6979,6 +6984,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Email</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Email_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13956,6 +13966,26 @@
         <field>sked__Change_Event__e.sked__Data__c</field>
         <readable>false</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Parameter1__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Parameter2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Processed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>zConversion__c.Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Account-Bucket Account Page Layout</layout>
         <recordType>Account.Bucket_Account</recordType>
@@ -14143,6 +14173,10 @@
         <recordType>Case.Read_Only_Invoicing</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-Read Only Non-Training Case</layout>
+        <recordType>Case.Read_Only_Non_Training_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-Read Only RCS PO Case Layout</layout>
         <recordType>Case.Read_Only_RCS_PO</recordType>
     </layoutAssignments>
@@ -14155,19 +14189,15 @@
         <recordType>Case.Service_Case_Read_Only</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-Read Only Troubleshooting</layout>
+        <recordType>Case.Read_Only_Troubleshooting_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-Sales Case Layout</layout>
         <recordType>Case.Sales_Case</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Service Case Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Service Case Layout</layout>
-        <recordType>Case.Read_Only_Non_Training_Case</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Service Case Layout</layout>
-        <recordType>Case.Read_Only_Troubleshooting_Case</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Service Case Layout</layout>
@@ -14823,6 +14853,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>redwing__Training_Plan__c-PHSS Training Plan Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>zConversion__c-zConversion Layout</layout>
     </layoutAssignments>
     <loginHours/>
     <objectPermissions>

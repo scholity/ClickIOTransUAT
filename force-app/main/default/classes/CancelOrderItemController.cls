@@ -561,7 +561,8 @@ public class CancelOrderItemController {
                                      		Voucher_Claim__c,
                                      		User__r.Name   
                                      FROM   Voucher__c
-                                     WHERE  CC_Order_Item__c =: orderItemId];
+                                     WHERE  CC_Order_Item__c =: orderItemId
+                                     AND	Status__c != 'Void'];
                                      
         if (vouchers.size() > 0)
         {
@@ -678,6 +679,7 @@ public class CancelOrderItemController {
         
         List<Id> 		 voucherListIds 	= new List<Id>();
         List<Voucher__c> vouchersToUpdate 	= new List<Voucher__c>();
+        List<Voucher__c> vouchersToCreate 	= new List<Voucher__c>();
         
         if(!string.isBlank(voucherRecords))
         {   
@@ -695,6 +697,9 @@ public class CancelOrderItemController {
         
         system.debug('voucherListIds***'+voucherListIds);
         
+        //DE1496 
+        
+        //List<Voucher__c> vouchers = []
         if(voucherListIds.size() > 0)
         {
             for(Id vId : voucherListIds)
@@ -702,7 +707,7 @@ public class CancelOrderItemController {
                 Voucher__c v = new Voucher__c();
                 
                 v.Id				= vId;
-                v.CC_Order__c		= null;
+                /*v.CC_Order__c		= null;
                 v.CC_Order_Item__c	= null;
                 v.CC_Cart_Item__c	= null;
                 v.Opportunity__c	= null;
@@ -710,8 +715,8 @@ public class CancelOrderItemController {
                 v.Online_Class__c	= null;
                 v.CC_Product__c 	= null;
                 v.Account__c		= null;
-                v.User__c			= null;
-                v.Status__c			= 'Issued';
+                v.User__c			= null;*/
+                v.Status__c			= 'Void';
                 
                 vouchersToUpdate.add(v);
             }
@@ -722,6 +727,24 @@ public class CancelOrderItemController {
 												 FROM   Voucher__c
 												 WHERE 	Id
 												 IN 	:voucherListIds];
+        
+        List<Voucher__c> vouchers = [SELECT Id, 
+                                            Account__c,
+                                            CC_Cart_Item__c,
+                                            CC_Order__c,
+                                            CC_Order_Item__c,
+                                            CC_Product__c,
+                                            ILT_Class__c,
+                                            Learning_Plan__c,
+                                            Online_Class__c,
+                                            Opportunity__c,
+                                            RCO_Order_Id__c,
+                                            RCO_Reservation_Timestamp__c,
+                                            Status__c,
+                                            User__c 
+                                     FROM   Voucher__c
+									WHERE 	Id
+									 IN 	:voucherListIds];
 												 
 		List<Id> rosterList = new List<Id>();
 		
@@ -750,119 +773,121 @@ public class CancelOrderItemController {
         {
             update vouchersToUpdate;
         }
+        
+        if(vouchers.size() > 0)
+        {
+            for(Voucher__c v : vouchers)
+            {   
+                Voucher__c newVoucher = v.clone(false,false,false);
+                
+                newVoucher.CC_Order__c					= null;
+                newVoucher.CC_Order_Item__c				= null;
+                newVoucher.CC_Cart_Item__c				= null;
+                newVoucher.Opportunity__c				= null;
+                newVoucher.RCO_Order_Id__c				= null;
+                newVoucher.Online_Class__c				= null;
+                newVoucher.CC_Product__c 				= null;
+                newVoucher.Account__c					= null;
+                newVoucher.User__c						= null;
+                newVoucher.RCO_Reservation_Timestamp__c = null;
+                newVoucher.Status__c					= 'Issued';
+                
+                vouchersToCreate.add(newVoucher);
+            } 
+        }
+        
+        if(vouchersToCreate.size() > 0)
+        {
+            insert vouchersToCreate;
+        }
     }
     
-    @AuraEnabled
-    public static void cancelEnrollment(List<Id> recId) {
-    	
-    	/*
-        //for Roster Object(a36) 
-        Schema.DescribeSObjectResult r = redwing__Learning_Assignment__c.sObjectType.getDescribe();
-        keyPrefixlrnas = r.getKeyPrefix();
-        System.debug('Value of roster id' + keyPrefixlrnas );
-        
-      //Get the value of learning assignent prefix  
-        Schema.DescribeSObjectResult l = redwing__ILT_Roster__c.sObjectType.getDescribe();
-        keyPrefixroster = l.getKeyPrefix();
-        System.debug('Value of learning assignement id' + keyPrefixroster );*/
-        
-        //if(recId[0].startsWith(keyPrefixroster)){
+    public static void cancelEnrollment(List<Id> recId)
+    {
+        List<redwing__ILT_Roster__c> rostersToUpdate = new List<redwing__ILT_Roster__c>();
+        List<Id> lAssignmentsIds = new List <Id>();
+        List<Id> userIds = new List <Id>();
         
         List<redwing__ILT_Roster__c> rosterList = [SELECT Id,
-        												  redwing__User__c,
-        												  redwing__Learning_Assignment__c,
-        												  redwing__ILT_Class__c 
-                                                   	FROM  redwing__ILT_Roster__c 
-                                                   WHERE  Id
-													  IN  :recId];
-													 	
-        system.debug('<><><>rosterList<><><>'+rosterList);
-        // Remove learning assignment
-        List<redwing__Learning_Assignment__c> assignList = [SELECT 	Id,
-        															redwing__User__c,
-        															redwing__Training_Plan__c 
-                                                            FROM 	redwing__Learning_Assignment__c 
-                                                            WHERE 	Id = :rosterList[0].redwing__Learning_Assignment__c];
+                                                          redwing__User__c,
+                                                          redwing__Status__c,
+                                                          redwing__Learning_Assignment__c,
+                                                          redwing__ILT_Class__c
+                                                    FROM  redwing__ILT_Roster__c
+                                                   WHERE  Id IN  :recId];
         
-        // Remove learning plan assignments
-        List<redwing__Training_Plan_Assignment__c> planAssignList = [SELECT Id,
-        																	redwing__User__c 
-                                                                     FROM 	redwing__Training_Plan_Assignment__c 
-                                                                     WHERE 	redwing__User__c = :rosterList[0].redwing__User__c
-																	 AND 	redwing__Training_Plan__c = :assignList[0].redwing__Training_Plan__c];
+        for(redwing__ILT_Roster__c rlist : rosterList)
+        {
+            lAssignmentsIds.add(rlist.redwing__Learning_Assignment__c);
+            userIds.add(rlist.redwing__User__c);
+        }
         
+        List<redwing__Learning_Assignment__c> LearningAssignmentList = [SELECT Id,
+																			   redwing__User__c,
+                                                                        	   redwing__Training_Plan__c,
+                                                                               redwing__Progress__c
+                                                                          FROM redwing__Learning_Assignment__c 
+                                                                         WHERE Id IN :lAssignmentsIds];
+        List<Id> trainingPlanIds = new List<Id>();
+        
+        for(redwing__Learning_Assignment__c l : LearningAssignmentList)
+        {
+            trainingPlanIds.add(l.redwing__Training_Plan__c);
+        }
+        
+        // Remove Learning Plan Assignments
+        List<redwing__Training_Plan_Assignment__c> LearningPlanAssignmentList = [SELECT Id,
+                                                                                        redwing__User__c 
+                                                                                   FROM redwing__Training_Plan_Assignment__c 
+                                                                                  WHERE redwing__User__c IN :userIds
+                                                                                    AND redwing__Training_Plan__c IN :trainingPlanIds];
+             
         // Get Learning Plan Achievements
-        List<redwing__Training_Plan_Achievement__c> learnPlanAchieveList = [SELECT	Id,
-        																			redwing__Training_Plan__c 
-                                                                            FROM 	redwing__Training_Plan_Achievement__c 
-                                                                            WHERE	redwing__Training_Plan__c = :assignList[0].redwing__Training_Plan__c];
+        List<redwing__Training_Plan_Achievement__c> LearningPlanAchievementList = [SELECT Id,
+                                                                                   		  redwing__Training_Plan__c 
+                                                                                     FROM redwing__Training_Plan_Achievement__c 
+                                                                                    WHERE redwing__Training_Plan__c IN :trainingPlanIds];
         
-        // Remove existing Achievement assignments
-        List<redwing__Achievement_Assignment__c> achieveAssignList = [SELECT Id,
-        																	 redwing__User__c 
-                                                                      FROM	 redwing__Achievement_Assignment__c 
-                                                                      WHERE  redwing__User__c = :rosterList[0].redwing__User__c
-																	  AND	 redwing__Training_Plan_Achievement__c
-																	  IN 	 :learnPlanAchieveList];
+        // Remove Achievement assignments
+        List<redwing__Achievement_Assignment__c> AchievementAssignmentList = [SELECT Id,
+                                                                                     redwing__User__c 
+                                                                                FROM redwing__Achievement_Assignment__c 
+                                                                               WHERE redwing__User__c IN :userIds
+                                                                                 AND redwing__Training_Plan_Achievement__c IN :LearningPlanAchievementList];
         
-        
-        
-        if(rosterList.size()>0)
+        if(LearningPlanAssignmentList.size() > 0)
         {
-        	delete rosterList;
-        }
-        if(rosterList.size()>0)
-        {
-        	delete assignList;
-        }
-        if(rosterList.size()>0)
-        {
-        	delete achieveAssignList;
-        }
-        if(rosterList.size()>0)
-        {
-        	delete planAssignList;
+            delete LearningPlanAssignmentList;
         }
         
-        // Deleting 'Learning Assignment' record will delete 'ILT Roster' record. 
-        //}
-        /*
-        //for Learning Assignment's record(a3E)
-        else if(recId.startsWith(keyPrefixlrnas)){
-
-        // Remove learning assignment
-        List<redwing__Learning_Assignment__c> assignList = [Select Id,redwing__User__c,redwing__Training_Plan__c 
-                                                            From redwing__Learning_Assignment__c 
-                                                            Where Id = :recId and Learning_Record_Type__c = 'Media'];
+        if(AchievementAssignmentList.size() > 0)
+        {
+            delete AchievementAssignmentList;
+        }
         
-        If(assignList.size()>0){
-            // Remove learning plan assignments
-            List<redwing__Training_Plan_Assignment__c> planAssignList = [Select Id,redwing__User__c 
-                                                                         From redwing__Training_Plan_Assignment__c 
-                                                                         Where redwing__User__c = :assignList[0].redwing__User__c AND 
-                                                                         redwing__Training_Plan__c = :assignList[0].redwing__Training_Plan__c];
+        if(LearningAssignmentList.size() > 0)
+        {
+            for(redwing__Learning_Assignment__c learningAssignment : LearningAssignmentList)
+            {
+                learningAssignment.redwing__Progress__c = 'Cancelled';
+            }
             
-            // Get Learning Plan Achievements
-            List<redwing__Training_Plan_Achievement__c> learnPlanAchieveList = [Select Id,redwing__Training_Plan__c 
-                                                                                From redwing__Training_Plan_Achievement__c 
-                                                                                Where redwing__Training_Plan__c = :assignList[0].redwing__Training_Plan__c];
-            
-            // Remove existing Achievement assignments
-            List<redwing__Achievement_Assignment__c> achieveAssignList = [Select Id,redwing__User__c 
-                                                                          From redwing__Achievement_Assignment__c 
-                                                                          Where redwing__User__c = :assignList[0].redwing__User__c AND 
-                                                                          redwing__Training_Plan_Achievement__c IN :learnPlanAchieveList];
-            
-            delete assignList;        
-            delete achieveAssignList;
-            delete planAssignList; // deleting plan assignment deletes section assignment too
-           }
-           
-        // Deleting 'Learning Assignment' record will delete 'ILT Roster' record.
-            
-        }*/       
+            update LearningAssignmentList;
+        }
         
-
+        
+        for(redwing__ILT_Roster__c r : rosterList)
+        {
+            r.redwing__Status__c   = 'Cancelled';
+            r.Cancellation_Date__c = System.today();
+            
+            rostersToUpdate.add(r);
+        }
+        
+        if(rostersToUpdate.size() > 0)
+        {
+            update rostersToUpdate;
+        }
     }
     
     public class VoucherWrapper

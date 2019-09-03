@@ -9,6 +9,7 @@
      * @param helper
      */
     doInit : function (component, event, helper) {
+        debugger;
         helper.getActiveCart(component);
         helper.getPaymentTabsetPermissions(component);
     },

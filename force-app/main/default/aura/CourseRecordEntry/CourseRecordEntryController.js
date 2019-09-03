@@ -579,6 +579,7 @@
                         console.log('data..'+data);
                         component.set("v.displayPaymentInfo", data);
                         console.log('display..'+component.get("v.displayPaymentInfo"));
+                        component.set('v.showExtendedPrice', !data);
                     }
                 });
                 $A.enqueueAction(action); 

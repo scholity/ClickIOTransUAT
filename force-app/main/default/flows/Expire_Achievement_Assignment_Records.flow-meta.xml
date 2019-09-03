@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Do_Nothing</name>
+        <label>Do Nothing</label>
+        <locationX>1157</locationX>
+        <locationY>452</locationY>
+        <actionName>Donothing</actionName>
+        <actionType>apex</actionType>
+    </actionCalls>
     <assignments>
         <name>Add_Catalog_Account_for_Output</name>
         <label>Add Catalog Account for Output</label>
@@ -59,7 +67,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Delete_Expired_Catalog_Account_Records</targetReference>
+            <targetReference>Set_Updated_Achievements_to_Due_Soon</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -157,6 +165,31 @@
             <targetReference>Add_Catalog_Account_for_Output</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Any_Catalog_Account_Records_to_Delete</name>
+        <label>Any Catalog Account Records to Delete</label>
+        <locationX>1153</locationX>
+        <locationY>300</locationY>
+        <defaultConnector>
+            <targetReference>Do_Nothing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isNotEmpty</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>colCatalogAccount</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Delete_Expired_Catalog_Account_Records</targetReference>
+            </connector>
+            <label>isNotEmpty</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Found_Expired_Achievement_Assignments</name>
         <label>Found Expired Achievement Assignments</label>
@@ -277,14 +310,8 @@
     <recordDeletes>
         <name>Delete_Expired_Catalog_Account_Records</name>
         <label>Delete Expired Catalog Account Records</label>
-        <locationX>849</locationX>
-        <locationY>112</locationY>
-        <connector>
-            <targetReference>Set_Updated_Achievements_to_Due_Soon</targetReference>
-        </connector>
-        <faultConnector>
-            <targetReference>Set_Updated_Achievements_to_Due_Soon</targetReference>
-        </faultConnector>
+        <locationX>1316</locationX>
+        <locationY>300</locationY>
         <filters>
             <field>Expiration_Date__c</field>
             <operator>LessThanOrEqualTo</operator>
@@ -358,6 +385,26 @@
         <queriedFields>redwing__User__c</queriedFields>
         <queriedFields>redwing__Contact__c</queriedFields>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Catalogs_Entries_Expiring_Today</name>
+        <label>Get Catalogs Entries Expiring Today</label>
+        <locationX>1005</locationX>
+        <locationY>298</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Any_Catalog_Account_Records_to_Delete</targetReference>
+        </connector>
+        <filters>
+            <field>Expiration_Date__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>fToday</elementReference>
+            </value>
+        </filters>
+        <object>redwing__Learning_Category_Account__c</object>
+        <outputReference>colCatalogAccount</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
     <recordUpdates>
         <description>Searches for Achievement Assignments that have passed the expiration date - May have been replaced by Appinium function</description>
         <name>Change_Status_of_Expired_Achievement_Assignment_Records</name>
@@ -398,8 +445,8 @@
     <recordUpdates>
         <name>Set_Updated_Achievements_to_Due_Soon</name>
         <label>Set Updated Achievements to Due Soon</label>
-        <locationX>1020</locationX>
-        <locationY>112</locationY>
+        <locationX>841</locationX>
+        <locationY>110</locationY>
         <connector>
             <targetReference>Update_Expired_Learning_Plan_Assignments</targetReference>
         </connector>
@@ -460,8 +507,11 @@
         <description>Set Learning Plan Assignments to Under Review when past due date</description>
         <name>Update_Expired_Learning_Plan_Assignments</name>
         <label>Update Expired Learning Plan Assignments</label>
-        <locationX>1197</locationX>
-        <locationY>115</locationY>
+        <locationX>1003</locationX>
+        <locationY>113</locationY>
+        <connector>
+            <targetReference>Get_Catalogs_Entries_Expiring_Today</targetReference>
+        </connector>
         <filters>
             <field>redwing__Due_Date__c</field>
             <operator>LessThanOrEqualTo</operator>
