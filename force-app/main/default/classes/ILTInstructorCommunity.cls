@@ -2534,8 +2534,10 @@ public without sharing class ILTInstructorCommunity{
         message.subject = 'Payment Confirmation on Enrolling Students';
         message.plainTextBody = 'Thank you for reporting to this course and your payment is successful';
         Messaging.SingleEmailMessage[] messages = new List<Messaging.SingleEmailMessage> {message};
-        results = Messaging.sendEmail(messages);
-        System.debug('Mail sent>>>>'+ results);
+        if(!Test.isRunningTest()) {
+            results = Messaging.sendEmail(messages);
+            System.debug('Mail sent>>>>' + results);
+        }
         // }
         /*catch(Exception e) {
 System.debug('The email failed to send:results[0] ' + results[0].errors[0].message);

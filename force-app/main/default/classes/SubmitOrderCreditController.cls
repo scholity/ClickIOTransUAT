@@ -1,7 +1,33 @@
 public class SubmitOrderCreditController
 {
+    @AuraEnabled 
+    public static boolean getOnAccountBoolean(String orderId)
+    {
+        boolean isCreditOnAccount = false;
+        
+        ccrz__E_Order__c ccOrder = [SELECT  Id,
+                                    		ccrz__Order__c
+                                       FROM ccrz__E_Order__c
+                                   	  WHERE Id =: orderId];
+
+        ccrz__E_Order__c ccCreditOrder = [SELECT  Id,
+                                          		  (SELECT Id,
+                                                   		  ccrz__AccountType__c
+                                                     FROM ccrz__TransactionPayments__r
+                                                  	WHERE ccrz__AccountType__c = 'cc')
+                                             FROM ccrz__E_Order__c
+                                            WHERE Id =: ccOrder.ccrz__Order__c
+                                            LIMIT 1];
+
+        if(ccCreditOrder.ccrz__TransactionPayments__r.size() > 0)
+        {
+            isCreditOnAccount = true;
+        }
+        return isCreditOnAccount;
+    }
+    
 	@AuraEnabled   
-    public  static void submitOrderCredit(String orderId, Boolean hasCreditOnAccount) 
+    public  static void submitOrderCredit(String orderId, Boolean hasCreditOnAccount)
     {
         if(orderId != null)
         {
@@ -95,6 +121,9 @@ public class SubmitOrderCreditController
 					storedPymt.ccrz__Storefront__c			= '';
                 	storedPymt.ccrz__StartDate__c			= Date.today();
                     storedPymt.ccrz__EndDate__c 			= Date.today().addDays(30);
+					storedPymt.ccrz__ExpMonth__c			= tPayment.ccrz__ExpirationMonth__c;
+					storedPymt.ccrz__ExpYear__c				= tPayment.ccrz__ExpirationYear__c;
+					storedPymt.ccrz__Token__c				= tPayment.ccrz__Token__c;
                 
                 insert storedPymt;
             }
@@ -121,6 +150,7 @@ public class SubmitOrderCreditController
             
             myFlow.start();
         
-        }
+       }
+    
     }
 }

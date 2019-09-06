@@ -1,5 +1,10 @@
 ({
-	showStep1 : function(component,event,helper)
+    doInit : function(component,event,helper)
+    {
+        helper.checkOnAccount(component,event,helper);
+    },
+    
+    showStep1 : function(component,event,helper)
     {        
         component.set("v.stepNumber", "One");
     },

@@ -17,6 +17,7 @@ public class phss_cc_OnAccountBalanceController
          
          for(ccrz__E_StoredPayment__c  sp : fetchStoredPaymentsResponse)
          {
+             System.debug('JASON: storedPayment.Id=' + sp.Id);
              WrapperToDisplayAccountBalanceRecords abRecords = new WrapperToDisplayAccountBalanceRecords();
              
              abRecords.name				 = sp.ccrz__DisplayName__c;

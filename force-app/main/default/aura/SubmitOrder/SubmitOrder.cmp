@@ -1,12 +1,15 @@
 <aura:component  controller = "SubmitOrderCreditController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     
-    <aura:handler 	event="aura:waiting" 		action="{!c.showSpinner}"/>
-    <aura:handler 	event="aura:doneWaiting" 	action="{!c.hideSpinner}"/>
+    <aura:handler 	event="aura:waiting" 			action="{!c.showSpinner}"/>
+    <aura:handler 	event="aura:doneWaiting" 		action="{!c.hideSpinner}"/>
     
-    <aura:attribute name = "isSubmitted" 		type = "Boolean" 	default = "false"/>
-    <aura:attribute name = "Spinner" 			type = "Boolean" 	default = "false"/>
-    <aura:attribute name = "CreditOnAccount" 	type = "Boolean" 	default = "false"/>
-    <aura:attribute name = "stepNumber"			type = "String" 	default = "Zero" />
+    <aura:attribute name = "isSubmitted" 			type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "Spinner" 				type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "CreditOnAccount" 		type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "showCreditOnAccount" 	type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "stepNumber"				type = "String" 	default = "Zero" />
+    
+    <aura:handler 	name = "init" 					value="{!this}" 				action = "{!c.doInit}"/>
     
     <aura:if isTrue="{!v.stepNumber == 'Zero'}" >
         
@@ -32,9 +35,13 @@
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                        <div class = "slds-text-align_center slds-m-top_xx-large slds-m-bottom_xx-large slds-text-heading_small">
                             
-                            <!-- Confirm Submit Order Credit -->
-                            
-                            <lightning:input type="checkbox" label="Credit On Account" name="options" checked = "{!v.CreditOnAccount}"/>
+                           Confirm Submit Order Credit
+                           
+                           <br/><br/>
+                           
+                           <aura:if isTrue="{!v.showCreditOnAccount}">
+                           		<lightning:input type="checkbox" label="Save Credit On Account" name="options" checked = "{!v.CreditOnAccount}"/>
+                           </aura:if>
                                 
                             
                        </div>

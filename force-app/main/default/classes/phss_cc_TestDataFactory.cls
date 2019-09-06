@@ -457,6 +457,16 @@ public with sharing class phss_cc_TestDataFactory {
      * @return
      */
     public static Map<String, Object> setupAccountAndProducts() {
+        return setupAccountAndProducts(4);
+    }
+
+
+    /**
+     * @description Creates Account, Account group, Users, PriceLists, Products, PriceListItems.
+     *
+     * @return
+     */
+    public static Map<String, Object> setupAccountAndProducts(Integer productCount) {
 
         initCCSettings();
         setCyberSourceConfig();
@@ -472,7 +482,7 @@ public with sharing class phss_cc_TestDataFactory {
         createInsertTestAccountGroupPriceList(accountGroup, pricelist);
 
         //Products and PriceListItems
-        List<ccrz__E_Product__c> products = createInsertTestProducts(4);
+        List<ccrz__E_Product__c> products = createInsertTestProducts(productCount);
         createInsertPriceListItems(products, pricelist);
 
         ccrz.cc_CallContext.currAccountId = account.Id;

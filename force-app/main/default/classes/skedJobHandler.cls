@@ -9,6 +9,10 @@ public class skedJobHandler {
         updateGeoLocation(newRecords);
     }
     
+    public static void beforeDelete(Map<Id, sked__Job__c> oldMap) {
+        deleteSubClasses(oldMap);
+    }
+    
     public static void beforeUpdate(List<sked__Job__c> newRecords, Map<Id, sked__Job__c> updatedRecords) {
         logConfirmedDateTime(updatedRecords, newRecords);
         populateJobData(updatedRecords, newRecords);
@@ -384,14 +388,16 @@ public class skedJobHandler {
                    || newRecord.sked__GeoLocation__Latitude__s != oldData.sked__GeoLocation__Latitude__s
                    || newRecord.sked__GeoLocation__Longitude__s != oldData.sked__GeoLocation__Longitude__s
                    || newRecord.sked__Address__c != oldData.sked__Address__c
-                   || newRecord.sked__Job_Status__c != oldData.sked__Job_Status__c) {
+                   || newRecord.sked__Job_Status__c != oldData.sked__Job_Status__c
+                   || newRecord.Location_Confirmed__c != oldData.Location_Confirmed__c) {
                     mapMasterClass.put(newRecord.Id, newRecord);
                 }
             }
         }
         if (!mapMasterClass.isEmpty()) {
             List<sked__Job__c> skedSubClasses = [SELECT Id, sked__Start__c, sked__Finish__c, sked__Job_Status__c, sked__Parent__c, sked__Timezone__c,
-                                                 sked__Address__c, sked__Location__c, sked__GeoLocation__Latitude__s, sked__GeoLocation__Longitude__s
+                                                 sked__Address__c, sked__Location__c, sked__GeoLocation__Latitude__s, sked__GeoLocation__Longitude__s,
+                                                 Location_Confirmed__c
                                                  FROM sked__Job__c
                                                  WHERE sked__Parent__c IN :mapMasterClass.keySet()];
             if (!skedSubClasses.isEmpty()) {
@@ -404,18 +410,22 @@ public class skedJobHandler {
                     
                     skedSubClass.sked__Start__c = skedDateTimeUtils.addMinutes(skedSubClass.sked__Start__c, startDifferentMinutes, skedSubClass.sked__Timezone__c);
                     skedSubClass.sked__Finish__c = skedDateTimeUtils.addMinutes(skedSubClass.sked__Finish__c, finishDifferentMinutes, skedSubClass.sked__Timezone__c);
+                    skedSubClass.sked__Duration__c = integer.valueOf((skedSubClass.sked__Finish__c.getTime() - skedSubClass.sked__Start__c.getTime()) / 60000);
                     
                     skedSubClass.sked__Address__c = skedMasterClass.sked__Address__c;
                     skedSubClass.sked__Location__c = skedMasterClass.sked__Location__c;
                     skedSubClass.sked__GeoLocation__Latitude__s = skedMasterClass.sked__GeoLocation__Latitude__s;
                     skedSubClass.sked__GeoLocation__Longitude__s = skedMasterClass.sked__GeoLocation__Longitude__s;
                     skedSubClass.sked__Job_Status__c = skedMasterClass.sked__Job_Status__c;
+                    skedSubClass.Location_Confirmed__c = skedMasterClass.Location_Confirmed__c;
                 }
                 update skedSubClasses;
             }
         }
     }
-
-
+    
+    private static void deleteSubClasses(Map<Id, sked__Job__c> oldMap) {
+        delete [SELECT Id FROM sked__Job__c WHERE sked__Parent__c IN :oldMap.keySet()];
+    }
 
 }

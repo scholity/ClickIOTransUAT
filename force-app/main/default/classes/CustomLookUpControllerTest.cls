@@ -67,10 +67,16 @@ public class CustomLookUpControllerTest
         insert a;
         
         Contact c = new Contact();
-        c.FirstName = 'New';
-        c.LastName = 'Tetst';
-        c.Email = 'Priyap@gmail.com';
+        c.FirstName = 'JASON';
+        c.LastName = 'LIVESTON';
+        c.Email = 'jason.liveston@asdf.com';
         c.Account =a;
+        c.MailingStreet = '100 Main st';
+        c.Mailingcity = 'Melbourne';
+        c.MailingPostalCode = '32901';
+        c.MailingState = 'FL';
+        c.Phone = '9998887777';
+        c.NSSCCConnector__Contact_Status__c  = 'Created';
         insert c;
         
         Contact c1 = new Contact();
@@ -78,6 +84,7 @@ public class CustomLookUpControllerTest
         c1.LastName = 'hunt';
         c1.Email = 'jhunt@gmail.com';
         c1.Account =a;
+        c1.NSSCCConnector__Contact_Status__c  = 'Created';
         insert c1;
         
            User usr = new User(LastName = 'LIVESTON',
@@ -90,9 +97,16 @@ public class CustomLookUpControllerTest
                             TimeZoneSidKey = 'GMT',
                             LanguageLocaleKey = 'en_US',
                             EmailEncodingKey = 'UTF-8',
-                            LocaleSidKey = 'en_US'
+                            LocaleSidKey = 'en_US',
+                            street = '100 Main st',
+                            city = 'Melbourne',
+                            PostalCode = '32901',
+                            State = 'FL',
+                            Phone = '9998887777'
                            );
         insert usr;
+        
+       
         
            User u1 = new User(LastName = 'Hunter',
                             FirstName='Jane',
@@ -164,6 +178,32 @@ public class CustomLookUpControllerTest
         rpi.redwing__Achievement__c=ra.id;
         insert rpi;
         
+        sked__Location__c objLocation = new sked__Location__c();
+        objLocation.Name = 'Test';
+        objLocation.sked__Type__c = 'Community';
+        objLocation.sked__Address__c = '401 S Monroe St, Little Rock, AR, 72206';
+        insert objLocation;
+        
+        redwing__Training_Plan__c lPlan2 = new redwing__Training_Plan__c();
+        lPlan2.Name = 'Plan2';
+        insert lPlan2;
+        
+        redwing__Learning__c learning1 = new redwing__Learning__c();
+        learning1.Name = 'Test learning';
+        learning1.redwing__Published__c = true;
+        learning1.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('Media').getRecordTypeId();
+        insert learning1;
+        
+        Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
+        clsRecord.Skedulo_Account__c = a.id;
+        clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
+        clsRecord.redwing__End_Time__c= '13:00';
+        clsRecord.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
+        clsRecord.redwing__Start_Time__c = '12:00';
+        clsRecord.Name = 'Test';
+        clsRecord.Learning_Plan__c = lPlan2.Id;
+        clsRecord.redwing__Learning__c = learning1.Id;
+        insert clsRecord;
         
         //User u = [Select Id From User Where Profile.Name Like '%Community Profile%' AND isActive=true Limit 1];
         
@@ -188,6 +228,47 @@ public class CustomLookUpControllerTest
         test.stopTest();
         
         //system.assertEquals(5, sObj.size());      
+    }
+    
+    static testMethod void testCustomLookup1()
+    {
+        List<Account> accounts = [SELECT Id, Name FROM Account];
+        
+        redwing__Learning__c learning1 = new redwing__Learning__c();
+        learning1.Name = 'Test learning';
+        learning1.redwing__Published__c = true;
+        learning1.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('Media').getRecordTypeId();
+        insert learning1;
+        
+        Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
+        clsRecord.Skedulo_Account__c = accounts[0].id;
+        clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
+        clsRecord.redwing__End_Time__c= '13:00';
+        clsRecord.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
+        clsRecord.redwing__Start_Time__c = '12:00';
+        clsRecord.Name = 'Test';
+        //clsRecord.Learning_Plan__c = lPlan2.Id;
+        clsRecord.redwing__Learning__c = learning1.Id;
+        insert clsRecord;
+        
+        test.startTest();
+        
+        List<sObject> sObj = CustomLookUpController.fetchLookUpValues('Test','redwing__ILT_Class__c','','');
+                
+        test.stopTest();
+        
+        //system.assertEquals(5, sObj.size());      
+    }
+    
+    static testMethod void testCustomLookup2()
+    {
+        List<Account> accounts = [SELECT Id, Name FROM Account];
+        
+        test.startTest();
+        
+        List<sObject> sObj = CustomLookUpController.fetchLookUpValues('Salesforce','redwing__ILT_Location__c','','');
+                
+        test.stopTest();    
     }
     
     public static void createTestAccounts(Integer accounts)

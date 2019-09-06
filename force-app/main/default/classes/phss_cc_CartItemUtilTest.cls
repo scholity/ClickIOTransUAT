@@ -49,15 +49,8 @@ public with sharing class phss_cc_CartItemUtilTest {
      */
     @IsTest
     static void testGetCartItemWithNullId() {
-        Boolean didFail = false;
-
-        try {
-            ccrz__E_CartItem__c cartItem = phss_cc_CartItemUtil.getCartItem(null);
-        } catch (Exception e) {
-            didFail = true;
-        }
-
-        System.assert(didFail);
+        ccrz__E_CartItem__c cartItem = phss_cc_CartItemUtil.getCartItem(null);
+        System.assert(cartItem == null);
     }
 
 }

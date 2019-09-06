@@ -6,15 +6,5 @@
         <minorNumber>136</minorNumber>
         <namespace>ccrz</namespace>
     </packageVersions>
-    <packageVersions>
-        <majorNumber>2</majorNumber>
-        <minorNumber>310</minorNumber>
-        <namespace>redwing</namespace>
-    </packageVersions>
-    <packageVersions>
-        <majorNumber>102</majorNumber>
-        <minorNumber>43</minorNumber>
-        <namespace>sked</namespace>
-    </packageVersions>
     <status>Active</status>
 </ApexClass>
