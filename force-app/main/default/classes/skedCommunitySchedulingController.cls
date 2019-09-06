@@ -166,7 +166,7 @@ global class skedCommunitySchedulingController {
                                              (SELECT Id, Name, sked__Region__c, sked__Address__c, sked__Contact__c, sked__Recurring_Schedule__c,
                                               sked__GeoLocation__Latitude__s, sked__GeoLocation__Longitude__s, sked__GeoLocation__c,
                                               sked__Timezone__c, sked__Start__c, sked__Finish__c, sked__Duration__c, sked__Type__c, 
-                                              sked__Job_Status__c, Copy_Result_Message__c, Number_of_Instructors__c, Location_Confirmed__c,
+                                              sked__Job_Status__c, Copy_Result_Message__c, Number_of_Instructors__c,
                                               sked__Location__c, Course_Catalog__c, Course_Catalog__r.Name, 
                                               Break_Duration__c, Number_of_Breaks__c, Number_of_Students__c,
                                               Special_Instructions__c, Is_Queued__c, Is_Previously_Cancelled__c, sked__Job_Allocation_Count__c,

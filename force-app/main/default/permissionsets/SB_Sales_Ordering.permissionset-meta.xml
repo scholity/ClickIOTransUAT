@@ -752,7 +752,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ccrz__E_OrderItem__c.ccrz__ProductType__c</field>
         <readable>true</readable>
     </fieldPermissions>

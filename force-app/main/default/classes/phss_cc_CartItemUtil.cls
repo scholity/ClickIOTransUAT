@@ -16,10 +16,11 @@ public with sharing class phss_cc_CartItemUtil {
      */
     public static ccrz__E_CartItem__c getCartItem(String cartItemId) {
 
-        Id identifier = Id.valueOf(cartItemId);
-        if (identifier == null) {
+        if (cartItemId == null) {
             return null;
         }
+
+        Id identifier = Id.valueOf(cartItemId);
 
         try {
             ccrz__E_CartItem__c cartItem = [

@@ -771,6 +771,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_LearningTriggerHandler_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_Logger</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1095,6 +1099,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>SubmitOrderCreditControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SurveyService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1415,6 +1423,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_CartControllerTest_Save_SJC</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_CartItemUtil</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1523,10 +1535,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>phss_cc_PriceOverrideModalControllerText</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>phss_cc_ProductListCmpControllerClone</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1571,11 +1579,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_TransactionPaymentUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_VoucherUtil</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_VoucherUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_VoucherUtilTestSJC</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1767,6 +1783,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>skedJobAllocationtoILTInstructor</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>skedJobCancellationNotificationCon</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1783,11 +1803,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>skedJobToILTClass_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>skedJobTrigger_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>skedJobtoILTClass</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>skedJobtoILTClassBackup</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

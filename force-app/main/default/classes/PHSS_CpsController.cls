@@ -119,12 +119,15 @@ public without sharing class PHSS_CpsController {
             newClass.redwing__End_Date__c = endTime.dateGmt();             
               
             newClass.redwing__Timezone__c = timeZoneVal;
+            /*
             newClass.Site_Name__c = cpsWrap.siteName;
             newClass.Site_Address_1__c = cpsWrap.address1;
             newClass.Site_Address_2__c = cpsWrap.address2;
             newClass.Site_City__c = cpsWrap.city;
             newClass.State__c = cpsWrap.state;
             newClass.Site_Postal_Code__c = cpsWrap.zip;
+			*/
+            newClass.redwing__Location__c = cpsWrap.locationId;
             newClass.CPS_Registration_URL__c = cpsWrap.regUrl;
             newClass.CPS_Registration_Phone__c = cpsWrap.regPhone;
             newClass.Registration_Fee__c = cpsWrap.regFee;
@@ -146,6 +149,7 @@ public without sharing class PHSS_CpsController {
             
                 sess.redwing__Start_Time__c = String.valueOf(sessStartTime).subString(0,5);
                 sess.redwing__End_Time__c = String.valueOf(sessEndTime).subString(0,5);
+                sess.redwing__Location__c = cpsWrap.locationId;
             	sessList.add(sess);
             }
 			
@@ -204,9 +208,9 @@ public without sharing class PHSS_CpsController {
             throw new AuraHandledException(e.getMessage());
         }
     }
-	/*
+
+    /*
     @AuraEnabled
-   
 	public static Id createOppForCC(String AccountId) {
         
         Opportunity o = new Opportunity();
@@ -239,6 +243,7 @@ public without sharing class PHSS_CpsController {
         o.Source_System__c = storeFront;
         
         insert o;
+        
         if(opptyId !=null && opptyId !=''){
             list<ccrz__E_Cart__c> lstCarts = new list<ccrz__E_Cart__c>();
             for(ccrz__E_Cart__c ccart : [select id,Opportunity__c from ccrz__E_Cart__c where Opportunity__c=:opptyId]){

@@ -2518,6 +2518,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>redwing__ILT_Class__c.Available_Seats__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>redwing__ILT_Class__c.CC_Order_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>

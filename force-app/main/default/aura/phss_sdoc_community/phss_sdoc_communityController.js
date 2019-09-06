@@ -31,7 +31,7 @@
         var urlString = window.location.href;
         var baseURL = urlString.substring(0, urlString.indexOf("/s"));
         // sdocURL = baseURL+'/apex/SDOC__SDCreate1?id='+recordId+'&Object='+object+'&doclist='+doclist+'&prepmail='+prepMail+'&Site='+baseURL;
-        sdocURL = baseURL+'/apex/SDOC__SDCreate1?id='+recordId+'&Object='+object+'&doclist='+doclist+'&prepmail='+prepMail;
+        sdocURL = baseURL+'/apex/SDOC__SDCreate1?id='+recordId+'&Object='+object+'&doclist='+doclist+'&prepmail='+prepMail+ '&uiLanguage=English';
         console.log("sdocURL: " + sdocURL );
         
         component.set("v.sdocURL", sdocURL);

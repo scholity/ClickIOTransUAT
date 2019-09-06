@@ -7,6 +7,7 @@ private class PHSS_CpsControllerTest {
         // Create community user record
         List<Profile> profList = [SELECT Id FROM Profile WHERE Name = 'SB PHSS-Partner-Community Plus Login' LIMIT 1];
         String profId;
+        ccrz__E_Product__c ccprod;
         
         if(!profList.isEmpty()) {
         	Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Bucket Account').getRecordTypeId();
@@ -43,14 +44,14 @@ private class PHSS_CpsControllerTest {
                 acc.BillingCountry = 'USA';
                 acc.Phone = '9876543210';
                 insert acc;
-                
+
                 Contact con = new Contact();
                 con.FirstName = 'Contact';
                 con.LastName = 'Test';
                 con.Email = 'testCon@gmail.com';
                 con.Account = acc;
                 insert con;
-                
+
                 partnerUser = new User(LastName = 'Test',
                                          FirstName = 'User',
                                          Alias = 'testU',
@@ -64,6 +65,16 @@ private class PHSS_CpsControllerTest {
                                          LocaleSidKey = 'en_US'
                                         );
                 insert partnerUser;
+                
+                ccprod = new ccrz__E_Product__c(
+                    Name = 'Lifeguarding',
+                    ccrz__SKU__c = 'HSSAQU402',
+                    ccrz__Quantityperunit__c = 1,
+                    ccrz__StartDate__c = Date.today(),
+                    ccrz__EndDate__c = Date.today().addMonths(12)
+                );
+                insert ccprod;
+
             }
             
             // Create Learning Plan record to use it as a course in postClass method
@@ -76,6 +87,11 @@ private class PHSS_CpsControllerTest {
             testAcc.Name = 'Test Org';
             testAcc.OwnerId = partnerUser.Id;
             insert testAcc;
+            
+            Map<String, Object> testData = phss_cc_TestDataFactory.setupAccountAndProducts();
+			Account testAccount = (Account) testData.get(phss_cc_TestDataFactory.TEST_ACCOUNT);
+			Opportunity testOpportunity = phss_cc_TestDataFactory.createInsertTestOpportunity(testAccount);
+
             
             String jsonStr = '{'+
                                 ' "accId": "' + testAcc.Id +'",'+
@@ -107,6 +123,8 @@ private class PHSS_CpsControllerTest {
                               '}';
             
             
+
+            
             Test.startTest();
             System.runAs(partnerUser) {
             	// Assign permission set 'LMS External user'
@@ -116,15 +134,22 @@ private class PHSS_CpsControllerTest {
                 psa.PermissionSetId = permSet[0].Id;
                 psa.AssigneeId = partnerUser.Id;
                 insert psa;
-            	
+                                
                 PHSS_CpsController.initWrapper();
+
+                String oppId = PHSS_CpsController.createOppForCCUpdate(testAcc.Id, 'CPS', testOpportunity.Id);
+                
+                PHSS_CpsController.updateCartProducts(testOpportunity.Id, lPlan.CC_Product__c, '1');
+                
+                PHSS_CpsController.getLearningPlanId(ccprod.Id);
+               	PHSS_CpsController.getLearningPlanAttributes(ccprod.Id);
+                
+                PHSS_CpsController.createIltLocation(testAcc.Id, 'test site', 'add1', 'add2', '12345', 'NY', 'test city', '38.894878', '-77.0413765');
+                
+                PHSS_CpsController.getDisplayPaymentInfo(oppId);
+                
                 PHSS_CpsController.postClass(jsonStr);
-                try{
-                	String oppId = PHSS_CpsController.createOppForCC(acc.Id);
-                }
-                catch(Exception ex) {
-                    
-                }
+
             }
             Test.stopTest();
             List<redwing__ILT_Class__c> iltClass = [Select Id From redwing__ILT_Class__c Where Name = :lPlan.Name];
