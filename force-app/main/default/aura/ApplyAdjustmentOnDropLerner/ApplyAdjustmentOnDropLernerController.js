@@ -123,9 +123,9 @@
                     {
                         var newPrice = price * pDis / 100;
                     
-                        price = price - newPrice; 
+                        //price = price - newPrice; //DE1381
                         
-                        component.set("v.newPrice", price);
+                        component.set("v.newPrice", newPrice);
                         component.set("v.isPrompt", false);
                         
                         var vx = component.get("v.method");

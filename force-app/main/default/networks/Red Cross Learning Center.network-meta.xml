@@ -5,8 +5,9 @@
     <changePasswordTemplate>All/PHSS_Community_Change_Password</changePasswordTemplate>
     <communityRoles/>
     <disableReputationRecordConversations>true</disableReputationRecordConversations>
+    <emailFooterLogo>Communities_Shared_Document_Folder/RC_TrainingServices_Logo_PNG.png</emailFooterLogo>
     <emailFooterText>© 2019 The American National Red Cross</emailFooterText>
-    <emailSenderAddress>snehra@salesforce.com</emailSenderAddress>
+    <emailSenderAddress>trainingsvcsacct@redcross.org</emailSenderAddress>
     <emailSenderName>American Red Cross</emailSenderName>
     <enableCustomVFErrorPageOverrides>false</enableCustomVFErrorPageOverrides>
     <enableDirectMessages>true</enableDirectMessages>
@@ -104,7 +105,7 @@
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
-                    <label>Account Affliliation</label>
+                    <label>Account Affiliation</label>
                     <position>3</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>/account-management</target>

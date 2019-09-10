@@ -19,7 +19,7 @@
         <domainName>www.instructorscorner.org</domainName>
         <primary>true</primary>
     </customWebAddresses>
-    <enableAuraRequests>false</enableAuraRequests>
+    <enableAuraRequests>true</enableAuraRequests>
     <fileNotFoundPage>CommunitiesLogin</fileNotFoundPage>
     <genericErrorPage>Exception</genericErrorPage>
     <inMaintenancePage>CommunitiesLogin</inMaintenancePage>

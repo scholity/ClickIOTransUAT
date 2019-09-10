@@ -1747,6 +1747,38 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>NAT Existing Business - AP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAT Existing Business - Community</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAT Existing Business - FS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAT Existing Business - LTP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAT New Business - AP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAT New Business - Community</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAT New Business - FS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NAT New Business - LTP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>New Business - AP</fullName>
             <default>false</default>
         </values>

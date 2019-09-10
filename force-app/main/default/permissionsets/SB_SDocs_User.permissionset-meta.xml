@@ -112,6 +112,10 @@
         <apexClass>SDOC__SD_XMLUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>SDRelatedListDocumentsController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Allows user to generate and view S-Docs, but not edit S-Docs Template records.</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -210,6 +214,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SDOC__SDJob__c.SDOC__Email_Params__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SDOC__SDJob__c.SDOC__Fid__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -251,6 +260,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SDOC__SDJob__c.SDOC__Partition_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SDOC__SDJob__c.SDOC__Process_Job_Splitters_Concurrently__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1402,6 +1416,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>SDOC__SDJobDelete</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>SDOC__SDJobPDF</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -1459,6 +1477,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>SDOC__SDTranslate</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>SDRelatedListDocuments</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
 </PermissionSet>

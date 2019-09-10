@@ -28,6 +28,10 @@
 	display: block;
 }
 
+.THIS .hide {
+    display: none !important;
+}
+
 .THIS .slds-box{
     padding:0.25rem 
 }

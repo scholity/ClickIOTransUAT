@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -617,8 +614,10 @@
         <fields>NAME</fields>
         <fields>ccrz__OrderDate__c</fields>
         <fields>Opportunity_Order__c</fields>
-        <fields>OWNER.ALIAS</fields>
         <fields>ccrz__OrderStatus__c</fields>
+        <fields>ccrz__TotalAmount__c</fields>
+        <fields>ccrz__Storefront__c</fields>
+        <fields>OWNER.ALIAS</fields>
         <relatedList>ccrz__E_Order__c.ccrz__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -755,6 +754,10 @@
         <fields>ACCOUNT.ADDRESS1_STATE</fields>
         <fields>ACCOUNT.ADDRESS1_ZIP</fields>
         <relatedList>Account.HQ_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Facility__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>

@@ -328,7 +328,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_3</name>
-            <conditionLogic>(1 or 2) and 3</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -358,37 +358,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>COURSE</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Inventory_Type__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>COMMUNITY</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -905,7 +874,7 @@
         </rules>
     </decisions>
     <description>Updates made on status changes of an Order Item</description>
-    <interviewLabel>Order_Item_Status_Controller_Change-19_InterviewLabel</interviewLabel>
+    <interviewLabel>Order_Item_Status_Controller_Change-20_InterviewLabel</interviewLabel>
     <label>Order Item Status Controller - Change</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1148,7 +1117,7 @@
         <object>redwing__ILT_Class__c</object>
     </recordUpdates>
     <startElementReference>isChangedDecision6_myRule_5_ccrz_OrderStatus_c</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>cancelWaits</name>
         <dataType>String</dataType>

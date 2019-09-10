@@ -22,6 +22,22 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Credit_Limit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Credit_Available__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Open_Order_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Payment_Terms__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SABA_Org_Type__c</field>
             </layoutItems>
         </layoutColumns>
@@ -78,6 +94,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingAddress</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Preferred_Payment_type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoice_Delivery_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -244,6 +268,8 @@
         <fields>CREATED_DATE</fields>
         <fields>ccrz__OrderDate__c</fields>
         <fields>ccrz__OrderStatus__c</fields>
+        <fields>ccrz__TotalAmount__c</fields>
+        <fields>ccrz__Storefront__c</fields>
         <relatedList>ccrz__E_Order__c.ccrz__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -296,7 +322,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Request_Type__c</fields>
+        <fields>Skedulo_Job_Id__c</fields>
         <fields>redwing__Learning__c</fields>
         <fields>redwing__Location__c</fields>
         <fields>redwing__Start_Date__c</fields>
@@ -326,7 +352,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h21000000S90L</masterLabel>
+        <masterLabel>00h5B000000HHUh</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

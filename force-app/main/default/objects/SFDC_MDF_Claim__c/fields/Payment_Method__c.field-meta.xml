@@ -12,11 +12,6 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
-                <fullName>Check</fullName>
-                <default>false</default>
-                <label>Check</label>
-            </value>
-            <value>
                 <fullName>Credit Memo</fullName>
                 <default>true</default>
                 <label>Credit Memo</label>

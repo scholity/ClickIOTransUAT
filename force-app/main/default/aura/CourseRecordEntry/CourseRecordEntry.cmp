@@ -306,7 +306,13 @@
                                                      /> 
                                 </div><br/>  
                                 <div class = "slds-m-around_x-small">
-                                    <lightning:input value="{!v.SupplementInfo}" label="Supplemental Information" pattern="^[a-zA-Z0-9_\s]*" messageWhenPatternMismatch	= "No Special Characters or spaces allowed in the Supplemental info field"  aura:id = "field" fieldLevelHelp = "If your organization requires this field to be completed for invoicing purposes, enter details here" maxlength="50"/>
+                                    <lightning:input value="{!v.SupplementInfo}"
+                                                     label="Supplemental Information"
+                                                     pattern="^[a-zA-Z0-9_\s]*"
+                                                     messageWhenPatternMismatch="No Special Characters or spaces allowed in the Supplemental info field"
+                                                     aura:id="field"
+                                                     fieldLevelHelp="If your organization requires this field to be completed for invoicing purposes, enter details here"
+                                                     maxlength="50"/>
                                     </div><br/> 
                             </div>
                             
@@ -869,7 +875,7 @@
                                                         <div class="slds-truncate" title="{!item.Fail_Reason}">{!item.Fail_Reason}</div>
                                                     </th>
                                                     <th scope="row">
-                                                        <div class="slds-truncate" title="{!item.AdditionalInfo}">{!item.AdditionalInfo} maxLength="50"</div>
+                                                        <div class="slds-truncate" title="{!item.AdditionalInfo}">{!item.AdditionalInfo}</div>
                                                     </th>
                                                 </tr>
                                             </aura:iteration>

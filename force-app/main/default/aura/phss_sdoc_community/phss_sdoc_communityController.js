@@ -1,13 +1,19 @@
 ({
    handleClick: function(component, event, helper) {
-       console.log("Start "  );
+        console.log("Start "  );
         var recordId = component.get("v.recordId");
         var object = component.get("v.object");
         var doclist = component.get("v.doclist");
         var prepMail = component.get("v.prepMail");
         var btnClicked = event.getSource(); // the button
         var btnMessage = btnClicked.get("v.value"); // the button value
-       
+        var childObjName= component.get("v.childObjName");
+        var lookUpField= component.get("v.lookUpField");
+        var combineAll= component.get("v.combineAll");
+        var autoRedirect= component.get("v.autoRedirect");      
+        var relatedReport= component.get("v.relatedReport");      
+        var additionalFilters= component.get("v.additionalFilters");      
+
         if($A.util.isEmpty(recordId)){
             var recordIdpattern = new RegExp("[?&]recordId=(([^&]*)&?|&|$)");
             var urlRecordId = recordIdpattern.exec(location.href);
@@ -26,12 +32,20 @@
         console.log("planId: " + planId);
         console.log("recordId: " + recordId );
         console.log("object: " + object );
- 
+       
+   
         var sdocURL = ' ';
         var urlString = window.location.href;
         var baseURL = urlString.substring(0, urlString.indexOf("/s"));
         // sdocURL = baseURL+'/apex/SDOC__SDCreate1?id='+recordId+'&Object='+object+'&doclist='+doclist+'&prepmail='+prepMail+'&Site='+baseURL;
-        sdocURL = baseURL+'/apex/SDOC__SDCreate1?id='+recordId+'&Object='+object+'&doclist='+doclist+'&prepmail='+prepMail+ '&uiLanguage=English';
+        console.log("Start "  );
+
+        if(relatedReport !=="1") {
+           sdocURL = baseURL+'/apex/SDOC__SDCreate1?id='+recordId+'&Object='+object+'&doclist='+doclist+'&prepmail='+prepMail+'&uiLanguage=English';
+        }
+        else {
+           sdocURL = baseURL+'/apex/SDRelatedListDocuments?parentId='+recordId+'&childObjName='+childObjName+'&LookupFieldName='+lookUpField+'&doclist='+doclist+'&allowEmail='+prepMail+'&combineAll='+combineAll+'&autoRedirect='+autoRedirect+'&additionalFilters='+additionalFilters+'&uiLanguage=English';
+        };
         console.log("sdocURL: " + sdocURL );
         
         component.set("v.sdocURL", sdocURL);

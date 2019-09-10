@@ -1252,15 +1252,21 @@ public without sharing class ILTInstructorCommunity{
         Map<id,id> Learnignassignmentmapids;
         Map<id, redwing__ILT_Roster__c> rosterMap;
         String iltClassid;
+        redwing__ILT_Class__c rosterILTClass;
         List<redwing__Training_Plan_Assignment__c> lpalist;
         List<redwing__Training_Plan_Assignment__c> lpaliststaus;
         List<redwing__Training_Plan_Section_Assignment__c> statusLearningplansectionAsslist;
         List<redwing__Training_Plan_Section__c> Learningplansectionlist;
         List<redwing__Achievement_Assignment__c> statusAchAsslist;
+
+        List<ccrz__E_OrderItem__c> updatedOrderItems = new List<ccrz__E_OrderItem__c>();
+        List<ccrz__E_Order__c> updatedOrders = new List<ccrz__E_Order__c>();
+
         Map<id,id> rostermapusers;
         Map<id,list<id>> rtpsamap;
         Map<id,id> rtpamap;
         Map<id,list<id>> mapUserWithAchievementAssignmentList = new Map<id,list<id>>();
+
         learningAssignmentList = new list<redwing__Learning_Assignment__c>();
         statusLearningplansectionAsslist = new list<redwing__Training_Plan_Section_Assignment__c>();
         statusAchAsslist = new list<redwing__Achievement_Assignment__c>();
@@ -1306,6 +1312,9 @@ public without sharing class ILTInstructorCommunity{
             {
 	         	rtpamap.put(rpa.redwing__User__c,rpa.id);            
             }
+
+            List<redwing__ILT_Class__c> theRosterILTClassList = [Select Id, Name, Opportunity__c From redwing__ILT_Class__c Where Id = :iltClassid Limit 1];
+            rosterILTClass = theRosterILTClassList[0];
         }
         
         for(redwing__Achievement_Assignment__c aa: [Select id, name, redwing__User__c, External_Id__c from redwing__Achievement_Assignment__c where External_Id__c like :('%' + iltClassid) ])
@@ -1446,7 +1455,35 @@ public without sharing class ILTInstructorCommunity{
                         }
                     }
                 }
-            }    
+            }
+            System.debug('**** Close Class:'+closeClass);
+            System.debug('**** rosterILTClass.Opp:'+rosterILTClass.Opportunity__c);
+
+            if (closeClass) {
+                // US1521 - Populate CC Cart Item Record(s) with ILT Class Id (if applicable)
+
+                if (rosterILTClass != null && rosterILTCLass.Opportunity__c != null) {
+                    // US1521 - For close class, Order Lines should already be created
+                    // In this case, we need to write ILT Class Id on Order Item record(s)
+
+                    for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c From ccrz__E_OrderItem__c
+                    Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :rosterILTClass.Opportunity__c]) {
+                        System.debug('*** orderItem:'+theOrderItem);
+                        ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
+                        newOrderItem.Id = theOrderItem.Id;
+                        newOrderItem.ILT_Class__c = rosterILTClass.Id;
+                        updatedOrderItems.add(newOrderItem);
+                        System.debug('*** updatedOrderItems:'+updatedOrderItems);
+                        // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
+                        // boolean on order header record
+                        ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                        newOrder.Id = theOrderItem.ccrz__Order__c;
+                        newOrder.CRE_Request_Processed__c = true;
+                        updatedOrders.add(newOrder);
+                        System.debug('*** updatedOrders:'+updatedOrders);
+                    }
+                }
+            }
         }
         
         // *** US1517 - Deactivate all remaining (unused) vouchers for this class
@@ -1486,6 +1523,14 @@ public without sharing class ILTInstructorCommunity{
         }
         if(statusAchAsslist.size() > 0){
             upsert statusAchAsslist;
+        }
+
+        if (updatedOrderItems.size() > 0) {
+            update updatedOrderItems;
+        }
+
+        if (updatedOrders.size() > 0) {
+            update updatedOrders;
         }
     }
     
@@ -2061,12 +2106,29 @@ public without sharing class ILTInstructorCommunity{
                     System.debug('Inserting session list: ' + JSON.serialize(wrapper));
                     System.debug('Inserting session list: ' + sessList);
                     insert sessList;
+                    
+                    //DE1576
+                    redwing__ILT_Class__c rILTClass = new redwing__ILT_Class__c ();
+                    rILTClass.Id = classId;
+                    rILTClass.redwing__Start_Time__c = sessList[0].redwing__Start_Time__c;
+                    rILTClass.redwing__End_Time__c  = sessList[0].redwing__End_Time__c;
+                    update rILTClass;
+                    
+                    
                 } else {
                     redwing__ILT_Session__c sess = new redwing__ILT_Session__c();
                     sess.redwing__ILT_Class__c = clsRecord.Id;
                     sess.redwing__Date__c = clsRecord.redwing__Start_Date__c;
                     sess.redwing__Location__c = objClassDetails.Location;
                     insert sess;
+                    
+                    
+                    //DE1576
+                    redwing__ILT_Class__c rILTClass = new redwing__ILT_Class__c ();
+                    rILTClass.Id = classId;
+                    rILTClass.redwing__Start_Time__c = '08:00';
+                    rILTClass.redwing__End_Time__c  = '05:00';
+                    update rILTClass;
                 }
 
 

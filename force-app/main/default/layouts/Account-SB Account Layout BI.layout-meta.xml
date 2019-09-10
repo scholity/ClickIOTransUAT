@@ -764,8 +764,10 @@
         <fields>NAME</fields>
         <fields>ccrz__OrderDate__c</fields>
         <fields>Opportunity_Order__c</fields>
-        <fields>OWNER.ALIAS</fields>
         <fields>ccrz__OrderStatus__c</fields>
+        <fields>ccrz__TotalAmount__c</fields>
+        <fields>ccrz__Storefront__c</fields>
+        <fields>OWNER.ALIAS</fields>
         <relatedList>ccrz__E_Order__c.ccrz__Account__c</relatedList>
     </relatedLists>
     <relatedLists>

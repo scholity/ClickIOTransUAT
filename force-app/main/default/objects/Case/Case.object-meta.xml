@@ -215,10 +215,9 @@
         <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
         <customTabListAdditionalFields>NAME</customTabListAdditionalFields>
         <customTabListAdditionalFields>CONTACT.ACCOUNT</customTabListAdditionalFields>
-        <excludedStandardButtons>NewCase</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
         <excludedStandardButtons>ChangeStatus</excludedStandardButtons>
         <excludedStandardButtons>MassClose</excludedStandardButtons>
-        <excludedStandardButtons>Accept</excludedStandardButtons>
         <lookupDialogsAdditionalFields>CASES.CASE_NUMBER</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CASES.TYPE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Case_Sub_Type__c</lookupDialogsAdditionalFields>
