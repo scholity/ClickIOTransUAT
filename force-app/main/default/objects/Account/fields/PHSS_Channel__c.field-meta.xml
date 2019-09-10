@@ -61,6 +61,11 @@
                 <default>false</default>
                 <label>RCS Retail</label>
             </value>
+            <value>
+                <fullName>NAT AP / LTP</fullName>
+                <default>false</default>
+                <label>NAT AP / LTP</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>4</visibleLines>

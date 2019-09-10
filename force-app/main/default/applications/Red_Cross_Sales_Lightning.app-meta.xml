@@ -139,6 +139,24 @@
         <profile>SB ARC Service Delivery</profile>
     </profileActionOverrides>
     <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Order_Opportunity_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Order_Opportunity</recordType>
+        <type>Flexipage</type>
+        <profile>SB ARC NAT Sales User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>Order_Opportunity_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Opportunity</pageOrSobjectType>
+        <recordType>Opportunity.Sales_Opportunity</recordType>
+        <type>Flexipage</type>
+        <profile>SB ARC NAT Sales User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
         <actionName>Tab</actionName>
         <content>American_Red_Cross_Service_Console_Home_Page</content>
         <formFactor>Large</formFactor>

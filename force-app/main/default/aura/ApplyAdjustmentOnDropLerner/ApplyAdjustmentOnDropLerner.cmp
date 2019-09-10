@@ -55,7 +55,7 @@
                                 <div class="slds-col">
                                     <lightning:input aura:id	= "percentDiscountField"
                                                      name		= "percentDiscount"
-                                                     label		= "Percent Fee"
+                                                     label		= "Percent to refund per unit"
                                                      type		= "number"
                                                      value		= "{!v.percentDiscount}"
                                                      onchange	= "{!c.valueFieldChanged}"/>
@@ -84,7 +84,7 @@
                                 <div class="slds-col">
                                     <lightning:input aura:id	= "unitPriceField"
                                                      name		= "unitPrice"
-                                                     label		= "Price"
+                                                     label		= "Amount to refund per unit"
                                                      value		= "{!v.adjPercentDiscount}"
                                                      onchange	= "{!c.valueFieldChanged}"
                                                      type		= "number"

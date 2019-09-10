@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingCriteriaRules>
+        <fullName>Instructor_Access_to_Certifications</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Instructor Access to Certifications</label>
+        <sharedTo>
+            <allCustomerPortalUsers/>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value>null</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+</SharingRules>

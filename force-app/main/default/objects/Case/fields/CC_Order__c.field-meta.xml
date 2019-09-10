@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Primary Order number used for consolidation across multiple systems</description>
     <externalId>false</externalId>
-    <inlineHelpText>Primary Order number used for consolidation across multiple systems</inlineHelpText>
+    <inlineHelpText>Order # associated with the inquiry or transaction in question  (O-0000000000)</inlineHelpText>
     <label>CC Order</label>
     <referenceTo>ccrz__E_Order__c</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>

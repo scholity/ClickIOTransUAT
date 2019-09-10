@@ -1,0 +1,31 @@
+<apex:page controller="SDRelatedListDocumentsController" action="{!createSDocJobs}" tabStyle="SDOC__SDTemplate__c" lightningStylesheets="true">
+    <apex:form >
+        <apex:sectionHeader title="Create S-Docs" subtitle="Generating Document(s)"/>
+        &lt;&lt; <apex:commandLink action="{!returnToParentRecord}">Return to record</apex:commandLink>
+        <br />
+        <br />
+        <apex:actionPoller action="{!redirectIfComplete}" interval="5" reRender="job_table" oncomplete="finishRedirect();" />
+        <apex:actionFunction action="{!finishRedirect}" name="finishRedirect" reRender="job_table" />
+        <div style="width: 700px;">
+            <apex:pageBlock id="job_table" >
+                <script type="text/javascript">
+                    function displaySuccessfulEmailMsg() {
+                        document.getElementById('email_msg').innerHtml
+                            = "Successfully emailed documents.";
+                    }
+                </script>
+                <apex:commandButton value="Email Documents" action="{!emailDocuments}"
+                disabled="{!NOT(jobsAreCompleted) || emailedDocuments}"
+                oncomplete="alert('Successfully emailed documents.');"
+                rendered="{!allowEmail}" reRender="" />
+                <apex:pageBlockTable value="{!sdocJobWrappers}" var="ow">
+                    <apex:column headerValue="Name">
+                        <a href="/{!ow['obj.Id']}" target="_blank">{!ow['obj.Name']}</a>
+                    </apex:column>
+                    <apex:column headerValue="Status" value="{!ow['job.SDOC__Status_Link__c']}"
+                    style="width: 150px;" />
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </div>
+    </apex:form>
+</apex:page>

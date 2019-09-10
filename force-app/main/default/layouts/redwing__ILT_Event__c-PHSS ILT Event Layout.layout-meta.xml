@@ -62,6 +62,7 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>redwing__Learning__c</fields>
         <relatedList>redwing__ILT_Event_Class__c.redwing__ILT_Event__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -70,7 +71,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5B000000HZXF</masterLabel>
+        <masterLabel>00h21000000S90w</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

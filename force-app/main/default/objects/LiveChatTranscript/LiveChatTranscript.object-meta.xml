@@ -128,6 +128,7 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
+    <externalSharingModel>Read</externalSharingModel>
     <searchLayouts>
         <customTabListAdditionalFields>LiveChatVisitor</customTabListAdditionalFields>
         <customTabListAdditionalFields>StartTime</customTabListAdditionalFields>

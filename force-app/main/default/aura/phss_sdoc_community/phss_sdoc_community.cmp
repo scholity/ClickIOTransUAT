@@ -8,8 +8,16 @@
     <aura:attribute name="planId" type="String" description="Learning Plan ID" access="global"/>        
     <aura:attribute name="object" type="String" description="Object Name API" access="global"/>
     <aura:attribute name="cbaseURL" type="String" description="Base URL" access="global"/>
+    <aura:attribute name="childObjName" type="String" description="Related List API" access="global"/>
+    <aura:attribute name="lookUpField" type="String" description="Field in Related List API" access="global"/>
     <aura:attribute name="message" type="String" description="button label" access="global"/>
-   
+    <aura:attribute name="combineAll" type="String" description="Individual or Combined Documents" access="global"/>
+    <aura:attribute name="autoRedirect" type="String" description="Send back to calling page" access="global"/>
+    <aura:attribute name="relatedReport" type="String" description="S-Doc based on Related Report" access="global"/>
+    <aura:attribute name="additionalFilters" type="String" description="Related Report SOQL Where Clause ex. and redwing__Achievement__r.redwing__Type__c = 'Certifications'" access="global"/>
+    <aura:attribute name="whereClause" type="String" description="Related Report SOQL Where Clause ex. and redwing__Achievement__r.redwing__Type__c = 'Certifications'" access="global"/>
+
+             
   <!--   <p>Message:  {!v.sdocURL}</p>
 -->
      <div >

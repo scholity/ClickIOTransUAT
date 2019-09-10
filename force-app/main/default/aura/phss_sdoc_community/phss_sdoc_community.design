@@ -4,5 +4,12 @@
     <design:attribute name="object" label="Object name" description="Name of S-Docs base object"/>
     <design:attribute name="doclist" label="S-Doc List" description="Comma delimited list of S-Docs to Print"/>
     <design:attribute name="prepMail" label="Email" description="Send SDoc Email 0=No 1=Yes"/>
+    <design:attribute name="relatedReport" label="Related Report" description="S-Doc based on Related List 0=No 1=Yes"/>
+    <design:attribute name="childObjName" label="Child Object" description="The API name of the object type of the records in the related list."/>
+    <design:attribute name="lookUpField" label="Lookup Field" description="The API name of the field relating the related list object to the parent object that the user will see this button on."/>
+    <design:attribute name="additionalFilters" label="Additional Filters" description="Additional Filters to be added to the SOQL Query"/>
+    <design:attribute name="combineAll" label="Combine Options" description="[true|file|attachment] (optional): If this is set to true, all documents will be combined into a single PDF that can be saved as either a file or attachment."/>
+    <design:attribute name="autoRedirect" label="Auto Redirect" description="[record|combineall|email|email,record] (optional): This parameter will automatically redirect you depending on which of the four values you input. Record will redirect you back to the record you started on. Combineall will take you to the combined PDF document if you've set the comebineall parameter to true. Email will take you to the email page so you can edit the email fields before sending your documents. Email,record will automatically email the documents and redirect you back to the record you started on."/>
+    <design:attribute name="whereClause" label="Where Clause DO NOT USE" description="Do Not Use"/>
 
 </design:component>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_fields_before_close_case</fullName>
+    <active>true</active>
+    <description>Required fields for invoicing Case before closing the case</description>
+    <errorConditionFormula>AND(
+RecordType.DeveloperName =&#39;Invoicing&#39;,
+ISPICKVAL( Type , &#39;Invoicing&#39;),
+ISPICKVAL(Dispute_Issue__c, &#39;&#39;),
+NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)),
+ISBLANK(ContactId)
+)</errorConditionFormula>
+    <errorMessage>Please Fill required Fileds Invoice subtype, Contact</errorMessage>
+</ValidationRule>

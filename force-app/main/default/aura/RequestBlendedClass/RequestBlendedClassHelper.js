@@ -187,6 +187,140 @@
             updatedSessions.push(session);
         });
         component.set("v.cpsWrap.sessionList", updatedSessions);
+        helper.setStartEndDate(component, event);
+    },
+
+    setStartEndDate : function(component, event, helper) {
+        // Format Start Time and End Time
+        var minStartDate = new Date();
+        component.get("v.cpsWrap.sessionList").forEach(function(session) {
+            var timeZone = session.timeZoneName;
+            console.log('session.timeZone: ' + timeZone);
+            console.log('session.classDate: ' + session.classDate);
+            console.log('startDateString: ' + session.startTime);
+
+            var gmtTime = new Date().toLocaleString("en-US", {timeZone: "GMT"});
+            var timeZoneTime = new Date().toLocaleString("en-US", {timeZone: timeZone});
+            var diff = new Date(timeZoneTime) - new Date(gmtTime);
+            console.log('diff: ' + diff);
+
+
+
+            var firstDate = new Date(session.classDate + " " + session.startTime);
+            firstDate = new Date(new Date(firstDate.getTime() - diff).toLocaleString("UTC", {timeZone: "GMT"}));
+            console.log('firstDate: ' + firstDate);
+            var startDate = new Date(session.classDate + " " + session.startTime).toLocaleString("UTC", {timeZone: timeZone});
+            console.log('startDate: ' + startDate);
+            //var startDate = new Date(session.classDate, 'yyyy-MM-dd');// + "T" + session.startTime);//.toLocaleString("en", {timeZoneName: "short", timeZone: timeZone});
+            var newDate = new Date(startDate);
+            console.log('newDate: ' + newDate);
+
+            // var diff = firstDate - new Date(startDate);
+            // console.log('diff: ' + diff);
+            var thirdDate = firstDate - newDate;
+            console.log('thirdDate: ' + thirdDate);
+
+
+            var adjustedStartDate = new Date(startDate);
+            console.log('adjustedStartDate: ' + adjustedStartDate);
+
+            // var adjustedStartDate = helper.changeTimezone(startDate, timeZone);
+            // console.log('adjustedStartDate: ' + adjustedStartDate);
+            // if (minStartDate === undefined) {
+            //     minStartDate = startDate;
+            //     console.log('minStartDate: ' + minStartDate);
+            // }
+            var startTime = session.formattedStartTime;
+            var endTime = session.formattedEndTime;
+            console.log('formattedStartTime: ' + startTime);
+            console.log('formattedEndTime: ' + endTime);
+            console.log('endDateString: ' + session.endTime);
+            var endDate = new Date(session.classDate + " " + session.endTime);//.toLocaleString("en", {timeZoneName: "short", timeZone: timeZone});
+            //var endDate = new Date(session.classDate, 'yyyy-MM-dd');// + "T" + session.endTime);//.toLocaleString("en", {timeZoneName: "short", timeZone: timeZone});
+            console.log('endDate: ' + endDate);
+
+            // var startTimeHrs = startTime.substring(0,2);
+            // console.log('startTimeHrs: ' + startTimeHrs);
+            // var startTimeMins = startTime.substring(3,5);
+            // console.log('startTimeMins: ' + startTimeMins);
+            // startDate.setHours(parseInt(startTimeHrs), parseInt(startTimeMins), 0);
+            // console.log('final startDate: ' + startDate);
+            // var endTimeHrs = endTime.substring(0,2);
+            // console.log('endTimeHrs: ' + endTimeHrs);
+            // var endTimeMins = endTime.substring(3,5);
+            // console.log('endTimeMins: ' + endTimeMins);
+            // endDate.setHours(parseInt(endTimeHrs), parseInt(endTimeMins), 0);
+            // console.log('final endDate: ' + endDate);
+            // var startTimeHrs = startTime.substring(0,2);
+            // var startTimeAmOrPm;
+            // console.log('startTimeHrs..'+startTimeHrs);
+            // console.log('con..'+(startTimeHrs == '00'));
+            // console.log('parsed..'+parseInt(startTimeHrs));
+
+            // if(startTimeHrs == '12') {
+            //     startTimeAmOrPm = 'PM';
+            // }
+            // else if(startTimeHrs == '00') {
+            //     startTimeHrs = '12';
+            //     startTimeAmOrPm = 'AM';
+            // }
+            // else if(parseInt(startTimeHrs) > 12 && parseInt(startTimeHrs) < 24) {
+            //     startTimeHrs = parseInt(startTimeHrs) - 12;
+            //     startTimeAmOrPm = 'PM';
+            // }
+            // else {
+            //     startTimeAmOrPm = 'AM';
+            // }
+            // startTime = startTimeHrs + ':' + startTime.substring(3,5) + ' ' + startTimeAmOrPm;
+            // console.log('startTime..'+startTime);
+            // // component.set("v.formattedStartTime",startTime);
+            // // session.startTime = startTime;
+            // session.formattedStartTime = startTime;
+            // var endTime = session.endTime;
+            // var endTimeHrs = endTime.substring(0,2);
+            // var endTimeAmOrPm;
+            // console.log('endTimeHrs..'+endTimeHrs);
+            // console.log('con..'+(endTimeHrs == '00'));
+            // console.log('parsed..'+parseInt(endTimeHrs));
+            //
+            // if(endTimeHrs == '12') {
+            //     endTimeAmOrPm = 'PM';
+            // }
+            // else if(endTimeHrs == '00') {
+            //     endTimeHrs = '12';
+            //     endTimeAmOrPm = 'AM';
+            // }
+            // else if(parseInt(endTimeHrs) > 12 && parseInt(endTimeHrs) < 24) {
+            //     endTimeHrs = parseInt(endTimeHrs) - 12;
+            //     endTimeAmOrPm = 'PM';
+            // }
+            // else {
+            //     endTimeAmOrPm = 'AM';
+            // }
+            // endTime = endTimeHrs + ':' + endTime.substring(3,5) + ' ' + endTimeAmOrPm;
+            // console.log('endTime..'+endTime);
+            // //component.set("v.formattedEndTime",endTime);
+            // // session.endTime = endTime;
+            // session.formattedEndTime = endTime;
+            // updatedSessions.push(session);
+        });
+        // component.set("v.cpsWrap.sessionList", updatedSessions);
+    },
+
+    changeTimezone : function (date,ianatz) {
+
+        // suppose the date is 12:00 UTC
+        var invdate = new Date(date.toLocaleString('en-US', {
+            timeZone: ianatz
+        }));
+
+        // then invdate will be 07:00 in Toronto
+        // and the diff is 5 hours
+        var diff = date.getTime()-invdate.getTime();
+
+        // so 12:00 in Toronto is 17:00 UTC
+        return new Date(date.getTime()+diff);
+
     },
 
     //
@@ -292,7 +426,7 @@
         var day 	= splitEndDate[2]; 
         var endDateFrmtd = month + '/' + day + '/' + year;
         component.set("v.EndDateFmt",endDateFrmtd);
-        
+
         var extUser = component.get("v.isExtUser");
         var isParnter = component.get("v.isPartner")
         if(extUser === true && isParnter===false)

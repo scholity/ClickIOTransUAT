@@ -624,34 +624,27 @@
 
     onZoneChange : function(component, event, helper) {
         helper.requiredSchedule(component,event,helper);
-        component.set("v.zoneError",false);
+
+        var target = event.target;
+        var value = target.value;
+        var sessionIndex = target.getAttribute('data-row-index');
 
         var cpsWrap = component.get("v.cpsWrap");
-        var target = event.target;
-        var values = target.value.split(",");
-        var index = values[0];
-        var value = values[1];
+        if (cpsWrap != null) {
+            cpsWrap.sessionList[sessionIndex].timeZone = value;
+            cpsWrap.sessionList[sessionIndex].timeZoneName = (value == '' ? '' : cpsWrap.timeZoneList[value]);
 
-        component.set("v.cpsWrap", cpsWrap);
-
-        cpsWrap.sessionList[index].timeZone = value;
-
-        // Time Zone validation
-        var tempList = component.get("v.cpsWrap.sessionList");
-        tempList.forEach(function(session) {
-            session.timeZone = document.getElementById('zoneSelect').value;
-
-            var temp = document.getElementById('zoneSelect');
-
-            if(session.timeZone) {
-                document.getElementById('zoneSelect').classList.remove('requiredSelect');
+            var errorDivs = component.find('zoneError');
+            if (cpsWrap.sessionList.length == 1) {
+                errorDivs = [errorDivs];        // convert the single div into an array
             }
-            else {
-                component.set("v.zoneError",true);
-                document.getElementById('zoneSelect').classList.add('requiredSelect');
+
+            if (cpsWrap.sessionList[sessionIndex].timeZone == '') {
+                $A.util.removeClass(errorDivs[sessionIndex], 'hide');
+            } else {
+                $A.util.addClass(errorDivs[sessionIndex], 'hide');
             }
-        });
-        component.set("v.cpsWrap.sessionList",tempList);
+        }
     },
 
     zoneUpdate : function(component, event, helper) {

@@ -257,6 +257,10 @@ public class phss_cc_PriceOverrideModalController {
                 {
                     cartItem.Coupon_Used__c = true;
                 }
+                else
+                {
+                    cartItem.Coupon_Used__c = false;
+                }
                 update cartItem;
 
                 result.put(CART_ITEM_KEY, cartItem);

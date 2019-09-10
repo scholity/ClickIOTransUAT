@@ -100,7 +100,6 @@
     <aura:attribute name = "todaysDate"			type = "String" />
     <aura:attribute name = "formattedStartTime" type = "String" />
     <aura:attribute name = "formattedEndTime" type = "String" />
-    <aura:attribute name = "zoneError"      type = "Boolean"    default = "false"/>
 
     <aura:attribute name = "locationId" type="String" description="ILT Location Id return by apex controller's method createIltLocation" />
 
@@ -277,17 +276,15 @@
                                        <div class="slds-col slds-size_1-of-5">
                                            <label class="slds-required">*</label>
                                            <label class="slds-form-element__label">Time Zone</label><br/>
-                                           <select name="zoneSelect" class="slds-select"
-                                                   onchange="{!c.onZoneChange}" value="{!v.zoneIndex}">
+                                           <select aura:id="zoneSelect" data-row-index="{!index}" name="zoneSelect" onchange="{!c.onZoneChange}" class="slds-select">
                                                <option value=""> Select a Time Zone</option>
-                                               <aura:iteration items="{!v.zoneList}" var="zone"
-                                                               indexVar="key">
-                                                   <option value="{!index + ',' + zone.key}" selected=""> {!zone.key} </option>
+                                               <aura:iteration items="{!v.zoneList}" var="zone" indexVar="key">
+                                                   <option value="{!zone.key}">{!zone.key}</option>
                                                </aura:iteration>
                                            </select>
-                                           <aura:if isTrue="{!v.zoneError}">
-                                               <div class="lookupError">Complete this field.</div>
-                                           </aura:if>
+                                           <div aura:id="zoneError" class="lookupError hide">
+                                               Complete this field.
+                                           </div>
                                        </div>
                                        <div class="slds-col slds-size_1-of-5">
                                            <aura:if isTrue="{!index}">
