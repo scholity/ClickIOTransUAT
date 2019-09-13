@@ -1533,6 +1533,13 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Activated</stringValue>
+            </value>
+        </filters>
         <object>Contract</object>
         <outputReference>sContract</outputReference>
         <queriedFields>Account__c</queriedFields>

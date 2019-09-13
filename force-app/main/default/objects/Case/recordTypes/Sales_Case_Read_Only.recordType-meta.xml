@@ -56,10 +56,6 @@
     <picklistValues>
         <picklist>Calendar_Year__c</picklist>
         <values>
-            <fullName>2018</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>2019</fullName>
             <default>false</default>
         </values>

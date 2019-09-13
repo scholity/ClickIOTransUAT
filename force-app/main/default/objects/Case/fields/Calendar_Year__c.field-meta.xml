@@ -12,11 +12,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>2018</fullName>
-                <default>false</default>
-                <label>2018</label>
-            </value>
-            <value>
                 <fullName>2019</fullName>
                 <default>false</default>
                 <label>2019</label>
@@ -65,6 +60,12 @@
                 <fullName>2028</fullName>
                 <default>false</default>
                 <label>2028</label>
+            </value>
+            <value>
+                <fullName>2018</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>2018</label>
             </value>
         </valueSetDefinition>
     </valueSet>

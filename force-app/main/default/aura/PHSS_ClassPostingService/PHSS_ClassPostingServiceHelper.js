@@ -441,6 +441,7 @@ formatTime : function(component, event, helper) {
                 var storeResponse = response.getReturnValue();
                 console.log('response from createIltLocation: '+ storeResponse);
                 component.set('v.locationId', storeResponse);
+                component.set('v.cpsWrap.locationId', storeResponse);
             }
         });
         $A.enqueueAction(action);

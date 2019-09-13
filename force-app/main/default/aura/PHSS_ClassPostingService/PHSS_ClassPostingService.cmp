@@ -352,6 +352,7 @@
                                              label 	  = "URL for registration"
                                              type  	  = "url" 
                                              messageWhenTypeMismatch = "Please enter a valid URL"/>
+                            <lightning:helptext content="Enter valid url starting with https:// or http:// www.domain_name.com / org / gov " />
                         </div>
                         <div class = "slds-size_3-of-6 slds-p-top_small">
                             <lightning:input value	  = "{!v.cpsWrap.regPhone}"
@@ -579,8 +580,8 @@
                         <div class= "slds-p-left_small">
                             <div class= "slds-grid slds-wrap slds-p-top_medium">
                                 <div class="slds-size_6-of-12">
-                                    <lightning:input label="Payment Method" readonly = "true"/> <br/>
-                                    <lightning:input label="PO Number" readonly = "true"/>  
+                                    <lightning:input label="Payment Method" readonly = "true"/> Credit Card <br/>
+                                    <!-- <lightning:input label="PO Number" readonly = "true"/>  -->
                                 </div>
                                 <div class="slds-size_6-of-12">PAYMENT AMOUNT<br/>
                                     <div class="slds-box ">

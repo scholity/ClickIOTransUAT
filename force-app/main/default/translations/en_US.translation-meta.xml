@@ -645,7 +645,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Add_Rescheduling_Fee_to_Order-14</fullName>
+            <fullName>Add_Rescheduling_Fee_to_Order-15</fullName>
             <screens>
                 <fields>
                     <name>PricingError</name>
@@ -690,7 +690,13 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Transaction_Payment_Controller-10</fullName>
+            <fullName>Set_Opportunity_Discount_Approvals-2</fullName>
+        </flows>
+        <fullName>Set_Opportunity_Discount_Approvals</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Transaction_Payment_Controller-11</fullName>
         </flows>
         <fullName>Transaction_Payment_Controller</fullName>
     </flowDefinitions>
@@ -793,13 +799,13 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Manage_Order_Status-51</fullName>
+            <fullName>Manage_Order_Status-52</fullName>
         </flows>
         <fullName>Manage_Order_Status</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Opportunity_Controller-22</fullName>
+            <fullName>Opportunity_Controller-24</fullName>
         </flows>
         <fullName>Opportunity_Controller</fullName>
     </flowDefinitions>
@@ -1121,7 +1127,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_On_Hold_Order_Case-12</fullName>
+            <fullName>Create_On_Hold_Order_Case-13</fullName>
         </flows>
         <fullName>Create_On_Hold_Order_Case</fullName>
     </flowDefinitions>
@@ -1139,7 +1145,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Full_Service_Minimum_Quantity-2</fullName>
+            <fullName>Full_Service_Minimum_Quantity-3</fullName>
         </flows>
         <fullName>Full_Service_Minimum_Quantity</fullName>
     </flowDefinitions>
@@ -1157,7 +1163,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Achievement_Assignment_Controller-5</fullName>
+            <fullName>Achievement_Assignment_Controller-6</fullName>
         </flows>
         <fullName>Achievement_Assignment_Controller</fullName>
     </flowDefinitions>
@@ -1223,7 +1229,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Order_Item_Status_Controller_Change-14</fullName>
+            <fullName>Order_Item_Status_Controller_Change-16</fullName>
         </flows>
         <fullName>Order_Item_Status_Controller_Change</fullName>
     </flowDefinitions>
@@ -1446,7 +1452,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Add_Cancelation_Fee_to_Order-26</fullName>
+            <fullName>Add_Cancelation_Fee_to_Order-27</fullName>
             <screens>
                 <fields>
                     <name>CancelFeeError</name>
@@ -1479,7 +1485,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Add_Onsite_Fee_Waiver-6</fullName>
+            <fullName>Add_Onsite_Fee_Waiver-7</fullName>
             <screens>
                 <fields>
                     <name>Error</name>

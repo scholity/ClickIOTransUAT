@@ -896,15 +896,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
-            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
-            <controllingFieldValue>Product Sales Referral</controllingFieldValue>
-            <controllingFieldValue>Non-Training</controllingFieldValue>
-            <controllingFieldValue>Community Course Support</controllingFieldValue>
-            <controllingFieldValue>Course Records</controllingFieldValue>
-            <valueName>Other</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
             <valueName>Questions about NAT Registration Process</valueName>
         </valueSettings>
         <valueSettings>
@@ -989,6 +980,14 @@
             <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
             <controllingFieldValue>Non-Training</controllingFieldValue>
             <valueName>Gov Shutdown</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Product Sales Referral</controllingFieldValue>
+            <controllingFieldValue>Non-Training</controllingFieldValue>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>Other</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Non PHSS Referral</controllingFieldValue>

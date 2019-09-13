@@ -3,8 +3,8 @@
     <assignments>
         <name>Set_Order_Fulfillment</name>
         <label>Set Order Fulfillment</label>
-        <locationX>557</locationX>
-        <locationY>343</locationY>
+        <locationX>611</locationX>
+        <locationY>364</locationY>
         <assignmentItems>
             <assignToReference>sFulfillment.Fulfillment_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -186,8 +186,8 @@
     <recordCreates>
         <name>Add_to_Order_Item</name>
         <label>Add Fee to Order Item</label>
-        <locationX>556</locationX>
-        <locationY>239</locationY>
+        <locationX>623</locationX>
+        <locationY>217</locationY>
         <connector>
             <targetReference>Set_Order_Fulfillment</targetReference>
         </connector>
@@ -206,7 +206,7 @@
         <inputAssignments>
             <field>ccrz__OrderItemStatus__c</field>
             <value>
-                <stringValue>Shipped</stringValue>
+                <stringValue>In Process</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -274,8 +274,8 @@
     <recordCreates>
         <name>Create_Order_Fulfillment</name>
         <label>Create Order Fulfillment</label>
-        <locationX>721</locationX>
-        <locationY>347</locationY>
+        <locationX>757</locationX>
+        <locationY>361</locationY>
         <connector>
             <targetReference>Set_Order_Fulfillment_Item</targetReference>
         </connector>

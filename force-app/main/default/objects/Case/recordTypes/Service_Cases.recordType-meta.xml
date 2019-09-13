@@ -108,10 +108,6 @@
     <picklistValues>
         <picklist>Calendar_Year__c</picklist>
         <values>
-            <fullName>2018</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>2019</fullName>
             <default>false</default>
         </values>
@@ -176,10 +172,6 @@
         </values>
         <values>
             <fullName>Annual AP%2FLTP Price Increase</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Application Fee paid</fullName>
             <default>false</default>
         </values>
         <values>
@@ -551,19 +543,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Refund Issued</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Refused</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Register Deep Link</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Registration Fee paid</fullName>
             <default>false</default>
         </values>
         <values>
@@ -636,10 +620,6 @@
         </values>
         <values>
             <fullName>Transcript Support</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Transfer</fullName>
             <default>false</default>
         </values>
         <values>

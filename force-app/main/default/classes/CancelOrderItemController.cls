@@ -343,6 +343,7 @@ public class CancelOrderItemController {
                                              ccrz__OriginalQuantity__c,
                                              ccrz__OriginalItemPrice__c,
                                              Opportunity__c,
+                                     		 ILT_Class__c, 
                                              Inventory_Type__c
                                         FROM ccrz__E_OrderItem__c
                                        WHERE Id =: orderId LIMIT 1];
@@ -683,7 +684,10 @@ public class CancelOrderItemController {
         
         if(!string.isBlank(voucherRecords))
         {   
-            List<VoucherWrapper> lstVoucherRecords =  (List<VoucherWrapper>) System.JSON.deserialize(voucherRecords,List<VoucherWrapper>.class);
+            
+			List<VoucherWrapper> lstVoucherRecords =  (List<VoucherWrapper>) System.JSON.deserialize(voucherRecords,List<VoucherWrapper>.class);
+            
+            system.debug('***lstVoucherRecords***'+lstVoucherRecords);
             
             for(VoucherWrapper vRecords : lstVoucherRecords)
             {

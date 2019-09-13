@@ -14,9 +14,10 @@
     <aura:attribute name="recordId" type="String"/>
     <aura:attribute name="voucherId" type="String"/>
     <aura:attribute name="validVoucher" type="Boolean" description="" default="true"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    
+
     <aura:registerEvent name="refreshVoucherList" type="c:PHSS_EnrollLearnerEvent" />
     
     <div class="container slds-align_absolute-center">
@@ -38,6 +39,18 @@
                 <lightning:input type="tel" value="{!v.formWrap.Phone}" aura:id="field" placeholder="{!v.phoneLabel}" pattern="\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})" messageWhenPatternMismatch="{!v.phoneErrorMsg}" required="true"/><br/>
                 <lightning:input value="{!v.formWrap.voucherid}" aura:id="field" placeholder="{!v.voucherLabel}" pattern="[a-zA-Z0-9]{15}" messageWhenPatternMismatch="{!v.voucherErrorMsg}" required="true"/>
             </div>
+
+            <aura:if isTrue="{!v.showSpinner}">
+                <div style="height:6rem">
+                    <div role="status" class="slds-spinner slds-spinner_medium">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </aura:if>
+
+
             <div class ="slds-p-top_large">
                 <aura:if isTrue="{!v.validVoucher}">
                     <aura:if isTrue="{!v.voucherId == null}">

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Redcross_Store_email_for_Cust_acc_mntc</fullName>
+    <active>true</active>
+    <description>Required field when Customer Account Maintenance/Update RCS Login Email</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Type, &#39;Invoicing&#39;),
+ISPICKVAL ( Dispute_Issue__c ,&#39;Customer Account Maintenance&#39;),
+OR(NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)), OwnerId = &#39;00Gd0000000SdP5&#39;),
+RecordType.DeveloperName = &quot;Invoicing&quot;,
+ISBLANK(RCS_Email__c),
+$Setup.ETL_Configuration__c.Is_ETL_User__c = FALSE,
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE
+)</errorConditionFormula>
+    <errorDisplayField>RCS_Email__c</errorDisplayField>
+    <errorMessage>Please enter Red cross store email</errorMessage>
+</ValidationRule>
