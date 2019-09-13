@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_field_for_invoice_del_method</fullName>
+    <active>true</active>
+    <description>required field when 	
+1) Invoice Delivery Method/Email 
+2) Invoice Delivery Method/Portal Billing (if approved)
+3) Invoice Delivery Method/Return to Postal Mail</description>
+    <errorConditionFormula>AND (
+RecordType.DeveloperName = &#39;Invoicing&#39;,
+NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)),
+ISPICKVAL( Dispute_Issue__c , &#39;Invoice Delivery Method&#39;),
+OR(
+ISPICKVAL( Type_of_Price_Dispute__c , &#39;Email&#39;),
+ISPICKVAL( Type_of_Price_Dispute__c , &#39;Portal Billing&#39;),
+ISPICKVAL( Type_of_Price_Dispute__c , &#39;Return to Postal Mail&#39;)
+),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE
+)</errorConditionFormula>
+    <errorDisplayField>Invoice_Delivery__c</errorDisplayField>
+    <errorMessage>Provide Invoice Delivery Type</errorMessage>
+</ValidationRule>

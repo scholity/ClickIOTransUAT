@@ -138,6 +138,13 @@
         </value>
     </constants>
     <constants>
+        <name>cFixedPrice</name>
+        <dataType>Currency</dataType>
+        <value>
+            <numberValue>120.0</numberValue>
+        </value>
+    </constants>
+    <constants>
         <name>cInventoryType</name>
         <dataType>String</dataType>
         <value>
@@ -223,7 +230,8 @@
     <formulas>
         <name>AdjustedCancelFee</name>
         <dataType>Currency</dataType>
-        <expression>IF({!$Flow.CurrentDate}&gt;={!sTrainingEvent.Start_Date__c},{!sOrderItem.ccrz__SubAmount__c},{!CancelFeeAdjustment} * {!sOrderItem.ccrz__SubAmount__c})</expression>
+        <expression>IF({!vFixed}=&quot;Y&quot;,{!cFixedPrice},
+(IF({!$Flow.CurrentDate}&gt;={!sTrainingEvent.Start_Date__c},{!sOrderItem.ccrz__SubAmount__c},{!CancelFeeAdjustment} * {!sOrderItem.ccrz__SubAmount__c})))</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -660,5 +668,15 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>ccrz__E_TransactionPayment__c</objectType>
+    </variables>
+    <variables>
+        <name>vFixed</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Y</stringValue>
+        </value>
     </variables>
 </Flow>

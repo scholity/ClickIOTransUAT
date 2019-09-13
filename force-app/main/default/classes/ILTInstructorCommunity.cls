@@ -1259,6 +1259,8 @@ public without sharing class ILTInstructorCommunity{
         List<redwing__Training_Plan_Section__c> Learningplansectionlist;
         List<redwing__Achievement_Assignment__c> statusAchAsslist;
 
+        Set<Id> updatedOrderItemIds = new Set<Id>();
+        Set<Id> updatedOrderIds = new Set<Id>();
         List<ccrz__E_OrderItem__c> updatedOrderItems = new List<ccrz__E_OrderItem__c>();
         List<ccrz__E_Order__c> updatedOrders = new List<ccrz__E_Order__c>();
 
@@ -1468,19 +1470,25 @@ public without sharing class ILTInstructorCommunity{
 
                     for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c From ccrz__E_OrderItem__c
                     Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :rosterILTClass.Opportunity__c]) {
-                        System.debug('*** orderItem:'+theOrderItem);
-                        ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                        newOrderItem.Id = theOrderItem.Id;
-                        newOrderItem.ILT_Class__c = rosterILTClass.Id;
-                        updatedOrderItems.add(newOrderItem);
-                        System.debug('*** updatedOrderItems:'+updatedOrderItems);
+                        System.debug('*** orderItem:' + theOrderItem);
+                        if (!updatedOrderItemIds.contains(theOrderItem.Id)) {
+                            ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
+                            newOrderItem.Id = theOrderItem.Id;
+                            newOrderItem.ILT_Class__c = rosterILTClass.Id;
+                            updatedOrderItems.add(newOrderItem);
+                            updatedOrderItemIds.add(theOrderItem.Id);
+                            System.debug('*** updatedOrderItems:' + updatedOrderItems);
+                        }
                         // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
                         // boolean on order header record
-                        ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
-                        newOrder.Id = theOrderItem.ccrz__Order__c;
-                        newOrder.CRE_Request_Processed__c = true;
-                        updatedOrders.add(newOrder);
-                        System.debug('*** updatedOrders:'+updatedOrders);
+                        if (!updatedOrderIds.contains(theOrderItem.ccrz__Order__c)) {
+                            ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                            newOrder.Id = theOrderItem.ccrz__Order__c;
+                            newOrder.CRE_Request_Processed__c = true;
+                            updatedOrders.add(newOrder);
+                            updatedOrderIds.add(theOrderItem.ccrz__Order__c);
+                            System.debug('*** updatedOrders:' + updatedOrders);
+                        }
                     }
                 }
             }
@@ -1493,12 +1501,12 @@ public without sharing class ILTInstructorCommunity{
         List<Voucher__c> lstVouchersToUpdate = new List<Voucher__c>();    
         
         if (iltClassid != null) { 
-	        List<Voucher__c> unclaimedVouchers = [Select Id, Name, Status__c From Voucher__c 
+	        List<Voucher__c> unclaimedVouchers = [Select Id, Name, Status__c From Voucher__c
 	        	Where ILT_Class__c = :iltClassid And Status__c Not In :ClaimedStatuses];
 	        
 	        for (Voucher__c theVoucher : unclaimedVouchers) {
 	            voucher__c theUpdatedVoucher = new voucher__c();
-	        	theUpdatedVoucher.Id = theVoucher.Id;	 	                        		
+	        	theUpdatedVoucher.Id = theVoucher.Id;
 //	            theUpdatedVoucher.Status__c = 'Blocked';
 	            theUpdatedVoucher.Status__c = 'Void';
 	            lstVouchersToUpdate.add(theUpdatedVoucher);
@@ -1901,6 +1909,8 @@ public without sharing class ILTInstructorCommunity{
         List<ccrz__E_CartItem__c> updatedCartItems = new List<ccrz__E_CartItem__c>();
         List<ccrz__E_OrderItem__c> updatedOrderItems = new List<ccrz__E_OrderItem__c>();
         List<ccrz__E_Order__c> updatedOrders = new List<ccrz__E_Order__c>();
+        Set<Id> updatedOrderItemIds = new Set<Id>();
+        Set<Id> updatedOrderIds = new Set<Id>();
         
         Map<id,id> insertedclassid = new Map<id,id>();
         Map<String,redwing__Learning_Version__c> lVersions = new Map<String,redwing__Learning_Version__c>();
@@ -2153,7 +2163,7 @@ public without sharing class ILTInstructorCommunity{
                 		ccrz__E_CartItem__c newCartItem = new ccrz__E_CartItem__c();
                 		newCartItem.Id = theCartItem.Id;	
                 		newCartItem.ILT_Class__c = classId;
-                		updatedCartItems.add(newCartItem);                		
+                		updatedCartItems.add(newCartItem);
 	                }
                 
 	                // US1521 - If this is CRE, Order Lines will already be created
@@ -2161,18 +2171,22 @@ public without sharing class ILTInstructorCommunity{
 
 	                for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c From ccrz__E_OrderItem__c
 	                	Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :clsRecord.Opportunity__c]) {
-	                		
-                		ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                		newOrderItem.Id = theOrderItem.Id;	
-                		newOrderItem.ILT_Class__c = classId;
-                		updatedOrderItems.add(newOrderItem);
-
+                        if (!updatedOrderItemIds.contains(theOrderItem.Id)) {
+                            ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
+                            newOrderItem.Id = theOrderItem.Id;
+                            newOrderItem.ILT_Class__c = classId;
+                            updatedOrderItems.add(newOrderItem);
+                            updatedOrderItemIds.add(theOrderItem.Id);
+                        }
                         // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
                         // boolean on order header record
-                        ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
-                        newOrder.Id = theOrderItem.ccrz__Order__c;
-                        newOrder.CRE_Request_Processed__c = true;
-                        updatedOrders.add(newOrder);
+                        if (!updatedOrderIds.contains(theOrderItem.ccrz__Order__c)) {
+                            ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                            newOrder.Id = theOrderItem.ccrz__Order__c;
+                            newOrder.CRE_Request_Processed__c = true;
+                            updatedOrders.add(newOrder);
+                            updatedOrderIds.add(theOrderItem.ccrz__Order__c);
+                        }
 	                }
                 }                
                 

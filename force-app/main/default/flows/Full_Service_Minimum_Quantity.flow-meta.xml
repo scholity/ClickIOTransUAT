@@ -11,8 +11,8 @@
     <assignments>
         <name>Set_Greatest_Quantity</name>
         <label>Set Greatest Quantity</label>
-        <locationX>922</locationX>
-        <locationY>60</locationY>
+        <locationX>948</locationX>
+        <locationY>54</locationY>
         <assignmentItems>
             <assignToReference>outOrderItem.ccrz__Quantity__c</assignToReference>
             <operator>Assign</operator>
@@ -30,10 +30,24 @@
         <locationX>540</locationX>
         <locationY>508</locationY>
         <assignmentItems>
-            <assignToReference>vInstructors</assignToReference>
+            <assignToReference>vInstructorQty</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>fMinInstructor</elementReference>
+                <elementReference>spOrderItem.ccrz__Quantity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vInstCmpMinQty</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sCompositeProduct.Minimum_Quantity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vInstCmpRatio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sCompositeProduct.Student_Ratio__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -43,15 +57,8 @@
     <assignments>
         <name>Set_Student_Ratio</name>
         <label>Set Student Ratio</label>
-        <locationX>1036</locationX>
-        <locationY>502</locationY>
-        <assignmentItems>
-            <assignToReference>vStudentRatio</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>fDifQty</elementReference>
-            </value>
-        </assignmentItems>
+        <locationX>991</locationX>
+        <locationY>505</locationY>
         <assignmentItems>
             <assignToReference>outOrderItem.Unit_Code__c</assignToReference>
             <operator>Assign</operator>
@@ -150,6 +157,13 @@
                 <elementReference>spOrderItem.ccrz__Quantity__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vStudentMinQty</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sCompositeProduct.Minimum_Quantity__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Find_Min_Values</targetReference>
         </connector>
@@ -164,8 +178,8 @@
     <decisions>
         <name>Meets_Minimum</name>
         <label>Meets Minimum</label>
-        <locationX>1064</locationX>
-        <locationY>68</locationY>
+        <locationX>1087</locationX>
+        <locationY>56</locationY>
         <defaultConnector>
             <targetReference>Do_Nothing</targetReference>
         </defaultConnector>
@@ -241,33 +255,29 @@
         </rules>
     </decisions>
     <formulas>
-        <name>fDifQty</name>
-        <dataType>Number</dataType>
-        <expression>{!sCompositeProduct.Minimum_Quantity__c} - {!sOrderItem.ccrz__Quantity__c}</expression>
-        <scale>2</scale>
-    </formulas>
-    <formulas>
         <name>fGreatestQty</name>
         <dataType>Number</dataType>
-        <expression>MAX({!fMaxInstructorDif},{!vStudentRatio},{!vStudentQty})</expression>
+        <expression>IF({!vInstructorQty} = {!vInstCmpMinQty},{!fStudentDifQty},{!fMinInstBillQty})</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
-        <name>fMaxInstructorDif</name>
+        <name>fMinInstBillQty</name>
         <dataType>Number</dataType>
-        <expression>{!vInstructors} - {!vStudentQty}</expression>
+        <expression>({!vInstructorQty} - 1) * {!vInstCmpRatio} +1</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
-        <name>fMinInstructor</name>
+        <name>fMinInstructorCP</name>
         <dataType>Number</dataType>
-        <expression>({!spOrderItem.ccrz__Quantity__c} * {!sCompositeProduct.Student_Ratio__c})</expression>
+        <expression>{!vInstCmpMinQty} * {!vInstCmpRatio}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
-        <name>fMinStudentbasedonInstructor</name>
+        <name>fStudentDifQty</name>
         <dataType>Number</dataType>
-        <expression>{!fMinInstructor} -{!vStudentRatio}</expression>
+        <expression>IF({!vStudentMinQty} - {!vStudentQty} &gt; 0,
+{!vStudentMinQty} - {!vStudentQty} ,
+0)</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -297,7 +307,7 @@
         <name>Loop_through_Minor_Items</name>
         <label>Loop through Minor Items</label>
         <locationX>780</locationX>
-        <locationY>53</locationY>
+        <locationY>50</locationY>
         <assignNextValueToReference>spOrderItem</assignNextValueToReference>
         <collectionReference>colMinOrderItems</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -324,8 +334,8 @@
     <recordCreates>
         <name>Add_New_Order_Item</name>
         <label>Add New Order Item</label>
-        <locationX>1067</locationX>
-        <locationY>208</locationY>
+        <locationX>1092</locationX>
+        <locationY>203</locationY>
         <inputAssignments>
             <field>ILT_Class__c</field>
             <value>
@@ -463,8 +473,8 @@
     <recordLookups>
         <name>Get_Composite_Item</name>
         <label>Get Composite Item</label>
-        <locationX>602</locationX>
-        <locationY>51</locationY>
+        <locationX>599</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_through_Minor_Items</targetReference>
@@ -490,8 +500,8 @@
     <recordLookups>
         <name>Get_Minor_Order_Items</name>
         <label>Get Minor Order Items</label>
-        <locationX>446</locationX>
-        <locationY>49</locationY>
+        <locationX>445</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Composite_Item</targetReference>
@@ -553,8 +563,8 @@
     <recordLookups>
         <name>Get_Order_Item</name>
         <label>Get Order Item</label>
-        <locationX>163</locationX>
-        <locationY>54</locationY>
+        <locationX>168</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Product</targetReference>
@@ -625,7 +635,7 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <startElementReference>Get_Order_Item</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>colComposite</name>
         <dataType>SObject</dataType>
@@ -698,29 +708,39 @@
         <objectType>ccrz__E_Product__c</objectType>
     </variables>
     <variables>
-        <name>vInstructors</name>
+        <name>vInstCmpMinQty</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
-        <value>
-            <numberValue>1.0</numberValue>
-        </value>
+    </variables>
+    <variables>
+        <name>vInstCmpRatio</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>vInstructorQty</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>vStudentMinQty</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
     </variables>
     <variables>
         <name>vStudentQty</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>2</scale>
-        <value>
-            <numberValue>0.0</numberValue>
-        </value>
-    </variables>
-    <variables>
-        <name>vStudentRatio</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

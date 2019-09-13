@@ -385,7 +385,10 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
         for (redwing__ILT_Session__c theSession : activeCommunitySessions) {
             if (theSession.redwing__Location__c != null) {
                 locationSet.add(theSession.redwing__Location__c);
-            } else {
+            }
+            /* The following block is no longer required - CPS classes now use Location lookup defined in Session record
+
+            else {
                 // Dynamically create location records for LTP CPS classes which lack location Ids
                 redwing__ILT_Class__c theClass = sessionClassMap.get(theSession.Id);
                 if (theClass != null) {             
@@ -402,17 +405,20 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
                     CPSLocationXMLMap.put(theSession.Id, getLocationXML(theCPSLocation, String.valueOf(theClass.Id), thePhoneNumber, theGeoLocation));
                 }
             }
+            */
         }
 
         activeCommunityLocations = [Select Id, Name, redwing__Address_1__c, redwing__Address_2__c, redwing__City__c,
             redwing__State__c, redwing__Postal_Code__c, redwing__Country__c, Skedulo_Location__r.sked__GeoLocation__c,
-            Skedulo_Location__r.sked__Account__r.Billing_Contact_email__c, Skedulo_Location__r.sked__Account__r.Billing_Contact_phone__c
+            Skedulo_Location__r.sked__Account__r.Billing_Contact_email__c, Skedulo_Location__r.sked__Account__r.Billing_Contact_phone__c,
+            GeoLocation__c
             From redwing__ILT_Location__c
             Where Id IN :locationSet];  
             
         for (redwing__ILT_Location__c theLocation : activeCommunityLocations) {
             if (!locationXMLMap.containsKey(theLocation.Id)) {
                 String thePhoneNumber = ''; // ILT Location records lack a phone number
+                // GeoLocations are stored in CPS records?
                 Location theGeoLocation = null; // ILT Location records inherit geo coordinates from Skedulo location
                 locationXMLMap.put(theLocation.Id, getLocationXML(theLocation, '', thePhoneNumber, theGeoLocation));            
             }   
@@ -480,7 +486,7 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             
             // If the ILT Class record lacks a lookup to the Learning Plan we will have to derive from maps
 
-            if (theClass.Learning_Plan__c == null) {
+            if (theClass.Learning_Plan__c == null || !trainingPlanMap.containsKey(theClass.Learning_Plan__c)) {
                 theLearningPlan = 
                     trainingPlanMap.get(eventLearningTrainingPlanMap.get(classLearningEventLearningMap.get(
                         classLearningMap.get(theClass.Id))));
@@ -488,6 +494,10 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
                 theLearningPlan = trainingPlanMap.get(theClass.Learning_Plan__c);
             }
 
+            // If no learning plan available for this Class, then completely omit this class from output file(s)
+            if (theLearningPlan == null) continue;
+
+            // If this class has no session defined, then completely omit this class from output file(s)
             theSessionList = classSessionMap.get(theClass.Id);
             if (theSessionList == null) continue;
             
@@ -691,77 +701,113 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
     private void generateCourseClassXmlFile(List<String> courseXMLList, List<String> classXmlList, List<String> onlineClassXMLList) {
         // Define master list to create file export to Integration Files object
         List<Integration_Files__c> exportedXMLRecords = new List<Integration_Files__c>();
-        
-        String exportFileName = 'ARC_LMS_Master_' + RunTime.format('MMddyyyyhhmma') + '.xml';  
-        String targetSystem = 'RCO';    
+
+        String exportFileName = 'ARC_LMS_Master_' + RunTime.format('MMddyyyyhhmma') + '.xml';
+        String targetSystem = 'RCO';
         Integer theSequenceNumber = 0;
-        
+
         String serializedCourseXMLList = '';
         String serializedClassXMLList = '';
-        
+
         // Write header line to integration file custom object
-        Integration_Files__c integrationFileHeader = new Integration_Files__c();              
+        Integration_Files__c integrationFileHeader = new Integration_Files__c();
         integrationFileHeader.Record_Data__c = getCourseXmlHeader(false);
         integrationFileHeader.File_Name__c = exportFileName;
-        integrationFileHeader.Target_System__c = targetSystem;     
+        integrationFileHeader.Target_System__c = targetSystem;
         integrationFileHeader.Sequence_Number__c = ++theSequenceNumber;
-        exportedXMLRecords.add(integrationFileHeader);            
-        
+        exportedXMLRecords.add(integrationFileHeader);
+
         for (String theCourseXML : courseXmlList) {
-            serializedCourseXMLList += theCourseXml;
+            //serializedCourseXMLList += theCourseXml;
             // Write line to integration file custom object
-            Integration_Files__c integrationFileRecord = new Integration_Files__c();              
+            Integration_Files__c integrationFileRecord = new Integration_Files__c();
             integrationFileRecord.Record_Data__c = theCourseXML;
             integrationFileRecord.File_Name__c = exportFileName;
-            integrationFileRecord.Target_System__c = targetSystem;              
+            integrationFileRecord.Target_System__c = targetSystem;
             integrationFileRecord.Sequence_Number__c = ++theSequenceNumber;
             exportedXMLRecords.add(integrationFileRecord);
         }
 
         for (String theClassXML : classXMLList) {
-            serializedClassXMLList += theClassXml;
+            //serializedClassXMLList += theClassXml;
             // Write line to integration file custom object
-            Integration_Files__c integrationFileRecord = new Integration_Files__c();              
+            Integration_Files__c integrationFileRecord = new Integration_Files__c();
             integrationFileRecord.Record_Data__c = theClassXML;
             integrationFileRecord.File_Name__c = exportFileName;
-            integrationFileRecord.Target_System__c = targetSystem;              
+            integrationFileRecord.Target_System__c = targetSystem;
             integrationFileRecord.Sequence_Number__c = ++theSequenceNumber;
-            exportedXMLRecords.add(integrationFileRecord);            
-        }   
+            exportedXMLRecords.add(integrationFileRecord);
+        }
 
         for (String theOnlineClassXML : onlineClassXMLList) {
-            serializedClassXMLList += theOnlineClassXML;
+            //serializedClassXMLList += theOnlineClassXML;
             // Write line to integration file custom object
-            Integration_Files__c integrationFileRecord = new Integration_Files__c();              
+            Integration_Files__c integrationFileRecord = new Integration_Files__c();
             integrationFileRecord.Record_Data__c = theOnlineClassXML;
             integrationFileRecord.File_Name__c = exportFileName;
-            integrationFileRecord.Target_System__c = targetSystem;              
+            integrationFileRecord.Target_System__c = targetSystem;
             integrationFileRecord.Sequence_Number__c = ++theSequenceNumber;
-            exportedXMLRecords.add(integrationFileRecord);            
-        }           
-        
+            exportedXMLRecords.add(integrationFileRecord);
+        }
+
         // Write trailer line to integration file custom object
-        Integration_Files__c integrationFileTrailer = new Integration_Files__c();              
+        Integration_Files__c integrationFileTrailer = new Integration_Files__c();
         integrationFileTrailer.Record_Data__c = getCourseXmlTrailer();
         integrationFileTrailer.File_Name__c = exportFileName;
-        integrationFileTrailer.Target_System__c = targetSystem;          
+        integrationFileTrailer.Target_System__c = targetSystem;
         integrationFileTrailer.Sequence_Number__c = ++theSequenceNumber;
-        exportedXMLRecords.add(integrationFileTrailer);        
-        
-        // Comment out the following block to disable writing file as internal Salesforce file
-        ContentVersion v = new ContentVersion();
-        v.versionData = Blob.valueOf(getCourseXmlHeader(false)+serializedCourseXMLList+serializedClassXMLList+getCourseXmlTrailer());
-        v.title = 'Active Community Classes '+String.valueOf(Date.today());
-        v.PathOnClient = '/ActiveCommunityClasses.xml';
-        insert v;
-        
+        exportedXMLRecords.add(integrationFileTrailer);
+
         // Write export records to Integration Files object
         try {
             insert(exportedXMLRecords);
         } catch (exception e) {
-            
-        }        
-        
+        }
+
+        // Comment out the following block to disable writing file as internal Salesforce file
+        // Clear out Apex heap
+        Integer totalExportXMLRecords = exportedXMLRecords.size();
+        //exportedXMLRecords.clear();
+        system.debug('*** totalExportXMLRecords for course/class='+totalExportXMLRecords);
+
+        /*
+        // Read course and class records from Integration Files object to create output string for Salesforce file
+        List<Integration_Files__c> classCourseXMLRecordSet = new List<Integration_Files__c>();
+        String serializedClassCourseXML = '';
+        Integer setNumber = 1;
+        Integer minRecord = 501;
+        Integer maxRecord = 1000;
+
+        // do {
+            system.debug('*** exporting records '+minRecord+' to '+maxRecord);
+            // Clear Apex Heap
+            classCourseXMLRecordSet.clear();
+            serializedClassCourseXML = '';
+            System.debug('*** Heap Size='+Limits.getHeapSize());
+
+            classCourseXMLRecordSet = [
+                    Select Id, Sequence_Number__c, Record_Data__c
+                    From Integration_Files__c
+                    Where Target_System__c = :targetSystem And File_Name__c = :exportFileName
+                    And Sequence_Number__c >= :minRecord And Sequence_Number__c <= :maxRecord
+                    Order by Sequence_Number__c
+            ];
+
+            For (Integer record = 0; record < classCourseXMLRecordSet.size(); record++) {
+                serializedClassCourseXML += classCourseXMLRecordSet[record].Record_Data__c;
+            }
+            ContentVersion v = new ContentVersion();
+            v.versionData = Blob.valueOf(serializedClassCourseXML);
+            //v.versionData = Blob.valueOf(getCourseXmlHeader(false)+serializedCourseXMLList+serializedClassXMLList+getCourseXmlTrailer());
+            v.title = 'Active Community Classes [' + String.valueOf(setNumber) + '] ' + String.valueOf(Date.today());
+            v.PathOnClient = '/ActiveCommunityClasses.xml';
+            insert v;
+
+            minRecord = minRecord + 500;
+            maxRecord = Math.min(maxRecord+500, totalExportXMLRecords);
+            setNumber++;
+        // } while (minRecord <= totalExportXMLRecords);
+        */
         return;
     }
     
@@ -1050,40 +1096,66 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
    private  Map<Id, Double> getClassPrice(List<redwing__ILT_Class__c> communityClassList,
             List<redwing__Training_Plan_Section_Item__c> onlineClassList) {
        Set<Id> communityCourseSet = new Set<Id>();
-       Map<Id, Id> classcourseMap = new Map<Id, Id>();
-       
+       Map<Id, Id> classCourseMap = new Map<Id, Id>();
+       Map<Id, Double> coursePriceMap = new Map<Id, Double>();
+       Map<Id, Double> theCommunityPriceList = new Map<Id, Double>();
+
+       // Add community courses (blended and classroom only) to communityCourseSet and classCourseMap
        for (redwing__ILT_Class__c theClass : communityClassList) {
-            if (theClass.Request_Type__c != 'CPS') communityCourseSet.add(theClass.Learning_Plan__c);
+            if (theClass.Request_Type__c != 'CPS') {
+                communityCourseSet.add(theClass.Learning_Plan__c);
+            }
             classCourseMap.put(theClass.Id, theClass.Learning_Plan__c);
        }
-       
-       // Fetch price overrides (if defined) for each community course
-       Map<Id, Double> theCommunityPriceList = new Map<Id, Double>();
+       system.debug('*** communityCourseSet.size='+communityCourseSet.size());
+       system.debug('*** classCourseMap.size='+classCourseMap.size());
+
+       // Fetch price overrides (if defined) for each community class (overrides are by class)
+
        theCommunityPriceList = getPriceOverrides(communityCourseSet, communityClassList);
-       
+       system.debug('*** price override.sizes='+theCommunityPriceList.size());
+
        // Remove classes with price overrides from communityCourseSet
        for (Id theClass : theCommunityPriceList.keySet()) {
-          if (classCourseMap.get(theClass) != null) communityCourseSet.remove(classCourseMap.get(theClass));
+            if (classCourseMap.containsKey(theClass)) communityCourseSet.remove(classCourseMap.get(theClass));
        }
-       
+       system.debug('*** remove price override *** communityCourseSet.size='+communityCourseSet.size());
+
+       // Add community classes (online) to communityCourseSet and classCourseMap
+       // Note: online classes use Learning Id as the class Id
        for (redwing__Training_Plan_Section_Item__c theTPSI : onlineClassList) {
             communityCourseSet.add(theTPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c);
+            classCourseMap.put(theTPSI.redwing__Learning__c, theTPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c);
        }
-       
+
+       // Fetch retail pricing and write to coursePriceMap (retail pricing is by product (course))
        List<ccrz__E_PriceListItem__c> priceItemList = [Select Id, ccrz__Price__c, ccrz__Product__r.LMS_Learning_Plan__c
-            From ccrz__E_PriceListItem__c 
-            Where ccrz__Pricelist__r.Name = 'Retail Price List' // Change to retail price group??? (DD-Feb 26)
+            From ccrz__E_PriceListItem__c
+            Where ccrz__Pricelist__r.Name = 'Retail Price List'
             And ccrz__Product__r.LMS_Learning_Plan__c In :communityCourseSet];
+       system.debug('*** priceItemList.size='+priceItemList.size());
 
        for (ccrz__E_PriceListItem__c thePriceListItem : priceItemList) {
-            theCommunityPriceList.put(thePriceListItem.ccrz__Product__r.LMS_Learning_Plan__c, thePriceListItem.ccrz__Price__c);
+           coursePriceMap.put(thePriceListItem.ccrz__Product__r.LMS_Learning_Plan__c, thePriceListItem.ccrz__Price__c);
+           // theCommunityPriceList.put(thePriceListItem.ccrz__Product__r.LMS_Learning_Plan__c, thePriceListItem.ccrz__Price__c);
        }
+       system.debug('*** coursePriceMap.size()'+coursePriceMap.size());
+
+       // Create pricing map by class (online, classroom, and blended)
+       for (Id theClassId: classCourseMap.keySet()) {
+           if (coursePriceMap.containsKey(classCourseMap.get(theClassId))) {
+               theCommunityPriceList.put(theClassId, coursePriceMap.get(classCourseMap.get(theClassId)));
+           }
+       }
+       system.debug('*** theCommunityPriceList.size()='+theCommunityPriceList.size());
 
        return theCommunityPriceList;
    }
    
    private  Map<Id, Integer> getClassInventory(List<redwing__ILT_Class__c> communityClassList) {
        Set<Id> theClassSet = new Set<Id>();
+       Map<Id, Integer> classInventory = new Map<Id, Integer>();
+       Integer classVoucherCount;
        
        // Exclude Class Posting Service (CPS) classes from dynamic inventory calculations (exclude CPS)
        for (redwing__ILT_Class__c theClass : communityClassList) {
@@ -1093,11 +1165,8 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
        // Determine number of available (unsold) seats in each class represented by 'Issued' vouchers
        List<Voucher__c> theVoucherList = [Select Id, Name, Status__c, Learning_Plan__c, ILT_Class__c
             From Voucher__c Where Status__c = 'Issued' And ILT_Class__c IN :theClassSet];
-                              
-       Map<Id, Integer> classInventory = new Map<Id, Integer>();
-       Integer classVoucherCount;
        
-       // Calculate inventory for each no-CPS class as number of vouchers in 'Issued' (unsold) status
+       // Calculate inventory for each non-CPS class as number of vouchers in 'Issued' (unsold) status
        for (Voucher__c theVoucher : theVoucherList) {
             if (classInventory.containsKey(theVoucher.ILT_Class__c)) {
                 classVoucherCount = classInventory.get(theVoucher.ILT_Class__c);    
@@ -1504,7 +1573,7 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             xmlW.writeCharacters('\n');
             xmlW.writeStartElement(null,'online-from', null);
                 Date classOnlineFrom = (theClass.Class_Online_From__c != null) ? theClass.Class_Online_From__c : Date.valueOf(theClass.CreatedDate);
-                String dateTimeOnlineFrom = String.valueOf(classOnlineFrom)+'T00:00:00Z';
+                String dateTimeOnlineFrom = String.valueOf(classOnlineFrom)+'T05:00:00Z';
                 xmlW.writeCharacters(String.valueOf(dateTimeOnlineFrom));
             xmlW.writeEndElement(); // Close online-from
             xmlW.writeCharacters('\n');
@@ -1517,7 +1586,7 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
                 } else {
                     classOnlineTo = theFirstSession.redwing__Date__c;
                 }
-                String dateTimeOnlineTo = String.valueOf(classOnlineTo)+'T00:00:00Z';
+                String dateTimeOnlineTo = String.valueOf(classOnlineTo)+'T05:00:00Z';
                 xmlW.writeCharacters(String.valueOf(dateTimeOnlineTo));
             xmlW.writeEndElement(); // Close online-to
             xmlW.writeCharacters('\n');
@@ -1644,13 +1713,13 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             xmlW.writeCharacters('\n');
             xmlW.writeStartElement(null,'online-from', null);
                 Date classOnlineFrom = (theLearningPlan.redwing__Start_Date__c != null) ? theLearningPlan.redwing__Start_Date__c : Date.valueOf(theLearningPlan.CreatedDate);
-                String dateTimeOnlineFrom = String.valueOf(classOnlineFrom)+'T00:00:00Z';
+                String dateTimeOnlineFrom = String.valueOf(classOnlineFrom)+'T05:00:00Z';
                 xmlW.writeCharacters(String.valueOf(dateTimeOnlineFrom));
             xmlW.writeEndElement(); // Close online-from
             xmlW.writeCharacters('\n');
             xmlW.writeStartElement(null,'online-to', null);
                 Date classOnlineTo = (theLearningPlan.redwing__End_Date__c != null) ? theLearningPlan.redwing__End_Date__c : Date.valueOf('2099-12-31');
-                String dateTimeOnlineTo = String.valueOf(classOnlineTo)+'T00:00:00Z';
+                String dateTimeOnlineTo = String.valueOf(classOnlineTo)+'T05:00:00Z';
                 xmlW.writeCharacters(String.valueOf(dateTimeOnlineTo));
             xmlW.writeEndElement(); // Close online-to
             xmlW.writeCharacters('\n');

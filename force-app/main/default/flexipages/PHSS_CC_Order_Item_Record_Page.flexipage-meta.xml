@@ -6,6 +6,10 @@
                 <name>collapsed</name>
                 <value>false</value>
             </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>hideChatterActions</name>
+                <value>false</value>
+            </componentInstanceProperties>
             <componentName>force:highlightsPanel</componentName>
         </componentInstances>
         <mode>Replace</mode>
@@ -388,7 +392,7 @@
                 </criteria>
                 <criteria>
                     <leftValue>{!Record.Inventory_Type__c}</leftValue>
-                    <operator>EQUAL</operator>
+                    <operator>NE</operator>
                     <rightValue>FEE</rightValue>
                 </criteria>
                 <criteria>

@@ -5,15 +5,6 @@
     <description>For TX Pilot</description>
     <externalId>false</externalId>
     <label>Customer Contact</label>
-    <lookupFilter>
-        <active>true</active>
-        <filterItems>
-            <field>Contact.AccountId</field>
-            <operation>equals</operation>
-            <valueField>$Source.AccountId</valueField>
-        </filterItems>
-        <isOptional>false</isOptional>
-    </lookupFilter>
     <referenceTo>Contact</referenceTo>
     <relationshipLabel>Opportunities (Customer Contact)</relationshipLabel>
     <relationshipName>Opportunities1</relationshipName>

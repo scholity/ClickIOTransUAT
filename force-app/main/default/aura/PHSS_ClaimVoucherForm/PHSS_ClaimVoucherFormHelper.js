@@ -204,7 +204,13 @@
                     console.log("Unknown error");
                 }
             }
+            this.flipSpinner(cmp, evt);
         });
         $A.enqueueAction(action1);
     },
+
+    flipSpinner: function(cmp, evt) {
+        var current = cmp.get("v.showSpinner");
+        cmp.set("v.showSpinner", !current);
+    }
 })

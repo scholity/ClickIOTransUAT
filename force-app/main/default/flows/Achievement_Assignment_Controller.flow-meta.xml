@@ -339,7 +339,7 @@
         </rules>
     </decisions>
     <description>Controls changes made on the Achievement Assignment Record</description>
-    <interviewLabel>Achievement_Assignment_Controller-15_InterviewLabel</interviewLabel>
+    <interviewLabel>Achievement_Assignment_Controller-6_InterviewLabel</interviewLabel>
     <label>Achievement Assignment Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -404,7 +404,7 @@
             </processMetadataValues>
             <field>SDOC__Doclist__c</field>
             <value>
-                <stringValue>a6m1k0000004fhuAAA,a6m1k0000004fhpAAA,a6m1k0000004fK1AAI</stringValue>
+                <stringValue>a2u210000016nsWAAQ,a2u210000016nsXAAQ,a2u210000016SuAAAU</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

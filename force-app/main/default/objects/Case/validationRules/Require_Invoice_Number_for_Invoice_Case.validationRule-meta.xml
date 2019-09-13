@@ -16,7 +16,17 @@ ISPICKVAL(Dispute_Issue__c, &#39;Misapplied Payment&#39;),
 ISPICKVAL(Dispute_Issue__c, &#39;Missing Payment&#39;), 
 ISPICKVAL(Dispute_Issue__c, &#39;Modify Invoice Presentation&#39;), 
 ISPICKVAL(Dispute_Issue__c, &#39;Price&#39;), 
-ISPICKVAL(Dispute_Issue__c, &#39;Wrong Organization&#39;) 
+ISPICKVAL(Dispute_Issue__c, &#39;Wrong Organization&#39;),
+ISPICKVAL(Dispute_Issue__c, &#39;Customer Service Credit&#39;),
+ISPICKVAL(Dispute_Issue__c, &#39;Request Invoicing Privileges&#39;),
+AND(
+ISPICKVAL(Dispute_Issue__c, &#39;Invoice Payments&#39;),
+OR(
+ISPICKVAL(Type_of_Price_Dispute__c, &#39;Paid - Credit Card&#39;),
+ISPICKVAL(Type_of_Price_Dispute__c, &#39;Paid - Check&#39;)
+)
+)
+
 ))</errorConditionFormula>
     <errorDisplayField>Invoice_Number__c</errorDisplayField>
     <errorMessage>Please provide Invoice #</errorMessage>

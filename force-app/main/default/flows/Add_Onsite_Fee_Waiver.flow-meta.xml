@@ -240,7 +240,7 @@
         <inputAssignments>
             <field>ccrz__OrderItemStatus__c</field>
             <value>
-                <stringValue>Shipped</stringValue>
+                <stringValue>In Process</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -508,7 +508,7 @@
         <showHeader>true</showHeader>
     </screens>
     <startElementReference>Onsite_Fee_Screen</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>colProductPrice</name>
         <dataType>SObject</dataType>

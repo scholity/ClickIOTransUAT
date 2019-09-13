@@ -1248,6 +1248,17 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_to_Finance_Queue</fullName>
+        <description>Set Finance Queue</description>
+        <field>OwnerId</field>
+        <lookupValue>Finance_COE_Billing</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Set to Finance Queue</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Shipping_Contact_Last_Name</fullName>
         <description>Update Shipping Contact Last Name</description>
         <field>Shipping_Contact_Last_Name__c</field>
@@ -2177,7 +2188,32 @@ CreatedBy.FirstName = &quot;BillingRequestForm&quot;,
             <operation>equals</operation>
             <value>CRE</value>
         </criteriaItems>
-        <description>Moves CRE cases to Fin Billing queue</description>
+        <criteriaItems>
+            <field>Case.Type_of_Price_Dispute__c</field>
+            <operation>notEqual</operation>
+            <value>Review Available Credit</value>
+        </criteriaItems>
+        <description>Moves CRE cases to CCO Specialist queue</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>CRE Finance</fullName>
+        <actions>
+            <name>Set_to_Finance_Queue</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Case.Origin</field>
+            <operation>equals</operation>
+            <value>CRE</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Type_of_Price_Dispute__c</field>
+            <operation>equals</operation>
+            <value>Review Available Credit</value>
+        </criteriaItems>
+        <description>Moves CRE cases to Fin Queue</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

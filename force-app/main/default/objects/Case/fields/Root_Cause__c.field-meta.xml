@@ -48,11 +48,6 @@
                 <label>Coupon Expired</label>
             </value>
             <value>
-                <fullName>Coupon Not Applied</fullName>
-                <default>false</default>
-                <label>Coupon Not Applied</label>
-            </value>
-            <value>
                 <fullName>Coupon Not Created</fullName>
                 <default>false</default>
                 <label>Coupon Not Created</label>

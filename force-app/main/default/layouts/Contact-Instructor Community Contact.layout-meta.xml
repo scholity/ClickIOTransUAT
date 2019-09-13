@@ -197,6 +197,7 @@
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
         <fields>ACCCONRELATION.IS_ACTIVE</fields>
+        <fields>Display_Payment_Info__c</fields>
         <fields>ACCCONRELATION.IS_DIRECT</fields>
         <fields>ACCCONRELATION.ROLES</fields>
         <relatedList>RelatedContactAccountRelationList</relatedList>

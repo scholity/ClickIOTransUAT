@@ -109,6 +109,10 @@
                 <behavior>Edit</behavior>
                 <field>Type_of_Price_Dispute__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Other__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

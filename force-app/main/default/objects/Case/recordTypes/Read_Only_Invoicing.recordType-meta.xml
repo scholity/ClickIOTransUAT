@@ -452,10 +452,6 @@
     <picklistValues>
         <picklist>Calendar_Year__c</picklist>
         <values>
-            <fullName>2018</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>2019</fullName>
             <default>false</default>
         </values>
@@ -2911,10 +2907,6 @@
         </values>
         <values>
             <fullName>Applied to Different LOB</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Coupon Not Applied</fullName>
             <default>false</default>
         </values>
         <values>

@@ -66,22 +66,6 @@
         </inputParameters>
     </actionCalls>
     <assignments>
-        <name>myVariable_waitStartTimeAssignment</name>
-        <label>myVariable_waitStartTimeAssignment</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>myVariable_waitStartTimeVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>myPreWaitDecision_myWait_myRule_3</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>myWaitAssignment_myWait_myRule_1</name>
         <label>myWaitAssignment_myWait_myRule_1</label>
         <locationX>0</locationX>
@@ -475,7 +459,7 @@
         </rules>
     </decisions>
     <description>Update information on Transaction Payment Records change or create</description>
-    <interviewLabel>Transaction_Payment_Controller-12_InterviewLabel</interviewLabel>
+    <interviewLabel>Transaction_Payment_Controller-11_InterviewLabel</interviewLabel>
     <label>Transaction Payment Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -543,7 +527,7 @@
             </processMetadataValues>
             <field>SDOC__Doclist__c</field>
             <value>
-                <stringValue>a6k5B0000008XzQQAU</stringValue>
+                <stringValue>a2u210000016Sv1AAE</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -692,7 +676,7 @@
         </inputAssignments>
         <object>SDOC__SDJob__c</object>
     </recordCreates>
-    <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
+    <startElementReference>myPreWaitDecision_myWait_myRule_3</startElementReference>
     <status>Active</status>
     <variables>
         <name>cancelWaits</name>
@@ -716,16 +700,6 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>ccrz__E_TransactionPayment__c</objectType>
-    </variables>
-    <variables>
-        <name>myVariable_waitStartTimeVariable</name>
-        <dataType>DateTime</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>$Flow.CurrentDateTime</elementReference>
-        </value>
     </variables>
     <variables>
         <name>myWaitEvent_myWait_myRule_1_event_0_postActionExecutionVariable</name>

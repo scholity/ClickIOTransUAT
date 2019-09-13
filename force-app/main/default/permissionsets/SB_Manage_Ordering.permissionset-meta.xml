@@ -2270,4 +2270,8 @@
         <tab>ccrz__E_CompositeProduct__c</tab>
         <visibility>Available</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>ccrz__E_Product__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
 </PermissionSet>
