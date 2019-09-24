@@ -106,10 +106,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sCase.OwnerId</assignToReference>
+            <assignToReference>sCase.Case_Sub_Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>00Gd0000000SdP6</stringValue>
+                <stringValue>Organization Request</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -196,6 +196,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>sOrder.ccrz__Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sCase.Case_Sub_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Organization Request</stringValue>
             </value>
         </assignmentItems>
         <connector>

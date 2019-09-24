@@ -12,7 +12,7 @@
     <valueSet>
         <controllingField>Dispute_Issue__c</controllingField>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Account Reconciliation</fullName>
                 <default>false</default>
@@ -184,6 +184,11 @@
                 <label>Increase Credit Limit</label>
             </value>
             <value>
+                <fullName>Increase Limit-New Customer</fullName>
+                <default>false</default>
+                <label>Increase Limit-New Customer</label>
+            </value>
+            <value>
                 <fullName>In-Progress</fullName>
                 <default>false</default>
                 <label>In-Progress</label>
@@ -259,6 +264,16 @@
                 <label>Org ID Name Change</label>
             </value>
             <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Paid - Check</fullName>
+                <default>false</default>
+                <label>Paid - Check</label>
+            </value>
+            <value>
                 <fullName>Paid - Credit Card</fullName>
                 <default>false</default>
                 <label>Paid - Credit Card</label>
@@ -277,6 +292,11 @@
                 <fullName>Portal Billing</fullName>
                 <default>false</default>
                 <label>Portal Billing</label>
+            </value>
+            <value>
+                <fullName>Portal Posting Request</fullName>
+                <default>false</default>
+                <label>Portal Posting Request</label>
             </value>
             <value>
                 <fullName>Prepaid PO Issue</fullName>
@@ -422,21 +442,6 @@
                 <fullName>Wrong Price per Student</fullName>
                 <default>false</default>
                 <label>Wrong Price per Student</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
-                <fullName>Paid - Check</fullName>
-                <default>false</default>
-                <label>Paid - Check</label>
-            </value>
-            <value>
-                <fullName>Portal Posting Request</fullName>
-                <default>false</default>
-                <label>Portal Posting Request</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -591,6 +596,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
+            <valueName>Increase Limit-New Customer</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
             <valueName>Former Invoicing Privileges</valueName>
         </valueSettings>
         <valueSettings>
@@ -611,11 +620,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Invoice Payments</controllingFieldValue>
-            <valueName>Paid - Credit Card</valueName>
+            <valueName>Paid - Check</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Invoice Payments</controllingFieldValue>
-            <valueName>Paid - Check</valueName>
+            <valueName>Paid - Credit Card</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Invoice Payments</controllingFieldValue>

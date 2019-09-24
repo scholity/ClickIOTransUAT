@@ -143,7 +143,7 @@ public class PHSS_RegistrationControllerTest {
         
         res = new RestResponse();
         
-        req.requestURI = '/services/apexrest/PHSS/register';
+        req.requestURI = '/services/apexrest/PHSS/register2';
         
         req.httpMethod = 'POST';
         

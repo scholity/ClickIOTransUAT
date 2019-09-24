@@ -145,7 +145,7 @@
                             
                             <aura:if isTrue="{!v.hasPreviousDiscount}">
                                 <div class = "slds-p-top_large slds-p-bottom_large" style = "color:red;">
-                                    Previously ${!v.previousCredit} was credited on this order item. You are only allowed to give ${!v.CreditLeft} as a credit.
+                                    <!-- Previously ${!v.previousCredit} was credited on this order item. -->You are only allowed to give ${!v.CreditLeft} as a credit.
                                 </div>
                             </aura:if>
                             <aura:if isTrue="{!v.hasPolicy}">

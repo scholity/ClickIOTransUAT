@@ -81,6 +81,9 @@ public with sharing class phss_cc_TestDataFactory {
     public static final Date TEST_COMMUNITY_CLASS_SEARCH_START_DATE = Date.today().addDays(-1);
     public static final Date TEST_COMMUNITY_CLASS_SEARCH_END_DATE = Date.today().addDays(1);
 
+    // Test data for transaction payments
+    public static final String TEST_AUTH_TXN_PMT_TOKEN = 'testTokenForAuthTransactionPayment';
+
     /**
      * @description Setups a test storefront.
      */
@@ -387,7 +390,8 @@ public with sharing class phss_cc_TestDataFactory {
         ccrz__E_TransactionPayment__c authTransactionPayment = new ccrz__E_TransactionPayment__c(
                 ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
                 ccrz__CCOrder__c = order.Id,
-                ccrz__Token__c = 'testToken'
+                ccrz__Token__c = TEST_AUTH_TXN_PMT_TOKEN,
+                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
         );
         insert authTransactionPayment;
 
@@ -395,7 +399,8 @@ public with sharing class phss_cc_TestDataFactory {
                 ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
                 ccrz__CCOrder__c = order.Id,
                 ccrz__Token__c = 'testToken',
-                ccrz__SourceTransactionPayment__c = authTransactionPayment.Id
+                ccrz__SourceTransactionPayment__c = authTransactionPayment.Id,
+                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE
         );
         insert captureTransactionPayment;
 

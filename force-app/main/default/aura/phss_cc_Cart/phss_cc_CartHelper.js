@@ -27,24 +27,27 @@
     getActiveCart: function (component, event, helper) {
         component.set('v.renderComplete', false);
         var opportunitySfid = component.get('v.recordId');
-        var action = component.get('c.fetchActiveCart');
+        var action = component.get('c.fetchActiveCartAndItems');
         action.setParams({
-            opportunitySfid: opportunitySfid
+            opportunityId: opportunitySfid
         });
         action.setCallback(this, function (response) {
             var state = response.getState();
 
             if (state === 'SUCCESS') {
                 var returnValue = response.getReturnValue();
+                console.log('returnValue');
+                console.log(returnValue);
+                console.log(JSON.stringify(returnValue));
 
                 if (returnValue != null && returnValue.Error == null) {
                     component.set('v.encryptedCartId', returnValue.encryptedCartId);
                     component.set('v.cartTotal', returnValue.CartTotal);
-                    component.set('v.productList', returnValue.productList);
-                    component.set('v.productsMap', returnValue.productMap);
-                    component.set('v.productQuantityMap', returnValue.productQuantityMap);
+                    // component.set('v.productList', returnValue.productList);
+                    // component.set('v.productsMap', returnValue.productMap);
                     component.set('v.cartItemList', returnValue.cartItemList);
                     component.set('v.cartItemMap', returnValue.cartItemMap);
+                    component.set('v.cartItemQuantityMap', returnValue.cartItemQuantityMap);
                     component.set('v.renderComplete', true);
                     console.log('getActiveCart');
                     console.log(JSON.stringify(returnValue));
@@ -76,16 +79,15 @@
         console.log('recordId');
         console.log(component.get('v.recordId'));
         console.log('cartItems');
-        console.log(JSON.stringify(component.get('v.productQuantityMap')));
-        var productQuantityMap = component.get('v.productQuantityMap');
-        var opportunitySfid = component.get('v.recordId');
+        console.log(JSON.stringify(component.get('v.cartItemQuantityMap')));
+        var opportunityId = component.get('v.recordId');
+        var cartItemQuantityMap = component.get('v.cartItemQuantityMap');
         var encryptedCartId = component.get('v.encryptedCartId');
-        var action = component.get('c.updateCartProducts');
+        var action = component.get('c.updateCartItemQuantities');
         action.setParams({
-            opportunitySfid: opportunitySfid,
+            opportunityId: opportunityId,
             encryptedCartId: encryptedCartId,
-            productQuantityMap: productQuantityMap
-
+            cartItemQuantityMap: cartItemQuantityMap
         });
         action.setCallback(this, function (response) {
             var state = response.getState();
@@ -93,8 +95,8 @@
             if (state === 'SUCCESS') {
                 var returnValue = response.getReturnValue();
                 if (returnValue != null && returnValue.Error == null) {
-                    component.set('v.productList', returnValue.productList);
-                    component.set('v.productsMap', returnValue.productMap);
+                    // component.set('v.productList', returnValue.productList);
+                    // component.set('v.productsMap', returnValue.productMap);
                     component.set('v.productQuantityMap', returnValue.productQuantityMap);
                     component.set('v.renderComplete', true);
                     var updateEvent = $A.get('e.c:phss_cc_RefreshComponentEvent');
@@ -120,6 +122,7 @@
      * @param helper
      */
     doPlaceOrderCC: function (component, event, helper, cyberSourceResponse) {
+        console.log('JASON: doPlaceOrderCC()');
         component.set('v.renderComplete', false);
         if (cyberSourceResponse === undefined)
             cyberSourceResponse = null;
@@ -136,6 +139,7 @@
         action.setCallback(this, function (response) {
             var state = response.getState();
 
+            console.log('c.placeOrderOnCartCC returnValue: ' + JSON.stringify(returnValue));
             if (state === 'SUCCESS') {
                 var returnValue = response.getReturnValue();
                 if (returnValue != null && returnValue.Error == null) {

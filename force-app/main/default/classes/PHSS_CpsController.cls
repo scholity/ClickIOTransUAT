@@ -36,172 +36,198 @@ public without sharing class PHSS_CpsController {
     }
     
     @AuraEnabled
+    //public static void postClass(List<String> jsonList) {
     public static void postClass(String jsonStr) {
         try {
             
-            System.debug('JSON:'+jsonStr);
+            //System.debug('JSON:'+jsonStr);
             
             List<ccrz__E_CartItem__c> updatedCartItems = new list<ccrz__E_CartItem__c>();
-        	List<ccrz__E_OrderItem__c> updatedOrderItems = new list<ccrz__E_OrderItem__c>();  
+        	List<ccrz__E_OrderItem__c> updatedOrderItems = new list<ccrz__E_OrderItem__c>();
             
-            PHSS_CpsWrapper cpsWrap = (PHSS_CpsWrapper)JSON.deserialize(jsonStr, PHSS_CpsWrapper.class);
+            //for(String jsonList : jsonList) {
             
-            
-            System.debug('cpsWrap:'+cpsWrap);
-            
-            // Create Learning (master) record
-            redwing__Learning__c objLearning = new redwing__Learning__c();
-            objLearning.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('ILT Class').getRecordTypeId();
-            objLearning.Name = cpsWrap.courseName;
-            objLearning.redwing__Published__c = true;
-            insert objLearning;    
-            
-            // Create ILT Class record
-            redwing__ILT_Class__c newClass = new redwing__ILT_Class__c();
-            newClass.Request_Type__c = 'CPS';
-            newClass.Name = cpsWrap.courseName;
-            newClass.Skedulo_Account__c = cpsWrap.accId;
-            newClass.Learning_Plan__c = cpsWrap.courseId;
-            
-            // Convert date and time to UTC 
-            integer indx = cpsWrap.sessionList.size() - 1;
-            System.debug('Max size of Session Obj: '+indx);
-            
-            Date classStartDate = Date.valueOf(cpsWrap.sessionList[0].classDate);
-            
-            Date classEndDate = Date.valueOf(cpsWrap.sessionList[indx].classDate);
-            
-            List<String> startTimeList = cpsWrap.sessionList[0].startTime.split(':');
-
-            List<String> endTimeList = cpsWrap.sessionList[indx].endTime.split(':');
-            
-            String timeZoneVal = cpsWrap.timeZoneList.get(cpsWrap.sessionList[0].timeZone); 
-            TimeZone tz = Timezone.getTimeZone(timeZoneVal);
-            
-            DateTime startDateTime = DateTime.newInstanceGmt(classStartDate.year(),classStartDate.month(),classStartDate.day(),Integer.valueOf(startTimeList[0]),Integer.valueOf(startTimeList[1]),0);
-            DateTime endDateTime = DateTime.newInstanceGmt(classEndDate.year(),classEndDate.month(),classEndDate.day(),Integer.valueOf(endTimeList[0]),Integer.valueOf(endTimeList[1]),0);
-            /*
-            Integer offset = (tz.getOffset(startDateTime))/(60*60*1000);
-             
-            Integer offsetStartTime = Integer.valueOf(startTimeList[0]) - offset;
-            Integer offsetEndTime = Integer.valueOf(endTimeList[0]) - offset;
-            
-            String timeStart = String.valueOf(offsetStartTime);
-            String timeEnd = String.valueOf(offsetEndTime);
-			*/
-            String timeStart = String.valueOf(startTimeList[0]);
-            String timeEnd = String.valueOf(endTimeList[0]);
-            Integer daysToAdd = 0;
-            /*
-            if(offsetStartTime > 23){
-                timeStart = String.valueOf(offsetStartTime - 24);
-                daysToAdd = 1;
-            }
-            else if(offsetStartTime < 0) {
-                timeStart = String.valueOf(12 - offsetStartTime);  
-                daysToAdd = -1;
-            }
-            
-            if(offsetEndTime > 23){
-                timeEnd = String.valueOf(offsetEndTime - 24);
-            }
-            else if(offsetEndTime < 0) {
-                timeEnd = String.valueOf(12 - offsetEndTime);  
-            }
- 			*/
-			DateTime startTime = DateTime.newInstanceGmt(classStartDate.year(),classStartDate.month(),Integer.valueOf(classStartDate.day()+daysToAdd),Integer.valueOf(timeStart),Integer.valueOf(startTimeList[1]),0); 
-			DateTime endTime = DateTime.newInstanceGmt(classEndDate.year(),classEndDate.month(),Integer.valueOf(classEndDate.day()+daysToAdd),Integer.valueOf(timeEnd),Integer.valueOf(endTimeList[1]),0); 
-
-            newClass.redwing__Start_Time__c = startTime.format('HH:mm', 'GMT'); 
-            newClass.redwing__End_Time__c = endTime.format('HH:mm', 'GMT'); 
-            
-            newClass.redwing__Start_Date__c = startTime.dateGmt();
-            newClass.redwing__End_Date__c = endTime.dateGmt();             
-              
-            newClass.redwing__Timezone__c = timeZoneVal;
-            /*
-            newClass.Site_Name__c = cpsWrap.siteName;
-            newClass.Site_Address_1__c = cpsWrap.address1;
-            newClass.Site_Address_2__c = cpsWrap.address2;
-            newClass.Site_City__c = cpsWrap.city;
-            newClass.State__c = cpsWrap.state;
-            newClass.Site_Postal_Code__c = cpsWrap.zip;
-			*/
-            newClass.redwing__Location__c = cpsWrap.locationId;
-            newClass.CPS_Registration_URL__c = cpsWrap.regUrl;
-            newClass.CPS_Registration_Phone__c = cpsWrap.regPhone;
-            newClass.Registration_Fee__c = cpsWrap.regFee;
-            newClass.CPS_Approval_Status__c = 'Submitted';
-            newClass.redwing__Learning__c = objLearning.Id;
-            newClass.Classroom_Setting__c = cpsWrap.classFormat;
-            insert newClass;
-             
-            List<redwing__ILT_Session__c> sessList = new List<redwing__ILT_Session__c>();
-            for(PHSS_cpsWrapper.SessionWrapper sessWrap : cpsWrap.sessionList) {
-                redwing__ILT_Session__c sess = new redwing__ILT_Session__c();
-                sess.redwing__ILT_Class__c = newClass.Id;
-                sess.redwing__Date__c = Date.valueOf(sessWrap.classDate);
+                PHSS_CpsWrapper cpsWrap = (PHSS_CpsWrapper)JSON.deserialize(jsonStr, PHSS_CpsWrapper.class);
                 
-                List<String> sessStartTimeList = cpsWrap.sessionList[0].startTime.split(':');
-                Time sessStartTime = Time.newInstance(Integer.valueOf(sessStartTimeList[0]),Integer.valueOf(sessStartTimeList[1]),0,0);
-                List<String> sessEndTimeList = cpsWrap.sessionList[0].endTime.split(':');
-                Time sessEndTime = Time.newInstance(Integer.valueOf(sessEndTimeList[0]),Integer.valueOf(sessEndTimeList[1]),0,0);
-            
-                sess.redwing__Start_Time__c = String.valueOf(sessStartTime).subString(0,5);
-                sess.redwing__End_Time__c = String.valueOf(sessEndTime).subString(0,5);
-                sess.redwing__Location__c = cpsWrap.locationId;
-            	sessList.add(sess);
-            }
-			
-            if(!Test.isRunningTest()) {
-            	insert sessList;    
-            }
-            String classID = newClass.Id;
-            // Insert Learning Versiom
-            redwing__Learning_Version__c lv = new redwing__Learning_Version__c();
-            lv.redwing__Learning__c = objLearning.id;
-            lv.redwing__Version__c = 1;
-            lv.redwing__Type__c = 'Published';
-            lv.redwing__Version_selection_behavior__c = null;
-            lv.redwing__ILT__c = newClass.Id;
-            insert lv;
-            
-            // US1521 - Populate CC Cart Item Record(s) with ILT Class Id (if applicable)
-
-            if (cpsWrap.oppId != null && classID != null) {
-                for (ccrz__E_CartItem__c theCartItem : [Select Id, ccrz__Product__c, ILT_Class__c From ccrz__E_CartItem__c
-                                                        Where ccrz__Cart__r.Opportunity__c = :cpsWrap.oppId]) {
-                                                            
-                                                            ccrz__E_CartItem__c newCartItem = new ccrz__E_CartItem__c();
-                                                            newCartItem.Id = theCartItem.Id;	
-                                                            newCartItem.ILT_Class__c = classID;
-                                                            updatedCartItems.add(newCartItem);                		
-                                                        }
                 
-                // US1521 - If this is CRE, Order Lines will already be created
-                // In this case, we need to write ILT Class Id on Order Item record(s)
+                System.debug('cpsWrap:'+cpsWrap);
                 
-                for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c From ccrz__E_OrderItem__c
-                                                          Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :cpsWrap.oppId]) {
-                                                              
-                                                              ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                                                              newOrderItem.Id = theOrderItem.Id;	
-                                                              newOrderItem.ILT_Class__c = classID;
-                                                              updatedOrderItems.add(newOrderItem);                		
-                                                          }
-            } 
-
-
-
-			
-            if (updatedCartItems.size() > 0) {
-                update updatedCartItems;
-            }
+                // Create Learning (master) record
+                redwing__Learning__c objLearning = new redwing__Learning__c();
+                objLearning.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('ILT Class').getRecordTypeId();
+                objLearning.Name = cpsWrap.courseName;
+                objLearning.redwing__Published__c = true;
+                insert objLearning;    
+                
+                // Create ILT Class record
+                redwing__ILT_Class__c newClass = new redwing__ILT_Class__c();
+                newClass.Request_Type__c = 'CPS';
+                newClass.Name = cpsWrap.courseName;
+                newClass.Skedulo_Account__c = cpsWrap.accId;
+                newClass.Learning_Plan__c = cpsWrap.courseId;
+                
+                // Convert date and time to UTC 
+                integer indx = cpsWrap.sessionList.size() - 1;
+                System.debug('Max size of Session Obj: '+indx);
+                
+                Date classStartDate = Date.valueOf(cpsWrap.sessionList[0].classDate);
+                
+                Date classEndDate = Date.valueOf(cpsWrap.sessionList[indx].classDate);
+                
+                List<String> startTimeList = cpsWrap.sessionList[0].startTime.split(':');
+    
+                List<String> endTimeList = cpsWrap.sessionList[indx].endTime.split(':');
+                
+                String timeZoneVal = cpsWrap.timeZoneList.get(cpsWrap.sessionList[0].timeZone); 
+                TimeZone tz = Timezone.getTimeZone(timeZoneVal);
+                
+                DateTime startDateTime = DateTime.newInstanceGmt(classStartDate.year(),classStartDate.month(),classStartDate.day(),Integer.valueOf(startTimeList[0]),Integer.valueOf(startTimeList[1]),0);
+                DateTime endDateTime = DateTime.newInstanceGmt(classEndDate.year(),classEndDate.month(),classEndDate.day(),Integer.valueOf(endTimeList[0]),Integer.valueOf(endTimeList[1]),0);
+                /*
+                Integer offset = (tz.getOffset(startDateTime))/(60*60*1000);
+                 
+                Integer offsetStartTime = Integer.valueOf(startTimeList[0]) - offset;
+                Integer offsetEndTime = Integer.valueOf(endTimeList[0]) - offset;
+                
+                String timeStart = String.valueOf(offsetStartTime);
+                String timeEnd = String.valueOf(offsetEndTime);
+                */
+                String timeStart = String.valueOf(startTimeList[0]);
+                String timeEnd = String.valueOf(endTimeList[0]);
+                Integer daysToAdd = 0;
+            	Integer daysToSubtract = 1;
             
-            if (updatedOrderItems.size() > 0) {
-                update updatedOrderItems;
-            }
-			
+                /*
+                if(offsetStartTime > 23){
+                    timeStart = String.valueOf(offsetStartTime - 24);
+                    daysToAdd = 1;
+                }
+                else if(offsetStartTime < 0) {
+                    timeStart = String.valueOf(12 - offsetStartTime);  
+                    daysToAdd = -1;
+                }
+                
+                if(offsetEndTime > 23){
+                    timeEnd = String.valueOf(offsetEndTime - 24);
+                }
+                else if(offsetEndTime < 0) {
+                    timeEnd = String.valueOf(12 - offsetEndTime);  
+                }
+                */
+                DateTime startTime = DateTime.newInstanceGmt(classStartDate.year(),classStartDate.month(),Integer.valueOf(classStartDate.day()+daysToAdd),Integer.valueOf(timeStart),Integer.valueOf(startTimeList[1]),0); 
+                DateTime endTime = DateTime.newInstanceGmt(classEndDate.year(),classEndDate.month(),Integer.valueOf(classEndDate.day()+daysToAdd),Integer.valueOf(timeEnd),Integer.valueOf(endTimeList[1]),0); 
+    
+                DateTime rco_post_startTime = DateTime.newInstanceGmt(System.today(), Time.newInstance(0,0,0,0)); 
+                DateTime rco_post_endTime = DateTime.newInstanceGmt(classEndDate.year(),classEndDate.month(),Integer.valueOf(classEndDate.day() - daysToSubtract),Integer.valueOf(timeEnd),Integer.valueOf(endTimeList[1]),0); 
+
+                newClass.redwing__Start_Time__c = startTime.format('HH:mm', 'GMT'); 
+                newClass.redwing__End_Time__c = endTime.format('HH:mm', 'GMT'); 
+                
+                newClass.redwing__Start_Date__c = startTime.dateGmt();
+                newClass.redwing__End_Date__c = endTime.dateGmt();             
+                  
+                newClass.redwing__Timezone__c = timeZoneVal;
+                /*
+                newClass.Site_Name__c = cpsWrap.siteName;
+                newClass.Site_Address_1__c = cpsWrap.address1;
+                newClass.Site_Address_2__c = cpsWrap.address2;
+                newClass.Site_City__c = cpsWrap.city;
+                newClass.State__c = cpsWrap.state;
+                newClass.Site_Postal_Code__c = cpsWrap.zip;
+                */
+                newClass.redwing__Location__c = cpsWrap.locationId;
+                newClass.CPS_Registration_URL__c = cpsWrap.regUrl;
+                newClass.CPS_Registration_Phone__c = cpsWrap.regPhone;
+                newClass.Registration_Fee__c = cpsWrap.regFee;
+                newClass.CPS_Approval_Status__c = 'Submitted';
+                newClass.redwing__Learning__c = objLearning.Id;
+                newClass.Classroom_Setting__c = cpsWrap.classFormat;
+            	newClass.Class_Online_From__c = rco_post_startTime.dateGmt();
+            	newClass.Class_Online_To__c = rco_post_endTime.dateGmt();
+                newClass.Class_Searchable__c = true;
+                insert newClass;
+                 
+                Integer sessionIndex = 0;
+                List<redwing__ILT_Session__c> sessList = new List<redwing__ILT_Session__c>();
+                for(PHSS_cpsWrapper.SessionWrapper sessWrap : cpsWrap.sessionList) {
+                    redwing__ILT_Session__c sess = new redwing__ILT_Session__c();
+                    sess.redwing__ILT_Class__c = newClass.Id;
+                    sess.redwing__Date__c = Date.valueOf(sessWrap.classDate);
+                    /*
+                    List<String> sessStartTimeList = cpsWrap.sessionList[0].startTime.split(':');
+                    Time sessStartTime = Time.newInstance(Integer.valueOf(sessStartTimeList[0]),Integer.valueOf(sessStartTimeList[1]),0,0);
+                    List<String> sessEndTimeList = cpsWrap.sessionList[0].endTime.split(':');
+                    Time sessEndTime = Time.newInstance(Integer.valueOf(sessEndTimeList[0]),Integer.valueOf(sessEndTimeList[1]),0,0);
+                    */
+                    List<String> sessStartTimeList = sessWrap.startTime.split(':');
+                    Time sessStartTime = Time.newInstance(Integer.valueOf(sessStartTimeList[0]),Integer.valueOf(sessStartTimeList[1]),0,0);
+                    List<String> sessEndTimeList = sessWrap.endTime.split(':');
+                    Time sessEndTime = Time.newInstance(Integer.valueOf(sessEndTimeList[0]),Integer.valueOf(sessEndTimeList[1]),0,0);
+                
+                    sess.redwing__Start_Time__c = String.valueOf(sessStartTime).subString(0,5);
+                    sess.redwing__End_Time__c = String.valueOf(sessEndTime).subString(0,5);
+                    sess.redwing__Location__c = cpsWrap.locationId;
+                    
+    
+                    Integer clsday = sess.redwing__Date__c.day();
+                    Integer clsmonth = sess.redwing__Date__c.month();
+                    Integer clsyear = sess.redwing__Date__c.year();
+                    Datetime sessionDatetime = Datetime.newInstance(clsyear, clsmonth, clsday, 12, 00, 00);
+                    Integer namePrefixLength = Math.min(cpsWrap.courseName.length(), 40);
+                    sess.Name = cpsWrap.courseName.substring(0, namePrefixLength) + ' ' + sessionDatetime.format('MM/dd/yyyy');
+    
+                    sessList.add(sess);
+                }
+                
+                if(!Test.isRunningTest()) {
+                    insert sessList;    
+                }
+                String classID = newClass.Id;
+                // Insert Learning Versiom
+                redwing__Learning_Version__c lv = new redwing__Learning_Version__c();
+                lv.redwing__Learning__c = objLearning.id;
+                lv.redwing__Version__c = 1;
+                lv.redwing__Type__c = 'Published';
+                lv.redwing__Version_selection_behavior__c = null;
+                lv.redwing__ILT__c = newClass.Id;
+                insert lv;
+                
+                // US1521 - Populate CC Cart Item Record(s) with ILT Class Id (if applicable)
+    
+                if (cpsWrap.oppId != null && classID != null) {
+                    for (ccrz__E_CartItem__c theCartItem : [Select Id, ccrz__Product__c, ILT_Class__c From ccrz__E_CartItem__c
+                                                            Where ccrz__Cart__r.Opportunity__c = :cpsWrap.oppId]) {
+                                                                
+                                                                ccrz__E_CartItem__c newCartItem = new ccrz__E_CartItem__c();
+                                                                newCartItem.Id = theCartItem.Id;	
+                                                                newCartItem.ILT_Class__c = classID;
+                                                                updatedCartItems.add(newCartItem);                		
+                                                            }
+                    
+                    // US1521 - If this is CRE, Order Lines will already be created
+                    // In this case, we need to write ILT Class Id on Order Item record(s)
+                    
+                    for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c From ccrz__E_OrderItem__c
+                                                              Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :cpsWrap.oppId]) {
+                                                                  
+                                                                  ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
+                                                                  newOrderItem.Id = theOrderItem.Id;	
+                                                                  newOrderItem.ILT_Class__c = classID;
+                                                                  updatedOrderItems.add(newOrderItem);                		
+                                                              }
+                } 
+    
+    
+    
+                
+                if (updatedCartItems.size() > 0) {
+                    update updatedCartItems;
+                }
+                
+                if (updatedOrderItems.size() > 0) {
+                    update updatedOrderItems;
+                }
+            //}			
 
         }
         catch(Exception e) {
@@ -359,5 +385,23 @@ public without sharing class PHSS_CpsController {
     	
         return addToCartResult;
     }
+
+    @AuraEnabled 
+    public static Boolean checkURL(String url) { 
+    
+            Http http = new Http();
+            HttpRequest request = new HttpRequest();
+            request.setEndpoint(url);
+        	request.setHeader('Content-Type', 'text/html');
+            request.setMethod('GET');
+            HttpResponse response = http.send(request);
+    
+            if (response.getStatusCode() == 200) {
+    			return true;
+            } 
+        
+			return false;
+    }
+
 
 }

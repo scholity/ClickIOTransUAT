@@ -22,7 +22,7 @@ public with sharing class phss_cc_AccountUtil {
     public static Account fetchAccount(String accountId) {
         try {
             Account account = [
-                    SELECT AccountNumber, Name, Id, Payment_Status__c
+                    SELECT AccountNumber, Name, Id, Payment_Status__c, Preferred_Payment_type__c
                     FROM Account
                     WHERE Id = :accountId
                     LIMIT 1

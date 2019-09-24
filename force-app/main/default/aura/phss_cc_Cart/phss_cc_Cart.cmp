@@ -17,11 +17,10 @@
     />
 
     <!--Retrieved from Server-->
-    <aura:attribute name="productList" type="List"/>
-    <aura:attribute name="productsMap" type="Map"/>
     <aura:attribute name="cartItemList" type="List"/>
     <aura:attribute name="cartItemMap" type="Map"/>
     <aura:attribute name="cartTotal" type="Decimal" default="0.00"/>
+    <aura:attribute name="cartItemQuantityMap" type="Map"/>
     <aura:attribute name="storedPayments" type="List"/>
 
     <!--Variables to maintain a cart on the front end-->
@@ -51,10 +50,8 @@
 
     <!--Handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdate"
-                  action="{!c.productCountIncrement}"/>
-    <aura:handler name="decrementProductCount" event="c:phss_cc_ProductCountUpdate"
-                  action="{!c.productCountDecrement}"/>
+    <aura:handler name="incrementCartItemQuantity" event="c:phss_cc_CartItemQuantityUpdate" action="{!c.cartItemQuantityIncrement}"/>
+    <aura:handler name="decrementCartItemQuantity" event="c:phss_cc_CartItemQuantityUpdate" action="{!c.cartItemQuantityDecrement}"/>
     <aura:handler name="cyberSourceResponse" event="c:phss_cc_CyberSourceResponseEvent"
                   action="{!c.handleCyberSourceResponse}"/>
     <aura:handler name="sendPOToCart" event="c:phss_cc_POToCartEvent"
@@ -89,7 +86,7 @@
     <aura:if isTrue="{!v.renderComplete}">
         <h1 class="slds-text-heading--medium slds-m-bottom--small">
             <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.Cart_Table_Header}"/>
-            <lightning:formattedNumber class="slds-m-right--xx-small" value="{!v.productList.length}"/>
+            <lightning:formattedNumber class="slds-m-right--xx-small" value="{!v.cartItemList.length}"/>
             <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.Cart_Table_Header_Value_Type}"/>
         </h1>
 
@@ -97,7 +94,7 @@
             <div class="slds-size_2-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_SKU}</div>
             <div class="slds-size_4-of-12 columnHeaders">{!$Label.c.ProductDetail_Column_Name}</div>
             <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_ListPrice}</div>
-            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_DiscountPrice}</div>
+            <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders" style="font-size: 90%;">Discounted<br/>Price</div>
             <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_DiscountPercentage}</div>
             <div class="slds-size_1-of-12 slds-align_absolute-center columnHeaders">&nbsp;</div>
             <div class="slds-size_2-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>
@@ -114,10 +111,7 @@
         <aura:if isTrue="{! v.cartItemList.length != 0 }">
             <div class="slds-scrollable--y" style="max-height: 20rem; height: auto;">
                 <aura:iteration items="{! v.cartItemList }" var="cartItem">
-                    <c:phss_cc_CartItem recordId="{! cartItem }"
-                                        cartItems="{! v.cartItemMap }"
-                                        productMap="{! v.productsMap }"
-                                        productQuantityMap="{! v.productQuantityMap }"/>
+                    <c:phss_cc_CartItem recordId="{! cartItem }" cartItems="{! v.cartItemMap }"/>
                 </aura:iteration>
             </div>
 

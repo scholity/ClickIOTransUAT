@@ -20,8 +20,9 @@ public with sharing class phss_cc_CartUtil {
     private static final String CART_ITEM_ORIGINAL_ITEM_PRICE_KEY = 'originalItemPrice';
     private static final String CART_ITEM_PERCENT_DISCOUNT_KEY = 'percentDiscount';
 
-    private static final String CART_ITEM_LIST = 'cartItemList';
-    private static final String CART_ITEM_MAP = 'cartItemMap';
+    public static final String CART_ITEM_LIST = 'cartItemList';
+    public static final String CART_ITEM_MAP = 'cartItemMap';
+    public static final String CART_ITEM_QUANTITY_MAP_KEY = 'cartItemQuantityMap';
     private static final String CART_ITEMS_KEY = 'ECartItemsS';
     private static final String CART_TOTAL_AMOUNT_KEY = 'totalAmount';
     private static final String PRODUCT_PRICE_KEY = 'price';
@@ -41,18 +42,22 @@ public with sharing class phss_cc_CartUtil {
     @TestVisible private static final String SUCCESS_KEY = 'Success';
 
     private static final String FAILED_TO_CREATE_LINE_ITEMS = 'Failed to create line items.';
+    private static final String FAILED_TO_CREATE_LINE_ITEMS_WITH_CART_ITEM_QUANTITY_MAP = 'Failed to create line items with cart item quantity map.';
     private static final String FAILED_TO_ADD_ITEMS_TO_CART = 'Failed to add items to the cart.';
     private static final String FAILED_TO_CREATE_CART = 'Failed to create a Cart.';
     private static final String FAILED_TO_CREATE_PRODUCT_QUANTITY_MAP = 'Failed to create Product Quantities Map.';
     private static final String FAILED_TO_CREATE_MINOR_PRODUCT_QUANTITY_MAP = 'Failed to create minor Product Quantities Map.';
     private static final String FAILED_TO_FETCH_CART = 'Failed to fetch cart.';
+    private static final String FAILED_TO_FETCH_CART_BY_ID = 'Failed to fetch cart by ID.';
     private static final String FAILED_TO_FETCH_THE_ACTIVE_CART = 'Failed to fetch the active cart.';
     private static final String FAILED_TO_FETCH_THE_ACTIVE_CART_ITEMS = 'Failed to fetch the active cart items.';
+    private static final String FAILED_TO_FETCH_THE_ACTIVE_CART_AND_ITEMS = 'Failed to fetch the active cart and items.';
     private static final String FAILED_TO_FETCH_PRICE_FROM_CART = 'Failed to fetch price from cart.';
     private static final String FAILED_TO_PARSE_DETAILS_FROM_CART = 'Failed to parse details from Cart.';
     private static final String FAILED_TO_SET_THE_ADDRESS_ON_THE_CART = 'Failed to set the address on the cart.';
     private static final String FAILED_TO_FETCH_THE_CURRENT_ADDRESSES_FROM_THE_CART = 'Failed to fetch the current addresses from the cart.';
     private static final String FAILED_TO_SET_THE_BILLING_ADDRESS_ON_THE_CART = 'Failed to set the Billing Address on the cart.';
+    private static final String FAILED_TO_UPDATE_CART_ITEM_QUANTITIES = 'Failed to update cart item quantities.';
 
 
     /**
@@ -125,6 +130,86 @@ public with sharing class phss_cc_CartUtil {
     }
 
     /**
+     * @description Fetches the cart identified by the specified cart ID
+     *
+     * @param cartId
+     *
+     * @return
+     */
+    public static ccrz__E_Cart__c fetchCartById(String cartId) {
+        ccrz__E_Cart__c cart;
+
+        if (cartId == null) {
+            return null;
+        }
+
+        Id identifier = Id.valueOf(cartId);
+
+        try {
+            cart = [
+                    SELECT
+                            ccrz__Account__c,
+                            ccrz__ActiveCart__c,
+                            ccrz__AdjustmentAmount__c,
+                            ccrz__AdjustmentReason__c,
+                            ccrz__AnonymousId__c,
+                            ccrz__BillTo__c,
+                            ccrz__BuyerCompanyName__c,
+                            ccrz__BuyerEmail__c,
+                            ccrz__BuyerFirstName__c,
+                            ccrz__BuyerLastName__c,
+                            ccrz__BuyerMobilePhone__c,
+                            ccrz__BuyerPhone__c,
+                            ccrz__CartId__c,
+                            ccrz__CartStatus__c,
+                            ccrz__CartType__c,
+                            ccrz__CCEmailAddress__c,
+                            ccrz__Contact__c,
+                            ccrz__ContractId__c,
+                            ccrz__CurrencyISOCode__c,
+                            ccrz__EffectiveAccountID__c,
+                            ccrz__EncryptedId__c,
+                            ccrz__Name__c,
+                            ccrz__Note__c,
+                            ccrz__PaymentMethod__c,
+                            ccrz__PONumber__c,
+                            ccrz__RequestDate__c,
+                            ccrz__SessionId__c,
+                            ccrz__ShipAmount__c,
+                            ccrz__ShipComplete__c,
+                            ccrz__ShipDiscountAmount__c,
+                            ccrz__ShipMethod__c,
+                            ccrz__ShipStructure__c,
+                            ccrz__ShipTo__c,
+                            ccrz__Storefront__c,
+                            ccrz__SubtotalAmount__c,
+                            ccrz__TaxAmount__c,
+                            ccrz__TaxExemptFlag__c,
+                            ccrz__TaxSubTotalAmount__c,
+                            ccrz__TotalAmount__c,
+                            ccrz__TotalDiscount__c,
+                            ccrz__TotalQuantity__c,
+                            ccrz__TotalSurcharge__c,
+                            ccrz__User__c,
+                            ccrz__ValidationStatus__c,
+                            Highest_Cart_Discount__c,
+                            Id,
+                            Name,
+                            Opportunity__c
+                    FROM
+                            ccrz__E_Cart__c
+                    WHERE
+                            Id = :identifier
+            ];
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_FETCH_CART_BY_ID, e);
+        }
+
+        return cart;
+    }
+
+    /**
      * @description Creates a new cart for the opportunity.
      *
      * @return
@@ -189,10 +274,6 @@ public with sharing class phss_cc_CartUtil {
      * @return
      */
     public static Map<String, Object> addProductsToCart(String opportunitySfid, Map<String, Object> productQuantityMap, Boolean fetchMinorItems) {
-        System.debug('JASON: addProductsToCart()');
-        System.debug('opportunitySfid=' + opportunitySfid);
-        System.debug('productQuantityMap=' + productQuantityMap);
-        System.debug('fetchMinorItems=' + fetchMinorItems);
 
         try {
             phss_cc_Context.setContext(opportunitySfid);
@@ -215,15 +296,81 @@ public with sharing class phss_cc_CartUtil {
 
             List<Map<String, Object>> lineData = createLineItems(productQuantityMap);
             Map<String, Object> addToResult = cartAddTo(lineData, encryptedCartId);
-            System.debug('JASON: addToResult: ' + addToResult);
-            for (String key : addToResult.keySet()) {
-                System.debug('JASON: key=' + key + ' value=' + addToResult.get(key));
-            }
             addProductsToCartResponse = retrieveLineItemsAndTotalAmountFromCart(addToResult, fetchMinorItems);
             return addProductsToCartResponse;
         } catch (Exception e) {
             throw new phss_cc_Exception(e.getMessage());
         }
+    }
+
+    /**
+     * @description Updates the quantity of the cart items
+     *
+     * @param opportunityId
+     * @param cartItemQuantityMap
+     *
+     * @return
+     */
+    public static Map<String, Object> updateCartItemQuantities(String opportunityId, Map<String, Object> cartItemQuantityMap) {
+        Map<String, Object> result = new Map<String, Object>();
+
+        try {
+            phss_cc_Context.setContext(opportunityId);
+
+            if (phss_cc_Context.currCart != null) {
+                List<Map<String, Object>> lineData = createLineItemsWithCartItemQuantityMap(cartItemQuantityMap);
+
+                if (phss_cc_Context.currCart.Id != null) {
+                    delete [SELECT Id FROM ccrz__E_CartItem__c WHERE ccrz__Cart__c = :phss_cc_Context.currCart.Id];
+                }
+
+                if (lineData.size() > 0 && phss_cc_Context.currCart.ccrz__EncryptedId__c != null) {
+                    Map<String, Object> cartAddToResult = cartAddTo(lineData, phss_cc_Context.currCart.ccrz__EncryptedId__c);
+                    result.putAll(cartAddToResult);
+                }
+
+                Map<String, Object> fetchResult = fetchCartItems(phss_cc_Context.currCart.Id);
+                result.putAll(fetchResult);
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_UPDATE_CART_ITEM_QUANTITIES);
+        }
+
+        return result;
+    }
+
+    private static List<Map<String, Object>> createLineItemsWithCartItemQuantityMap(Map<String, Object> cartItemQuantityMap) {
+        List<Map<String, Object>> lineData = new List<Map<String, Object>>();
+
+        if (cartItemQuantityMap != null && cartItemQuantityMap.size() > 0) {
+            try {
+                List<ccrz__E_CartItem__c> cartItems = phss_cc_CartItemUtil.getCartItems(cartItemQuantityMap.keySet());
+                for (ccrz__E_CartItem__c cartItem : cartItems) {
+                    if (cartItem.ccrz__cartItemType__c != 'Major') {
+                        continue;
+                    }
+
+                    Integer quantity = Integer.valueOf(cartItemQuantityMap.get(cartItem.Id));
+                    if (quantity == 0) {
+                        continue;
+                    }
+
+                    Map<String, Object> lineDataItem = new Map<String, Object>();
+                    lineDataItem.put(ccrz.ccApiCart.LINE_DATA_PRODUCT_SFID, cartItem.ccrz__Product__c);
+                    lineDataItem.put(ccrz.ccApiCart.LINE_DATA_QUANTITY, quantity);
+                    if (cartItem.ILT_Class__c != null) {
+                        lineDataItem.put(phss_cc_ClassCartUtil.ILT_CLASS_FIELD, cartItem.ILT_Class__c);
+                    }
+                    lineData.add(lineDataItem);
+                }
+
+            } catch (Exception e) {
+                throw new phss_cc_Exception(FAILED_TO_CREATE_LINE_ITEMS_WITH_CART_ITEM_QUANTITY_MAP, e);
+            }
+        }
+
+        return lineData;
     }
 
     /**
@@ -429,14 +576,40 @@ public with sharing class phss_cc_CartUtil {
 
                 Map<String, Object> cartItems = fetchCartItems(phss_cc_Context.currCart.Id);
                 if (cartItems != null && cartItems.size() > 0) {
-                    fetchCartResponse.put(CART_ITEM_LIST, cartItems.keySet());
-                    fetchCartResponse.put(CART_ITEM_MAP, cartItems);
+                    fetchCartResponse.putAll(cartItems);
                 }
             }
             return fetchCartResponse;
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_FETCH_THE_ACTIVE_CART);
         }
+    }
+
+    /**
+     * @description
+     *
+     * @param opportunityId
+     *
+     * @return
+     */
+    public static Map<String, Object> fetchActiveCartAndItems(String opportunityId) {
+        Map<String, Object> response;
+
+        try {
+            phss_cc_Context.setContext(opportunityId);
+
+            if (phss_cc_Context.currCart != null && String.isNotEmpty(phss_cc_Context.currCart.Id)) {
+                ccrz__E_Cart__c cart = fetchCartById(phss_cc_Context.currCart.Id);
+                response = fetchCartItems(cart.Id);
+                response.put(CART_TOTAL_KEY, cart.ccrz__TotalAmount__c);
+                response.put(CART_ENCRYPTED_ID_KEY, cart.ccrz__EncryptedId__c);
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_FETCH_THE_ACTIVE_CART_AND_ITEMS, e);
+        }
+
+        return response;
     }
 
     /**
@@ -449,6 +622,7 @@ public with sharing class phss_cc_CartUtil {
     public static Map<String, Object> fetchCartItems(String cartId) {
 
         Map<String, Object> cartItemMap = new Map<String, Object>();
+        Map<String, Decimal> cartItemQtyMap = new Map<String, Decimal>();
 
         try {
             if (String.isNotEmpty(cartId)) {
@@ -499,6 +673,8 @@ public with sharing class phss_cc_CartUtil {
                             Map<String, Object> itemMap = new Map<String, Object>(cartItem.getPopulatedFieldsAsMap());
                             cartItemMap.put(cartItem.Id, itemMap);
                         }
+
+                        cartItemQtyMap.put(cartItem.Id, cartItem.ccrz__Quantity__c);
                     }
                 }
             }
@@ -507,7 +683,12 @@ public with sharing class phss_cc_CartUtil {
             throw new phss_cc_Exception(FAILED_TO_FETCH_THE_ACTIVE_CART_ITEMS, e);
         }
 
-        return cartItemMap;
+        Map<String, Object> m = new Map<String, Object>{
+                CART_ITEM_LIST => cartItemMap.keySet(),
+                CART_ITEM_MAP => cartItemMap,
+                CART_ITEM_QUANTITY_MAP_KEY => cartItemQtyMap
+        };
+        return m;
     }
 
     /**

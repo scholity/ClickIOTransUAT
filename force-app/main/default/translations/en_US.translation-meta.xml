@@ -721,15 +721,15 @@
     <flowDefinitions>
         <flows>
             <choices>
+                <name>CREStore</name>
+            </choices>
+            <choices>
                 <name>CPS</name>
             </choices>
             <choices>
                 <name>GeneralStore</name>
             </choices>
-            <choices>
-                <name>CREStore</name>
-            </choices>
-            <fullName>Create_Contract-27</fullName>
+            <fullName>Create_Contract-28</fullName>
             <screens>
                 <fields>
                     <name>Effective_End_Date</name>
@@ -835,7 +835,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Process_On_Hold_Orders-2</fullName>
+            <fullName>Process_On_Hold_Orders-4</fullName>
         </flows>
         <fullName>Process_On_Hold_Orders</fullName>
     </flowDefinitions>
@@ -1016,7 +1016,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Release_Achievement_Assignments-4</fullName>
+            <fullName>Release_Achievement_Assignments-7</fullName>
         </flows>
         <fullName>Release_Achievement_Assignments</fullName>
     </flowDefinitions>
@@ -1127,7 +1127,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_On_Hold_Order_Case-13</fullName>
+            <fullName>Create_On_Hold_Order_Case-17</fullName>
         </flows>
         <fullName>Create_On_Hold_Order_Case</fullName>
     </flowDefinitions>
@@ -1163,7 +1163,19 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Achievement_Assignment_Controller-6</fullName>
+            <fullName>Customer_Contact_TE_update-1</fullName>
+        </flows>
+        <fullName>Customer_Contact_TE_update</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Update_TE_from_Opportunity_Customer_Contact-1</fullName>
+        </flows>
+        <fullName>Update_TE_from_Opportunity_Customer_Contact</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Achievement_Assignment_Controller-16</fullName>
         </flows>
         <fullName>Achievement_Assignment_Controller</fullName>
     </flowDefinitions>

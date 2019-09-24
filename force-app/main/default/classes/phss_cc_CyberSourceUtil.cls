@@ -449,14 +449,15 @@ public with sharing class phss_cc_CyberSourceUtil {
      * @return
      */
     @Future (Callout=true)
-    public static void capturePayment(String transactionPaymentId, String fulfillmentId) {
+    public static void capturePayment(String fulfillmentId, String authTransactionPaymentId, String captureTransactionPaymentId) {
         try {
-            ccrz__E_TransactionPayment__c payment = fetchTransactionPayment(transactionPaymentId);
-            ccrz__E_Order__c order = fetchOrder(payment.ccrz__CCOrder__c);
+            ccrz__E_TransactionPayment__c authTxnPmt = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(authTransactionPaymentId);
+            ccrz__E_TransactionPayment__c captureTxnPmt = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(captureTransactionPaymentId);
+            ccrz__E_Order__c order = fetchOrder(authTxnPmt.ccrz__CCOrder__c);
             ccrz__E_Cart__c cart = fetchCart(order.ccrz__OriginatedCart__c);
 
             getCyberSourceConfigSettings(cart.ccrz__Storefront__c);
-            Map<String, Object> captureData = buildCaptureData(payment.ccrz__Token__c, payment.Name, payment.ccrz__Amount__c);
+            Map<String, Object> captureData = buildCaptureData(authTxnPmt.ccrz__Token__c, captureTxnPmt.Name, captureTxnPmt.ccrz__Amount__c);
             Map<String, Object> captureResult = requestPaymentCapture(captureData);
 
             String status = (String) captureResult.get(PAYMENT_CAPTURE_STATUS);
@@ -467,10 +468,10 @@ public with sharing class phss_cc_CyberSourceUtil {
 
                 Boolean isResponseValid = verifyPaymentCaptureResponse(responseMap);
                 if (isResponseValid) {
-                    phss_cc_FulfillmentUtil.finalizePayment(transactionPaymentId, fulfillmentId, responseMap);
+                    phss_cc_FulfillmentUtil.finalizePayment(authTxnPmt.Id, captureTxnPmt.Id, fulfillmentId, responseMap);
                 }
                 else {
-                    throw new phss_cc_Exception('Failed to capture payment because of mismatching signatures (fulfillment=' + fulfillmentId + ', transactionPayment=' + transactionPaymentId + ')');
+                    throw new phss_cc_Exception('Failed to capture payment because of mismatching signatures (fulfillment=' + fulfillmentId + ', AUTH=' + authTransactionPaymentId + ', CAPTURE=' + captureTransactionPaymentId + ')');
                 }
 
             } else if (status == PAYMENT_CAPTURE_FAILED) {
@@ -572,25 +573,6 @@ public with sharing class phss_cc_CyberSourceUtil {
         return order;
     }
 
-
-    /**
-     * @description Fetches a transaction payment for its identifier
-     *
-     * @param transactionPaymentId
-     *
-     * @return
-     */
-    @testVisible
-    private static ccrz__E_TransactionPayment__c fetchTransactionPayment(String transactionPaymentId) {
-        ccrz__E_TransactionPayment__c transactionPayment = [
-                SELECT Id, ccrz__Amount__c, ccrz__CCOrder__c, ccrz__CCOrder__r.Opportunity_Order__c,
-                        ccrz__PaymentType__c, ccrz__Storefront__c, ccrz__Token__c, ccrz__TransactionType__c, Name
-                FROM ccrz__E_TransactionPayment__c
-                WHERE Id = :transactionPaymentId
-        ];
-        return transactionPayment;
-    }
-
 	@testVisible
     private static ccrz__E_TransactionPayment__c fetchTransactionPaymentForToken(String token) {
         ccrz__E_TransactionPayment__c transactionPayment = [
@@ -600,7 +582,7 @@ public with sharing class phss_cc_CyberSourceUtil {
         ];
 
         if (transactionPayment != null) {
-            return fetchTransactionPayment(transactionPayment.Id);
+            return phss_cc_TransactionPaymentUtil.fetchTransactionPayment(transactionPayment.Id);
         }
 
         return null;
@@ -763,7 +745,7 @@ public with sharing class phss_cc_CyberSourceUtil {
         }
 
         try {
-            ccrz__E_TransactionPayment__c transactionPayment = fetchTransactionPayment(transactionPaymentId);
+            ccrz__E_TransactionPayment__c transactionPayment = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(transactionPaymentId);
             if (phss_cc_TransactionPaymentUtil.isCaptureTransaction(transactionPayment)) {
                 String creditRequst = buildCreditRequestBody(transactionPayment);
             }

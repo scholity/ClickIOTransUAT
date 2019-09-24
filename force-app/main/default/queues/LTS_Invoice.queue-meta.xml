@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <name>LTS Invoice</name>
+    <name>LTS Non Credit Card</name>
     <queueMembers>
         <roleAndSubordinatesInternal>
             <roleAndSubordinateInternal>Registration_Support_Group_Agent_Role</roleAndSubordinateInternal>

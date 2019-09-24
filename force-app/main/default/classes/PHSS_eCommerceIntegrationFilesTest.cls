@@ -25,23 +25,41 @@ private class PHSS_eCommerceIntegrationFilesTest {
         learning.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('Media').getRecordTypeId();
         update learning;
 
+        // create location record for class
+        redwing__ILT_Location__c theLocation = new redwing__ILT_Location__c();
+        
 
+        theLocation.Name = 'My Location';
+        theLocation.redwing__Address_1__c   = '101 S Main';
+        theLocation.redwing__Address_2__c   = '';
+        theLocation.redwing__City__c        = 'Anywhere';
+        theLocation.redwing__State__c       = 'NY';
+        theLocation.redwing__Postal_Code__c = '10012';
+        theLocation.redwing__Country__c     = 'US'; 
+        insert theLocation;
+
+        String startTime = String.valueOf(Datetime.now().addHours(1).time()).left(5);
+        String endTime = String.valueOf(Datetime.now().addHours(3).time()).left(5);
+        
         // create records for activeCommunityClasses
         redwing__ILT_Event__c event = (redwing__ILT_Event__c) learningObjects.get(phss_cc_TestDataFactory.TEST_ILT_EVENT);
         Map<String, Object> skeduloObjects = phss_cc_TestDataFactory.createInsertTestSkeduloJob(event);
         redwing__ILT_Class__c iltClass = (redwing__ILT_Class__c) skeduloObjects.get(phss_cc_TestDataFactory.TEST_ILT_CLASS);
-        iltClass.Request_Type__c = 'CPS';
-        iltClass.Site_Postal_Code__c = '10117';
+        iltClass.Request_Type__c = 'Community';
+        iltClass.Skedulo_Job_Status__c  = 'Pending Allocation';
+        iltClass.redwing__Location__c = theLocation.Id;
+        iltClass.Skedulo_Job_Active__c = true;
+        iltClass.Site_Postal_Code__c = '10012';
+        iltClass.redwing__Start_Time__c = startTime;
+        iltClass.redwing__End_Time__c = endTime;
         update iltClass;
-
-        String startTime = String.valueOf(Datetime.now().addHours(1).time()).left(5);
-        String endTime = String.valueOf(Datetime.now().addHours(3).time()).left(5);
 
         redwing__ILT_Session__c iltSession = new redwing__ILT_Session__c(
                 redwing__ILT_Class__c = iltClass.Id,
                 redwing__Date__c = Date.today(),
                 redwing__Start_Time__c = startTime,
-                redwing__End_Time__c = endTime
+                redwing__End_Time__c = endTime,
+            	redwing__Location__c = theLocation.Id
         );
         insert iltSession;
 
@@ -59,7 +77,7 @@ private class PHSS_eCommerceIntegrationFilesTest {
 
         Test.startTest();
         PHSS_eCommerceIntegrationFiles inst = new PHSS_eCommerceIntegrationFiles();
-        inst.getCommunityClasses();
+        inst.getAllCommunityClasses();
         Test.stopTest();
     }    
 }

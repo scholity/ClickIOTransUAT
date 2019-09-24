@@ -568,7 +568,7 @@ Select a voucher(s) with a status of &#39;Issued&#39;. Copy and paste the self-r
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>The Discount Price column label text.</shortDescription>
-        <value>Discount</value>
+        <value>Discounted Price</value>
     </labels>
     <labels>
         <fullName>ProductDetail_Column_ExtendedPrice</fullName>

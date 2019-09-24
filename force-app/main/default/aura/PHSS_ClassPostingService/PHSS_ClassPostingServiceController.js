@@ -3,7 +3,9 @@
 		component.set("v.storeFrontName","CPSStore");
         
         helper.initializeWrapper(component, event, helper);
-        	
+        
+        var days = '7';
+        
         // Get today's date
         var today = new Date();
         var dd = today.getDate();
@@ -11,6 +13,17 @@
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
         component.set("v.todaysDate",today);
+
+        // Get today's date plus 7
+        var todayPlus7 = new Date();
+        todayPlus7.setTime(todayPlus7.getTime() + (days * 24 * 60 * 60 * 1000));
+        dd = todayPlus7.getDate();
+        mm = todayPlus7.getMonth()+1; //January is 0!
+        yyyy = todayPlus7.getFullYear();
+        todayPlus7 = yyyy + '-' + mm + '-' + dd;
+		//alert('Date + 7 ' + todayPlus7);        
+        
+        component.set("v.todaysDatePlus7",todayPlus7);
         
         
           
@@ -70,12 +83,20 @@
                 document.getElementById('zoneSelect').classList.add('requiredSelect');
             }
         });
-        component.set("v.cpsWrap.sessionList",updatedList);
+        component.set("v.cpsWrap.sessionList",tempList);
     },
     
 
     addSession : function(component, event, helper) {
+        var lastDate = '';
         var tempList = component.get("v.cpsWrap.sessionList");
+        
+        //Get the Last Session Date to Set on Calendar
+        tempList.forEach(function(session) {
+            lastDate = session.classDate
+        });
+        component.set("v.todaysDateFromLastEnterDate", lastDate);
+        
         tempList.push({'classDate':'',
                        'startTime':'',
                        'endTime':''});
@@ -110,6 +131,8 @@
             helper.validateFields(component,event,helper);
             helper.createIltLocation(component);
             
+            //alert("Location ID " + component.get('v.cpsWrap.locationId'));
+            
             var vorgId 	= component.get("v.selectedLookUpRecord1").Id
             if(vorgId === undefined){
                 component.set("v.orgError",true);
@@ -118,6 +141,9 @@
             }
             
             if(component.get("v.allValid") && component.get("v.isUrlValid") && !component.get("v.orgError")) {
+                var tempList = component.get("v.offeringsList");
+                tempList.push(JSON.stringify(component.get("v.cpsWrap")));
+                component.set("v.offeringsList", tempList);
                 // Show/hide credit card info
                 //Will fetch AccountContactRelation record on the basis of loggedin user's ContactId and selected account id
                 var action = component.get("c.getDisplayPaymentInfo"); 
@@ -137,25 +163,27 @@
             	component.set("v.stepNumber", "Two");    
             }
         }
+        else if(currentSN == "Three")
+        {
+            component.set("v.stepNumber", "Four");	
+            console.log("***PaymentInfo " + JSON.stringify(component.get("v.displayPaymentInfo")));
+        }
         else if(currentSN == "Two")
         {
             helper.formatTime(component,event,helper);
-            component.set("v.stepNumber", "Three");	
-            console.log("***PaymentInfo " + JSON.stringify(component.get("v.displayPaymentInfo")));
-        }
-        else if(currentSN == "Three")
-        {
-            component.set("v.stepNumber", "Four");
+            component.set("v.stepNumber", "Three");
         }
         else if(currentSN == "Four")
         {
+            //helper.clearForm(component,event,helper);
+        	$A.get("e.force:refreshView").fire();
         	component.set("v.stepNumber", "Complete");
         }
     },
     
     showStep1 : function(component,event,helper){
         component.set("v.stepNumber", "One");
-        component.set("v.cpsWrap.zip","");
+        //component.set("v.cpsWrap.zip","");
         /*
         var action = component.get("c.createOppForCC");
         action.setParams({
@@ -198,6 +226,7 @@
             helper.requiredSchedule(component,event,helper);
         	helper.validateFields(component,event,helper);
             if(component.get("v.allValid") && component.get("v.isUrlValid")) {
+                helper.formatTime(component,event,helper);
                 component.set("v.stepNumber", "Two");    
             }    
         }
@@ -231,10 +260,12 @@
     },
     
     onclickAddToCart : function(component, event, helper) { 
-        helper.updateGeoLatLong(component,event,helper);
-        helper.requiredSchedule(component,event,helper);
-        helper.validateFields(component,event,helper); 
-
+            helper.updateGeoLatLong(component,event,helper);
+            helper.requiredSchedule(component,event,helper);
+            helper.formatTime(component,event,helper);
+            helper.validateFields(component,event,helper);
+            helper.createIltLocation(component);
+            
             var vorgId 	= component.get("v.selectedLookUpRecord1").Id
             if(vorgId === undefined){
                 component.set("v.orgError",true);
@@ -243,21 +274,30 @@
             }
             
             if(component.get("v.allValid") && component.get("v.isUrlValid") && !component.get("v.orgError")) {
-                //Will fetch AccountContactRelation record on the basis of loggedin user's ContactId and selected account id
-                var action = component.get("c.getDisplayPaymentInfo"); 
-                action.setParams({ opportunityId : component.get("v.oppIdParent")});
-                action.setCallback(this, function(response) {
+                var tempList = component.get("v.offeringsList");
+                tempList.push(JSON.stringify(component.get("v.cpsWrap")));
+                component.set("v.offeringsList", tempList);
+                //alert("Offerings " + JSON.stringify(component.get("v.offeringsList")));
+                
+            	var action = component.get("c.updateCartProducts");
+        
+        		action.setParams({opportunitySfid : component.get("v.oppIdParent"),
+                          CCProductId : component.get("v.CCProductId"),
+                          noOfStudents : '1',
+                          storeFrontName : 'CPS'});
+        		action.setCallback(this, function(response) {
                     var state = response.getState();
                     if (state === "SUCCESS") {
-                //        debugger;
-                //        var data = response.getReturnValue();
-                        component.set("v.displayPaymentInfo", FALSE);
+                        
+                        var storeResponse = response.getReturnValue();
+                        console.log("Cart updated"+storeResponse);
                     }
-                 });
-				$A.enqueueAction(action);
+                });
+                $A.enqueueAction(action);
+                
                 helper.clearForm(component,event,helper);
-            	component.set("v.stepNumber", "One"); 
-            } 
+            	component.set("v.stepNumber", "One");    
+            }
     },
     
     createClass : function(component, event, helper) {
@@ -279,12 +319,29 @@
         });
         $A.enqueueAction(action);
 
-        helper.createClass(component, event, helper);    
+        helper.createClass(component, event, helper);
+
+        $A.get("e.force:refreshView").fire();
+
     },
     
     cancel : function(component, event, helper){
-        helper.clearForm(component,event,helper);
-        component.set("v.stepNumber", "Zero");
+        //helper.clearForm(component,event,helper);
+        
+        var madePayment = component.get("v.paymentComplete");
+        
+        if(madePayment)            
+        {
+            var yes = confirm("You have already submitted yor payment. If you Cancel now, the offering(s) you paid for will Not be Posted on RCO! To post your offering(s) click on Cancel on the dialog window and then click on Checkout at the bottom right.");
+       
+            if(yes){
+                $A.get("e.force:refreshView").fire();
+                component.set("v.stepNumber", "Zero");
+            }
+        } else {
+        	$A.get("e.force:refreshView").fire();
+        	component.set("v.stepNumber", "Zero");
+        }
     },
         
     handleChange : function (component, event) {
@@ -356,6 +413,7 @@
         component.set("v.cpsWrap.city", selectedSite["redwing__City__c"]);
         component.set("v.cpsWrap.state", selectedSite["redwing__State__c"]);
         component.set("v.cpsWrap.zip", selectedSite["redwing__Postal_Code__c"]);
+        //component.set('v.cpsWrap.locationId', siteId);
     },
     updatePaymentComplete : function(component,event,helper){
 
@@ -364,4 +422,5 @@
         console.log('check if payment completed'+component.get("v.paymentComplete"));
 
     },
+
 })

@@ -140,6 +140,28 @@
             component.set("v.isUrlValid",false);
         } 
         
+        if(component.get("v.cpsWrap.regUrl")){
+            /*
+            var action = component.get("c.checkURL");
+            action.setParams({
+                url : component.get("v.cpsWrap.regUrl")
+            });
+                              
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    var validURL = response.getReturnValue();
+                    if(validURL == false){
+                        component.set("v.showError","true");
+                        var errMsg = "\'URL for registration\' field is invalid.";
+                        component.set("v.errorMessage",errMsg);
+                        component.set("v.isUrlValid",false);
+                    }
+                }            
+            });
+            $A.enqueueAction(action);
+            */
+    	}
     },
     
 formatTime : function(component, event, helper) {
@@ -205,9 +227,10 @@ formatTime : function(component, event, helper) {
     },
     
     createClass : function(component, event, helper) {
-        console.log('***wrap..'+JSON.stringify(component.get("v.cpsWrap")));
+        //alert('***Offerings.. '+JSON.stringify(component.get("v.offeringsList")));
         
         var action = component.get("c.postClass");
+        //action.setParams({ jsonList : component.get("v.offeringsList") });
         action.setParams({ jsonStr : JSON.stringify(component.get("v.cpsWrap")) });
         
         action.setCallback(this, function(response) {
@@ -287,27 +310,27 @@ formatTime : function(component, event, helper) {
         component.set("v.showError","false");
         component.set("v.errorMessage","");
         component.set("v.selectedCourse",null);
-        component.set("v.LPClassroomSetting","");
-        component.set("v.LPDuration","");
+        //component.set("v.LPClassroomSetting","");
+        //component.set("v.LPDuration","");
         component.set("v.ScheduledTime","");
-        component.set("v.cpsWrap.classFormat","");
+        //component.set("v.cpsWrap.classFormat","");
         component.set("v.cpsWrap.sessionList",[]);
         var tempList = component.get("v.cpsWrap.sessionList");
         tempList.push({'classDate':'',
                        'startTime':'',
                        'endTime':''});
         component.set("v.cpsWrap.sessionList",tempList);
-        component.set("v.cpsWrap.siteName","");
-        component.set("v.cpsWrap.address1","");
-        component.set("v.cpsWrap.address2","");
-        component.set("v.cpsWrap.city","");
-        component.set("v.cpsWrap.state","");
-        component.set("v.cpsWrap.zip","");
+        //component.set("v.cpsWrap.siteName","");
+        //component.set("v.cpsWrap.address1","");
+        //component.set("v.cpsWrap.address2","");
+        //component.set("v.cpsWrap.city","");
+        //component.set("v.cpsWrap.state","");
+        //component.set("v.cpsWrap.zip","");
         component.set("v.cpsWrap.regUrl","");
         component.set("v.cpsWrap.regPhone","");
         component.set("v.cpsWrap.regFee","");
-        component.set("v.selectedLookUpRecord5","");
-        component.set("v.selectedLookUpRecord1","");
+        //component.set("v.selectedLookUpRecord5","");
+        //component.set("v.selectedLookUpRecord1","");
         
         //$A.get("e.force:refreshView").fire();
         //component.destroy();
@@ -409,7 +432,7 @@ formatTime : function(component, event, helper) {
         	return('Your browser does not support GeoLocation');
   
          
-    }
+    	}
        */  
     }, 
      getFullAddress : function(component, event, helper){
@@ -445,5 +468,5 @@ formatTime : function(component, event, helper) {
             }
         });
         $A.enqueueAction(action);
-    }
+    },
 })

@@ -194,7 +194,8 @@
                           'explanation'		  	: explntn,
                           'qty'					: qty,
                           'price'				: price,
-                          'isPartialReturn'		: isPartial});
+                          'isPartialReturn'		: isPartial,
+                          'isDropStdnt'			: false});
         
         action.setCallback(this, function(response) {
             

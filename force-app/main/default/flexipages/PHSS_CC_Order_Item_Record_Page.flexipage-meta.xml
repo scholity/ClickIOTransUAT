@@ -369,7 +369,7 @@
         <componentInstances>
             <componentName>ReplaceOrderItem</componentName>
             <visibilityRule>
-                <booleanFilter>(1 OR 2 OR 3 or 6) AND (4 OR 5)</booleanFilter>
+                <booleanFilter>(1 OR 2 OR 3 or 5) AND (4 )</booleanFilter>
                 <criteria>
                     <leftValue>{!Record.ccrz__OrderItemStatus__c}</leftValue>
                     <operator>EQUAL</operator>
@@ -389,11 +389,6 @@
                     <leftValue>{!Record.Inventory_Type__c}</leftValue>
                     <operator>EQUAL</operator>
                     <rightValue>STANDARD</rightValue>
-                </criteria>
-                <criteria>
-                    <leftValue>{!Record.Inventory_Type__c}</leftValue>
-                    <operator>NE</operator>
-                    <rightValue>FEE</rightValue>
                 </criteria>
                 <criteria>
                     <leftValue>{!Record.ccrz__OrderItemStatus__c}</leftValue>

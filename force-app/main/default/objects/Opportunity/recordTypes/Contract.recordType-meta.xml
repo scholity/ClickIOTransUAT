@@ -1735,6 +1735,10 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>AES</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Existing Business - AP</fullName>
             <default>false</default>
         </values>

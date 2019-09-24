@@ -463,7 +463,27 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>GarbageAccountBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>GarbageAccountServices</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GeneratePDFHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GeneratePDFHandlerInstCert</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GeneratePDFHandlerInstCerttest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GeneratePDFHandlertest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -831,6 +851,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_RegistrationController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_RegistrationControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_RegistrationRestService</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -924,6 +952,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_eCommerceIntegrationFilesTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_fetchCompletion</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_fetchCompletionTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1163,11 +1199,11 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>TestGarbageAccountBatch</apexClass>
+        <apexClass>TestGarbageAccountServices</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>TestGarbageAccountServices</apexClass>
+        <apexClass>TestGetFeedbackSurveytrigger</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1384,6 +1420,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>createTrainingEventForNewOrder_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>getFeedbacktriggerfireonce</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -13303,6 +13343,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Training_Events__c.Additional_Videos__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Training_Events__c.Alterations_to_skills_due_to_state_local__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13417,13 +13462,18 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Training_Events__c.Course_Order_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Course_Record_Processed_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Training_Events__c.Customer_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13553,6 +13603,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Training_Events__c.NAT_Types__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Training_Events__c.Number_in_Class__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13564,6 +13619,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Number_of_Instructors__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Training_Events__c.Pre_Approval__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13629,6 +13689,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Scheduling_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Training_Events__c.Send_Class_Certs_to_POC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15457,6 +15522,14 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>GeneratePDFHandlerInstCert</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>GeneratePDFHelper</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>ILTClassRosterPDF</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -15495,6 +15568,14 @@
     <pageAccesses>
         <apexPage>NewCaseComment</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>PDFDownloader</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>PDFDownloaderInstCert</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PHSS_ChangePasswordCommunity</apexPage>
@@ -15562,6 +15643,14 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>WebToCasePage</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>XLSDownloader</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>XLSDownloaderInstCert</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

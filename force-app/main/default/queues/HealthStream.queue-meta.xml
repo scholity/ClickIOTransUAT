@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>fakeemail@email.com</email>
+    <name>HealthStream</name>
+    <queueMembers>
+        <users>
+            <user>april.oliver@redcross.org</user>
+            <user>brooke.robinson@redcross.org</user>
+            <user>danyel.thomas@redcross.org</user>
+            <user>darlene.madarish@redcross.org</user>
+            <user>david.simpson@redcross.org</user>
+            <user>gina.gunn@redcross.org.transuat2</user>
+            <user>gloria.price@redcross.org</user>
+            <user>gregory.fulton@redcross.org</user>
+            <user>jami.horn@redcross.org</user>
+            <user>lisa.buzzelli@redcross.org</user>
+            <user>marianne.shrum@redcross.org</user>
+            <user>nicole.provance@redcross.org</user>
+            <user>paul.shavers@redcross.org</user>
+            <user>robynn.turlington@redcross.org</user>
+            <user>ryan.dorman@redcross.org</user>
+            <user>scott.palmitier@redcross.org</user>
+            <user>tara.phillips@redcross.org</user>
+            <user>thomas.harvey@redcross.org</user>
+            <user>tonya.sweatt@redcross.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

@@ -8,28 +8,115 @@ public with sharing class phss_cc_CartControllerTest {
 
     public static Opportunity testOpportunity;
     public static Map<String, Object> testData;
-    public static List<ccrz__E_Product__c> products;
+    public static List<ccrz__E_Product__c> testProducts;
     public static ccrz__E_Cart__c testCart;
+    public static List<ccrz__E_StoredPayment__c> testStoredPayments;
     public static Map<String, Object> productQuantityMap;
+
+    public static Account testAccount;
+    public static Geo_Location__c testLocation;
+    public static redwing__ILT_Class__c testIltClass;
+    public static ccrz__E_Product__c testProduct;
+    public static ccrz__E_CartItem__c testCartItem;
 
     /**
      * @description Creates the basic testdata.
      */
     public static void setupTestData() {
-        testData = phss_cc_TestDataFactory.setupAccountAndProducts();
-        products = (List<ccrz__E_Product__c>) testData.get(phss_cc_TestDataFactory.TEST_PRODUCTS);
+        testData = phss_cc_TestDataFactory.setupAccountAndProducts(1);
+        testAccount = (Account) testData.get(phss_cc_TestDataFactory.TEST_ACCOUNT);
+        testProducts = (List<ccrz__E_Product__c>) testData.get(phss_cc_TestDataFactory.TEST_PRODUCTS);
+        testProduct = testProducts[0];
         testOpportunity = phss_cc_TestDataFactory.createInsertTestOpportunity((Account) testData.get(phss_cc_TestDataFactory.TEST_ACCOUNT));
         List<ccrz__E_Cart__c> testCarts = phss_cc_TestDataFactory.createInsertCartAndCartItems(1, testData, testOpportunity.Id);
 
-        //Create productQuantityMap
         productQuantityMap = new Map<String, Object>();
-        for (ccrz__E_Product__c product : products) {
+        for (ccrz__E_Product__c product : testProducts) {
             String productSfid = String.valueOf(product.Id);
-            productQuantityMap.put(productSfid, 2);
+            productQuantityMap.put(productSfid, 1);
         }
 
         testCart = testCarts[0];
-        phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
+        testStoredPayments = phss_cc_TestDataFactory.createInsertStoredPayment(1, testOpportunity);
+    }
+
+    public static void setupAdditional() {
+
+        testLocation = phss_cc_TestDataFactory.createInsertTestGeoLocation();
+
+        Map<String, Object> learningData = phss_cc_TestDataFactory.createInsertTestLearningObjects();
+        redwing__Training_Plan__c trainingPlan = (redwing__Training_Plan__c) learningData.get(phss_cc_TestDataFactory.TEST_TRAINING_PLAN);
+        trainingPlan.Classroom_Setting__c = 'Online';
+        trainingPlan.redwing__Status__c = 'Active';
+        update trainingPlan;
+
+        Course_Catalog__c catalog = new Course_Catalog__c();
+        catalog.Name = 'Test Catalog';
+        catalog.Number_of_Students__c = 5;
+        insert catalog;
+
+        sked__Job__c job = (sked__Job__c) learningData.get(phss_cc_TestDataFactory.TEST_SKEDULO_JOB);
+        job.Temp_Course__c = catalog.Name;
+
+        testProduct.ccrz__InventoryType__c = 'COMMUNITY';
+        testProduct.LMS_Learning_Plan__c = trainingPlan.Id;
+        testProduct.Course_Catalog__c = catalog.Id;
+        update testProduct;
+        testIltClass = (redwing__ILT_Class__c) learningData.get(phss_cc_TestDataFactory.TEST_ILT_CLASS);
+
+        testCart.Opportunity__c = testOpportunity.Id;
+        update testCart;
+
+        List<ccrz__E_CartItem__c> cartItems = [
+                SELECT
+                        Id,
+                        ccrz__Product__c,
+                        ILT_Class__c
+                FROM
+                        ccrz__E_CartItem__c
+                WHERE
+                        ccrz__Cart__r.Opportunity__c = :testOpportunity.Id
+        ];
+        for (ccrz__E_CartItem__c cartItem : cartItems) {
+            cartItem.ccrz__Product__c = testProduct.Id;
+            cartItem.ILT_Class__c = testIltClass.Id;
+            testCartItem = cartItem;
+        }
+
+        update cartItems;
+
+        List<Voucher__c> vs = new List<Voucher__c>();
+        Voucher__c v1 = new Voucher__c();
+        v1.ILT_Class__c = testIltClass.id;
+        v1.Learning_Plan__c = trainingPlan.Id;
+        v1.CC_Product__c = testProduct.Id;
+        v1.Status__c = 'Temp Hold';
+        vs.add(v1);
+
+        /*
+        
+        Voucher__c v2 = new Voucher__c();
+        v2.ILT_Class__c = testIltClass.id;
+        v2.Learning_Plan__c = trainingPlan.Id;
+        v2.Status__c = 'Temp Hold';
+        vs.add(v2);
+
+        Voucher__c v3 = new Voucher__c();
+        v3.ILT_Class__c = testIltClass.id;
+        v3.Learning_Plan__c = trainingPlan.Id;
+        v3.Status__c = 'Issued';
+        vs.add(v3);
+
+         */
+
+        Voucher__c v4 = new Voucher__c();
+        v4.ILT_Class__c = testIltClass.id;
+        v4.Learning_Plan__c = trainingPlan.Id;
+        v4.Status__c = 'Issued';
+        vs.add(v4);
+
+        insert vs;
+
     }
 
     @isTest
@@ -49,7 +136,50 @@ public with sharing class phss_cc_CartControllerTest {
         setupTestData();
 
         Test.startTest();
-        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(null, null);
+
+        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+        for (ccrz__E_Product__c product : testProducts) {
+            String productSfid = String.valueOf(product.Id);
+            productQuantityMap.put(productSfid, 2);
+        }
+        Test.stopTest();
+
+        System.assertNotEquals(null, updateCartProductsResult);
+    }
+
+    @isTest
+    public static void updateCartProductsWithAddingVouchers() {
+        setupTestData();
+        setupAdditional();
+
+        Test.startTest();
+
+        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+
+        for (ccrz__E_Product__c product : testProducts) {
+            String productSfid = String.valueOf(product.Id);
+            productQuantityMap.put(productSfid, 3);
+        }
+        updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+
+        Test.stopTest();
+
+        System.assertNotEquals(null, updateCartProductsResult);
+    }
+
+    @isTest
+    public static void updateCartProductsWithSubtractingVouchers() {
+        setupTestData();
+        setupAdditional();
+
+        Test.startTest();
+
+        Map<String, Object> updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
+
+        for (ccrz__E_Product__c product : testProducts) {
+            String productSfid = String.valueOf(product.Id);
+            productQuantityMap.put(productSfid, 1);
+        }
         updateCartProductsResult = phss_cc_CartController.updateCartProducts(testOpportunity.Id, productQuantityMap);
         Test.stopTest();
 
@@ -58,16 +188,15 @@ public with sharing class phss_cc_CartControllerTest {
 
     @isTest
     public static void placeOrderOnCartCC() {
-    /*
         setupTestData();
-        
+        /*
+
         Test.startTest();
         Map<String, Object> placeOrderResult = phss_cc_CartController.placeOrderOnCartCC(null, null, null);
         placeOrderResult = phss_cc_CartController.placeOrderOnCartCC(testOpportunity.Id, testCart.ccrz__EncryptedId__c, cyberSourceResponseAccept);
         Test.stopTest();
 
-        System.assertNotEquals(null, placeOrderResult);
-        */
+        System.assertNotEquals(null, placeOrderResult);*/
     }
 
     @isTest
@@ -100,13 +229,76 @@ public with sharing class phss_cc_CartControllerTest {
 
         System.assertNotEquals(null, placeOrderResult);
     }
-    
+
+    @isTest
+    public static void placeOrderOnCartCB() {
+        setupTestData();
+
+        List<String> storedPaymentIDs = new List<String>();
+        for (ccrz__E_StoredPayment__c storedPayment : testStoredPayments) {
+            storedPaymentIDs.add(storedPayment.Id);
+        }
+
+        Test.startTest();
+        Map<String, Object> placeOrderResult = phss_cc_CartController.placeOrderOnCartCB(null, null, null);
+        placeOrderResult = phss_cc_CartController.placeOrderOnCartCB(testOpportunity.Id, testCart.ccrz__EncryptedId__c, storedPaymentIDs);
+        Test.stopTest();
+
+        System.assertNotEquals(null, placeOrderResult);
+    }
+
     @isTest
     public static void testGetOpportunityApprovalStatus() {
         setupTestData();
         Test.startTest();
         phss_cc_CartController.getOpportunityApprovalStatus (testOpportunity.Id);
         Test.stopTest();
+    }
+
+    @IsTest
+    public static void testFetchActiveCartAndItems() {
+        setupTestData();
+        testCart.ccrz__ActiveCart__c = true;
+        update testCart;
+
+        Test.startTest();
+        Map<String, Object> result = phss_cc_CartController.fetchActiveCartAndItems(testOpportunity.Id);
+        Test.stopTest();
+
+        System.assert(result != null);
+    }
+
+    @IsTest
+    public static void testUpdateCartItemQuantities() {
+        setupTestData();
+        testCart.ccrz__ActiveCart__c = true;
+        update testCart;
+
+        List<ccrz__E_CartItem__c> cartItems = [SELECT Id, ccrz__Quantity__c FROM ccrz__E_CartItem__c WHERE ccrz__Cart__c = :testCart.Id];
+        Map<String, Object> cartItemQuantityMap = new Map<String, Object>();
+        for (ccrz__E_CartItem__c cartItem : cartItems) {
+            cartItemQuantityMap.put(cartItem.Id, cartItem.ccrz__Quantity__c.intValue() + 1);
+        }
+
+        Test.startTest();
+        Map<String, Object> result = phss_cc_CartController.updateCartItemQuantities(testOpportunity.Id, cartItemQuantityMap);
+        Test.stopTest();
+
+        System.assert(result != null);
+        if (result != null) {
+            Integer inputTotal = 0;
+            for (String cartItemId : cartItemQuantityMap.keySet()) {
+                inputTotal += (Integer) cartItemQuantityMap.get(cartItemId);
+            }
+
+            Map<String, Object> quantityMap = (Map<String, Object>) result.get(phss_cc_CartUtil.CART_ITEM_QUANTITY_MAP_KEY);
+            Integer resultTotal = 0;
+            for (String cartItemId : quantityMap.keySet()) {
+                resultTotal += ((Decimal) quantityMap.get(cartItemId)).intValue();
+            }
+
+            System.assertEquals(inputTotal, resultTotal);
+        }
     }
     
     @isTest

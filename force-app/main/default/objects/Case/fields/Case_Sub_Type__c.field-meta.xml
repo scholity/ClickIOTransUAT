@@ -268,6 +268,11 @@
                 <label>Health Fairs</label>
             </value>
             <value>
+                <fullName>HealthStream</fullName>
+                <default>false</default>
+                <label>HealthStream</label>
+            </value>
+            <value>
                 <fullName>Incorrect</fullName>
                 <default>false</default>
                 <label>Incorrect</label>
@@ -793,6 +798,11 @@
         <valueSettings>
             <controllingFieldValue>Instructors</controllingFieldValue>
             <valueName>Certifications</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <controllingFieldValue>Course Records</controllingFieldValue>
+            <valueName>HealthStream</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Instructors</controllingFieldValue>

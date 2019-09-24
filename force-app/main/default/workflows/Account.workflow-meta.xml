@@ -274,7 +274,7 @@
             <name>Electronic_Invoice_Delivery_Opt_In_Alert</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Account.Invoice_Delivery_Type__c</field>
             <operation>equals</operation>

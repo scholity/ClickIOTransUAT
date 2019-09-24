@@ -2202,7 +2202,7 @@ CreatedBy.FirstName = &quot;BillingRequestForm&quot;,
             <name>Set_to_Finance_Queue</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>equals</operation>

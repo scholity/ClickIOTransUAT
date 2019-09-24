@@ -7,7 +7,7 @@
    
    The endpoint for this service is https://<mycommunitydomain>/learner/services/apexrest/PHSS/fetchCompletion/
 */
-@RestResource(urlMapping='/PHSS/fetchCompletion')
+@RestResource(urlMapping='/PHSS/fetchCompletion2')
 global without sharing class PHSS_fetchCompletion {
     
     @HttpPost

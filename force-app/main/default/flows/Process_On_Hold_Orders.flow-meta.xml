@@ -17,10 +17,30 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Clear_Collection</name>
+        <label>Clear Collection</label>
+        <locationX>516</locationX>
+        <locationY>406</locationY>
+        <assignmentItems>
+            <assignToReference>colOutOrder</assignToReference>
+            <operator>RemoveAll</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vTenCount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Order_Status</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Order_Status</name>
         <label>Set Order Status</label>
-        <locationX>344</locationX>
-        <locationY>405</locationY>
+        <locationX>347</locationX>
+        <locationY>454</locationY>
         <assignmentItems>
             <assignToReference>sOrders.Error_Message__c</assignToReference>
             <operator>Assign</operator>
@@ -28,10 +48,48 @@
                 <stringValue>Reprocess</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>vTenCount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>fTenCount</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_to_Output_Collection</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Release_10_at_a_time</name>
+        <label>Release 10 at a time</label>
+        <locationX>337</locationX>
+        <locationY>301</locationY>
+        <defaultConnector>
+            <targetReference>Set_Order_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>TenCount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>vTenCount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>10.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Orders</targetReference>
+            </connector>
+            <label>TenCount</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>fTenCount</name>
+        <dataType>Number</dataType>
+        <expression>{!vTenCount} + 1</expression>
+        <scale>2</scale>
+    </formulas>
     <interviewLabel>Process On Hold Orders {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Process On Hold Orders</label>
     <loops>
@@ -43,7 +101,7 @@
         <collectionReference>colOrder</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Set_Order_Status</targetReference>
+            <targetReference>Release_10_at_a_time</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Change_All_On_Hold_Records_to_Submitted</targetReference>
@@ -96,11 +154,21 @@
         <name>Change_All_On_Hold_Records_to_Submitted</name>
         <label>Change All On Hold Records to Submitted</label>
         <locationX>474</locationX>
-        <locationY>186</locationY>
+        <locationY>185</locationY>
+        <inputReference>colOutOrder</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Orders</name>
+        <label>Update Orders</label>
+        <locationX>514</locationX>
+        <locationY>305</locationY>
+        <connector>
+            <targetReference>Clear_Collection</targetReference>
+        </connector>
         <inputReference>colOutOrder</inputReference>
     </recordUpdates>
     <startElementReference>Get_Account_On_Hold_Orders</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>colOrder</name>
         <dataType>SObject</dataType>
@@ -131,5 +199,16 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>ccrz__E_Order__c</objectType>
+    </variables>
+    <variables>
+        <name>vTenCount</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>10.0</numberValue>
+        </value>
     </variables>
 </Flow>

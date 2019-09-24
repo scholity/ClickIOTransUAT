@@ -106,7 +106,92 @@ public with sharing class phss_cc_CartUtilTest {
         System.assert(fetchActiveCartResponse.containsKey(phss_cc_CartUtil.PRODUCT_MAP_KEY));
         System.assert(fetchActiveCartResponse.containsKey(phss_cc_CartUtil.PRODUCT_QUANTITY_MAP_KEY));
         System.assert(fetchActiveCartResponse.containsKey(phss_cc_CartUtil.CART_TOTAL_KEY));
+    }
 
+    /**
+     * @description Tests if a cart is correctly fetched by its encrypted Id.
+     */
+    @IsTest
+    static void testFetchCart() {
+        setupTestData();
+        List<ccrz__E_Cart__c> carts = phss_cc_TestDataFactory.createInsertCartAndCartItems(1, testData, testOpportunity.Id);
+        String encryptedCartId = carts[0].ccrz__EncryptedId__c;
+
+        Test.startTest();
+        ccrz__E_Cart__c cart = phss_cc_CartUtil.fetchCart(encryptedCartId);
+        Test.stopTest();
+
+        System.assert(cart != null);
+        System.assertEquals(encryptedCartId, cart.ccrz__EncryptedId__c);
+    }
+
+    /**
+     * @description Tests if a cart is correctly fetched by its Id.
+     */
+    @IsTest
+    static void testFetchCartById() {
+        setupTestData();
+        List<ccrz__E_Cart__c> carts = phss_cc_TestDataFactory.createInsertCartAndCartItems(1, testData, testOpportunity.Id);
+        String cartId = carts[0].Id;
+
+        Test.startTest();
+        ccrz__E_Cart__c cart = phss_cc_CartUtil.fetchCartById(cartId);
+        Test.stopTest();
+
+        System.assert(cart != null);
+        System.assertEquals(cartId, cart.Id);
+    }
+
+    /**
+     * @description Tests if a cart and its items can be fetched by the opportunity Id.
+     */
+    @IsTest
+    static void testFetchActiveCartAndItems() {
+        setupTestData();
+        List<ccrz__E_Cart__c> carts = phss_cc_TestDataFactory.createInsertCartAndCartItems(1, testData, testOpportunity.Id);
+        ccrz__E_Cart__c cart = carts[0];
+        cart.ccrz__ActiveCart__c = true;
+        update cart;
+
+        Test.startTest();
+        Map<String, Object> result = phss_cc_CartUtil.fetchActiveCartAndItems(testOpportunity.Id);
+        Test.stopTest();
+
+        System.assert(result != null);
+    }
+
+    /**
+     * @description Tests if the cart item quantities can be successfully updated
+     */
+    @IsTest
+    static void testUpdateCartItemQuantities() {
+        setupTestData();
+        ccrz__E_Cart__c cart = phss_cc_TestDataFactory.createInsertCartAndCartItems(1, testData, testOpportunity.Id)[0];
+        List<ccrz__E_CartItem__c> cartItems = [SELECT Id, ccrz__Quantity__c FROM ccrz__E_CartItem__c WHERE ccrz__Cart__c = :cart.Id];
+        Map<String, Object> cartItemQuantityMap = new Map<String, Object>();
+        for (ccrz__E_CartItem__c cartItem : cartItems) {
+            cartItemQuantityMap.put(cartItem.Id, cartItem.ccrz__Quantity__c.intValue() + 1);
+        }
+
+        Test.startTest();
+        Map<String, Object> result = phss_cc_CartUtil.updateCartItemQuantities(testOpportunity.Id, cartItemQuantityMap);
+        Test.stopTest();
+
+        System.assert(result != null);
+        if (result != null) {
+            Integer inputTotal = 0;
+            for (String cartItemId : cartItemQuantityMap.keySet()) {
+                inputTotal += (Integer) cartItemQuantityMap.get(cartItemId);
+            }
+
+            Map<String, Object> quantityMap = (Map<String, Object>) result.get(phss_cc_CartUtil.CART_ITEM_QUANTITY_MAP_KEY);
+            Integer resultTotal = 0;
+            for (String cartItemId : quantityMap.keySet()) {
+                resultTotal += ((Decimal) quantityMap.get(cartItemId)).intValue();
+            }
+
+            System.assertEquals(inputTotal, resultTotal);
+        }
     }
 
     /**

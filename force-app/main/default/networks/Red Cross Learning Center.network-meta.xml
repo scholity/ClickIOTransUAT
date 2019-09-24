@@ -25,7 +25,7 @@
     <enableTopicAssignmentRules>true</enableTopicAssignmentRules>
     <enableTopicSuggestions>false</enableTopicSuggestions>
     <enableUpDownVote>true</enableUpDownVote>
-    <forgotPasswordTemplate>All/PHSS_ICommunity_Forgot_Password</forgotPasswordTemplate>
+    <forgotPasswordTemplate>redwing__LMS_Email_Templates/Password_Reset</forgotPasswordTemplate>
     <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
     <navigationLinkSet>
         <navigationMenuItem>
@@ -51,7 +51,7 @@
                     <label>Classes I&#39;m Teaching</label>
                     <position>2</position>
                     <publiclyAvailable>false</publiclyAvailable>
-                    <target>/classesteaching</target>
+                    <target>/classes-im-teaching-new</target>
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
@@ -115,7 +115,7 @@
                     <label>Manage Instructors</label>
                     <position>4</position>
                     <publiclyAvailable>false</publiclyAvailable>
-                    <target>/verify-certifications</target>
+                    <target>/verify-certifications-new</target>
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>

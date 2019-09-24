@@ -53,17 +53,15 @@
      * @param event
      * @param helper
      */
-    productCountIncrement: function (component, event, helper) {
-        var productQuantityMap = component.get('v.productQuantityMap');
-        var productSfid = event.getParam('productSfid');
-        if (isNaN(productQuantityMap[productSfid])) {
-            productQuantityMap[productSfid] = 1;
+    cartItemQuantityIncrement: function (component, event, helper) {
+        var quantities = component.get('v.cartItemQuantityMap');
+        var cartItemId = event.getParam('cartItemId');
+        var cartItemQty = quantities[cartItemId];
+        if (isNaN(cartItemQty)) {
+            quantities[cartItemId] = 1;
+        } else {
+            quantities[cartItemId] = Number(cartItemQty) + 1;
         }
-        else {
-            productQuantityMap[productSfid] = Number(productQuantityMap[productSfid]) + 1;
-        }
-
-        component.set('v.productQuantityMap', productQuantityMap);
         component.set('v.isCartUpdated', true);
     },
 
@@ -73,16 +71,15 @@
      * @param event
      * @param helper
      */
-    productCountDecrement: function (component, event, helper) {
-        var productQuantityMap = component.get('v.productQuantityMap');
-        var productSfid = event.getParam('productSfid');
-        if (isNaN(productQuantityMap[productSfid]) || productQuantityMap[productSfid] == 0) {
-            productQuantityMap[productSfid] = 0;
+    cartItemQuantityDecrement: function (component, event, helper) {
+        var quantities = component.get('v.cartItemQuantityMap');
+        var cartItemId = event.getParam('cartItemId');
+        var cartItemQty = quantities[cartItemId];
+        if (isNaN(cartItemQty)) {
+            quantities[cartItemId] = 0;
+        } else {
+            quantities[cartItemId] = Number(cartItemQty) - 1;
         }
-        else {
-            productQuantityMap[productSfid] = Number(productQuantityMap[productSfid]) - 1;
-        }
-        component.set('v.productQuantityMap', productQuantityMap);
         component.set('v.isCartUpdated', true);
     },
 

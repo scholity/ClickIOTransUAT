@@ -7,7 +7,7 @@ Modified :
 Objective:  
  
 *****************************************************************************************************/ 
-public with sharing class cls_Channel_Compensation {
+public without sharing class cls_Channel_Compensation {
     
     public static void updateTerritoryCodeLookup(List <Channel_Compensation__c> channels) {
         

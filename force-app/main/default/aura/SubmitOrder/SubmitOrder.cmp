@@ -17,6 +17,11 @@
                           title		= "Submit Order Credit"
                           onclick	= "{!c.showStep1}"
                           class		= "slds-button_brand intialButton"/>
+        <!-- 
+        <lightning:button label		= "Submit Order Credit"
+                          title		= "Submit Order Credit"
+                          onclick	= "{!c.doNothing}"
+                          class		= "slds-button_brand intialButton"/> -->
         
     </aura:if>
     

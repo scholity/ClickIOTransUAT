@@ -1,0 +1,139 @@
+<apex:page Controller="GeneratePDFHandler" standardStylesheets="false" applyHtmlTag="false" showHeader="false" renderAs="PDF">    
+    <!--{!PDFData}-->
+    <head>
+        <style type="text/CSS">
+            body{
+            font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;         
+            }
+            
+            .center{
+            text-align:center;
+            }
+            
+            .table-bordered {
+            border-collapse : collapse;
+            font-size : .7em;
+            }
+            
+            
+            thead>tr>th {
+            vertical-align: bottom;
+            border:1px solid black;
+            border-spacing: 0;
+            text-align:center;
+            border-collapse: collapse;
+            background : #e31b2e;
+            color:white;
+            }
+            
+            td {
+            vertical-align: bottom;
+            border:1px solid black;
+            border-spacing: 0;
+            border-collapse: collapse;
+            text-align:center;
+            }
+            
+            .header>td{
+            font-weight:bold;
+            background : #c4c4c4;               
+            }
+            h2{
+            font-weight:bold;
+            font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;         
+            font-size : .7em;          
+            }
+            .echoArea>td{
+            padding:10px;
+            }
+            table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            }
+            @page {
+            size: landscape;
+            
+            
+            @bottom-center {
+            content: "Page " counter(page) " of " counter(pages);
+            }
+            
+            
+            }
+            
+            .page-break {
+            display:block;
+            page-break-after:always;
+            }
+            
+            body {
+            font-family: Arial Unicode MS;
+            }
+            
+        </style>
+    </head>
+    
+    <body>
+        <apex:image url="{!$Resource.PHSS_RedCrossLogo}" width="200" height="75"/>
+        <apex:outputPanel rendered="{!Classtype == 'Current'}">
+            <h4> Current Classes </h4>
+        </apex:outputPanel> 
+        
+        <apex:outputPanel rendered="{!Classtype == 'History'}">
+            <h4> Classes History</h4>
+        </apex:outputPanel>
+        
+        <table width="100%" border="1" class="table-bordered" style="-Fs-table-paginate: paginate;">
+            <thead>
+                <tr>
+                    <th width="90px;">Course</th>
+                    <th width="90px;">Class Id</th>
+                    <th width="80px;">Start Date</th>
+                    <th width="80px;">End Date</th>
+                    <th width="90px;">Number of Students</th>
+                    <th width="250px;">Start Time</th>
+                    <!-- <th width="90px;">Days</th> -->
+                    <th width="90px;">Company</th>
+                    <th width="90px;">Instructor</th>
+                    <th width="150px;">Location</th>
+                    <th width="90px;">Class Setting</th>
+                    <th width="90px;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!classWrapperContent}" var="tableRow" >
+                    <tr Style="page-break-inside: avoid">
+                        <td>{!tableRow.lpName}</td>
+                        <td>{!tableRow.classOfferingId}</td>
+                        <td>
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                <apex:param value="{!tableRow.startDate}" /> 
+                            </apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                <apex:param value="{!tableRow.endDate}" /> 
+                            </apex:outputText>
+                        </td>
+                        <td>{!tableRow.numberOfStudents}</td>
+                        <td>{!tableRow.startTime}</td>
+                        <!-- <td>{!tableRow.days}</td> -->
+                        <td>{!tableRow.company}</td>
+                        <td>{!tableRow.instructorName}</td>
+                        <td>
+                            <apex:outputpanel rendered="{!tableRow.location != null}">
+                                <apex:outputText value="{!tableRow.location.address1}" /><br/>
+                                <apex:outputText value="{!tableRow.location.city}" />&nbsp;
+                                <apex:outputText value="{!tableRow.location.country}" />&nbsp;
+                                <apex:outputText value="{!tableRow.location.province}" />&nbsp;<br/>
+                                <apex:outputText value="{!tableRow.location.postalCode}" />
+                            </apex:outputpanel>
+                        </td>
+                        <td>{!tableRow.classSettings}</td>
+                        <td>{!tableRow.status}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </body>   
+</apex:page>

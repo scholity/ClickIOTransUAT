@@ -104,6 +104,13 @@
                 <elementReference>Effective_Start_Date</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>HighestDiscount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOppurtunity.Highest_Product_Discount__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Upsell</targetReference>
         </connector>
@@ -365,8 +372,8 @@
     <decisions>
         <name>Account_Setting_Record_Exists</name>
         <label>Account Setting Record Exists</label>
-        <locationX>430</locationX>
-        <locationY>988</locationY>
+        <locationX>309</locationX>
+        <locationY>1004</locationY>
         <defaultConnector>
             <targetReference>Approval_Levels</targetReference>
         </defaultConnector>
@@ -487,8 +494,8 @@
     <decisions>
         <name>Approval_Levels</name>
         <label>Approval Levels</label>
-        <locationX>875</locationX>
-        <locationY>985</locationY>
+        <locationX>886</locationX>
+        <locationY>1009</locationY>
         <defaultConnector>
             <targetReference>Set_No_Approval</targetReference>
         </defaultConnector>
@@ -604,7 +611,7 @@
         <name>Include_Price_List</name>
         <label>Include Price List</label>
         <locationX>909</locationX>
-        <locationY>717</locationY>
+        <locationY>721</locationY>
         <defaultConnector>
             <targetReference>Loop_through_Price_Lists_to_Add</targetReference>
         </defaultConnector>
@@ -628,8 +635,8 @@
     <decisions>
         <name>Is_Discount_Higher</name>
         <label>Is Discount Higher</label>
-        <locationX>1215</locationX>
-        <locationY>723</locationY>
+        <locationX>1171</locationX>
+        <locationY>725</locationY>
         <defaultConnector>
             <targetReference>Assign_Price_Lists</targetReference>
         </defaultConnector>
@@ -880,8 +887,8 @@
     <loops>
         <name>Loop_through_Price_Lists_to_Add</name>
         <label>Loop through Price Lists to Add</label>
-        <locationX>670</locationX>
-        <locationY>715</locationY>
+        <locationX>674</locationX>
+        <locationY>700</locationY>
         <assignNextValueToReference>sPriceLists</assignNextValueToReference>
         <collectionReference>colAvailablePriceLists</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -896,8 +903,8 @@
         <description>Set end date of price lists associated to price group</description>
         <name>Set_End_Date_of_all_Price_Lists</name>
         <label>Set End Date of all Price Lists</label>
-        <locationX>1474</locationX>
-        <locationY>192</locationY>
+        <locationX>1491</locationX>
+        <locationY>193</locationY>
         <assignNextValueToReference>sPriceGroupPriceListLoop</assignNextValueToReference>
         <collectionReference>colPriceGroupPriceLists</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -918,8 +925,8 @@
     <recordCreates>
         <name>Create_CC_Account_Setup</name>
         <label>Create CC Account Setup</label>
-        <locationX>425</locationX>
-        <locationY>1111</locationY>
+        <locationX>498</locationX>
+        <locationY>1052</locationY>
         <connector>
             <targetReference>Approval_Levels</targetReference>
         </connector>
