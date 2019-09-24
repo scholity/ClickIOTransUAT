@@ -1,0 +1,49 @@
+<apex:page controller="GeneratePDFHandlerInstCert" showHeader="false">
+    
+    <apex:includeLightning />
+    
+    <apex:includeScript value="/lightning/lightning.out.js" />    
+    
+    <!-- Page code -->
+    <apex:form >
+        <apex:inputhidden id="hiddenData" value="{!PDFData}"/>
+        <apex:inputhidden id="hiddenDownloadtype" value="{!Downloadtype}"/>
+        
+        <apex:actionfunction name="jsGeneratePDF" action="{!downloadPDF}" />
+        
+        <div id="lightning" />
+        
+        <script>
+        function saveData(data, downloadtypeCmp, callback){
+            var printData = document.getElementById('{!$Component.hiddenData}');
+            printData.value = JSON.stringify(data);
+            var downloadtype = document.getElementById('{!$Component.hiddenDownloadtype}');
+            downloadtype.value = downloadtypeCmp;
+            
+            //invoke PDF Generation
+            jsGeneratePDF();
+            
+            //invoke callback;
+            if(typeof callback == 'function') callback();
+        }
+        
+        function loadComponents(){
+            console.log("Loading lightning component: InstructorwithCertifications");
+            
+            $Lightning.use("c:PHSS_GeneratePDF", function() {
+                $Lightning.createComponent("c:InstructorwithCertifications",
+                                           { 
+                                               sendData : saveData,
+                                               recordId : "{!$CurrentPage.parameters.id}"                    
+                                           },
+                                           "lightning",
+                                           function(cmp) {
+                                               // do some stuff
+                                           });
+            });
+        }
+        
+        loadComponents();
+        </script>
+    </apex:form>
+</apex:page>

@@ -32,8 +32,9 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
     @TestVisible private static final String CURRENCY_CODE_KEY = 'currencyCode';
     private static final String ORDER_KEY = 'order';
     private static final String STOREFRONT_KEY = 'storefront';
+    @TestVisible private static final String AUTH_TRANSACTION_PAYMENT_ID_KEY = 'authorizationTransactionPaymentId';
+    @TestVisible private static final String CAPTURE_TRANSACTION_PAYMENT_ID_KEY = 'captureTransactionPaymentId';
     @TestVisible private static final String TRANSACTION_PAYMENT_AMOUNT_KEY = 'transactionPaymentAmount';
-    private static final String TRANSACTION_PAYMENT_ID_KEY = 'transactionPaymentId';
     @TestVisible private static final String TRANSACTION_PAYMENT_NAME_KEY = 'transactionPaymentName';
     @TestVisible private static final String TRANSACTION_REFERENCE_ID_KEY = 'transactionReferenceId';
     @TestVisible private static final String TRANSACTION_TIMESTAMP_KEY = 'transactionTimestamp';
@@ -52,7 +53,9 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
     private static final String FAILED_TO_FETCH_FULFILLMENT = 'Failed to fetch fulfillment.';
     private static final String FAILED_TO_FETCH_FULFILLMENT_ORDER_STOREFRONT = 'Failed to fetch the storefront from the fulfillment order.';
     private static final String FAILED_TO_GET_FULFILLMENT_DATA = 'Failed to get the fulfillment data.';
+    private static final String FAILED_TO_GET_CAPTURE_TRANSACTION_PAYMENT_ID = 'Failed to get capture transaction payment.';
     private static final String FAILED_TO_GET_TRANSACTION_PAYMENT_DATA = 'Failed to get transaction payment data.';
+    private static final String FAILED_TO_INITIALIZE_REFUND_TRANSACTION_PAYMENT = 'Failed to initialize refund transaction payment.';
     private static final String FAILED_TO_LOAD_CYBER_SOURCE_CONFIGS = 'Failed to load configurations.';
     private static final String FAILED_TO_SAVE_REFUND_CAPTURE_RESPONSE = 'Failed to save refund capture response.';
     private static final String INVALID_TRANSACTION_PAYMENT_AMOUNT = 'Invalid transaction payment amount';
@@ -82,7 +85,10 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
             getFulfillmentData(fulfillmentId, objectMap);
 
             String orderId = (String) objectMap.get(ORDER_KEY);
-            getTransactionPaymentDataForOrder(orderId, objectMap);
+            getTransactionReferenceId(orderId, objectMap);
+
+            String authTxnPmtId = (String) objectMap.get(AUTH_TRANSACTION_PAYMENT_ID_KEY);
+            getCaptureTransactionPaymentInfo(authTxnPmtId, objectMap);
 
             String storefront = (String) objectMap.get(STOREFRONT_KEY);
             loadCyberSourceConfigurations(storefront);
@@ -93,8 +99,8 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
                 HttpResponse response = http.send(request);
                 if (response.getStatusCode() == HTTP_STATUS_CODE_CREATED) {
                     Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-                    String transactionPaymentId = (String) objectMap.get(TRANSACTION_PAYMENT_ID_KEY);
-                    saveRefundCapture(data, transactionPaymentId);
+                    String captureTxnPmtId = (String) objectMap.get(CAPTURE_TRANSACTION_PAYMENT_ID_KEY);
+                    saveRefundCapture(data, authTxnPmtId, captureTxnPmtId);
                     phss_cc_FulfillmentUtil.completeFulfillment(fulfillmentId, null);
                 }
                 else {
@@ -118,15 +124,10 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
         }
     }
 
-	@testVisible
-    private static void saveRefundCapture(Map<String, Object> data, String sourceTransactionPaymentId) {
+    @TestVisible
+    public static void createRefundTransactionPayment(String authTransactionPaymentId) {
         try {
-            Map<String, Object> refundAmountDetails = (Map<String, Object>) data.get(REFUND_AMOUNT_DETAILS_KEY);
-            Decimal refundAmount = Decimal.valueOf((String) refundAmountDetails.get(REFUND_AMOUNT_KEY));
-
-            ccrz__E_TransactionPayment__c authTxn = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(sourceTransactionPaymentId);
-            authTxn.ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE;
-            update authTxn;
+            ccrz__E_TransactionPayment__c authTxn = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(authTransactionPaymentId);
 
             ccrz__E_TransactionPayment__c captureTxn = new ccrz__E_TransactionPayment__c();
             captureTxn.ccrz__Account__c = authTxn.ccrz__Account__c;
@@ -135,13 +136,32 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
             captureTxn.ccrz__CCOrder__c = authTxn.ccrz__CCOrder__c;
             captureTxn.ccrz__InvoiceAppliedFor__c = authTxn.ccrz__InvoiceAppliedFor__c;
             captureTxn.ccrz__PaymentType__c = authTxn.ccrz__PaymentType__c;
-            captureTxn.ccrz__RequestAmount__c = refundAmount;
+            captureTxn.ccrz__RequestAmount__c = authTxn.ccrz__Amount__c * -1;      // REVERSE THE SIGN to make the amount a positive number
             captureTxn.ccrz__SourceTransactionPayment__c = authTxn.Id;
             captureTxn.ccrz__Storefront__c = authTxn.ccrz__Storefront__c;
-            captureTxn.ccrz__TransactionPaymentId__c = (String) data.get(TRANSACTION_ID_KEY);
-            captureTxn.ccrz__TransactionTS__c = DatetimeUtil.parse((String) data.get(SUBMIT_TIME_UTC_KEY), DatetimeUtil.format.YYYY_MM_DDTHH_MM_SSZ);
             captureTxn.ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE;
             insert captureTxn;
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_INITIALIZE_REFUND_TRANSACTION_PAYMENT, e);
+        }
+    }
+
+	@testVisible
+    private static void saveRefundCapture(Map<String, Object> data, String authTxnPmtId, String captureTxnPmtId) {
+        try {
+            Map<String, Object> refundAmountDetails = (Map<String, Object>) data.get(REFUND_AMOUNT_DETAILS_KEY);
+            Decimal refundAmount = Decimal.valueOf((String) refundAmountDetails.get(REFUND_AMOUNT_KEY));
+
+            ccrz__E_TransactionPayment__c authTxn = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(authTxnPmtId);
+            authTxn.ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE;
+            update authTxn;
+
+            ccrz__E_TransactionPayment__c captureTxn = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(captureTxnPmtId);
+            captureTxn.ccrz__RequestAmount__c = refundAmount;
+            captureTxn.ccrz__TransactionPaymentId__c = (String) data.get(TRANSACTION_ID_KEY);
+            captureTxn.ccrz__TransactionTS__c = DatetimeUtil.parse((String) data.get(SUBMIT_TIME_UTC_KEY), DatetimeUtil.format.YYYY_MM_DDTHH_MM_SSZ);
+            update captureTxn;
 
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_SAVE_REFUND_CAPTURE_RESPONSE, e);
@@ -174,33 +194,60 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
      * @param objectMap
      */
     @TestVisible
-    private static void
-    getTransactionPaymentDataForOrder(String orderId, Map<String, Object> objectMap) {
+    private static void getTransactionReferenceId(String orderId, Map<String, Object> objectMap) {
         try {
-            List<ccrz__E_TransactionPayment__c> transactionPayments = [
-                    SELECT Id, ccrz__TransactionPaymentId__c, ccrz__TransactionType__c, Name
-                    FROM ccrz__E_TransactionPayment__c
-                    WHERE ccrz__CCOrder__c = :orderId
+            ccrz__E_TransactionPayment__c transactionPayment = [
+                    SELECT
+                            ccrz__TransactionPaymentId__c
+                    FROM
+                            ccrz__E_TransactionPayment__c
+                    WHERE
+                            ccrz__CCOrder__c = :orderId
+                    AND
+                            ccrz__TransactionType__c = :phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE
+                    LIMIT
+                            1
             ];
 
-            for (ccrz__E_TransactionPayment__c tp : transactionPayments) {
-                if (phss_cc_TransactionPaymentUtil.isAuthTransaction(tp)) {
-                    objectMap.put(TRANSACTION_PAYMENT_NAME_KEY, tp.Name);
-                }
-                else if (phss_cc_TransactionPaymentUtil.isCaptureTransaction(tp)) {
-                    objectMap.put(TRANSACTION_REFERENCE_ID_KEY, tp.ccrz__TransactionPaymentId__c);
-                }
-            }
-
-            if (String.isBlank((String) objectMap.get(TRANSACTION_PAYMENT_NAME_KEY))) {
-                throw new phss_cc_Exception(MISSING_TRANSACTION_PAYMENT_NAME);
-            }
-            if (String.isBlank((String) objectMap.get(TRANSACTION_REFERENCE_ID_KEY))) {
+            if (String.isEmpty(transactionPayment.ccrz__TransactionPaymentId__c)) {
                 throw new phss_cc_Exception(MISSING_TRANSACTION_REFERENCE_ID);
             }
 
+            objectMap.put(TRANSACTION_REFERENCE_ID_KEY, transactionPayment.ccrz__TransactionPaymentId__c);
+
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_GET_TRANSACTION_PAYMENT_DATA, e);
+        }
+    }
+
+    /**
+     * @description Fetches the ID of the capture transaction payment associated with the auth transaction payment
+     *
+     * @param authTransactionPaymentId
+     * @param objectMap
+     */
+    @TestVisible
+    private static void getCaptureTransactionPaymentInfo(String authTransactionPaymentId, Map<String, Object> objectMap) {
+        try {
+            ccrz__E_TransactionPayment__c transactionPayment = [
+                    SELECT
+                            Id,
+                            Name
+                    FROM
+                            ccrz__E_TransactionPayment__c
+                    WHERE
+                            ccrz__SourceTransactionPayment__c = :authTransactionPaymentId
+                    AND
+                            ccrz__TransactionType__c = :phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE
+                    LIMIT
+                            1
+            ];
+
+            objectMap.put(CAPTURE_TRANSACTION_PAYMENT_ID_KEY, transactionPayment.Id);
+            objectMap.put(TRANSACTION_PAYMENT_NAME_KEY, transactionPayment.Name);
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_GET_CAPTURE_TRANSACTION_PAYMENT_ID, e);
         }
     }
 
@@ -248,7 +295,7 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
             }
 
             objectMap.put(STOREFRONT_KEY, fulfillment.Order__r.ccrz__Storefront__c);
-            objectMap.put(TRANSACTION_PAYMENT_ID_KEY, fulfillment.CC_Transaction_Payment__c);
+            objectMap.put(AUTH_TRANSACTION_PAYMENT_ID_KEY, fulfillment.CC_Transaction_Payment__c);
             objectMap.put(TRANSACTION_PAYMENT_AMOUNT_KEY, fulfillment.CC_Transaction_Payment__r.ccrz__Amount__c);
             objectMap.put(CURRENCY_CODE_KEY, fulfillment.CC_Transaction_Payment__r.ccrz__CurrencyISOCode__c);
             objectMap.put(ORDER_KEY, orderId);

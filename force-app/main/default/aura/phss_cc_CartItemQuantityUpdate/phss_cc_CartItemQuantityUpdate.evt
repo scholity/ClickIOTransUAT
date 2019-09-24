@@ -1,0 +1,7 @@
+<!--
+ - Created by jbarker on 2019-09-11.
+ -->
+
+<aura:event type="COMPONENT" description="phss_cc_CartItemQuantityUpdate">
+    <aura:attribute name="cartItemId" type="String" required="true"/>
+</aura:event>

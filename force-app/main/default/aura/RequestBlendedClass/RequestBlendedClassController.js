@@ -600,9 +600,17 @@
 
     addSession : function(component, event, helper) {
         var tempList = component.get("v.cpsWrap.sessionList");
+        console.log("tempList");
+        console.log(tempList);
+        console.log(tempList[0].timeZone);
+        console.log(tempList[0].timeZoneName);
+
+        //console.log(tempList.timeZoneName[0]);
         tempList.push({'classDate':'',
             'startTime':'',
-            'endTime':''
+            'endTime':'',
+            'timeZone':tempList[0].timeZone,
+            'timeZoneName':tempList[0].timeZoneName
             });
         component.set("v.cpsWrap.sessionList",tempList);
 

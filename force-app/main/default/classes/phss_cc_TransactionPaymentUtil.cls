@@ -12,6 +12,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
     public static final String CAPTURE_TRANSACTION_TYPE = 'CAPTURE';
 
     // error messages
+    public static final String FAILED_TO_CREATE_CAPTURE_TRANSACTION_PAYMENT_FROM_AUTH_TRANSACTION_PAYMENT = 'Failed to create CAPTURE transaction payment from AUTH transaction payment.';
     public static final String FAILED_TO_OBTAIN_TRANSACTION_PAYMENTS_FOR_STORED_PAYMENT = 'Failed to obtain the transaction payments for the stored payment.';
 
 
@@ -33,6 +34,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
                             ccrz__AccountType__c,
                             ccrz__Amount__c,
                             ccrz__CCOrder__c,
+                            ccrz__CCOrder__r.Opportunity_Order__c,
                             ccrz__InvoiceAppliedFor__c,
                             ccrz__ParentTransactionPayment__c,
                             ccrz__PaymentType__c,
@@ -42,7 +44,8 @@ public with sharing class phss_cc_TransactionPaymentUtil {
                             ccrz__Token__c,
                             ccrz__TransactionPaymentId__c,
                             ccrz__TransactionTS__c,
-                            ccrz__TransactionType__c
+                            ccrz__TransactionType__c,
+                            Name
                     FROM    ccrz__E_TransactionPayment__c
                     WHERE   Id = :transactionPaymentId
             ];
@@ -108,5 +111,32 @@ public with sharing class phss_cc_TransactionPaymentUtil {
             throw new phss_cc_Exception(FAILED_TO_OBTAIN_TRANSACTION_PAYMENTS_FOR_STORED_PAYMENT, e);
         }
         return transactionPayments;
+    }
+
+    /**
+     * @description Creates a CAPTURE transaction payment based on the specified AUTH transaction payment
+     *
+     * @param authTransactionPaymentId
+     *
+     * @return
+     */
+    public static ccrz__E_TransactionPayment__c createCaptureTransactionPaymentFromAuthTransactionPayment(String authTransactionPaymentId) {
+        try {
+            ccrz__E_TransactionPayment__c authTxnPmt = fetchTransactionPayment(authTransactionPaymentId);
+
+            ccrz__E_TransactionPayment__c captureTxnPmt = new ccrz__E_TransactionPayment__c();
+            captureTxnPmt.ccrz__Account__c = authTxnPmt.ccrz__Account__c;
+            captureTxnPmt.ccrz__AccountType__c = authTxnPmt.ccrz__AccountType__c;
+            captureTxnPmt.ccrz__Amount__c = authTxnPmt.ccrz__Amount__c;
+            captureTxnPmt.ccrz__CCOrder__c = authTxnPmt.ccrz__CCOrder__c;
+            captureTxnPmt.ccrz__SourceTransactionPayment__c = authTxnPmt.Id;
+            captureTxnPmt.ccrz__Storefront__c = authTxnPmt.ccrz__Storefront__c;
+            captureTxnPmt.ccrz__TransactionType__c = CAPTURE_TRANSACTION_TYPE;
+            insert captureTxnPmt;
+            return captureTxnPmt;
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_CREATE_CAPTURE_TRANSACTION_PAYMENT_FROM_AUTH_TRANSACTION_PAYMENT, e);
+        }
     }
 }

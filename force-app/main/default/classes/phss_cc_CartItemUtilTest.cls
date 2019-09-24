@@ -53,4 +53,50 @@ public with sharing class phss_cc_CartItemUtilTest {
         System.assert(cartItem == null);
     }
 
+    /**
+     * @description Tests a fetch of the cart items by their IDs.
+     */
+    @IsTest
+    static void testGetCartItems() {
+        setupTestData();
+        Set<String> cartItemIdentifiers = new Set<String>();
+        List<ccrz__E_CartItem__c> cartItems = [SELECT Id FROM ccrz__E_CartItem__c WHERE ccrz__Cart__c = :testCart.Id];
+        for (ccrz__E_CartItem__c cartItem : cartItems) {
+            cartItemIdentifiers.add(cartItem.Id);
+        }
+
+        Test.startTest();
+        List<ccrz__E_CartItem__c> results = phss_cc_CartItemUtil.getCartItems(cartItemIdentifiers);
+        Test.stopTest();
+
+        System.assert(results != null);
+        if (results != null) {
+            System.assertEquals(cartItemIdentifiers.size(), results.size());
+        }
+    }
+
+    /**
+     * @description Tests a fetch of the cart items with no Id.
+     */
+    @IsTest
+    static void testGetCartItemsWithNoIdentifiers() {
+        Test.startTest();
+        List<ccrz__E_CartItem__c> results = phss_cc_CartItemUtil.getCartItems(null);
+        Test.stopTest();
+        System.assert(results == null);
+    }
+
+    /**
+     * @description Tests a fetch of the cart items with invalid Id.
+     */
+    @IsTest
+    static void testGetCartItemsWithInvalidId() {
+        Set<String> cartItemIdentifiers = new Set<String>{ '123456789' };
+
+        Test.startTest();
+        List<ccrz__E_CartItem__c> results = phss_cc_CartItemUtil.getCartItems(cartItemIdentifiers);
+        Test.stopTest();
+
+        System.assert(results.size() == 0);
+    }
 }

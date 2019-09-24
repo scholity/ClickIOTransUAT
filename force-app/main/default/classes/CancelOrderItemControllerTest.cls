@@ -170,7 +170,26 @@ private class CancelOrderItemControllerTest
         List<ccrz__E_OrderItem__c> initOrderItem4 = [SELECT Id, ccrz__OrderItemStatus__c FROM ccrz__E_OrderItem__c WHERE ccrz__Quantity__c = 1];
         
         Test.startTest();
-        	CancelOrderItemController.refundOI(initOrderItem4[0].Id, 'Course Cancelation', 'Bad Weather', '', 1 , '10', false);
+        	CancelOrderItemController.refundOI(initOrderItem4[0].Id, 'Course Cancelation', 'Bad Weather', '', 1 , '10', false, false);
+        Test.stopTest();
+    }
+    
+    @isTest
+    static void testRefundOI1()
+    {
+        
+        List<ccrz__E_OrderItem__c> initOrderItem4 = [SELECT Id, ccrz__OrderItemStatus__c FROM ccrz__E_OrderItem__c WHERE ccrz__Quantity__c = 1];
+        
+        ccrz__E_Product__c product2 = new ccrz__E_Product__c();
+        product2.Name = 'Test Prod';
+        product2.ccrz__SKU__c = 'CMCANCELFEE';
+        product2.ccrz__Quantityperunit__c = 2.0;
+        product2.ccrz__StartDate__c =  System.Today().addDays(2);
+        product2.ccrz__EndDate__c = System.Today().addDays(20);
+        insert product2;
+        
+        Test.startTest();
+        	CancelOrderItemController.refundOI(initOrderItem4[0].Id, 'Course Cancelation', 'Bad Weather', '', 1 , '10', false, true);
         Test.stopTest();
     }
     

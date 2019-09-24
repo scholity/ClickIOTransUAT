@@ -33,10 +33,26 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Achievement_Assignments</name>
-        <label>Set Achievement Assignments</label>
-        <locationX>463</locationX>
-        <locationY>598</locationY>
+        <name>Add_to_SDoc_Output</name>
+        <label>Add to SDoc Output</label>
+        <locationX>183</locationX>
+        <locationY>811</locationY>
+        <assignmentItems>
+            <assignToReference>colSDOCJob</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>sSDOCJob</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Output_Collection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Achievement_Information</name>
+        <label>Set Achievement Information</label>
+        <locationX>476</locationX>
+        <locationY>641</locationY>
         <assignmentItems>
             <assignToReference>sAchievementAssighments.redwing__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -45,9 +61,92 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Add_to_Output_Collection</targetReference>
+            <targetReference>Check_Achievement_Type</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_SDocs_Information</name>
+        <label>Set SDocs Information</label>
+        <locationX>354</locationX>
+        <locationY>812</locationY>
+        <assignmentItems>
+            <assignToReference>sSDOCJob.SDOC__Start__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sSDOCJob.SDOC__SendEmail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>0</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sSDOCJob.SDOC__Oid__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sAchievementAssighments.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sSDOCJob.SDOC__ObjApiName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>redwing__Achievement_Assignment__c</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sSDOCJob.SDOC__Doclist__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>a2u210000016nsWAAQ,a2u210000016nsXAAQ,a2u210000016SuAAAU</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sSDOCJob.SDOC__RunAs__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>implementationadmin@salesforce.com.transuat</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_SDoc_Output</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Achievement_Type</name>
+        <label>Check Achievement Type</label>
+        <locationX>343</locationX>
+        <locationY>643</locationY>
+        <defaultConnector>
+            <targetReference>Add_to_Output_Collection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Send_Certificate_Email</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>sAchievementAssighments.Achievement_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Certifications</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sAchievementAssighments.Achievement_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CEU</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_SDocs_Information</targetReference>
+            </connector>
+            <label>Send Certificate Email</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Need_Update</name>
         <label>Need Update</label>
@@ -68,7 +167,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Achievement_Assignments</targetReference>
+                <targetReference>Set_Achievement_Information</targetReference>
             </connector>
             <label>Status Check</label>
         </rules>
@@ -182,6 +281,13 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Sdoc</name>
+        <label>Create Sdoc</label>
+        <locationX>1034</locationX>
+        <locationY>377</locationY>
+        <inputReference>colSDOCJob</inputReference>
+    </recordCreates>
     <recordLookups>
         <name>Get_Achievement_Assignments</name>
         <label>Get Achievement Assignments</label>
@@ -202,6 +308,7 @@
         <outputReference>colAchievementAssignment</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>redwing__Status__c</queriedFields>
+        <queriedFields>Achievement_Type__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Fulfillment_Item</name>
@@ -276,10 +383,13 @@
         <label>Update Achievement Assignments</label>
         <locationX>843</locationX>
         <locationY>378</locationY>
+        <connector>
+            <targetReference>Create_Sdoc</targetReference>
+        </connector>
         <inputReference>outAchievementAssignments</inputReference>
     </recordUpdates>
     <startElementReference>Get_Fulfillment_Item</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>colAchievementAssignment</name>
         <dataType>SObject</dataType>
@@ -287,6 +397,14 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>redwing__Achievement_Assignment__c</objectType>
+    </variables>
+    <variables>
+        <name>colSDOCJob</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SDOC__SDJob__c</objectType>
     </variables>
     <variables>
         <name>colVoucher</name>
@@ -342,5 +460,13 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>ccrz__E_Product__c</objectType>
+    </variables>
+    <variables>
+        <name>sSDOCJob</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>SDOC__SDJob__c</objectType>
     </variables>
 </Flow>

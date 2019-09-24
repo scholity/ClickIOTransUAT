@@ -4,7 +4,6 @@
     <defaultValue>0</defaultValue>
     <description>Sum of Orders In Process</description>
     <externalId>false</externalId>
-    <inlineHelpText>Based on the total dollar value of open orders for all orders on the account. </inlineHelpText>
     <label>Open Order Amount</label>
     <precision>18</precision>
     <required>false</required>

@@ -30,7 +30,8 @@ public without sharing class CCOrderItemTriggerHandler {
         for(ccrz__E_OrderItem__c  oi: newCCOrderItems) {
             orderIds.add(oi.ccrz__Order__c);
             if(oi.ccrz__Product__c!=null) { productIds.add(oi.ccrz__Product__c); }
-            if(oi.ILT_Class__c!=null && oi.ILT_Class__c!=oldCCOrderItemMap.get(oi.Id).ILT_Class__c) { 
+            //if(oi.ILT_Class__c!=null && oi.ILT_Class__c!=oldCCOrderItemMap.get(oi.Id).ILT_Class__c) {
+            if(oi.ILT_Class__c!=null) {  
                 classIds.add(oi.ILT_Class__c); 
             }
         }
@@ -45,16 +46,23 @@ public without sharing class CCOrderItemTriggerHandler {
         Map<Id,redwing__ILT_Class__c> classMap = new Map<Id,redwing__ILT_Class__c>();
         if(!orderIds.isEmpty()) { orderMap = new Map<Id,ccrz__E_Order__c>([SELECT Id,ccrz__Account__c,ccrz__Account__r.BillingPostalCode,ccrz__ShipTo__c,ccrz__ShipTo__r.ccrz__PostalCode__c FROM ccrz__E_Order__c WHERE Id IN:orderIds]); }
         if(!productIds.isEmpty()) { productMap = new Map<Id,ccrz__E_Product__c>([SELECT Id,ccrz__InventoryType__c FROM ccrz__E_Product__c WHERE Id IN:productIds]); }
-        if(!classIds.isEmpty()) { classMap = new Map<Id,redwing__ILT_Class__c>([SELECT Id,Skedulo_Training_Event__c,Skedulo_Training_Event__r.Training_Zip__c FROM redwing__ILT_Class__c WHERE Id IN:classIds]); }  
+        if(!classIds.isEmpty()) { classMap = new Map<Id,redwing__ILT_Class__c>([SELECT Id,Skedulo_Training_Event__c,Skedulo_Training_Event__r.Training_Zip__c, Location_ZIP_Code__c FROM redwing__ILT_Class__c WHERE Id IN:classIds]); }  
+        
         for(ccrz__E_OrderItem__c  oi: newCCOrderItems) {
             if(productMap.containsKey(oi.ccrz__Product__c) && 
               (productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COURSE' || 
                productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COMMUNITY' || 
                productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='FEE') && 
                classMap.containsKey(oi.ILT_Class__c) && 
-               classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__c!=null && 
-               classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c!=null) {
-            	zipCodeSet.add(String.valueOf(classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c));
+               classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c != null
+               /*classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__c!=null && 
+               classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c!=null*/
+              ) {
+            	//zipCodeSet.add(String.valueOf(classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c));
+            	
+                system.debug(classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c);
+            	
+            	zipCodeSet.add(String.valueOf(classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c));
             } else if(productMap.containsKey(oi.ccrz__Product__c) && 
                       productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='STANDARD' &&
                       orderMap.containsKey(oi.ccrz__Order__c) &&
@@ -73,6 +81,8 @@ public without sharing class CCOrderItemTriggerHandler {
             system.debug(oi.ccrz__Order__c);
             system.debug(oi.ccrz__Order__r.ccrz__Account__c);
         }
+        
+        system.debug(zipCodeSet);
         if(!zipCodeSet.isEmpty()) {
             List<Geo_Location__c> glList = new List<Geo_Location__c>([SELECT Id, Postal_Code__c, GL_Unit_Code__c, GL_Unit_Code__r.TS_LOC__c, GL_Unit_Code__r.Unit_Code__c FROM Geo_Location__c WHERE Postal_Code__c IN:zipCodeSet]);
             Map<String,Geo_Location__c> glMap = new Map<String,Geo_Location__c>();
@@ -85,10 +95,13 @@ public without sharing class CCOrderItemTriggerHandler {
                   (productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COURSE' || 
                    productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COMMUNITY' || 
                    productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='FEE') && 
-                   classMap.containsKey(oi.ILT_Class__c) && 
-                   classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__c!=null && 
-                   classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c!=null) {
-                    zip = classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c;
+                   classMap.containsKey(oi.ILT_Class__c) &&
+                   classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c != null
+                   /*classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__c!=null && 
+                   classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c!=null*/
+                  ) {
+                    //zip = classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c;
+                    zip = classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c;
                 } else if(productMap.containsKey(oi.ccrz__Product__c) && 
                       	  productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='STANDARD' &&
                           orderMap.containsKey(oi.ccrz__Order__c) &&

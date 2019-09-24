@@ -252,6 +252,7 @@
         <apexClass>sked__RESTTransactionController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <description>Does Not give delete jobs / classes capability</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.sked__Rank__c</field>

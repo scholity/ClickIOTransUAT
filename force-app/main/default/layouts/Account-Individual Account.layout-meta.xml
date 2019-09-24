@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComAccountInsights</excludeButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -19,22 +16,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ParentId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Credit_Limit__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Credit_Available__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Open_Order_Amount__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Payment_Terms__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -146,6 +127,21 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>NewTask</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>13</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewEvent</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>LogACall</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>15</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -210,23 +206,9 @@
             <actionType>ProductivityAction</actionType>
             <sortOrder>12</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewTask</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>13</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewEvent</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>14</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>LogACall</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>15</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <excludeButtons>AddRelation</excludeButtons>
         <fields>CONTACT.FULL_NAME</fields>
         <fields>ACCCONRELATION.IS_DIRECT</fields>
         <fields>ACCCONRELATION.IS_ACTIVE</fields>
@@ -264,12 +246,12 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>OWNER.ALIAS</fields>
-        <fields>CREATED_DATE</fields>
         <fields>ccrz__OrderDate__c</fields>
+        <fields>Opportunity_Order__c</fields>
         <fields>ccrz__OrderStatus__c</fields>
         <fields>ccrz__TotalAmount__c</fields>
         <fields>ccrz__Storefront__c</fields>
+        <fields>OWNER.ALIAS</fields>
         <relatedList>ccrz__E_Order__c.ccrz__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -352,7 +334,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5B000000HHUh</masterLabel>
+        <masterLabel>00h21000000S90L</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

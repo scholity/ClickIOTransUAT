@@ -4,30 +4,32 @@ public without sharing class CommunitypageInstructors
     Public Static  Set<InstructorWrapper> Dupcheck;
     Public Static  List<InstructorWrapper> returnedlist;
     Public Static List<UserAccountWrapper> UserAccountlist;
+    
     @AuraEnabled
-    public static UserAccountWrapper getPicklistValues(String objName, String objInsName, String accId) {
-        UserAccountlist = new list<UserAccountWrapper>();
+    public static List<sObject> getPicklistValues(String objName, String accId) 
+    {
         User usr = [SELECT id, ContactId, Name, Profile.Name, Profile.UserLicense.Name FROM User WHERE id=: UserInfo.getUserId()];
         String sQuery = '';
-        String sUserQuery = '';
         List <sObject> returnList = new List <sObject> ();
         
-        
-        
-        sQuery =  'Select id, Name From Account Where id in (SELECT AccountId FROM AccountContactRelation WHERE ContactId = \'' +usr.ContactId+'\') Order By Name ASC';
-        List<Account> useracc = [Select id, Name From Account Where id in (SELECT AccountId FROM AccountContactRelation WHERE ContactId=:usr.ContactId)];
-        
-        List<String> ListRolesName= new List<String> {'Administrator','Instructor'};
-            sUserQuery =  'Select id, Name From User Where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE Roles IN: ListRolesName and AccountId IN:useracc) Order By Name ASC';    
-        
-        
-        List <sObject> lstOfAccRecords = Database.query(sQuery);
-        List <sObject> lstOfUsrRecords = Database.query(sUserQuery);
-        UserAccountWrapper us = new UserAccountWrapper();
-        us.Accountdetails=lstOfAccRecords;
-        us.Userdetails=lstOfUsrRecords;
-        System.debug('recprds..'+UserAccountlist);
-        return Us;
+        if(objName == 'Account')
+        {
+            sQuery =  'Select id, Name From ' +objName + ' Where id in (SELECT AccountId FROM AccountContactRelation WHERE ContactId = \'' +usr.ContactId+'\') Order By Name ASC';
+        }
+        else if(ObjName == 'User')
+        {
+            List<String> ListRolesName= new List<String> {'Administrator','Instructor'};
+                Boolean isInstructor = isInstructor(accId);
+            
+            if(isInstructor) {
+                sQuery =  'Select id, Name From ' +objName + ' Where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId = \'' +accId +'\' and ContactId = \'' +usr.ContactId+'\' and Roles IN: ListRolesName) Order By Name ASC';    
+            }
+            else {
+                sQuery =  'Select id, Name From ' +objName + ' Where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId = \'' +accId +'\' and Roles IN: ListRolesName) Order By Name ASC';    
+            }
+        }        
+        List <sObject> lstOfRecords = Database.query(sQuery);
+        return lstOfRecords;
     }
     
     // Get logged in user details:
@@ -76,19 +78,23 @@ public without sharing class CommunitypageInstructors
         }
         List <user> lstOfRecords=new List <user>(); 
         // Query to fetch the User List when its a specific Account 
-        if(accId != 'Not' && instId == 'Not' )
+        if(((List<Id>)JSON.deserializeStrict(accId ,List<Id>.class)).size () > 0 && ((List<Id>)JSON.deserializeStrict(instId ,List<Id>.class)).size () == 0 )
         {
-            sQuery =  'select id, Name, ContactId from User where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId = \'' +accId +'\' ) order by createdDate DESC limit 100';
+            List<Id> accIdsFromClient = (List<Id>)JSON.deserializeStrict(accId ,List<Id>.class);
+            sQuery =  'select id, Name, ContactId from User where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId In ( \'' +String.join(accIdsFromClient, '\',\'') +'\' )) order by createdDate DESC limit 100';
             
         }
-        else if(instId != 'Not' && accId =='Not')
+        else if(((List<Id>)JSON.deserializeStrict(instId ,List<Id>.class)).size () > 0 && ((List<Id>)JSON.deserializeStrict(accId ,List<Id>.class)).size () == 0)
         {
-            sQuery =  'select id, Name,ContactId from User where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId IN :SetAccIDs) and id = \'' +instId+'\' order by createdDate DESC limit 100';
+            List<Id> userIdsFromClient = (List<Id>)JSON.deserializeStrict(instId ,List<Id>.class);
+            sQuery =  'select id, Name,ContactId from User where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId IN :SetAccIDs) and id In( \'' + String.join(userIdsFromClient, '\',\'') + '\') order by createdDate DESC limit 100';
             System.debug('Contactlist >>>>>>>>>>>'+Database.query(sQuery));
         }
         else
         {
-            sQuery =  'select id, Name,ContactId from User where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId = \'' +accId +'\') and id = \'' +instId+'\' order by createdDate DESC limit 100';
+            List<Id> accIdsFromClient = (List<Id>)JSON.deserializeStrict(accId ,List<Id>.class);
+            List<Id> userIdsFromClient = (List<Id>)JSON.deserializeStrict(instId ,List<Id>.class);
+            sQuery =  'select id, Name,ContactId from User where ContactId in (SELECT ContactId FROM AccountContactRelation WHERE AccountId In ( \'' + String.join(accIdsFromClient, '\',\'') +'\')) and id In (\'' + String.join(userIdsFromClient, '\',\'') +'\') order by createdDate DESC limit 100';
         }
         lstOfRecords = Database.query(sQuery);
         
@@ -96,24 +102,30 @@ public without sharing class CommunitypageInstructors
             MapUsrCon.put(Obj.ContactId,Obj.Name);
         }
         system.debug('MapUsrCon+++++++++++++'+MapUsrCon);
-        User aUser;
-        if(instId!='Not'){
-            aUser = [SELECT id, ContactId, Name, Profile.Name, Profile.UserLicense.Name FROM User WHERE id=: instId];
-        }
-      
-        if(accId != 'Not' && instId == 'Not')
+        /*User aUser;
+if(instId!='Not'){
+aUser = [SELECT id, ContactId, Name, Profile.Name, Profile.UserLicense.Name FROM User WHERE id=: instId];
+}*/
+        
+        if(((List<Id>)JSON.deserializeStrict(accId ,List<Id>.class)).size () > 0 && ((List<Id>)JSON.deserializeStrict(instId ,List<Id>.class)).size () == 0 )
         {
-            
-            for(AccountContactRelation AccCon:[SELECT ContactId,Account.Name FROM AccountContactRelation WHERE AccountId =:accId ORDER BY Account.Name]){
+            List<Id> accIdsFromClient = (List<Id>)JSON.deserializeStrict(accId ,List<Id>.class);
+            for(AccountContactRelation AccCon:[SELECT ContactId,Account.Name FROM AccountContactRelation WHERE AccountId In : accIdsFromClient ORDER BY Account.Name]){
                 String UsrId=MapUsrCon.get(AccCon.ContactId);
                 MapUsrAcc.put(UsrId+'|'+AccCon.Account.Name,AccCon.Account.Name);
                 userAccountList.add(AccCon.Account.Name);
             }
         } 
-        else if(instId != 'Not' && accId =='Not')
+        else if(((List<Id>)JSON.deserializeStrict(instId ,List<Id>.class)).size () > 0 && ((List<Id>)JSON.deserializeStrict(accId ,List<Id>.class)).size () == 0)
         {
-            
-            for(AccountContactRelation AccCon:[SELECT ContactId,Account.Name FROM AccountContactRelation WHERE ContactId =:aUser.ContactId ORDER BY Account.Name]){
+            List<Id> userIdsFromClient = (List<Id>)JSON.deserializeStrict(instId ,List<Id>.class);
+            List<User> usersListWithContact = [SELECT id, ContactId, Name, Profile.Name, Profile.UserLicense.Name FROM User WHERE id In : userIdsFromClient];
+            List<Id> userContactIds = new List<Id>();
+            for(User userRec : usersListWithContact)
+            {
+                userContactIds.add(userRec.ContactId);
+            }
+            for(AccountContactRelation AccCon:[SELECT ContactId,Account.Name FROM AccountContactRelation WHERE ContactId In : userContactIds ORDER BY Account.Name]){
                 String UsrId=MapUsrCon.get(AccCon.ContactId);
                 MapUsrAcc.put(UsrId+'|'+AccCon.Account.Name,AccCon.Account.Name);
                 userAccountList.add(AccCon.Account.Name);
@@ -121,7 +133,15 @@ public without sharing class CommunitypageInstructors
         }
         else
         {
-            for(AccountContactRelation AccCon:[SELECT ContactId,Account.Name FROM AccountContactRelation WHERE ContactId =:aUser.ContactId and AccountId =:accId ORDER BY Account.Name]){
+            List<Id> accIdsFromClient = (List<Id>)JSON.deserializeStrict(accId ,List<Id>.class);
+            List<Id> userIdsFromClient = (List<Id>)JSON.deserializeStrict(instId ,List<Id>.class);
+            List<User> usersListWithContact = [SELECT id, ContactId, Name, Profile.Name, Profile.UserLicense.Name FROM User WHERE id In : userIdsFromClient];
+            List<Id> userContactIds = new List<Id>();
+            for(User userRec : usersListWithContact)
+            {
+                userContactIds.add(userRec.ContactId);
+            }
+            for(AccountContactRelation AccCon:[SELECT ContactId,Account.Name FROM AccountContactRelation WHERE ContactId In : userContactIds and AccountId In : accIdsFromClient ORDER BY Account.Name]){
                 String UsrId=MapUsrCon.get(AccCon.ContactId);
                 MapUsrAcc.put(UsrId+'|'+AccCon.Account.Name,AccCon.Account.Name);
                 userAccountList.add(AccCon.Account.Name);
@@ -130,7 +150,7 @@ public without sharing class CommunitypageInstructors
         system.debug('MapUsrAcc+++++++++++++'+MapUsrAcc);
         System.debug('List of account recordss>>>>>>>>'+lstOfRecords);
         // Query to fetch the Certified Instructors    
-        List<redwing__Achievement_Assignment__c> InstructorAchv = [Select Id, Name, Account__r.Name,redwing__Contact__r.Email,redwing__Contact__r.Phone, redwing__Achievement__r.Name, redwing__User__c ,redwing__User__r.Name, redwing__User__r.Phone, redwing__User__r.Email, redwing__Expiration_Date__c from redwing__Achievement_Assignment__c where redwing__User__c in:lstOfRecords and redwing__Status__c = 'Acquired' and Achievement_Type__c = 'Certifications'  ORDER BY redwing__User__r.Name,redwing__Achievement__r.Name ASC ];
+        List<redwing__Achievement_Assignment__c> InstructorAchv = [Select Id, Name, Account__r.Name,redwing__Contact__r.Email,redwing__Contact__r.Phone, redwing__Achievement__r.Name, redwing__User__c ,redwing__User__r.Name, redwing__User__r.Phone, redwing__User__r.Email, redwing__Expiration_Date__c, QR_Code_Identifier__c from redwing__Achievement_Assignment__c where redwing__User__c in:lstOfRecords and redwing__Status__c = 'Acquired' and Achievement_Type__c = 'Certifications'  ORDER BY redwing__User__r.Name,redwing__Achievement__r.Name ASC ];
         System.debug('Achievement Assignment listt iddd>>>'+InstructorAchv);
         
         InstructorList = new List<InstructorWrapper>();
@@ -151,7 +171,7 @@ public without sharing class CommunitypageInstructors
                 }
                 else
                 {
-                  Expiredate = false;
+                    Expiredate = false;
                 }
                 
                 
@@ -177,9 +197,7 @@ public without sharing class CommunitypageInstructors
                 }
                 
                 // To confirm if the Organization is already available in the list
-                
-                
-                InstructorList.add(new InstructorWrapper(InstructorName,Key.redwing__Achievement__r.Name,Expdate,Key.redwing__Contact__r.Email,Key.redwing__Contact__r.Phone,Expiredate,existUser,existAccount,OrganizationName));
+                InstructorList.add(new InstructorWrapper(InstructorName,Key.redwing__Achievement__r.Name,Expdate,Key.redwing__Contact__r.Email,Key.redwing__Contact__r.Phone,Expiredate,existUser,existAccount,OrganizationName, Key.QR_Code_Identifier__c));
             }
         }
         System.debug('Map assignmentsss>>>>>>>>>>>>>>>>'+InstructorList);
@@ -189,6 +207,18 @@ public without sharing class CommunitypageInstructors
         return returnedlist;
     }
     
+    public static Boolean isInstructor(String accId) {
+        User usr = [Select Id,Name,Profile.Name, ContactId From User Where Id = :UserInfo.getUserId()];  
+        if(usr.Profile.Name.containsIgnoreCase('partner')) 
+        {
+            List<AccountContactRelation> accountConRelation = [select id, Roles from AccountContactRelation where AccountId =: accId And ContactId =: usr.ContactId AND Roles includes ('Administrator')];
+            if(accountConRelation.size() > 0)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
     
     public class InstructorWrapper {
         @AuraEnabled public string Key;
@@ -200,7 +230,8 @@ public without sharing class CommunitypageInstructors
         @AuraEnabled public boolean ExistUser;
         @AuraEnabled public boolean ExistAccount;
         @AuraEnabled public String OrganizationName;
-        public InstructorWrapper(string Key, String Valuess, String expDate, String Email, String Phonenumber,Boolean Expireflag, Boolean ExistUser, Boolean ExistAccount, String OrganizationName) {
+        @AuraEnabled public String QRCode;
+        public InstructorWrapper(string Key, String Valuess, String expDate, String Email, String Phonenumber,Boolean Expireflag, Boolean ExistUser, Boolean ExistAccount, String OrganizationName, String QRCode) {
             this.Key = Key;
             this.Valuess= Valuess;
             this.expDate=expDate;
@@ -210,6 +241,7 @@ public without sharing class CommunitypageInstructors
             this.ExistUser = ExistUser;
             this.ExistAccount = ExistAccount;
             this.OrganizationName = OrganizationName;
+            this.QRCode = QRCode;
         }
     }
     public class UserAccountWrapper{

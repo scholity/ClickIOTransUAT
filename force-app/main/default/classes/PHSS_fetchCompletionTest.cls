@@ -108,7 +108,7 @@ public class PHSS_fetchCompletionTest {
         
         req.addHeader('Content-Type', 'application/json'); // Add a JSON Header as it is validated
         
-        req.requestURI = '/services/PHSS/fetchCompletion/';
+        req.requestURI = '/services/PHSS/fetchCompletion2/';
         
         req.httpMethod = 'POST';
         
@@ -133,7 +133,7 @@ public class PHSS_fetchCompletionTest {
         
         req.addHeader('Content-Type', 'application/json'); // Add a JSON Header as it is validated
         
-        req.requestURI = '/services/PHSS/fetchCompletion/';
+        req.requestURI = '/services/PHSS/fetchCompletion2/';
         
         req.httpMethod = 'POST';
         
@@ -158,7 +158,7 @@ public class PHSS_fetchCompletionTest {
         
         req.addHeader('Content-Type', 'application/json'); // Add a JSON Header as it is validated
         
-        req.requestURI = '/services/PHSS/fetchCompletion/';
+        req.requestURI = '/services/PHSS/fetchCompletion2/';
         
         req.httpMethod = 'POST';
         
@@ -187,7 +187,7 @@ public class PHSS_fetchCompletionTest {
         
         req.addHeader('Content-Type', 'application/json'); // Add a JSON Header as it is validated
         
-        req.requestURI = '/services/PHSS/fetchCompletion/';
+        req.requestURI = '/services/PHSS/fetchCompletion2/';
         
         req.httpMethod = 'POST';
         
@@ -213,7 +213,7 @@ public class PHSS_fetchCompletionTest {
         
         req.addHeader('Content-Type', 'application/json'); // Add a JSON Header as it is validated
         
-        req.requestURI = '/services/PHSS/fetchCompletion/';
+        req.requestURI = '/services/PHSS/fetchCompletion2/';
         
         req.httpMethod = 'POST';
         

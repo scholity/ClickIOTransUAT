@@ -1,15 +1,15 @@
 <aura:component implements = "force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction,flexipage:availableForRecordHome,force:hasSObjectName" access="global"
                 controller = "PHSS_CpsController">
 	
-    <aura:handler name = "init" value="{!this}" action = "{!c.doInit}" /> 
-    <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdateClone" action="{!c.productCountIncrement}"/>
+    <aura:handler   name = "init" value="{!this}" action = "{!c.doInit}" /> 
+    <aura:handler   name="incrementProductCount" event="c:phss_cc_ProductCountUpdateClone" action="{!c.productCountIncrement}"/>
     <aura:attribute name = "CCProductId"			type = "String"  	default = ""/>
     <aura:attribute name = "LPName"					type = "String"  	default = ""/>
     <aura:attribute name = "LPClassroomSetting"		type = "String"  	default = ""/>
     <aura:attribute name = "LPDuration"				type = "Decimal"  	default = ""/>      
     <aura:attribute name = "ScheduledTime"			type = "Decimal"  	default = "0"/> 
     
-    <aura:attribute name = "storeFrontName" 	type = "String" 	default = "" />
+    <aura:attribute name = "storeFrontName" 	type = "String" 	default = "CPS" />
     
     <aura:attribute name = "stepNumber"			type = "String" 	default = "Zero" />
     <aura:attribute name = "pMethod"			type = "String" 	default = "po" />
@@ -17,14 +17,16 @@
     <aura:attribute name = "initialWrap" 		type = "Object" />
     <aura:attribute name = "selectedCourse" 	type = "sObject" 	default = "{}"/>
     <aura:attribute name = "todaysDate"			type = "String" />
+    <aura:attribute name = "todaysDatePlus7"	type = "String" />
+    <aura:attribute name = "todaysDateFromLastEnterDate"	type = "String" />
     <aura:attribute name = "formattedStartTime" type = "String" />
     <aura:attribute name = "formattedEndTime" 	type = "String" />
-    <aura:attribute name = "zoneList" 			type = "List" />
+    <aura:attribute name = "zoneList" 		type = "List" />
     
     <aura:attribute name = "selectedLookUpRecord5" 	type = "sObject" 	default = "{}"/>   
-    <aura:attribute name = "locationId" 			type="String" 		description="ILT Location Id return by apex controller's method createIltLocation" />
-    <aura:handler name = "change" value="{!v.selectedLookUpRecord5}" action = "{!c.siteSelected}" />
-    <aura:handler name = "change" value="{!v.selectedLookUpRecord5}" action = "{!c.onAddressChange}" />
+    <aura:attribute name = "locationId" 	type="String" 		description="ILT Location Id return by apex controller's method createIltLocation" />
+    <aura:handler   name = "change" value="{!v.selectedLookUpRecord5}" action = "{!c.siteSelected}" />
+    <aura:handler   name = "change" value="{!v.selectedLookUpRecord5}" action = "{!c.onAddressChange}" />
     
     <aura:attribute name = "allValid"		type = "Boolean"	description="" default="true"/>
     <aura:attribute name = "isUrlValid"		type = "Boolean"	description="" default="true"/>
@@ -35,14 +37,17 @@
     <aura:attribute name = "zoneError"      type = "Boolean"    default = "false"/>
     <aura:attribute name = "scheduleError"  type = "Boolean"    default = "false"/>
     
-    <aura:attribute name = "oppIdParent" 		type = "String" 	default = ""/>
+    <aura:attribute name = "oppIdParent" 	type = "String" 	default = ""/>
     <aura:attribute name = "displayPaymentInfo" type = "Boolean" default="true"/>
-    <aura:attribute name = "paymentComplete"    type = "Boolean" default = "false"/>
-    <aura:handler name="notifyPaymentComplete" event="c:PHSS_NotifyPaymentComplete_Event"
-                  action="{!c.updatePaymentComplete}"/>
+    <aura:attribute name = "paymentComplete" type = "Boolean" default = "false"/>
+    <aura:handler   name="notifyPaymentComplete" event="c:PHSS_NotifyPaymentComplete_Event" action="{!c.updatePaymentComplete}"/>
     <aura:attribute name = "selectedLookUpRecord1" 	type = "sObject" 	default = "{}"/>
-    <aura:handler name = "change" value="{!v.selectedLookUpRecord1}" action = "{!c.accountSelected}" />
-    <aura:attribute name = "orgError" 				type = "Boolean" 	default = "false"/>
+    <aura:handler   name = "change" value="{!v.selectedLookUpRecord1}" action = "{!c.accountSelected}" />
+    <aura:attribute name = "orgError" 		type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "offeringsList"	type="List" />
+
+
+    
 	<!--
     <ltng:require 
                       styles="" 
@@ -180,19 +185,34 @@
 
                                    <div class="slds-grid slds-gutters_xxx-small">
                                        <div class="slds-col slds-size_1-of-5">
+                                           <aura:if isTrue="{!index == 0}" >
                                            <lightning:input value="{!sess.classDate}"
                                                             label="Date"
                                                             required="true"
                                                             type="date"
-                                                            min="{!v.StartDate}"
+                                                            min="{!v.todaysDatePlus7}"
                                                             max="{!v.EndDate}"
-                                                            aura:id="field"/>
+                                                            autocomplete="off"
+                                                            aura:id="date1"/>
+                                               
+                                           <aura:set attribute="else">
+                                           <lightning:input value="{!sess.classDate}"
+                                                            label="Date"
+                                                            required="true"
+                                                            type="date"
+                                                            min="{!v.todaysDateFromLastEnterDate}"
+                                                            max="{!v.EndDate}"
+                                                            autocomplete="off"
+                                                            aura:id="dateN"/>
+                                           </aura:set>
+                                           </aura:if>
                                        </div>
                                        <div class="slds-col slds-size_1-of-5">
                                            <lightning:input value="{!sess.startTime}"
                                                             label="Start Time"
                                                             required="true"
                                                             type="time"
+                                                            autocomplete="off"
                                                             aura:id="field"
                                                             max="{!sess.endTime}"/>
                                        </div>
@@ -202,6 +222,7 @@
                                                             required="true"
                                                             type="time"
                                                             aura:id="field"
+                                                            autocomplete="off"
                                                             min="{!sess.startTime}"/>
                                        </div>
 
@@ -277,13 +298,15 @@
                                     Site Search
                                 </label>
                                 <lightning:helptext content="Enter a site name to search" />
-                                
+                                <div aura:id="offering_location">
                                 <c:CustomLookup objectAPIName	=	"redwing__ILT_Location__c"
                                                 selectedRecord	=	"{!v.selectedLookUpRecord5}"
                                                 accountId		= 	"{!v.cpsWrap.accId}"
                                                 courseId 		=	"{!v.cpsWrap.courseId}"
                                                 instanceId      =   "Site"
+          
                                                 />
+                                </div>
                             </div>
                         </div>
                         <div class = "slds-m-around_x-small">
@@ -294,6 +317,7 @@
                                              label 	  = "Site Name"
                                              required = "true" 
                                              type	  = "text"
+                                             autocomplete = "off"
                                              aura:id  = "field"/>
                         </div>
 
@@ -302,18 +326,21 @@
                                              label 	  = "Address 1"
                                              required = "true" 
                                              type	  = "text"
+                                             autocomplete = "off"
                                              aura:id  = "field"/>
                         </div>
                         <div class = "slds-size_3-of-6 slds-p-top_small">
                             <lightning:input value	  = "{!v.cpsWrap.address2}"
                                              label 	  = "Address 2"
                                              type	  = "text"
+                                             autocomplete = "off"
                                              aura:id  = "field"/>
                         </div>
                         <div class = "slds-size_3-of-6 slds-p-top_small">
                             <lightning:input value	  = "{!v.cpsWrap.city}"
                                              label 	  = "City"
                                              required = "true" 
+                                             autocomplete = "off"
                                              aura:id  = "field"/>
                         </div>
                         <div class = "slds-size_3-of-6 slds-p-top_small">
@@ -321,6 +348,7 @@
                                              label 	  = "State"
                                              required = "true" 
                                              maxlength = "2"
+                                             autocomplete = "off"
                                              aura:id  = "field"/>
                         </div>
                         <div onchange="{!c.onAddressChange}" class = "slds-size_3-of-6 slds-p-top_small">
@@ -329,6 +357,7 @@
                                              required = "true" 
                                              aura:id  = "field"
                                              pattern  = "[0-9]{5}(?:-[0-9]{4})?"
+                                             autocomplete = "off"
                                              messageWhenPatternMismatch = "Please enter a valid Zip code"/>
                         </div>
                         <div class = "slds-size_3-of-6 slds-p-top_small slds-hidden">
@@ -350,7 +379,8 @@
                         <div class = "slds-size_3-of-6 slds-p-top_small">
                             <lightning:input value	  = "{!v.cpsWrap.regUrl}"
                                              label 	  = "URL for registration"
-                                             type  	  = "url" 
+                                             type  	  = "url"
+                                             autocomplete = "off"
                                              messageWhenTypeMismatch = "Please enter a valid URL"/>
                             <lightning:helptext content="Enter valid url starting with https:// or http:// www.domain_name.com / org / gov " />
                         </div>
@@ -358,6 +388,7 @@
                             <lightning:input value	  = "{!v.cpsWrap.regPhone}"
                                              label 	  = "Phone for registration"
                                              type	  = "phone"
+                                             autocomplete = "off"
                                              pattern  = "\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})" 
                                              messageWhenPatternMismatch = "Please enter a valid Phone"/>
                         </div>
@@ -368,6 +399,7 @@
                                              pattern = "[0-9]*(\.[0-9]+)?"
                                              messageWhenPatternMismatch = "Please enter a valid Fee"
                                              aura:id  = "field"
+                                             autocomplete = "off"
                                              formatter = "currency" 
                                              step      ="0.01"/>
                         </div>
@@ -378,11 +410,11 @@
                 
                 <!-- Step 1 - End -->
                 
-                <!-- Step 2 - Start -->
+                <!-- Step 3 - Start -->
                 
-                <aura:if isTrue="{!v.stepNumber == 'Two'}" >
+                <aura:if isTrue="{!v.stepNumber == 'Three'}" >
                     <div class="slds-modal__content slds-grow slds-p-around_x-large" id="modal-content-id-1">
-                        <p class="slds-text-heading_medium">STEP 2: PAYMENT</p> <br/>
+                        <p class="slds-text-heading_medium">STEP 3: PAYMENT</p> <br/>
 
                         <div class = "slds-box slds-theme_shade">Payment</div><br/>
                         
@@ -437,14 +469,15 @@
                     </div>
                 </aura:if>
                 
-                <!-- Step 2 - End -->
+                <!-- Step 3 - End -->
                 
-                <!-- Step 3 - Start -->
+                <!-- Step 2 - Start -->
                 
-                <aura:if isTrue="{!v.stepNumber == 'Three'}" >
+                <aura:if isTrue="{!v.stepNumber == 'Two'}" >
                     <div class="slds-modal__content slds-grow slds-p-around_x-large" id="modal-content-id-1">
-                        <p class="slds-text-heading_medium">STEP 3: Review</p><br/>
-                        
+                        <p class="slds-text-heading_medium">STEP 2: Review</p><br/>
+                        <aura:iteration items="{!v.offeringsList}" var="offering"
+                                               indexVar="index">
                         <div class= "slds-grid slds-grid_align-spread slds-box slds-theme_shade">
                             <div class = "top">
                                 Course Information
@@ -542,7 +575,7 @@
                                 <div class = "slds-size_2-of-4">
                                     <label style="color:gray; font-size: .75rem;">Training Facility</label><br/>
                                     {!v.cpsWrap.siteName},&nbsp;{!v.cpsWrap.address1},&nbsp;{!v.cpsWrap.address2},&nbsp;{!v.cpsWrap.city},&nbsp;{!v.cpsWrap.state},&nbsp;{!v.cpsWrap.zip}<br/>
-                                    <label style="color:gray; font-size: .75rem;">Latitude</label> &nbsp; {!v.cpsWrap.geoLat} &nbsp; <label style="color:gray; font-size: .75rem;">Longitude</label> &nbsp; {!v.cpsWrap.geoLng} &nbsp;<br/>
+                                    <!-- <label style="color:gray; font-size: .75rem;">Latitude</label> &nbsp; {!v.cpsWrap.geoLat} &nbsp; <label style="color:gray; font-size: .75rem;">Longitude</label> &nbsp; {!v.cpsWrap.geoLng} &nbsp;<br/> -->
                                 </div>
                                 
                                 <div class = "slds-size_2-of-4">
@@ -564,7 +597,8 @@
                             </div>
                             
                         </div>
-                        
+                       </aura:iteration>
+                        <!--
                         <div class= "slds-grid slds-grid_align-spread slds-box slds-theme_shade">
                             <div class = "top">
                                 Payment
@@ -581,7 +615,7 @@
                             <div class= "slds-grid slds-wrap slds-p-top_medium">
                                 <div class="slds-size_6-of-12">
                                     <lightning:input label="Payment Method" readonly = "true"/> Credit Card <br/>
-                                    <!-- <lightning:input label="PO Number" readonly = "true"/>  -->
+                                     <lightning:input label="PO Number" readonly = "true"/>  
                                 </div>
                                 <div class="slds-size_6-of-12">PAYMENT AMOUNT<br/>
                                     <div class="slds-box ">
@@ -591,11 +625,11 @@
                                 </div>
                             </div>
                         </div>
-                        
+                        -->
                     </div>
                 </aura:if>
                 
-                <!-- Step 3 - End -->
+                <!-- Step 2 - End -->
                 
                 <!-- Body - End -->
                 
@@ -630,10 +664,18 @@
                     <aura:if isTrue="{!v.stepNumber == 'Three'}">
                         
                         <div class="slds-col">
-                            <button class="slds-button slds-button_neutral customButton"
-                                    onclick="{!c.createClass}" >
-                                Checkout
-                            </button>
+                            <aura:if  isTrue="{!v.paymentComplete == false }" >
+                                <button class="slds-button slds-button_neutral"
+                                        onclick="{!c.cancel}" disabled="true" >
+                                    Checkout
+                                </button>
+                                <aura:set attribute="else">
+                                    <button class="slds-button slds-button_neutral customButton"
+                                            onclick="{!c.createClass}" >
+                                        Checkout
+                                    </button>
+                                </aura:set>
+                            </aura:if>
                         </div>
                         
                     <aura:set attribute="else">                        
@@ -655,18 +697,10 @@
                                     </div>                                
                             <aura:set attribute="else"> 
                                 <div class="slds-col">
-                                    <aura:if  isTrue="{!v.paymentComplete == false }" >
-                                        <button class="slds-button slds-button_neutral"
-                                                onclick="{!c.cancel}" disabled="true" >
-                                            Submit
-                                        </button>
-                                        <aura:set attribute="else">
-                                                <button class="slds-button slds-button_neutral customButton"
-                                                        onclick="{!c.onclickNext}" >
-                                                    Submit
-                                                </button>
-                                        </aura:set>
-                                    </aura:if>
+                                    <button class="slds-button slds-button_neutral customButton"
+                                            	onclick="{!c.onclickNext}" >
+                                        	Submit
+                                    </button>
                                 </div>
                                 
                                 

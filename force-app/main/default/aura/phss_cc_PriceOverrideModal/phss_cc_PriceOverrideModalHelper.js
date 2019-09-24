@@ -123,9 +123,12 @@
                     if (typeof cartItem !== 'undefined') {
                         component.set('v.isShown', false);
                         component.set("v.options","");
+                        component.set("v.CouponId",null);
                         this.showToast('success', 'Coupon emoved successfully');
                         var updateEvent = $A.get('e.c:phss_cc_RefreshComponentEvent');
                         updateEvent.fire();
+                        
+                        $A.get("e.force:refreshView").fire();
                     }
                     else {
                         this.showToast('info', 'There was no cart item to update', 'Try reloading the page and attempt to override the price again.');

@@ -98,7 +98,8 @@
                           'explanation'		  	: explntn,
                           'qty'					: qty,
                           'price'				: price,
-                          'isPartialReturn'		: true});
+                          'isPartialReturn'		: true,
+                          'isDropStdnt'			: true});
         
         action.setCallback(this, function(response) {
             

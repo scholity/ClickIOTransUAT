@@ -316,6 +316,21 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Add_Cancellation_Fee</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>15</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Waive_Onsite_Fee</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Update_Purchase_Order</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>17</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -389,21 +404,6 @@
             <actionName>Add_Rescheduling_Fee</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>14</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Add_Cancellation_Fee</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>15</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Waive_Onsite_Fee</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>16</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Update_Purchase_Order</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>17</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>

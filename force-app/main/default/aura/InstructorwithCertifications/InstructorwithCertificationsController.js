@@ -2,54 +2,26 @@
     doInit : function(component, event, helper) {
         component.set("v.objName","Account");
         component.set("v.objInsName","User");
-        helper.getValues(component);
+        helper.getValues(component, event, helper);
+        //helper.fetchIns(component, event, helper);
+    },
+    getInstructorValues : function(component, event, helper) {
+        if(component.get("v.selectedAccount") == "") {
+            component.set("v.selectedInstructor","");
+        }    
+        else { 
+            component.set("v.objName","User");
+            helper.getValues(component, event, helper); 
+        }
+    },
+    sortOrgName: function(component, event, helper) {
+        // set current selected header field on selectedTabsoft attribute.     
+        component.set("v.selectedTabsoft", 'OrganizationName');
+        // call the helper function with pass sortField Name   
+        // helper.sortHelper(component, event, 'Name');
     },
     fetchIns : function(component, event, helper) {
-        
-        var action = component.get("c.fetchAchv");
-        var orgId 	= component.get("v.selectedAccount")
-        var InsId   = component.get("v.selectedInstructor")
-        var orgg;
-        var Ins;
-        if((orgId!=null||orgId!=undefined||orgId!='') && (InsId==null||InsId==undefined||InsId==''))
-        {
-            orgg = orgId;
-            Ins = 'Not';
-        }
-        if((orgId==null||orgId==undefined||orgId=='') && (InsId!=null||InsId!=undefined||InsId!=''))
-        {
-            orgg = 'Not';
-            Ins = InsId;
-        }
-        if((orgId!=null && InsId!=undefined && orgId!='' && InsId!=''))
-        {
-            orgg = orgId;
-            Ins = InsId;
-        }
-        
-        console.log('Accountid>>>>>>>>'+orgg);
-        console.log('Instructor idd>>>>>>>>'+Ins);
-        var idx = event.target.id;
-        
-        action.setParams({accId : orgg,instId :Ins});
-        
-        
-        
-        console.log('Button id>>>>>>>>'+idx);
-        action.setCallback(this, function(response){
-            
-            var state = response.getState();
-            console.log('Expected State'+state);
-            if (state === "SUCCESS") {
-                var a = response.getReturnValue();
-                console.log('success'+a);
-                console.log('getting inside succes'+JSON.stringify(a));
-                component.set("v.Listss", response.getReturnValue());
-                
-                
-            }
-        });
-        $A.enqueueAction(action);
+        helper.fetchIns(component, event, helper);
     },
     sortField : function(component, event, helper) {
         var dataset = event.target.dataset;
@@ -58,4 +30,26 @@
         console.log('order..'+dataset.order);
         helper.sortFields(component, dataset.array, dataset.field, dataset.order);
     },
+    downloadDocument : function(component, event, helper){
+        var sendData = component.get("v.sendData");
+        
+        console.log('dataToSend='+component.get("v.Listss"));
+        var dataToSend = component.get("v.Listss");
+        
+        //invoke vf page js method
+        sendData(dataToSend, 'PDF', function(){
+            //handle callback
+        });
+    },
+    exportDocument : function(component, event, helper){
+        var sendData = component.get("v.sendData");
+        
+        console.log('dataToSend='+component.get("v.Listss"));
+        var dataToSend = component.get("v.Listss");
+        
+        //invoke vf page js method
+        sendData(dataToSend, 'XLS', function(){
+            //handle callback
+        });
+    }
 })

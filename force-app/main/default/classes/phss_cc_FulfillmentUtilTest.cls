@@ -14,7 +14,7 @@ public class phss_cc_FulfillmentUtilTest {
         
         generateTestData();
         
-        Fulfillment__c completedFulfillment = phss_cc_FulfillmentUtil.completeFulfillment(testFulfillment.Id, testTransactionPayment.Id);
+        Fulfillment__c completedFulfillment = phss_cc_FulfillmentUtil.completeFulfillment(testFulfillment.Id, testAuthTransactionPayment.Id);
 
         system.assertEquals(completedFulfillment.Id, testFulfillment.Id);
     }
@@ -23,31 +23,31 @@ public class phss_cc_FulfillmentUtilTest {
         
         generateTestData();
         
-        ccrz__E_TransactionPayment__c completedPayment = phss_cc_FulfillmentUtil.completeAuthTransactionPayment(testTransactionPayment.Id, phss_cc_FulfillmentUtil.createInvoiceForPayment(testTransactionPayment.Id).Id);
+        ccrz__E_TransactionPayment__c completedPayment = phss_cc_FulfillmentUtil.completeAuthTransactionPayment(testAuthTransactionPayment.Id, phss_cc_FulfillmentUtil.createInvoiceForPayment(testAuthTransactionPayment.Id).Id);
     }
     
     @isTest static void testFinalizePayment(){
         
         generateTestData();
         
-        phss_cc_FulfillmentUtil.finalizePayment(testTransactionPayment.Id, testFulfillment.Id, new Map<String, Object>{'test' => 'test'});
+        phss_cc_FulfillmentUtil.finalizePayment(testAuthTransactionPayment.Id, testCaptureTransactionPayment.Id, testFulfillment.Id, new Map<String, Object>{'test' => 'test'});
     }
     
     @isTest static void testGetRecords(){
         
         generateTestData();
         
-        system.assertEquals(testFulfillment.Id, phss_cc_FulfillmentUtil.getFulfillment(testFulfillment.Id).Id);
+        system.assertEquals(testFulfillment.Id, phss_cc_FulfillmentUtil.fetchFulfillment(testFulfillment.Id).Id);
         
         system.assertEquals(testFulfillmentItem1.Id, phss_cc_FulfillmentUtil.getFulfillmentItems(testFulfillment.Id)[0].Id);
         
         system.assertEquals(testOrderItem.Id, phss_cc_FulfillmentUtil.getItemsForOrder(testOrder.Id)[0].Id);
         
-        system.assertEquals(testTransactionPayment.Id, phss_cc_FulfillmentUtil.getTransactionPayment(testTransactionPayment.Id).Id);
+        system.assertEquals(testAuthTransactionPayment.Id, phss_cc_FulfillmentUtil.getTransactionPayment(testAuthTransactionPayment.Id).Id);
         
-        system.assertEquals(testTransactionPayment.Id, phss_cc_FulfillmentUtil.getTransactionPaymentForOrder(testOrder.Id).Id);
+        system.assertEquals(testAuthTransactionPayment.Id, phss_cc_FulfillmentUtil.getTransactionPaymentForOrder(testOrder.Id).Id);
         
-        system.assertEquals(testTransactionPayment.Id, phss_cc_FulfillmentUtil.getTransactionPaymentForOrder(testOrder.Id).Id);
+        system.assertEquals(testAuthTransactionPayment.Id, phss_cc_FulfillmentUtil.getTransactionPaymentForOrder(testOrder.Id).Id);
         
         try{
             phss_cc_FulfillmentUtil.parseDatetime(system.now().format('yyyy-MM-dd\'T\'HH:mm:ss'));
@@ -61,7 +61,8 @@ public class phss_cc_FulfillmentUtilTest {
     
     private static Fulfillment_Item__c testFulfillmentItem1;
     
-    private static ccrz__E_TransactionPayment__c testTransactionPayment;
+    private static ccrz__E_TransactionPayment__c testAuthTransactionPayment;
+    private static ccrz__E_TransactionPayment__c testCaptureTransactionPayment;
     
     private static ccrz__E_Order__c testOrder;
     
@@ -149,18 +150,27 @@ public class phss_cc_FulfillmentUtilTest {
         );
         insert testOrderItem;
         
-        testTransactionPayment = new ccrz__E_TransactionPayment__c(
+        testAuthTransactionPayment = new ccrz__E_TransactionPayment__c(
         	ccrz__CCOrder__c = testOrder.Id,
             ccrz__AccountType__c = phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE,
-            ccrz__Amount__c = 1
+            ccrz__Amount__c = 1,
+            ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
         );
-        insert testTransactionPayment;
+        insert testAuthTransactionPayment;
+
+        testCaptureTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__CCOrder__c = testOrder.Id,
+                ccrz__AccountType__c = phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE,
+                ccrz__Amount__c = 1,
+                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE
+        );
+        insert testCaptureTransactionPayment;
         
         testFulfillment = new Fulfillment__c(
             Type__c='Invoice',
             Status__c='Open',
             Order__c = testOrder.Id,
-            CC_Transaction_Payment__c= testTransactionPayment.Id
+            CC_Transaction_Payment__c= testAuthTransactionPayment.Id
         );
         insert testFulfillment;
         

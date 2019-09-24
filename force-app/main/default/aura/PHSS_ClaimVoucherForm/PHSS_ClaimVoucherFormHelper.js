@@ -147,29 +147,33 @@
                 
                 action.setCallback(this, function(response) {
                     var state = response.getState();
-                    if (state === "SUCCESS") {
+                    if (state === "SUCCESS")
+                    {
                         // Enroll Learner via community
-                        if(cmp.get("v.voucherId") != null) {
+                        if(cmp.get("v.voucherId") != null)
+                        {
                             var compEvnt = cmp.getEvent("refreshVoucherList");
                             compEvnt.fire();
                         }
-                        else if(!newUser && cmp.get("v.recordId")==null) {
+                        else if(!newUser && cmp.get("v.recordId")==null)
+                        {
                             var attributes = { url: '/claimVoucherSuccess?isNewLearner=false' };
                             $A.get("e.force:navigateToURL").setParams(attributes).fire();
                         }
-                        else if(!newUser && cmp.get("v.recordId")!=null)
+                        else if(!newUser && cmp.get("v.recordId"))
                         {
                            $A.get("e.force:closeQuickAction").fire();
                 		   $A.get('e.force:refreshView').fire();
                         }
-                        else if(newUser && cmp.get("v.recordId")!=null)
+                        else if(newUser && cmp.get("v.recordId"))
                         {
 							$A.get("e.force:closeQuickAction").fire();
                 			$A.get('e.force:refreshView').fire();                        
                         }
-                        else {
-                            var attributes = { url: '/claimVoucherSuccess?isNewLearner=true' };
-                            $A.get("e.force:navigateToURL").setParams(attributes).fire();
+                        else
+                        {
+                            var urlAttributes = { url: '/claimVoucherSuccess?isNewLearner=true' };
+                            $A.get("e.force:navigateToURL").setParams(urlAttributes).fire();
                         }
                     }
                     else if (state === "ERROR") {

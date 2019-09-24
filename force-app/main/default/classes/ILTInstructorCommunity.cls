@@ -1500,19 +1500,35 @@ public without sharing class ILTInstructorCommunity{
         List<String> ClaimedStatuses = System.label.ClaimedVoucherTypes.split(';');   
         List<Voucher__c> lstVouchersToUpdate = new List<Voucher__c>();    
         
-        if (iltClassid != null) { 
-	        List<Voucher__c> unclaimedVouchers = [Select Id, Name, Status__c From Voucher__c
-	        	Where ILT_Class__c = :iltClassid And Status__c Not In :ClaimedStatuses];
+        if (iltClassid != null)
+        { 
+	        List<Voucher__c> unclaimedVouchers = [SELECT Id,
+                                                         Name,
+                                                  		 Status__c,
+                                                  		 ILT_Class__r.Request_Type__c
+                                                    FROM Voucher__c
+                                                   WHERE ILT_Class__c = :iltClassid
+                                                     AND Status__c
+                                                     NOT IN :ClaimedStatuses];
 	        
-	        for (Voucher__c theVoucher : unclaimedVouchers) {
+	        for (Voucher__c theVoucher : unclaimedVouchers)
+			{
 	            voucher__c theUpdatedVoucher = new voucher__c();
-	        	theUpdatedVoucher.Id = theVoucher.Id;
+                
+	        	theUpdatedVoucher.Id 		= theVoucher.Id;
+                theUpdatedVoucher.Status__c = 'Void'; 
 //	            theUpdatedVoucher.Status__c = 'Blocked';
-	            theUpdatedVoucher.Status__c = 'Void';
+                /*
+                if(theVoucher.ILT_Class__r.Request_Type__c != 'Community')
+                {
+                   theUpdatedVoucher.Status__c = 'Void'; 
+                }
+                */
 	            lstVouchersToUpdate.add(theUpdatedVoucher);
 	    	}
 	        
-	        if(lstVouchersToUpdate.size() > 0) {
+	        if(lstVouchersToUpdate.size() > 0)
+            {
 	        	update lstVouchersToUpdate;
 	        }
         }
@@ -2737,13 +2753,13 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
 
             item.ccrz__Quantity__c = studentCount;
             item.ccrz__SubAmount__c = studentCount * item.ccrz__Price__c;
-            item.ccrz__OrderItemStatus__c = 'Shipped';
+            //item.ccrz__OrderItemStatus__c = 'Shipped';
         }
 
         String resMessage;
         try {
             update orderItems;
-
+            
             ccrz__E_Order__c ord = [SELECT Id, ccrz__TotalAmount__c, (SELECT Id, ccrz__Amount__c FROM ccrz__TransactionPayments__r) FROM ccrz__E_Order__c WHERE Id = :te.CC_Order__c LIMIT 1];
 
             // update transaction amount from order amount
@@ -2751,6 +2767,18 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
                 tp.ccrz__Amount__c = ord.ccrz__TotalAmount__c;
             }
             update ord.ccrz__TransactionPayments__r;
+            
+            List<ccrz__E_OrderItem__c> oItems = [SELECT Id,
+                                                 		ccrz__OrderItemStatus__c
+                                                   FROM ccrz__E_OrderItem__c
+                                                  WHERE ccrz__Order__c = :te.CC_Order__c];
+            system.debug('***oItems***'+oItems);
+            for (ccrz__E_OrderItem__c oi : oItems)
+            {
+                oi.ccrz__OrderItemStatus__c  = 'Shipped';
+            }
+            
+            update oItems; 
 
             resMessage = 'Order items successfully updated';
 

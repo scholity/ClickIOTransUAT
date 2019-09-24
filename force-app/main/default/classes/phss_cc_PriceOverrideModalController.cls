@@ -92,7 +92,8 @@ public class phss_cc_PriceOverrideModalController {
                                       	FROM Coupon__c
                                        WHERE Active__c = true
                                          AND Start_Date__c <= today
-                                         AND End_Date__c   >= today];
+                                         AND End_Date__c   >= today
+                                    ORDER BY Display_Name__c ASC NULLS LAST];
 
         return couponList;
     }

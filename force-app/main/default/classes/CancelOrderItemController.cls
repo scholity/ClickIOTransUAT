@@ -319,7 +319,7 @@ public class CancelOrderItemController {
     }
     
     @AuraEnabled
-    public static void refundOI(String orderId, String orderAdjustmentType, String reasonCodes, String explanation, decimal qty, String price, Boolean isPartialReturn)
+    public static void refundOI(String orderId, String orderAdjustmentType, String reasonCodes, String explanation, decimal qty, String price, Boolean isPartialReturn, Boolean isDropStdnt)
     {
         system.debug('***qty***'+qty);
         system.debug('***price***'+Decimal.ValueOf(price));
@@ -349,6 +349,16 @@ public class CancelOrderItemController {
                                        WHERE Id =: orderId LIMIT 1];
         
         system.debug('***oItm***'+oItm);
+        system.debug('***oItm.ccrz__Price__c***'+oItm.ccrz__Price__c);
+        
+        decimal oItemPrice 		= oItm.ccrz__Price__c * -1;
+        decimal rtnOiPrice 		= Decimal.ValueOf(price);
+        boolean createNewOrder 	= false;
+        
+        if(oItemPrice != rtnOiPrice)
+        {
+            createNewOrder = true;
+        }
         
         if(oItm.ccrz__Order__c != null)
         {
@@ -403,48 +413,88 @@ public class CancelOrderItemController {
 	        {
 	        	newOdrItm.ccrz__Order__c 		= ccOrder.ccrz__E_Orders__r[0].Id;
 	        }
-	        newOdrItm.ccrz__Price__c			= decimal.ValueOf(price);
-	        newOdrItm.ccrz__Quantity__c 		= qty;
-	        newOdrItm.ccrz__SubAmount__c 		= qty * Decimal.ValueOf(price);
+            
+            newOdrItm.ccrz__Quantity__c 		= qty;
+            
+            if(isDropStdnt)
+            {
+                newOdrItm.ccrz__Price__c			= oItemPrice;
+                newOdrItm.ccrz__SubAmount__c 		= qty * oItemPrice;
+            }
+            else
+            {
+                newOdrItm.ccrz__Price__c			= decimal.ValueOf(price);
+                newOdrItm.ccrz__SubAmount__c 		= qty * decimal.ValueOf(price);
+            }
 	        newOdrItm.ccrz__OrderItemStatus__c 	= 'Return Submitted';
 	        newOdrItm.ccrz__ParentOrderItem__c	= oItm.Id;
 	        newOdrItm.Is_Return__c				= true;
+            newOdrItm.Adjustment_Types__c	    = orderAdjustmentType;
+			newOdrItm.Reason_Codes__c 		    = reasonCodes;
+			newOdrItm.Explanation__c			= explanation;
             newOdrItm.Payment_Category__c		= '48150';
-            /*
-            if (isPartialReturn)
-	        {
-	        	newOdrItm.Is_Partial_Return_OI__c  = true;
-	        }
-	        else
-	        {
-	        	newOdrItm.Is_Partial_Return_OI__c  = false;
-	        }*/
             
 	        insert newOdrItm;
+            
+            if(createNewOrder && isDropStdnt)
+            {
+                ccrz__E_OrderItem__c newOdrItm1 = oItm.clone(false,false,false);
+                
+                ccrz__E_Product__c  ccProduct = [SELECT Id
+                                                   FROM ccrz__E_Product__c
+                                                  WHERE ccrz__SKU__c  = 'CMCANCELFEE'
+                                                  LIMIT 1];
+                
+                if(ccProduct != null)
+                {
+                    if (!hasChildOrder)
+                    {
+                        newOdrItm1.ccrz__Order__c 		= newOrder.Id;
+                    }
+                    else
+                    {
+                        newOdrItm1.ccrz__Order__c 		= ccOrder.ccrz__E_Orders__r[0].Id;
+                    }
+                    newOdrItm1.ccrz__OrderLineType__c	= 'Minor'; 
+                    newOdrItm1.ccrz__Price__c			= decimal.ValueOf(price) * -1;
+                    newOdrItm1.ccrz__Quantity__c 		= qty;
+                    newOdrItm1.ccrz__SubAmount__c 		= qty * decimal.ValueOf(price) * -1;
+                    newOdrItm1.ccrz__OrderItemStatus__c = 'Return Submitted';
+                    newOdrItm1.ccrz__ParentOrderItem__c	= newOdrItm.Id;
+                    newOdrItm1.Is_Return__c				= true;
+                    newOdrItm1.ccrz__Product__c			= ccProduct.Id;
+                    newOdrItm1.Adjustment_Types__c	    = orderAdjustmentType;
+                    newOdrItm1.Reason_Codes__c 		    = reasonCodes;
+                    newOdrItm1.Explanation__c			= explanation;
+                    newOdrItm1.Payment_Category__c		= '48130';
+                    
+                    insert newOdrItm1;
+                }
+            }
 	        
 	        system.debug('***newOrdItm***'+newOdrItm);
 	        
 	        system.debug('***isPartialReturn***'+isPartialReturn);
 	        
 	        //For DROP STUDENT it should be 
-	        if (isPartialReturn)
+	        if (!isPartialReturn)
 	        {
-	        	oItm.ccrz__OrderItemStatus__c = 'Partial Returned';
+                oItm.Is_Return__c 	= true;
+	        	//oItm.ccrz__OrderItemStatus__c = 'Partial Returned';
                 //oItm.Is_Partial_Return_OI__c  = true;
 	        }
-	        else
+	        /*else
 	        {
 	        	oItm.ccrz__OrderItemStatus__c = 'Returned';
-	        }
+	        }*/
 	        
-	        oItm.Adjustment_Types__c	  = orderAdjustmentType;
-			oItm.Reason_Codes__c 		  = reasonCodes;
-			oItm.Explanation__c			  = explanation;
+	        //oItm.Adjustment_Types__c	  = orderAdjustmentType;
+			//oItm.Reason_Codes__c 		  = reasonCodes;
+			//oItm.Explanation__c			  = explanation;
 	        update oItm;
 	        
 	        ccOrder.ccrz__OrderStatus__c	= 'Returned';
 	        update ccOrder;
-	        
         }
         
     }

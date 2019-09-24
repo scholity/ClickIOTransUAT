@@ -47,9 +47,9 @@ public class PHSS_CancelEnrollmentRestServiceTest {
         sessionRecord.redwing__ILT_Class__c = clsRecord.Id;
         sessionRecord.Skedulo_Account__c = a.id;
         sessionRecord.Skedulo_Address__c = objLocation.id;
-        sessionRecord.redwing__End_Time__c = '20:00';
+        sessionRecord.redwing__End_Time__c = '13:00';
         sessionRecord.redwing__Date__c = Date.Parse('12/19/2018');
-        sessionRecord.redwing__Start_Time__c = '08:00';
+        sessionRecord.redwing__Start_Time__c = '12:00';
         insert sessionRecord; 
 
         // Learning Plan Assignment

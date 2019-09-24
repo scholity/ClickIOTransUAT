@@ -4,7 +4,7 @@
 
 public with sharing class phss_cc_ClassCartUtil {
 
-    private static final String ILT_CLASS_FIELD = 'ILT_Class__c';
+    public static final String ILT_CLASS_FIELD = 'ILT_Class__c';
 
     private static final String CART_ITEM_PRODUCT_SFID_KEY = 'product';
     private static final String CART_ITEM_QUANTITY_KEY = 'quantity';
@@ -68,7 +68,7 @@ public with sharing class phss_cc_ClassCartUtil {
             addClassesToCartResponse = phss_cc_CartUtil.retrieveLineItemsAndTotalAmountFromCart(addToResult, true);
 
 
-            Map<String, String> classCartItemMap  = getClassCartItemMap();
+            Map<String, String> classCartItemMap = getClassCartItemMap();
 
             // AFTER the cart line items are created, associate them to the requested vouchers
             List<Voucher__c> vouchers = phss_cc_VoucherUtil.reserveVouchersForCartItems(classVoucherMap, classCourseMap, classCartItemMap, opportunityId);
@@ -118,10 +118,11 @@ public with sharing class phss_cc_ClassCartUtil {
 
         Map<String, String> classCartItemMap = new Map<String, String>();
 
-        Map<String, Object> cartItems = phss_cc_CartUtil.fetchCartItems(phss_cc_Context.currCart.Id);
+        Map<String, Object> cartItemInfo = phss_cc_CartUtil.fetchCartItems(phss_cc_Context.currCart.Id);
+        Map<String, Object> cartItemMap = (Map<String, Object>) cartItemInfo.get(phss_cc_CartUtil.CART_ITEM_MAP);
 
-        for (String cartItemId : cartItems.keySet()) {
-            Map<String, Object> cartItem = (Map<String, Object>) cartItems.get(cartItemId);
+        for (String cartItemId : cartItemMap.keySet()) {
+            Map<String, Object> cartItem = (Map<String, Object>) cartItemMap.get(cartItemId);
             String iltClass = (String) cartItem.get('ILT_Class__c');
             classCartItemMap.put(iltClass, cartItemId);
         }

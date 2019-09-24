@@ -55,7 +55,7 @@
                     });
                     toastEvent.fire();
                     $A.get("e.force:refreshView").fire();
-                    component.set("v.stepNumber", "Zero")
+                    component.set("v.stepNumber", "Zero");
                 }
                 
             });
@@ -80,7 +80,7 @@
                     });
                     toastEvent.fire();
                     $A.get("e.force:refreshView").fire();
-                    component.set("v.stepNumber", "Zero")
+                    component.set("v.stepNumber", "Zero");
                 }
                 
             });

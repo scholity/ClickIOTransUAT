@@ -33,25 +33,14 @@
     incrementQuantity: function (component, event, helper) {
         var cartItem = component.get('v.cartItem');
         var quantity = component.get('v.quantity');
-        var products = component.get('v.productMap');
 
-        if (cartItem != null && quantity != null && products != null) {
-            var productId = cartItem.ccrz__Product__c;
-            var product = products[productId];
+        if (cartItem != null && quantity != null) {
+            quantity = Number(quantity) + 1;
+            component.set('v.quantity', quantity);
 
-            if (product != null) {
-                var productInventory = product.inventoryCount;
-                if (quantity == productInventory) {
-                    return;
-                }
-
-                quantity = Number(quantity) + 1;
-                component.set('v.quantity', quantity);
-
-                var updateEvent = component.getEvent('incrementProductCount');
-                updateEvent.setParams({'productSfid': productId});
-                updateEvent.fire();
-            }
+            var updateEvent = component.getEvent('incrementCartItemQuantity');
+            updateEvent.setParam('cartItemId', cartItem.Id);
+            updateEvent.fire();
         }
     },
 
@@ -64,22 +53,14 @@
     decrementQuantity: function (component, event, helper) {
         var cartItem = component.get('v.cartItem');
         var quantity = component.get('v.quantity');
-        var products = component.get('v.productMap');
 
-        if (cartItem != null && quantity != null && products != null) {
-            var productId = cartItem.ccrz__Product__c;
-            var product = products[productId];
-
-            if (product != null) {
-                if (quantity == 0) {
-                    return;
-                }
-
+        if (cartItem != null && quantity != null) {
+            if (quantity > 0) {
                 quantity = Number(quantity) - 1;
                 component.set('v.quantity', quantity);
 
-                var updateEvent = component.getEvent('decrementProductCount');
-                updateEvent.setParams({'productSfid': productId});
+                var updateEvent = component.getEvent('decrementCartItemQuantity');
+                updateEvent.setParam('cartItemId', cartItem.Id);
                 updateEvent.fire();
             }
         }

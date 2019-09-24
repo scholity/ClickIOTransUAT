@@ -10,9 +10,10 @@ public with sharing class phss_cc_CyberSourceUtilTest {
     public static Opportunity testOpportunity;
     	
     public static ccrz__E_Order__c testOrder;
-    
-    public static ccrz__E_TransactionPayment__c testTransactionPayment;
-    
+
+    public static ccrz__E_TransactionPayment__c testAuthTransactionPayment;
+    public static ccrz__E_TransactionPayment__c testCaptureTransactionPayment;
+
     public static Fulfillment__c testFulfillment;
     
     /**
@@ -30,18 +31,27 @@ public with sharing class phss_cc_CyberSourceUtilTest {
             ccrz__Account__c = ((Account)testData.get(phss_cc_TestDataFactory.TEST_ACCOUNT)).Id
         );
         insert testOrder;
-        
-        testTransactionPayment = new ccrz__E_TransactionPayment__c(
-        	ccrz__Token__c = 'testToken',
-            ccrz__CCOrder__c = testOrder.Id
+
+        testAuthTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__Token__c = phss_cc_TestDataFactory.TEST_AUTH_TXN_PMT_TOKEN,
+                ccrz__CCOrder__c = testOrder.Id,
+                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
         );
-        insert testTransactionPayment;
-        
+        insert testAuthTransactionPayment;
+
+        testCaptureTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__Token__c = 'testToken',
+                ccrz__CCOrder__c = testOrder.Id,
+                ccrz__SourceTransactionPayment__c = testAuthTransactionPayment.Id,
+                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE
+        );
+        insert testCaptureTransactionPayment;
+
         testFulfillment = new Fulfillment__c(
             Type__c='Invoice',
             Status__c='Open',
             Order__c = testOrder.Id,
-            CC_Transaction_Payment__c= testTransactionPayment.Id
+            CC_Transaction_Payment__c= testAuthTransactionPayment.Id
         );
         insert testFulfillment;
 
@@ -173,18 +183,12 @@ public with sharing class phss_cc_CyberSourceUtilTest {
         system.assertEquals(testOrder.Id, phss_cc_CyberSourceUtil.fetchOrder(testOrder.Id).Id);
     }
     
-    @isTest static void testFetchTransactionPayment(){
-        
-        setupTestData();
-        
-        system.assertEquals(testTransactionPayment.Id, phss_cc_CyberSourceUtil.fetchTransactionPayment(testTransactionPayment.Id).Id);
-    }
-    
     @isTest static void testFetchTransactionPaymentForToken(){
         
         setupTestData();
-        
-        system.assertEquals(testTransactionPayment.Id, phss_cc_CyberSourceUtil.fetchTransactionPaymentForToken(testTransactionPayment.ccrz__Token__c).Id);
+
+        String token = phss_cc_TestDataFactory.TEST_AUTH_TXN_PMT_TOKEN;
+        System.assertEquals(testAuthTransactionPayment.Id, phss_cc_CyberSourceUtil.fetchTransactionPaymentForToken(token).Id);
     }
     
     @isTest static void testCapturePayment(){
@@ -202,7 +206,7 @@ public with sharing class phss_cc_CyberSourceUtilTest {
         
         Test.startTest();
         
-        phss_cc_CyberSourceUtil.capturePayment(testTransactionPayment.Id, testFulfillment.Id);
+        phss_cc_CyberSourceUtil.capturePayment(testFulfillment.Id, testAuthTransactionPayment.Id, testCaptureTransactionPayment.Id);
         
         test.stopTest();
         
@@ -237,7 +241,7 @@ public with sharing class phss_cc_CyberSourceUtilTest {
         
         Test.startTest();
         
-        phss_cc_CyberSourceUtil.creditTransactionPayment(testTransactionPayment.Id);
+        phss_cc_CyberSourceUtil.creditTransactionPayment(testAuthTransactionPayment.Id);
         
         Test.stopTest();
     }

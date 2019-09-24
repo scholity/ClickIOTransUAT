@@ -6,11 +6,11 @@
 (
 OR(
 ISPICKVAL(  Dispute_Issue__c, &#39;Customer Service Credit&#39;),
-ISPICKVAL(  Dispute_Issue__c, &#39;Price&#39;),
-AND(
+ISPICKVAL(  Dispute_Issue__c, &#39;Price&#39;)
+/*AND(
 ISPICKVAL(  Dispute_Issue__c, &#39;Invoice Delivery Method&#39;),
 ISPICKVAL(  Type_of_Price_Dispute__c, &#39;Portal Billing&#39;)
-)
+)*/
 ),
 ISPICKVAL( Type, &#39;Invoicing&#39;),
 ISPICKVAL( BOS_Approval__c, &quot;&quot;),
