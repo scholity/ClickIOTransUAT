@@ -13,12 +13,15 @@
                 <stringValue>Release Achievement Assignments</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_1_A2</name>
+        <name>myWaitEvent_myWait_myRule_1_event_0_SA1</name>
         <label>Release Achievement Assignments</label>
         <locationX>100</locationX>
-        <locationY>300</locationY>
+        <locationY>200</locationY>
         <actionName>Release_Achievement_Assignments</actionName>
         <actionType>flow</actionType>
+        <connector>
+            <targetReference>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</targetReference>
+        </connector>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -62,6 +65,38 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <assignments>
+        <name>myWaitAssignment_myWait_myRule_1</name>
+        <label>myWaitAssignment_myWait_myRule_1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>cancelWaits</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>myWait_myRule_1</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myDecision</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</name>
+        <label>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myWaitEvent_myWait_myRule_1_event_0_postActionExecutionVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myWait_myRule_1</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <processMetadataValues>
             <name>index</name>
@@ -85,9 +120,96 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_1_A1</targetReference>
+                <targetReference>myRule_1_pmetdec</targetReference>
             </connector>
             <label>Status is set to Complete</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_0</name>
+        <label>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_0</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myPostWaitRule_myWaitEvent_myWait_myRule_1_event_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_current.CreatedDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myWaitEvent_myWait_myRule_1_event_0_SA1</targetReference>
+            </connector>
+            <label>myPostWaitRule_myWaitEvent_myWait_myRule_1_event_0</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myPreWaitDecision_myWait_myRule_1</name>
+        <label>myPreWaitDecision_myWait_myRule_1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myWaitAssignment_myWait_myRule_1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myPreWaitRule_myWait_myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision</targetReference>
+            </connector>
+            <label>myPreWaitRule_myWait_myRule_1</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_1_pmetdec</name>
+        <label>Previously Met Decision</label>
+        <locationX>100</locationX>
+        <locationY>100</locationY>
+        <defaultConnector>
+            <targetReference>myRule_1_A1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1_pmetnullrule</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Previously Met - Null</label>
+        </rules>
+        <rules>
+            <name>myRule_1_pmetrule</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1_pmetrule</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Previously Met - Prev</label>
         </rules>
     </decisions>
     <description>Once the Fulfillment Item Status is set to Complete, the flow is triggered to create a Training Revenue record and Release Achievement Assignments</description>
@@ -105,7 +227,7 @@
 &#39;Other&#39;)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_3109400725</name>
+        <name>formula_2_myRule_1_A1_7601285646</name>
         <dataType>String</dataType>
         <expression>CASE({!myVariable_current.Order__r.FOCIS_Category__c}, 
 &#39;42&#39;, &#39;FS&#39;, 
@@ -123,7 +245,7 @@
                 <stringValue>DATEVALUE( [Fulfillment_Item__c].Transaction_Date__c )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_A1_6796644742</name>
+        <name>formula_3_myRule_1_A1_4955645462</name>
         <dataType>Date</dataType>
         <expression>DATEVALUE( {!myVariable_current.Transaction_Date__c} )</expression>
     </formulas>
@@ -147,7 +269,7 @@
 &#39;&#39;)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_1_A1_4441563081</name>
+        <name>formula_4_myRule_1_A1_0260332557</name>
         <dataType>String</dataType>
         <expression>CASE(MONTH({!myVariable_current.Fulfillment_Date__c}), 
 1, &#39;JAN&#39;, 
@@ -171,7 +293,7 @@
                 <stringValue>IF(CONTAINS([Fulfillment_Item__c].Order__c.Opportunity_Order__c.Owner.Profile.Name, &#39;ARC BGST Sales User&#39;) , &#39;BGST&#39;, &#39;&#39;) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_5_myRule_1_A1_9135135692</name>
+        <name>formula_5_myRule_1_A1_2047618782</name>
         <dataType>String</dataType>
         <expression>IF(CONTAINS({!myVariable_current.Order__r.Opportunity_Order__r.Owner.Profile.Name}, &#39;ARC BGST Sales User&#39;) , &#39;BGST&#39;, &#39;&#39;)</expression>
     </formulas>
@@ -188,7 +310,7 @@
     [Fulfillment_Item__c].Order__c.ccrz__Account__c.BillingState )  </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_6_myRule_1_A1_9893845480</name>
+        <name>formula_6_myRule_1_A1_4095537986</name>
         <dataType>String</dataType>
         <expression>IF(
    {!myVariable_current.Order_Item__r.ILT_Class__c}!=null &amp;&amp; 
@@ -205,7 +327,7 @@
                 <stringValue>[Fulfillment_Item__c].Fulfillment_Item_Total__c </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_1_A1_4129411851</name>
+        <name>formula_7_myRule_1_A1_0684831669</name>
         <dataType>Number</dataType>
         <expression>{!myVariable_current.Fulfillment_Item_Total__c}</expression>
         <scale>18</scale>
@@ -223,7 +345,7 @@
 [Fulfillment_Item__c].Order__c.ccrz__Account__c.BillingPostalCode )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_8_myRule_1_A1_0859635790</name>
+        <name>formula_8_myRule_1_A1_1403906934</name>
         <dataType>String</dataType>
         <expression>IF(
    {!myVariable_current.Order_Item__r.ILT_Class__c}!=null &amp;&amp; 
@@ -246,7 +368,20 @@ IF(ISCHANGED([Fulfillment_Item__c].Status__c) &amp;&amp; ISPICKVAL([Fulfillment_
         <expression>IF(ISNEW() &amp;&amp; ISPICKVAL({!myVariable_current.Status__c}, &#39;Complete&#39;), TRUE, 
 IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_current.Status__c}, &#39;Complete&#39;), TRUE, FALSE) )</expression>
     </formulas>
-    <interviewLabel>Create_Training_Revenue_Record-6_InterviewLabel</interviewLabel>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(ISNEW() &amp;&amp; ISPICKVAL([Fulfillment_Item__c].Status__c, &#39;Complete&#39;), TRUE, 
+IF(ISCHANGED([Fulfillment_Item__c].Status__c) &amp;&amp; ISPICKVAL([Fulfillment_Item__c].Status__c, &#39;Complete&#39;), TRUE, FALSE) )  </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1_pmetrule</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(ISNEW() &amp;&amp; ISPICKVAL({!myVariable_old.Status__c}, &#39;Complete&#39;), TRUE, 
+IF(ISCHANGED({!myVariable_old.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_old.Status__c}, &#39;Complete&#39;), TRUE, FALSE) )</expression>
+    </formulas>
+    <interviewLabel>Create_Training_Revenue_Record-7_InterviewLabel</interviewLabel>
     <label>Create Training Revenue Record</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -279,7 +414,7 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
         <locationX>100</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myRule_1_A2</targetReference>
+            <targetReference>myWait_myRule_1</targetReference>
         </connector>
         <inputAssignments>
             <processMetadataValues>
@@ -386,7 +521,7 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
             </processMetadataValues>
             <field>Channel__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_3109400725</elementReference>
+                <elementReference>formula_2_myRule_1_A1_7601285646</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -458,7 +593,7 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
             </processMetadataValues>
             <field>End_Date__c</field>
             <value>
-                <elementReference>formula_3_myRule_1_A1_6796644742</elementReference>
+                <elementReference>formula_3_myRule_1_A1_4955645462</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -566,7 +701,7 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
             </processMetadataValues>
             <field>Fiscal_Month_Abbr__c</field>
             <value>
-                <elementReference>formula_4_myRule_1_A1_4441563081</elementReference>
+                <elementReference>formula_4_myRule_1_A1_0260332557</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -602,7 +737,7 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
             </processMetadataValues>
             <field>Focis_Location__c</field>
             <value>
-                <elementReference>formula_5_myRule_1_A1_9135135692</elementReference>
+                <elementReference>formula_5_myRule_1_A1_2047618782</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -854,7 +989,7 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
             </processMetadataValues>
             <field>State__c</field>
             <value>
-                <elementReference>formula_6_myRule_1_A1_9893845480</elementReference>
+                <elementReference>formula_6_myRule_1_A1_4095537986</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -926,7 +1061,7 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
             </processMetadataValues>
             <field>Transaction_Amt__c</field>
             <value>
-                <elementReference>formula_7_myRule_1_A1_4129411851</elementReference>
+                <elementReference>formula_7_myRule_1_A1_0684831669</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -998,13 +1133,20 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
             </processMetadataValues>
             <field>Zip_Code__c</field>
             <value>
-                <elementReference>formula_8_myRule_1_A1_0859635790</elementReference>
+                <elementReference>formula_8_myRule_1_A1_1403906934</elementReference>
             </value>
         </inputAssignments>
         <object>Channel_Compensation__c</object>
     </recordCreates>
-    <startElementReference>myDecision</startElementReference>
-    <status>Draft</status>
+    <startElementReference>myPreWaitDecision_myWait_myRule_1</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>cancelWaits</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>
@@ -1021,4 +1163,73 @@ IF(ISCHANGED({!myVariable_current.Status__c}) &amp;&amp; ISPICKVAL({!myVariable_
         <isOutput>false</isOutput>
         <objectType>Fulfillment_Item__c</objectType>
     </variables>
+    <variables>
+        <name>myWaitEvent_myWait_myRule_1_event_0_postActionExecutionVariable</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <waits>
+        <name>myWait_myRule_1</name>
+        <label>myWait_myRule_1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>defaultLabel</defaultConnectorLabel>
+        <waitEvents>
+            <processMetadataValues>
+                <name>inputParameterType</name>
+                <value>
+                    <stringValue>referenced</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>myWaitEvent_myWait_myRule_1_event_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myWaitEvent_myWait_myRule_1_event_0_postActionExecutionVariable</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_0</targetReference>
+            </connector>
+            <eventType>DateRefAlarmEvent</eventType>
+            <inputParameters>
+                <name>TimeTableColumnEnumOrId</name>
+                <value>
+                    <stringValue>Fulfillment_Item__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>EntityObjectId</name>
+                <value>
+                    <elementReference>myVariable_current.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeFieldColumnEnumOrId</name>
+                <value>
+                    <stringValue>CreatedDate</stringValue>
+                </value>
+            </inputParameters>
+            <label>myWaitEvent_myWait_myRule_1_event_0</label>
+        </waitEvents>
+    </waits>
 </Flow>

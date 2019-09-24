@@ -13327,6 +13327,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Training_Events__c.Account_Owner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Account__c</field>
         <readable>true</readable>
@@ -14539,7 +14544,7 @@
         <layout>CommunityMemberLayout-Community Member Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-SB Organization Contact Page Layout</layout>
+        <layout>Contact-SB TSC Contact Page Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact_Address_Detail__c-Contact Address Detail Layout</layout>
