@@ -4,9 +4,9 @@
 
 public with sharing class phss_cc_VoucherUtil {
 
-    private static final String ISSUED_STATUS = 'Issued';
-    private static final String TEMP_HOLD_STATUS = 'Temp Hold';
-    private static final Integer RESERVATION_TIMESTAMP_OFFSET = -45;        // number of minutes to offset the reservation timestamp
+    public static final String ISSUED_STATUS = 'Issued'; 
+    public static final String TEMP_HOLD_STATUS = 'Temp Hold';
+    public static final Integer RESERVATION_TIMESTAMP_OFFSET = -45;        // number of minutes to offset the reservation timestamp
 
     private static final String FAILED_TO_GET_REQUESTED_QUANTITY_OF_AVAILABLE_VOUCHERS = 'Failed to get the requested quantity of available vouchers.';
     private static final String FAILED_TO_MATCH_CART_ITEM_FOR_COURSE = 'Failed to match a cart item with a selected course.';

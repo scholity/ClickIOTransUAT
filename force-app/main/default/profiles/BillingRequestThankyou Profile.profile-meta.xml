@@ -13324,6 +13324,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Training_Events__c.Account_Owner__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Training_Events__c.Account__c</field>
         <readable>false</readable>
     </fieldPermissions>

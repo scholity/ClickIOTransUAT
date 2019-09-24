@@ -808,7 +808,7 @@
         </rules>
     </decisions>
     <description>Updates made on status changes of an Order Item</description>
-    <interviewLabel>Order_Item_Status_Controller_Change-16_InterviewLabel</interviewLabel>
+    <interviewLabel>Order_Item_Status_Controller_Change-18_InterviewLabel</interviewLabel>
     <label>Order Item Status Controller - Change</label>
     <processMetadataValues>
         <name>ObjectType</name>
