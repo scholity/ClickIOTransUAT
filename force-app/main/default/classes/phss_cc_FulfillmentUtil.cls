@@ -186,7 +186,7 @@ public with sharing class phss_cc_FulfillmentUtil {
     public static void finalizePayment(String authTransactionPaymentId, String captureTransactionPaymentId, String fulfillmentId, Map<String, Object> cyberSourceResponseMap) {
         try {
             ccrz__E_Invoice__c invoice = createInvoiceForPayment(authTransactionPaymentId);
-            completeFulfillment(fulfillmentId, authTransactionPaymentId);
+            completeFulfillment(fulfillmentId, captureTransactionPaymentId);
             
             ccrz__E_TransactionPayment__c authTransactionPayment = completeAuthTransactionPayment(authTransactionPaymentId, invoice.Id);
             ccrz__E_TransactionPayment__c captureTransactionPayment = completeCaptureTransactionPayment(captureTransactionPaymentId, invoice.Id, cyberSourceResponseMap);

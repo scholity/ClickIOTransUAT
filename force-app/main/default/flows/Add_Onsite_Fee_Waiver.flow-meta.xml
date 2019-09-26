@@ -74,7 +74,7 @@
             <assignToReference>sFulfillmentItem.Quantity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>NegativeOne</elementReference>
+                <numberValue>1.0</numberValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -201,7 +201,7 @@
             <label>Not Found</label>
         </rules>
     </decisions>
-    <description>Add Onsite Fee Waiver - Added ILT Class Reference - Removed Offering ID</description>
+    <description>Add Onsite Fee Waiver - Changed to Price to be negative and quantity to be positive</description>
     <formulas>
         <name>qtyprice</name>
         <dataType>Currency</dataType>
@@ -264,7 +264,7 @@
         <inputAssignments>
             <field>ccrz__OriginalQuantity__c</field>
             <value>
-                <elementReference>NegativeOne</elementReference>
+                <numberValue>1.0</numberValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -276,7 +276,7 @@
         <inputAssignments>
             <field>ccrz__Price__c</field>
             <value>
-                <elementReference>sOrderItem.ccrz__Price__c</elementReference>
+                <elementReference>qtyprice</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -294,7 +294,7 @@
         <inputAssignments>
             <field>ccrz__Quantity__c</field>
             <value>
-                <elementReference>NegativeOne</elementReference>
+                <numberValue>1.0</numberValue>
             </value>
         </inputAssignments>
         <inputAssignments>

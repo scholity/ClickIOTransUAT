@@ -459,7 +459,7 @@
         </rules>
     </decisions>
     <description>Update information on Transaction Payment Records change or create</description>
-    <interviewLabel>Transaction_Payment_Controller-11_InterviewLabel</interviewLabel>
+    <interviewLabel>Transaction_Payment_Controller-13_InterviewLabel</interviewLabel>
     <label>Transaction Payment Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -527,7 +527,7 @@
             </processMetadataValues>
             <field>SDOC__Doclist__c</field>
             <value>
-                <stringValue>a2u210000016Sv1AAE</stringValue>
+                <stringValue>a2u210000016Sv6AAE</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -677,7 +677,7 @@
         <object>SDOC__SDJob__c</object>
     </recordCreates>
     <startElementReference>myPreWaitDecision_myWait_myRule_3</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>cancelWaits</name>
         <dataType>String</dataType>

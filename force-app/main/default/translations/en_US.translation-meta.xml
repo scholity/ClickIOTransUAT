@@ -696,7 +696,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Transaction_Payment_Controller-11</fullName>
+            <fullName>Transaction_Payment_Controller-13</fullName>
         </flows>
         <fullName>Transaction_Payment_Controller</fullName>
     </flowDefinitions>
@@ -799,7 +799,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Manage_Order_Status-52</fullName>
+            <fullName>Manage_Order_Status-53</fullName>
         </flows>
         <fullName>Manage_Order_Status</fullName>
     </flowDefinitions>
@@ -1151,7 +1151,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Set_Order_Item_Emails-3</fullName>
+            <fullName>Set_Order_Item_Emails-5</fullName>
         </flows>
         <fullName>Set_Order_Item_Emails</fullName>
     </flowDefinitions>
@@ -1235,7 +1235,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Order_Item_Status_Controller_Change-18</fullName>
+            <fullName>Order_Item_Status_Controller_Change-20</fullName>
         </flows>
         <fullName>Order_Item_Status_Controller_Change</fullName>
     </flowDefinitions>
@@ -1458,6 +1458,81 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
+            <fullName>Assign_Vouchers_for_Online_Class-3</fullName>
+        </flows>
+        <fullName>Assign_Vouchers_for_Online_Class</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Cancel_Class-1</fullName>
+            <screens>
+                <fields>
+                    <name>Information</name>
+                </fields>
+                <fields>
+                    <name>InformationVerification</name>
+                </fields>
+                <fields>
+                    <name>ProccessRecords</name>
+                </fields>
+                <name>Cancel_Class</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>closeclassmsg</name>
+                </fields>
+                <name>NotClosed</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>NotCancelled</name>
+                </fields>
+                <name>Not_Cancelled</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>UpdateComplete</name>
+                </fields>
+                <name>SuccessMessage</name>
+            </screens>
+        </flows>
+        <fullName>Cancel_Class</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Schedule_New_Training_Event-11</fullName>
+            <screens>
+                <fields>
+                    <name>EventCancelled</name>
+                </fields>
+                <name>Cancel_Processing</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>SuccessMessage</name>
+                </fields>
+                <name>Success_Screen</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>ProcessorCancel</name>
+                </fields>
+                <fields>
+                    <name>VerificationMessage</name>
+                </fields>
+                <name>Verification</name>
+            </screens>
+        </flows>
+        <fullName>Schedule_New_Training_Event</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Voucher_Controller-1</fullName>
+        </flows>
+        <fullName>Voucher_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
             <fullName>Add_Cancelation_Fee_to_Order-27</fullName>
             <screens>
                 <fields>
@@ -1491,7 +1566,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Add_Onsite_Fee_Waiver-7</fullName>
+            <fullName>Add_Onsite_Fee_Waiver-9</fullName>
             <screens>
                 <fields>
                     <name>Error</name>

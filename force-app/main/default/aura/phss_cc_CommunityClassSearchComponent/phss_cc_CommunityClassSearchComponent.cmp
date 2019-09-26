@@ -7,11 +7,13 @@
     <aura:attribute name="ranges" type="List" default=""/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
 
-    <!--Initializer-->
+    <!--Event handlers-->
     <aura:handler name="init" action="{! c.doInit }" value="{! this }"/>
-
-    <!--Register Event Handlers-->
     <aura:handler name="cartUpdate" event="c:phss_cc_CommunityClassCartUpdate" action="{! c.updateCart }"/>
+    <aura:handler event="c:phss_cc_ProductSearchReadyEvent" action="{! c.handleProductSearchIsReady }"/>
+
+    <!--Register events-->
+    <aura:registerEvent name="productSearchEvent" type="c:phss_cc_ProductSearchEvent"/>
 
     <aura:if isTrue="{! v.showSpinner }">
         <lightning:spinner variant="brand" size="large" alternativeText="{! $Label.c.Spinner_Alternate_Text }"/>

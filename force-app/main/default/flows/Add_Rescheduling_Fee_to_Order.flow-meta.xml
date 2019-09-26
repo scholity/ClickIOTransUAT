@@ -501,7 +501,7 @@
         <showHeader>true</showHeader>
     </screens>
     <startElementReference>Reschedule_Fee_Screen</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>colProductPrice</name>
         <dataType>SObject</dataType>

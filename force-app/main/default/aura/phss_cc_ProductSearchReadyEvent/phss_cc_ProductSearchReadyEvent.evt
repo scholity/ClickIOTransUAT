@@ -1,0 +1,6 @@
+<!--
+ - Created by jbarker on 2019-09-24.
+ -->
+
+<aura:event type="APPLICATION" description="phss_cc_ProductSearchReadyEvent">
+</aura:event>

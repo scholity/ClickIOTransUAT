@@ -10,6 +10,9 @@
      */
     doInit : function (component, event, helper) {
         helper.getActiveCart(component);
+
+        var readyEvent = $A.get('e.c:phss_cc_ProductSearchReadyEvent');
+        setTimeout(function() { readyEvent.fire(); }, 100);
     },
 
     /**
@@ -19,6 +22,7 @@
      * @param helper
      */
     onSearch: function (component, event, helper) {
+        component.set('v.availableProductSpecs', []);
         helper.doSearch(component);
     },
 
@@ -31,6 +35,12 @@
     handleRefreshComponentEvent : function (component, event, helper){
         component.set('v.productQuantityMap',new Map());
         helper.getActiveCart(component);
+    },
+
+    handleProductSearchEvent : function (component, event, helper) {
+        var searchTerm = event.getParam('searchTerm');
+        component.set('v.searchQuery', searchTerm);
+        helper.doSearch(component, event, helper);
     },
 
     /**
@@ -78,5 +88,21 @@
      */
     addProdsToCart: function (component, event, helper) {
         helper.addToCartRequest(component,event,helper);
+    },
+
+    /**
+     *
+     * @param component
+     * @param event
+     * @param helper
+     */
+    handleProductSpecMenuOptionSelected: function (component, event, helper) {
+        var specValue = event.getSource().get('v.value');
+        if (specValue == null || specValue == '') {
+            component.set('v.selectedProductSpec', null);
+        } else {
+            component.set('v.selectedProductSpec', specValue);
+        }
+        helper.filterProductList(component, event, helper);
     }
 })

@@ -66,25 +66,6 @@
         <template>All/Case_with_No_priority</template>
     </alerts>
     <alerts>
-        <fullName>GetFeedback_respoce_Workflow</fullName>
-        <description>GetFeedback respoce Workflow</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactEmail</field>
-            <type>email</type>
-        </recipients>
-        <recipients>
-            <recipient>rsguser@redcross.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sfdcsudhir@redcross.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Survey_Templates/getFeedbackTest</template>
-    </alerts>
-    <alerts>
         <fullName>LTS_Registration_Using_Credit_Card</fullName>
         <description>LTS Registration Using Credit Card</description>
         <protected>false</protected>
@@ -4760,10 +4741,6 @@ Learn To Swim Facility Registration - Account Name</description>
     </rules>
     <rules>
         <fullName>getFeedbacsurvey</fullName>
-        <actions>
-            <name>GetFeedback_respoce_Workflow</name>
-            <type>Alert</type>
-        </actions>
         <active>false</active>
         <criteriaItems>
             <field>Case.Status</field>

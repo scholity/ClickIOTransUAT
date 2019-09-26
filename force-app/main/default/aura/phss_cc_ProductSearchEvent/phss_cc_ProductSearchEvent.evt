@@ -1,0 +1,7 @@
+<!--
+ - Created by jbarker on 2019-09-20.
+ -->
+
+<aura:event type="APPLICATION" description="phss_cc_ProductSearchEvent">
+    <aura:attribute type="String" name="searchTerm"/>
+</aura:event>

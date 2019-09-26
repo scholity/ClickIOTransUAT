@@ -395,7 +395,13 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             
             if(fi.CC_Product__r.ccrz__InventoryType__c == 'COURSE' || fi.CC_Product__r.ccrz__InventoryType__c == 'COMMUNITY')
             {
-                    offeringId = fi.ILT_Class__r.Offering_ID__c;
+                offeringId = fi.ILT_Class__r.Offering_ID__c;
+                if(String.isBlank(offeringId))
+                {
+                    isError = true;
+                    if(errString!='') {errString=errString+';';}
+                    errString = errString + 'ILT Class - offeringId';
+                }
             }
             else
             {
@@ -449,15 +455,33 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // Max Instructor Full Name
             String instructorName = '';
             // DE1194 For the following conditions, supply the student name (should be only one)
-            if (('"6243"'.equals(apCode) || '"6244"'.equals(apCode)) && '"41"'.equals(focis)) {
+            if (('"6243"'.equals(apCode) || '"6244"'.equals(apCode)) && '"41"'.equals(focis))
+            {
                 List<redwing__ILT_Roster__c > rosters = new List<redwing__ILT_Roster__c >();
-                if (fi.ILT_Class__c != null) {
+                
+                if (fi.ILT_Class__c != null &&
+                    ('COURSE'.equals(fi.CC_Product__r.ccrz__InventoryType__c) || 'COMMUNITY'.equals(fi.CC_Product__r.ccrz__InventoryType__c)))
+                {
                     rosters = new List<redwing__ILT_Roster__c>([SELECT redwing__User__r.Name
-                    FROM redwing__ILT_Roster__c
-                    WHERE redwing__ILT_Class__c =:fi.ILT_Class__c]);
+                    											  FROM redwing__ILT_Roster__c
+                    											 WHERE redwing__ILT_Class__c =:fi.ILT_Class__c]);
+                    if (rosters.size()> 0)
+                    {
+                    	instructorName = '"' + rosters[0].redwing__User__r.Name.replaceAll(regExp, '') + '"';
+                		fullName 	   = instructorName;
+                    }
+                    else
+                    {
+                        isError = true;
+                        if(errString!='')
+                        {
+                            errString=errString+';';
+                        }
+                		errString = errString + 'ILT Class-Roster User Name';
+                    }
                 }
-                instructorName = '"' + rosters[0].Name.replaceAll(regExp, '') + '"';
-                fullName = instructorName;
+                
+                
             } else if (fi.ILT_Class__c!=null && iltCIMap.containsKey(fi.ILT_Class__c) && iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__c!=null) {
                 instructorName = '"';
                 if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.FirstName!=null) {

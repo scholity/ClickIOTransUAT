@@ -316,7 +316,8 @@ global class skedFullServiceBookingGridController {
                                                          WHERE sked__Status__c != :skedConstants.JOB_ALLOCATION_STATUS_DELETED)
                                                         FROM sked__Job__c
                                                         WHERE sked__Region__c = :queryModel.regionId
-                                                        AND sked__Type__c = :skedConstants.JOB_TYPE_FULL_SERVICE
+                                                        AND (sked__Type__c = :skedConstants.JOB_TYPE_FULL_SERVICE
+                                                             OR sked__Type__c = :skedConstants.JOB_TYPE_COMMUNITY)
                                                         AND sked__Job_Status__c = :skedConstants.JOB_STATUS_PENDING_ALLOCATION
                                                         AND sked__Start__c < :queryModel.endTime
                                                         AND sked__Finish__c > : queryModel.startTime
@@ -729,7 +730,6 @@ global class skedFullServiceBookingGridController {
         skedJob.sked__Region__c = model.regionId;
         skedJob.sked__Account__c = model.accountId;
         skedJob.sked__Contact__c = model.contactId;
-        skedJob.sked__Description__c = model.courseCatalogName;
         skedJob.sked__Start__c = job.start;
         skedJob.sked__Finish__c = job.finish;
         skedJob.sked__Duration__c = model.classDuration;
@@ -773,7 +773,7 @@ global class skedFullServiceBookingGridController {
         Training_Events__c skedTrainingEvent = new Training_Events__c(
             Id = model.trainingEventId,
             Start_Date__c = skedDateTimeUtils.getDate(firstJob.sked__Start__c, model.timezoneSidId),
-            End_Date__c = skedDateTimeUtils.getDate(lastJob.sked__Start__c, model.timezoneSidId),
+            End_Date__c = skedDateTimeUtils.getDate(lastJob.sked__Finish__c, model.timezoneSidId),
             Start_Time__c = firstJob.sked__Start__c.format('hh:mm a', model.timezoneSidId),
             End_Time__c = firstJob.sked__Finish__c.format('hh:mm a', model.timezoneSidId),
             Equipment__c = string.join(model.selectedAvEquipments, ';'),
@@ -1228,7 +1228,7 @@ global class skedFullServiceBookingGridController {
         public List<string> tagIds {get;set;}
         public integer jobDuration {get;set;}
         public integer timeslotStep {get;set;}
-        public integer radius {get;set;}
+        public decimal radius {get;set;}
         public decimal lat {get;set;}
         public decimal lng {get;set;}
         public integer beforeClassDuration {get;set;}

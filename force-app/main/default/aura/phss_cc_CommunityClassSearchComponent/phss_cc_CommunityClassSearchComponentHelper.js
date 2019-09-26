@@ -30,6 +30,13 @@
         }
     },
 
+    fireProductSearchEvent : function(searchCriteria) {
+        var searchTerm = searchCriteria.searchTerm;
+        var searchEvent = $A.get('e.c:phss_cc_ProductSearchEvent');
+        searchEvent.setParams({ 'searchTerm' : searchTerm });
+        searchEvent.fire();
+    },
+
     /**
      * @description Searches for classes matching the user's input
      * @param component
@@ -41,6 +48,8 @@
 		    if (shouldWarnUser) {
                 alert('HISTORICAL SEARCH\n\nYour search includes dates before today.');
             }
+
+		    this.fireProductSearchEvent(result);
 
 			var action = component.get('c.classSearch');
 
