@@ -356,7 +356,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CommunitypageInstructorstest</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Constants</apexClass>
@@ -14086,6 +14086,11 @@
         <editable>false</editable>
         <field>Voucher__c.ILT_Class__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Is_My_Voucher__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

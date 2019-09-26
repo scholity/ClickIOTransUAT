@@ -389,7 +389,7 @@
         <inputReference>outAchievementAssignments</inputReference>
     </recordUpdates>
     <startElementReference>Get_Fulfillment_Item</startElementReference>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>colAchievementAssignment</name>
         <dataType>SObject</dataType>

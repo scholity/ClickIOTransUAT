@@ -635,7 +635,7 @@
         <queriedFields>Id</queriedFields>
     </recordLookups>
     <startElementReference>Get_Order_Item</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>colComposite</name>
         <dataType>SObject</dataType>

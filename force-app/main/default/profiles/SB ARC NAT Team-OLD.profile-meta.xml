@@ -14088,6 +14088,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Is_My_Voucher__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Voucher__c.Learning_Plan__c</field>
         <readable>true</readable>

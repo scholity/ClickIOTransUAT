@@ -33,18 +33,22 @@ public with sharing class phss_cc_TransactionPaymentUtil {
                             ccrz__Account__c,
                             ccrz__AccountType__c,
                             ccrz__Amount__c,
+                            ccrz__BillTo__c,
                             ccrz__CCOrder__c,
                             ccrz__CCOrder__r.Opportunity_Order__c,
+                            ccrz__Contact__c,
                             ccrz__InvoiceAppliedFor__c,
                             ccrz__ParentTransactionPayment__c,
                             ccrz__PaymentType__c,
                             ccrz__RequestAmount__c,
+                            ccrz__SoldTo__c,
                             ccrz__SourceTransactionPayment__c,
                             ccrz__Storefront__c,
                             ccrz__Token__c,
                             ccrz__TransactionPaymentId__c,
                             ccrz__TransactionTS__c,
                             ccrz__TransactionType__c,
+                            ccrz__User__c,
                             Name
                     FROM    ccrz__E_TransactionPayment__c
                     WHERE   Id = :transactionPaymentId
@@ -128,10 +132,14 @@ public with sharing class phss_cc_TransactionPaymentUtil {
             captureTxnPmt.ccrz__Account__c = authTxnPmt.ccrz__Account__c;
             captureTxnPmt.ccrz__AccountType__c = authTxnPmt.ccrz__AccountType__c;
             captureTxnPmt.ccrz__Amount__c = authTxnPmt.ccrz__Amount__c;
+            captureTxnPmt.ccrz__BillTo__c = authTxnPmt.ccrz__BillTo__c;
             captureTxnPmt.ccrz__CCOrder__c = authTxnPmt.ccrz__CCOrder__c;
+            captureTxnPmt.ccrz__Contact__c = authTxnPmt.ccrz__Contact__c;
+            captureTxnPmt.ccrz__SoldTo__c = authTxnPmt.ccrz__SoldTo__c;
             captureTxnPmt.ccrz__SourceTransactionPayment__c = authTxnPmt.Id;
             captureTxnPmt.ccrz__Storefront__c = authTxnPmt.ccrz__Storefront__c;
             captureTxnPmt.ccrz__TransactionType__c = CAPTURE_TRANSACTION_TYPE;
+            captureTxnPmt.ccrz__User__c = authTxnPmt.ccrz__User__c;
             insert captureTxnPmt;
             return captureTxnPmt;
 

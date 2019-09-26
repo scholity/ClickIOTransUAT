@@ -45,9 +45,9 @@
             } else {
                 this.showToastMessage('Error Fetching Active Cart', 'Unable to contact server.', 'Error');
             }
-            component.set('v.showSpinner', false);
+            this.actionDidFinish('getActiveCart', component);
         });
-        component.set('v.showSpinner', true);
+        this.actionDidStart('getActiveCart', component);
         $A.enqueueAction(action);
     },
 
@@ -66,6 +66,8 @@
         else if (searchString.length < 2) {
             this.showToastMessage('Error', 'Enter at least 2 characters for search.', 'Error');
         } else {
+            this.actionDidStart('doSearch', component);
+
             var opportunitySfid = component.get('v.recordId');
             var action = component.get('c.searchProducts');
             action.setParams({
@@ -83,6 +85,7 @@
                             if (returnValue.productList.length !== 0) {
                                 component.set('v.productList', returnValue.productList);
                                 component.set('v.productsMap', returnValue.productMap);
+                                this.buildProductSpecOptions(component);
                                 component.set('v.renderComplete', true);
                             } else {
                                 this.showToastMessage('Error', 'No Products found.', 'Error');
@@ -94,9 +97,8 @@
                 } else {
                     this.showToastMessage('Error Fetching Products', 'Unable to contact server.', 'Error');
                 }
-                component.set('v.showSpinner', false);
+                this.actionDidFinish('doSearch', component);
             });
-            component.set('v.showSpinner', true);
             $A.enqueueAction(action);
         }
     },
@@ -138,9 +140,96 @@
             } else {
                 this.showToastMessage('Error Adding to Cart', 'Unable to contact server.', 'Error');
             }
-            component.set('v.showSpinner', false);
+            this.actionDidFinish('addToCart', component);
         });
-        component.set('v.showSpinner', true);
+        this.actionDidStart('addToCart', component);
         $A.enqueueAction(action);
+    },
+
+    /**
+     * @description Builds the list of available product specs
+     * @param component
+     */
+    buildProductSpecOptions: function (component) {
+        var productList = component.get('v.productList');
+        var productsMap = component.get('v.productsMap');
+        var options = [];
+
+        if (productList != null && Array.isArray(productList)) {
+            for (var i = 0; i < productList.length; i++) {
+                var productId = productList[i];
+                var product = productsMap[productId];
+                if (product != null) {
+                    var productSpecsList = product['productSpecsS'];
+                    if (productSpecsList != null && Array.isArray(productSpecsList)) {
+                        for (var j = 0; j < productSpecsList.length; j++) {
+                            var productSpecs = productSpecsList[j];
+                            var value = productSpecs['specValue'];
+                            if (value != null && !options.includes(value)) {
+                                options.push(value);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        component.set('v.availableProductSpecs', options.sort());
+    },
+
+    /**
+     *
+     * @param component
+     * @param event
+     * @param helper
+     */
+    filterProductList: function (component, event, helper) {
+        var products = [];
+        var productList = component.get('v.productList');
+        var productsMap = component.get('v.productsMap');
+        var selectedProductSpec = component.get('v.selectedProductSpec');
+
+        if (selectedProductSpec != null && selectedProductSpec != '') {
+            for (var i = 0; i < productList.length; i++) {
+                var productId = productList[i];
+                var product = productsMap[productId];
+                if (product != null) {
+                    var productSpecsList = product['productSpecsS'];
+                    if (productSpecsList != null && Array.isArray(productSpecsList)) {
+                        for (var j = 0; j < productSpecsList.length; j++) {
+                            var productSpecs = productSpecsList[j];
+                            var value = productSpecs['specValue'];
+                            if (value == selectedProductSpec) {
+                                products.push(productId);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        component.set('v.filteredProductList', products);
+    },
+
+    actionDidStart: function (actionName, component) {
+        var actionsInProgress = component.get('v.actionsInProgress');
+        if (actionsInProgress != null && Array.isArray(actionsInProgress)) {
+            if (!actionsInProgress.includes(actionName)) {
+                actionsInProgress.push(actionName);
+            }
+        }
+        component.set('v.showSpinner', actionsInProgress.length > 0);
+    },
+
+    actionDidFinish: function (actionName, component) {
+        var actionsInProgress = component.get('v.actionsInProgress');
+        if (actionsInProgress != null && Array.isArray(actionsInProgress)) {
+            for (var i = 0; i < actionsInProgress.length; i++) {
+                if (actionsInProgress[i] == actionName) {
+                    actionsInProgress.splice(i, 1);
+                }
+            }
+        }
+        component.set('v.showSpinner', actionsInProgress.length > 0);
     }
 })

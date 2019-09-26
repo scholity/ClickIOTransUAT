@@ -19,6 +19,13 @@
         helper.doAddToCart(component);
     },
 
+    handleProductSearchIsReady: function(component, event, helper) {
+        var result = helper.isUserInputValid(component);
+        if (result.success) {
+            helper.fireProductSearchEvent(result);
+        }
+    },
+
     searchButtonPressed : function(component, event, helper) {
         helper.doSearch(component);
     },

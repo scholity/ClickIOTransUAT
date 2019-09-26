@@ -1035,7 +1035,7 @@ system.debug('*** nTotalStudents='+nTotalStudents);
 
                     if (clsRecord.Request_Type__c == 'Full Service') {
                         Set<ccrz__E_OrderItem__c> orderItemSet = jobIdOrderItems.get(clsRecord.Skedulo_Job_Id__c);
-                        if (!orderItemSet.isEmpty()) {
+                        if (orderItemSet != null && !orderItemSet.isEmpty()) {
                             Id theOrderId;
                             for (ccrz__E_OrderItem__c oi : orderItemSet) {
                                 if (oi.ILT_Class__c == null) {
@@ -1349,7 +1349,7 @@ system.debug('*** nTotalStudents='+nTotalStudents);
 
         return classFieldChange;
     }
-	*/
+    */
     
     private Boolean checkSessionJobFields(sked__Job__c newJob, sked__Job__c oldJob) {
         Boolean sessionFieldChange = false; // true = at least one field value has changed between old and new records
@@ -1393,7 +1393,7 @@ system.debug('*** nTotalStudents='+nTotalStudents);
         if (includedProfilesSet.contains(profiles[0].Name)) {
             return true; // Eligible, profile in included List
         } else {
-			if(Test.isRunningTest()) return true;            
+            if(Test.isRunningTest()) return true;            
             else return false; // Not eligible, profile not in included List
         }
     }

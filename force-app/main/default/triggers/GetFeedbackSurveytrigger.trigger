@@ -28,7 +28,7 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
     {
         EmailTemps.put(ETempms.Name,ETempms.id);
     }
-    //Contact c = [select Id, Email from Contact where Email = 'sfdcsudhir1@gmail.com' limit 1];
+   // Contact c = [select Id, Email from Contact where Email = 'sfdcsudhir1@gmail.com' limit 1];
     if(ILTId.size() >0)
     {
         for(redwing__ILT_Roster__c SendRoster: RosterList)
@@ -46,12 +46,12 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setToAddresses(sendTo);
                     mail.setSenderDisplayName('Getfeedback Survey');
-                   /* mail.setTargetObjectId(SendRoster.Contact__c);
+                    mail.setTargetObjectId(SendRoster.Contact__c);
                     mail.setTemplateID(EmailTemps.get('getFeedback for Base'));
-                    mail.setWhatId(SendRoster.id);*/
-                   String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
+                    mail.setWhatId(SendRoster.id);
+                   /*String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
                                             'Please tell us what you think by completing this'+' '+ '<a href=\'https://www.getfeedback.com/r/XBRCEhS9?ILT_Roster_ID='+SendRoster.id+'\'>quick survey</a>'+'<br /> <br />' +'Thank you'+'<br />'+'Team Redcross';
-                    mail.setHtmlBody(body);
+                    mail.setHtmlBody(body);*/
                     allmsg.add(mail);
                     
                 }
@@ -60,11 +60,12 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setToAddresses(sendTo);
                     mail.setSenderDisplayName('Getfeedback Survey');
-                   // mail.setTargetObjectId(SendRoster.Contact__c);
-                    //mail.setTemplateID(EmailTemps.get('getFeedback for Instructor'));
-                    String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
+                    mail.setTargetObjectId(SendRoster.Contact__c);
+                    mail.setTemplateID(EmailTemps.get('getFeedback for Instructor'));
+                    mail.setWhatId(SendRoster.id);
+                   /* String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
                                             'Please tell us what you think by completing this'+' '+ '<a href=\'https://www.getfeedback.com/r/XBRCEhS9?ILT_Roster_ID='+SendRoster.id+'\'>quick survey</a>'+'<br /> <br />' +'Thank you'+'<br />'+'Team Redcross';
-                    mail.setHtmlBody(body);
+                    mail.setHtmlBody(body);*/
                     allmsg.add(mail);
                 }
                 else if(Prosp.ccrz__SpecValue__c == 'Instructor Trainer')
@@ -72,11 +73,12 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setToAddresses(sendTo);
                     mail.setSenderDisplayName('Getfeedback Survey');
-                    //mail.setTargetObjectId(SendRoster.Contact__c);
-                    //mail.setTemplateID(EmailTemps.get('getFeedback for Instructor Trainer'));
-                    String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
+                    mail.setTargetObjectId(SendRoster.Contact__c);
+                    mail.setTemplateID(EmailTemps.get('getFeedback for Instructor Trainer'));
+                    mail.setWhatId(SendRoster.id);
+                    /*String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
                                             'Please tell us what you think by completing this'+' '+ '<a href=\'https://www.getfeedback.com/r/XBRCEhS9?ILT_Roster_ID='+SendRoster.id+'\'>quick survey</a>'+'<br /> <br />' +'Thank you'+'<br />'+'Team Redcross';
-                    mail.setHtmlBody(body);
+                    mail.setHtmlBody(body);*/
                     allmsg.add(mail);
                 }
             }

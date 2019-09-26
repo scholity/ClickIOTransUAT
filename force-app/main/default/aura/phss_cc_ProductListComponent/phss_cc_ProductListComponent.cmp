@@ -15,15 +15,24 @@
     <!--Booleans for changing component visibility-->
     <aura:attribute name="renderComplete" type="Boolean" default="false"/>
     <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="actionsInProgress" type="List" default="[]"/>
+
+    <!--product spec attributes-->
+    <aura:attribute name="showProductSpecMenu" type="Boolean" default="false"/>
+    <aura:attribute name="availableProductSpecs" type="List" default="[]"/>
+    <aura:attribute name="selectedProductSpec" type="String"/>
+    <aura:attribute name="filteredProductList" type="List" default="[]"/>
 
     <!--Event Handlers-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:phss_cc_ProductSearchEvent" action="{!c.handleProductSearchEvent}"/>
     <aura:handler name="incrementProductCount" event="c:phss_cc_ProductCountUpdate" action="{!c.productCountIncrement}"/>
     <aura:handler name="decrementProductCount" event="c:phss_cc_ProductCountUpdate" action="{!c.productCountDecrement}"/>
     <aura:handler event="c:phss_cc_RefreshComponentEvent" action="{!c.handleRefreshComponentEvent}"/>
 
     <!--Register Event-->
     <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
+    <aura:registerEvent name="productSearchReady" type="c:phss_cc_ProductSearchReadyEvent"/>
 
     <!--Component Attributes-->
     <aura:attribute type="String" name="searchQuery"/>
@@ -43,20 +52,34 @@
         </lightning:layoutItem>
     </lightning:layout>
 
-    <div class="slds-grid slds-wrap slds-m-bottom--large">
+    <div class="slds-grid slds-m-bottom--large slds-grid_vertical-align-end">
         <div class="slds-col slds-size_2-of-6 slds-m-right--small">
-            <ui:inputText value="{!v.searchQuery}"/>
+            <lightning:input label="" value="{!v.searchQuery}"/>
         </div>
         <div class="slds-col slds-size_1-of-6">
             <lightning:button label="Submit" name="searchButton" onclick="{!c.onSearch}" variant="brand"/>
         </div>
+
+        <aura:if isTrue="{! greaterthan(v.availableProductSpecs.length, 0) }">
+            <div class="slds-col slds-size_2-of-6">
+                <h1>&nbsp;</h1>
+            </div>
+            <div class="slds-col slds-size_1-of-6 slds-text-align_right slds-p-right_medium">
+                <lightning:select name="productSpecMenu" label="Product Specs" onchange="{! c.handleProductSpecMenuOptionSelected }">
+                    <option value="">--</option>
+                    <aura:iteration items="{! v.availableProductSpecs }" var="specValue">
+                        <option value="{! specValue }">{! specValue }</option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+        </aura:if>
     </div>
 
     <!--Render Product Table-->
     <aura:if isTrue="{!v.renderComplete}">
         <h1 class="slds-text-heading--medium slds-m-bottom--small">
             <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.ProductSearch_Table_Header}"/>
-            <lightning:formattedNumber class="slds-m-right--xx-small" value="{!v.productList.length}"/>
+            <lightning:formattedNumber class="slds-m-right--xx-small" value="{! if(not(empty(v.selectedProductSpec)), v.filteredProductList.length, v.productList.length)}"/>
             <lightning:formattedText class="slds-m-right--xx-small" value="{!$Label.c.ProductSearch_Table_Header_Value_Type}"/>
         </h1>
         <div class="slds-grid slds-border--top slds-border--bottom slds-m-bottom--small">
@@ -68,11 +91,24 @@
             <div class="slds-size_2-of-12 slds-align_absolute-center columnHeaders">{!$Label.c.ProductDetail_Column_Quantity}</div>
         </div>
         <div class="slds-scrollable--y slds-m-bottom--large" style="max-height: 20rem; height: auto;">
-            <aura:iteration items="{!v.productList}" var="product">
-                <c:phss_cc_ProductDetail productSfid="{!product}"
-                                         productMap="{!v.productsMap}"
-                                         allowsKitComponentPopover="true"/>
-            </aura:iteration>
+            <aura:if isTrue="{! not(empty(v.selectedProductSpec)) }">
+
+                <!--products list filtered by product spec-->
+                <aura:iteration items="{! v.filteredProductList }" var="product">
+                    <c:phss_cc_ProductDetail productSfid="{!product}"
+                                             productMap="{!v.productsMap}"
+                                             allowsKitComponentPopover="true"/>
+                </aura:iteration>
+
+                <aura:set attribute="else">
+                    <!--ALL products-->
+                    <aura:iteration items="{!v.productList}" var="product">
+                        <c:phss_cc_ProductDetail productSfid="{!product}"
+                                                 productMap="{!v.productsMap}"
+                                                 allowsKitComponentPopover="true"/>
+                    </aura:iteration>
+                </aura:set>
+            </aura:if>
 
             <!--SPACER to accommodate a popover for the last row-->
             <div style="width: 35px; height: 35px;"></div>

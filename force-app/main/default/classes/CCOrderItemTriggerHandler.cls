@@ -44,36 +44,46 @@ public without sharing class CCOrderItemTriggerHandler {
         Map<Id,ccrz__E_Order__c> orderMap = new Map<Id,ccrz__E_Order__c>();
         Map<Id,ccrz__E_Product__c> productMap = new Map<Id,ccrz__E_Product__c>();
         Map<Id,redwing__ILT_Class__c> classMap = new Map<Id,redwing__ILT_Class__c>();
+        
+        //Map<String,Geo_Location__c> glMap = new Map<String,Geo_Location__c>();
+        
         if(!orderIds.isEmpty()) { orderMap = new Map<Id,ccrz__E_Order__c>([SELECT Id,ccrz__Account__c,ccrz__Account__r.BillingPostalCode,ccrz__ShipTo__c,ccrz__ShipTo__r.ccrz__PostalCode__c FROM ccrz__E_Order__c WHERE Id IN:orderIds]); }
         if(!productIds.isEmpty()) { productMap = new Map<Id,ccrz__E_Product__c>([SELECT Id,ccrz__InventoryType__c FROM ccrz__E_Product__c WHERE Id IN:productIds]); }
         if(!classIds.isEmpty()) { classMap = new Map<Id,redwing__ILT_Class__c>([SELECT Id,Skedulo_Training_Event__c,Skedulo_Training_Event__r.Training_Zip__c, Location_ZIP_Code__c FROM redwing__ILT_Class__c WHERE Id IN:classIds]); }  
         
-        for(ccrz__E_OrderItem__c  oi: newCCOrderItems) {
+        for(ccrz__E_OrderItem__c  oi: newCCOrderItems)
+        {
             if(productMap.containsKey(oi.ccrz__Product__c) && 
               (productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COURSE' || 
                productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COMMUNITY' || 
                productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='FEE') && 
                classMap.containsKey(oi.ILT_Class__c) && 
-               classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c != null
-               /*classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__c!=null && 
-               classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c!=null*/
-              ) {
-            	//zipCodeSet.add(String.valueOf(classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c));
-            	
+               classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c != null)
+            {
                 system.debug(classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c);
-            	
+                     
             	zipCodeSet.add(String.valueOf(classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c));
+                
+                if(orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode != null)
+                {
+                    zipCodeSet.add(String.valueOf(orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode));
+                }
+                  
             } else if(productMap.containsKey(oi.ccrz__Product__c) && 
                       productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='STANDARD' &&
                       orderMap.containsKey(oi.ccrz__Order__c) &&
                       orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__c!=null &&
-					  orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__r.ccrz__PostalCode__c!=null) {
-            	zipCodeSet.add(String.valueOf(orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__r.ccrz__PostalCode__c));
+					  orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__r.ccrz__PostalCode__c!=null)
+            {
+            		  zipCodeSet.add(String.valueOf(orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__r.ccrz__PostalCode__c));
             } else if(orderMap.containsKey(oi.ccrz__Order__c) && 
                       orderMap.get(oi.ccrz__Order__c).ccrz__Account__c!=null && 
-                      orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode!=null) {
-            	zipCodeSet.add(String.valueOf(orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode));
-            } else {
+                      orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode!=null)
+            {
+            		  zipCodeSet.add(String.valueOf(orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode));
+            }
+            else
+            {
                 oi.Unit_Code__c='00000';
                 oi.TS_LOC__c='0000';
             }
@@ -83,49 +93,88 @@ public without sharing class CCOrderItemTriggerHandler {
         }
         
         system.debug(zipCodeSet);
-        if(!zipCodeSet.isEmpty()) {
-            List<Geo_Location__c> glList = new List<Geo_Location__c>([SELECT Id, Postal_Code__c, GL_Unit_Code__c, GL_Unit_Code__r.TS_LOC__c, GL_Unit_Code__r.Unit_Code__c FROM Geo_Location__c WHERE Postal_Code__c IN:zipCodeSet]);
+        if(!zipCodeSet.isEmpty())
+        {   
+            Set<String> zipCodeSetNew = new Set<String>();
+            
+            for(String zc : zipCodeSet)
+            {
+                //zc.substring(0,5);
+                zipCodeSetNew.add(zc.substring(0,5));
+            }
+            
+            system.debug('***zipCodeSetNew***'+zipCodeSetNew);
+            
+            List<Geo_Location__c> glList = new List<Geo_Location__c>([SELECT Id,
+                                                                      		 Postal_Code__c,
+                                                                      		 GL_Unit_Code__c,
+                                                                      		 GL_Unit_Code__r.TS_LOC__c,
+                                                                      		 GL_Unit_Code__r.Unit_Code__c
+                                                                        FROM Geo_Location__c
+                                                                       WHERE Postal_Code__c IN:zipCodeSetNew]);
+            
             Map<String,Geo_Location__c> glMap = new Map<String,Geo_Location__c>();
-            for(Geo_Location__c gl: glList) {
+            
+            for(Geo_Location__c gl: glList)
+            {
                 glMap.put(gl.Postal_Code__c,gl);
             }
-            for(ccrz__E_OrderItem__c  oi: newCCOrderItems) {
+			
+            for(ccrz__E_OrderItem__c  oi: newCCOrderItems)
+            {
                 String zip = '';
                 if(productMap.containsKey(oi.ccrz__Product__c) && 
                   (productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COURSE' || 
                    productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='COMMUNITY' || 
                    productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='FEE') && 
                    classMap.containsKey(oi.ILT_Class__c) &&
-                   classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c != null
-                   /*classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__c!=null && 
-                   classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c!=null*/
-                  ) {
-                    //zip = classMap.get(oi.ILT_Class__c).Skedulo_Training_Event__r.Training_Zip__c;
+                   classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c != null)
+                {
                     zip = classMap.get(oi.ILT_Class__c).Location_ZIP_Code__c;
-                } else if(productMap.containsKey(oi.ccrz__Product__c) && 
-                      	  productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='STANDARD' &&
-                          orderMap.containsKey(oi.ccrz__Order__c) &&
-                      	  orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__c!=null &&
-					  	  orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__r.ccrz__PostalCode__c!=null) {
+                    
+                    Boolean containsZip = glMap.containsKey(zip);
+
+                    // if zip code isn't the glMap, use Account billing postal code. 
+                    if(!containsZip && orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode != null)
+                    {
+                    	system.debug('***orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode***'+orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode);
+                        zip = orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode;
+                    }
+                }
+                else if(productMap.containsKey(oi.ccrz__Product__c) && 
+                      	productMap.get(oi.ccrz__Product__c).ccrz__InventoryType__c=='STANDARD' &&
+                        orderMap.containsKey(oi.ccrz__Order__c) &&
+                      	orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__c!=null &&
+					  	orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__r.ccrz__PostalCode__c!=null)
+                {
                     zip = orderMap.get(oi.ccrz__Order__c).ccrz__ShipTo__r.ccrz__PostalCode__c;
-                } else if(orderMap.containsKey(oi.ccrz__Order__c) && 
-                          orderMap.get(oi.ccrz__Order__c).ccrz__Account__c!=null && 
-                          orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode!=null) {
+                }
+                else if(orderMap.containsKey(oi.ccrz__Order__c) && 
+                        orderMap.get(oi.ccrz__Order__c).ccrz__Account__c!=null && 
+                        orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode!=null)
+                {
                     zip = orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode;
-                }             
-                if(glMap.containsKey(zip) && glMap.get(zip).GL_Unit_Code__c!=null) {
+                }
+                
+                system.debug('***zip0***'+zip);
+                zip = zip.substring(0,5);
+                system.debug('***zip1***'+zip);
+                
+                if(glMap.containsKey(zip) && glMap.get(zip).GL_Unit_Code__c!=null)
+                {
                 	oi.Unit_Code__c = glMap.get(zip).GL_Unit_Code__r.Unit_Code__c;
-                    oi.TS_LOC__c = glMap.get(zip).GL_Unit_Code__r.TS_LOC__c;
-                } else {
-                    oi.Unit_Code__c='00000';
-                    oi.TS_LOC__c='0000';
+                    oi.TS_LOC__c 	= glMap.get(zip).GL_Unit_Code__r.TS_LOC__c;
+                }
+                else
+                {
+                    oi.Unit_Code__c	='00000';
+                    oi.TS_LOC__c	='0000';
                 }
         	}
         }  
     }
-
-
-    public void populateILTClass (List<ccrz__E_OrderItem__c> orderItems) {
+    
+   public void populateILTClass (List<ccrz__E_OrderItem__c> orderItems) {
         // adjusted to beforeInsert
 
         Set<Id> orderIds = new Set<Id>();

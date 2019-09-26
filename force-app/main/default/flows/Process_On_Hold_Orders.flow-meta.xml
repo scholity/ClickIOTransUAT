@@ -168,7 +168,7 @@
         <inputReference>colOutOrder</inputReference>
     </recordUpdates>
     <startElementReference>Get_Account_On_Hold_Orders</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>colOrder</name>
         <dataType>SObject</dataType>

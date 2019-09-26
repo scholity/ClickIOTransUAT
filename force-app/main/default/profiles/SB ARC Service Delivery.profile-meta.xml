@@ -13450,7 +13450,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Training_Events__c.Course_ID_1__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -14085,6 +14085,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Voucher__c.ILT_Class__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Is_My_Voucher__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
