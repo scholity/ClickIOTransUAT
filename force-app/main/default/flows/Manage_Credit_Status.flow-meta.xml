@@ -84,6 +84,13 @@
                 <stringValue>Returned</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFulfillmentItem.ILT_Class__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.ILT_Class__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Add_OrderFulfillment_Collection</targetReference>
         </connector>
@@ -426,6 +433,7 @@
         <queriedFields>Error_Message__c</queriedFields>
         <queriedFields>Inventory_Type__c</queriedFields>
         <queriedFields>ccrz__PercentDiscount__c</queriedFields>
+        <queriedFields>ILT_Class__c</queriedFields>
         <sortField>Id</sortField>
         <sortOrder>Asc</sortOrder>
     </recordLookups>

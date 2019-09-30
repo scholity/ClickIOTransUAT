@@ -18,7 +18,7 @@ public class TestGetFeedbackSurveytrigger
         Account Acc=new Account(Name='Test Account',OwnerId=UserInfo.getUserId());
         insert Acc;
         
-        Contact Con = new Contact(FirstName = 'Test111', LastName = 'Contact', Email ='Test@test.com',AccountId=Acc.id);
+        Contact Con = new Contact(FirstName = 'Test111', LastName = 'Contact', Email ='sfdcsudhir1@gmail.com',AccountId=Acc.id);
         insert Con;
         
         redwing__Learning__c Learn=new redwing__Learning__c();

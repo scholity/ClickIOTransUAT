@@ -1535,13 +1535,7 @@ public without sharing class ILTInstructorCommunity{
                 
 	        	theUpdatedVoucher.Id 		= theVoucher.Id;
                 theUpdatedVoucher.Status__c = 'Void'; 
-//	            theUpdatedVoucher.Status__c = 'Blocked';
-                /*
-                if(theVoucher.ILT_Class__r.Request_Type__c != 'Community')
-                {
-                   theUpdatedVoucher.Status__c = 'Void'; 
-                }
-                */
+
 	            lstVouchersToUpdate.add(theUpdatedVoucher);
 	    	}
 	        
@@ -2761,6 +2755,8 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
 
     @AuraEnabled
     public static String handleFullServiceClass(String classId, Integer studentCount, String trainingEventId) {
+        List<ccrz__E_OrderItem__c> updatedOrderItems = new List<ccrz__E_OrderItem__c>();
+        List<ccrz__E_TransactionPayment__c> updatedTransactionPayments = new List<ccrz__E_TransactionPayment__c>();
 
         // query for opp with the same training event
         List<Training_Events__c> trainingEvents = [SELECT Id, CC_Order__c FROM Training_Events__c WHERE Id = :trainingEventId];
@@ -2771,35 +2767,48 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
                                                     WHERE ccrz__Order__c = :te.CC_Order__c AND ccrz__UnitOfMeasure__c IN :unitsOfMeassure ];
 
         for (ccrz__E_OrderItem__c item : orderItems) {
-
-            item.ccrz__Quantity__c = studentCount;
-            item.ccrz__SubAmount__c = studentCount * item.ccrz__Price__c;
-            //item.ccrz__OrderItemStatus__c = 'Shipped';
+            ccrz__E_OrderItem__c updatedItem = new ccrz__E_OrderItem__c();
+            updatedItem.Id = item.Id;
+            updatedItem.ccrz__Quantity__c = studentCount;
+            updatedItem.ccrz__SubAmount__c = studentCount * item.ccrz__Price__c;
+            updatedOrderItems.add(updatedItem);
         }
 
         String resMessage;
         try {
-            update orderItems;
+            update updatedOrderItems;
             
             ccrz__E_Order__c ord = [SELECT Id, ccrz__TotalAmount__c, (SELECT Id, ccrz__Amount__c FROM ccrz__TransactionPayments__r) FROM ccrz__E_Order__c WHERE Id = :te.CC_Order__c LIMIT 1];
 
             // update transaction amount from order amount
             for (ccrz__E_TransactionPayment__c tp : ord.ccrz__TransactionPayments__r) {
-                tp.ccrz__Amount__c = ord.ccrz__TotalAmount__c;
+                ccrz__E_TransactionPayment__c updatedPayment = new ccrz__E_TransactionPayment__c();
+                updatedPayment.Id = tp.Id;
+                updatedPayment.ccrz__Amount__c = ord.ccrz__TotalAmount__c;
+                updatedTransactionPayments.add(updatedPayment);
             }
-            update ord.ccrz__TransactionPayments__r;
+            update updatedTransactionPayments;
             
             List<ccrz__E_OrderItem__c> oItems = [SELECT Id,
                                                  		ccrz__OrderItemStatus__c
                                                    FROM ccrz__E_OrderItem__c
                                                   WHERE ccrz__Order__c = :te.CC_Order__c];
             system.debug('***oItems***'+oItems);
+
+            updatedOrderItems.clear();
             for (ccrz__E_OrderItem__c oi : oItems)
             {
-                oi.ccrz__OrderItemStatus__c  = 'Shipped';
+                ccrz__E_OrderItem__c updatedItem = new ccrz__E_OrderItem__c();
+                updatedItem.Id = oi.Id;
+                if (oi.ccrz__OrderLineType__c == 'Minor') {
+                    updatedItem.ccrz__OrderItemStatus__c = 'In Process';
+                } else {
+                    updatedItem.ccrz__OrderItemStatus__c = 'Shipped';
+                }
+                updatedOrderItems.add(updatedItem);
             }
             
-            update oItems; 
+            update updatedOrderItems;
 
             resMessage = 'Order items successfully updated';
 

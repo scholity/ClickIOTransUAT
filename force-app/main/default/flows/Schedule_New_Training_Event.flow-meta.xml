@@ -4,7 +4,7 @@
         <name>Set_Minor_Item_Output</name>
         <label>Set Minor Item Output</label>
         <locationX>890</locationX>
-        <locationY>154</locationY>
+        <locationY>153</locationY>
         <assignmentItems>
             <assignToReference>outMinOrderItem</assignToReference>
             <operator>Add</operator>
@@ -20,7 +20,7 @@
         <name>Set_Minor_Item_Values</name>
         <label>Set Minor Item Values</label>
         <locationX>762</locationX>
-        <locationY>217</locationY>
+        <locationY>216</locationY>
         <assignmentItems>
             <assignToReference>sMinOrderItem.ccrz__ParentOrderItem__c</assignToReference>
             <operator>Assign</operator>
@@ -308,7 +308,7 @@
         <name>Create_new_Major_Line_Item</name>
         <label>Create new Major Line Item</label>
         <locationX>582</locationX>
-        <locationY>202</locationY>
+        <locationY>254</locationY>
         <assignRecordIdToReference>vOrderItem</assignRecordIdToReference>
         <connector>
             <targetReference>Loop_through_Minor_Items</targetReference>
@@ -431,12 +431,6 @@
             <field>ccrz__ItemStatus__c</field>
             <value>
                 <elementReference>sMajOrderItem.ccrz__ItemStatus__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ccrz__OrderItemGroup__c</field>
-            <value>
-                <elementReference>sMajOrderItem.ccrz__OrderItemGroup__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -589,7 +583,6 @@
         <queriedFields>ccrz__ItemTotal__c</queriedFields>
         <queriedFields>ccrz__Next_Subscription_Date__c</queriedFields>
         <queriedFields>ccrz__Order__c</queriedFields>
-        <queriedFields>ccrz__OrderItemGroup__c</queriedFields>
         <queriedFields>ccrz__OrderItemId__c</queriedFields>
         <queriedFields>ccrz__OrderItemStatus__c</queriedFields>
         <queriedFields>ccrz__OrderLineType__c</queriedFields>
@@ -601,17 +594,11 @@
         <queriedFields>ccrz__Price__c</queriedFields>
         <queriedFields>ccrz__PricingModifierTypes__c</queriedFields>
         <queriedFields>ccrz__PricingType__c</queriedFields>
-        <queriedFields>ccrz__PrimaryAttr__c</queriedFields>
         <queriedFields>ccrz__Product__c</queriedFields>
         <queriedFields>ccrz__Product_Name__c</queriedFields>
         <queriedFields>ccrz__ProductType__c</queriedFields>
         <queriedFields>ccrz__Quantity__c</queriedFields>
-        <queriedFields>ccrz__RecurringPrice__c</queriedFields>
-        <queriedFields>ccrz__RecurringPriceSubAmt__c</queriedFields>
         <queriedFields>ccrz__RequestDate__c</queriedFields>
-        <queriedFields>ccrz__SecondaryAttr__c</queriedFields>
-        <queriedFields>ccrz__SelectedAttr__c</queriedFields>
-        <queriedFields>ccrz__Seller__c</queriedFields>
         <queriedFields>ccrz__StoreId__c</queriedFields>
         <queriedFields>ccrz__SubAmount__c</queriedFields>
         <queriedFields>ccrz__UnitOfMeasure__c</queriedFields>
@@ -633,9 +620,9 @@
     <recordLookups>
         <name>Get_Minor_Order_Items</name>
         <label>Get Minor Order Items</label>
-        <locationX>584</locationX>
-        <locationY>50</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <locationX>583</locationX>
+        <locationY>48</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_new_Major_Line_Item</targetReference>
         </connector>
@@ -660,13 +647,10 @@
         <queriedFields>ccrz__DisplayProduct__c</queriedFields>
         <queriedFields>ccrz__ExtName__c</queriedFields>
         <queriedFields>ccrz__ExtSKU__c</queriedFields>
-        <queriedFields>ccrz__Is_Subscription__c</queriedFields>
         <queriedFields>ccrz__ItemLabel__c</queriedFields>
         <queriedFields>ccrz__ItemStatus__c</queriedFields>
         <queriedFields>ccrz__ItemTotal__c</queriedFields>
-        <queriedFields>ccrz__Next_Subscription_Date__c</queriedFields>
         <queriedFields>ccrz__Order__c</queriedFields>
-        <queriedFields>ccrz__OrderItemGroup__c</queriedFields>
         <queriedFields>ccrz__OrderItemId__c</queriedFields>
         <queriedFields>ccrz__OrderItemStatus__c</queriedFields>
         <queriedFields>ccrz__OrderLineType__c</queriedFields>
@@ -678,17 +662,11 @@
         <queriedFields>ccrz__Price__c</queriedFields>
         <queriedFields>ccrz__PricingModifierTypes__c</queriedFields>
         <queriedFields>ccrz__PricingType__c</queriedFields>
-        <queriedFields>ccrz__PrimaryAttr__c</queriedFields>
         <queriedFields>ccrz__Product__c</queriedFields>
         <queriedFields>ccrz__Product_Name__c</queriedFields>
         <queriedFields>ccrz__ProductType__c</queriedFields>
         <queriedFields>ccrz__Quantity__c</queriedFields>
-        <queriedFields>ccrz__RecurringPrice__c</queriedFields>
-        <queriedFields>ccrz__RecurringPriceSubAmt__c</queriedFields>
         <queriedFields>ccrz__RequestDate__c</queriedFields>
-        <queriedFields>ccrz__SecondaryAttr__c</queriedFields>
-        <queriedFields>ccrz__SelectedAttr__c</queriedFields>
-        <queriedFields>ccrz__Seller__c</queriedFields>
         <queriedFields>ccrz__StoreId__c</queriedFields>
         <queriedFields>ccrz__SubAmount__c</queriedFields>
         <queriedFields>ccrz__UnitOfMeasure__c</queriedFields>
@@ -781,13 +759,6 @@
         <queriedFields>End_Time__c</queriedFields>
         <queriedFields>Entry_Method__c</queriedFields>
         <queriedFields>Est_Training_Event_Amount__c</queriedFields>
-        <queriedFields>Facility_Address_1__c</queriedFields>
-        <queriedFields>Facility_Address_2__c</queriedFields>
-        <queriedFields>Facility_City__c</queriedFields>
-        <queriedFields>Facility_State__c</queriedFields>
-        <queriedFields>Facility_Type__c</queriedFields>
-        <queriedFields>Facility_Zip__c</queriedFields>
-        <queriedFields>Facility_Name__c</queriedFields>
         <queriedFields>Equipment__c</queriedFields>
         <queriedFields>Final_Service__c</queriedFields>
         <queriedFields>Instructor_1__c</queriedFields>
