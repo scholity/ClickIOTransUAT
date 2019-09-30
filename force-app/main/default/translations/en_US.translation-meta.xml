@@ -33,6 +33,10 @@
         <name>IRT_Service_Console</name>
     </customApplications>
     <customApplications>
+        <label><!-- Integration Management --></label>
+        <name>Integration_Management</name>
+    </customApplications>
+    <customApplications>
         <label><!-- LMS Admin --></label>
         <name>LMS_Admin</name>
     </customApplications>
@@ -639,7 +643,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Order_Status_Controller-16</fullName>
+            <fullName>Order_Status_Controller-18</fullName>
         </flows>
         <fullName>Order_Status_Controller</fullName>
     </flowDefinitions>
@@ -799,7 +803,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Manage_Order_Status-53</fullName>
+            <fullName>Manage_Order_Status-56</fullName>
         </flows>
         <fullName>Manage_Order_Status</fullName>
     </flowDefinitions>
@@ -1127,7 +1131,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Training_Revenue_Record-7</fullName>
+            <fullName>Create_Training_Revenue_Record-8</fullName>
         </flows>
         <fullName>Create_Training_Revenue_Record</fullName>
     </flowDefinitions>
@@ -1169,7 +1173,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Achievement_Assignment_Controller-17</fullName>
+            <fullName>Achievement_Assignment_Controller-18</fullName>
         </flows>
         <fullName>Achievement_Assignment_Controller</fullName>
     </flowDefinitions>
@@ -1337,9 +1341,15 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Manage_Credit_Status-2</fullName>
+            <fullName>Manage_Credit_Status-3</fullName>
         </flows>
         <fullName>Manage_Credit_Status</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Fulfillment_Controller-1</fullName>
+        </flows>
+        <fullName>Fulfillment_Controller</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -1500,7 +1510,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Schedule_New_Training_Event-11</fullName>
+            <fullName>Schedule_New_Training_Event-19</fullName>
             <screens>
                 <fields>
                     <name>EventCancelled</name>

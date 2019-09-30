@@ -28,14 +28,17 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
     {
         EmailTemps.put(ETempms.Name,ETempms.id);
     }
-   // Contact c = [select Id, Email from Contact where Email = 'sfdcsudhir1@gmail.com' limit 1];
+   Contact c = [select Id, Email from Contact where Email = 'sfdcsudhir1@gmail.com' limit 1];
     if(ILTId.size() >0)
     {
         for(redwing__ILT_Roster__c SendRoster: RosterList)
         {
+            if(SendRoster.Contact__r.Email != null)
             sendTo.add(SendRoster.Contact__r.Email);
         }
-        System.debug('sendTo'+sendTo);
+        if(sendTo.size() >0)
+        {
+            System.debug('sendTo'+sendTo);
         for(redwing__ILT_Roster__c SendRoster: RosterList)
         {
             List<Messaging.SingleEmailMessage> allmsg = new List<Messaging.SingleEmailMessage>();
@@ -46,7 +49,8 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setToAddresses(sendTo);
                     mail.setSenderDisplayName('Getfeedback Survey');
-                    mail.setTargetObjectId(SendRoster.Contact__c);
+                    mail.setTargetObjectId(c.id);
+                   // mail.setTargetObjectId(SendRoster.Contact__c);
                     mail.setTemplateID(EmailTemps.get('getFeedback for Base'));
                     mail.setWhatId(SendRoster.id);
                    /*String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
@@ -60,7 +64,8 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setToAddresses(sendTo);
                     mail.setSenderDisplayName('Getfeedback Survey');
-                    mail.setTargetObjectId(SendRoster.Contact__c);
+                    mail.setTargetObjectId(c.id);
+                    //mail.setTargetObjectId(SendRoster.Contact__c);
                     mail.setTemplateID(EmailTemps.get('getFeedback for Instructor'));
                     mail.setWhatId(SendRoster.id);
                    /* String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
@@ -73,7 +78,8 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
                     Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
                     mail.setToAddresses(sendTo);
                     mail.setSenderDisplayName('Getfeedback Survey');
-                    mail.setTargetObjectId(SendRoster.Contact__c);
+                   // mail.setTargetObjectId(SendRoster.Contact__c);
+                    mail.setTargetObjectId(c.id);
                     mail.setTemplateID(EmailTemps.get('getFeedback for Instructor Trainer'));
                     mail.setWhatId(SendRoster.id);
                     /*String body = 'Hi ' +SendRoster.Contact__r.FirstName+','+'<br /><br />'+'<br />'+'Your class '+SendRoster.redwing__ILT_Class__r.name+' is completed.'+'<br />'+
@@ -83,6 +89,8 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
                 }
             }
             Messaging.sendEmail(allmsg);
-        }       
+        } 
+        }
+              
     }
 }

@@ -7,67 +7,7 @@
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
-            <fullName>AED Partner Referral - Cardiac Science</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AED Partner Referral - Philips</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AED Partner Referral - Physio-Control</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AED Partner Referral - Zoll</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Advertisement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BGST</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BioMed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chapter Exec</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Client Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Data Warehouse</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Email Jump Page</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Employee Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>External Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Financial Development</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Google Search</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OTC</fullName>
+            <fullName>Marketing Lead</fullName>
             <default>false</default>
         </values>
         <values>
@@ -75,47 +15,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Participant Survey</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Public Relations</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RCO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ready Rating</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Seminar - Internal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Seminar - Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TSC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trade Show</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Web</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Word of mouth</fullName>
+            <fullName>Sales Lead</fullName>
             <default>false</default>
         </values>
     </picklistValues>
