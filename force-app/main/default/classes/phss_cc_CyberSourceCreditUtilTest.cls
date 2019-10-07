@@ -22,14 +22,15 @@ public with sharing class phss_cc_CyberSourceCreditUtilTest {
     private static Fulfillment__c testFulfillment;
     
     private static Fulfillment_Item__c testFulfillmentItem1;
-    
-    private static ccrz__E_TransactionPayment__c testTransactionPayment;
-    
+
+    private static ccrz__E_TransactionPayment__c testAuthTransactionPayment;
+    private static ccrz__E_TransactionPayment__c testCaptureTransactionPayment;
+
     private static ccrz__E_Order__c testOrder;
     
     private static ccrz__E_OrderItem__c testOrderItem;
 
-    @testSetup
+    @TestSetup
     public static void setup() {
         ccrz__E_ConfigurationModule__c module = new ccrz__E_ConfigurationModule__c(ccrz__APIName__c = 'pgcsc', Name = 'CyberSource Credit');
         insert module;
@@ -191,11 +192,11 @@ public with sharing class phss_cc_CyberSourceCreditUtilTest {
             ccrz__Amount__c = 1,
             ccrz__CurrencyISOCode__c = 'USD',
             ccrz__TransactionPaymentId__c = 'test123',
-            ccrz__TransactionType__c = 'AUTH'
+            ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
         );
         insert testParentTransactionPayment;
         
-        testTransactionPayment = new ccrz__E_TransactionPayment__c(
+        testAuthTransactionPayment = new ccrz__E_TransactionPayment__c(
         	ccrz__CCOrder__c = testOrder.Id,
             ccrz__AccountType__c = phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE,
             ccrz__Amount__c = -1,
@@ -204,24 +205,24 @@ public with sharing class phss_cc_CyberSourceCreditUtilTest {
             ccrz__TransactionPaymentId__c = 'test321',
             ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
         );
-        insert testTransactionPayment;
+        insert testAuthTransactionPayment;
         
-        ccrz__E_TransactionPayment__c testTransactionPayment2 = new ccrz__E_TransactionPayment__c(
+        testCaptureTransactionPayment = new ccrz__E_TransactionPayment__c(
         	ccrz__CCOrder__c = testOrder.Id,
             ccrz__AccountType__c = phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE,
             ccrz__Amount__c = -1,
             ccrz__CurrencyISOCode__c = 'USD',
-            ccrz__ParentTransactionPayment__c = testParentTransactionPayment.Id,
+            ccrz__SourceTransactionPayment__c = testAuthTransactionPayment.Id,
             ccrz__TransactionPaymentId__c = '123test',
             ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE
         );
-        insert testTransactionPayment2;
+        insert testCaptureTransactionPayment;
         
         testFulfillment = new Fulfillment__c(
             Type__c='Invoice',
             Status__c='Open',
             Order__c = testOrder.Id,
-            CC_Transaction_Payment__c= testTransactionPayment.Id
+            CC_Transaction_Payment__c= testAuthTransactionPayment.Id
         );
         insert testFulfillment;
         
@@ -328,8 +329,9 @@ public with sharing class phss_cc_CyberSourceCreditUtilTest {
         
         phss_cc_CyberSourceCreditUtil.getFulfillmentData(testFulfillment.Id, objectMap);
     }
-    
-    @isTest static void testSaveRefundCapture(){
+
+    @IsTest
+    static void testSaveRefundCapture() {
         
         PHSS_TriggerSettings__c settings = PHSS_TriggerSettings__c.getOrgDefaults();
         settings.FulfillmentTriggerDisabled__c = true;
@@ -351,11 +353,8 @@ public with sharing class phss_cc_CyberSourceCreditUtilTest {
         objectMap.put(phss_cc_CyberSourceCreditUtil.REFUND_AMOUNT_DETAILS_KEY, refundAmountDetails);
         objectMap.put(phss_cc_CyberSourceCreditUtil.SUBMIT_TIME_UTC_KEY, String.valueOf(system.Now()));
         
-        //this FulfillmentTriggerDisabled__c disable needs to go away once code coverage is cleaned up
         Test.startTest();
-        
-        phss_cc_CyberSourceCreditUtil.saveRefundCapture(objectMap, testTransactionPayment.Id);
-        
+        phss_cc_CyberSourceCreditUtil.saveRefundCapture(objectMap, testAuthTransactionPayment.Id, testCaptureTransactionPayment.Id);
         Test.stopTest();
 
     }

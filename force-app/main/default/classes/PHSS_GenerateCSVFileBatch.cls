@@ -1,23 +1,29 @@
-global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, Database.Stateful {
-
+global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, Database.Stateful
+{
     //global List<String> csvRowValues;
     //global String csvHeader;
     global List<Fulfillment_Item__c> fulfillmentItemList;
-    global List<errorItem> errorItemList; 
+    global List<errorItem> errorItemList;
+    global List<Integration_Error_Log__c> integrationErrorLogList;
     global String regExp;   
     global String documentName;
     global Integer sequenceNumber;
     global Integer recordsProcessed;   
     
-    global PHSS_GenerateCSVFileBatch() { 
+    global PHSS_GenerateCSVFileBatch()
+    { 
         //csvRowValues = new List<String>();
-        fulfillmentItemList = new List<Fulfillment_Item__c>();
-        errorItemList = new List<errorItem>();
-        sequenceNumber = 2;
-        recordsProcessed = 0;
+        
+        fulfillmentItemList 	= new List<Fulfillment_Item__c>();
+        errorItemList 			= new List<errorItem>();
+        integrationErrorLogList	= new List<Integration_Error_Log__c>();
+        sequenceNumber 			= 2;
+        recordsProcessed 		= 0;
+        
         // TODO: need to include in regExp soft hyphens and non-breaking space
         regExp = '[¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿŒœŠšŸƒ–—‘’‚“”„†‡•…‰€™]';
-        String csvHeader = 'Transaction Date,' +
+        
+        String csvHeader =  'Transaction Date,' +
                             'Unit Code,' +
                             'FOCIS Category GL,' +
                             'Bill To Org Name,' +
@@ -49,27 +55,54 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                             'Nk Bill to Org Id,' +
                             'Max Instructor Full Name,' + 
                             'AP Code \n';
+        
         // Document name format: ARCINVC_yyyy-mm-dd-hh-mm-ss.csv
-        String todayMonth = String.valueOf(Date.today().month());
-        String todayDay = String.valueOf(Date.today().day());
-        String todayHour = String.valueOf(Datetime.now().hour());
-        String todayMin = String.valueOf(Datetime.now().minute());
-        String todaySec = String.valueOf(Datetime.now().second());
-        if(todayMonth.length()<2) { todayMonth = '0'+ todayMonth; }
-        if(todayDay.length()<2) { todayDay = '0'+ todayDay; }
-        if(todayHour.length()<2) { todayHour = '0'+ todayHour; }
-        if(todayMin.length()<2) { todayMin = '0'+ todayMin; }
-        if(todaySec.length()<2) { todaySec = '0'+ todaySec; }        
+        String todayMonth 	= String.valueOf(Date.today().month());
+        String todayDay 	= String.valueOf(Date.today().day());
+        String todayHour 	= String.valueOf(Datetime.now().hour());
+        String todayMin 	= String.valueOf(Datetime.now().minute());
+        String todaySec 	= String.valueOf(Datetime.now().second());
+        
+        if(todayMonth.length()<2)
+        {
+            todayMonth = '0'+ todayMonth;
+        }
+        
+        if(todayDay.length()<2)
+        {
+            todayDay = '0'+ todayDay;
+        }
+        if(todayHour.length()<2)
+        {
+            todayHour = '0'+ todayHour;
+        }
+        if(todayMin.length()<2)
+        {
+            todayMin = '0'+ todayMin;
+        }
+        if(todaySec.length()<2)
+        {
+            todaySec = '0'+ todaySec;
+        }
+        
         documentName = 'ARCINVC_'+String.valueOf(Date.today().year())+'-'+todayMonth+'-'+todayDay+'-'+todayHour+'-'+todayMin+'-'+todaySec+'.csv';
+        
         // Insert Header record
-        try {
-            insert(new Integration_Files__c(File_Name__c=documentName, Record_Data__c=csvHeader, Sequence_Number__c=1, Target_System__c='CFS'));
-        } catch (exception e) {
+        try
+        {   
+            insert(new Integration_Files__c(File_Name__c		= documentName,
+                                            Record_Data__c		= csvHeader,
+                                            Sequence_Number__c	= 1,
+                                            Target_System__c	= 'CFS'));
+        }
+        catch (exception e)
+        {
           
         }        
     }
     
-    global Database.QueryLocator start(Database.BatchableContext BC) {
+    global Database.QueryLocator start(Database.BatchableContext BC)
+    {
         String query = 'SELECT Name,Transaction_Date__c,' +
                               'Order_Item__r.Unit_Code__c,' +
                               'Order__r.FOCIS_Category__c,' +
@@ -90,74 +123,108 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                               'Fulfillment_Item_Total__c,' +
                               'Order__r.ccrz__Account__r.SABA_LMS_Code__c,' +
                               'Order__r.ccrz__Account__r.Billing_Contact__c,Order__r.ccrz__Account__r.Billing_Contact__r.FirstName,Order__r.ccrz__Account__r.Billing_Contact__r.LastName,' +
-                                 'Order_Item__r.Payment_Category__c,' +
+                              'Order_Item__r.Payment_Category__c,' +
                               'Order__r.ccrz__PONumber__c,' +
-                                 'Fulfillment_Date__c,' +
-                                 'Order_Item__r.Name,' +
+                              'Fulfillment_Date__c,' +
+                              'Order_Item__r.Name,' +
                               // FUTURE - Full Name
                               'Fulfillment__r.Name,ILT_Class__r.Offering_ID__c,' +
                               'Order_Item__r.ccrz__Price__c,' +
                               'Quantity__c,Order__r.ccrz__Account__r.SABA_Org_Type__c,' +
                               // FUTURE/TBD - Org Type
                               'Id,' +
+            				  'Order__r.Id,' +
                               'Order__r.ccrz__Account__r.SABA_Name__c,Order__r.ccrz__Account__r.Id,' +
                               'Order__r.ccrz__Account__r.nk_billto_org_id__c,' +
                               'ILT_Class__c,' +
+            				  'AP_Code__c,' +
                               'CC_Product__r.AP_Code__c ' +
-                        'FROM Fulfillment_Item__c WHERE Status__c=\'Ready\' AND Fulfillment__r.Type__c!=\'Receipt\'';
+                        'FROM Fulfillment_Item__c WHERE Status__c=\'Ready\' AND Fulfillment__r.Type__c!=\'Receipt\' AND Fulfillment__r.Payment_Method__c =\'po\'';
+        
         system.debug('Query: '+query);
+        
         return Database.getQueryLocator(query);
     }
  
-    global void execute(Database.BatchableContext BC, List<Fulfillment_Item__c> scope) {
+    global void execute(Database.BatchableContext BC, List<Fulfillment_Item__c> scope)
+    {
         // QUERY INSTRUCTORS FOR ALL ILT CLASSES
         Set<Id> iltClassIds = new Set<Id>();
         Map<Id,redwing__ILT_Instructor__c> iltCIMap = new Map<Id,redwing__ILT_Instructor__c>();
-        for(Fulfillment_Item__c fi: scope) {
-            if(fi.ILT_Class__c!=null) {
+        
+        for(Fulfillment_Item__c fi: scope)
+        {
+            if(fi.ILT_Class__c!=null)
+            {
                 iltClassIds.add(fi.ILT_Class__c);
             }
         }
+        
         List<redwing__ILT_Instructor__c > instructors = new List<redwing__ILT_Instructor__c >();
-        if(!iltClassIds.isEmpty()) {
-            instructors = new List<redwing__ILT_Instructor__c >([SELECT Id,redwing__ILT_Class__c,redwing__Primary__c,redwing__Instructor__r.FirstName,redwing__Instructor__r.LastName 
-                                                                 FROM redwing__ILT_Instructor__c 
-                                                                 WHERE redwing__ILT_Class__c IN:iltClassIds]);
+        if(!iltClassIds.isEmpty())
+        {
+            instructors = new List<redwing__ILT_Instructor__c >([SELECT Id,
+                                                                 		redwing__ILT_Class__c,
+                                                                 		redwing__Primary__c,
+                                                                 		redwing__Instructor__r.FirstName,
+                                                                 		redwing__Instructor__r.LastName 
+                                                                   FROM redwing__ILT_Instructor__c 
+                                                                  WHERE redwing__ILT_Class__c IN:iltClassIds]);
         }
-        for(redwing__ILT_Instructor__c i: instructors) {
-            if(iltCIMap.containsKey(i.redwing__ILT_Class__c)) {               
-                if(iltCIMap.get(i.redwing__ILT_Class__c).redwing__Primary__c) {
+        
+        for(redwing__ILT_Instructor__c i: instructors)
+        {
+            if(iltCIMap.containsKey(i.redwing__ILT_Class__c))
+            {               
+                if(iltCIMap.get(i.redwing__ILT_Class__c).redwing__Primary__c)
+                {
                     iltCIMap.put(i.redwing__ILT_Class__c, i);
                 }
-            } else {
+            }
+            else
+            {
                 iltCIMap.put(i.redwing__ILT_Class__c, i);
             }
         }
+        
         // CREATE ROW FOR EACH FULFILLMENT ITEM
         List<Integration_Files__c> integrationFiles = new List<Integration_Files__c>();
         Boolean isError;
         String errString;
-        for(Fulfillment_Item__c fi: scope) {
-            isError = false;
-            errString = '';
-            // Transaction Date - Format 2017/03/21 00:00:00
-            Datetime dt = fi.Transaction_Date__c;
-            String transactionDate = '';
-            if(dt!=null) {
-                String day = String.valueOf(dt.day());
-                String month = String.valueOf(dt.month());
-                if(day.length()<2) { day='0'+day; }
-                if(month.length()<2) { month='0'+month; }
-                transactionDate = dt.year()+'/'+month+'/'+day+' 00:00:00';
+        for(Fulfillment_Item__c fi: scope)
+        {
+            isError 				= false;
+            errString 				= '';
+            Datetime dt 			= fi.Transaction_Date__c;		// Transaction Date - Format 2017/03/21 00:00:00
+            String transactionDate 	= '';
+            
+            if(dt!=null)
+            {
+                String day 		= String.valueOf(dt.day());
+                String month 	= String.valueOf(dt.month());
+                if(day.length()<2)
+                {
+                    day='0'+day;
+                }
+                if(month.length()<2)
+                {
+                    month='0'+month;
+                }
+                //transactionDate = dt.year()+'/'+month+'/'+day+' 00:00:00';
+                transactionDate = dt.year()+'/'+month+'/'+day; // DE1824
             }
+            
             // Unit Code
             String unitCode = '';
-            if(fi.Order_Item__r.Unit_Code__c!=null) {
-                unitCode='"' + fi.Order_Item__r.Unit_Code__c + '"';
+            if(fi.Order_Item__r.Unit_Code__c!=null)
+            {
+                unitCode = '"' + fi.Order_Item__r.Unit_Code__c + '"';
             }
+            
             // FOCIS Category GL
             String focis = '';
-            if(fi.Order__r.FOCIS_Category__c!=null && fi.CC_Product__r.AP_Code__c != '6243' && fi.CC_Product__r.AP_Code__c != '6244') {
+            if(fi.Order__r.FOCIS_Category__c!=null && fi.CC_Product__r.AP_Code__c != '6243' && fi.CC_Product__r.AP_Code__c != '6244')
+            {
                 focis='"' + fi.Order__r.FOCIS_Category__c + '"';
             }
             else if (fi.CC_Product__r.AP_Code__c == '6243' || fi.CC_Product__r.AP_Code__c == '6244')
@@ -170,132 +237,229 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 if(errString!='') {errString=errString+';';}
                 errString = errString + 'Order-FOCIS Category';
             }
+            
             // Bill To Org Name - No more than 60 characters, check for special characters
             String accountName = '';
-            if(fi.Order__r.ccrz__Account__r.Name!=null) {
+            if(fi.Order__r.ccrz__Account__r.Name!=null)
+            {
                 accountName = fi.Order__r.ccrz__Account__r.Name;
                 accountName = accountName.replaceAll(regExp, '');
-                if(accountName.length()>60) {accountName=accountName.left(60);}
-                accountName='"' + accountName + '"';
+                if(accountName.length()>60)
+                {
+                    accountName = accountName.left(60);
+                }
+                accountName = '"' + accountName + '"';
             }
+            
             // Bill To Org Address - No more than 40 characters, check for special characters
             // Bill To Org Address 2 - No more than 40 characters, check for special characters
+            
             String billingStreet = fi.Order__r.ccrz__Account__r.BillingStreet;
-            String street1 = '';
-            String street2 = '';           
-            if(billingStreet!=null) {
+            String street1 		 = '';
+            String street2 		 = ''; 
+            
+            if(billingStreet!=null)
+            {
                 List<String> stringList = new List<String>();
-                stringList = String.valueOf(billingStreet).split('\n');
+                
+                stringList				= String.valueOf(billingStreet).split('\n');
                 system.debug('Billing Street String List: ' + stringList); 
-                String street = stringList[0].replaceAll(regExp, '');
-                street1 = street.trim();
-                if(stringList.size()==1) {
-                    if(!String.isEmpty(street) && street.length()>40) {
+                String street 			= stringList[0].replaceAll(regExp, '');
+                street1 				= street.trim();
+                if(stringList.size()==1)
+                {
+                    if(!String.isEmpty(street) && street.length()>40)
+                    {
                         street1 = street.left(40);
-                        if(street.length()>80) {
+                        if(street.length()>80)
+                        {
                             street2 = street.substring(40, 80);
-                        } else {
+                        }
+                        else
+                        {
                             street2 = street.substring(40);
                         }                        
                     }                   
-                } else if(stringList.size()>1) {
-                    if(!String.isEmpty(street) && street.length()>41) {
+                }
+                else if(stringList.size()>1)
+                {
+                    if(!String.isEmpty(street) && street.length()>41)
+                    {
                         street1 = street.left(40);
                     }
-                    if(!String.isEmpty(stringList[1])) {
+                    if(!String.isEmpty(stringList[1]))
+                    {
                         street2 = stringList[1].replaceAll(regExp, '');
-                        if(street2.length()>40) {
+                        if(street2.length()>40)
+                        {
                             street2 = stringList[1].left(40);
                         }
                     }
                 } 
+                
                 street1 = '"' + street1 + '"';
-                if(street2!='') {street2='"'+street2+'"'.trim();}
-            } else {
+                
+                if(street2!='')
+                {
+                    street2='"'+street2+'"'.trim();
+                }
+                
+            }
+            else
+            {
                 isError = true;
                 if(errString!='') {errString=errString+';';}
                 errString = errString + 'Order-Account-Billing Street';
             }
+            
             // Bill To Org City - No more than 30 characters, check for special characters
             String city = '';
-            if(fi.Order__r.ccrz__Account__r.BillingCity!=null) {
-                city = fi.Order__r.ccrz__Account__r.BillingCity.replaceAll(regExp, '');
-                if(city.length()>30) {city=city.left(30);}
+            
+            if(fi.Order__r.ccrz__Account__r.BillingCity!=null)
+            {
+                city 	= fi.Order__r.ccrz__Account__r.BillingCity.replaceAll(regExp, '');
+                
+                if(city.length()>30)
+                {
+                    city=city.left(30);
+                }
+                
                 city = '"' + city + '"';
-            } else {
-                isError = true;
-                if(errString!='') {errString=errString+';';}
+            }
+            else
+            {
+                isError 	= true;
+                
+                if(errString!='')
+                {
+                    errString=errString+';';
+                }
+                
                 errString = errString + 'Order-Account-Billing City';
             }
+            
             // TODO: Update to picklist fields when enabled 
             // Bill To Org State - No more than 2 characters
             String state = '';
-            if(fi.Order__r.ccrz__Account__r.BillingState!=null) {
+            if(fi.Order__r.ccrz__Account__r.BillingState!=null)
+            {
                 state = fi.Order__r.ccrz__Account__r.BillingState.replaceAll(regExp, '');
-                if(state.length()>2) {
-                    isError = true;
-                    if(errString!='') {errString=errString+';';}
-                    errString = errString + 'Order-Account-Billing State';
-                } else {
+                
+                if(state.length()>2)
+                {
+                    isError 	= true;
+                    if(errString!='')
+                    {
+                        errString=errString+';';
+                    }
+                    errString 	= errString + 'Order-Account-Billing State';
+                }
+                else
+                {
                     state = '"' + state + '"';
                 } 
-            } else {
-                isError = true;
-                if(errString!='') {errString=errString+';';}
+            }
+            else
+            {
+                isError 	= true;
+                
+                if(errString!='')
+                {
+                    errString = errString+';';
+                }
                 errString = errString + 'Order-Account-Billing State';
             }
+            
             // Bill To Org Zip Code - No more than 10 characters
             String postalCode = '';
-            if(fi.Order__r.ccrz__Account__r.BillingPostalCode!=null) {
+            if(fi.Order__r.ccrz__Account__r.BillingPostalCode!=null)
+            {
                 postalCode = fi.Order__r.ccrz__Account__r.BillingPostalCode;
-                if(postalCode.length()>10) {postalCode=postalCode.left(10);}
+                
+                if(postalCode.length()>10)
+                {
+                    postalCode=postalCode.left(10);
+                }
+                
                 postalCode = '"' + postalCode + '"';
-            } else {
+            }
+            else
+            {
                 isError = true;
-                if(errString!='') {errString=errString+';';}
+                
+                if(errString!='')
+                {
+                    errString=errString+';';
+                }
+                
                 errString = errString + 'Order-Account-Billing Postal Code';
             }
             // TODO: Update to picklist fields when enabled 
             // Bill To Org Country - No more than 2 characters
             String country = '';
-            if(fi.Order__r.ccrz__Account__r.BillingCountry!=null) {
+            if(fi.Order__r.ccrz__Account__r.BillingCountry!=null)
+            {
                 country = fi.Order__r.ccrz__Account__r.BillingCountry.replaceAll(regExp, '');
-                if(country.length()>2) {
+                if(country.length()>2)
+                {
                     isError = true;
                     if(errString!='') {errString=errString+';';}
                     errString = errString + 'Order-Account-Billing Country';
-                } else {
+                }
+                else
+                {
                     country = '"' + country + '"';
                 }
             }
+            
             // Bill To Org User Field3
             String sInvoicing = '';
-            if(!String.isEmpty(fi.Order__r.ccrz__Account__r.Special_Invoicing__c)) {
+            
+            if(!String.isEmpty(fi.Order__r.ccrz__Account__r.Special_Invoicing__c))
+            {
                 sInvoicing = '"' + fi.Order__r.ccrz__Account__r.Special_Invoicing__c + '"';
             }
+            
             // Bill To Org Primary Phone
             String phone = '';
-            if(fi.Order__r.ccrz__Account__r.Billing_Contact_phone__c!=null) {
+            
+            if(fi.Order__r.ccrz__Account__r.Billing_Contact_phone__c!=null)
+            {
                 phone = '"' + fi.Order__r.ccrz__Account__r.Billing_Contact_phone__c + '"';
-            }else{
-                isError = true;
-                if(errString!='') {errString=errString+';';}
-                errString = errString + 'Bill To Org Primary Phone';
+            }
+            else
+            {
+                isError 	= true;
+                if(errString!='')
+                {
+                    errString=errString+';';
+                }
+                errString 	= errString + 'Bill To Org Primary Phone';
             }
             // Course Num - No more than 40 characters
             String courseNum = '';
-            if(fi.CC_Product__r.ccrz__SKU__c!=null) {
-                courseNum = fi.CC_Product__r.ccrz__SKU__c;
-                if(courseNum.length()>40) {courseNum=courseNum.left(40);}
-                courseNum = '"' + courseNum + '"';
-            } else {
+            if(fi.CC_Product__r.ccrz__SKU__c!=null)
+            {
+                courseNum 	= fi.CC_Product__r.ccrz__SKU__c;
+                if(courseNum.length()>40)
+                {
+                    courseNum=courseNum.left(40);
+                }
+                courseNum   = '"' + courseNum + '"';
+            }
+            else
+            {
                 isError = true;
-                if(errString!='') {errString=errString+';';}
+                if(errString!='')
+                {
+                    errString=errString+';';
+                }
                 errString = errString + 'CC Product-SKU';
             }
             // Course Name, check for special characters
             String courseName = '';
-            if(fi.CC_Product__r.Name!=null) {
+            if(fi.CC_Product__r.Name!=null)
+            {
                 courseName = '"' + fi.CC_Product__r.Name.replaceAll(regExp, '') + '"';
             } 
             
@@ -318,78 +482,134 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             /*if(eDate == null){
                 eDate = fi.Fulfillment_Date__c;
             }*/
+            
             system.debug('***eDate3***'+eDate);
+            
             String endDate;
-            if(eDate!=null) {
+            
+            if(eDate!=null)
+            {
                 system.debug('***eDate4***'+eDate);
-                String day = String.valueOf(eDate.day());
-                String month = String.valueOf(eDate.month());
-                if(day.length()<2) {day='0'+day;}
-                if(month.length()<2) {month='0'+month;}
+                String day 		= String.valueOf(eDate.day());
+                String month 	= String.valueOf(eDate.month());
+                
+                if(day.length()<2)
+                {
+                    day='0'+day;
+                }
+                
+                if(month.length()<2)
+                {
+                    month='0'+month;
+                }
+                
                 endDate = dt.year()+'/'+month+'/'+day+' 00:00:00';
             } 
             // CRS Comments - No more than 50 characters, check for special characters
             String crsComments = '';
-            if(fi.Supplemental_Information__c!=null) {
-                crsComments = fi.Supplemental_Information__c.replaceAll(regExp, '');
-                if(crsComments.length()>50) {crsComments=crsComments.left(50);}
+            
+            if(fi.Supplemental_Information__c!=null)
+            {
+                crsComments 	= fi.Supplemental_Information__c.replaceAll(regExp, '');
+                
+                if(crsComments.length()>50)
+                {
+                    crsComments=crsComments.left(50);
+                }
+                
                 crsComments = '"' + crsComments + '"';
             }
             // Order Num
             String orderNum = '';
+            
             //US1581 - change the Order Number to the CC Order.Name
-            if(fi.Order__r.Name!=null) {
+            if(fi.Order__r.Name!=null)
+            {
                 orderNum = '"' + fi.Order__r.Name.replaceAll(regExp, '') + '"';
             }
+            
             // Terms
             String terms = '';
-            if(!String.isEmpty(fi.Order__r.ccrz__Account__r.Payment_Terms__c)) {
+            if(!String.isEmpty(fi.Order__r.ccrz__Account__r.Payment_Terms__c))
+            {
                 terms = '"' + fi.Order__r.ccrz__Account__r.Payment_Terms__c + '"';
-            } else {
-                isError = true;
-                if(errString!='') {errString=errString+';';}
+            }
+            else
+            {
+                isError 	= true;
+                if(errString!='')
+                {
+                    errString=errString+';';
+                }
                 errString = errString + 'Order-Account-Payment Terms';
             }
+            
             // Transaction Amt  
-            Decimal amt = fi.Fulfillment_Item_Total__c;          
+            Decimal amt 		  = fi.Fulfillment_Item_Total__c;          
             String transactionAmt = String.valueOf(amt);
-            if(amt.scale()==1) {transactionAmt=transactionAmt+'0';}
+            
+            if(amt.scale()==1)
+            {
+                transactionAmt=transactionAmt+'0';
+            }
+            
             // Bill To Org Id - No more than 60 characters
             String billToOrgId = '';
-            if(fi.Order__r.ccrz__Account__r.SABA_LMS_Code__c!=null) { 
-                billToOrgId=fi.Order__r.ccrz__Account__r.SABA_LMS_Code__c;
-                if(billToOrgId.length()>60) {billToOrgId=billToOrgId.left(60);}
+            if(fi.Order__r.ccrz__Account__r.SABA_LMS_Code__c!=null)
+            { 
+                billToOrgId	= fi.Order__r.ccrz__Account__r.SABA_LMS_Code__c;
+                
+                if(billToOrgId.length()>60)
+                {
+                    billToOrgId=billToOrgId.left(60);
+                }
+                
                 billToOrgId = '"' + billToOrgId + '"'; 
             }
+            
             // Bill To Org Bill Contact, check for special characters
             String contactFirstName = fi.Order__r.ccrz__Account__r.Billing_Contact__r.FirstName;
-            String contactLastName = fi.Order__r.ccrz__Account__r.Billing_Contact__r.LastName;
-            String contactName = '';
-            if(fi.Order__r.ccrz__Account__r.Billing_Contact__c!=null) {
-                if(contactFirstName!=null && contactLastName!=null) { 
+            String contactLastName 	= fi.Order__r.ccrz__Account__r.Billing_Contact__r.LastName;
+            String contactName 		= '';
+            
+            if(fi.Order__r.ccrz__Account__r.Billing_Contact__c!=null)
+            {
+                if(contactFirstName!=null && contactLastName!=null)
+                { 
                     contactName = '"' + contactFirstName.replaceAll(regExp, '') + ' ' + contactLastName.replaceAll(regExp, '') + '"'; 
-                } else if(contactFirstName==null) {
+                }
+                else if(contactFirstName==null)
+                {
                     contactName = '"' + contactLastName.replaceAll(regExp, '') + '"';
                 }
-            } else {
+            }
+            else
+            {
                 isError = true;
                 if(errString!='') {errString=errString+';';}
                 errString = errString + 'Order-Account-Billing Contact';
             }
             // Payment Category GL
             String paymentCategoryGL = '';
-            if(fi.Order_Item__r.Payment_Category__c!=null) {
+            if(fi.Order_Item__r.Payment_Category__c!=null)
+            {
                 paymentCategoryGL = '"' + fi.Order_Item__r.Payment_Category__c + '"';
-            } else {
+            }
+            else
+            {
                 isError = true;
                 if(errString!='') {errString=errString+';';}
                 errString = errString + 'Order Item-Payment Category';
-            }   
+            } 
+            
             // Customer PO Num, check for special characters
             String po = '';
-            if(fi.Order__r.ccrz__PONumber__c!=null) {
+            
+            if(fi.Order__r.ccrz__PONumber__c!=null)
+            {
                 po = '"' + fi.Order__r.ccrz__PONumber__c.replaceAll(regExp, '') + '"';
             }
+            
             // CRS/Offering ID
             String offeringId;
             
@@ -409,27 +629,39 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             
             // Per Person Fee
-            Decimal ppFee = fi.Order_Item__r.ccrz__Price__c;  
+            Decimal ppFee 		= fi.Order_Item__r.ccrz__Price__c;  
             String perPersonFee = '';
-            if(ppFee!=null) {
+            
+            if(ppFee!=null)
+            {
                 perPersonFee = String.valueOf(ppFee);
-                if(ppFee.scale()==1) {perPersonFee=perPersonFee+'0';}
-            } else {
+                if(ppFee.scale()==1)
+                {
+                    perPersonFee=perPersonFee+'0';
+                }
+            }
+            else
+            {
                 isError = true;
                 if(errString!='') {errString=errString+';';}
                 errString = errString + 'Order Item-Price';
             }  
             // Number of Students
-            Decimal quantity = fi.Quantity__c;    
-            String numStudents = '0';
-            if(quantity!=null) {
+            Decimal quantity 	= fi.Quantity__c;    
+            String numStudents 	= '0';
+            
+            if(quantity!=null)
+            {
                 numStudents = String.valueOf(quantity.intValue());
             }
+            
             // Org Type
             String orgType = '';
-            if(!String.isEmpty(fi.Order__r.ccrz__Account__r.SABA_Org_Type__c)) {
+            if(!String.isEmpty(fi.Order__r.ccrz__Account__r.SABA_Org_Type__c))
+            {
                 orgType='"'+fi.Order__r.ccrz__Account__r.SABA_Org_Type__c+'"';
             }
+            
             // Nk Payment Id
             String paymentId = '"' + fi.Id + '"';
             // DE1194 Return SABA name instead of Id
@@ -440,17 +672,24 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             if (!String.isEmpty(fi.Order__r.ccrz__Account__r.SABA_Name__c)) {
                 sabaName = '"' + fi.Order__r.ccrz__Account__r.SABA_Name__c + '"';*/
                 
-            if (!String.isEmpty(fi.Order__r.ccrz__Account__r.nk_billto_org_id__c)) {
+            if (!String.isEmpty(fi.Order__r.ccrz__Account__r.nk_billto_org_id__c))
+            {
                 sabaName = '"' + fi.Order__r.ccrz__Account__r.nk_billto_org_id__c + '"';
-            } else {
+            }
+            else
+            {
                 sabaName = '"' + fi.Order__r.ccrz__Account__r.Id + '"';
             }
 
             // AP Code
             String apCode = '';
-            if(!String.isEmpty(fi.CC_Product__r.AP_Code__c)) {
-                apCode='"'+fi.CC_Product__r.AP_Code__c+'"';
+            if(!String.isEmpty(fi.AP_Code__c))
+            {
+                //apCode='"'+fi.CC_Product__r.AP_Code__c+'"';
+                //DE1301
+                apCode='"'+fi.AP_Code__c+'"';
             }
+            
             String fullName = '';
             // Max Instructor Full Name
             String instructorName = '';
@@ -482,29 +721,34 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 }
                 
                 
-            } else if (fi.ILT_Class__c!=null && iltCIMap.containsKey(fi.ILT_Class__c) && iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__c!=null) {
+            }
+            else if (fi.ILT_Class__c!=null && iltCIMap.containsKey(fi.ILT_Class__c) && iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__c!=null)
+            {
                 instructorName = '"';
-                if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.FirstName!=null) {
+                if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.FirstName!=null)
+                {
                     instructorName = instructorName + iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.FirstName.replaceAll(regExp, '') + ' ';
                 }
-                if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.LastName!=null) {
+                if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.LastName!=null)
+                {
                     instructorName = instructorName + iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.LastName.replaceAll(regExp, '');
                 }
                 instructorName = instructorName + '"';
             }
-            if ('COURSE'.equals(fi.CC_Product__r.ccrz__InventoryType__c) && 'KIT'.equals(fi.CC_Product__r.ccrz__ProductType__c)){
+            if ('COURSE'.equals(fi.CC_Product__r.ccrz__InventoryType__c) && 'KIT'.equals(fi.CC_Product__r.ccrz__ProductType__c))
+            {
                 List<ccrz__E_Product__c > products = new List<ccrz__E_Product__c>();
-                if (fi.CC_Product__r.AP_Code__c != null) {
+                if (fi.CC_Product__r.AP_Code__c != null)
+                {
                     products = new List<ccrz__E_Product__c>([SELECT AP_Code__c
-                        FROM ccrz__E_Product__c
-                        WHERE ccrz__ParentProduct__c =:fi.CC_Product__r.Id]);
-                    for (ccrz__E_Product__c product : products) {
+                        									   FROM ccrz__E_Product__c
+                                                              WHERE ccrz__ParentProduct__c =:fi.CC_Product__r.Id]);
+                    for (ccrz__E_Product__c product : products)
+                    {
                         product.AP_Code__c = fi.CC_Product__r.AP_Code__c;
                     }
                     update products;
                 }
-
-
             }
             String transactionString =  transactionDate+','+unitCode+','+focis+','+accountName+','+street1+','+
                                         city+','+state+','+postalCode+','+country+','+sInvoicing+','+
@@ -518,34 +762,61 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             System.debug('Row: '+transactionString);
             if(isError) { 
                 errorItem err = new errorItem();
-                err.fiId = fi.Id;
-                err.fiName = fi.Name;
-                err.fiAmount = fi.Fulfillment_Item_Total__c;
+                
+                err.fiId 		 = fi.Id;
+                err.fiName 		 = fi.Name;
+                err.fiAmount 	 = fi.Fulfillment_Item_Total__c;
                 err.errorDetails = errString;
+                
                 errorItemList.add(err);
+                
+                
+                Integration_Error_Log__c iErrorLog = new Integration_Error_Log__c ();
+                
+                iErrorLog.Fulfillment_Item__c 	= fi.Id;
+                iErrorLog.Account__c 			= fi.Order__r.ccrz__Account__r.Id;
+                iErrorLog.Order__c 				= fi.Order__r.Id;
+                iErrorLog.Error_Details__c		= errString;
+                iErrorLog.Status__c				= 'Open';
+                
+                integrationErrorLogList.add(iErrorLog);
                 //errorItemList.add(new errorItem(fi.Id,fi.Name,fi.Fulfillment_Item_Total__c,errorDetails));
-            } else {
+            }
+            else
+            {
                 //csvRowValues.add(transactionString);
-                integrationFiles.add(new Integration_Files__c(File_Name__c=documentName, Record_Data__c=transactionString, Sequence_Number__c=sequenceNumber, Target_System__c='CFS'));
-                fulfillmentItemList.add(fi);
-                sequenceNumber++;
+                if(!String.isBlank(transactionString))
+                {
+                    integrationFiles.add(new Integration_Files__c(File_Name__c=documentName, Record_Data__c=transactionString, Sequence_Number__c=sequenceNumber, Target_System__c='CFS'));
+                    fulfillmentItemList.add(fi);
+                    sequenceNumber++;
+                }
             }  
         }
-        try {
-            for(Fulfillment_Item__c fi: fulfillmentItemList) {
-                fi.Status__c='Complete';
+        try
+        {
+            for(Fulfillment_Item__c fi: fulfillmentItemList)
+            {
+                //DE1792/DE1809
+                //fi.Status__c='Complete';
+                fi.Status__c='Invoiced'; 
             }
-            if(!integrationFiles.isEmpty() && !fulfillmentItemList.isEmpty()) {
+            if(!integrationFiles.isEmpty() && !fulfillmentItemList.isEmpty())
+            {
                 insert integrationFiles;
                 update fulfillmentItemList;
             }
-        } catch (exception e) {
+        }
+        catch (exception e)
+        {
           
         }         
     }
     
-    global void finish(Database.BatchableContext BC) {
+    global void finish(Database.BatchableContext BC)
+    {
         System.debug(recordsProcessed + ' records processed.');
+        
 /*        AsyncApexJob job = [SELECT Id,Status,NumberOfErrors,JobItemsProcessed,TotalJobItems,CreatedBy.Email
                             FROM AsyncApexJob 
                             WHERE Id = :bc.getJobId()];
@@ -579,12 +850,22 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
         }        
 */
         // TODO: Send an email to the User after your batch completes
-        if(!errorItemList.isEmpty()) {
+        if(!errorItemList.isEmpty())
+        {
             String csvFileString = 'Fulfillment Item Id,Fulfillment Item Name,Fulfillment Item Total,Error Details \n';
-            for(errorItem e: errorItemList) {
+            for(errorItem e: errorItemList)
+            {
                 system.debug(e);
                 csvFileString = csvFileString + e.fiId + ',' + e.fiName + ',' + e.fiAmount + ',' + e.errorDetails + '\n';
             }
+            
+            system.debug('***integrationErrorLogList***'+integrationErrorLogList);
+            
+            if(integrationErrorLogList.size() > 0)
+            {
+                insert integrationErrorLogList;
+            }
+            
             String body = 'The batch job PHSS_GenerateCSVFileBatch has finished. \n' +
                           'Attached you will find a list of Fulfillment Item Ids that need data verified.';
             String subject = 'Apex Batch Result for PHSS_GenerateCSVFileBatch - Fulfillment Items Not Processed';
@@ -599,14 +880,17 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             email.setSubject( subject );
             //email.setToAddresses( new String[] {'snehra@salesforce.com'} );
             email.setToAddresses( new String[] {'reportscoa@redcross.org'} );
+            //email.setToAddresses( new String[] {'jatinkumar.acharya@redcross.org'} );
             email.setPlainTextBody( body );
             email.setFileAttachments(emailAttList);
-            if (!Test.isRunningTest()) {
+            if (!Test.isRunningTest())
+            {
                 Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
             }
         }
     }
-    global class errorItem {
+    global class errorItem
+    {
         public Id fiId {get; set;}
         public String fiName {get; set;}
         public Decimal fiAmount {get; set;}

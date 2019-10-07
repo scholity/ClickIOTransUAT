@@ -46,27 +46,21 @@ global with sharing class cc_phss_ccLogicCartAddTo extends ccrz.ccLogicCartAddTo
 			}
 		}
 
-		String unitOfMeasure = cartItem.ccrz__UnitOfMeasure__c;
-		Set<String> validUOMs = new Set<String>{CLASS_UNIT_OF_MEASURE, INSTRUCTOR_UNIT_OF_MEASURE};
-		if (cartItem.ccrz__cartItemType__c == MINOR_CART_ITEM_TYPE
-				&& validUOMs.contains(unitOfMeasure)
-				&& cartItem.ccrz__ProductType__c == PRODUCT_PRODUCT_TYPE)
-		{
-//			ccrz__E_Product__c product = getProduct((String) cartItem.ccrz__Product__c);
-//			if (product.ccrz__InventoryType__c == FEE_INVENTORY_TYPE) {
-//
-//				// Quantity of 1
-//				cartItem.ccrz__Quantity__c = 1;
-//				cartItem.ccrz__SubAmount__c = cartItem.ccrz__Price__c;
-//			}
+		if (cartItem.ccrz__cartItemType__c == MINOR_CART_ITEM_TYPE && cartItem.ccrz__ProductType__c == PRODUCT_PRODUCT_TYPE) {
+			if (cartItem.ccrz__UnitOfMeasure__c == CLASS_UNIT_OF_MEASURE) {
+				ccrz__E_Product__c product = getProduct((String) cartItem.ccrz__Product__c);
+				if (product != null && product.ccrz__InventoryType__c == FEE_INVENTORY_TYPE) {
+					cartItem.ccrz__Quantity__c = 1;
+					cartItem.ccrz__SubAmount__c = cartItem.ccrz__Price__c;
+				}
 
-
-			// Quantity based on student ratio
-			Object studentRatioObject = productStudentRatioMap.get(cartItem.ccrz__Product__c);
-			if (studentRatioObject != null) {
-				Decimal studentRatio = (Decimal) studentRatioObject;
-				cartItem.ccrz__Quantity__c = calculateKitCartItemQuantity(cartItem.ccrz__Quantity__c, studentRatio);
-				cartItem.ccrz__SubAmount__c = calculateSubAmount(cartItem.ccrz__Price__c, cartItem.ccrz__Quantity__c);
+			} else if (cartItem.ccrz__UnitOfMeasure__c == INSTRUCTOR_UNIT_OF_MEASURE) {
+				Object studentRatioObject = productStudentRatioMap.get(cartItem.ccrz__Product__c);
+				if (studentRatioObject != null) {
+					Decimal studentRatio = (Decimal) studentRatioObject;
+					cartItem.ccrz__Quantity__c = calculateKitCartItemQuantity(cartItem.ccrz__Quantity__c, studentRatio);
+					cartItem.ccrz__SubAmount__c = calculateSubAmount(cartItem.ccrz__Price__c, cartItem.ccrz__Quantity__c);
+				}
 			}
 		}
 

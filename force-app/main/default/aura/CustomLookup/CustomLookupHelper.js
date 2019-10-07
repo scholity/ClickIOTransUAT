@@ -1,13 +1,16 @@
 ({
 	searchHelper : function(component,event,getInputkeyWord) {
-	  
-     var action = component.get("c.fetchLookUpValues");
-      console.log('accountid obtained'+component.get("v.accountId"));
+	    var action = component.get("c.fetchLookUpValues");
+	    console.log('accountid obtained'+component.get("v.accountId"));
+
+	    var objectName = component.get('v.objectAPIName');
+	    var accountId = component.get('v.accountId');
+	    var learningplanid = component.get('v.courseId');
         action.setParams({
             'searchKeyWord': getInputkeyWord,
-            'ObjectName' : component.get("v.objectAPIName"),
-            'accId' : component.get("v.accountId"),
-            'learningplanid' : component.get("v.courseId")
+            'ObjectName' : objectName,
+            'accId' : accountId,
+            'learningplanid' : learningplanid
           });
       
         action.setCallback(this, function(response) {
@@ -37,6 +40,15 @@
                 {
                 component.set("v.listOfSearchRecords", storeResponse);
   
+                }
+            } else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message: " + errors[0].message);
+                    }
+                } else {
+                    console.log("Unknown error");
                 }
             }
  

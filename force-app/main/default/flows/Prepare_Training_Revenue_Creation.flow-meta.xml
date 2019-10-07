@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Set_Output</name>
+        <label>Set Output</label>
+        <locationX>353</locationX>
+        <locationY>183</locationY>
+        <assignmentItems>
+            <assignToReference>outFulfillmentItem</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>sFulfillmentItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_Invoiced_Records</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Status</name>
+        <label>Set Status</label>
+        <locationX>476</locationX>
+        <locationY>184</locationY>
+        <assignmentItems>
+            <assignToReference>sFulfillmentItem.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Output</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Items_to_Write</name>
+        <label>Items to Write</label>
+        <locationX>648</locationX>
+        <locationY>48</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Output_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>outFulfillmentItem</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Fulfillment_Items</targetReference>
+            </connector>
+            <label>Output Not Null</label>
+        </rules>
+    </decisions>
+    <description>Sets Invoiced Fulfillment Items to Completed to trigger Create Training Revenue process builder</description>
+    <interviewLabel>Prepare Training Revenue Creatuib {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Prepare Training Revenue Creation</label>
+    <loops>
+        <name>Loop_through_Invoiced_Records</name>
+        <label>Loop through Invoiced Records</label>
+        <locationX>352</locationX>
+        <locationY>54</locationY>
+        <assignNextValueToReference>sFulfillmentItem</assignNextValueToReference>
+        <collectionReference>colFullfilmentItems</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Set_Status</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Items_to_Write</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Fulfillment_Items</name>
+        <label>Get Fulfillment Items</label>
+        <locationX>183</locationX>
+        <locationY>54</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Loop_through_Invoiced_Records</targetReference>
+        </connector>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Invoiced</stringValue>
+            </value>
+        </filters>
+        <object>Fulfillment_Item__c</object>
+        <outputReference>colFullfilmentItems</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Status__c</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Fulfillment_Items</name>
+        <label>Update Fulfillment Items</label>
+        <locationX>829</locationX>
+        <locationY>55</locationY>
+        <inputReference>outFulfillmentItem</inputReference>
+    </recordUpdates>
+    <startElementReference>Get_Fulfillment_Items</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>colFullfilmentItems</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Fulfillment_Item__c</objectType>
+    </variables>
+    <variables>
+        <name>outFulfillmentItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Fulfillment_Item__c</objectType>
+    </variables>
+    <variables>
+        <name>sFulfillmentItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Fulfillment_Item__c</objectType>
+    </variables>
+</Flow>

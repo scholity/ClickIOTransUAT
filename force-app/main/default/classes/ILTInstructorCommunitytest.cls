@@ -55,11 +55,11 @@ private without sharing class ILTInstructorCommunitytest {
         User runAsUser = [Select Id,FirstName,LastName,Alias,Email,Username,ProfileId,UserRoleId,TimeZoneSidKey,
                 EmailEncodingKey,LanguageLocaleKey,LocaleSidKey from User 
                           
-                //Where IsActive = True And
-                //Name != 'Salesforce Automation Account' And UserRoleId != NULL
-                //And Profile.Name = 'System Administrator' Limit 1];
+                Where IsActive = True And
+                Name != 'Salesforce Automation Account' And UserRoleId != NULL
+                And Profile.Name = 'System Administrator' Limit 1];
         
-                Where Id = '0050V000006m443' Limit 1];                
+                //Where Id = '0050V000006m443' Limit 1];                
 
         System.RunAs(runAsUser) {
 

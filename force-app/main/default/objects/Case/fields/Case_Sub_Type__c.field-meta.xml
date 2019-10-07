@@ -28,6 +28,11 @@
                 <label>Abandoned in Portal</label>
             </value>
             <value>
+                <fullName>Age requirement</fullName>
+                <default>false</default>
+                <label>Age requirement</label>
+            </value>
+            <value>
                 <fullName>AHA Crossover</fullName>
                 <default>false</default>
                 <label>AHA Crossover</label>
@@ -103,6 +108,16 @@
                 <label>Cardio</label>
             </value>
             <value>
+                <fullName>Careers</fullName>
+                <default>false</default>
+                <label>Careers</label>
+            </value>
+            <value>
+                <fullName>Centennial Program</fullName>
+                <default>false</default>
+                <label>Centennial Program</label>
+            </value>
+            <value>
                 <fullName>Certifications</fullName>
                 <default>false</default>
                 <label>Certifications</label>
@@ -153,6 +168,11 @@
                 <label>Correct</label>
             </value>
             <value>
+                <fullName>Cost of training</fullName>
+                <default>false</default>
+                <label>Cost of training</label>
+            </value>
+            <value>
                 <fullName>Coupons/Promos</fullName>
                 <default>false</default>
                 <label>Coupons/Promos</label>
@@ -168,6 +188,11 @@
                 <label>Course Change</label>
             </value>
             <value>
+                <fullName>Course language offerings</fullName>
+                <default>false</default>
+                <label>Course language offerings</label>
+            </value>
+            <value>
                 <fullName>Course Record Certification</fullName>
                 <default>false</default>
                 <label>Course Record Certification</label>
@@ -181,6 +206,11 @@
                 <fullName>Course Record-  Replacement Cert Request</fullName>
                 <default>false</default>
                 <label>Course Record-  Replacement Cert Request</label>
+            </value>
+            <value>
+                <fullName>Course requirements</fullName>
+                <default>false</default>
+                <label>Course requirements</label>
             </value>
             <value>
                 <fullName>Create Blended Learning Offering</fullName>
@@ -206,6 +236,16 @@
                 <fullName>CRS - Name Correction - TSC</fullName>
                 <default>false</default>
                 <label>CRS - Name Correction - TSC</label>
+            </value>
+            <value>
+                <fullName>Curriculum question</fullName>
+                <default>false</default>
+                <label>Curriculum question</label>
+            </value>
+            <value>
+                <fullName>Digital Cert for Online Courses</fullName>
+                <default>false</default>
+                <label>Digital Cert for Online Courses</label>
             </value>
             <value>
                 <fullName>Direct Links</fullName>
@@ -238,6 +278,11 @@
                 <label>Fraud</label>
             </value>
             <value>
+                <fullName>Free/discounted courses</fullName>
+                <default>false</default>
+                <label>Free/discounted courses</label>
+            </value>
+            <value>
                 <fullName>FS – Blended Learning</fullName>
                 <default>false</default>
                 <label>FS – Blended Learning</label>
@@ -261,6 +306,11 @@
                 <fullName>Granted Grace Period for Expired Base Level Cert</fullName>
                 <default>false</default>
                 <label>Granted Grace Period for Expired Base Level Cert</label>
+            </value>
+            <value>
+                <fullName>Headquarters location</fullName>
+                <default>false</default>
+                <label>Headquarters location</label>
             </value>
             <value>
                 <fullName>Health Fairs</fullName>
@@ -338,6 +388,11 @@
                 <label>Instructor Profile Update</label>
             </value>
             <value>
+                <fullName>Instructor Supplies</fullName>
+                <default>false</default>
+                <label>Instructor Supplies</label>
+            </value>
+            <value>
                 <fullName>Invalid Delivery Type</fullName>
                 <default>false</default>
                 <label>Invalid Delivery Type</label>
@@ -356,6 +411,11 @@
                 <fullName>Lifeguarding</fullName>
                 <default>false</default>
                 <label>Lifeguarding</label>
+            </value>
+            <value>
+                <fullName>Lifesaving Awards</fullName>
+                <default>false</default>
+                <label>Lifesaving Awards</label>
             </value>
             <value>
                 <fullName>LMS Error</fullName>
@@ -433,6 +493,11 @@
                 <label>MTN IT Bridge</label>
             </value>
             <value>
+                <fullName>NAT Testing</fullName>
+                <default>false</default>
+                <label>NAT Testing</label>
+            </value>
+            <value>
                 <fullName>New</fullName>
                 <default>false</default>
                 <label>New</label>
@@ -461,6 +526,11 @@
                 <fullName>No Certificate Found</fullName>
                 <default>false</default>
                 <label>No Certificate Found</label>
+            </value>
+            <value>
+                <fullName>No classes found in area</fullName>
+                <default>false</default>
+                <label>No classes found in area</label>
             </value>
             <value>
                 <fullName>No Coupon Created</fullName>
@@ -523,9 +593,29 @@
                 <label>Presentation</label>
             </value>
             <value>
+                <fullName>Product complaint</fullName>
+                <default>false</default>
+                <label>Product complaint</label>
+            </value>
+            <value>
+                <fullName>Product question</fullName>
+                <default>false</default>
+                <label>Product question</label>
+            </value>
+            <value>
+                <fullName>Purchase an AED</fullName>
+                <default>false</default>
+                <label>Purchase an AED</label>
+            </value>
+            <value>
                 <fullName>Questions</fullName>
                 <default>false</default>
                 <label>Questions</label>
+            </value>
+            <value>
+                <fullName>Questions about NAT Location Offerings</fullName>
+                <default>false</default>
+                <label>Questions about NAT Location Offerings</label>
             </value>
             <value>
                 <fullName>Questions about NAT Registration Process</fullName>
@@ -668,6 +758,11 @@
                 <label>Status of Order</label>
             </value>
             <value>
+                <fullName>Story Share</fullName>
+                <default>false</default>
+                <label>Story Share</label>
+            </value>
+            <value>
                 <fullName>Submitted by Email</fullName>
                 <default>false</default>
                 <label>Submitted by Email</label>
@@ -741,6 +836,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Aquatics</controllingFieldValue>
+            <valueName>Centennial Program</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Aquatics</controllingFieldValue>
             <valueName>Lifeguarding</valueName>
         </valueSettings>
         <valueSettings>
@@ -803,6 +902,10 @@
             <controllingFieldValue>Instructors</controllingFieldValue>
             <controllingFieldValue>Course Records</controllingFieldValue>
             <valueName>HealthStream</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>Instructor Supplies</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Instructors</controllingFieldValue>
@@ -902,7 +1005,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>NAT Testing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
             <valueName>New Agency Lead</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>Questions about NAT Location Offerings</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
@@ -978,6 +1089,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <valueName>Careers</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
             <controllingFieldValue>Non-Training</controllingFieldValue>
             <valueName>Disaster</valueName>
         </valueSettings>
@@ -993,6 +1108,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Non PHSS Referral</controllingFieldValue>
+            <controllingFieldValue>Other</controllingFieldValue>
             <controllingFieldValue>Product Sales Referral</controllingFieldValue>
             <controllingFieldValue>Non-Training</controllingFieldValue>
             <controllingFieldValue>Community Course Support</controllingFieldValue>
@@ -1019,6 +1135,30 @@
         <valueSettings>
             <controllingFieldValue>RCS PO</controllingFieldValue>
             <valueName>RCS PO Inquiry</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Headquarters location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Lifesaving Awards</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Product complaint</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Product question</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Purchase an AED</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Other</controllingFieldValue>
+            <valueName>Story Share</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Product Sales Referral</controllingFieldValue>
@@ -1122,6 +1262,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Digital Cert for Online Courses</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
             <valueName>Granted Grace Period for Expired Base Level Cert</valueName>
         </valueSettings>
         <valueSettings>
@@ -1186,7 +1330,35 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>Age requirement</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>Cost of training</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>Course language offerings</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>Course requirements</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>Curriculum question</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>Free/discounted courses</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
             <valueName>Logistics</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Support</controllingFieldValue>
+            <valueName>No classes found in area</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Course Records</controllingFieldValue>

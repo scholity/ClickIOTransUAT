@@ -241,6 +241,48 @@ public with sharing class phss_cc_CartUtil {
     }
 
     /**
+     * @description Attempts to activate the open cart, if necessary
+     *
+     * @param opportunityId
+     *
+     * @return
+     */
+    public static ccrz__E_Cart__c activateOpenCart(String opportunityId) {
+        ccrz__E_Cart__c cart = null;
+
+        try {
+            Id id = Id.valueOf(opportunityId);
+            List<ccrz__E_Cart__c> openCarts = [
+                    SELECT
+                            Id,
+                            ccrz__Account__c,
+                            ccrz__ActiveCart__c,
+                            ccrz__EncryptedId__c
+                    FROM
+                            ccrz__E_Cart__c
+                    WHERE
+                            Opportunity__c = :id
+                            AND ccrz__CartStatus__c = 'Open'
+                    ORDER BY
+                            ccrz__ActiveCart__c DESC,
+                            LastModifiedDate DESC
+            ];
+            if (openCarts != null && openCarts.size() > 0) {
+                ccrz__E_Cart__c firstCart = openCarts[0];
+                if (firstCart.ccrz__ActiveCart__c == false) {
+                    firstCart.ccrz__ActiveCart__c = true;
+                    update firstCart;
+                    cart = firstCart;
+                }
+            }
+        } catch (Exception e) {
+            // ignore exception
+        }
+
+        return cart;
+    }
+
+    /**
      * @description Adds the line data to the CC Cart. If encryptedCartId is blank, a new cart is first created.
      *
      * @param productQuantityMap

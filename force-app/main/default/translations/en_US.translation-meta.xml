@@ -839,6 +839,12 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
+            <fullName>Fulfillment_Item_Batch-1</fullName>
+        </flows>
+        <fullName>Fulfillment_Item_Batch</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
             <fullName>Process_On_Hold_Orders-4</fullName>
         </flows>
         <fullName>Process_On_Hold_Orders</fullName>
@@ -1026,6 +1032,12 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
+            <fullName>Prepare_Training_Revenue_Creation-1</fullName>
+        </flows>
+        <fullName>Prepare_Training_Revenue_Creation</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
             <fullName>Contract_Opportunity_update-1</fullName>
         </flows>
         <fullName>Contract_Opportunity_update</fullName>
@@ -1044,7 +1056,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Process_Scheduler_Controller-1</fullName>
+            <fullName>Process_Scheduler_Controller-3</fullName>
         </flows>
         <fullName>Process_Scheduler_Controller</fullName>
     </flowDefinitions>
@@ -1131,7 +1143,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Training_Revenue_Record-8</fullName>
+            <fullName>Create_Training_Revenue_Record-11</fullName>
         </flows>
         <fullName>Create_Training_Revenue_Record</fullName>
     </flowDefinitions>
@@ -1468,7 +1480,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Assign_Vouchers_for_Online_Class-3</fullName>
+            <fullName>Assign_Vouchers_for_Online_Class-5</fullName>
         </flows>
         <fullName>Assign_Vouchers_for_Online_Class</fullName>
     </flowDefinitions>
@@ -1510,7 +1522,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Schedule_New_Training_Event-19</fullName>
+            <fullName>Schedule_New_Training_Event-20</fullName>
             <screens>
                 <fields>
                     <name>EventCancelled</name>
@@ -1537,13 +1549,13 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Voucher_Controller-1</fullName>
+            <fullName>Voucher_Controller-7</fullName>
         </flows>
         <fullName>Voucher_Controller</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Add_Cancelation_Fee_to_Order-27</fullName>
+            <fullName>Add_Cancelation_Fee_to_Order-28</fullName>
             <screens>
                 <fields>
                     <name>CancelFeeError</name>

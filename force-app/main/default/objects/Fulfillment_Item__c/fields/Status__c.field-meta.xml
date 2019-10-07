@@ -5,6 +5,7 @@
     <externalId>false</externalId>
     <label>Status</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -17,8 +18,13 @@
             </value>
             <value>
                 <fullName>Ready</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Ready</label>
+            </value>
+            <value>
+                <fullName>Invoiced</fullName>
+                <default>false</default>
+                <label>Invoiced</label>
             </value>
             <value>
                 <fullName>Complete</fullName>

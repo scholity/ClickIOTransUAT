@@ -7,6 +7,7 @@ public with sharing class phss_cc_FulfillmentUtil {
     private static final String INVOICE_STATUS_CLOSED = 'Closed';
     private static final String FULFILLMENT_ITEM_STATUS_READY = 'Ready';
     private static final String FULFILLMENT_ITEM_STATUS_COMPLETE = 'Complete';
+    private static final String FULFILLMENT_ITEM_STATUS_IN_PROGRESS = 'In Progress';
 
     //  error messages
     private static final String FAILED_TO_CAPTURE_PAYMENT = 'Failed to capture payment.';
@@ -61,7 +62,7 @@ public with sharing class phss_cc_FulfillmentUtil {
 
             for (Fulfillment_Item__c item : fulfillmentItems) {
                 if (item.Status__c == FULFILLMENT_ITEM_STATUS_READY) {
-                    item.Status__c = FULFILLMENT_ITEM_STATUS_COMPLETE;
+                    item.Status__c = FULFILLMENT_ITEM_STATUS_IN_PROGRESS;
                     updatedItems.add(item);
                 }
             }

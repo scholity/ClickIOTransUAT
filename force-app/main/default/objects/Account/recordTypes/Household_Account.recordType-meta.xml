@@ -7,7 +7,11 @@
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>
-            <fullName>Other</fullName>
+            <fullName>Marketing Lead</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales Lead</fullName>
             <default>false</default>
         </values>
     </picklistValues>
