@@ -16,6 +16,7 @@
     <tabs>Geo_Location__c</tabs>
     <tabs>Fulfillment_Item__c</tabs>
     <tabs>Integration_Files__c</tabs>
+    <tabs>Integration_Error_Log__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Integration_Management_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -27,6 +28,9 @@
         </mappings>
         <mappings>
             <tab>Geo_Location__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Integration_Error_Log__c</tab>
         </mappings>
         <mappings>
             <tab>Integration_Files__c</tab>

@@ -1,10 +1,252 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
+        <name>Add_Cancelation_Fee_to_Fulfillment_Output</name>
+        <label>Add Cancelation Fee to Fulfillment Output</label>
+        <locationX>865</locationX>
+        <locationY>301</locationY>
+        <assignmentItems>
+            <assignToReference>outFulfillmentItem</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>sFI2</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_Fulfillment_Item</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_Major_Item_to_Output_Colletion</name>
+        <label>Add Major Item to Output Colletion</label>
+        <locationX>687</locationX>
+        <locationY>750</locationY>
+        <assignmentItems>
+            <assignToReference>outFulfillmentItem</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>sFullfillmentItem</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Minor_Item_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Add_to_Fulfillment_Output</name>
+        <label>Add to Fulfillment  Output</label>
+        <locationX>1189</locationX>
+        <locationY>597</locationY>
+        <assignmentItems>
+            <assignToReference>outFulfillmentItem</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>sFullfillmentItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Minor_Item_Output</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Cancel_Order_Item</name>
+        <label>Cancel Order Item</label>
+        <locationX>1351</locationX>
+        <locationY>501</locationY>
+        <assignmentItems>
+            <assignToReference>sMinOrderItem.ccrz__OrderItemStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Minor_Item_Output</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Prepare_Fulfillment_Items</name>
+        <label>Prepare Fulfillment Items</label>
+        <locationX>1041</locationX>
+        <locationY>597</locationY>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Fulfillment__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sFulfillment.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Order_Item__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sMinOrderItem.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Quantity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sMinOrderItem.ccrz__Quantity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Training_Event__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sTrainingEvent.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.SKU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sMinOrderItem.ccrz__ExtSKU__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Training</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.ILT_Class__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sILTClass.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sMinOrderItem.ccrz__Order__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.CC_Product__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sMinOrderItem.ccrz__Product__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Fulfillment_Item_Total__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sMinOrderItem.ccrz__ItemTotal__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Fulfillment_Output</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Major_Item_to_Order</name>
+        <label>Set Major Item to Order</label>
+        <locationX>686</locationX>
+        <locationY>923</locationY>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Fulfillment__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sFulfillment.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Order_Item__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Quantity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.ccrz__Quantity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Training_Event__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sTrainingEvent.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.SKU__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.ccrz__ExtSKU__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Training</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.ILT_Class__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sILTClass.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Order__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.ccrz__Order__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.CC_Product__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.ccrz__Product__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFullfillmentItem.Fulfillment_Item_Total__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrderItem.ccrz__ItemTotal__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Major_Item_to_Output_Colletion</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Minor_Item_Output</name>
+        <label>Set Minor Item Output</label>
+        <locationX>951</locationX>
+        <locationY>932</locationY>
+        <assignmentItems>
+            <assignToReference>outMinOrderItem</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>sMinOrderItem</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Minor_Item_Loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Order_Fulfillment</name>
         <label>Set Order Fulfillment</label>
-        <locationX>637</locationX>
-        <locationY>303</locationY>
+        <locationX>530</locationX>
+        <locationY>750</locationY>
         <assignmentItems>
             <assignToReference>sFulfillment.Fulfillment_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -54,80 +296,103 @@
     <assignments>
         <name>Set_Order_Fulfillment_Item</name>
         <label>Set Order Fulfillment Item</label>
-        <locationX>936</locationX>
+        <locationX>714</locationX>
         <locationY>301</locationY>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.Fulfillment__c</assignToReference>
+            <assignToReference>sFI2.Fulfillment__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>sFulfillment.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.Order_Item__c</assignToReference>
+            <assignToReference>sFI2.Order_Item__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>sOrderItem.Id</elementReference>
+                <elementReference>vNewOrderItem</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.Quantity__c</assignToReference>
+            <assignToReference>sFI2.Quantity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>One</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.Training_Event__c</assignToReference>
+            <assignToReference>sFI2.Training_Event__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>sTrainingEvent.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.Status__c</assignToReference>
+            <assignToReference>sFI2.Status__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Ready</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.SKU__c</assignToReference>
+            <assignToReference>sFI2.SKU__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>CancellationFee</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.Type__c</assignToReference>
+            <assignToReference>sFI2.Type__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Training</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.ILT_Class__c</assignToReference>
+            <assignToReference>sFI2.ILT_Class__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>sILTClass.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.Order__c</assignToReference>
+            <assignToReference>sFI2.Order__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>sTrainingEvent.CC_Order__c</elementReference>
+                <elementReference>sOrderItem.ccrz__Order__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>sFullfillmentItem.CC_Product__c</assignToReference>
+            <assignToReference>sFI2.CC_Product__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>sOrderItem.ccrz__Product__c</elementReference>
+                <elementReference>sProduct.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sFI2.Fulfillment_Item_Total__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AdjustedCancelFee</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_Fulfillment_Item</targetReference>
+            <targetReference>Add_Cancelation_Fee_to_Fulfillment_Output</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_to_Ship</name>
+        <label>Set to Ship</label>
+        <locationX>898</locationX>
+        <locationY>564</locationY>
+        <assignmentItems>
+            <assignToReference>sMinOrderItem.ccrz__OrderItemStatus__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Shipped</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Prepare_Fulfillment_Items</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -208,7 +473,7 @@
         <name>Is_Cancellation_Fee_Needed</name>
         <label>Is Cancellation Fee Needed</label>
         <locationX>479</locationX>
-        <locationY>62</locationY>
+        <locationY>59</locationY>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
             <name>Less_than_12_Days</name>
@@ -226,7 +491,62 @@
             <label>Less than 12 Days</label>
         </rules>
     </decisions>
-    <description>From the Training Event add a cancelation fee to the order when job is canceled - Added transaction Payment</description>
+    <decisions>
+        <name>Set_Minor_Item_Status</name>
+        <label>Set Minor Item Status</label>
+        <locationX>1048</locationX>
+        <locationY>464</locationY>
+        <defaultConnector>
+            <targetReference>Set_to_Ship</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isPerStudent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sMinOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Student</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cancel_Order_Item</targetReference>
+            </connector>
+            <label>isPerStudent</label>
+        </rules>
+        <rules>
+            <name>isClass</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sMinOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Class</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cancel_Order_Item</targetReference>
+            </connector>
+            <label>isClass</label>
+        </rules>
+        <rules>
+            <name>Waiver</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sMinOrderItem.ccrz__Quantity__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cancel_Order_Item</targetReference>
+            </connector>
+            <label>Waiver</label>
+        </rules>
+    </decisions>
+    <description>From the Training Event add a cancelation fee to the order when job is canceled - Include cancellation of Class and processing of any additional minor items</description>
     <formulas>
         <name>AdjustedCancelFee</name>
         <dataType>Currency</dataType>
@@ -279,6 +599,22 @@
     </formulas>
     <interviewLabel>Add Cancelation Fee to Order {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Add Cancelation Fee to Order</label>
+    <loops>
+        <description>Find Items that have not been shipped - Cancel Onsite Delivery Fee and Per Student Fee - otherwise ship items</description>
+        <name>Minor_Item_Loop</name>
+        <label>Minor Item Loop</label>
+        <locationX>790</locationX>
+        <locationY>487</locationY>
+        <assignNextValueToReference>sMinOrderItem</assignNextValueToReference>
+        <collectionReference>colMinOrderItem</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Set_Minor_Item_Status</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Minor_Items</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -289,10 +625,11 @@
     <recordCreates>
         <name>Add_Fee_to_Order_Item</name>
         <label>Add Fee to Order Item</label>
-        <locationX>494</locationX>
-        <locationY>315</locationY>
+        <locationX>500</locationX>
+        <locationY>302</locationY>
+        <assignRecordIdToReference>vNewOrderItem</assignRecordIdToReference>
         <connector>
-            <targetReference>Set_Order_Fulfillment</targetReference>
+            <targetReference>Set_Order_Fulfillment_Item</targetReference>
         </connector>
         <inputAssignments>
             <field>ILT_Class__c</field>
@@ -369,7 +706,7 @@
         <inputAssignments>
             <field>ccrz__Quantity__c</field>
             <value>
-                <numberValue>1.0</numberValue>
+                <elementReference>One</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -383,25 +720,28 @@
     <recordCreates>
         <name>Create_Fulfillment_Item</name>
         <label>Create Fulfillment Item</label>
-        <locationX>1098</locationX>
-        <locationY>302</locationY>
-        <inputReference>sFullfillmentItem</inputReference>
+        <locationX>1042</locationX>
+        <locationY>301</locationY>
+        <connector>
+            <targetReference>Update_Status_of_Order_Line</targetReference>
+        </connector>
+        <inputReference>outFulfillmentItem</inputReference>
     </recordCreates>
     <recordCreates>
         <name>Create_Fulfillment_Order</name>
         <label>Create Fulfillment Order</label>
-        <locationX>791</locationX>
-        <locationY>303</locationY>
+        <locationX>529</locationX>
+        <locationY>925</locationY>
         <connector>
-            <targetReference>Set_Order_Fulfillment_Item</targetReference>
+            <targetReference>Set_Major_Item_to_Order</targetReference>
         </connector>
         <inputReference>sFulfillment</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_Cancelation_Fee_Product_ID</name>
         <label>Get Cancelation Fee Product ID</label>
-        <locationX>336</locationX>
-        <locationY>297</locationY>
+        <locationX>341</locationX>
+        <locationY>197</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Cancellation_Fee_Check</targetReference>
@@ -422,7 +762,7 @@
         <name>Get_ILT_Class</name>
         <label>Get ILT Class</label>
         <locationX>340</locationX>
-        <locationY>551</locationY>
+        <locationY>549</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Transaction_Payment</targetReference>
@@ -438,6 +778,40 @@
         <outputReference>sILTClass</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Offering_Id__c</queriedFields>
+        <queriedFields>Skedulo_Job_Status__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Get Minor Items associated to course to be cancelled</description>
+        <name>Get_Minor_Items</name>
+        <label>Get Minor Items</label>
+        <locationX>639</locationX>
+        <locationY>547</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Order_Fulfillment</targetReference>
+        </connector>
+        <filters>
+            <field>ccrz__ParentOrderItem__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sOrderItem.Id</elementReference>
+            </value>
+        </filters>
+        <object>ccrz__E_OrderItem__c</object>
+        <outputReference>colMinOrderItem</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Inventory_Type__c</queriedFields>
+        <queriedFields>ccrz__ExtSKU__c</queriedFields>
+        <queriedFields>ccrz__OrderItemStatus__c</queriedFields>
+        <queriedFields>ccrz__OrderItemId__c</queriedFields>
+        <queriedFields>ccrz__OrderLineType__c</queriedFields>
+        <queriedFields>ccrz__Quantity__c</queriedFields>
+        <queriedFields>ccrz__Product_Name__c</queriedFields>
+        <queriedFields>ccrz__ProductType__c</queriedFields>
+        <queriedFields>ccrz__Product__c</queriedFields>
+        <queriedFields>ccrz__UnitOfMeasure__c</queriedFields>
+        <queriedFields>ccrz__ItemTotal__c</queriedFields>
+        <queriedFields>ccrz__Order__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Transaction_Payment</name>
@@ -446,7 +820,7 @@
         <locationY>550</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Add_Fee_to_Order_Item</targetReference>
+            <targetReference>Get_Minor_Items</targetReference>
         </connector>
         <filters>
             <field>ccrz__CCOrder__c</field>
@@ -464,7 +838,7 @@
         <name>Lookup_Order_Item</name>
         <label>Lookup Order Item</label>
         <locationX>488</locationX>
-        <locationY>198</locationY>
+        <locationY>196</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Cancelation_Fee_Product_ID</targetReference>
@@ -494,6 +868,8 @@
         <queriedFields>ccrz__ExtSKU__c</queriedFields>
         <queriedFields>ccrz__SubAmount__c</queriedFields>
         <queriedFields>ILT_Class__c</queriedFields>
+        <queriedFields>ccrz__OrderItemStatus__c</queriedFields>
+        <queriedFields>ccrz__ItemTotal__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Lookup_Training_Event</name>
@@ -520,6 +896,36 @@
         <queriedFields>CC_Order__c</queriedFields>
         <queriedFields>Number_in_Class__c</queriedFields>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Minor_Items</name>
+        <label>Update Minor Items</label>
+        <locationX>492</locationX>
+        <locationY>423</locationY>
+        <connector>
+            <targetReference>Add_Fee_to_Order_Item</targetReference>
+        </connector>
+        <inputReference>outMinOrderItem</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Status_of_Order_Line</name>
+        <label>Update Status of Order Line</label>
+        <locationX>1253</locationX>
+        <locationY>302</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sOrderItem.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ccrz__OrderItemStatus__c</field>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>ccrz__E_OrderItem__c</object>
+    </recordUpdates>
     <screens>
         <name>Cancel_Fee_Missing</name>
         <label>Cancel Fee Missing</label>
@@ -564,6 +970,14 @@
     <startElementReference>Cancellation_Fee_Notes</startElementReference>
     <status>Active</status>
     <variables>
+        <name>colMinOrderItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ccrz__E_OrderItem__c</objectType>
+    </variables>
+    <variables>
         <name>colOrderShipmentItem</name>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -598,12 +1012,36 @@
         </value>
     </variables>
     <variables>
+        <name>outFulfillmentItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Fulfillment_Item__c</objectType>
+    </variables>
+    <variables>
+        <name>outMinOrderItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ccrz__E_OrderItem__c</objectType>
+    </variables>
+    <variables>
         <name>sFee</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>ccrz__E_PriceListItem__c</objectType>
+    </variables>
+    <variables>
+        <name>sFI2</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Fulfillment_Item__c</objectType>
     </variables>
     <variables>
         <name>sFulfillment</name>
@@ -628,6 +1066,22 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>redwing__ILT_Class__c</objectType>
+    </variables>
+    <variables>
+        <name>sMinOrderItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ccrz__E_OrderItem__c</objectType>
+    </variables>
+    <variables>
+        <name>sNewItem</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ccrz__E_OrderItem__c</objectType>
     </variables>
     <variables>
         <name>sOrder</name>
@@ -678,5 +1132,12 @@
         <value>
             <stringValue>Y</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>vNewOrderItem</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

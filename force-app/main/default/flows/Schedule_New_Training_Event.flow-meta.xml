@@ -436,7 +436,7 @@
         <inputAssignments>
             <field>ccrz__OrderItemStatus__c</field>
             <value>
-                <stringValue>In Process</stringValue>
+                <stringValue>Order Submitted</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

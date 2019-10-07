@@ -15,3 +15,9 @@ div.ltuiUserAchievementsCmp > div.slds-grid.slds-grid_align-end > a {
 .ltuiUserAchievementsCmp .add-certificate{
     display:none;
 }
+.ltuiILTEventViewerCmp .register button {
+	/*display: none !important;*/
+}
+.ltuiILTEventViewerCmp .slds-section.slds-is-open .slds-section__content div a {
+	display: none !important;
+}

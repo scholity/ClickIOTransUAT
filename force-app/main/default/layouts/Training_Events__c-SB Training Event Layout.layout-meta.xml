@@ -114,6 +114,10 @@
                 <field>Rescheduling_Fee__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Returned_to_Sales__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>BGST_Indicator__c</field>
             </layoutItems>
@@ -211,6 +215,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Send_Class_Certs_to_POC__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>BL_Info_Sent_to_Customer__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -338,16 +346,6 @@
             <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>LogACall</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>12</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Schedule_Additional_Training</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>13</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -401,6 +399,16 @@
             <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>LogACall</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>12</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Schedule_Additional_Training</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Add_Rescheduling_Fee</actionName>

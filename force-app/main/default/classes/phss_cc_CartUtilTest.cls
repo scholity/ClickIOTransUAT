@@ -232,4 +232,25 @@ public with sharing class phss_cc_CartUtilTest {
         System.assert(addAddressToCartResponse.containsKey(phss_cc_CartUtil.SUCCESS_KEY));
     }
 
+    /**
+     * @description Tests if the most recently modified open cart can be activated
+     */
+    @IsTest
+    static void testActivateOpenCart() {
+        setupTestData();
+
+        ccrz__E_Cart__c cart = new ccrz__E_Cart__c(
+                Opportunity__c = testOpportunity.Id,
+                ccrz__ActiveCart__c = false,
+                ccrz__CartStatus__c = 'Open'
+        );
+        insert cart;
+
+        Test.startTest();
+        ccrz__E_Cart__c testCart = phss_cc_CartUtil.activateOpenCart(testOpportunity.Id);
+        Test.stopTest();
+
+        System.assert(testCart != null);
+        System.assertEquals(true, testCart.ccrz__ActiveCart__c);
+    }
 }

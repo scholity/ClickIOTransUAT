@@ -71,4 +71,19 @@ public with sharing class phss_cc_TransactionPaymentUtilTest {
         System.assert(transactionPayments.size() == 1);
         System.assertEquals(testTransactionPayment.Id, transactionPayments[0].Id);
     }
+
+    @IsTest
+    public static void testCreateCaptureTransactionPaymentFromAuthTransactionPayment() {
+        ccrz__E_TransactionPayment__c testAuthTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
+        );
+        insert testAuthTransactionPayment;
+
+        Test.startTest();
+        ccrz__E_TransactionPayment__c transactionPayment = phss_cc_TransactionPaymentUtil.createCaptureTransactionPaymentFromAuthTransactionPayment(testAuthTransactionPayment.Id);
+        Test.stopTest();
+
+        System.assert(transactionPayment != null);
+        System.assertEquals(testAuthTransactionPayment.Id, transactionPayment.ccrz__SourceTransactionPayment__c);
+    }
 }

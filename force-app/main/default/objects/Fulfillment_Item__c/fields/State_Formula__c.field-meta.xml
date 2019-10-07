@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>State_Formula__c</fullName>
+    <description>Set state value for Training Revenue</description>
+    <externalId>false</externalId>
+    <formula>IF(  AND(!ISNULL(ILT_Class__c), Order__r.ccrz__Storefront__c &lt;&gt; &quot;CREStore&quot;), 
+ IF(
+    AND(!ISNULL(ILT_Class__r.Skedulo_Job_Id__c), !ISNULL( ILT_Class__r.Location_State__c )),
+    ILT_Class__r.Location_State__c, Order__r.ccrz__Account__r.BillingState ) ,Order__r.ccrz__Account__r.BillingState)</formula>
+    <label>State Formula</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

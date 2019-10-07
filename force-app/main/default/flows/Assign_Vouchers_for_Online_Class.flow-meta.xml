@@ -234,7 +234,7 @@
         <name>Get_Order_Item</name>
         <label>Get Order Item</label>
         <locationX>219</locationX>
-        <locationY>51</locationY>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ready_to_fulfill</targetReference>

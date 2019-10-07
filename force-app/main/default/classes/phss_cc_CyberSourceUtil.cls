@@ -497,12 +497,11 @@ public with sharing class phss_cc_CyberSourceUtil {
     @testVisible
     private static Map<String, Object> buildCaptureData(String paymentToken, String referenceNumber, Decimal amount) {
 
-        String signedFieldNames = 'access_key,amount,bill_trans_ref_no,currency,ignore_avs,locale,payment_method,payment_token,profile_id,reference_number,signed_date_time,signed_field_names,transaction_type,transaction_uuid';
+        String signedFieldNames = 'access_key,amount,currency,ignore_avs,locale,payment_method,payment_token,profile_id,reference_number,signed_date_time,signed_field_names,transaction_type,transaction_uuid';
         String dateStr = Datetime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'', 'GMT');
         String millisecondsStr = String.valueOf(System.currentTimeMillis());
         String dataStr = 'access_key=' + ACCESS_KEY
                 + ',amount=' + amount
-                + ',bill_trans_ref_no=' + referenceNumber
                 + ',currency=' + DEFAULT_CURRENCY_CODE
                 + ',ignore_avs=' + BOOLEAN_TRUE
                 + ',locale=' + DEFAULT_LOCALE
@@ -519,7 +518,6 @@ public with sharing class phss_cc_CyberSourceUtil {
         Map<String, Object> dataMap = new Map<String, Object>{
                 'access_key' => ACCESS_KEY,
                 'amount' => amount,
-                'bill_trans_ref_no' => referenceNumber,
                 'currency' => DEFAULT_CURRENCY_CODE,
                 'ignore_avs' => BOOLEAN_TRUE,
                 'locale' => DEFAULT_LOCALE,

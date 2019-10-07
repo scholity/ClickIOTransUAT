@@ -10,11 +10,26 @@
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Advanced Childcare</fullName>
+                <default>false</default>
+                <label>Advanced Childcare</label>
+            </value>
+            <value>
+                <fullName>ALS &amp; PALS</fullName>
+                <default>false</default>
+                <label>ALS &amp; PALS</label>
+            </value>
             <value>
                 <fullName>Babysitting</fullName>
                 <default>false</default>
                 <label>Babysitting</label>
+            </value>
+            <value>
+                <fullName>Bloodborne Pathogens</fullName>
+                <default>false</default>
+                <label>Bloodborne Pathogens</label>
             </value>
             <value>
                 <fullName>BLS</fullName>
@@ -42,9 +57,24 @@
                 <label>Lifeguarding</label>
             </value>
             <value>
+                <fullName>Lifeguard Management</fullName>
+                <default>false</default>
+                <label>Lifeguard Management</label>
+            </value>
+            <value>
                 <fullName>Nurse Assistant Training</fullName>
                 <default>false</default>
                 <label>Nurse Assistant Training</label>
+            </value>
+            <value>
+                <fullName>Online First Aid/CPR/AED</fullName>
+                <default>false</default>
+                <label>Online First Aid/CPR/AED</label>
+            </value>
+            <value>
+                <fullName>Opioid First Aid</fullName>
+                <default>false</default>
+                <label>Opioid First Aid</label>
             </value>
             <value>
                 <fullName>Other</fullName>
@@ -52,9 +82,19 @@
                 <label>Other</label>
             </value>
             <value>
+                <fullName>Pet First Aid</fullName>
+                <default>false</default>
+                <label>Pet First Aid</label>
+            </value>
+            <value>
                 <fullName>Safety Training for Swim Coaches</fullName>
                 <default>false</default>
                 <label>Safety Training for Swim Coaches</label>
+            </value>
+            <value>
+                <fullName>Severe Bleeding</fullName>
+                <default>false</default>
+                <label>Severe Bleeding</label>
             </value>
             <value>
                 <fullName>Swimming and Water Safety/Learn to Swim</fullName>

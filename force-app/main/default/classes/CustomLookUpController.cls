@@ -58,9 +58,6 @@ public without sharing class CustomLookUpController {
      */
     @AuraEnabled
     public static List <SObject> fetchLookUpValues(String searchKeyWord, String ObjectName, String accId, String learningplanid) {
-        System.debug('*** objectName: ' + ObjectName);
-        System.debug('JASON - searchKeyWord: ' + searchKeyWord + '; ObjectName: ' + ObjectName + '; accId: ' + accId + '; learningplanid: ' + learningplanid);
-
         Set<Id> PreachSet = new Set<Id>();
         List<Id> Prereqid = new List<Id>();
         User u = fetchUser();
@@ -76,10 +73,10 @@ public without sharing class CustomLookUpController {
 
         if (ObjectName == ACCOUNT_OBJECT) {
             if (u.Profile.UserLicense.Name.contains(CUSTOMER_COMMUNITY_USER_LICENSE) || u.Profile.Name == SB_ARC_INSTRUCTOR_PROFILE) {
-                sQuery = 'SELECT Id, Name FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId = \'' + u.ContactId + '\') AND Name LIKE :searchKey ORDER BY CreatedDate DESC LIMIT 5';
+                sQuery = 'SELECT Id, Name, BillingAddress FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId = \'' + u.ContactId + '\') AND Name LIKE :searchKey ORDER BY CreatedDate DESC LIMIT 5';
 
             } else {
-                sQuery = 'SELECT Id, Name FROM Account WHERE Name LIKE :searchKey AND (Recordtype.Name = :ORG_ACCT_RECORDTYPE_NAME OR RecordType.Name = :SB_ORG_ACCT_RECORDTYPE_NAME) ORDER BY CreatedDate DESC LIMIT 5';
+                sQuery = 'SELECT Id, Name, BillingAddress FROM Account WHERE Name LIKE :searchKey AND (Recordtype.Name = :ORG_ACCT_RECORDTYPE_NAME OR RecordType.Name = :SB_ORG_ACCT_RECORDTYPE_NAME) ORDER BY CreatedDate DESC LIMIT 5';
             }
 
         } else if (ObjectName == USER_OBJECT) {
@@ -103,15 +100,11 @@ public without sharing class CustomLookUpController {
             sQuery = 'SELECT Id, Name FROM ' + ObjectName + ' WHERE Name LIKE :searchKey ORDER BY CreatedDate DESC LIMIT 5';
         }
 
-        System.debug('sQuery: ' + sQuery);
         List <SObject> lstOfRecords = Database.query(sQuery);
-        System.debug('Users in Account Contact Relationship: ' + lstOfRecords);
-
         Map<Id, Set<Id>> mapuserach = new Map<Id, Set<Id>>();
         if (ObjectName == USER_OBJECT) {
 
             // Logic to retrieve the prerequisite of the current course
-            System.debug('LPId received: ' + learningplanid);
             redwing__Training_Plan_Section_Item__c learningPlanILTEventItem = [
                     SELECT  Id,
                             redwing__Learning__c,
@@ -153,7 +146,6 @@ public without sharing class CustomLookUpController {
                     PreachSet.add(ObjPreItm.redwing__Achievement__c);
                 }
             }
-            System.debug('PreachSetValues: ' + PreachSet);
 
             // Get Achievement Assignment records
             List<redwing__Achievement_Assignment__c> InstructorAchv = [
@@ -163,7 +155,6 @@ public without sharing class CustomLookUpController {
                     WHERE   redwing__User__c IN :lstOfRecords
                     AND     redwing__Status__c = :ACQUIRED_STATUS
             ];
-            System.debug('InstructorAchv: ' + InstructorAchv);
             for (redwing__Achievement_Assignment__c raa : InstructorAchv) {
                 if (mapuserach.containsKey(raa.redwing__User__c)) {
                     Set<Id> AchvmntSet = mapuserach.get(raa.redwing__User__c);
@@ -174,14 +165,12 @@ public without sharing class CustomLookUpController {
                     Set<Id> AchvmntSet = new Set<Id>{ raa.redwing__Achievement__c };
                     mapuserach.put(raa.redwing__User__c, AchvmntSet);
                 }
-                System.debug('mapuserachValues: ' + mapuserach);
             }
         }
 
         if (ObjectName == USER_OBJECT && PreachSet.size() > 0) {
             for (SObject u1 : lstOfRecords) {
                 if (mapuserach.containsKey(u1.Id)) {
-                    System.debug('Contains respective user');
                     if (mapuserach.get(u1.Id).containsAll(PreachSet)) {
                         returnList.add(u1);
                     }
@@ -218,13 +207,10 @@ public without sharing class CustomLookUpController {
                 returnList.add(obj);
             }
         } else {
-            System.debug('The user list came here');
             for (SObject obj : lstOfRecords) {
                 returnList.add(obj);
             }
-            System.debug('User list available here: ' + returnList);
         }
-        System.debug('returnList: ' + returnList);
         return returnList;
     }
 }

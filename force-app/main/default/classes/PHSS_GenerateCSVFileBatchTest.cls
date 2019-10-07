@@ -127,15 +127,13 @@ public class PHSS_GenerateCSVFileBatchTest {
         );
         insert testProduct;
         
-        ccrz__E_TransactionPayment__c testTransactionPayment = new ccrz__E_TransactionPayment__c();
+        ccrz__E_TransactionPayment__c testTransactionPayment = new ccrz__E_TransactionPayment__c(ccrz__AccountType__c = 'po');
         insert testTransactionPayment;
         
         ccrz__E_Order__c testOrder = new ccrz__E_Order__c(
             NSSCCConnector_SFCC_Order_Number__c = '3114226',
             NSSCCConnector_from_SFCC__c = true,
-            ccrz__Account__c = testAccount.Id,
-            ccrz__OrderStatus__c = 'Shipped',
-             Resend_Receipt__c = true
+            ccrz__Account__c = testAccount.Id
         );
         insert testOrder;
         

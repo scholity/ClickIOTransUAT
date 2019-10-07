@@ -6,6 +6,7 @@
     <formula>CC_Product__r.ccrz__SKU__c</formula>
     <label>SKU</label>
     <required>false</required>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

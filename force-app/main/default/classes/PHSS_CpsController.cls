@@ -1,8 +1,8 @@
 public without sharing class PHSS_CpsController {
-	
+    
     @AuraEnabled
     public static PHSS_CpsWrapper initWrapper() {
-    	PHSS_CpsWrapper cpsWrap = new PHSS_CpsWrapper();
+        PHSS_CpsWrapper cpsWrap = new PHSS_CpsWrapper();
         // Get Organization name
         List<User> userList = [Select Id,Name,ContactId From User Where Id = :UserInfo.getUserId()];
         if(!userList.isEmpty() && userList[0].ContactId != null) {
@@ -23,13 +23,13 @@ public without sharing class PHSS_CpsController {
         List<Schema.PicklistEntry> entries = fieldResult.getPicklistValues();
         for(Schema.PicklistEntry val : entries) {
             if(val.getLabel() != 'Online') {
-            	formatsList.add(val.getLabel());
+                formatsList.add(val.getLabel());
             }
         }
         cpsWrap.classFormatList = formatsList;
         
         // Timezone
-        skedJobtoILTClass localSkedJobtoILTClass = new skedJobtoILTClass();
+        PHSS_skedJobtoILTClass localSkedJobtoILTClass = new PHSS_skedJobtoILTClass();
         cpsWrap.timeZoneList = localSkedJobtoILTClass.timeZoneMap;
         
         return cpsWrap;
@@ -43,7 +43,7 @@ public without sharing class PHSS_CpsController {
             //System.debug('JSON:'+jsonStr);
             
             List<ccrz__E_CartItem__c> updatedCartItems = new list<ccrz__E_CartItem__c>();
-        	List<ccrz__E_OrderItem__c> updatedOrderItems = new list<ccrz__E_OrderItem__c>();
+            List<ccrz__E_OrderItem__c> updatedOrderItems = new list<ccrz__E_OrderItem__c>();
             
             //for(String jsonList : jsonList) {
             
@@ -95,7 +95,7 @@ public without sharing class PHSS_CpsController {
                 String timeStart = String.valueOf(startTimeList[0]);
                 String timeEnd = String.valueOf(endTimeList[0]);
                 Integer daysToAdd = 0;
-            	Integer daysToSubtract = 1;
+                Integer daysToSubtract = 1;
             
                 /*
                 if(offsetStartTime > 23){
@@ -142,8 +142,8 @@ public without sharing class PHSS_CpsController {
                 newClass.CPS_Approval_Status__c = 'Submitted';
                 newClass.redwing__Learning__c = objLearning.Id;
                 newClass.Classroom_Setting__c = cpsWrap.classFormat;
-            	newClass.Class_Online_From__c = rco_post_startTime.dateGmt();
-            	newClass.Class_Online_To__c = rco_post_endTime.dateGmt();
+                newClass.Class_Online_From__c = rco_post_startTime.dateGmt();
+                newClass.Class_Online_To__c = rco_post_endTime.dateGmt();
                 newClass.Class_Searchable__c = true;
                 insert newClass;
                  
@@ -199,9 +199,9 @@ public without sharing class PHSS_CpsController {
                                                             Where ccrz__Cart__r.Opportunity__c = :cpsWrap.oppId]) {
                                                                 
                                                                 ccrz__E_CartItem__c newCartItem = new ccrz__E_CartItem__c();
-                                                                newCartItem.Id = theCartItem.Id;	
+                                                                newCartItem.Id = theCartItem.Id;    
                                                                 newCartItem.ILT_Class__c = classID;
-                                                                updatedCartItems.add(newCartItem);                		
+                                                                updatedCartItems.add(newCartItem);                      
                                                             }
                     
                     // US1521 - If this is CRE, Order Lines will already be created
@@ -211,9 +211,9 @@ public without sharing class PHSS_CpsController {
                                                               Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :cpsWrap.oppId]) {
                                                                   
                                                                   ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                                                                  newOrderItem.Id = theOrderItem.Id;	
+                                                                  newOrderItem.Id = theOrderItem.Id;    
                                                                   newOrderItem.ILT_Class__c = classID;
-                                                                  updatedOrderItems.add(newOrderItem);                		
+                                                                  updatedOrderItems.add(newOrderItem);                      
                                                               }
                 } 
     
@@ -227,7 +227,7 @@ public without sharing class PHSS_CpsController {
                 if (updatedOrderItems.size() > 0) {
                     update updatedOrderItems;
                 }
-            //}			
+            //}         
 
         }
         catch(Exception e) {
@@ -237,7 +237,7 @@ public without sharing class PHSS_CpsController {
 
     /*
     @AuraEnabled
-	public static Id createOppForCC(String AccountId) {
+    public static Id createOppForCC(String AccountId) {
         
         Opportunity o = new Opportunity();
         
@@ -253,7 +253,7 @@ public without sharing class PHSS_CpsController {
         
      return o.Id;
     }
-	*/
+    */
     
     @AuraEnabled
     public static Id createOppForCCUpdate(String AccountId, String storeFront, string opptyId) {
@@ -306,7 +306,7 @@ public without sharing class PHSS_CpsController {
     //Method to Skip payment page
     @AuraEnabled
     public static Boolean getDisplayPaymentInfo(String opportunityId) {
-    	User u = [Select id, ContactId, Name, Profile.Name, Profile.UserLicense.Name from user where id=: UserInfo.getUserId()];
+        User u = [Select id, ContactId, Name, Profile.Name, Profile.UserLicense.Name from user where id=: UserInfo.getUserId()];
         Opportunity opp = [Select Id,AccountId From Opportunity WHERE Id = :opportunityId];
         List<AccountContactRelation> accConRel = [SELECT AccountId, Display_Payment_Info__c FROM AccountContactRelation WHERE ContactId = : u.ContactId and AccountId =: opp.AccountId]; 
         if(!accConRel.isEmpty()) {
@@ -357,8 +357,8 @@ public without sharing class PHSS_CpsController {
         // US1521 - Save ILT Class Id (if any) on Cart Items since cart is recreated in addProductsToCart
         Map<Id, Id> cartItemClassIdMap = new Map<Id, Id>();
         for (ccrz__E_CartItem__c theCartItem : [Select Id, ccrz__Cart__r.Opportunity__c, ccrz__Product__c, ILT_Class__c From ccrz__E_CartItem__c 
-        	Where ccrz__Cart__r.Opportunity__c = :opportunitySfid]) {
-        	cartItemClassIdMap.put(theCartItem.ccrz__Product__c, theCartItem.ILT_Class__c);
+            Where ccrz__Cart__r.Opportunity__c = :opportunitySfid]) {
+            cartItemClassIdMap.put(theCartItem.ccrz__Product__c, theCartItem.ILT_Class__c);
         }
         
         try {
@@ -370,19 +370,19 @@ public without sharing class PHSS_CpsController {
         // US1521 - Restore ILT Class Ids (if any) to CartItems on newly created cart after call to addProductsToCart
         List<ccrz__E_CartItem__c> updateCartItemList = new List<ccrz__E_CartItem__c>();
         for (ccrz__E_CartItem__c theCartItem : [Select Id, ccrz__Cart__r.Opportunity__c, ccrz__Product__c, ILT_Class__c From ccrz__E_CartItem__c
-        	Where ccrz__Cart__r.Opportunity__c = :opportunitySfid]) {
-        	Id cartItemProductId = theCartItem.ccrz__Product__c;
-        	if (cartItemClassIdMap.containsKey(cartItemProductId)) {
-        		ccrz__E_CartItem__c updateCartItem = new ccrz__E_CartItem__c();
-        		updateCartItem.Id = theCartItem.Id;
-        		updateCartItem.ILT_Class__c = cartItemClassIdMap.get(cartItemProductId);
-        		updateCartItemList.add(updateCartItem);
-        	}
+            Where ccrz__Cart__r.Opportunity__c = :opportunitySfid]) {
+            Id cartItemProductId = theCartItem.ccrz__Product__c;
+            if (cartItemClassIdMap.containsKey(cartItemProductId)) {
+                ccrz__E_CartItem__c updateCartItem = new ccrz__E_CartItem__c();
+                updateCartItem.Id = theCartItem.Id;
+                updateCartItem.ILT_Class__c = cartItemClassIdMap.get(cartItemProductId);
+                updateCartItemList.add(updateCartItem);
+            }
         } 
-    	if (updateCartItemList.size() > 0) {
-    		update updateCartItemList;
-    	}        
-    	
+        if (updateCartItemList.size() > 0) {
+            update updateCartItemList;
+        }        
+        
         return addToCartResult;
     }
 
@@ -392,15 +392,15 @@ public without sharing class PHSS_CpsController {
             Http http = new Http();
             HttpRequest request = new HttpRequest();
             request.setEndpoint(url);
-        	request.setHeader('Content-Type', 'text/html');
+            request.setHeader('Content-Type', 'text/html');
             request.setMethod('GET');
             HttpResponse response = http.send(request);
     
             if (response.getStatusCode() == 200) {
-    			return true;
+                return true;
             } 
         
-			return false;
+            return false;
     }
 
 

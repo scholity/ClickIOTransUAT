@@ -101,7 +101,7 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
                     Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
                     String captureTxnPmtId = (String) objectMap.get(CAPTURE_TRANSACTION_PAYMENT_ID_KEY);
                     saveRefundCapture(data, authTxnPmtId, captureTxnPmtId);
-                    phss_cc_FulfillmentUtil.completeFulfillment(fulfillmentId, null);
+                    phss_cc_FulfillmentUtil.completeFulfillment(fulfillmentId, captureTxnPmtId);
                 }
                 else {
                     System.debug('UNEXPECTED RESPONSE: ' + response.getStatusCode() + ' ' + response.getStatus());

@@ -225,6 +225,23 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_Status_Reason</fullName>
+        <description>Clear Status Reason</description>
+        <field>Termination_Reason__c</field>
+        <name>Update Status Reason</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Terminate_Reinstate_Date</fullName>
+        <field>Terminate_Reinstate_Date__c</field>
+        <name>Update Terminate Reinstate Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Null</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_field_to_Granted</fullName>
         <description>Updates field to &quot;Granted&quot; when Preferred Payment = &quot;Invoice&quot;</description>
         <field>Payment_Status__c</field>
@@ -287,6 +304,14 @@
         <fullName>Granted Payment Status if Pref%2E Pymt is Invoice</fullName>
         <actions>
             <name>Update_Credit_Limit</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Status_Reason</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Terminate_Reinstate_Date</name>
             <type>FieldUpdate</type>
         </actions>
         <actions>

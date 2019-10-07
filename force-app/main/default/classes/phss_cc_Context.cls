@@ -64,7 +64,10 @@ public without sharing class phss_cc_Context {
                         WHERE Opportunity__c = :currOpportunityId AND ccrz__ActiveCart__c = true
                         LIMIT 1
                 ];
-                if (!fetchCarts.isEmpty()){
+
+                if (fetchCarts == null || fetchCarts.isEmpty()) {
+                    currCart = phss_cc_CartUtil.activateOpenCart(currOpportunityId);
+                } else {
                     currCart = fetchCarts[0];
                 }
             }
