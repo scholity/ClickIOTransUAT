@@ -7,6 +7,10 @@
                 <value>false</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
+                <name>hideChatterActions</name>
+                <value>false</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
                 <name>numVisibleActions</name>
                 <value>7</value>
             </componentInstanceProperties>
@@ -181,6 +185,29 @@
             <componentInstanceProperties>
                 <name>relatedListComponentOverride</name>
                 <value>NONE</value>
+            </componentInstanceProperties>
+            <componentName>force:relatedListSingleContainer</componentName>
+        </componentInstances>
+        <componentInstances>
+            <componentInstanceProperties>
+                <name>parentFieldApiName</name>
+                <value>Account.Id</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>relatedListApiName</name>
+                <value>Training_Event__r</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>relatedListComponentOverride</name>
+                <value>NONE</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>rowsToDisplay</name>
+                <value>10</value>
+            </componentInstanceProperties>
+            <componentInstanceProperties>
+                <name>showActionBar</name>
+                <value>true</value>
             </componentInstanceProperties>
             <componentName>force:relatedListSingleContainer</componentName>
         </componentInstances>
@@ -595,14 +622,14 @@
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>richTextValue</name>
-                <value>&lt;span style=&quot;color:#FF0000;&quot;&gt;&lt;b&gt;Account is Inactive&lt;/b&gt;&lt;/span&gt;</value>
+                <value>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 0, 0);&quot;&gt;Account is not active&lt;/b&gt;&lt;/p&gt;</value>
             </componentInstanceProperties>
             <componentName>flexipage:richText</componentName>
             <visibilityRule>
                 <criteria>
                     <leftValue>{!Record.Status__c}</leftValue>
-                    <operator>EQUAL</operator>
-                    <rightValue>Inactive</rightValue>
+                    <operator>NE</operator>
+                    <rightValue>Active</rightValue>
                 </criteria>
             </visibilityRule>
         </componentInstances>

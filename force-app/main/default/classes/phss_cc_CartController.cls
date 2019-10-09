@@ -227,7 +227,10 @@ public with sharing class phss_cc_CartController {
     public static Map<String, Object> fetchPaymentTabsetPermissions(String opportunityId) {
         Map<String, Object> permissionsResult;
         try {
-            permissionsResult = new Map<String, Object>();
+            phss_cc_Context.setContext(opportunityId);
+
+            Boolean isValidStatus = false;
+            Boolean isValidStorefront = false;
 
             List<String> validPaymentStatuses = new List<String>{
                     phss_cc_AccountUtil.PAYMENT_STATUS_GRANTED,
@@ -237,9 +240,14 @@ public with sharing class phss_cc_CartController {
             Account account = phss_cc_AccountUtil.fetchAccountForOpportunity(opportunityId); 
             if (account.Preferred_Payment_type__c == 'Invoice') {
                 if (account.Payment_Status__c != null && validPaymentStatuses.contains(account.Payment_Status__c)) {
-                    permissionsResult.put('allowPaymentByInvoice', true);
+                    isValidStatus = true;
                 }
             }
+
+            isValidStorefront = (phss_cc_Context.STOREFRONT_NAME != 'CPS');
+
+            permissionsResult = new Map<String, Object>();
+            permissionsResult.put('allowPaymentByInvoice', (isValidStatus && isValidStorefront));
 
         } catch (Exception e) {
             permissionsResult = phss_cc_Exception.getErrorMessageMap(e.getMessage());

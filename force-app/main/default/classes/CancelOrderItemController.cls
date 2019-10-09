@@ -456,9 +456,9 @@ public class CancelOrderItemController {
                         newOdrItm1.ccrz__Order__c 		= ccOrder.ccrz__E_Orders__r[0].Id;
                     }
                     newOdrItm1.ccrz__OrderLineType__c	= 'Minor'; 
-                    newOdrItm1.ccrz__Price__c			= decimal.ValueOf(price) * -1;
+                    newOdrItm1.ccrz__Price__c			= (oItemPrice - decimal.ValueOf(price)) * -1;
                     newOdrItm1.ccrz__Quantity__c 		= qty;
-                    newOdrItm1.ccrz__SubAmount__c 		= qty * decimal.ValueOf(price) * -1;
+                    newOdrItm1.ccrz__SubAmount__c 		= qty * (oItemPrice - decimal.ValueOf(price)) * -1;
                     newOdrItm1.ccrz__OrderItemStatus__c = 'Return Submitted';
                     newOdrItm1.ccrz__ParentOrderItem__c	= newOdrItm.Id;
                     newOdrItm1.Is_Return__c				= true;
@@ -653,7 +653,7 @@ public class CancelOrderItemController {
         
         system.debug('oItm'+oItm);
         
-        if(oItm != null)
+        if(oItm != null && oItm.ILT_Class__c != null)
         {
             system.debug('oItm ILT START DATE'+oItm.ILT_Class__r.redwing__Start_Date__c );
             
