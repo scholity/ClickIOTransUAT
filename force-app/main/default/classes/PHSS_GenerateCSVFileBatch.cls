@@ -623,6 +623,10 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                     errString = errString + 'ILT Class - offeringId';
                 }
             }
+            else if(fi.CC_Product__r.ccrz__InventoryType__c == 'FEE')
+            {
+                offeringId = fi.ILT_Class__r.Offering_ID__c;
+            }
             else
             {
                     offeringId = fi.Order_Item__r.Name;
@@ -799,7 +803,8 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             {
                 //DE1792/DE1809
                 //fi.Status__c='Complete';
-                fi.Status__c='Invoiced'; 
+                fi.Status__c		= 'Invoiced';
+                fi.CFS_File_Name__c	= documentName;
             }
             if(!integrationFiles.isEmpty() && !fulfillmentItemList.isEmpty())
             {

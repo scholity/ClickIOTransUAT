@@ -13,6 +13,7 @@ public class CreateOrderWrapper {
     }
     public class shipping_info{
         public String phone{get;set;}
+        public String company_name{get;set;}
         public String city{get;set;}
         public String address2{get;set;}
         public String postal_code{get;set;}
@@ -89,11 +90,12 @@ public class CreateOrderWrapper {
         //public Decimal order_total{get;set;}
         //public String shipping_method{get;set;}
         public Decimal total_discount{get;set;}
+        public String promotion_ids{get;set;}
         public String order_no{get;set;}
         public String tax_exempt_flag{get;set;}
         public String external_order_status{get;set;}
         public Integer tax_total{get;set;}
-        public String currencyVal{get;set;}
+        public String currency_code{get;set;}
         public String payment_method{get;set;}
         public String creation_date{get;set;}
         public String created_by{get;set;}
@@ -136,6 +138,7 @@ public class CreateOrderWrapper {
     }
     public class billing_info{
         public String email{get;set;}
+        public String company_name{get;set;}
         public String city{get;set;}
         public String postal_code{get;set;}
         public String address2{get;set;}

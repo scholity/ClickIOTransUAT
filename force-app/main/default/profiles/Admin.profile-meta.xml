@@ -284,6 +284,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CaptureCCPaymentOnFulfillmentInsertTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CaseAPIToCreateAttachments</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -988,6 +992,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_skedJobToILTClass_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_skedJobtoILTClass</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1269,10 +1277,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestSurveyService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>TestTriggersskedtoILT</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -8859,6 +8863,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Fulfillment_Item__c.CFS_File_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Fulfillment_Item__c.FCC__c</field>
         <readable>true</readable>
@@ -9071,6 +9080,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Geo_Location__c.State_UC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Geo_Location__c.TS_Loc__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10431,6 +10445,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Estimated_Annual_Enrollees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.Estimated_annual_revenue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14811,12 +14830,12 @@
         <layout>Offering__c-Offering Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Aquatic Examiner Service</layout>
-        <recordType>Opportunity.Aquatics_Examiner_Service</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Opportunity-Order Opportunity Layout</layout>
         <recordType>Opportunity.Order_Opportunity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Opportunity-SB Aquatic Examiner Service</layout>
+        <recordType>Opportunity.Aquatics_Examiner_Service</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Opportunity-SB BGST Opportunity Layout</layout>

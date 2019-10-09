@@ -25,8 +25,29 @@ private class CancelOrderItemControllerTest
         bas.Maximum_Size_of_Bucket__c = 5000;
         insert bas;
         
+        List<BGST_Profiles__c> ProfilesLists = new List<BGST_Profiles__c>();
+        BGST_Profiles__c indivl = new BGST_Profiles__c();
+        indivl.name = 'Owner Profile';
+        indivl.Sales_User__c = 'ARC BGST Sales User';
+        ProfilesLists.add(indivl);
+        insert ProfilesLists;
+        
+		Switch__c esettings = new Switch__c();
+        esettings.Name = 'EmailMessageServiceSwitch';
+        esettings.Switch_Description__c = 'some desc';
+        esettings.Switch__c = false;
+        insert esettings;
+        
+        Opportunity opp = new Opportunity();
+        opp.Name = 'Test Opp';
+        opp.AccountId = a.Id;
+        opp.StageName = 'Approach';
+        opp.CloseDate = date.today();
+        opp.Pricing_Approval_Level__c = 'Manager';
+        insert opp;
+        
         Contact con = new Contact();
-        con.FirstName = '';
+        con.FirstName = 'Test';
         con.LastName = 'SalesforcetestOrg';
         con.Email = 'test@test.com';
         con.AccountId = a.id;
@@ -71,11 +92,13 @@ private class CancelOrderItemControllerTest
         ccrz__E_Order__c cco=new ccrz__E_Order__c();
         cco.NSSCCConnector_SFCC_Order_Number__c ='3114226';
         cco.NSSCCConnector_from_SFCC__c=true;
+        cco.Opportunity_Order__c = opp.Id;  
         insert cco;
         
         ccrz__E_Order__c cco1 =new ccrz__E_Order__c();
         cco1.NSSCCConnector_SFCC_Order_Number__c ='3114227';
         cco1.NSSCCConnector_from_SFCC__c=true;
+        cco1.Opportunity_Order__c = opp.Id;
         insert cco1;
         
         ccrz__E_Order__c ccoChild =new ccrz__E_Order__c();
@@ -83,6 +106,7 @@ private class CancelOrderItemControllerTest
         ccoChild.NSSCCConnector_from_SFCC__c=true;
         ccoChild.ccrz__Order__c  = cco.Id;
         ccoChild.Is_Return_Order__c  = true;
+        ccoChild.Opportunity_Order__c = opp.Id;
         insert ccoChild;
         
         ccrz__E_OrderItem__c ccoItems= new ccrz__E_OrderItem__c();

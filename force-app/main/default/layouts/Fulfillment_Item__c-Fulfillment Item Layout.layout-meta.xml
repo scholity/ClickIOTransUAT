@@ -24,12 +24,8 @@
                 <field>Order_Item__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>State_Formula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Zip_Formula__c</field>
+                <behavior>Edit</behavior>
+                <field>CFS_File_Name__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -38,11 +34,11 @@
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Quantity__c</field>
             </layoutItems>
             <layoutItems>
@@ -101,10 +97,6 @@
                 <behavior>Readonly</behavior>
                 <field>FCC__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Payment_Category__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -145,6 +137,10 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <relatedList>ccrz__E_InvoiceItem__c.Fulfillment_Item__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <fields>State__c</fields>
         <fields>Zip_Code__c</fields>
         <fields>User_Field__c</fields>
@@ -152,14 +148,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>ccrz__E_InvoiceItem__c.Fulfillment_Item__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <relatedList>Integration_Error_Log__c.Fulfillment_Item__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -167,7 +156,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h21000000S909</masterLabel>
+        <masterLabel>00h5B000000XWGG</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

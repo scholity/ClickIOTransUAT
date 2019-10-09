@@ -7,6 +7,7 @@ public with sharing class phss_cc_OrderUtil {
     //CyberSource Response message keys.
     private static final String CYBER_SOURCE_RESPONSE_PAYMENT_TOKEN = 'payment_token';
     private static final String CYBER_SOURCE_RESPONSE_CARD_EXPIRATION_KEY = 'req_card_expiry_date';
+    private static final String CYBER_SOURCE_RESPONSE_BILL_TO_POSTAL_CODE_KEY = 'req_bill_to_address_postal_code';
     private static final String CYBER_SOURCE_TRANSACTION_DECISION_KEY = 'decision';
     private static final String CYBER_SOURCE_DECISION_ACCEPT = 'ACCEPT';
     @TestVisible private static final String CYBER_SOURCE_AUTH_RESPONSE_CODE_KEY = 'auth_response';
@@ -35,9 +36,9 @@ public with sharing class phss_cc_OrderUtil {
     private static final String AMOUNT_KEY = 'amount';
     private static final String COMMENTS_KEY = 'comments';
     private static final String REQUEST_AMOUNT_KEY = 'requestAmount';
-    @TestVisible private static final String ACCOUNT_TYPE_CREDIT_BALANCE = 'cb';
-    @TestVisible private static final String ACCOUNT_TYPE_CREDIT_CARD = 'cc';
-    @TestVisible private static final String ACCOUNT_TYPE_PURCHASE_ORDER = 'po';
+    public static final String ACCOUNT_TYPE_CREDIT_BALANCE = 'cb';
+    public static final String ACCOUNT_TYPE_CREDIT_CARD = 'cc';
+    public static final String ACCOUNT_TYPE_PURCHASE_ORDER = 'po';
     public static final String REFUND_COMMENT = 'Refund for Stored Payment. Id=';
     @TestVisible private static final String SUCCESS_KEY = 'success';
 
@@ -85,6 +86,7 @@ public with sharing class phss_cc_OrderUtil {
     private static final String FAILED_TO_PLACE_ORDER_PO = 'Failed to place order using PO.';
     private static final String FAILED_TO_DETECT_REASON_OF_PAYMENT_FAILURE = 'Failed to detect reason of payment failure.';
     private static final String SUCCESSFULLY_CREATED_AN_ORDER = 'Successfully created an Order.';
+    private static final String FAILED_TO_CAPTURE_BILLING_DATA_FOR_PAYMENT = 'Failed to capture billing data for payment.';
     private static final String FAILED_TO_CONVERT_TRANSACTION_PAYMENT_DATA = 'Failed to convert the transaction payment data.';
     private static final String FAILED_TO_CREATE_A_TRANSACTION_RECORD_ON_THE_ORDER = 'Failed to create a transaction record on the order.';
     private static final String FAILED_TO_CREATE_CREDIT_BALANCE_TRANSACTION_PAYMENT = 'Failed to create credit balance transaction payment.';
@@ -301,8 +303,11 @@ public with sharing class phss_cc_OrderUtil {
         try {
             if (cyberSourcePaymentResponse != null) {
                 Map<String, Object> cyberSourceResponseMap = (Map<String, Object>) JSON.deserializeUntyped(cyberSourcePaymentResponse);
-                String transactionDecision = (String) cyberSourceResponseMap.get(CYBER_SOURCE_TRANSACTION_DECISION_KEY);
 
+                String ccPostalCode = (String) cyberSourceResponseMap.get(CYBER_SOURCE_RESPONSE_BILL_TO_POSTAL_CODE_KEY);
+                captureBillingDataForPayment(encryptedCartId, ccPostalCode);
+
+                String transactionDecision = (String) cyberSourceResponseMap.get(CYBER_SOURCE_TRANSACTION_DECISION_KEY);
                 if (transactionDecision == CYBER_SOURCE_DECISION_ACCEPT) {
                     String paymentData = getPaymentDataJSONString(cyberSourceResponseMap);
                     Map<String, Object> creditResult = applyCredit(encryptedCartId, storedPayments);
@@ -700,10 +705,37 @@ public with sharing class phss_cc_OrderUtil {
     }
 
     /**
-     * @description Creates a transaction payment record for an order not associated with a purchase order
+     * @description Stores payment data on the transaction payment
      *
-     * @param orderId
+     * @param
+     * @param
      */
+    private static void captureBillingDataForPayment(String encryptedCartId, String postalCode) {
+        try {
+            ccrz__E_Cart__c cart = [
+                    SELECT
+                            Id,
+                            Payment_Postal_Code__c
+                    FROM
+                            ccrz__E_Cart__c
+                    WHERE
+                            ccrz__EncryptedId__c = :encryptedCartId
+            ];
+            if (cart != null) {
+                cart.Payment_Postal_Code__c = postalCode;
+                update cart;
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_CAPTURE_BILLING_DATA_FOR_PAYMENT, e);
+        }
+    }
+
+/**
+ * @description Creates a transaction payment record for an order not associated with a purchase order
+ *
+ * @param orderId
+ */
     @TestVisible
     private static void createNoPOTransactionPaymentForOrder(String orderId) {
         if (String.isBlank(orderId)) {

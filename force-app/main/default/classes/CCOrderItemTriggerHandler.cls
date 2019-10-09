@@ -155,6 +155,10 @@ public without sharing class CCOrderItemTriggerHandler {
                 {
                     zip = orderMap.get(oi.ccrz__Order__c).ccrz__Account__r.BillingPostalCode;
                 }
+
+                if (String.isEmpty(zip)) {
+                    zip = getPaymentPostalCodeForOrder(oi.ccrz__Order__c);
+                }
                 
                 system.debug('***zip0***'+zip);
                 zip = zip.substring(0,5);
@@ -172,6 +176,33 @@ public without sharing class CCOrderItemTriggerHandler {
                 }
         	}
         }  
+    }
+
+    /**
+     * @description Obtains the payment postal code for an order
+     *
+     * @param orderId
+     *
+     * @return
+     */
+    private String getPaymentPostalCodeForOrder(String orderId) {
+        String postalCode;
+        ccrz__E_Order__c order = [
+                SELECT
+                        Id,
+                        ccrz__OriginatedCart__r.Payment_Postal_Code__c
+                FROM
+                        ccrz__E_Order__c
+                WHERE
+                        Id = :orderId
+                LIMIT
+                        1
+        ];
+        if (order != null) {
+            postalCode = order.ccrz__OriginatedCart__r.Payment_Postal_Code__c;
+        }
+
+        return postalCode;
     }
     
    public void populateILTClass (List<ccrz__E_OrderItem__c> orderItems) {
