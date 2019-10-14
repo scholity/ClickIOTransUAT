@@ -1,0 +1,59 @@
+<apex:page controller="GeneratePDFHandlerStudents" showHeader="false">
+    
+    <apex:includeLightning />
+    
+    <apex:includeScript value="/lightning/lightning.out.js" />    
+    
+    <!-- Page code -->
+    <apex:form >
+        <apex:inputhidden id="hiddenData" value="{!PDFData}"/>
+        <apex:inputhidden id="hiddenDownloadtype" value="{!Downloadtype}"/>
+        <apex:inputhidden id="hiddencompanyName" value="{!companyName}"/>
+        <apex:inputhidden id="hiddenExpStartDate" value="{!expStartDate}"/>
+        <apex:inputhidden id="hiddenExpEndDate" value="{!expEndDate}"/>
+        
+        <apex:actionfunction name="jsGeneratePDF" action="{!downloadPDF}" />
+        
+        <div id="lightning" />
+        
+        <script>
+        function saveData(data, downloadtypeCmp, compNameCmp, startDateCmp, endDateCmp, classtypeCmp, callback){
+            var printData = document.getElementById('{!$Component.hiddenData}');
+            printData.value = JSON.stringify(data);
+            var downloadtype = document.getElementById('{!$Component.hiddenDownloadtype}');
+            downloadtype.value = downloadtypeCmp;
+            
+            var compName = document.getElementById('{!$Component.hiddencompanyName}');
+            compName.value = compNameCmp;
+            var startDate = document.getElementById('{!$Component.hiddenExpStartDate}');
+            startDate.value = startDateCmp;
+            var endDate = document.getElementById('{!$Component.hiddenExpEndDate}');
+            endDate.value = endDateCmp;
+            
+            //invoke PDF Generation
+            jsGeneratePDF();
+            
+            //invoke callback;
+            if(typeof callback == 'function') callback();
+        }
+        
+        function loadComponents(){
+            console.log("Loading lightning component: StudentListing");
+            
+            $Lightning.use("c:PHSS_GeneratePDF", function() {
+                $Lightning.createComponent("c:StudentListing",
+                                           { 
+                                               sendData : saveData,
+                                               recordId : "{!$CurrentPage.parameters.id}"                    
+                                           },
+                                           "lightning",
+                                           function(cmp) {
+                                               // do some stuff
+                                           });
+            });
+        }
+        
+        loadComponents();
+        </script>
+    </apex:form>
+</apex:page>

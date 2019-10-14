@@ -6,10 +6,12 @@ public with sharing class phss_cc_AccountUtil {
 
     public static final String PAYMENT_STATUS_GRANTED       = 'Granted';
     public static final String PAYMENT_STATUS_REINSTATED    = 'Reinstated';
+    public static final String INDIVIDUAL_ACCOUNT_TYPE      = 'Individual Account';
     
 
     private static final String FAILED_TO_FETCH_ACCOUNT = 'Failed to fetch the account.';
     private static final String FAILED_TO_FETCH_ACCOUNT_FOR_OPPORTUNITY = 'Failed to fetch the account related to the opportunity.';
+    private static final String FAILED_TO_IDENTIFY_ACCOUNT_TYPE = 'Failed to identify account type.';
 
 
     /**
@@ -57,5 +59,27 @@ public with sharing class phss_cc_AccountUtil {
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_FETCH_ACCOUNT_FOR_OPPORTUNITY, e);
         }
+    }
+
+    /**
+     * @description Attempts to discover if account is an Individual Account
+     *
+     * @param accountId
+     *
+     * @return
+     */
+    public static Boolean isIndividualAccount(String accountId) {
+        Boolean flag = false;
+        Id identifier = Id.valueOf(accountId);
+        try {
+            Account acct = [SELECT Id, RecordType.Name FROM Account WHERE Id = :identifier];
+            if (acct != null) {
+                flag = acct.RecordType.Name == INDIVIDUAL_ACCOUNT_TYPE;
+            }
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_IDENTIFY_ACCOUNT_TYPE, e);
+        }
+
+        return flag;
     }
 }

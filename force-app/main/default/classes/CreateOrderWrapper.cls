@@ -1,6 +1,7 @@
 public class CreateOrderWrapper {
-        public order order{get;set;}
-        public String action{get;set;}
+    public order order{get;set;}
+    public String action{get;set;}
+
     public class transaction_dtls{
         public list<ccTransactionDtls> ccTransactionDtls{get;set;}
         public list<poTransactionDtls> poTransactionDtls{get;set;}
@@ -91,6 +92,7 @@ public class CreateOrderWrapper {
         //public String shipping_method{get;set;}
         public Decimal total_discount{get;set;}
         public String promotion_ids{get;set;}
+        public String coupon_codes{get;set;}
         public String order_no{get;set;}
         public String tax_exempt_flag{get;set;}
         public String external_order_status{get;set;}

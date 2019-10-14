@@ -1,0 +1,87 @@
+<apex:page controller="GeneratePDFHandlerStudents" contentType="txt/xml#{!companyName} -Student History Report-{!expStartDate} to {!expEndDate}.xls" cache="true">
+    <apex:outputText value="{!xlsHeader}"/>
+    
+    <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+              xmlns:o="urn:schemas-microsoft-com:office:office"
+              xmlns:x="urn:schemas-microsoft-com:office:excel"
+              xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+              xmlns:html="http://www.w3.org/TR/REC-html40">
+        <Styles>
+            <Style ss:ID="s1">
+                <Alignment/>
+                <Borders/>
+                <Font ss:Color="#FFFFFF" ss:Size="9" ss:Bold="1"/>
+                <Interior ss:Color="#000000" ss:Pattern="Solid"/>
+                <NumberFormat/>
+                <Protection/>
+            </Style> 
+        </Styles>
+        
+        <Worksheet ss:Name="Students Details">              
+            <Table x:FullColumns="1" x:FullRows="1">                    
+                <Column ss:Width="120"/>
+                <Column ss:Width="85"/>
+                <Column ss:Width="95"/>
+                <Column ss:Width="120"/>
+                <Column ss:Width="80"/>
+                <Column ss:Width="140"/>
+                <Column ss:Width="80"/>
+                <Column ss:Width="80"/>
+                <Column ss:Width="120"/>
+                <Column ss:Width="150"/>
+                <Column ss:Width="100"/>
+                <Column ss:Width="120"/>
+                <Column ss:Width="80"/>
+                <Column ss:Width="100"/>
+                <Column ss:Width="100"/>
+                <Column ss:Width="110"/>
+                <Column ss:Width="140"/>
+                <Row>
+                    
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Organization</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Student First Name</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Student Last Name</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Student Email</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Student Phone</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Certificate</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Expiration Date</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >QR Code</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Class Name</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Class Start Date</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Location</Data></Cell>
+                    <Cell ss:StyleID="s1"><Data ss:Type="String" >Instructor</Data></Cell>
+                </Row>
+                
+                <apex:repeat value="{!classWrapperContent}" var="tableRow">                            
+                    <Row>
+                        <Cell><Data ss:Type="String">{!tableRow.OrganizationName}</Data></Cell>
+                        <Cell><Data ss:Type="String">{!tableRow.StudentFirstName}</Data></Cell>
+                        <Cell><Data ss:Type="String">{!tableRow.StudentLastName}</Data></Cell>
+                        <Cell><Data ss:Type="String">{!tableRow.StudentEmail}</Data></Cell>
+                        <Cell><Data ss:Type="String">{!tableRow.StudentPhone}</Data></Cell>
+                        <Cell><Data ss:Type="String">{!tableRow.AchievementName}</Data></Cell>
+                        <Cell><Data ss:Type="String">{!tableRow.expDate}</Data></Cell>                            
+                        <Cell><Data ss:Type="String">{!tableRow.QRCode}</Data></Cell>
+                        <Cell><Data ss:Type="String">{!tableRow.ILTClass}</Data></Cell>
+                        <Cell><Data ss:Type="String"> <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                            <apex:param value="{!tableRow.ILTClassStartDate}" /> 
+                            </apex:outputText>
+                            </Data>
+                        </Cell>
+                        <Cell><Data ss:Type="String">
+                            <apex:outputpanel rendered="{!tableRow.location != null}">
+                                <apex:outputText value="{!tableRow.location.address1}" /><br/>
+                                <apex:outputText value="{!tableRow.location.city}" />&nbsp;
+                                <apex:outputText value="{!tableRow.location.country}" />&nbsp;
+                                <apex:outputText value="{!tableRow.location.province}" />&nbsp;<br/>
+                                <apex:outputText value="{!tableRow.location.postalCode}" />
+                            </apex:outputpanel>
+                            </Data>
+                        </Cell> 
+                        <Cell><Data ss:Type="String">{!tableRow.Key}</Data></Cell>
+                    </Row>                            
+                </apex:repeat>
+            </Table>
+        </Worksheet>
+    </Workbook>
+</apex:page>

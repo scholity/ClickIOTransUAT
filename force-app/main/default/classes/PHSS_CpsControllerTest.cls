@@ -139,7 +139,7 @@ private class PHSS_CpsControllerTest {
 
                 String oppId = PHSS_CpsController.createOppForCCUpdate(testAcc.Id, 'CPS', testOpportunity.Id);
                 
-                PHSS_CpsController.updateCartProducts(testOpportunity.Id, lPlan.CC_Product__c, '1');
+                //PHSS_CpsController.updateCartProducts(testOpportunity.Id, lPlan.CC_Product__c, '1');
                 
                 PHSS_CpsController.getLearningPlanId(ccprod.Id);
                	PHSS_CpsController.getLearningPlanAttributes(ccprod.Id);

@@ -5,6 +5,7 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") { 
+
                 var resp = response.getReturnValue();    
                 component.set("v.cpsWrap",resp);
                 component.set("v.initialWrap",resp);
@@ -20,6 +21,7 @@
                 console.log('map..'+component.get("v.zoneList"));
                 
                 console.log("accId***"+resp.accId);
+                
             }
             else if (state === "ERROR") {
                 var errors = response.getError();
@@ -36,6 +38,63 @@
         $A.enqueueAction(action);	
 	},
     
+    initalizeProductQuantityMap : function(component, event, helper) {
+        
+		var action = component.get("c.initProductQuantityMap");
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") { 
+                var resp = response.getReturnValue();    
+                component.set("v.myProductQuantityMap",resp);
+                //alert("Initalized ProductQuantityMap");
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        component.set("v.errorMessage",errors[0].message);
+                        component.set("v.showError",true);
+                    }
+                } else {
+                    console.log("Unknown error");
+                }
+            }
+        });
+        $A.enqueueAction(action);        
+        
+    },
+    
+    updateProductQuantityMap : function(component, event, helper) {
+        //alert("myProductQuantityMap Before "+ JSON.stringify(component.get("v.myProductQuantityMap")) );
+       	var action = component.get("c.updateProductQuantityMap");
+        action.setParams({ productQuantityMap : component.get("v.myProductQuantityMap"),
+                           ccProductId : component.get("v.cpsWrap.ccProductId"),
+                           quantity : component.get("v.cpsWrap.quantity") });
+
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") { 
+                var resp = response.getReturnValue();    
+                component.set("v.myProductQuantityMap",resp);
+                //alert("updateProductQuantityMap Successful");
+                //alert("myProductQuantityMap After "+ JSON.stringify(component.get("v.myProductQuantityMap")) );
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                //alert("updateProductQuantityMap Error");
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        component.set("v.errorMessage",errors[0].message);
+                        component.set("v.showError",true);
+                    }
+                } else {
+                    console.log("Unknown error");
+                }
+            }
+        });
+        $A.enqueueAction(action);
+    },
+                         
     validateFields : function(component, event, helper) {
         component.set("v.allValid",true);
         component.set("v.isUrlValid",true);
@@ -51,14 +110,14 @@
         component.set("v.cpsWrap.courseId",courseId);
         component.set("v.cpsWrap.courseName",component.get("v.selectedCourse").Name);*/
         
-        if(!component.get("v.CCProductId")) {
+        if(!component.get("v.cpsWrap.ccProductId")) {
         	component.set("v.courseError",true);
         	component.set("v.allValid",false);    
         }
         
         var action = component.get("c.getLearningPlanId");
-        console.log("CCProductId***"+component.get("v.CCProductId"));
-        action.setParams({ccProdId : component.get("v.CCProductId")});
+        console.log("CCProductId***"+component.get("v.cpsWrap.ccProductId"));
+        action.setParams({ccProdId : component.get("v.cpsWrap.ccProductId")});
         action.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
@@ -79,28 +138,26 @@
         $A.enqueueAction(action);
         
         // Class Schedule validation
-		console.log(component.get("v.LPDuration") +" "+ component.get("v.ScheduledTime") );
-        if(component.get("v.ScheduledTime") < component.get("v.LPDuration")){
+		console.log(component.get("v.cpsWrap.classDuration") +" "+ component.get("v.ScheduledTime") );
+        if(component.get("v.ScheduledTime") < component.get("v.cpsWrap.classDuration")){
         	component.set("v.scheduleError",true);
         	component.set("v.allValid",false);
         }
         
         // Class format validation
-        component.set("v.cpsWrap.classFormat",component.get("v.LPClassroomSetting"));
+        //component.set("v.cpsWrap.classFormat",component.get("v.LPClassroomSetting"));
         console.log("Class Format " + component.get("v.cpsWrap.classFormat"));
 		
-        //if(component.get("v.cpsWrap.classFormat")) {
-        //    document.getElementById('formatSelect').classList.remove('requiredSelect');    
-        //}
-        //else {
-        //    component.set("v.formatError",true);
-        //	  component.set("v.allValid",false);
-        //    document.getElementById('formatSelect').classList.add('requiredSelect');
-        //}
+        if(!component.get("v.cpsWrap.classFormat")) {
+            component.set("v.formatError",true);
+       		component.set("v.allValid",false);
+            //document.getElementById('formatSelect').classList.add('requiredSelect');
+        }
         
         // Time Zone validation
         var tempList = component.get("v.cpsWrap.sessionList");
         tempList.forEach(function(session) {
+            
         	session.timeZone = document.getElementById('zoneSelect').value;
 
             if(session.timeZone) {
@@ -115,7 +172,6 @@
 
         });    
         component.set("v.cpsWrap.sessionList",tempList);
-        
         
         // Other fields validation
         var allValid = component.find('field').reduce(function (validSoFar, inputCmp) {
@@ -139,6 +195,9 @@
             component.set("v.errorMessage",errMsg);
             component.set("v.isUrlValid",false);
         } 
+        
+        component.set("v.cpsWrap.OfferingInformation.selectedAccount",component.get("v.selectedLookUpRecord1"));
+        component.set("v.cpsWrap.OfferingInformation.selectedFacility",component.get("v.selectedLookUpRecord5"));
         
         if(component.get("v.cpsWrap.regUrl")){
             /*
@@ -164,7 +223,7 @@
     	}
     },
     
-formatTime : function(component, event, helper) {
+	formatTime : function(component, event, helper) {
     	// Format Start Time and End Time
 		var updatedSessions = [];
 		component.get("v.cpsWrap.sessionList").forEach(function(session) {
@@ -228,36 +287,53 @@ formatTime : function(component, event, helper) {
     
     createClass : function(component, event, helper) {
         //alert('***Offerings.. '+JSON.stringify(component.get("v.offeringsList")));
-        
-        var action = component.get("c.postClass");
-        //action.setParams({ jsonList : component.get("v.offeringsList") });
-        action.setParams({ jsonStr : JSON.stringify(component.get("v.cpsWrap")) });
-        
-        action.setCallback(this, function(response) {
-            var resp = response.getReturnValue();
-            console.log('response..'+resp);
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                console.log('success');
-                alert('Class posted successfully!!!');
-                component.set("v.stepNumber", "Zero");
-                this.initializeWrapper(component, event, helper);
-				component.set("v.selectedCourse",null);
-            } 
-            else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " + errors[0].message);
-                        component.set("v.showError","true");
-            			component.set("v.errorMessage",errors[0].message);	
+        var tempList = component.get("v.offeringsList");
+        tempList.forEach(function(offering) {
+            //alert('Location ID '+offering.locationId);
+            //alert('***Offerings.. '+JSON.stringify((offering)));
+            
+            var action = component.get("c.postClass");
+            action.setParams({ jsonStr : JSON.stringify(offering) });
+            action.setCallback(this, function(response) {
+                var resp = response.getReturnValue();
+                console.log('response..'+resp);
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    console.log('success');
+                    var postCount = component.get("v.offeringsPosted");
+                    postCount = postCount + 1;
+                    component.set("v.offeringsPosted", postCount);
+                    //alert(component.get("v.offeringsPosted") + " == " + component.get("v.offeringId"));
+                    if(component.get("v.offeringsPosted") == component.get("v.offeringId")){
+                        if(component.get("v.offeringId") > 1){
+                            alert('Classes posted successfully!!!');
+                        } else {
+                            alert('Class posted successfully!!!');
+                        }
                     }
-                } else {
-                    console.log("Unknown error");
+
+                    //alert('Class posted successfully!!!');
+                    //component.set("v.stepNumber", "Zero");
+                    //this.initializeWrapper(component, event, helper);
+                    //component.set("v.selectedCourse",null);
+                } 
+                else if (state === "ERROR") {
+                    var errors = response.getError();
+                    //component.set("v.offeringsPosted", false);
+                    if (errors) {
+                        if (errors[0] && errors[0].message) {
+                            console.log("Error message: " + errors[0].message);
+                            component.set("v.showError","true");
+                            component.set("v.errorMessage",errors[0].message);	
+                        }
+                    } else {
+                        console.log("Unknown error");
+                    }
                 }
-            }
-        });
-        $A.enqueueAction(action);
+            });
+            $A.enqueueAction(action);
+        });   
+		//component.set("v.offeringsList", tempList);
     },
 
     getLearningPlanAttributes : function(component, event, helper) {
@@ -277,58 +353,66 @@ formatTime : function(component, event, helper) {
                     var courseFormat = getResponse.LMS_Learning_Plan__r.Classroom_Setting__c;
                     var courseDuration = getResponse.LMS_Learning_Plan__r.redwing__Duration__c;
                     
-                    //console.log("ccProdId " + component.get("v.CCProductId"));
-        			//console.log("courseName " + courseName);
-        			//console.log("courseFormat " + courseFormat);
-        			//console.log("courseDuration " + courseDuration);
+ 					var hours = Math.floor(courseDuration / 60); 
+                	console.log("Hours: " + hours);
+                    component.set("v.LPDuration", hours);
+                    component.set("v.LPName", courseName);
+                    component.set("v.LPClassroomSetting", courseFormat);
 
                     component.set("v.cpsWrap.courseId", learningPlan);
                     component.set("v.cpsWrap.courseName", getResponse.LMS_Learning_Plan__r.Name);
-
-                    component.set("v.LPName", courseName);
-                    component.set("v.LPClassroomSetting", courseFormat);
-                    var hours = Math.floor(courseDuration / 60); 
-                	console.log("Hours: " + hours);
-                    component.set("v.LPDuration", hours);
+                    component.set("v.cpsWrap.classFormat", courseFormat);                   
+                    component.set("v.cpsWrap.classDuration", hours);
                     //component.set("v.ScheduledTime", hours);
                 } else {
-                    component.set("v.cpsWrap.courseId", '');
-                    component.set("v.cpsWrap.courseName", 'Not Found');
-
+                    
                     component.set("v.LPName", 'Not Found');
                     component.set("v.LPClassroomSetting", '');
-                    component.set("v.LPDuration", '');
+                    component.set("v.LPDuration", 0);
+                    
+                    component.set("v.cpsWrap.courseId", '');
+                    component.set("v.cpsWrap.courseName", 'Not Found');
+                    component.set("v.cpsWrap.classFormat", courseFormat); 
+                    component.set("v.cpsWrap.classDuration", '');
                 }
             //}
         });
         $A.enqueueAction(action);
     },
     clearForm : function(component,event,helper) {
-		
+		component.set("v.cpsWrap.offeringId","0");
         //component.set("v.cpsWrap.accId","");
         //component.set("v.cpsWrap.accName","");
         component.set("v.showError","false");
         component.set("v.errorMessage","");
-        component.set("v.selectedCourse",null);
-        //component.set("v.LPClassroomSetting","");
-        //component.set("v.LPDuration","");
-        component.set("v.ScheduledTime","");
-        //component.set("v.cpsWrap.classFormat","");
+        component.set("v.productChange", false);
+    	component.set("v.CCProductId","");
+    	component.set("v.LPName","");
+        component.set("v.LPClassroomSetting","");
+        component.set("v.LPDuration",0);
+        component.set("v.ScheduledTime",0);
+        component.set("v.cpsWrap.courseName","");
+    	component.set("v.cpsWrap.ccProductId","");
+    	component.set("v.cpsWrap.courseId","");    
+    	component.set("v.cpsWrap.classFormat","");
+    	component.set("v.cpsWrap.classDuration","");
+    	component.set("v.cpsWrap.quantity","1");
         component.set("v.cpsWrap.sessionList",[]);
         var tempList = component.get("v.cpsWrap.sessionList");
         tempList.push({'classDate':'',
                        'startTime':'',
                        'endTime':''});
         component.set("v.cpsWrap.sessionList",tempList);
+        component.set("v.myProductQuantityMap", component.get("v.myProductQuantityMap"));
         //component.set("v.cpsWrap.siteName","");
         //component.set("v.cpsWrap.address1","");
         //component.set("v.cpsWrap.address2","");
         //component.set("v.cpsWrap.city","");
         //component.set("v.cpsWrap.state","");
         //component.set("v.cpsWrap.zip","");
-        component.set("v.cpsWrap.regUrl","");
-        component.set("v.cpsWrap.regPhone","");
-        component.set("v.cpsWrap.regFee","");
+        //component.set("v.cpsWrap.regUrl","");
+        //component.set("v.cpsWrap.regPhone","");
+        //component.set("v.cpsWrap.regFee","");
         //component.set("v.selectedLookUpRecord5","");
         //component.set("v.selectedLookUpRecord1","");
         
@@ -339,7 +423,7 @@ formatTime : function(component, event, helper) {
     requiredSchedule : function(component,event,helper){
         
         // Required Time Counter decrement value
-        var required_time = component.get('v.LPDuration');
+        var required_time = component.get('v.cpsWrap.classDuration');
         component.set("v.ScheduledTime",0);
         component.get("v.cpsWrap.sessionList").forEach(function(session) { 
             if(session.classDate && session.startTime && session.endTime){
@@ -349,7 +433,7 @@ formatTime : function(component, event, helper) {
                 var hours = Math.floor(minutes / 60); 
                 // console.log("Hours: " + hours);
                 var timeScheduled = (component.get('v.ScheduledTime') +  hours);
-                if(timeScheduled >= required_time){ 
+                if(timeScheduled >= required_time && component.get('v.cpsWrap.classDuration') != 0){ 
                     component.set("v.scheduleError",false);
                 } else {
                     component.set("v.scheduleError",true);
@@ -435,7 +519,7 @@ formatTime : function(component, event, helper) {
     	}
        */  
     }, 
-     getFullAddress : function(component, event, helper){
+    getFullAddress : function(component, event, helper){
             return ('"' + component.get("v.cpsWrap.address1") + ',' + component.get("v.cpsWrap.city") + ',' + component.get("v.cpsWrap.state")  + ',' +  component.get("v.cpsWrap.zip") + '"');
     },
     updateGeoLatLong : function (component, event, helper) {
@@ -465,7 +549,9 @@ formatTime : function(component, event, helper) {
                 console.log('response from createIltLocation: '+ storeResponse);
                 component.set('v.locationId', storeResponse);
                 component.set('v.cpsWrap.locationId', storeResponse);
+                //alert("Location ID "+storeResponse);
             }
+            //alert("Location ID "+component.get('v.cpsWrap.locationId'));
         });
         $A.enqueueAction(action);
     },

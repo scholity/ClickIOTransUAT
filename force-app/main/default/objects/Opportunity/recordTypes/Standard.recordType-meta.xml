@@ -856,6 +856,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Lead</fullName>
             <default>false</default>
         </values>

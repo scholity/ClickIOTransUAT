@@ -568,8 +568,8 @@ public without sharing class PHSS_skedJobtoILTClass {
         Map<String,redwing__Learning_Version__c> lVersions = new Map<String,redwing__Learning_Version__c>();
         Map<Id,Id> insertedclassId = new Map<Id,Id>();
         Map<Id, Id> JobIdOppIdMap = new Map<Id, Id>();
-        Map<Id, Id> orderIdJobIdMap = new Map<Id, Id>(); // key: order Id, value: skedulo Job Id
-        Map<Id, Id> jobIdOrderIdMap = new Map<Id, Id>(); // key: skedulo Job Id , value: order Id
+        Map<String, Id> orderIdJobIdMap = new Map<String, Id>(); // key: order:orderItem Id, value: skedulo Job Id
+        Map<Id, String> jobIdOrderIdMap = new Map<Id, String>(); // key: skedulo Job Id , value: order:orderItem Id
         Map<Id, Set<ccrz__E_OrderItem__c>> jobIdOrderItems = new Map<Id, Set<ccrz__E_OrderItem__c>>(); // skedulo job Id as key, Set of related order items as value
 
         List<redwing__Learning__c> lstLearning = new List<redwing__Learning__c>();
@@ -590,6 +590,7 @@ public without sharing class PHSS_skedJobtoILTClass {
         //Set<Id> SetDeleteILTInstructor = new Set<Id>();
         Set<Id> SetSchedule = new Set<Id>();
         Set<Id> orderIdSet = new Set<Id>();
+        Set<Id> orderItemIdSet = new Set<Id>();
         //Set<redwing__ILT_Instructor__c> SetILTInstructor = new Set<redwing__ILT_Instructor__c>();
 
         Boolean jobst = false; // No longer used
@@ -636,21 +637,33 @@ public without sharing class PHSS_skedJobtoILTClass {
         // **** logic to populate Opp Id on Full Service class
         // query opportunity IDs, Map - dependency Map between job and opp Id
 
-        Map<Id, sked__Job__c> skedJobsMap = new Map<Id, sked__Job__c>([SELECT Id, Training_Event__r.Opportunity__c, Training_Event__r.CC_Order__c FROM sked__Job__c WHERE Id IN:SetJob]);
+        Map<Id, sked__Job__c> skedJobsMap = new Map<Id, sked__Job__c>([SELECT Id, Training_Event__r.Opportunity__c, Training_Event__r.CC_Order__c,
+                Training_Event__r.CC_Order_Item__c FROM sked__Job__c WHERE Id IN:SetJob]);
 
         // *** get order items to populate them with ILT class Id.
 
         for (Id Id : skedJobsMap.keySet()) {
             Id orderId = skedJobsMap.get(Id).Training_Event__r.CC_Order__c;
-            orderIdJobIdMap.put(orderId, Id);
-            jobIdOrderIdMap.put(Id, orderId);
+            Id orderItemId = skedJobsMap.get(Id).Training_Event__r.CC_Order_Item__c;
+            String orderIdOrderItemId = String.valueOf(orderId)+':'+String.valueOf(orderItemId);
+            orderIdJobIdMap.put(orderIdOrderItemId, Id);
+            jobIdOrderIdMap.put(Id, orderIdOrderItemId);
             orderIdSet.add(orderId);
+            orderItemIdSet.add(orderItemId);
         }
 
-        orderItems = [SELECT Id, ILT_Class__c, ccrz__Order__c FROM ccrz__E_OrderItem__c WHERE ccrz__Order__c IN :orderIdSet];
+        orderItems = [SELECT Id, ILT_Class__c, ccrz__Order__c, ccrz__ParentOrderItem__c FROM ccrz__E_OrderItem__c
+            WHERE (ccrz__Order__c IN :orderIdSet) AND (Id IN :orderItemIdSet
+            OR (ccrz__ParentOrderItem__c IN :orderItemIdSet AND ccrz__OrderLineType__c = 'Minor'))];
 
         for (ccrz__E_OrderItem__c item : orderItems) {
-            Id skeduloJobId = orderIdJobIdMap.get(item.ccrz__Order__c);
+            String orderIdOrderItemId = '';
+            if (String.isNotBlank(item.ccrz__ParentOrderItem__c)) {
+                orderIdOrderItemId = String.valueOf(item.ccrz__Order__c)+':'+String.valueOf(item.ccrz__ParentOrderItem__c);
+            } else {
+                orderIdOrderItemId = String.valueOf(item.ccrz__Order__c)+':'+String.valueOf(item.Id);
+            }
+            Id skeduloJobId = orderIdJobIdMap.get(orderIdOrderItemId);
 
             if (skeduloJobId != null) {
                 if (jobIdOrderItems.keySet().contains(skeduloJobId)) {

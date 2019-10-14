@@ -57,4 +57,33 @@ public with sharing class phss_cc_AccountUtilTest {
 
         System.assert(exceptionThrown);
     }
+    
+    @IsTest
+    public static void testIsIndividualAccount() {
+       	Map<String,Object> testData = phss_cc_TestDataFactory.setupAccountAndProducts(1);
+        Account testAccount = (Account) testData.get(phss_cc_TestDataFactory.TEST_ACCOUNT);
+        
+        Test.startTest();
+        Boolean result = phss_cc_AccountUtil.isIndividualAccount(testAccount.Id);
+        Test.stopTest();
+
+        System.assertEquals(false, result);
+    }
+    
+    @IsTest
+    public static void testIsIndividualAccountWithException() {
+        Map<String,Object> testData = phss_cc_TestDataFactory.setupAccountAndProducts(1);
+        Account testAccount = (Account) testData.get(phss_cc_TestDataFactory.TEST_ACCOUNT);
+        Opportunity testOpportunity = phss_cc_TestDataFactory.createInsertTestOpportunity(testAccount);
+        Boolean exceptionThrown = false;
+        Test.startTest();
+        try {
+            phss_cc_AccountUtil.isIndividualAccount(testOpportunity.Id);
+        } catch (Exception e) {
+            exceptionThrown = true;
+        }
+        Test.stopTest();
+
+        System.assert(exceptionThrown);
+    }
 }

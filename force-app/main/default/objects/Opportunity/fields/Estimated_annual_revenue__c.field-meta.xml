@@ -3,7 +3,7 @@
     <fullName>Estimated_annual_revenue__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>Total anticipated annual revenue for this Opportunity.</inlineHelpText>
-    <label>Estimated annual revenue</label>
+    <label>Estimated Annual Revenue</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

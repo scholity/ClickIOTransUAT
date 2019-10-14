@@ -2,12 +2,12 @@
                 controller = "PHSS_CpsController">
 	
     <aura:handler   name = "init" value="{!this}" action = "{!c.doInit}" /> 
-    <aura:handler   name="incrementProductCount" event="c:phss_cc_ProductCountUpdateClone" action="{!c.productCountIncrement}"/>
-    <aura:attribute name = "CCProductId"			type = "String"  	default = ""/>
-    <aura:attribute name = "LPName"					type = "String"  	default = ""/>
-    <aura:attribute name = "LPClassroomSetting"		type = "String"  	default = ""/>
-    <aura:attribute name = "LPDuration"				type = "Decimal"  	default = ""/>      
-    <aura:attribute name = "ScheduledTime"			type = "Decimal"  	default = "0"/> 
+    <aura:handler   name="incrementProductCount"  event="c:phss_cc_ProductCountUpdateClone" action="{!c.productCountIncrement}"/>
+    <aura:attribute name = "CCProductId"		  type = "String"  	default = ""/>
+    <aura:attribute name = "LPName"				  type = "String"  	default = ""/>
+    <aura:attribute name = "LPClassroomSetting"	  type = "String"  	default = ""/>
+    <aura:attribute name = "LPDuration"			  type = "Decimal"  	default = "0"/>      
+    <aura:attribute name = "ScheduledTime"		  type = "Decimal"  	default = "0"/> 
     
     <aura:attribute name = "storeFrontName" 	type = "String" 	default = "CPS" />
     
@@ -36,18 +36,21 @@
     <aura:attribute name = "formatError"    type = "Boolean"    default = "false"/>
     <aura:attribute name = "zoneError"      type = "Boolean"    default = "false"/>
     <aura:attribute name = "scheduleError"  type = "Boolean"    default = "false"/>
+    <aura:attribute name = "productChange"  type = "Boolean"    default = "false"/>
     
     <aura:attribute name = "oppIdParent" 	type = "String" 	default = ""/>
     <aura:attribute name = "displayPaymentInfo" type = "Boolean" default="true"/>
     <aura:attribute name = "paymentComplete" type = "Boolean" default = "false"/>
-    <aura:handler   name="notifyPaymentComplete" event="c:PHSS_NotifyPaymentComplete_Event" action="{!c.updatePaymentComplete}"/>
+    <aura:handler   name = "notifyPaymentComplete" event="c:PHSS_NotifyPaymentComplete_Event" action="{!c.updatePaymentComplete}"/>
     <aura:attribute name = "selectedLookUpRecord1" 	type = "sObject" 	default = "{}"/>
     <aura:handler   name = "change" value="{!v.selectedLookUpRecord1}" action = "{!c.accountSelected}" />
     <aura:attribute name = "orgError" 		type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "myProductQuantityMap" 	type="Map"/>
     <aura:attribute name = "offeringsList"	type="List" />
+    <aura:attribute name = "offeringId" 	type="Integer" default = "0"/>
+    <aura:attribute name = "offeringsPosted" type="Integer" default = "0"/>
+    <aura:handler   name="change" value="{!v.cpsWrap.classFormat}" action="{!c.onFormatChange}" />
 
-
-    
 	<!--
     <ltng:require 
                       styles="" 
@@ -135,7 +138,8 @@
                             </label>
                             
                             <div id="courseInput">
-                            	<c:phss_cc_ProductListComponent_Clone oppId = "{!v.oppIdParent}" storeFront = "{!v.storeFrontName}"/>
+                                <!-- <c:phss_cc_ProductListComponent_Clone oppId = "{!v.oppIdParent}" storeFront = "{!v.storeFrontName}" productQuantityMap = "{!v.myProductQuantityMap}" searchQuery = "{!v.cpsWrap.courseName}"/> -->
+                                <c:phss_cc_ProductListComponent_Clone oppId = "{!v.oppIdParent}" storeFront = "{!v.storeFrontName}" searchQuery = "{!v.cpsWrap.courseName}"/>
                             </div>
                             
                             <aura:if isTrue="{!v.courseError}" >
@@ -145,7 +149,7 @@
                             
                             <div class = "slds-size_3-of-6 slds-p-top_small">
                                 <!-- <label style="font-size: .75rem;" class="slds-required">*</label> -->
-                                <label style="color:gray; font-size: .75rem;" >Class Format: </label>&nbsp;<b>{!v.LPClassroomSetting}</b><br/> <!-- <label style="color:gray; font-size: .75rem;" >Minimum hours required to teach course: </label>&nbsp;<b>{!v.LPDuration}</b><br/><label style="color:gray; font-size: .75rem;" >Hours you have scheduled: </label>&nbsp;<b>{!v.ScheduledTime}</b><br/>
+                                <label style="color:gray; font-size: .75rem;" >Class Format: </label>&nbsp;<b>{!v.cpsWrap.classFormat}</b><br/> <!-- <label style="color:gray; font-size: .75rem;" >Minimum hours required to teach course: </label>&nbsp;<b>{!v.LPDuration}</b><br/><label style="color:gray; font-size: .75rem;" >Hours you have scheduled: </label>&nbsp;<b>{!v.ScheduledTime}</b><br/>
                                 <aura:if isTrue="{!v.scheduleError}" >
                                     	<div class="lookupError">Schedule more time.</div>
                                	</aura:if>
@@ -175,7 +179,12 @@
                             	<label style="color:gray; font-size: .75rem;">Session</label>
                             </div>    
                             <aura:if isTrue="{!v.scheduleError}" >
-                                <div class="lookupError">You must Schedule session for minimum <b>{!v.LPDuration}</b> hours</div>
+                                <aura:if isTrue="{!v.cpsWrap.classDuration}" >
+                                	<div class="lookupError">You must Schedule session for minimum <b>{!v.cpsWrap.classDuration}</b> hours</div>
+                            	<aura:set attribute="else">
+                                    <div class="lookupError">Please <b>Search for a Course</b> and select from the search results to Schedule session(s) </div>
+                                </aura:set>
+                                </aura:if>
                             </aura:if>
                             <!--
                             <aura:iteration items="{!v.cpsWrap.sessionList}" var="sess" indexVar="index">
@@ -193,7 +202,7 @@
                                                             min="{!v.todaysDatePlus7}"
                                                             max="{!v.EndDate}"
                                                             autocomplete="off"
-                                                            aura:id="date1"/>
+                                                            aura:id="field"/>
                                                
                                            <aura:set attribute="else">
                                            <lightning:input value="{!sess.classDate}"
@@ -203,7 +212,7 @@
                                                             min="{!v.todaysDateFromLastEnterDate}"
                                                             max="{!v.EndDate}"
                                                             autocomplete="off"
-                                                            aura:id="dateN"/>
+                                                            aura:id="field2"/>
                                            </aura:set>
                                            </aura:if>
                                        </div>
@@ -476,15 +485,17 @@
                 <aura:if isTrue="{!v.stepNumber == 'Two'}" >
                     <div class="slds-modal__content slds-grow slds-p-around_x-large" id="modal-content-id-1">
                         <p class="slds-text-heading_medium">STEP 2: Review</p><br/>
-                        <aura:iteration items="{!v.offeringsList}" var="offering"
-                                               indexVar="index">
+                        <aura:iteration items="{!v.offeringsList}" var="offering" indexVar="index">
                         <div class= "slds-grid slds-grid_align-spread slds-box slds-theme_shade">
                             <div class = "top">
                                 Course Information
                             </div>
                             <div >
+                                <b style="margin-right:3rem">
+                                    <lightning:button  label="EDIT" value="{!offering.offeringId}" variant="base" class = "customButtonRed" onclick="{!c.editOffering }"/>
+                                </b>
                                 <b>
-                                    <lightning:button variant="base" label="EDIT" class = "customButtonRed" onclick="{!c.showStep1 }"/>
+                                    <lightning:button  label="DELETE" value="{!offering.offeringId}" variant="base" class = "customButtonRed" onclick="{!c.deleteOffering }"/>
                                 </b>
                             </div>
                         </div>
@@ -494,19 +505,19 @@
                             <div class= "slds-grid slds-wrap slds-p-top_medium">
                                 <div class = "slds-size_4-of-4">
                                 	<label style="color:gray; font-size: .75rem;">Organization</label><br/>
-                                    {!v.cpsWrap.accName}
+                                    {!offering.accName}
                                 </div>
                             </div>
                                 
                             <div class= "slds-grid slds-wrap slds-p-top_medium">    
                                 <div class = "slds-size_2-of-4">
                                     <label style="color:gray; font-size: .75rem;">Course</label><br/>
-                                    {!v.cpsWrap.courseName}
+                                    {!offering.courseName}
                                 </div>
                                 
                                 <div class = "slds-size_2-of-4">
                                     <label style="color:gray; font-size: .75rem;">Class Format</label><br/>
-                                    {!v.cpsWrap.classFormat}
+                                    {!offering.classFormat}
                                 </div>
                             </div>
                             
@@ -534,7 +545,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                             <aura:iteration items="{!v.cpsWrap.sessionList}" var="item" indexVar="index">
+                                             <aura:iteration items="{!offering.sessionList}" var="item" indexVar="index">
                                                 <tr>
 						    					<!--
                                                     <td>
@@ -574,25 +585,25 @@
                             <div class= "slds-grid slds-wrap slds-p-top_medium">
                                 <div class = "slds-size_2-of-4">
                                     <label style="color:gray; font-size: .75rem;">Training Facility</label><br/>
-                                    {!v.cpsWrap.siteName},&nbsp;{!v.cpsWrap.address1},&nbsp;{!v.cpsWrap.address2},&nbsp;{!v.cpsWrap.city},&nbsp;{!v.cpsWrap.state},&nbsp;{!v.cpsWrap.zip}<br/>
+                                    {!offering.siteName},&nbsp;{!offering.address1},&nbsp;{!offering.address2},&nbsp;{!offering.city},&nbsp;{!offering.state},&nbsp;{!offering.zip}<br/>
                                     <!-- <label style="color:gray; font-size: .75rem;">Latitude</label> &nbsp; {!v.cpsWrap.geoLat} &nbsp; <label style="color:gray; font-size: .75rem;">Longitude</label> &nbsp; {!v.cpsWrap.geoLng} &nbsp;<br/> -->
                                 </div>
                                 
                                 <div class = "slds-size_2-of-4">
                                     <label style="color:gray; font-size: .75rem;">URL for registration</label><br/>
-                                    {!v.cpsWrap.regUrl}
+                                    {!offering.regUrl}
                                 </div>
                             </div>
                             
                             <div class= "slds-grid slds-wrap slds-p-top_medium slds-p-bottom_medium">    
                                 <div class = "slds-size_2-of-4">
                                     <label style="color:gray; font-size: .75rem;">Class Registration Fee</label><br/>
-                                    ${!v.cpsWrap.regFee}
+                                    ${!offering.regFee}
                                 </div>
                                 
                                 <div class = "slds-size_2-of-4">
                                     <label style="color:gray; font-size: .75rem;">Phone for registration</label><br/>
-                                    {!v.cpsWrap.regPhone}
+                                    {!offering.regPhone}
                                 </div>
                             </div>
                             
@@ -638,7 +649,12 @@
                 <footer class="slds-modal__footer slds-grid slds-grid_align-spread progIndicator">
                     
                     <div class="slds-col">
-                        <button class="slds-button slds-button_neutral customButtonRed" onclick="{!c.cancel}">Cancel</button>
+                            <aura:if isTrue="{!v.paymentComplete}">
+                           		<button aura:id="cancelButton" class=" slds-hidden slds-button slds-button_neutral customButtonRed" onclick="{!c.cancel}">Cancel</button>
+                            <aura:set attribute="else">
+                              	<button aura:id="cancelButton" class="slds-button slds-button_neutral customButtonRed" onclick="{!c.cancel}">Cancel</button>
+                            </aura:set>
+                          </aura:if>
                     </div>
                     
                     <div class="slds-col slds-size_2-of-3 " >
@@ -646,7 +662,7 @@
                             
                             <lightning:progressStep label="Step 1"
                                                     value="One"
-                                                    onclick="{!c.showStep1}"/>
+                                                    onclick="{!c.editOffering}"/>
                             
                             <lightning:progressStep label="Step 2"
                                                     value="Two"
@@ -667,12 +683,12 @@
                             <aura:if  isTrue="{!v.paymentComplete == false }" >
                                 <button class="slds-button slds-button_neutral"
                                         onclick="{!c.cancel}" disabled="true" >
-                                    Checkout
+                                    Submit
                                 </button>
                                 <aura:set attribute="else">
                                     <button class="slds-button slds-button_neutral customButton"
                                             onclick="{!c.createClass}" >
-                                        Checkout
+                                        Submit
                                     </button>
                                 </aura:set>
                             </aura:if>
@@ -681,14 +697,12 @@
                     <aura:set attribute="else">                        
                             
                                <aura:if isTrue="{!v.stepNumber == 'One'}">
-                        		<!--
-                                <div class="slds-col">
-                                    <button class="slds-button slds-button_neutral customButton"
-                                            onclick="{!c.onclickAddToCart}" >
-                                        Add To Cart
-                                    </button>
-                                </div>
-								-->
+                                    <div class="slds-col">
+                                        <button class="slds-button slds-button_neutral customButton"
+                                                onclick="{!c.onclickAddToCart}" >
+                                            Add To Cart
+                                        </button>
+                                    </div>
                                     <div class="slds-col">
                                         <button class="slds-button slds-button_neutral customButton"
                                                 onclick="{!c.onclickNext}" >

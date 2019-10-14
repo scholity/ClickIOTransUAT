@@ -85,7 +85,9 @@
                             if (returnValue.productList.length !== 0) {
                                 component.set('v.productList', returnValue.productList);
                                 component.set('v.productsMap', returnValue.productMap);
+                                component.set('v.selectedProductSpec', null);
                                 this.buildProductSpecOptions(component);
+                                this.actionDidFinish('doSearch', component);
                                 component.set('v.renderComplete', true);
                             } else {
                                 this.showToastMessage('Error', 'No Products found.', 'Error');
@@ -208,6 +210,7 @@
             }
         }
 
+        console.log('resetting filtered product list: ' + products);
         component.set('v.filteredProductList', products);
     },
 
@@ -231,5 +234,6 @@
             }
         }
         component.set('v.showSpinner', actionsInProgress.length > 0);
+        console.log('Actions in progress: ' + actionsInProgress);
     }
 })

@@ -19,6 +19,9 @@ public with sharing class phss_cc_CyberSourceUtil {
     // CyberSource transaction types
     private static final String TRANSACTION_TYPE_CAPTURE = 'sale';
 
+    // CyberSource response values
+    private static final String SUCCESS_REASON_CODE = '100';
+
     // Form Data
     private static final String CART_ENCID_KEY = 'cartEncId';
     private static final String UTC_DATE_KEY = 'utcDate';
@@ -61,6 +64,8 @@ public with sharing class phss_cc_CyberSourceUtil {
     public static final String CYBER_SOURCE_REQ_PAYMENT_TOKEN_KEY = 'req_payment_token';
     public static final String CYBER_SOURCE_REQUEST_TOKEN_KEY = 'request_token';
     public static final String CYBER_SOURCE_TRANSACTION_ID_KEY = 'transaction_id';
+    public static final String CYBER_SOURCE_REASON_CODE_KEY = 'reason_code';
+    public static final String CYBER_SOURCE_MESSAGE_KEY = 'message';
 
     // CyberSource Config Keys
     private static final String CYBER_SOURCE_CONFIG_TOKEN_URL_KEY = 'pgcs.urltokencreate';
@@ -82,6 +87,7 @@ public with sharing class phss_cc_CyberSourceUtil {
     private static final String FAILED_TO_CREDIT_TRANSACTION_PAYMENT = 'Failed to credit transaction payment';
     public static final String FAILED_TO_VERIFY_CYBERSOURCE_RESPONSE_SIGNATURE = 'Failed to verify Cybersource response signature.';
     private static final String FAILED_TO_VERIFY_CYBERSOURCE_PAYMENT_CAPTURE_RESPONSE = 'Failed to verify payment capture response';
+    private static final String FAILED_TO_CAPTURE_PAYMENT_WITH_REASON_CODE = 'Failed to capture payment.';
 
     //CyberSource Config Settings.
     @TestVisible private static String ACCESS_KEY;
@@ -468,7 +474,18 @@ public with sharing class phss_cc_CyberSourceUtil {
 
                 Boolean isResponseValid = verifyPaymentCaptureResponse(responseMap);
                 if (isResponseValid) {
-                    phss_cc_FulfillmentUtil.finalizePayment(authTxnPmt.Id, captureTxnPmt.Id, fulfillmentId, responseMap);
+                    String reasonCode = responseMap.get(CYBER_SOURCE_REASON_CODE_KEY);
+                    if (reasonCode == SUCCESS_REASON_CODE) {
+                        phss_cc_FulfillmentUtil.finalizePayment(authTxnPmt.Id, captureTxnPmt.Id, fulfillmentId, responseMap);
+                    }
+                    else {
+                        String message = (String) responseMap.get(CYBER_SOURCE_MESSAGE_KEY);
+                        if (message == null) {
+                            message = FAILED_TO_CAPTURE_PAYMENT_WITH_REASON_CODE + ' [reason_code=' + reasonCode + ']';
+                        }
+
+                        throw new phss_cc_Exception(message);
+                    }
                 }
                 else {
                     throw new phss_cc_Exception('Failed to capture payment because of mismatching signatures (fulfillment=' + fulfillmentId + ', AUTH=' + authTransactionPaymentId + ', CAPTURE=' + captureTransactionPaymentId + ')');

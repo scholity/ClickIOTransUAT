@@ -28,12 +28,12 @@
         <name>Assign_Order_Item_to_Ship</name>
         <label>Assign Order Item to Ship</label>
         <locationX>677</locationX>
-        <locationY>329</locationY>
+        <locationY>328</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.ccrz__OrderItemStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Shipped</stringValue>
+                <stringValue>In Process</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -157,6 +157,10 @@
                 <rightValue>
                     <stringValue>Order Submitted</stringValue>
                 </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrderItem.ccrz__OrderItemStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
             </conditions>
             <connector>
                 <targetReference>Get_Product</targetReference>

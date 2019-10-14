@@ -13,6 +13,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
 
     // error messages
     public static final String FAILED_TO_CREATE_CAPTURE_TRANSACTION_PAYMENT_FROM_AUTH_TRANSACTION_PAYMENT = 'Failed to create CAPTURE transaction payment from AUTH transaction payment.';
+    public static final String FAILED_TO_DESIGNATE_CONTACT = 'Failed to designate contact on the transaction payment.';
     public static final String FAILED_TO_OBTAIN_TRANSACTION_PAYMENTS_FOR_STORED_PAYMENT = 'Failed to obtain the transaction payments for the stored payment.';
 
 
@@ -145,6 +146,37 @@ public with sharing class phss_cc_TransactionPaymentUtil {
 
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_CREATE_CAPTURE_TRANSACTION_PAYMENT_FROM_AUTH_TRANSACTION_PAYMENT, e);
+        }
+    }
+
+    /**
+     * @description Assigns the contact on the transaction payment. This is ONLY intended for Individual Accounts.
+     *
+     * @param transactionPaymentId
+     *
+     * @return
+     */
+    public static void designateContactForTransactionPayment(ccrz__E_TransactionPayment__c transactionPayment) {
+        try {
+            AccountContactRelation relation = [
+                    SELECT
+                            ContactId
+                    FROM
+                            AccountContactRelation
+                    WHERE
+                            AccountId = :transactionPayment.ccrz__Account__c
+                            AND IsDirect = true
+                    ORDER BY
+                            CreatedDate DESC
+                    LIMIT 1
+            ];
+            if (relation != null && relation.ContactId != null) {
+                transactionPayment.ccrz__Contact__c = relation.ContactId;
+                update transactionPayment;
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_DESIGNATE_CONTACT, e);
         }
     }
 }

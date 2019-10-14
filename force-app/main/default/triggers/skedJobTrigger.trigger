@@ -6,11 +6,9 @@ trigger skedJobTrigger on sked__Job__c (before insert, before update, before del
         else if (Trigger.isUpdate) {
             skedJobHandler.beforeUpdate(Trigger.new, Trigger.oldMap);
         }
-        /*
         else if (Trigger.isDelete) {
             skedJobHandler.beforeDelete(Trigger.oldMap);
         }
-        */
     }
     else if (Trigger.isAfter) {
         if (Trigger.isInsert) {

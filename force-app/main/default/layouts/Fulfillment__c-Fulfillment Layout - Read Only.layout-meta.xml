@@ -31,6 +31,10 @@
                 <behavior>Readonly</behavior>
                 <field>FOCIS_Category__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Stored_Payment_Name__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

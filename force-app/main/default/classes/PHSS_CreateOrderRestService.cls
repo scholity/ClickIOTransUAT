@@ -32,10 +32,10 @@ Global without sharing class PHSS_CreateOrderRestService {
         Map<String,String> map_LPIDtoProductId;
         Map<String,String> map_onlineclsIDtoLPId;
         Map<String,String> map_onlineLPIDtoProductId;   
-        Map<String,String> map_onlineclsIDtoLearning;
+        //Map<String,String> map_onlineclsIDtoLearning;
         Map<String,String> map_productIdToOrderItem;  
         Map<String,String> map_physicalSKUToProductId;  
-        Map<Id,Id> map_onlineLearningToClsId;   
+        //Map<Id,Id> map_onlineLearningToClsId;
                 
         Rest_Service_Calls__c serviceLog = new Rest_Service_Calls__c();
         serviceLog.Name = 'PHSS/createOrder';
@@ -100,10 +100,10 @@ Global without sharing class PHSS_CreateOrderRestService {
             map_clsIDtoLPId = new Map<String,String>();
             map_LPIDtoProductId = new Map<String,String>();
             
-            map_onlineclsIDtoLearning = new Map<String,String>();
+            //map_onlineclsIDtoLearning = new Map<String,String>();
             map_onlineclsIDtoLPId = new Map<String,String>();
             map_onlineLPIDtoProductId = new Map<String,String>();   
-            map_onlineLearningToClsId = new Map<Id, Id>();       
+            //map_onlineLearningToClsId = new Map<Id, Id>();
             
 	 		String clsILTPrefix = Schema.getGlobalDescribe().get('redwing__ILT_Class__c').getDescribe().getKeyPrefix(); 
 	 		String clsOnlinePrefix = Schema.getGlobalDescribe().get('redwing__Learning__c').getDescribe().getKeyPrefix(); 	 		
@@ -147,44 +147,57 @@ Global without sharing class PHSS_CreateOrderRestService {
             // The following block manages the relationship of instructor led/blended classes to cloud craze products
 
             // map_clsIDtoLPId ==> map of product Id (ILT Class ID) to Learning Plan Id
-            for( redwing__ILT_Class__c cls : [Select Id,Learning_Plan__c From redwing__ILT_Class__c Where Id In :lst_clsId]){
-                 System.debug('cls with learning plan --->>>>'+ cls.Learning_Plan__c);
-                 map_clsIDtoLPId.put(String.Valueof(cls.Id).substring(0,15),String.Valueof(cls.Learning_Plan__c).substring(0,15));
-            }
-            
-            // map_LPIDtoProductId ==> map of Learning Plan Id to Cloud Craze Product Id
-            for( ccrz__E_Product__c ccp : [Select Id,LMS_Learning_Plan__c From ccrz__E_Product__c Where LMS_Learning_Plan__c In :map_clsIDtoLPId.values() ]){
-                 map_LPIDtoProductId.put(String.Valueof(ccp.LMS_Learning_Plan__c).substring(0,15),String.Valueof(ccp.Id).substring(0,15));
-            }
+            if (!lst_clsId.isEmpty()) {
+                for (redwing__ILT_Class__c cls : [Select Id,Learning_Plan__c From redwing__ILT_Class__c Where Id In :lst_clsId]) {
+                    System.debug('cls with learning plan --->>>>' + cls.Learning_Plan__c);
+                    map_clsIDtoLPId.put(String.Valueof(cls.Id).substring(0, 15), String.Valueof(cls.Learning_Plan__c).substring(0, 15));
+                }
 
-            System.debug('map_clsIDtoLPId-->'+map_clsIDtoLPId);
-            System.debug('map_LPIDtoProductId-->'+map_LPIDtoProductId);
+                // map_LPIDtoProductId ==> map of Learning Plan Id to Cloud Craze Product Id
+                for (ccrz__E_Product__c ccp : [Select Id,LMS_Learning_Plan__c From ccrz__E_Product__c Where LMS_Learning_Plan__c In :map_clsIDtoLPId.values()]) {
+                    map_LPIDtoProductId.put(String.Valueof(ccp.LMS_Learning_Plan__c).substring(0, 15), String.Valueof(ccp.Id).substring(0, 15));
+                }
+
+                System.debug('map_clsIDtoLPId-->' + map_clsIDtoLPId);
+                System.debug('map_LPIDtoProductId-->' + map_LPIDtoProductId);
+            }
             
             // The following block manages the relationship of online classes to cloud craze products
             
             // map_onlineclsIDtoLearning ==> map of product Id (Learning object of type Media) to Learning object Id
-            for( redwing__ILT_Event__c theEvent : [Select Id, redwing__Learning__c From redwing__ILT_Event__c Where Id in :lst_onlineclsId]){
-            	map_onlineclsIDtoLearning.put(String.valueOf(theEvent.Id).substring(0,15),String.valueOf(theEvent.redwing__Learning__c).substring(0,15));
-            	map_onlineLearningToClsId.put(theEvent.redwing__Learning__c, theEvent.Id);
-            }
-            
-            // map_clsIDtoLPId ==> map of Learning Id to Learning Plan Id 
-            for( redwing__Training_Plan_Section_Item__c theLPSI : [Select Id, redwing__Training_Plan_Section__r.redwing__Training_Plan__c 
-            	From redwing__Training_Plan_Section_Item__c Where Id In :map_onlineclsIdtoLearning.values()]){
-                 System.debug('onlinecls with learning plan --->>>>'+ theLPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c);
-                 map_onlineclsIDtoLPId.put(String.Valueof(map_onlineLearningToClsId.get(theLPSI.Id)).substring(0,15),String.Valueof(theLPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c).substring(0,15));
-            }
-            
-            // map_LPIDtoProductId ==> map of Learning Plan Id to Cloud Craze Product Id
-            for( ccrz__E_Product__c ccp : [Select Id,LMS_Learning_Plan__c From ccrz__E_Product__c Where LMS_Learning_Plan__c In :map_onlineClsIDtoLPId.values() ]){
-                 map_LPIDtoProductId.put(String.Valueof(ccp.LMS_Learning_Plan__c).substring(0,15),String.Valueof(ccp.Id).substring(0,15));
+            if (!lst_onlineclsId.isEmpty()) {
+                for (redwing__Training_Plan_Section_Item__c theLPSI : [Select Id, redwing__Learning__c, redwing__Training_Plan_Section__r.redwing__Training_Plan__c
+                    From redwing__Training_Plan_Section_Item__c Where redwing__Learning__c in :lst_onlineclsId]) {
+                    //map_onlineclsIDtoLearning.put(String.valueOf(theLPSI.redwing__Learning__c).substring(0, 15), String.valueOf(theLPSI.redwing__Learning__c).substring(0, 15));
+                    System.debug('onlinecls with learning plan --->>>>' + theLPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c);
+                    map_onlineclsIDtoLPId.put(String.Valueof(theLPSI.redwing__Learning__c).substring(0, 15), String.Valueof(theLPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c).substring(0, 15));
+                    //map_onlineLearningToClsId.put(theLPSI.redwing__Learning__c, theLPSI.redwing__Learning__c);
+                }
+                /*
+                // map_onlineclsIDtoLPId ==> map of Learning Id to Learning Plan Id
+                for (redwing__Training_Plan_Section_Item__c theLPSI : [
+                        Select Id, redwing__Training_Plan_Section__r.redwing__Training_Plan__c
+                        From redwing__Training_Plan_Section_Item__c
+                        Where Id In :lst_onlineclsId
+                        //Where Id In :map_onlineclsIdtoLearning.values()
+                ]) {
+                    System.debug('onlinecls with learning plan --->>>>' + theLPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c);
+                    map_onlineclsIDtoLPId.put(String.Valueof(map_onlineLearningToClsId.get(theLPSI.Id)).substring(0, 15), String.Valueof(theLPSI.redwing__Training_Plan_Section__r.redwing__Training_Plan__c).substring(0, 15));
+                }
+                */
+                // map_onlineLPIDtoProductId ==> map of Learning Plan Id to Cloud Craze Product Id
+                for (ccrz__E_Product__c ccp : [Select Id, LMS_Learning_Plan__c From ccrz__E_Product__c Where LMS_Learning_Plan__c In :map_onlineClsIDtoLPId.values()]) {
+                    map_onlineLPIDtoProductId.put(String.Valueof(ccp.LMS_Learning_Plan__c).substring(0, 15), String.Valueof(ccp.Id).substring(0, 15));
+                }
             }
             
             // The following block manages the relationship of physical products to cloud craze products
             
             // map_eCommIdtoProductId ==> map of eCommerce product Id to Cloud Craze Product Id
-            for( ccrz__E_Product__c ccp : [Select Id, ccrz__SKU__c from ccrz__E_Product__c Where ccrz__SKU__c In :lst_productId]){
-            	map_physicalSKUtoProductId.put(ccp.ccrz__SKU__c, String.Valueof(ccp.Id).substring(0,15));
+            if (!lst_productId.isEmpty()) {
+                for (ccrz__E_Product__c ccp : [Select Id, ccrz__SKU__c from ccrz__E_Product__c Where ccrz__SKU__c In :lst_productId]) {
+                    map_physicalSKUtoProductId.put(ccp.ccrz__SKU__c, String.Valueof(ccp.Id).substring(0, 15));
+                }
             }
 
             System.debug('map_onlineclsIDtoLPId-->'+map_onlineclsIDtoLPId);
@@ -497,6 +510,7 @@ Global without sharing class PHSS_CreateOrderRestService {
            obj_order.ccrz__AdjustmentAmount__c = OrderWrapper.order.Order_header.total_discount;
            obj_order.ccrz__AdjustmentReason__c = OrderWrapper.order.Order_header.promotion_ids;
         }
+        obj_order.Coupon_Codes__c = OrderWrapper.order.Order_header.coupon_codes;
         obj_order.ccrz__TaxAmount__c = OrderWrapper.order.Order_header.tax_total;
         //obj_order.ccrz__ShipAmount__c = OrderWrapper.order.Order_header.shipping_total;
 
@@ -522,15 +536,15 @@ Global without sharing class PHSS_CreateOrderRestService {
                 ccrz__E_OrderItem__c obj_orderitem = new ccrz__E_OrderItem__c();
                 obj_orderitem.ccrz__Order__c = obj_order.id;
                 obj_orderitem.ccrz__StoreId__c = OrderWrapper.order.Order_header.created_by;
-                
+
                 String theProductId = product.product_id;
-                
                 if (theProductId.length()>15) theProductId = theProductId.substring(0,15);
+                String inventoryType = '';
                 
                 if (map_clsIDtoLPId.containsKey(theProductId)) {
                     obj_orderitem.ILT_Class__c = theProductId;
                 } else if (map_onlineclsIDtoLPId.containsKey(theProductId)) {
-                	//obj_orderitem.Online_Class__c = theProductId;  Not sure here - do we load with record id of Learning object???
+                	// obj_orderitem.Online_Class__c = theProductId;  // can't load record Id of online learning object
                 }
                 
                 System.debug('Product ID--->'+product.product_id);
@@ -548,32 +562,36 @@ Global without sharing class PHSS_CreateOrderRestService {
                 if (map_clsIDtoLPId.get(theProductId) != null) {       	
 	                if (map_LPIDtoProductId.containsKey(map_clsIDtoLPId.get(theProductId))) {
 	                    obj_orderitem.ccrz__Product__c = map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId));
-	                
-	                    if (map_productIdToOrderItem.containskey(map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId)))) {
-	                        if (map_productIdToOrderItem.get(map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId))) != NULL) {
-	                            obj_orderitem.Id = map_productIdToOrderItem.get(map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId)));
-	                            System.debug('ILT class orderItemId-->'+map_productIdToOrderItem.get(map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId))));
+                        inventoryType = 'COMMUNITY';
+
+	                    if (map_productIdToOrderItem.containskey(obj_orderitem.ccrz__Product__c)) {
+	                        if (map_productIdToOrderItem.get(obj_orderitem.ccrz__Product__c) != NULL) {
+	                            obj_orderitem.Id = map_productIdToOrderItem.get(obj_orderitem.ccrz__Product__c);
+	                            System.debug('ILT class orderItemId-->'+map_productIdToOrderItem.get(obj_orderitem.ccrz__Product__c));
 	                        } 
 	                    } 
 	                } 
 	            // Derive order item Id if product is an online class
-                } else if (map_onlineclsIDtoLPId.get(theProductId) != null) {  
+                } else if (map_onlineclsIDtoLPId.get(theProductId) != null) {
 	                if (map_onlineLPIDtoProductId.containsKey(map_onlineclsIDtoLPId.get(theProductId))) {
 	                    obj_orderitem.ccrz__Product__c = map_onlineLPIDtoProductId.get(map_onlineclsIDtoLPId.get(theProductId));
-	                
-	                    if (map_productIdToOrderItem.containskey(map_onlineLPIDtoProductId.get(map_onlineclsIDtoLPId.get(theProductId)))) {
-	                        if (map_productIdToOrderItem.get(map_onlineLPIDtoProductId.get(map_onlineclsIDtoLPId.get(theProductId))) != NULL) {
-	                            obj_orderitem.Id = map_productIdToOrderItem.get(map_onlineLPIDtoProductId.get(map_onlineclsIDtoLPId.get(theProductId)));
-	                            System.debug('Online class orderItemId-->'+map_productIdToOrderItem.get(map_onlineLPIDtoProductId.get(map_onlineclsIDtoLPId.get(theProductId))));
+                        inventoryType = 'COURSE';
+
+	                    if (map_productIdToOrderItem.containskey(obj_orderitem.ccrz__Product__c)) {
+	                        if (map_productIdToOrderItem.get(obj_orderitem.ccrz__Product__c) != NULL) {
+	                            obj_orderitem.Id = map_productIdToOrderItem.get(obj_orderitem.ccrz__Product__c);
+	                            System.debug('Online class orderItemId-->'+obj_orderitem.Id);
 	                        } 
 	                    } 
 	                }   
 	            // Derive order item Id if product is a physical product              		
                 } else if (map_physicalSKUtoProductId.get(theProductId) != null) {
                 	obj_orderitem.ccrz__Product__c = map_physicalSKUtoProductId.get(theProductId);
-                	if (map_productIdToOrderItem.containskey(theProductId)) {
-                	     obj_orderitem.Id = map_productIdToOrderItem.get(theProductId);	
-                	     System.debug('Physical product orderItemId-->'+map_productIdToOrderItem.get(theProductId));
+                    inventoryType = 'STANDARD';
+
+                    if (map_productIdToOrderItem.containskey(theProductId)) {
+                        obj_orderitem.Id = map_productIdToOrderItem.get(theProductId);
+                        System.debug('Physical product orderItemId-->'+map_productIdToOrderItem.get(theProductId));
                 	}
                 }
                 
@@ -582,24 +600,33 @@ Global without sharing class PHSS_CreateOrderRestService {
                 obj_orderitem.ccrz__ItemLabel__c = product.product_name;
                 
                 if(product.product_type == 'offering')
-                    obj_orderitem.Inventory_Type__c = 'COURSE';
+                    obj_orderitem.Inventory_Type__c = inventoryType; // COURSE or COMMUNITY as appropriate
                 else if(product.product_type == 'physical')
                     obj_orderitem.Inventory_Type__c = 'STANDARD'; 
-                else obj_orderitem.Inventory_Type__c = 'FEE';
+                else obj_orderitem.Inventory_Type__c = 'FEE'; // Treat all other product_type values as a Fee
  
                 System.debug('Inventory Type--->'+obj_orderitem.Inventory_Type__c);
                 System.debug(obj_orderitem);
+
                 obj_orderitem.ccrz__Quantity__c = product.quantity;
+                obj_orderitem.ccrz__OriginalQuantity__c = product.quantity;
                 obj_orderitem.ccrz__Price__c = product.price;
                 obj_orderitem.ccrz__AdjustmentAmount__c  =  product.adjustment_amount;
                 obj_orderitem.ccrz__OriginalItemPrice__c = product.original_price;
-                //obj_orderitem.ccrz__SubAmount__c = (product.price * product.quantity) - product.adjustment_amount;
+                obj_orderitem.ccrz__SubAmount__c = (product.price * product.quantity) - product.adjustment_amount;
+
                 //obj_orderitem.Adjustment_Types__c = 'Course Credit Adjustment'; // Commented after validation rule on reason code deactivated
                 //obj_orderitem.Reason_Codes__c = 'Duplicate';
                 //obj_orderitem.ccrz__OriginalItemPrice__c = product.base_price;
                 //obj_orderitem.ccrz__TaxAmount__c = product.adjusted_tax;
+
+                obj_orderitem.ccrz__OrderLineType__c = 'Major';
+                obj_orderitem.ccrz__UnitOfMeasure__c = 'Each';
+                obj_orderitem.ccrz__OrderItemStatus__c = 'Shipped';
+                obj_orderitem.ccrz__ProductType__c = 'Product';
+                obj_orderitem.ccrz__PricingType__c = 'external';
               
-                //System.debug('Sub Amount--->'+ obj_orderitem.ccrz__SubAmount__c);
+                System.debug('Sub Amount--->'+ obj_orderitem.ccrz__SubAmount__c);
                 
                 
                 lst_orderItems.add(obj_orderitem);
