@@ -27,6 +27,7 @@
     <enableUpDownVote>true</enableUpDownVote>
     <forgotPasswordTemplate>redwing__LMS_Email_Templates/Password_Reset</forgotPasswordTemplate>
     <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
+    <logoutUrl>https://transuat-americanredcross.cs26.force.com/learner</logoutUrl>
     <navigationLinkSet>
         <navigationMenuItem>
             <label>Classes</label>
@@ -119,29 +120,22 @@
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
-                    <label>Reports</label>
-                    <position>5</position>
-                    <publiclyAvailable>false</publiclyAvailable>
-                    <target>/report/Report/Recent</target>
-                    <type>InternalLink</type>
-                </navigationMenuItem>
-                <navigationMenuItem>
                     <label>Student Detail Templates</label>
-                    <position>6</position>
+                    <position>5</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>/student-templates</target>
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
                     <label>Safety Outreach</label>
-                    <position>7</position>
+                    <position>6</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>/learn-to-swim</target>
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
                     <label>Learn to Swim/ Safety Outreach</label>
-                    <position>8</position>
+                    <position>7</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>/safety-outreach-learn-to-swim</target>
                     <type>InternalLink</type>
@@ -149,7 +143,7 @@
                 <navigationMenuItem>
                     <defaultListViewId>All</defaultListViewId>
                     <label>Centennial Campaign</label>
-                    <position>9</position>
+                    <position>8</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>Centennial_Campaign__c</target>
                     <type>SalesforceObject</type>

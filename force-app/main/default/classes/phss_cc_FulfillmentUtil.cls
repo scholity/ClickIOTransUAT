@@ -32,6 +32,12 @@ public with sharing class phss_cc_FulfillmentUtil {
         try {
             ccrz__E_TransactionPayment__c authTxnPmt = getTransactionPaymentForOrder(fulfillment.Order__c);
             if (authTxnPmt != null && authTxnPmt.ccrz__AccountType__c == phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE && authTxnPmt.ccrz__Amount__c > 0) {
+
+                Boolean isIndividualAccount = phss_cc_AccountUtil.isIndividualAccount(authTxnPmt.ccrz__Account__c);
+                if (isIndividualAccount) {
+                    phss_cc_TransactionPaymentUtil.designateContactForTransactionPayment(authTxnPmt);
+                }
+
                 ccrz__E_TransactionPayment__c captureTxnPmt = phss_cc_TransactionPaymentUtil.createCaptureTransactionPaymentFromAuthTransactionPayment(authTxnPmt.Id);
                 phss_cc_CyberSourceUtil.capturePayment(fulfillment.Id, authTxnPmt.Id, captureTxnPmt.Id);
             }
@@ -232,27 +238,48 @@ public with sharing class phss_cc_FulfillmentUtil {
     @testVisible
     private static List<Fulfillment_Item__c> getFulfillmentItems(String fulfillmentId) {
         return [
-                SELECT Id, Order_Item__c, Quantity__c, Status__c
-                FROM Fulfillment_Item__c
-                WHERE Fulfillment__c = :fulfillmentId
+                SELECT
+                        Id,
+                        Order_Item__c,
+                        Quantity__c,
+                        Status__c
+                FROM
+                        Fulfillment_Item__c
+                WHERE
+                        Fulfillment__c = :fulfillmentId
         ];
     }
 
 	@testVisible
     private static List<ccrz__E_OrderItem__c> getItemsForOrder(String orderId) {
         return [
-                SELECT Id, ccrz__AdjustmentAmount__c, ccrz__Quantity__c
-                FROM ccrz__E_OrderItem__c
-                WHERE ccrz__Order__c = :orderId
+                SELECT
+                        Id,
+                        ccrz__AdjustmentAmount__c,
+                        ccrz__Quantity__c
+                FROM
+                        ccrz__E_OrderItem__c
+                WHERE
+                        ccrz__Order__c = :orderId
         ];
     }
 
 	@testVisible
     private static ccrz__E_TransactionPayment__c getTransactionPayment(String transactionPaymentId) {
         ccrz__E_TransactionPayment__c transactionPayment = [
-                SELECT Id, ccrz__Account__c, ccrz__AccountType__c, ccrz__Amount__c, ccrz__CCOrder__c, ccrz__CurrencyISOCode__c, ccrz__PaymentType__c, ccrz__Storefront__c
-                FROM ccrz__E_TransactionPayment__c
-                WHERE Id = :transactionPaymentId
+                SELECT
+                        Id,
+                        ccrz__Account__c,
+                        ccrz__AccountType__c,
+                        ccrz__Amount__c,
+                        ccrz__CCOrder__c,
+                        ccrz__CurrencyISOCode__c,
+                        ccrz__PaymentType__c,
+                        ccrz__Storefront__c
+                FROM
+                        ccrz__E_TransactionPayment__c
+                WHERE
+                        Id = :transactionPaymentId
         ];
         return transactionPayment;
     }
@@ -273,9 +300,12 @@ public with sharing class phss_cc_FulfillmentUtil {
         }
 
         List<ccrz__E_TransactionPayment__c> transactionPayments = [
-                SELECT Id
-                FROM ccrz__E_TransactionPayment__c
-                WHERE ccrz__CCOrder__c = :orderId
+                SELECT
+                        Id
+                FROM
+                        ccrz__E_TransactionPayment__c
+                WHERE
+                        ccrz__CCOrder__c = :orderId
         ];
 
         if (transactionPayments.size() > 0) {

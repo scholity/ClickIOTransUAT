@@ -1028,7 +1028,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_3</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 and 2) or (1 and 3)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -1089,6 +1089,37 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Contract</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.RecordType.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>AES</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1425,7 +1456,7 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_13_myRule_12_A3_6102236713</name>
+        <name>formula_13_myRule_12_A3_2566026900</name>
         <dataType>DateTime</dataType>
         <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} -1, {!myVariable_current.Contract.ContractTerm}))</expression>
     </formulas>
@@ -1438,7 +1469,7 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_14_myRule_12_A2_4501216688</name>
+        <name>formula_14_myRule_12_A2_1382558792</name>
         <dataType>DateTime</dataType>
         <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} - 1, {!myVariable_current.Contract.ContractTerm}))</expression>
     </formulas>
@@ -1449,11 +1480,11 @@
                 <stringValue>DATETIMEVALUE ( [Opportunity].Closed_Won_Date__c )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_15_myRule_12_A1_2553633273</name>
+        <name>formula_15_myRule_12_A1_6241419762</name>
         <dataType>Date</dataType>
         <expression>DATETIMEVALUE ( {!myVariable_current.Closed_Won_Date__c} )</expression>
     </formulas>
-    <interviewLabel>Opportunity_Controller-24_InterviewLabel</interviewLabel>
+    <interviewLabel>Opportunity_Controller-26_InterviewLabel</interviewLabel>
     <label>Opportunity Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1558,7 +1589,7 @@
             </processMetadataValues>
             <field>StartDate</field>
             <value>
-                <elementReference>formula_15_myRule_12_A1_2553633273</elementReference>
+                <elementReference>formula_15_myRule_12_A1_6241419762</elementReference>
             </value>
         </inputAssignments>
         <object>Contract</object>
@@ -1641,7 +1672,43 @@
             </processMetadataValues>
             <field>ccrz__EffectiveEnd__c</field>
             <value>
-                <elementReference>formula_14_myRule_12_A2_4501216688</elementReference>
+                <elementReference>formula_14_myRule_12_A2_1382558792</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Enabled</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ccrz__Enabled__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <object>ccrz__E_PriceGroupAccount__c</object>
@@ -1721,7 +1788,43 @@
             </processMetadataValues>
             <field>ccrz__EffectiveEnd__c</field>
             <value>
-                <elementReference>formula_13_myRule_12_A3_6102236713</elementReference>
+                <elementReference>formula_13_myRule_12_A3_2566026900</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Enabled</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Boolean</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ccrz__Enabled__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <object>ccrz__E_PriceGroup__c</object>

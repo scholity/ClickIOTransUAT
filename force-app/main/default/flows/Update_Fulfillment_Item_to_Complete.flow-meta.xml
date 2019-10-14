@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to set fulfillment items associated to a fulfillment record to complete - Credit Card</description>
+    <interviewLabel>Update Fulfillment Item to Complete {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Fulfillment Item to Complete</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Fulfillment</name>
+        <label>Get Fulfillment</label>
+        <locationX>170</locationX>
+        <locationY>51</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Fulfillment_Items</targetReference>
+        </connector>
+        <filters>
+            <field>CC_Transaction_Payment__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>frmTransactionPayment</elementReference>
+            </value>
+        </filters>
+        <object>Fulfillment__c</object>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Fulfillment_Items</name>
+        <label>Update Fulfillment Items</label>
+        <locationX>314</locationX>
+        <locationY>49</locationY>
+        <filters>
+            <field>Fulfillment__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Fulfillment.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Complete</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Fulfillment_Item__c</object>
+    </recordUpdates>
+    <startElementReference>Get_Fulfillment</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>frmTransactionPayment</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

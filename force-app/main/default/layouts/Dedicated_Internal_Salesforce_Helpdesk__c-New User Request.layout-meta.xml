@@ -39,6 +39,10 @@
                 <behavior>Edit</behavior>
                 <field>Requested_Completion_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SF_Case_Number__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

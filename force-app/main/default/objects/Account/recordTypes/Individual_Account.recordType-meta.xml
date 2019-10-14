@@ -11,6 +11,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sales Lead</fullName>
             <default>false</default>
         </values>
@@ -644,6 +648,10 @@
         </values>
         <values>
             <fullName>Terminated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Write Off</fullName>
             <default>false</default>
         </values>
     </picklistValues>

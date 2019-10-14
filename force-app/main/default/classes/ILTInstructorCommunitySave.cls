@@ -2759,12 +2759,14 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
         List<ccrz__E_TransactionPayment__c> updatedTransactionPayments = new List<ccrz__E_TransactionPayment__c>();
 
         // query for opp with the same training event
-        List<Training_Events__c> trainingEvents = [SELECT Id, CC_Order__c FROM Training_Events__c WHERE Id = :trainingEventId];
+        List<Training_Events__c> trainingEvents = [SELECT Id, CC_Order__c, CC_Order_Item__c FROM Training_Events__c WHERE Id = :trainingEventId];
         Training_Events__c te = trainingEvents[0];
 
-        Set<String> unitsOfMeassure = new Set<String>{'Student', 'Each'};
+        Set<String> unitsOfMeasure = new Set<String>{'Student', 'Each'};
         List<ccrz__E_OrderItem__c> orderItems = [SELECT Id, ccrz__Price__c, ccrz__SubAmount__c, ccrz__UnitOfMeasure__c, ccrz__Quantity__c, ccrz__ItemStatus__c FROM ccrz__E_OrderItem__c
-                                                    WHERE ccrz__Order__c = :te.CC_Order__c AND ccrz__UnitOfMeasure__c IN :unitsOfMeassure ];
+                                                    WHERE ((ccrz__Order__c = :te.CC_Order__c AND Id = :te.CC_Order_Item__c)
+                                                    OR (ccrz__ParentOrderItem__c = :te.CC_Order_Item__c AND ccrz__OrderLineType__c = 'Minor'))
+                                                    AND ccrz__UnitOfMeasure__c IN :unitsOfMeasure ];
 
         for (ccrz__E_OrderItem__c item : orderItems) {
             ccrz__E_OrderItem__c updatedItem = new ccrz__E_OrderItem__c();
@@ -2788,11 +2790,14 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
                 updatedTransactionPayments.add(updatedPayment);
             }
             update updatedTransactionPayments;
-            
-            List<ccrz__E_OrderItem__c> oItems = [SELECT Id,
-                                                        ccrz__OrderItemStatus__c
-                                                   FROM ccrz__E_OrderItem__c
-                                                  WHERE ccrz__Order__c = :te.CC_Order__c];
+
+            List<ccrz__E_OrderItem__c> oItems = [SELECT Id, ccrz__OrderItemStatus__c, ILT_Class__c, ccrz__Order__c
+                    FROM ccrz__E_OrderItem__c
+                    WHERE ((ccrz__Order__c = :te.CC_Order__c AND Id = :te.CC_Order_Item__c)
+                    OR (ccrz__ParentOrderItem__c = :te.CC_Order_Item__c AND ccrz__OrderLineType__c = 'Minor'))
+                    //WHERE ccrz__Order__c = :te.CC_Order__c
+                    //AND ILT_Class__c = :classId
+                    AND ccrz__OrderItemStatus__c = 'Order Submitted'];
             system.debug('***oItems***'+oItems);
 
             updatedOrderItems.clear();
@@ -2800,17 +2805,14 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
             {
                 ccrz__E_OrderItem__c updatedItem = new ccrz__E_OrderItem__c();
                 updatedItem.Id = oi.Id;
-                if (oi.ccrz__OrderLineType__c == 'Minor') {
-                    updatedItem.ccrz__OrderItemStatus__c = 'In Process';
-                } else {
-                    updatedItem.ccrz__OrderItemStatus__c = 'Shipped';
-                }
+                updatedItem.ccrz__OrderItemStatus__c = 'In Process';
+
                 updatedOrderItems.add(updatedItem);
             }
-            
+
             update updatedOrderItems;
 
-            resMessage = 'Order items successfully updated';
+            resMessage = 'Order items successfully updated to "In Process"';
 
         } catch (Exception e) {
 

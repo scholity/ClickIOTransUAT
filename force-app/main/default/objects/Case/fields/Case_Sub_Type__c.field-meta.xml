@@ -483,6 +483,11 @@
                 <label>MTN</label>
             </value>
             <value>
+                <fullName>MTN Instructor/IT Updates</fullName>
+                <default>false</default>
+                <label>MTN Instructor/IT Updates</label>
+            </value>
+            <value>
                 <fullName>MTN Bridge</fullName>
                 <default>false</default>
                 <label>MTN Instructor Bridge</label>
@@ -906,6 +911,10 @@
         <valueSettings>
             <controllingFieldValue>Instructors</controllingFieldValue>
             <valueName>Instructor Supplies</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructors</controllingFieldValue>
+            <valueName>MTN Instructor/IT Updates</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Instructors</controllingFieldValue>

@@ -1351,8 +1351,8 @@
     <screens>
         <name>Establish_Price_Group</name>
         <label>Establish Price Group</label>
-        <locationX>298</locationX>
-        <locationY>379</locationY>
+        <locationX>300</locationX>
+        <locationY>378</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1408,7 +1408,7 @@
             <name>Enabled</name>
             <dataType>Boolean</dataType>
             <defaultValue>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </defaultValue>
             <fieldText>Enabled</fieldText>
             <fieldType>InputField</fieldType>

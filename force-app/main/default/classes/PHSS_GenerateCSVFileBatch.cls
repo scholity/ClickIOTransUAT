@@ -130,6 +130,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                               // FUTURE - Full Name
                               'Fulfillment__r.Name,ILT_Class__r.Offering_ID__c,' +
                               'Order_Item__r.ccrz__Price__c,' +
+            				  'Order_Item__r.Class_Setting__c,' +
                               'Quantity__c,Order__r.ccrz__Account__r.SABA_Org_Type__c,' +
                               // FUTURE/TBD - Org Type
                               'Id,' +
@@ -400,7 +401,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             if(fi.Order__r.ccrz__Account__r.BillingCountry!=null)
             {
                 country = fi.Order__r.ccrz__Account__r.BillingCountry.replaceAll(regExp, '');
-                if(country.length()>2)
+                if(country.length()>2 || String.isBlank(country))
                 {
                     isError = true;
                     if(errString!='') {errString=errString+';';}
@@ -411,7 +412,17 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                     country = '"' + country + '"';
                 }
             }
-            
+            else
+            {
+                isError = true;
+                
+                if(errString != '')
+                {
+                    errString=errString+';';
+                }
+                
+                errString = errString + 'Order-Account-Billing Country';
+            }
             // Bill To Org User Field3
             String sInvoicing = '';
             
@@ -613,7 +624,9 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // CRS/Offering ID
             String offeringId;
             
-            if(fi.CC_Product__r.ccrz__InventoryType__c == 'COURSE' || fi.CC_Product__r.ccrz__InventoryType__c == 'COMMUNITY')
+            if((fi.CC_Product__r.ccrz__InventoryType__c == 'COURSE' ||
+                fi.CC_Product__r.ccrz__InventoryType__c == 'COMMUNITY') &&
+               fi.Order_Item__r.Class_Setting__c != 'Online')
             {
                 offeringId = fi.ILT_Class__r.Offering_ID__c;
                 if(String.isBlank(offeringId))
@@ -623,7 +636,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                     errString = errString + 'ILT Class - offeringId';
                 }
             }
-            else if(fi.CC_Product__r.ccrz__InventoryType__c == 'FEE')
+            else if(fi.CC_Product__r.ccrz__InventoryType__c == 'FEE' && String.isNotBlank(fi.ILT_Class__r.Offering_ID__c))
             {
                 offeringId = fi.ILT_Class__r.Offering_ID__c;
             }

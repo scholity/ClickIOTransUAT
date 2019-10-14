@@ -19,8 +19,8 @@
     <assignments>
         <name>Set_Minor_Item_Values</name>
         <label>Set Minor Item Values</label>
-        <locationX>762</locationX>
-        <locationY>216</locationY>
+        <locationX>718</locationX>
+        <locationY>296</locationY>
         <assignmentItems>
             <assignToReference>sMinOrderItem.ccrz__ParentOrderItem__c</assignToReference>
             <operator>Assign</operator>
@@ -36,7 +36,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Minor_Item_Output</targetReference>
+            <targetReference>Add_to_Order</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -245,6 +245,45 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Add_to_Order</name>
+        <label>Add to Order</label>
+        <locationX>822</locationX>
+        <locationY>296</locationY>
+        <defaultConnector>
+            <targetReference>Loop_through_Minor_Items</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isStudentorClass</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>sMinOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Student</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sMinOrderItem.ccrz__UnitOfMeasure__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Class</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sMinOrderItem.ccrz__ExtSKU__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>MINSTUDENT</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Minor_Item_Output</targetReference>
+            </connector>
+            <label>isStudentorClass</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ProcessorNot</name>
         <label>ProcessorNot</label>
         <locationX>310</locationX>
@@ -275,8 +314,8 @@
     <loops>
         <name>Loop_through_Minor_Items</name>
         <label>Loop through Minor Items</label>
-        <locationX>760</locationX>
-        <locationY>54</locationY>
+        <locationX>695</locationX>
+        <locationY>55</locationY>
         <assignNextValueToReference>sMinOrderItem</assignNextValueToReference>
         <collectionReference>colMinOrderItems</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -621,7 +660,7 @@
         <name>Get_Minor_Order_Items</name>
         <label>Get Minor Order Items</label>
         <locationX>583</locationX>
-        <locationY>48</locationY>
+        <locationY>47</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_new_Major_Line_Item</targetReference>

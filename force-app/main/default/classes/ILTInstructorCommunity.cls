@@ -1333,7 +1333,7 @@ public without sharing class ILTInstructorCommunity{
                 rtpamap.put(rpa.redwing__User__c,rpa.id);            
             }
 
-            List<redwing__ILT_Class__c> theRosterILTClassList = [Select Id, Name, Opportunity__c From redwing__ILT_Class__c Where Id = :iltClassid Limit 1];
+            List<redwing__ILT_Class__c> theRosterILTClassList = [Select Id, Name, Opportunity__c, Request_Type__c From redwing__ILT_Class__c Where Id = :iltClassid Limit 1];
             rosterILTClass = theRosterILTClassList[0];
         }
         
@@ -1485,27 +1485,35 @@ public without sharing class ILTInstructorCommunity{
                 if (rosterILTClass != null && rosterILTCLass.Opportunity__c != null) {
                     // US1521 - For close class, Order Lines should already be created
                     // In this case, we need to write ILT Class Id on Order Item record(s)
-
-                    for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c From ccrz__E_OrderItem__c
-                    Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :rosterILTClass.Opportunity__c]) {
-                        System.debug('*** orderItem:' + theOrderItem);
-                        if (!updatedOrderItemIds.contains(theOrderItem.Id)) {
-                            ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                            newOrderItem.Id = theOrderItem.Id;
-                            newOrderItem.ILT_Class__c = rosterILTClass.Id;
-                            updatedOrderItems.add(newOrderItem);
-                            updatedOrderItemIds.add(theOrderItem.Id);
-                            System.debug('*** updatedOrderItems:' + updatedOrderItems);
+                    // Skip for FS classes; assignment of ILT Class Id was performed when class was originally created
+                    if (rosterILTCLass.Request_Type__c != 'Full Service') {
+                        for (ccrz__E_OrderItem__c theOrderItem : [
+                                Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c
+                                From ccrz__E_OrderItem__c
+                                Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :rosterILTClass.Opportunity__c
+                        ]) {
+                            System.debug('*** non-FS orderItem:' + theOrderItem);
+                            if (!updatedOrderItemIds.contains(theOrderItem.Id)) {
+                                ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
+                                newOrderItem.Id = theOrderItem.Id;
+                                newOrderItem.ILT_Class__c = rosterILTClass.Id;
+                                updatedOrderItems.add(newOrderItem);
+                                updatedOrderItemIds.add(theOrderItem.Id);
+                                System.debug('*** non-FS updatedOrderItems:' + updatedOrderItems);
+                            }
                         }
+
                         // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
                         // boolean on order header record
-                        if (!updatedOrderIds.contains(theOrderItem.ccrz__Order__c)) {
-                            ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
-                            newOrder.Id = theOrderItem.ccrz__Order__c;
-                            newOrder.CRE_Request_Processed__c = true;
-                            updatedOrders.add(newOrder);
-                            updatedOrderIds.add(theOrderItem.ccrz__Order__c);
-                            System.debug('*** updatedOrders:' + updatedOrders);
+                        if (!updatedOrderItems.isEmpty() && updatedOrderItems[0].ccrz__Order__c != null) {
+                            if (!updatedOrderIds.contains(updatedOrderItems[0].ccrz__Order__c)) {
+                                ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                                newOrder.Id = updatedOrderItems[0].ccrz__Order__c;
+                                newOrder.CRE_Request_Processed__c = true;
+                                updatedOrders.add(newOrder);
+                                updatedOrderIds.add(updatedOrderItems[0].ccrz__Order__c);
+                                System.debug('*** non-FS updatedOrders:' + updatedOrders);
+                            }
                         }
                     }
                 }
@@ -2196,6 +2204,7 @@ public without sharing class ILTInstructorCommunity{
                 
                     // US1521 - If this is CRE, Order Lines will already be created
                     // In this case, we need to write ILT Class Id on Order Item record(s)
+                    // Note: it is assumed that CRE/RBC orders are one-to-one opportunity-to-product(class)
 
                     for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c From ccrz__E_OrderItem__c
                         Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :clsRecord.Opportunity__c]) {
@@ -2759,12 +2768,14 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
         List<ccrz__E_TransactionPayment__c> updatedTransactionPayments = new List<ccrz__E_TransactionPayment__c>();
 
         // query for opp with the same training event
-        List<Training_Events__c> trainingEvents = [SELECT Id, CC_Order__c FROM Training_Events__c WHERE Id = :trainingEventId];
+        List<Training_Events__c> trainingEvents = [SELECT Id, CC_Order__c, CC_Order_Item__c FROM Training_Events__c WHERE Id = :trainingEventId];
         Training_Events__c te = trainingEvents[0];
 
-        Set<String> unitsOfMeassure = new Set<String>{'Student', 'Each'};
+        Set<String> unitsOfMeasure = new Set<String>{'Student', 'Each'};
         List<ccrz__E_OrderItem__c> orderItems = [SELECT Id, ccrz__Price__c, ccrz__SubAmount__c, ccrz__UnitOfMeasure__c, ccrz__Quantity__c, ccrz__ItemStatus__c FROM ccrz__E_OrderItem__c
-                                                    WHERE ccrz__Order__c = :te.CC_Order__c AND ccrz__UnitOfMeasure__c IN :unitsOfMeassure ];
+                                                    WHERE (ccrz__Order__c = :te.CC_Order__c) AND (Id = :te.CC_Order_Item__c
+                                                    OR (ccrz__ParentOrderItem__c = :te.CC_Order_Item__c AND ccrz__OrderLineType__c = 'Minor'))
+                                                    AND ccrz__UnitOfMeasure__c IN :unitsOfMeasure ];
 
         for (ccrz__E_OrderItem__c item : orderItems) {
             ccrz__E_OrderItem__c updatedItem = new ccrz__E_OrderItem__c();
@@ -2791,8 +2802,10 @@ System.debug('The email failed to send:results[0] ' + results[0].errors[0].messa
 
             List<ccrz__E_OrderItem__c> oItems = [SELECT Id, ccrz__OrderItemStatus__c, ILT_Class__c, ccrz__Order__c
                     FROM ccrz__E_OrderItem__c
-                    WHERE ccrz__Order__c = :te.CC_Order__c
-                    AND ILT_Class__c = :classId
+                    WHERE (ccrz__Order__c = :te.CC_Order__c) AND (Id = :te.CC_Order_Item__c
+                    OR (ccrz__ParentOrderItem__c = :te.CC_Order_Item__c AND ccrz__OrderLineType__c = 'Minor'))
+                    //WHERE ccrz__Order__c = :te.CC_Order__c
+                    //AND ILT_Class__c = :classId
                     AND ccrz__OrderItemStatus__c = 'Order Submitted'];
             system.debug('***oItems***'+oItems);
 

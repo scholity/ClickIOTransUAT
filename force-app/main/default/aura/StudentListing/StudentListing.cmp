@@ -1,0 +1,166 @@
+<aura:component controller="StudentListingController" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:handler name = "init" value="{!this}" action = "{!c.doInit}" /> 
+    <aura:attribute name = "objName"                type = "String"     default = "" />
+    <aura:attribute name = "Listss" type = "List" default = "[]"/>
+    <aura:attribute name = "instList"               type = "sObject"    default = "{}"/>
+    <aura:attribute name = "accountList"            type = "sObject"    default = "{}"/>
+    <aura:attribute name = "objAccName"              type = "String"     default = "" />
+    <aura:attribute name = "objInsName"              type = "String"     default = "" />
+    <aura:attribute name = "selectedLookUpRecord1" 	type = "sObject" 	default = "{}"/>
+    <aura:attribute name = "selectedAccount" 	    type = "sObject" 	default = "null"/>
+    <aura:attribute name = "selectedInstructor"     type = "sObject" 	default = "null"/>
+    <aura:attribute name = "orgError" 				type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "Buttonclicked" 		    type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "sortField"              type = "String"     default = "Email" />
+    <aura:attribute name = "sortOrder"              type = "String"     default = "asc" />
+    
+    <!-- Message components -->
+    <aura:attribute name = "messageType"              type = "String"     default = "" />
+    <aura:attribute name = "message"              type = "String"     default = "" /> 
+    <aura:attribute name = "isError"              type = "Boolean"     default = "false" />  
+    
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/> 
+    <aura:attribute name="selectedTabsoft" type="string" default="OrganisationName" description="Use for show/hide arraow sign on header based on conditions"/>
+    
+    <aura:attribute name = "expirationDateFrom"              type = "Date"     default = "" />
+    <aura:handler name="change" value="{!v.expirationDateFrom}" action="{!c.getStudentsOnChangeDate}"/> 
+    
+    <aura:attribute name = "expirationDateTo"              type = "Date"     default = "" />
+    <aura:handler name="change" value="{!v.expirationDateTo}" action="{!c.getStudentsOnChangeDate}"/>
+    
+    <aura:attribute name = "selectedLookUpRecord" 	type = "sObject" 	default = "{}"/>
+    <aura:handler name="change" value="{!v.selectedLookUpRecord}" action="{!c.getStudentsOnChangeLookUp}"/>
+    
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    
+    <!-- attribute to accept Visualforce page's javascript method -->
+    <aura:attribute name="sendData" type="object"/>
+    
+    <aura:if isTrue="{!v.isError}">
+        <c:MessageComponent type="{!v.messageType}" message="{!v.message}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.accountList.length > 0}">
+        <aura:if isTrue="{!v.accountList.length > 0}">
+            <div class="slds-is-absolute">
+                <div class="slds-float_left slds-p-around_small slds-size_1-of-5">
+                    <lightning:select value="{!v.selectedAccount}" onchange="{!c.getInstructorValues}" label="Organization" required="true">
+                        <option value="" text="Select an Organization"/>
+                        <aura:iteration items="{!v.accountList}" var="acc">
+                            <option value="{!acc.Id}" text="{!acc.Name}" />   
+                        </aura:iteration>
+                    </lightning:select>   
+                </div>
+                
+                <div class="slds-float_left slds-p-around_small slds-size_1-of-5">
+                    <h1>Instructor</h1>
+                    <lightning:select value="{!v.selectedInstructor}" onchange="{!c.fetchIns}" disabled="{!or(v.selectedAccount == '',v.selectedAccount == null)}">
+                        <option value="" text="Select an Instructor"/>
+                        <aura:iteration items="{!v.instList}" var="inst">
+                            <option value="{!inst.Id}" text="{!inst.Name}" selected="{!inst.Id == v.selectedInstructor}"/>   
+                        </aura:iteration>
+                    </lightning:select>   
+                </div>
+                
+                <div class="slds-float_left slds-p-around_small slds-size_1-of-5">
+                    <h1>Certificate</h1>
+                    <c:CustomLookup objectAPIName	=	"redwing__Achievement__c"
+                                    selectedRecord	=	"{!v.selectedLookUpRecord}"
+                                    errorMessage    =   "{!v.orgError}"/>
+                </div>
+                
+                <div class="slds-float_left slds-p-around_small slds-size_1-of-5">
+                    <lightning:input type="date" value="{!v.expirationDateFrom}" label="Expiration Date From" required="true"/> 
+                </div>
+                
+                <div class="slds-float_left slds-p-around_small slds-size_1-of-5">
+                    <lightning:input type="date" value="{!v.expirationDateTo}" label="Expiration Date To" required="true"/> 
+                </div>
+            </div>
+        </aura:if>
+    </aura:if>   
+    
+    <div style="{!v.accountList.length > 0?'padding-top:100px':'0px'}">
+        <aura:if isTrue="{! v.loadingSpinner }">
+            <lightning:spinner alternativeText="Loading" variant="brand" size="large"/>
+        </aura:if>
+        <div class="slds-float_right slds-p-around_small">
+            <aura:if isTrue="{!not(empty(v.Listss))}">
+                <lightning:button label="Export" onclick="{!c.exportDocument}" />
+                <lightning:button label="Print" onclick="{!c.downloadDocument}" />
+            </aura:if> 
+        </div>
+        <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout">
+            <thead class="slds-color__background_gray-4">
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <td ><div class="slds-truncate slds-cell-wrap">Organization</div></td>
+                    </th>
+                    <th scope="col">
+                        <td ><div class="slds-truncate slds-cell-wrap">Student Name</div></td>
+                    </th>
+                    <th scope="col">
+                        <td onclick="{!c.sortByKey}"><div class="slds-truncate slds-cell-wrap">Instructor Name</div></td>
+                    </th>
+                    <th scope="col">
+                        <div  class="slds-truncate slds-cell-wrap" title="Certificate Name">Certificate</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate slds-cell-wrap" title="Expiration Date">Expiration Date</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate slds-cell-wrap" title="Email">Email</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate slds-cell-wrap" title="Phone Number">Phone Number</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:if isTrue="{!v.Listss.length > 0}">
+                    <aura:iteration items="{!v.Listss}" var="a">
+                        <tr>
+                            <td data-label="Organization">
+                                <div class="slds-truncate" title="">{!a.OrganizationName}</div>
+                            </td>
+                            <td data-label="Student Name">
+                                <div class="slds-truncate" title="">{!a.StudentFirstName} {!a.StudentLastName}</div>
+                            </td>
+                            <td data-label="Instructor Name">
+                                <div class="slds-truncate" title="">{!a.Key}</div>
+                            </td>
+                            <aura:if isTrue="{!a.Expireflag}">
+                                <td data-label="Certificate Name" style="color:red;" class="slds-cell-wrap">
+                                    <div class="slds-cell-wrap" title="">{!a.Valuess}</div>
+                                </td>
+                                <aura:set attribute="else">
+                                    <td data-label="Certificate Name" class="slds-cell-wrap">
+                                        <div class="slds-cell-wrap" title="">{!a.Valuess}</div>
+                                    </td>
+                                </aura:set>
+                            </aura:if> 
+                            
+                            <aura:if isTrue="{!a.Expireflag}">
+                                <td data-label="Expiration Date" style="color:red;">
+                                    <div class="slds-truncate" title="">{!a.expDate}</div>
+                                </td>
+                                <aura:set attribute="else">
+                                    <td data-label="Expiration Date">
+                                        <div class="slds-truncate" title="">{!a.expDate}</div>
+                                    </td>
+                                </aura:set>
+                            </aura:if> 
+                            <td data-label="Certificate Name">
+                                <div class="slds-truncate" title="">{!a.Email}</div>
+                            </td>
+                            <td data-label="Certificate Name">
+                                <div class="slds-truncate" title="">{!a.Phonenumber}</div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </aura:if>   
+            </tbody>
+        </table>
+    </div>
+</aura:component>

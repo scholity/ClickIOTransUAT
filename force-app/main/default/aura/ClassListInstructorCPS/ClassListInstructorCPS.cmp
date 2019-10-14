@@ -1,0 +1,225 @@
+<aura:component controller="ClassListInstructorCPSController" implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId" access="global" >
+    
+    <aura:handler name = "init" value="{!this}" action = "{!c.doInit}" /> 
+    
+    <!-- attribute to accept Visualforce page's javascript method -->
+    <aura:attribute name="sendData" type="object"/>
+    
+    <aura:attribute name = "accountList"            type = "sObject"    default = "{}"/>
+    <aura:attribute name = "instList"               type = "sObject"    default = "{}"/>
+    <aura:attribute name = "selectedAccount" 	    type = "sObject" 	default = "null"/>
+    <aura:attribute name = "selectedInstructor" 	type = "sObject" 	default = "null"/>
+    <aura:attribute name = "objName"                type = "String"     default = "" />
+    <aura:attribute name = "Classes"         type = "Object[]"   default = ""/> 
+    <aura:attribute name = "limitOffset"            type = "Integer"    default = "0"/>
+    <aura:attribute name = "offset"                 type = "Integer"    default = "0"/>
+    <aura:attribute name = "sortField"              type = "date"     default = "startDate" />
+    <aura:attribute name = "sortOrder"              type = "date"     default = "asc" />
+    <aura:attribute name = "StartDateFrom"              type = "String"     default = "" />
+    <aura:handler name="change" value="{!v.StartDateFrom}" action="{!c.getClassesOnChangeDate}"/>  
+    <aura:attribute name = "StartDateTo"              type = "String"     default = "" />
+    <aura:attribute name = "selectedLookUpRecord" 	type = "sObject" 	default = ""/>
+    <aura:attribute name = "orgError" 				type = "String" 	default = ""/>
+    <aura:handler name="change" value="{!v.StartDateTo}" action="{!c.getClassesOnChangeDate}"/>
+    <aura:handler name="change" value="{!v.selectedLookUpRecord}" action="{!c.getClassesOnChangeLookUp}"/>
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    
+    <!-- Message components -->
+    <aura:attribute name = "messageType"              type = "String"     default = "" />
+    <aura:attribute name = "message"              type = "String"     default = "" /> 
+    <aura:attribute name = "isError"              type = "Boolean"     default = "false" />  
+    
+    <!--Labels-->
+    <aura:attribute name="label_Current_Classes"                type="String" default="Current Classes CPS"/>
+    <aura:attribute name="label_Course"                         type="String" default="Course"/>
+    <aura:attribute name="label_Start_Date"                     type="String" default="Start Date"/>
+    <aura:attribute name="label_Time"                           type="String" default="Time"/>
+    <aura:attribute name="label_Days"                           type="String" default="Days"/>
+    <aura:attribute name="label_Company"                        type="String" default="Organization"/>
+    <aura:attribute name="label_Location"                       type="String" default="Location"/>
+    <aura:attribute name="label_facility_Name"                 type="String" default="Facility Name"/>
+    <aura:attribute name="label_ClassId"                    type="String" default="Class-ID"/>
+    <aura:attribute name="label_Items"                          type="String" default="items"/>
+    <aura:attribute name="label_Item"                           type="String" default="item"/>
+    <aura:attribute name="label_LocationName"                           type="String" default="Location Name"/>
+    <aura:attribute name="label_No_Classes"                     type="String" default="No Classes"/>
+    <ltng:require scripts="{!join(',',
+                           $Resource.RCUilib + '/jsLibs/moment-with-locales.min.js'
+                           )}" afterScriptsLoaded="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.isError}">
+        <c:MessageComponent type="{!v.messageType}" message="{!v.message}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.accountList.length > 0}">
+        <div class="slds-is-absolute">
+            <div class="slds-float_left slds-p-around_small slds-size_1-of-4">
+                <lightning:select value="{!v.selectedAccount}" onchange="{!c.getCPSClasses}" required="true" label="Organization">
+                    <option value="" text="Select an Organization"/>
+                    <aura:iteration items="{!v.accountList}" var="acc">
+                        <option value="{!acc.Id}" text="{!acc.Name}" />   
+                    </aura:iteration>
+                </lightning:select>   
+            </div>
+            
+            <div class="slds-float_left slds-p-around_small slds-size_1-of-4">
+                <lightning:input type="date" value="{!v.StartDateFrom}" label="Start Date From" required="true"/> 
+            </div>
+            
+            <div class="slds-float_left slds-p-around_small slds-size_1-of-4">
+                <lightning:input type="date" value="{!v.StartDateTo}" label="Start Date To" required="true"/> 
+            </div> 
+            
+            <div class="slds-float_left slds-p-around_small slds-size_1-of-4">
+                <h1>Course</h1>
+                <c:CustomLookup objectAPIName	=	"redwing__Learning__c"
+                                selectedRecord	=	"{!v.selectedLookUpRecord}"
+                                errorMessage    =   "{!v.orgError}"/>
+            </div>
+            
+            <div class="slds-float_left slds-p-around_small slds-p-left_x-small slds-size_4-of-4">
+                <h1>* This is a listing of all CPS Classes Entered for Publication *</h1>
+            </div> 
+        </div>
+        
+    </aura:if>
+    
+    <div style="{!v.accountList.length > 0?'padding-top:120px':'0px'}">
+        <aura:if isTrue="{! v.loadingSpinner }">
+            <lightning:spinner alternativeText="Loading" variant="brand" size="large"/>
+        </aura:if>
+        <aura:set attribute="label">
+            {!v.label_Current_Classes}
+        </aura:set>
+        <aura:if isTrue="{!v.Classes.length > 0}">
+            <div>
+                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-end slds-m-bottom_medium slds-p-left_x-small">
+                    <div class="slds-col">
+                        <aura:if isTrue="{!v.Classes.length == 1}">
+                            <div>{!v.Classes.length + ' ' + v.label_Item}</div>
+                            <aura:set attribute="else">
+                                <div>{!v.Classes.length + ' ' + v.label_Items}</div>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-col">
+                        <div class="slds-button-group" role="group">
+                            <lightning:button label="Export" 
+                                              onclick="{!c.exportDocumentCurrent}" />
+                            <lightning:button label="Print" 
+                                              onclick="{!c.downloadDocumentCurrent}" />
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="slds-table slds-table_bordered slds-max-medium-table_stacked-horizontal slds-table_fixed-layout">
+                    <thead class="slds-color__background_gray-4">
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'className' ? 'sorting' : '')}">
+                                    <span class="table-title slds-truncate">{!v.label_Course}</span>
+                                    <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="className" data-order="{!v.sortField == 'className' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                        <lightning:buttonIcon iconName="{!v.sortField == 'className' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="colCompany">
+                                <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'accountName' ? 'sorting' : '')}">
+                                    <span class="table-title slds-truncate">{!v.label_Company}</span>
+                                    <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="accountName" data-order="{!v.sortField == 'accountName' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                        <lightning:buttonIcon iconName="{!v.sortField == 'accountName' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="colLocationName">
+                                <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'locationName' ? 'sorting' : '')}">
+                                    <span class="table-title slds-truncate">{!v.label_LocationName}</span>
+                                    <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="locationName" data-order="{!v.sortField == 'locationName' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                        <lightning:buttonIcon iconName="{!v.sortField == 'locationName' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                    </div>
+                                </div>
+                                <!-- <div class="slds-truncate slds-grid">
+                                    <span class="table-title slds-truncate">{!v.label_LocationName}</span>
+                                </div> -->
+                            </th>
+                            <th scope="col" class="colLocation">
+                                <div class="slds-truncate slds-grid">
+                                    <span class="table-title slds-truncate">{!v.label_Location}</span>
+                                </div>
+                            </th>
+                            <th scope="col" class="colDate">
+                                <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'startDate' ? 'sorting' : '')}">
+                                    <span class="table-title slds-truncate">{!v.label_Start_Date}</span>
+                                    <div class="slds-show_inline-block" onclick="{!c.sortField}" data-array="current" data-field="startDate" data-order="{!v.sortField == 'startDate' ? (v.sortOrder == 'asc' ? 'desc' : 'asc') : 'asc'}">
+                                        <lightning:buttonIcon iconName="{!v.sortField == 'startDate' ? (v.sortOrder == 'asc' ? 'utility:arrowdown' : 'utility:arrowup') : 'utility:arrowdown'}" size="medium" variant="bare" class="btn-sort"/>
+                                    </div>
+                                </div>
+                            </th>
+                            <th scope="col" class="colTime">
+                                <div  class="{! 'slds-truncate slds-grid' + (v.sortField == 'startTime' ? 'sorting' : '')}">
+                                    <span class="table-title slds-truncate">{!v.label_Time}</span>
+                                </div>
+                            </th>
+                            <!-- <th scope="col">
+                                <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'facilityName' ? 'sorting' : '')}">
+                                    <span class="table-title slds-truncate">{!v.label_facility_Name}</span>
+                                </div>
+                            </th> -->
+                            <th scope="col" style="width: 90px;">
+                                <div class="{! 'slds-truncate slds-grid' + (v.sortField == 'orderNumber' ? 'sorting' : '')}">
+                                    <span>{!v.label_ClassId}</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.Classes}" var="class">
+                            <tr>
+                                <td data-label="{!v.label_Course}">
+                                    <div class="slds-truncate">
+                                        <div class="slds-truncate">{!class.courseName}</div>
+                                    </div>
+                                </td>
+                                <td data-label="{!v.label_Company}">
+                                    <div class="slds-truncate">{!class.accountName}</div>
+                                </td>
+                                <td data-label="{!v.label_Company}">
+                                    <div class="slds-truncate">{!class.locationName}</div>
+                                </td>
+                                <td data-label="{!v.label_Location}">
+                                    <div class="slds-truncate">
+                                        <p><lightning:formattedText value="{!class.location.address1}" /></p>
+                                        <p><lightning:formattedText value="{!class.location.city+' '+class.location.country}"/></p>
+                                        <p><lightning:formattedText linkify="true" value="{!class.location.province+' '+class.location.postalCode}" /></p>
+                                    </div>
+                                </td>
+                                <td data-label="{!v.label_Start_Date}">
+                                    <div class="slds-truncate">
+                                        <ui:outputDate aura:id="oDate" value="{!class.startDate}" format="MM/DD/YYYY"/>
+                                    </div>
+                                </td>
+                                <td data-label="{!v.label_Time}">
+                                    <div class="slds-truncate">
+                                        {!class.startTime} 
+                                        <aura:if isTrue="{!class.endTime.length}">
+                                            - {!class.endTime}
+                                        </aura:if>
+                                    </div>
+                                </td>
+                                <!-- <td data-label="{!v.label_facility_Name}">
+                                    <div class="slds-truncate">{!class.facilityName}</div>
+                                </td> -->
+                                <td data-label="{!v.label_Status}">
+                                    <div>{!class.classOfferingId}</div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+            <aura:set attribute="else">
+                <p class="slds-align_absolute-center slds-p-around_small slds-text-heading_medium">{!v.label_No_Classes}</p>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

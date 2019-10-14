@@ -10,11 +10,16 @@
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Denied</fullName>
                 <default>false</default>
                 <label>Denied</label>
+            </value>
+            <value>
+                <fullName>Eligible for Reinstatement</fullName>
+                <default>false</default>
+                <label>Eligible for Reinstatement</label>
             </value>
             <value>
                 <fullName>Granted</fullName>
@@ -32,9 +37,9 @@
                 <label>Terminated</label>
             </value>
             <value>
-                <fullName>Eligible for Reinstatement</fullName>
+                <fullName>Write Off</fullName>
                 <default>false</default>
-                <label>Eligible for Reinstatement</label>
+                <label>Write Off</label>
             </value>
         </valueSetDefinition>
     </valueSet>

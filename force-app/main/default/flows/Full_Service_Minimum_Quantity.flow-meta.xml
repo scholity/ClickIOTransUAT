@@ -33,7 +33,7 @@
             <assignToReference>vInstructorQty</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>spOrderItem.ccrz__Quantity__c</elementReference>
+                <elementReference>Get_Job.Number_of_Instructors__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -254,6 +254,7 @@
             <label>Class Ratio</label>
         </rules>
     </decisions>
+    <description>Updated Instructor Calc</description>
     <formulas>
         <name>fGreatestQty</name>
         <dataType>Number</dataType>
@@ -263,7 +264,7 @@
     <formulas>
         <name>fMinInstBillQty</name>
         <dataType>Number</dataType>
-        <expression>({!vInstructorQty} - 1) * {!vInstCmpRatio} +1</expression>
+        <expression>({!vInstructorQty} - 1) * {!vInstCmpRatio} +1 - {!vStudentQty}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -370,6 +371,12 @@
             <field>ccrz__AbsoluteDiscount__c</field>
             <value>
                 <elementReference>outOrderItem.ccrz__AbsoluteDiscount__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ccrz__ExtSKU__c</field>
+            <value>
+                <elementReference>sProduct.ccrz__SKU__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -498,10 +505,50 @@
         <sortOrder>Asc</sortOrder>
     </recordLookups>
     <recordLookups>
+        <name>Get_ILT_Class</name>
+        <label>Get ILT Class</label>
+        <locationX>295</locationX>
+        <locationY>247</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Job</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sOrderItem.ILT_Class__c</elementReference>
+            </value>
+        </filters>
+        <object>redwing__ILT_Class__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Skedulo_Job_Id__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Job</name>
+        <label>Get Job</label>
+        <locationX>442</locationX>
+        <locationY>246</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Minor_Order_Items</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_ILT_Class.Skedulo_Job_Id__c</elementReference>
+            </value>
+        </filters>
+        <object>sked__Job__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Number_of_Instructors__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Minor_Order_Items</name>
         <label>Get Minor Order Items</label>
         <locationX>445</locationX>
-        <locationY>50</locationY>
+        <locationY>49</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Composite_Item</targetReference>
@@ -617,11 +664,11 @@
     <recordLookups>
         <name>Get_Product</name>
         <label>Get Product</label>
-        <locationX>295</locationX>
-        <locationY>50</locationY>
+        <locationX>294</locationX>
+        <locationY>52</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Minor_Order_Items</targetReference>
+            <targetReference>Get_ILT_Class</targetReference>
         </connector>
         <filters>
             <field>ccrz__ProductId__c</field>
@@ -633,6 +680,7 @@
         <object>ccrz__E_Product__c</object>
         <outputReference>sProduct</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>ccrz__SKU__c</queriedFields>
     </recordLookups>
     <startElementReference>Get_Order_Item</startElementReference>
     <status>Active</status>
