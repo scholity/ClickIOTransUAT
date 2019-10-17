@@ -99,17 +99,25 @@ global class skedFullServiceBookingGridController {
         skedRemoteResultModel result = new skedRemoteResultModel();
         try {
             Map<Id, Account> mapAllAccount = skedUtils.getChildAccountsInHierarchy(accountId);
-            
             query = '%' + query + '%';
+            
+            List<contactModel> options = new List<contactModel>();
             List<Contact> matchContacts = [SELECT Id, FirstName, LastName, Email, Phone, AccountId
                                            FROM Contact
                                            WHERE AccountId IN :mapAllAccount.keySet()
                                            AND (FirstName LIKE :query OR LastName LIKE :query)
                                            ORDER BY Name ASC];
-            
-            List<contactModel> options = new List<contactModel>();
             for (Contact matchContact : matchContacts) {
                 contactModel option = new ContactModel(matchContact);
+                options.add(option);
+            }
+            List<AccountContactRelation> accountContactRelations = [SELECT Id, Contact.FirstName, Contact.LastName, Contact.Email, 
+                                                                    Contact.Phone, Contact.AccountId
+                                                                    FROM AccountContactRelation
+                                                                    WHERE AccountId IN :mapAllAccount.keySet()
+                                                                    AND (Contact.FirstName LIKE :query OR Contact.LastName LIKE :query)];
+            for (AccountContactRelation accountContactRelation : accountContactRelations) {
+                contactModel option = new ContactModel(accountContactRelation.Contact);
                 options.add(option);
             }
             result.data = options;
@@ -711,7 +719,7 @@ global class skedFullServiceBookingGridController {
             jobDateStart = skedDateTimeUtils.toTimezone(jobDateStart, model.timezoneSidId);
             integer startTimeInMinutes = skedDateTimeUtils.convertTimeNumberToMinutes(job.startTime);
             job.start = skedDateTimeUtils.addMinutes(jobDateStart, startTimeInMinutes, model.timezoneSidId);
-            job.finish = skedDateTimeUtils.addMinutes(job.start, model.classDuration, model.timezoneSidId);
+            job.finish = job.start.addMinutes(model.classDuration);
 
             job.tags = new List<skedBaseModels.tag>();
             for (string tagId : model.tagIds) {

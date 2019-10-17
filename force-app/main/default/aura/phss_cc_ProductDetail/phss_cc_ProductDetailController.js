@@ -21,14 +21,17 @@
             component.set('v.productCount', 0);
         }
 
-        var minorProductQuantityMap = product['minorProductQuantityMap'];
-        var minorProductList = product['minorProductList'];
-        if (minorProductList != null && minorProductQuantityMap != null) {
-            component.set('v.minorProductQuantityMap',minorProductQuantityMap);
-            component.set('v.minorProductList',minorProductList);
+        if (product !== undefined) {
+            var minorProductQuantityMap = product['minorProductQuantityMap'];
+            var minorProductList = product['minorProductList'];
+            if (minorProductList != null && minorProductQuantityMap != null) {
+                component.set('v.minorProductQuantityMap',minorProductQuantityMap);
+                component.set('v.minorProductList',minorProductList);
+            }
+
+            component.set('v.product', product);
         }
 
-        component.set('v.product', product);
         component.set('v.renderComplete', true);
 
     },

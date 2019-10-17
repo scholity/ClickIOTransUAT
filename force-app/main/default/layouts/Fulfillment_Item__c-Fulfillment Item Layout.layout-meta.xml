@@ -27,6 +27,10 @@
                 <behavior>Edit</behavior>
                 <field>CFS_File_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invoiced_Date__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

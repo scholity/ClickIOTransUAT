@@ -116,14 +116,18 @@ public with sharing class phss_cc_StoredPaymentUtil {
         try {
             if (identifiers != null && identifiers.size() > 0) {
                 storedPayments = [
-                        SELECT  Id,
+                        SELECT
+                                Id,
                                 ccrz__Account__c,
                                 ccrz__ExpMonth__c,
                                 ccrz__ExpYear__c,
+                                ccrz__Storefront__c,
                                 ccrz__Token__c,
                                 Remaining_PO_Amount__c
-                        FROM    ccrz__E_StoredPayment__c
-                        WHERE   Id IN :identifiers
+                        FROM
+                                ccrz__E_StoredPayment__c
+                        WHERE
+                                Id IN :identifiers
                 ];
             }
 

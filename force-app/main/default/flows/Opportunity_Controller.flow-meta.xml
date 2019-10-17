@@ -244,6 +244,71 @@
         <processMetadataValues>
             <name>flowSelection</name>
             <value>
+                <stringValue>Disable Price Group Accounts</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_12_A3</name>
+        <label>Disable affected Price groups</label>
+        <locationX>1200</locationX>
+        <locationY>400</locationY>
+        <actionName>Disable_Price_Group_Accounts</actionName>
+        <actionType>flow</actionType>
+        <connector>
+            <targetReference>myRule_12_A4</targetReference>
+        </connector>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>frmOpportunity</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>frmOpportunity</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
                 <stringValue>Create Training Event from Opportunity</stringValue>
             </value>
         </processMetadataValues>
@@ -1452,26 +1517,24 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>DATETIMEVALUE (ADDMONTHS([Opportunity].Closed_Won_Date__c -1, [Opportunity].Contract.ContractTerm))
-</stringValue>
+                <stringValue>DATETIMEVALUE (ADDMONTHS([Opportunity].Closed_Won_Date__c - 1, [Opportunity].Contract.ContractTerm))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_13_myRule_12_A3_2566026900</name>
+        <name>formula_13_myRule_12_A4_7153882020</name>
         <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} -1, {!myVariable_current.Contract.ContractTerm}))</expression>
+        <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} - 1, {!myVariable_current.Contract.ContractTerm}))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>DATETIMEVALUE (ADDMONTHS([Opportunity].Closed_Won_Date__c - 1, [Opportunity].Contract.ContractTerm))
-
+                <stringValue>DATETIMEVALUE (ADDMONTHS([Opportunity].Closed_Won_Date__c -1, [Opportunity].Contract.ContractTerm))
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_14_myRule_12_A2_1382558792</name>
+        <name>formula_14_myRule_12_A2_5484942661</name>
         <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} - 1, {!myVariable_current.Contract.ContractTerm}))</expression>
+        <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} -1, {!myVariable_current.Contract.ContractTerm}))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
@@ -1480,11 +1543,11 @@
                 <stringValue>DATETIMEVALUE ( [Opportunity].Closed_Won_Date__c )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_15_myRule_12_A1_6241419762</name>
+        <name>formula_15_myRule_12_A1_5919176294</name>
         <dataType>Date</dataType>
         <expression>DATETIMEVALUE ( {!myVariable_current.Closed_Won_Date__c} )</expression>
     </formulas>
-    <interviewLabel>Opportunity_Controller-26_InterviewLabel</interviewLabel>
+    <interviewLabel>Opportunity_Controller-56_InterviewLabel</interviewLabel>
     <label>Opportunity Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1589,7 +1652,7 @@
             </processMetadataValues>
             <field>StartDate</field>
             <value>
-                <elementReference>formula_15_myRule_12_A1_6241419762</elementReference>
+                <elementReference>formula_15_myRule_12_A1_5919176294</elementReference>
             </value>
         </inputAssignments>
         <object>Contract</object>
@@ -1613,14 +1676,14 @@
         <processMetadataValues>
             <name>reference</name>
             <value>
-                <stringValue>[Opportunity].CC_Price_Group_Accounts__r</stringValue>
+                <stringValue>[Opportunity].CC_Price_Groups__r</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
         <name>myRule_12_A2</name>
-        <label>Update Price Account Group</label>
+        <label>Update Price Group</label>
         <locationX>1200</locationX>
         <locationY>300</locationY>
         <connector>
@@ -1672,7 +1735,7 @@
             </processMetadataValues>
             <field>ccrz__EffectiveEnd__c</field>
             <value>
-                <elementReference>formula_14_myRule_12_A2_1382558792</elementReference>
+                <elementReference>formula_14_myRule_12_A2_5484942661</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1711,7 +1774,7 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
-        <object>ccrz__E_PriceGroupAccount__c</object>
+        <object>ccrz__E_PriceGroup__c</object>
     </recordUpdates>
     <recordUpdates>
         <processMetadataValues>
@@ -1732,16 +1795,16 @@
         <processMetadataValues>
             <name>reference</name>
             <value>
-                <stringValue>[Opportunity].CC_Price_Groups__r</stringValue>
+                <stringValue>[Opportunity].CC_Price_Group_Accounts__r</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_12_A3</name>
-        <label>Update Price Group</label>
+        <name>myRule_12_A4</name>
+        <label>Update Price Group Account</label>
         <locationX>1200</locationX>
-        <locationY>400</locationY>
+        <locationY>500</locationY>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -1788,7 +1851,7 @@
             </processMetadataValues>
             <field>ccrz__EffectiveEnd__c</field>
             <value>
-                <elementReference>formula_13_myRule_12_A3_2566026900</elementReference>
+                <elementReference>formula_13_myRule_12_A4_7153882020</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1827,7 +1890,7 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
-        <object>ccrz__E_PriceGroup__c</object>
+        <object>ccrz__E_PriceGroupAccount__c</object>
     </recordUpdates>
     <recordUpdates>
         <processMetadataValues>

@@ -162,16 +162,28 @@
     </nameField>
     <pluralLabel>Integration Error Logs</pluralLabel>
     <searchLayouts>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Order__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Fulfillment_Item__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Transaction_ID__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Error_Details__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Order__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Fulfillment_Item__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Transaction_ID__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Error_Details__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Fixed_by__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Notes__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Fulfillment_Item__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Transaction_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Error_Details__c</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Order__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Fulfillment_Item__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Transaction_ID__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Error_Details__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>Fixed_by__c</searchResultsAdditionalFields>

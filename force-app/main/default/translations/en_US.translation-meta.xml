@@ -724,16 +724,38 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <choices>
-                <name>CREStore</name>
-            </choices>
+            <fullName>Add_Supp_Information-1</fullName>
+            <screens>
+                <fields>
+                    <name>ErrorMessage</name>
+                </fields>
+                <name>Error_Message</name>
+            </screens>
+            <screens>
+                <fields>
+                    <name>SupMessage</name>
+                </fields>
+                <fields>
+                    <name>vSuppInfo</name>
+                    <validationRule/>
+                </fields>
+                <name>Supplemental_Information_Entry</name>
+            </screens>
+        </flows>
+        <fullName>Add_Supp_Information</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
             <choices>
                 <name>CPS</name>
             </choices>
             <choices>
                 <name>GeneralStore</name>
             </choices>
-            <fullName>Create_Contract-29</fullName>
+            <choices>
+                <name>CREStore</name>
+            </choices>
+            <fullName>Create_Contract-30</fullName>
             <screens>
                 <fields>
                     <name>Effective_End_Date</name>
@@ -809,13 +831,13 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Opportunity_Controller-26</fullName>
+            <fullName>Opportunity_Controller-27</fullName>
         </flows>
         <fullName>Opportunity_Controller</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Opportunity_to_Contract-3</fullName>
+            <fullName>Opportunity_to_Contract-4</fullName>
         </flows>
         <fullName>Opportunity_to_Contract</fullName>
     </flowDefinitions>
@@ -1011,6 +1033,12 @@
             <fullName>Update_Order_Opportunity_for_Closed_Won-1</fullName>
         </flows>
         <fullName>Update_Order_Opportunity_for_Closed_Won</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Disable_Price_Group_Accounts-1</fullName>
+        </flows>
+        <fullName>Disable_Price_Group_Accounts</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -1618,7 +1646,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Add_Onsite_Fee_Waiver-9</fullName>
+            <fullName>Add_Onsite_Fee_Waiver-10</fullName>
             <screens>
                 <fields>
                     <name>Error</name>

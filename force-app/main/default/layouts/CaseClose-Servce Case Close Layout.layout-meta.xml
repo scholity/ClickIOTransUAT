@@ -66,6 +66,10 @@
                 <behavior>Readonly</behavior>
                 <field>Delivery_Channel__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Organization_Name__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>

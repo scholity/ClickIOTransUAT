@@ -76,7 +76,6 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
         String   CourseFormat;
         String   CourseLanguage;
         Long     CourseSortDate;   // *** Note: These two dates tie to the date of the first session for the course
-                                   // *** For LTP CPS, value is start date
         Long     offeringDropDate; 
         String   CourseDates;      
         String   CourseDaysOfWeek; 
@@ -166,7 +165,6 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             DayOfWeek        = sessionDayOfWeekList;
             UnitCode         = '07038';              // Hard-coded, still in use?
             ChapterName      = 'American Red Cross'; // Hard-coded, are chapters even related to courses any more?
-            productType      = 'offering';           // Hard-coded as we are migrating classes (offerings)
             IsCourse         = true;                 // Hard-coded as we are migrating classes (offerings)
             attachmentID     = '';
             attachmentName   = '';
@@ -175,10 +173,16 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             
             if (CPS) {
                 ltpName      = theClass.Skedulo_Account__r.Name;
-                ltpUrl       = theClass.CPS_Registration_URL__c;
+                if (!String.isBlank(theClass.CPS_Registration_URL__c)) {
+                    ltpUrl = theClass.CPS_Registration_URL__c;
+                } else {
+                    ltpUrl = '';
+                }
+                productType  = 'ltp';
             } else {
                 ltpName      = '';
                 ltpUrl       = '';
+                productType  = 'offering';
             }
                   
             customAttributeValueMap = new Map<String, String>{
@@ -331,6 +335,8 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
         Map<Id, redwing__ILT_Location__c> CPSLocationMap = new Map<Id, redwing__ILT_Location__c>();        
         Map<Id, List<redwing__ILT_Session__c>> classSessionMap  = new Map<Id, List<redwing__ILT_Session__c>>();          
         Map<Id, redwing__ILT_Session__c> classFirstSessionMap  = new Map<Id, redwing__ILT_Session__c>();
+        // DE1816 - Support the population of the LTP/CPS registration phone in the location record
+        Map<Id, String> locationCPSPhoneMap = new Map<Id, String>();
                     
         Set<Id> eCommerceClassSet = new Set<Id>();  
         Set<Id> activeCommunityClassSet = new Set<Id>(); 
@@ -433,16 +439,26 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
         }        
 
         activeCommunitySessions = [Select Id, redwing__ILT_Class__c,
-            redwing__Location__c, redwing__Date__c, redwing__Start_Time__c, redwing__End_Time__c 
+            redwing__Location__c, redwing__Date__c, redwing__Start_Time__c, redwing__End_Time__c,
+            redwing__ILT_Class__r.Request_Type__c, redwing__ILT_Class__r.CPS_Registration_Phone__c
             From redwing__ILT_Session__c
             Where redwing__Date__c >= Today And redwing__ILT_Class__c In :activeCommunityClassSet];
 
         for (redwing__ILT_Session__c theSession : activeCommunitySessions) {
             if (!sessionClassMap.containsKey(theSession.Id)) {
                 sessionClassMap.put(theSession.Id, classMap.get(theSession.redwing__ILT_Class__c));  
-            }           
-        }
+            }
 
+            // DE1816 - Update the phone number in the Location record for LTP/CPS sessions that
+            // have a registration phone number defined in the ILT Class record
+            if (theSession.redwing__Location__c != null && theSession.redwing__ILT_Class__r.Request_Type__c == 'CPS'
+                && theSession.redwing__ILT_Class__r.CPS_Registration_Phone__c != null) {
+                if (!locationCPSPhoneMap.containsKey(theSession.redwing__Location__c)) {
+                    locationCPSPhoneMap.put(theSession.redwing__Location__c, theSession.redwing__ILT_Class__r.CPS_Registration_Phone__c);
+                }
+            }
+        }
+system.debug(locationCPSPhoneMap);
         // **** No longer required - CPS provides physical location records (was used for zip-code based GPS coords)
         /*
         activeCommunityGeoCodes = [Select Id, Postal_Code__c, Coordinates__c From Geo_Location__c
@@ -459,6 +475,7 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             if (theSession.redwing__Location__c != null) {
                 locationSet.add(theSession.redwing__Location__c);
             }
+
             /* The following block is no longer required - CPS classes now use Location lookup defined in Session record
 
             else {
@@ -490,11 +507,11 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             
         for (redwing__ILT_Location__c theLocation : activeCommunityLocations) {
             if (!locationXMLMap.containsKey(theLocation.Id)) {
-                String thePhoneNumber = ''; // ILT Location records lack a phone number
-                // GeoLocations are stored in CPS records?
-                Location theGeoLocation = null; // ILT Location records inherit geo coordinates from Skedulo location
-                locationXMLMap.put(theLocation.Id, getLocationXML(theLocation, '', thePhoneNumber, theGeoLocation));            
-            }   
+                String thePhoneNumber = '';
+                if (locationCPSPhoneMap.containsKey(theLocation.Id)) thePhoneNumber = locationCPSPhoneMap.get(theLocation.Id);
+                system.debug(thePhoneNumber);
+                locationXMLMap.put(theLocation.Id, getLocationXML(theLocation, thePhoneNumber));
+            }
         }
         //System.debug('locationXMLMap='+locationXMLMap);   
         
@@ -2024,24 +2041,18 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
         return xmlW;
     }     
     
-    private String getLocationXml(redwing__ILT_Location__c theLocation, String syntheticId, String thePhoneNumber, Location theGeoLocation) {
+    private String getLocationXml(redwing__ILT_Location__c theLocation, String thePhoneNumber) {
         // Hard-code values for unmapped attributes for now
         Boolean  storeLocatorEnabledFlag = true;
         Boolean  demandwarePosEnabledFlag = true;
         Boolean  posEnabledFlag = true;
         String   inventoryListId = '1';
-        
-        Boolean  syntheticKey = (theLocation.Id == null) ? true : false;
+
         String   locationKeyPrefix = redwing__ILT_Location__c.SObjectType.getDescribe().getKeyPrefix();     
         
         XmlStreamWriter xmlW = new XmlStreamWriter();
         xmlW.writeStartElement(null,'store', null);
-            String locationId;
-            if (syntheticKey) {
-                locationId = locationKeyPrefix+(syntheticId.substring(3,15));
-            } else {
-                locationId = String.valueOf(theLocation.Id).subString(0,15);
-            }
+            String locationId = String.valueOf(theLocation.Id).subString(0,15);
             xmlW.writeAttribute(null,null,'store-id',locationId);
             xmlW.writeCharacters('\n');
             if (String.isNotEmpty(theLocation.Name)) {
@@ -2087,7 +2098,7 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
                     xmlW.writeCharacters(theLocation.redwing__Country__c.substring(0,2));
                 xmlW.writeEndElement(); // Close country-code  
                 xmlW.writeCharacters('\n');  
-            if (!syntheticKey && theLocation.Skedulo_Location__c != null
+            if (theLocation.Skedulo_Location__c != null
                 && theLocation.Skedulo_Location__r.sked__Account__c != null
                 && theLocation.Skedulo_Location__r.sked__Account__r.Billing_Contact_email__c != null) {
                 xmlW.writeStartElement(null,'email', null);
@@ -2095,24 +2106,40 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
                 xmlW.writeEndElement(); // Close email  
                 xmlW.writeCharacters('\n');     
             }
-            if (!syntheticKey && theLocation.Skedulo_Location__c != null
-                && theLocation.Skedulo_Location__r.sked__Account__c != null
-                && String.isNotEmpty(theLocation.Skedulo_Location__r.sked__Account__r.Billing_Contact_phone__c)) {          
-                xmlW.writeStartElement(null,'phone', null);
+            if (String.isNotBlank(thePhoneNumber)) {
+                String formattedPhone = '';
+                String unformattedPhone = thePhoneNumber.replaceAll('[^0-9]', '');
+                if (unformattedPhone.length() == 10) {
+                    formattedPhone = unformattedPhone.substring(0, 3) + '-' + unformattedPhone.substring(3, 6) + '-' + unformattedPhone.substring(6);
+                } else if (unformattedPhone.length() == 11 && unformattedPhone.substring(0,1) == '1') {
+                    formattedPhone = unformattedPhone.substring(1, 4) + '-' + unformattedPhone.substring(4, 7) + '-' + unformattedPhone.substring(7);
+                }
+                system.debug(unformattedPhone);
+                system.debug(formattedPhone);
+                if (String.isNotBlank(formattedPhone)) {
+                    xmlW.writeStartElement(null, 'phone', null);
+                    xmlW.writeCharacters(formattedPhone);
+                    xmlW.writeEndElement(); // Close phone
+                    xmlW.writeCharacters('\n');
+                }
+            } else {
+                if (theLocation.Skedulo_Location__c != null
+                        && theLocation.Skedulo_Location__r.sked__Account__c != null
+                        && String.isNotEmpty(theLocation.Skedulo_Location__r.sked__Account__r.Billing_Contact_phone__c)) {
+                    xmlW.writeStartElement(null, 'phone', null);
                     xmlW.writeCharacters(theLocation.Skedulo_Location__r.sked__Account__r.Billing_Contact_phone__c);
-                xmlW.writeEndElement(); // Close phone  
-                xmlW.writeCharacters('\n'); 
+                    xmlW.writeEndElement(); // Close phone
+                    xmlW.writeCharacters('\n');
+                }
             }
             xmlW.writeStartElement(null,'store-hours', null);        
             xmlW.writeEndElement(); // Close store-hours
             xmlW.writeCharacters('\n'); 
              
             String geoLatitude = '';
-            if (!syntheticKey && theLocation.Skedulo_Location__c != null
+            if (theLocation.Skedulo_Location__c != null
                 && theLocation.Skedulo_Location__r.sked__GeoLocation__c != null) {
                 geoLatitude = String.valueOf(theLocation.Skedulo_Location__r.sked__GeoLocation__c.getLatitude());
-            } else if (syntheticKey && theGeoLocation != null) {
-                geoLatitude = String.valueOf(theGeoLocation.getLatitude());
             }
             if (String.isNotEmpty(geoLatitude)) {
                 xmlW.writeStartElement(null,'latitude', null);
@@ -2122,11 +2149,9 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             }
             
             String geoLongitude = '';
-            if (!syntheticKey && theLocation.Skedulo_Location__c != null
+            if (theLocation.Skedulo_Location__c != null
                 && theLocation.Skedulo_Location__r.sked__GeoLocation__c != null) {
                 geoLongitude = String.valueOf(theLocation.Skedulo_Location__r.sked__GeoLocation__c.getLongitude());
-            } else if (syntheticKey && theGeoLocation != null) {
-                geoLongitude = String.valueOf(theGeoLocation.getLongitude());
             }
             if (String.isNotEmpty(geoLongitude)) {
                 xmlW.writeStartElement(null,'longitude', null);
