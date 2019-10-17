@@ -190,6 +190,10 @@
                 <behavior>Edit</behavior>
                 <field>Estimated_annual_revenue__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Estimated_Annual_Participants__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

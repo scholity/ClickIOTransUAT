@@ -8,8 +8,8 @@ ACTION: Review the assigned contract fields. Add or remove fields as needed.
 If you need fields from another object, use a Fast Lookup element to store the fields in another sObject variable before this element in the flow, and then assign the stored values to the contract here.</description>
         <name>Assign_Contract_Fields</name>
         <label>Assign Contract Fields</label>
-        <locationX>589</locationX>
-        <locationY>30</locationY>
+        <locationX>654</locationX>
+        <locationY>259</locationY>
         <assignmentItems>
             <assignToReference>oContract.AccountId</assignToReference>
             <operator>Assign</operator>
@@ -115,6 +115,20 @@ If you need fields from another object, use a Fast Lookup element to store the f
                 <elementReference>oOppty.Id</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>oContract.CC_Price_Group_Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Price_Group_Account.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>oContract.CC_Price_Group__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Price_Group.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_Contract</targetReference>
         </connector>
@@ -123,8 +137,8 @@ If you need fields from another object, use a Fast Lookup element to store the f
         <description>Relates the opportunity to the contract that was just created.</description>
         <name>Set_Contract_on_Oppty</name>
         <label>Set Contract on Oppty</label>
-        <locationX>764</locationX>
-        <locationY>137</locationY>
+        <locationX>966</locationX>
+        <locationY>336</locationY>
         <assignmentItems>
             <assignToReference>oOppty.ContractId</assignToReference>
             <operator>Assign</operator>
@@ -142,10 +156,10 @@ If you need fields from another object, use a Fast Lookup element to store the f
 Include this element if you want the new contract to be Activated.
 
 Default is Draft</description>
-        <name>Set_Contract_Status_to_Activated</name>
-        <label>Set Contract Status to Activated</label>
-        <locationX>933</locationX>
-        <locationY>24</locationY>
+        <name>Set_Contract_Status_to_Draft</name>
+        <label>Set Contract Status to Draft</label>
+        <locationX>964</locationX>
+        <locationY>53</locationY>
         <assignmentItems>
             <assignToReference>oContract.Status</assignToReference>
             <operator>Assign</operator>
@@ -154,7 +168,7 @@ Default is Draft</description>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Activate_Contract</targetReference>
+            <targetReference>Update_Contract</targetReference>
         </connector>
     </assignments>
     <constants>
@@ -172,13 +186,35 @@ Default is Draft</description>
         </value>
     </constants>
     <decisions>
+        <name>Check_Price_Group_Records</name>
+        <label>Check Price Group Records</label>
+        <locationX>482</locationX>
+        <locationY>429</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>FoundPriceGroup_Records</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Price_Group_Account</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Contract_Fields</targetReference>
+            </connector>
+            <label>FoundPriceGroup Records</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Evaluates whether the opportunity has a contract or not.
 
 If the opportunity is already related to a contract, a new contract will not be generated.</description>
         <name>Contract_on_Oppty</name>
         <label>Contract on Oppty?</label>
-        <locationX>345</locationX>
-        <locationY>28</locationY>
+        <locationX>478</locationX>
+        <locationY>50</locationY>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
             <name>Contract_is_null</name>
@@ -191,22 +227,29 @@ If the opportunity is already related to a contract, a new contract will not be 
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Contract_Fields</targetReference>
+                <targetReference>Get_Price_Group_Account</targetReference>
             </connector>
             <label>Contract is null</label>
         </rules>
     </decisions>
     <description>Creates a contract from an opportunity</description>
+    <interviewLabel>Opportunity to Contract V2 {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity to Contract V2</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
         <description>Uses the field values that are stored in the sObject variable to create a new contract.</description>
         <name>Create_Contract</name>
         <label>Create Contract</label>
-        <locationX>763</locationX>
-        <locationY>28</locationY>
+        <locationX>654</locationX>
+        <locationY>52</locationY>
         <connector>
-            <targetReference>Set_Contract_Status_to_Activated</targetReference>
+            <targetReference>Set_Contract_Status_to_Draft</targetReference>
         </connector>
         <inputReference>oContract</inputReference>
     </recordCreates>
@@ -216,8 +259,8 @@ If the opportunity is already related to a contract, a new contract will not be 
 ACTION: Review the account fields, and add additional fields as needed to the sObject variable.</description>
         <name>Get_Account_Fields</name>
         <label>Get Account Fields</label>
-        <locationX>181</locationX>
-        <locationY>29</locationY>
+        <locationX>331</locationX>
+        <locationY>49</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Contract_on_Oppty</targetReference>
@@ -248,8 +291,8 @@ ACTION: Review the account fields, and add additional fields as needed to the sO
 ACTION: Review the retrieved opportunity fields, and add any additional fields that you need to the sObject variable.</description>
         <name>Get_Opportunity_Fields</name>
         <label>Get Opportunity Fields</label>
-        <locationX>24</locationX>
-        <locationY>32</locationY>
+        <locationX>179</locationX>
+        <locationY>49</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Fields</targetReference>
@@ -268,14 +311,52 @@ ACTION: Review the retrieved opportunity fields, and add any additional fields t
         <queriedFields>Pricebook2Id</queriedFields>
         <queriedFields>CloseDate</queriedFields>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Price_Group</name>
+        <label>Get Price Group</label>
+        <locationX>660</locationX>
+        <locationY>423</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assign_Contract_Fields</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Price_Group_Account.ccrz__PriceGroup__c</elementReference>
+            </value>
+        </filters>
+        <object>ccrz__E_PriceGroup__c</object>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Price_Group_Account</name>
+        <label>Get Price Group Account</label>
+        <locationX>489</locationX>
+        <locationY>229</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Price_Group_Records</targetReference>
+        </connector>
+        <filters>
+            <field>Opportunity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>frmOpptyID</elementReference>
+            </value>
+        </filters>
+        <object>ccrz__E_PriceGroupAccount__c</object>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
     <recordUpdates>
         <description>Uses the field values that are stored in the sObject variable to update the contract.
 
 Include this element if you want the new contract to be Activated.</description>
-        <name>Activate_Contract</name>
-        <label>Activate Contract</label>
-        <locationX>933</locationX>
-        <locationY>134</locationY>
+        <name>Update_Contract</name>
+        <label>Update Contract</label>
+        <locationX>961</locationX>
+        <locationY>207</locationY>
         <connector>
             <targetReference>Set_Contract_on_Oppty</targetReference>
         </connector>
@@ -285,8 +366,8 @@ Include this element if you want the new contract to be Activated.</description>
         <description>Uses the field values that are stored in the sObject variable to update the opportunity.</description>
         <name>Update_Oppty</name>
         <label>Update Oppty</label>
-        <locationX>589</locationX>
-        <locationY>137</locationY>
+        <locationX>967</locationX>
+        <locationY>494</locationY>
         <inputReference>oOppty</inputReference>
     </recordUpdates>
     <startElementReference>Get_Opportunity_Fields</startElementReference>
@@ -303,7 +384,7 @@ Include this element if you want the new contract to be Activated.</description>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
-        <isOutput>false</isOutput>
+        <isOutput>true</isOutput>
         <objectType>Account</objectType>
     </variables>
     <variables>

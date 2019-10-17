@@ -86,4 +86,48 @@ public with sharing class phss_cc_TransactionPaymentUtilTest {
         System.assert(transactionPayment != null);
         System.assertEquals(testAuthTransactionPayment.Id, transactionPayment.ccrz__SourceTransactionPayment__c);
     }
+
+    @IsTest
+    public static void testDesignateContactForTransactionPayment() {
+        ccrz__E_AccountGroup__c accountGroup = phss_cc_TestDataFactory.createInsertTestAccountGroup();
+        Account account = phss_cc_TestDataFactory.createInsertTestAccount(accountGroup);
+        
+        Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Bucket Account').getRecordTypeId();
+        
+        Bucket_Account_Settings__c bas = Bucket_Account_Settings__c.getOrgDefaults();
+        bas.Bucket_Account_Owner_ID__c = UserInfo.getUserID();
+        bas.Bucket_Account_RecordTypeID__c = recordTypeId;
+        bas.Default_Bucket_Name__c = 'Bucket Account';
+        bas.Maximum_Size_of_Bucket__c = 5000;
+        insert bas;
+
+        Contact contact = new Contact(
+                AccountId = account.Id,
+                FirstName = 'John',
+                LastName = 'Doe'
+        );
+        insert contact;
+
+//        AccountContactRelation relation = new AccountContactRelation(
+//                AccountId = account.Id,
+//                ContactId = contact.Id,
+//                IsDirect = true
+//        );
+//        insert relation;
+
+        List<RecordType> recordTypes = [SELECT Id, Name FROM RecordType WHERE SobjectType = 'Account'];
+        if (recordTypes != null) {
+            System.debug('JASON: Number of record types: ' + recordTypes.size());
+            for (RecordType rt : recordTypes) {
+                System.debug('JASON: recordType: ' + rt.Name + ' (Id=' + rt.Id + ')');
+            }
+        } else {
+            System.debug('JASON: NO RECORD TYPES FOUND');
+        }
+        Test.startTest();
+        phss_cc_TransactionPaymentUtil.designateContactForTransactionPayment(testAuthTransactionPayment);
+        Test.stopTest();
+
+        //System.assert(recordTypes != null);
+    }
 }

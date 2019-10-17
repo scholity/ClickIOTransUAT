@@ -178,7 +178,7 @@ public without sharing class ILTInstructorCommunity{
             
             if(csvRecordData.size()>3){
                 if(csvRecordData[3]!=null && csvRecordData[3].trim()!=''){
-                    stDetails.Phone = csvRecordData[3];    
+                    stDetails.Phone = csvRecordData[3];
                 }
             }
             
@@ -1873,8 +1873,9 @@ public without sharing class ILTInstructorCommunity{
                 stDetails.FirstName = objRoster.redwing__User__r.FirstName;
                 stDetails.LastName = objRoster.redwing__User__r.LastName;
                 stDetails.Email = objRoster.redwing__User__r.Email;
-                stDetails.Phone = objRoster.redwing__User__r.Phone;
-                
+                if (!String.isBlank(objRoster.redwing__User__r.Phone)) {
+                    stDetails.Phone = objRoster.redwing__User__r.Phone.replaceAll('[^0-9]',''); // Strip out all mark-up leaving numeric digits
+                } else stDetails.Phone = '';
                 redwing__Learning_Assignment__c learningAssignment = new redwing__Learning_Assignment__c();
                 learningAssignment = map_LearningAssignments.get(objRoster.redwing__Learning_Assignment__c);
                 stDetails.Grade = learningAssignment.redwing__Evaluation_Result__c;

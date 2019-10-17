@@ -56,25 +56,46 @@
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
-                    <label>Course Materials</label>
+                    <label>Student Certification</label>
                     <position>3</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/student-certifications</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Course Materials</label>
+                    <position>4</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>/course-materials</target>
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
                     <label>My Feedback</label>
-                    <position>4</position>
+                    <position>5</position>
                     <publiclyAvailable>false</publiclyAvailable>
                     <target>/my-feedback</target>
                     <type>InternalLink</type>
                 </navigationMenuItem>
                 <navigationMenuItem>
                     <label>Take Another Class</label>
-                    <position>5</position>
+                    <position>6</position>
                     <publiclyAvailable>true</publiclyAvailable>
                     <target>https://www.redcross.org/take-a-class</target>
                     <type>ExternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>CPS Class Report</label>
+                    <position>7</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/cps-classes</target>
+                    <type>InternalLink</type>
+                </navigationMenuItem>
+                <navigationMenuItem>
+                    <label>Student History Report</label>
+                    <position>8</position>
+                    <publiclyAvailable>false</publiclyAvailable>
+                    <target>/students-report</target>
+                    <type>InternalLink</type>
                 </navigationMenuItem>
             </subMenu>
             <type>MenuLabel</type>

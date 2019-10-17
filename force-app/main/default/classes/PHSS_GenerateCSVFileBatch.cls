@@ -197,7 +197,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             isError 				= false;
             errString 				= '';
             Datetime dt 			= fi.Transaction_Date__c;		// Transaction Date - Format 2017/03/21 00:00:00
-            String transactionDate 	= '';
+            String transactionDate 	= '""';
             
             if(dt!=null)
             {
@@ -211,19 +211,19 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 {
                     month='0'+month;
                 }
-                //transactionDate = dt.year()+'/'+month+'/'+day+' 00:00:00';
-                transactionDate = dt.year()+'/'+month+'/'+day; // DE1824
+                transactionDate = '"' + dt.year()+'/'+month+'/'+day+' 00:00:00' + '"'; // DE1883 
+                //transactionDate = dt.year()+'/'+month+'/'+day; // DE1824
             }
             
             // Unit Code
-            String unitCode = '';
+            String unitCode = '""';
             if(fi.Order_Item__r.Unit_Code__c!=null)
             {
                 unitCode = '"' + fi.Order_Item__r.Unit_Code__c + '"';
             }
             
             // FOCIS Category GL
-            String focis = '';
+            String focis = '""';
             if(fi.Order__r.FOCIS_Category__c!=null && fi.CC_Product__r.AP_Code__c != '6243' && fi.CC_Product__r.AP_Code__c != '6244')
             {
                 focis='"' + fi.Order__r.FOCIS_Category__c + '"';
@@ -240,7 +240,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             
             // Bill To Org Name - No more than 60 characters, check for special characters
-            String accountName = '';
+            String accountName = '""';
             if(fi.Order__r.ccrz__Account__r.Name!=null)
             {
                 accountName = fi.Order__r.ccrz__Account__r.Name;
@@ -256,7 +256,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // Bill To Org Address 2 - No more than 40 characters, check for special characters
             
             String billingStreet = fi.Order__r.ccrz__Account__r.BillingStreet;
-            String street1 		 = '';
+            String street1 		 = '""';
             String street2 		 = ''; 
             
             if(billingStreet!=null)
@@ -304,6 +304,10 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 {
                     street2='"'+street2+'"'.trim();
                 }
+                else
+                {
+                    street2 = '""';
+                }
                 
             }
             else
@@ -314,7 +318,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             
             // Bill To Org City - No more than 30 characters, check for special characters
-            String city = '';
+            String city = '""';
             
             if(fi.Order__r.ccrz__Account__r.BillingCity!=null)
             {
@@ -341,7 +345,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             
             // TODO: Update to picklist fields when enabled 
             // Bill To Org State - No more than 2 characters
-            String state = '';
+            String state = '""';
             if(fi.Order__r.ccrz__Account__r.BillingState!=null)
             {
                 state = fi.Order__r.ccrz__Account__r.BillingState.replaceAll(regExp, '');
@@ -372,7 +376,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             
             // Bill To Org Zip Code - No more than 10 characters
-            String postalCode = '';
+            String postalCode = '""';
             if(fi.Order__r.ccrz__Account__r.BillingPostalCode!=null)
             {
                 postalCode = fi.Order__r.ccrz__Account__r.BillingPostalCode;
@@ -397,7 +401,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             // TODO: Update to picklist fields when enabled 
             // Bill To Org Country - No more than 2 characters
-            String country = '';
+            String country = '""';
             if(fi.Order__r.ccrz__Account__r.BillingCountry!=null)
             {
                 country = fi.Order__r.ccrz__Account__r.BillingCountry.replaceAll(regExp, '');
@@ -424,7 +428,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 errString = errString + 'Order-Account-Billing Country';
             }
             // Bill To Org User Field3
-            String sInvoicing = '';
+            String sInvoicing = '""';
             
             if(!String.isEmpty(fi.Order__r.ccrz__Account__r.Special_Invoicing__c))
             {
@@ -432,7 +436,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             
             // Bill To Org Primary Phone
-            String phone = '';
+            String phone = '""';
             
             if(fi.Order__r.ccrz__Account__r.Billing_Contact_phone__c!=null)
             {
@@ -448,7 +452,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 errString 	= errString + 'Bill To Org Primary Phone';
             }
             // Course Num - No more than 40 characters
-            String courseNum = '';
+            String courseNum = '""';
             if(fi.CC_Product__r.ccrz__SKU__c!=null)
             {
                 courseNum 	= fi.CC_Product__r.ccrz__SKU__c;
@@ -468,7 +472,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 errString = errString + 'CC Product-SKU';
             }
             // Course Name, check for special characters
-            String courseName = '';
+            String courseName = '""';
             if(fi.CC_Product__r.Name!=null)
             {
                 courseName = '"' + fi.CC_Product__r.Name.replaceAll(regExp, '') + '"';
@@ -496,7 +500,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             
             system.debug('***eDate3***'+eDate);
             
-            String endDate;
+            String endDate = '""';
             
             if(eDate!=null)
             {
@@ -514,10 +518,10 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                     month='0'+month;
                 }
                 
-                endDate = dt.year()+'/'+month+'/'+day+' 00:00:00';
+                endDate = '"' + dt.year()+'/'+month+'/'+day+' 00:00:00' + '"';
             } 
             // CRS Comments - No more than 50 characters, check for special characters
-            String crsComments = '';
+            String crsComments = '""';
             
             if(fi.Supplemental_Information__c!=null)
             {
@@ -531,7 +535,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 crsComments = '"' + crsComments + '"';
             }
             // Order Num
-            String orderNum = '';
+            String orderNum = '""';
             
             //US1581 - change the Order Number to the CC Order.Name
             if(fi.Order__r.Name!=null)
@@ -540,7 +544,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             
             // Terms
-            String terms = '';
+            String terms = '""';
             if(!String.isEmpty(fi.Order__r.ccrz__Account__r.Payment_Terms__c))
             {
                 terms = '"' + fi.Order__r.ccrz__Account__r.Payment_Terms__c + '"';
@@ -564,8 +568,10 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 transactionAmt=transactionAmt+'0';
             }
             
+            transactionAmt = '"' + transactionAmt + '"';
+            
             // Bill To Org Id - No more than 60 characters
-            String billToOrgId = '';
+            String billToOrgId = '""';
             if(fi.Order__r.ccrz__Account__r.SABA_LMS_Code__c!=null)
             { 
                 billToOrgId	= fi.Order__r.ccrz__Account__r.SABA_LMS_Code__c;
@@ -581,7 +587,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // Bill To Org Bill Contact, check for special characters
             String contactFirstName = fi.Order__r.ccrz__Account__r.Billing_Contact__r.FirstName;
             String contactLastName 	= fi.Order__r.ccrz__Account__r.Billing_Contact__r.LastName;
-            String contactName 		= '';
+            String contactName 		= '""';
             
             if(fi.Order__r.ccrz__Account__r.Billing_Contact__c!=null)
             {
@@ -601,7 +607,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 errString = errString + 'Order-Account-Billing Contact';
             }
             // Payment Category GL
-            String paymentCategoryGL = '';
+            String paymentCategoryGL = '""';
             if(fi.Order_Item__r.Payment_Category__c!=null)
             {
                 paymentCategoryGL = '"' + fi.Order_Item__r.Payment_Category__c + '"';
@@ -614,7 +620,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             } 
             
             // Customer PO Num, check for special characters
-            String po = '';
+            String po = '""';
             
             if(fi.Order__r.ccrz__PONumber__c!=null)
             {
@@ -638,16 +644,16 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             else if(fi.CC_Product__r.ccrz__InventoryType__c == 'FEE' && String.isNotBlank(fi.ILT_Class__r.Offering_ID__c))
             {
-                offeringId = fi.ILT_Class__r.Offering_ID__c;
+                offeringId = '"' + fi.ILT_Class__r.Offering_ID__c + '"';
             }
             else
             {
-                    offeringId = fi.Order_Item__r.Name;
+                    offeringId = '"' + fi.Order_Item__r.Name + '"';
             }
             
             // Per Person Fee
             Decimal ppFee 		= fi.Order_Item__r.ccrz__Price__c;  
-            String perPersonFee = '';
+            String perPersonFee = '""';
             
             if(ppFee!=null)
             {
@@ -656,6 +662,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 {
                     perPersonFee=perPersonFee+'0';
                 }
+                perPersonFee = '"' + perPersonFee + '"'; 
             }
             else
             {
@@ -665,15 +672,15 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }  
             // Number of Students
             Decimal quantity 	= fi.Quantity__c;    
-            String numStudents 	= '0';
+            String numStudents 	= '"0"';
             
             if(quantity!=null)
             {
-                numStudents = String.valueOf(quantity.intValue());
+                numStudents = '"' + String.valueOf(quantity.intValue()) + '"';
             }
             
             // Org Type
-            String orgType = '';
+            String orgType = '""';
             if(!String.isEmpty(fi.Order__r.ccrz__Account__r.SABA_Org_Type__c))
             {
                 orgType='"'+fi.Order__r.ccrz__Account__r.SABA_Org_Type__c+'"';
@@ -683,7 +690,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             String paymentId = '"' + fi.Id + '"';
             // DE1194 Return SABA name instead of Id
             // DE1568 return account id if saba name/NK Org is null
-            String sabaName = '';
+            String sabaName = '""';
             /*
              * DE1671 - replaced SABA_Name__c with nk_billto_org_id__c
             if (!String.isEmpty(fi.Order__r.ccrz__Account__r.SABA_Name__c)) {
@@ -699,7 +706,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
 
             // AP Code
-            String apCode = '';
+            String apCode = '""';
             if(!String.isEmpty(fi.AP_Code__c))
             {
                 //apCode='"'+fi.CC_Product__r.AP_Code__c+'"';
@@ -707,7 +714,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 apCode='"'+fi.AP_Code__c+'"';
             }
             
-            String fullName = '';
+            String fullName = '""';
             // Max Instructor Full Name
             String instructorName = '';
             // DE1194 For the following conditions, supply the student name (should be only one)
@@ -818,6 +825,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 //fi.Status__c='Complete';
                 fi.Status__c		= 'Invoiced';
                 fi.CFS_File_Name__c	= documentName;
+                fi.Invoiced_Date__c = System.today();
             }
             if(!integrationFiles.isEmpty() && !fulfillmentItemList.isEmpty())
             {

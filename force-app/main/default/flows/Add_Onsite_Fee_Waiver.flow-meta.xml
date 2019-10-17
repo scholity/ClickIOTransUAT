@@ -3,8 +3,8 @@
     <assignments>
         <name>Set_Order_Fulfillment</name>
         <label>Set Order Fulfillment</label>
-        <locationX>558</locationX>
-        <locationY>351</locationY>
+        <locationX>549</locationX>
+        <locationY>382</locationY>
         <assignmentItems>
             <assignToReference>sFulfillment.Fulfillment_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -54,8 +54,8 @@
     <assignments>
         <name>Set_Order_Fulfillment_Item</name>
         <label>Set Order Fulfillment Item</label>
-        <locationX>886</locationX>
-        <locationY>351</locationY>
+        <locationX>893</locationX>
+        <locationY>382</locationY>
         <assignmentItems>
             <assignToReference>sFulfillmentItem.Fulfillment__c</assignToReference>
             <operator>Assign</operator>
@@ -179,8 +179,8 @@
     <decisions>
         <name>Onsite_Fee_Not_found</name>
         <label>Onsite Fee Not found</label>
-        <locationX>383</locationX>
-        <locationY>245</locationY>
+        <locationX>409</locationX>
+        <locationY>238</locationY>
         <defaultConnector>
             <targetReference>Look_Up_Product</targetReference>
         </defaultConnector>
@@ -220,11 +220,8 @@
     <recordCreates>
         <name>Add_to_Order_Item</name>
         <label>Add Fee to Order Item</label>
-        <locationX>366</locationX>
-        <locationY>358</locationY>
-        <connector>
-            <targetReference>Set_Order_Fulfillment</targetReference>
-        </connector>
+        <locationX>520</locationX>
+        <locationY>549</locationY>
         <inputAssignments>
             <field>ILT_Class__c</field>
             <value>
@@ -308,8 +305,8 @@
     <recordCreates>
         <name>Create_Fulfillment_Order</name>
         <label>Create Fulfillment Order</label>
-        <locationX>722</locationX>
-        <locationY>353</locationY>
+        <locationX>727</locationX>
+        <locationY>382</locationY>
         <connector>
             <targetReference>Set_Order_Fulfillment_Item</targetReference>
         </connector>
@@ -318,15 +315,15 @@
     <recordCreates>
         <name>Create_Order_Fulfillment_Item</name>
         <label>Create Order Fulfillment Item</label>
-        <locationX>1032</locationX>
-        <locationY>347</locationY>
+        <locationX>1046</locationX>
+        <locationY>382</locationY>
         <inputReference>sFulfillmentItem</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_ILT_Class</name>
         <label>Get ILT Class</label>
-        <locationX>184</locationX>
-        <locationY>532</locationY>
+        <locationX>171</locationX>
+        <locationY>552</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Transaction_Payment</targetReference>
@@ -345,8 +342,8 @@
     <recordLookups>
         <name>Get_Transaction_Payment</name>
         <label>Get Transaction Payment</label>
-        <locationX>367</locationX>
-        <locationY>532</locationY>
+        <locationX>362</locationX>
+        <locationY>551</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Add_to_Order_Item</targetReference>
@@ -366,8 +363,8 @@
     <recordLookups>
         <name>Look_Up_Product</name>
         <label>Look Up Product</label>
-        <locationX>180</locationX>
-        <locationY>361</locationY>
+        <locationX>172</locationX>
+        <locationY>236</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Onsite_Fee_Missing</targetReference>
@@ -386,8 +383,8 @@
     <recordLookups>
         <name>Lookup_Order_Item</name>
         <label>Lookup Order Item</label>
-        <locationX>182</locationX>
-        <locationY>245</locationY>
+        <locationX>416</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Onsite_Fee_Not_found</targetReference>
@@ -431,8 +428,8 @@
     <recordLookups>
         <name>Lookup_Training_Event</name>
         <label>Lookup Training Event</label>
-        <locationX>180</locationX>
-        <locationY>134</locationY>
+        <locationX>302</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Lookup_Order_Item</targetReference>
@@ -453,8 +450,8 @@
     <screens>
         <name>Error_Message</name>
         <label>Error Message</label>
-        <locationX>577</locationX>
-        <locationY>246</locationY>
+        <locationX>579</locationX>
+        <locationY>240</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -470,7 +467,7 @@
         <name>Onsite_Fee_Missing_Screen</name>
         <label>Onsite Fee Missing</label>
         <locationX>59</locationX>
-        <locationY>544</locationY>
+        <locationY>548</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -485,8 +482,8 @@
     <screens>
         <name>Onsite_Fee_Screen</name>
         <label>Onsite Fee Screen</label>
-        <locationX>180</locationX>
-        <locationY>32</locationY>
+        <locationX>177</locationX>
+        <locationY>50</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
