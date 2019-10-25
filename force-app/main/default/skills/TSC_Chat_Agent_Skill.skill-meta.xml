@@ -2,21 +2,12 @@
 <Skill xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
         <users>
-            <user>amelia.seibel1@redcross.org</user>
             <user>amie.wilson@redcross.org</user>
-            <user>breana.colbert@redcross.org</user>
             <user>chelsi.carr@redcross.org</user>
             <user>christa.angelo@redcross.org</user>
-            <user>debra.archibeque@redcross.org</user>
-            <user>gehovonna.morris@redcross.org</user>
             <user>gregory.fulton@redcross.org</user>
             <user>heather.ware@redcross.org</user>
-            <user>jamie.myers@redcross.org</user>
-            <user>julee.johnson@redcross.org</user>
-            <user>lisa.daugherty@redcross.org</user>
-            <user>maricris.smith@redcross.org</user>
             <user>mark.pyles@redcross.org</user>
-            <user>marra.dimatteo@redcross.org</user>
             <user>stephanie.bigley@redcross.org</user>
             <user>tanya.franklin@redcross.org</user>
             <user>trina.levy@redcross.org</user>

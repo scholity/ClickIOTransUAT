@@ -391,6 +391,24 @@
         <profile>SB ARC / TSC Agent</profile>
     </profileActionOverrides>
     <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ARC_Case_Record_Sales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Sales_Case_Read_Only</recordType>
+        <type>Flexipage</type>
+        <profile>SB ARC RSG Agent</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>ARC_Case_Record_Sales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Case</pageOrSobjectType>
+        <recordType>Case.Sales_Case</recordType>
+        <type>Flexipage</type>
+        <profile>SB ARC RSG Agent</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
         <actionName>Tab</actionName>
         <content>American_Red_Cross_Service_Console_Home_Page</content>
         <formFactor>Large</formFactor>

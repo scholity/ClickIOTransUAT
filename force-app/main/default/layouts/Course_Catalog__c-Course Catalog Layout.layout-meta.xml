@@ -100,6 +100,13 @@
         <relatedList>Sub_class_Setting__c.Course_Catalog__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>ccrz__SKU__c</fields>
+        <fields>ccrz__ProductType__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>ccrz__E_Product__c.Course_Catalog__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>

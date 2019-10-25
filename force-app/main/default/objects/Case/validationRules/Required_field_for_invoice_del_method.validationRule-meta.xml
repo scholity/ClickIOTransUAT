@@ -15,6 +15,7 @@ ISPICKVAL( Type_of_Price_Dispute__c , &#39;Email&#39;),
 ISPICKVAL( Type_of_Price_Dispute__c , &#39;Portal Billing&#39;),
 ISPICKVAL( Type_of_Price_Dispute__c , &#39;Return to Postal Mail&#39;)
 ),
+ISPICKVAL(Invoice_Delivery__c, &#39;&#39;),
 $Setup.Validation_Rules__c.Bypass_Rules__c = FALSE
 )</errorConditionFormula>
     <errorDisplayField>Invoice_Delivery__c</errorDisplayField>

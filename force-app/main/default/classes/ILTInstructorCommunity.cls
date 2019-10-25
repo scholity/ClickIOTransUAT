@@ -1481,7 +1481,7 @@ public without sharing class ILTInstructorCommunity{
 
             if (closeClass) {
                 // US1521 - Populate CC Cart Item Record(s) with ILT Class Id (if applicable)
-
+                Id orderId;
                 if (rosterILTClass != null && rosterILTCLass.Opportunity__c != null) {
                     // US1521 - For close class, Order Lines should already be created
                     // In this case, we need to write ILT Class Id on Order Item record(s)
@@ -1499,19 +1499,20 @@ public without sharing class ILTInstructorCommunity{
                                 newOrderItem.ILT_Class__c = rosterILTClass.Id;
                                 updatedOrderItems.add(newOrderItem);
                                 updatedOrderItemIds.add(theOrderItem.Id);
+                                orderId = theOrderItem.ccrz__Order__c;
                                 System.debug('*** non-FS updatedOrderItems:' + updatedOrderItems);
                             }
                         }
 
                         // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
                         // boolean on order header record
-                        if (!updatedOrderItems.isEmpty() && updatedOrderItems[0].ccrz__Order__c != null) {
-                            if (!updatedOrderIds.contains(updatedOrderItems[0].ccrz__Order__c)) {
+                        if (!updatedOrderItems.isEmpty() && orderId != null) {
+                            if (!updatedOrderIds.contains(orderId)) {
                                 ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
-                                newOrder.Id = updatedOrderItems[0].ccrz__Order__c;
+                                newOrder.Id = orderId;
                                 newOrder.CRE_Request_Processed__c = true;
                                 updatedOrders.add(newOrder);
-                                updatedOrderIds.add(updatedOrderItems[0].ccrz__Order__c);
+                                updatedOrderIds.add(orderId);
                                 System.debug('*** non-FS updatedOrders:' + updatedOrders);
                             }
                         }

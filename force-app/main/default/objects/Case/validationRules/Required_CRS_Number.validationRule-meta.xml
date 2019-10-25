@@ -6,12 +6,12 @@
 OR(
 ISPICKVAL(Dispute_Issue__c, &quot;Duplicate Invoice&quot;),
 ISPICKVAL(Dispute_Issue__c, &quot;Price&quot;),
-ISPICKVAL(Dispute_Issue__c, &quot;Wrong Organization&quot;)
-/*ISPICKVAL(Dispute_Issue__c, &quot;Customer Service Credit&quot;),
+ISPICKVAL(Dispute_Issue__c, &quot;Wrong Organization&quot;),
+ISPICKVAL(Dispute_Issue__c, &quot;Customer Service Credit&quot;),
 AND(
 ISPICKVAL(Dispute_Issue__c, &quot;Customer Account Maintenance&quot;),
 ISPICKVAL(Type_of_Price_Dispute__c, &quot;Missing Data&quot;)
-)*/
+)
 ),
 ISBLANK(CRS__c),
 OR(NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)), OwnerId = &#39;00Gd0000000SdP5&#39;),

@@ -37,6 +37,32 @@
         });
         $A.enqueueAction(action);	
 	},
+
+    initalizeProductQuantityList : function(component, event, helper) {
+        
+		var action = component.get("c.initProductQuantityList");
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") { 
+                var resp = response.getReturnValue();    
+                component.set("v.myProductQuantityList",resp);
+                //alert("Initalized ProductQuantityList");
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        component.set("v.errorMessage",errors[0].message);
+                        component.set("v.showError",true);
+                    }
+                } else {
+                    console.log("Unknown error");
+                }
+            }
+        });
+        $A.enqueueAction(action);        
+        
+    },
     
     initalizeProductQuantityMap : function(component, event, helper) {
         
@@ -194,7 +220,12 @@
             var errMsg = "Either \'URL for registration\' or \'Phone for registration\' fields must be filled.";
             component.set("v.errorMessage",errMsg);
             component.set("v.isUrlValid",false);
-        } 
+        } else if(component.get("v.allValid") && component.get("v.cpsWrap").regUrl  && component.get("v.cpsWrap").regPhone) {
+            component.set("v.showError","true");
+            var errMsg = "You can only have a \'URL for registration\' or \'Phone for registration\' not both.";
+            component.set("v.errorMessage",errMsg);
+            component.set("v.isUrlValid",false)
+        }
         
         component.set("v.cpsWrap.OfferingInformation.selectedAccount",component.get("v.selectedLookUpRecord1"));
         component.set("v.cpsWrap.OfferingInformation.selectedFacility",component.get("v.selectedLookUpRecord5"));
@@ -423,26 +454,34 @@
     requiredSchedule : function(component,event,helper){
         
         // Required Time Counter decrement value
+        var classFormat = component.get('v.cpsWrap.classFormat');
         var required_time = component.get('v.cpsWrap.classDuration');
+        //alert("classDuration " + component.get('v.cpsWrap.classDuration'));
         component.set("v.ScheduledTime",0);
-        component.get("v.cpsWrap.sessionList").forEach(function(session) { 
-            if(session.classDate && session.startTime && session.endTime){
-                var diff = Math.abs(new Date(session.classDate + " " + session.startTime) - new Date(session.classDate + " " + session.endTime)); 
-                var minutes = Math.floor(diff/60000);
-                // console.log("Minutes: " + minutes);
-                var hours = Math.floor(minutes / 60); 
-                // console.log("Hours: " + hours);
-                var timeScheduled = (component.get('v.ScheduledTime') +  hours);
-                if(timeScheduled >= required_time && component.get('v.cpsWrap.classDuration') != 0){ 
-                    component.set("v.scheduleError",false);
-                } else {
-                    component.set("v.scheduleError",true);
+        if(classFormat != "" && !required_time){
+            component.set("v.scheduleError",true);
+            component.set('v.cpsWrap.classDuration', 'NaN');
+        } else {
+            component.get("v.cpsWrap.sessionList").forEach(function(session) { 
+                if(session.classDate && session.startTime && session.endTime){
+                    var diff = Math.abs(new Date(session.classDate + " " + session.startTime) - new Date(session.classDate + " " + session.endTime)); 
+                    var minutes = Math.floor(diff/60000);
+                    // console.log("Minutes: " + minutes);
+                    var hours = Math.floor(minutes / 60); 
+                    // console.log("Hours: " + hours);
+                    var timeScheduled = (component.get('v.ScheduledTime') +  hours);
+                    if(timeScheduled >= required_time && component.get('v.cpsWrap.classDuration') != 0){ 
+                        component.set("v.scheduleError",false);
+                    } else {
+                        component.set("v.scheduleError",true);
+                    }
+                    
+                    component.set("v.ScheduledTime",timeScheduled);
                 }
                 
-                component.set("v.ScheduledTime",timeScheduled);
-           	}
-            
-     	});
+            });
+        }
+
     },
     getGeocode : function(component, event, helper){
         var address = this.getFullAddress(component, event, helper);

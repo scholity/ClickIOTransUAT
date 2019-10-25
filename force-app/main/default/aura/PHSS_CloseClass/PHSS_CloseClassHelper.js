@@ -133,6 +133,11 @@
 
                 component.set("v.requestType", storeResponse.RequestType);
                 component.set("v.trainingEventId", storeResponse.TrainingEventId);
+
+                var isCartActive = component.get("v.isCarActive");
+                if (storeResponse.RequestType.indexOf("Full Service") >= 0 || isCartActive) {
+                    component.set("v.eligibleForClose", "true");
+                }
             }
             else if (state === "ERROR") {
                 // Process error returned by server
@@ -263,7 +268,6 @@
 
     updateOrder : function(cmp, event) {
 
-
          var studentCount = cmp.get("v.numberOfStudentsList").length;
          console.log('studentCount '+studentCount);
 
@@ -274,6 +278,7 @@
          console.log('trainingEventId '+trainingEventId);
 
          var action = cmp.get("c.handleFullServiceClass");
+      
          action.setParams({
              classId : classId, studentCount : studentCount, trainingEventId : trainingEventId
          });

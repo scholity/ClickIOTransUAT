@@ -18,10 +18,10 @@ trigger GetFeedbackSurveytrigger on redwing__ILT_Class__c (after update) {
     }
     //List<ccrz__E_Product__c> ProdList=[Select id from ccrz__E_Product__c where id IN : ILTId];
     List<redwing__ILT_Roster__c> RosterList= new List<redwing__ILT_Roster__c>();
-	RosterList=[select id,Contact__r.Email,Contact__r.FirstName,redwing__ILT_Class__c,redwing__ILT_Class__r.name from redwing__ILT_Roster__c where redwing__ILT_Class__c IN : Trigger.new];
+    RosterList=[select id,Contact__r.Email,Contact__r.FirstName,redwing__ILT_Class__c,redwing__ILT_Class__r.name from redwing__ILT_Roster__c where redwing__ILT_Class__c IN : Trigger.new];
     List<ccrz__E_ProductSpec__c> ProdSpecList;
     ProdSpecList =[select id,ccrz__SpecValue__c,ccrz__Product__c from ccrz__E_ProductSpec__c where ccrz__Product__c IN :ILTId];
-	List<String> sendTo = new List<String>();
+    List<String> sendTo = new List<String>();
     Map<String,String> EmailTemps= new Map<String,String>();
     System.debug('RosterList>>'+RosterList);
     System.debug('ProdSpecList>>'+ProdSpecList);

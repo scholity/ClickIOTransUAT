@@ -35,6 +35,11 @@ public without sharing class PHSS_CpsController {
 		
         return cpsWrap;
     }
+
+    @AuraEnabled
+    public static List<Map<String, Object>> initProductQuantityList() {
+        return new List<Map<String, Object>> ();
+    }
     
     @AuraEnabled
     public static Map<String, Object> initProductQuantityMap() {
@@ -55,6 +60,7 @@ public without sharing class PHSS_CpsController {
         return productQuantityMap;
 
     }
+    
     
     @AuraEnabled
     public static void postClass(String jsonStr) {
@@ -231,66 +237,10 @@ public without sharing class PHSS_CpsController {
                                                           Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :cpsWrap.oppId And ccrz__E_OrderItem__c.ccrz__Product__c = :cpsWrap.ccProductId]) {
                                                               
                                                               ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                                                              /*
-                                                              if(theOrderItem.ILT_Class__c != NULL && theOrderItem.ILT_Class__c != ''){
-																 // Insert New Order Item for Multiple Course
-																	
-                                                                    for (ccrz__E_OrderItem__c existingOrderItem : [Select Id, AP_Code__c, Class_Setting__c, Course_Id__c, CreatedById, Date_Order__c, ccrz__ExtSKU__c, FOCIS_Category__c, ILT_Class__c, ILT_Class_End_Date__c, Inventory_Type__c, ccrz__ItemStatus__c, ccrz__ItemTotal__c, Offering_Id__c,Opportunity__c, ccrz__Order__c, Adjustment_Types__c, ccrz__OrderItemId__c, ccrz__OrderItemStatus__c, ccrz__OrderLineType__c, ccrz__OriginalItemPrice__c, ccrz__OriginalQuantity__c, Payment_Category__c, Payment_Method__c, ccrz__Price__c, ccrz__PricingModifierTypes__c, ccrz__PricingType__c, ccrz__PrimaryAttr__c, ccrz__Product__c, ccrz__Product_Name__c, ccrz__ProductType__c, ccrz__Quantity__c, RecordTypeId, ccrz__StoreId__c, ccrz__SubAmount__c, TS_LOC__c,Unit_Code__c, ccrz__UnitOfMeasure__c 
-                                                                        				From ccrz__E_OrderItem__c Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :cpsWrap.oppId And ccrz__E_OrderItem__c.ccrz__Product__c = :cpsWrap.ccProductId And ILT_Class__c != null ]) {
-                                                                                                            
-             
-                                                                        //newOrderItem.AP_Code__c = existingOrderItem.AP_Code__c;	
-                                                                        //newOrderItem.Class_Setting__c = existingOrderItem.Class_Setting__c;
-                                                                        //newOrderItem.Course_Id__c = existingOrderItem.Course_Id__c;
-                                                                        newOrderItem.CreatedById = existingOrderItem.CreatedById;
-                                                                        //newOrderItem.Date_Order__c = existingOrderItem.Date_Order__c;
-                                                                        newOrderItem.ccrz__ExtSKU__c = existingOrderItem.ccrz__ExtSKU__c;
-                                                                        //newOrderItem.FOCIS_Category__c = existingOrderItem.FOCIS_Category__c;
-                                                                        newOrderItem.ILT_Class__c = classID;
-                                                                        //newOrderItem.ILT_Class_End_Date__c =
-                                                                        newOrderItem.Inventory_Type__c = existingOrderItem.Inventory_Type__c;
-                                                                        newOrderItem.ccrz__ItemStatus__c = existingOrderItem.ccrz__ItemStatus__c;
-                                                                        //newOrderItem.ccrz__ItemTotal__c = existingOrderItem.ccrz__ItemTotal__c;
-                                                                        //newOrderItem.Offering_Id__c = existingOrderItem.Offering_Id__c;
-                                                                        //newOrderItem.Opportunity__c = existingOrderItem.Opportunity__c;
-                                                                        newOrderItem.ccrz__Order__c = existingOrderItem.ccrz__Order__c;
-                                                                        newOrderItem.Adjustment_Types__c = existingOrderItem.Adjustment_Types__c;
-                                                                        //newOrderItem.ccrz__OrderItemId__c = existingOrderItem.ccrz__OrderItemId__c;
-                                                                        newOrderItem.ccrz__OrderItemStatus__c = existingOrderItem.ccrz__OrderItemStatus__c;
-                                                                        newOrderItem.ccrz__OrderLineType__c = existingOrderItem.ccrz__OrderLineType__c;
-                                                                        newOrderItem.ccrz__OriginalItemPrice__c = existingOrderItem.ccrz__OriginalItemPrice__c;
-                                                                        newOrderItem.ccrz__OriginalQuantity__c = existingOrderItem.ccrz__OriginalQuantity__c;
-                                                                        newOrderItem.Payment_Category__c = existingOrderItem.Payment_Category__c;
-                                                                        //newOrderItem.Payment_Method__c = existingOrderItem.Payment_Method__c;
-                                                                        newOrderItem.ccrz__Price__c = existingOrderItem.ccrz__Price__c;
-                                                                        newOrderItem.ccrz__PricingModifierTypes__c = existingOrderItem.ccrz__PricingModifierTypes__c;
-                                                                        newOrderItem.ccrz__PricingType__c = existingOrderItem.ccrz__PricingType__c;
-                                                                        newOrderItem.ccrz__PrimaryAttr__c = existingOrderItem.ccrz__PrimaryAttr__c;
-                                                                        newOrderItem.ccrz__Product__c = existingOrderItem.ccrz__Product__c;
-                                                                        //newOrderItem.ccrz__Product_Name__c = existingOrderItem.ccrz__Product_Name__c;
-                                                                        newOrderItem.ccrz__ProductType__c = existingOrderItem.ccrz__ProductType__c;
-                                                                        newOrderItem.ccrz__Quantity__c = existingOrderItem.ccrz__Quantity__c;
-                                                                        newOrderItem.RecordTypeId = existingOrderItem.RecordTypeId;
-                                                                        newOrderItem.ccrz__StoreId__c = existingOrderItem.ccrz__StoreId__c;
-                                                                        newOrderItem.ccrz__SubAmount__c = existingOrderItem.ccrz__SubAmount__c;
-                                                                        newOrderItem.TS_LOC__c = existingOrderItem.TS_LOC__c;
-                                                                        newOrderItem.Unit_Code__c = existingOrderItem.Unit_Code__c;
-                                                                        newOrderItem.ccrz__UnitOfMeasure__c = existingOrderItem.ccrz__UnitOfMeasure__c;
-                                                                        
-                                                                        
-                                                                        insert newOrderItem;
-                                                                    }
-																	
-                                                              } else {
-																*/
-                                                                  newOrderItem.Id = theOrderItem.Id;	
-                                                                  newOrderItem.ILT_Class__c = classID;
-                                                                  updatedOrderItems.add(newOrderItem);
-                                                              //}
                                                               
-                                                             
-
-
+                                                              newOrderItem.Id = theOrderItem.Id;	
+                                                              newOrderItem.ILT_Class__c = classID;
+                                                              updatedOrderItems.add(newOrderItem);
                                                           }
                 
                 /*

@@ -121,6 +121,7 @@ public with sharing class phss_cc_StoredPaymentUtil {
                                 ccrz__Account__c,
                                 ccrz__ExpMonth__c,
                                 ccrz__ExpYear__c,
+                                ccrz__PaymentType__c,
                                 ccrz__Storefront__c,
                                 ccrz__Token__c,
                                 Remaining_PO_Amount__c

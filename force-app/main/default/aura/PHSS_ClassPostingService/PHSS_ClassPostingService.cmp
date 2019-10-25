@@ -45,6 +45,7 @@
     <aura:attribute name = "selectedLookUpRecord1" 	type = "sObject" 	default = "{}"/>
     <aura:handler   name = "change" value="{!v.selectedLookUpRecord1}" action = "{!c.accountSelected}" />
     <aura:attribute name = "orgError" 		type = "Boolean" 	default = "false"/>
+    <aura:attribute name = "myProductQuantityList" 	type="List"/>
     <aura:attribute name = "myProductQuantityMap" 	type="Map"/>
     <aura:attribute name = "offeringsList"	type="List" />
     <aura:attribute name = "offeringId" 	type="Integer" default = "0"/>
@@ -180,7 +181,12 @@
                             </div>    
                             <aura:if isTrue="{!v.scheduleError}" >
                                 <aura:if isTrue="{!v.cpsWrap.classDuration}" >
-                                	<div class="lookupError">You must Schedule session for minimum <b>{!v.cpsWrap.classDuration}</b> hours</div>
+                                    <aura:if isTrue="{!v.cpsWrap.classDuration == 'NaN'}" >
+                                		<div class="lookupError">Class Duration is not configured correctly. Please contact TSC for support.</div>
+                                    <aura:set attribute="else">
+                                        <div class="lookupError">You must Schedule session for minimum <b>{!v.cpsWrap.classDuration}</b> hours</div>
+                                    </aura:set>
+                                	</aura:if>
                             	<aura:set attribute="else">
                                     <div class="lookupError">Please <b>Search for a Course</b> and select from the search results to Schedule session(s) </div>
                                 </aura:set>
@@ -375,15 +381,23 @@
                                              label 	  = "geoLat"
                                              name	  = "geoLat"
                                              required = "true" 
-                                             aura:id  = "field"/>
+                                             aura:id  = "field"
+                                             messageWhenPatternMismatch = "Please enter a valid Zip code"/>
                             <input type="hidden" id="geoCodeLng" name="geoCodeLng" value=""/>
                             <lightning:input value	  = "{!v.cpsWrap.geoLng}"
                                              label 	  = "geoLng"
                                              name	  = "geoLng"
                                              required = "true"
-                                             aura:id  = "field"/>
+                                             aura:id  = "field"
+                                             messageWhenPatternMismatch = "Please enter a valid Zip code"/>
                         </div>
-                        
+                        <div id="Accspinner" class="demo-only" style="height: 6rem;z-index:100;display:none">
+                         <div role="status" class="slds-spinner slds-spinner_large slds-spinner_brand">
+                           <span class="slds-assistive-text">Loading</span>
+                           <div class="slds-spinner__dot-a"></div>
+                           <div class="slds-spinner__dot-b"></div>
+                         </div>
+                        </div>
                         <div class = "slds-box slds-theme_shade">Registration</div>
                         <div class = "slds-size_3-of-6 slds-p-top_small">
                             <lightning:input value	  = "{!v.cpsWrap.regUrl}"

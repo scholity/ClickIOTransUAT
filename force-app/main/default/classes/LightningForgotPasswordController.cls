@@ -61,6 +61,10 @@ global class LightningForgotPasswordController {
         String htmlBody = template.HtmlValue;
         htmlBody = htmlBody.replace('{!resetPasswdUrl}', resetPasswdUrl);
         htmlBody = htmlBody.replace('{!FirstName}', firstName);
+        
+        // filter out spurious HTML inserted by Salesforce (appears to be a platform bug!!)
+        htmlBody = htmlBody.replace('<![CDATA[','');        
+        htmlBody = htmlBody.replace(']]>','');
 
         String plainBody = template.Body;
         plainBody = plainBody.replace('{!resetPasswdUrl}', resetPasswdUrl);

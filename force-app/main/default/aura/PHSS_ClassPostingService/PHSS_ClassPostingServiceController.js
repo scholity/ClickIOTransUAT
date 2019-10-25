@@ -4,6 +4,7 @@
         
         helper.initializeWrapper(component, event, helper);
         helper.initalizeProductQuantityMap(component, event, helper);
+        helper.initalizeProductQuantityList(component, event, helper);
         
         var days = '7';
         
@@ -115,6 +116,7 @@
         component.set("v.LPDuration",offering.classDuration);
         component.set("v.cpsWrap.classDuration",offering.classDuration);
         component.set("v.cpsWrap.sessionList",offering.sessionList);
+        component.set("v.cpsWrap.locationId",offering.locationId);
         component.set("v.cpsWrap.siteName",offering.siteName);
         component.set("v.cpsWrap.address1",offering.address1);
         component.set("v.cpsWrap.address2",offering.address2);
@@ -122,13 +124,13 @@
         component.set("v.cpsWrap.state",offering.state);
         component.set("v.cpsWrap.zip",offering.zip);
         component.set("v.cpsWrap.geoLat",offering.geoLat);
-        component.set("v.cpsWrap.zip",offering.geoLng);
+        component.set("v.cpsWrap.geoLng",offering.geoLng);
         component.set("v.cpsWrap.regUrl",offering.regUrl);
         component.set("v.cpsWrap.regPhone",offering.regPhone);
         component.set("v.cpsWrap.regFee",offering.regFee);
         component.set("v.selectedLookUpRecord1",offering.OfferingInformation.selectedAccount);
         component.set("v.selectedLookUpRecord5",offering.OfferingInformation.selectedFacility);
-		
+		//alert("Selected Facility "+ JSON.stringify((offering.OfferingInformation.selectedFacility)));
 
 		helper.requiredSchedule(component,event,helper);
 		component.set("v.stepNumber", "One");        
@@ -204,6 +206,7 @@
     onclickNext : function(component,event,helper){
         
         var currentSN = component.get("v.stepNumber");
+        var timeOut = '2000';
         
         if(currentSN == "One")            
         {
@@ -213,83 +216,100 @@
             helper.validateFields(component,event,helper);
             helper.createIltLocation(component);
             
-            //alert("Location ID " + component.get('v.cpsWrap.locationId'));
-            
-            var vorgId 	= component.get("v.selectedLookUpRecord1").Id
-            if(vorgId === undefined){
-                component.set("v.orgError",true);
-            }else{
-                component.set("v.orgError",false);
+            if(component.get('v.cpsWrap.locationId') != ""){
+                var timeOut = '0';
             }
             
-            if(component.get("v.allValid") && component.get("v.isUrlValid") && !component.get("v.orgError")) {
-                var tempList = component.get("v.offeringsList");
-                var existingOfferingInCart = component.get("v.cpsWrap.offeringId");
-                var offeringJson = JSON.stringify(component.get("v.cpsWrap"));
+            if(component.get("v.allValid") == false && component.get("v.offeringId") > 0 && component.get("v.cpsWrap.offeringId") == "0"){
+                    component.set("v.showError","false");
+                    component.set("v.errorMessage","");
+            }
+            
+            if(component.get("v.allValid") == true){
+                document.getElementById("Accspinner").style.display = "block";
+            }
+            
+            
+        	setTimeout(function(){
+                document.getElementById("Accspinner").style.display = "none";
+                //alert("Location ID " + component.get('v.cpsWrap.locationId'));
 
-                if(existingOfferingInCart != "0"){
-                    tempList[existingOfferingInCart -1].quantity = "1";
-                    if(component.get("v.productChange")){
-                        component.set("v.cpsWrap.quantity", "1");
-                    } else {
-                        component.set("v.cpsWrap.quantity", "0");
-                    }
-                    component.set("v.productChange", false);
-                    tempList[existingOfferingInCart -1] = JSON.parse(offeringJson);
-                    
-                } else {
-                    var offeringId = component.get("v.offeringId");
-                    offeringId = offeringId + 1;
-                    component.set("v.offeringId", offeringId);
-					component.set("v.cpsWrap.offeringId", offeringId);
-                    component.set("v.cpsWrap.quantity", "1");
-                    offeringJson = JSON.stringify(component.get("v.cpsWrap"));
-					tempList.push(JSON.parse(offeringJson));                 
+                var vorgId 	= component.get("v.selectedLookUpRecord1").Id
+                if(vorgId === undefined){
+                    component.set("v.orgError",true);
+                }else{
+                    component.set("v.orgError",false);
                 }
-				component.set("v.offeringsList", tempList);
-
-                // Show/hide credit card info
-                //Will fetch AccountContactRelation record on the basis of loggedin user's ContactId and selected account id
-                var action = component.get("c.getDisplayPaymentInfo"); 
-                action.setParams({ opportunityId : component.get("v.oppIdParent")});
-                action.setCallback(this, function(response) {
-                    
-                    var state = response.getState();
-                    if (state === "SUCCESS") {
-                        //debugger;
-                        console.log("Payment Info: " + JSON.stringify(response));
-                        var data = response.getReturnValue();
-                        component.set("v.displayPaymentInfo", data);
+                
+                if(component.get("v.allValid") && component.get("v.isUrlValid") && !component.get("v.orgError")) {
+                    var tempList = component.get("v.offeringsList");
+                    var existingOfferingInCart = component.get("v.cpsWrap.offeringId");
+                    var offeringJson = JSON.stringify(component.get("v.cpsWrap"));
+                    //alert('***New Offerings.. '+offeringJson);
+                    if(existingOfferingInCart != "0"){
+                        tempList[existingOfferingInCart -1].quantity = "1";
+                        if(component.get("v.productChange")){
+                            component.set("v.cpsWrap.quantity", "1");
+                        } else {
+                            component.set("v.cpsWrap.quantity", "0");
+                        }
+                        component.set("v.productChange", false);
+                        tempList[existingOfferingInCart -1] = JSON.parse(offeringJson);
+                        
+                    } else {
+                        var offeringId = component.get("v.offeringId");
+                        offeringId = offeringId + 1;
+                        component.set("v.offeringId", offeringId);
+                        component.set("v.cpsWrap.offeringId", offeringId);
+                        component.set("v.cpsWrap.quantity", "1");
+                        offeringJson = JSON.stringify(component.get("v.cpsWrap"));
+                        tempList.push(JSON.parse(offeringJson));                 
                     }
-                });
-                $A.enqueueAction(action);
-                
-                helper.updateProductQuantityMap(component,event,helper);
-                
-                helper.clearForm(component,event,helper);
-                
-            	component.set("v.stepNumber", "Two");    
-            } else if(component.get("v.offeringId") > 0 && component.get("v.cpsWrap.offeringId") == "0") {
-                var action = component.get("c.getDisplayPaymentInfo"); 
-                action.setParams({ opportunityId : component.get("v.oppIdParent")});
-                action.setCallback(this, function(response) {
+                    component.set("v.offeringsList", tempList);
+    
+                    // Show/hide credit card info
+                    //Will fetch AccountContactRelation record on the basis of loggedin user's ContactId and selected account id
+                    var action = component.get("c.getDisplayPaymentInfo"); 
+                    action.setParams({ opportunityId : component.get("v.oppIdParent")});
+                    action.setCallback(this, function(response) {
+                        
+                        var state = response.getState();
+                        if (state === "SUCCESS") {
+                            //debugger;
+                            console.log("Payment Info: " + JSON.stringify(response));
+                            var data = response.getReturnValue();
+                            component.set("v.displayPaymentInfo", data);
+                        }
+                    });
+                    $A.enqueueAction(action);
                     
-                    var state = response.getState();
-                    if (state === "SUCCESS") {
-                        //debugger;
-                        console.log("Payment Info: " + JSON.stringify(response));
-                        var data = response.getReturnValue();
-                        component.set("v.displayPaymentInfo", data);
-                    }
-                });
-                $A.enqueueAction(action);
-                
-                helper.clearForm(component,event,helper);
-                
-                component.set("v.showError","false");
-        		component.set("v.errorMessage","");
-            	component.set("v.stepNumber", "Two");
-            }
+                    helper.updateProductQuantityMap(component,event,helper);
+                    
+                    helper.clearForm(component,event,helper);
+                    
+                    component.set("v.stepNumber", "Two");    
+                } else if(component.get("v.offeringId") > 0 && component.get("v.cpsWrap.offeringId") == "0") {
+                    var action = component.get("c.getDisplayPaymentInfo"); 
+                    action.setParams({ opportunityId : component.get("v.oppIdParent")});
+                    action.setCallback(this, function(response) {
+                        
+                        var state = response.getState();
+                        if (state === "SUCCESS") {
+                            //debugger;
+                            console.log("Payment Info: " + JSON.stringify(response));
+                            var data = response.getReturnValue();
+                            component.set("v.displayPaymentInfo", data);
+                        }
+                    });
+                    $A.enqueueAction(action);
+                    
+                    helper.clearForm(component,event,helper);
+                    
+                    component.set("v.showError","false");
+                    component.set("v.errorMessage","");
+                    component.set("v.stepNumber", "Two");
+                }
+        	},timeOut);
         }
         else if(currentSN == "Three")
         {
@@ -371,47 +391,56 @@
             helper.formatTime(component,event,helper);
             helper.validateFields(component,event,helper);
             helper.createIltLocation(component);
-        
-            var vorgId 	= component.get("v.selectedLookUpRecord1").Id
-            if(vorgId === undefined){
-                component.set("v.orgError",true);
-            }else{
-                component.set("v.orgError",false);
-            }
-            
-            if(component.get("v.allValid") && component.get("v.isUrlValid") && !component.get("v.orgError")) {
-                var tempList = component.get("v.offeringsList");
-                var existingOfferingInCart = component.get("v.cpsWrap.offeringId");
-                var offeringJson = JSON.stringify(component.get("v.cpsWrap"));
-                
-                if(existingOfferingInCart != "0"){
-                    tempList[existingOfferingInCart -1].quantity = "1";
-                    if(component.get("v.productChange")){
-                        component.set("v.cpsWrap.quantity", "1");
-                    } else {
-                        component.set("v.cpsWrap.quantity", "0");
-                    }
-                    component.set("v.productChange", false);
-                    tempList[existingOfferingInCart -1] = JSON.parse(offeringJson);
-                } else {
-                    var offeringId = component.get("v.offeringId");
-                    offeringId = offeringId + 1;
-                    component.set("v.offeringId", offeringId);
-					component.set("v.cpsWrap.offeringId", offeringId);
-                    component.set("v.cpsWrap.quantity", "1");
-                    offeringJson = JSON.stringify(component.get("v.cpsWrap"));
-					tempList.push(JSON.parse(offeringJson));                    
-                }
-                component.set("v.offeringsList", tempList);
-                //alert("Offerings " + JSON.stringify(component.get("v.offeringsList")));
-				
-                helper.updateProductQuantityMap(component,event,helper);
 
-                var offeringStartDate = $A.localizationService.formatDate(component.get("v.cpsWrap.sessionList[0].classDate"), "MM/dd/yyyy");
-                alert("Offering " + component.get("v.cpsWrap.courseName") + " " +  offeringStartDate + " has been add to your shopping cart. ");
-                helper.clearForm(component,event,helper);
-            	component.set("v.stepNumber", "One");    
+            if(component.get("v.allValid") == true){
+                document.getElementById("Accspinner").style.display = "block";
             }
+        
+        	setTimeout(function(){
+                document.getElementById("Accspinner").style.display = "none";
+                //alert("Location ID " + component.get('v.cpsWrap.locationId'));
+                
+                var vorgId 	= component.get("v.selectedLookUpRecord1").Id
+                if(vorgId === undefined){
+                    component.set("v.orgError",true);
+                }else{
+                    component.set("v.orgError",false);
+                }
+                
+                if(component.get("v.allValid") && component.get("v.isUrlValid") && !component.get("v.orgError")) {
+                    var tempList = component.get("v.offeringsList");
+                    var existingOfferingInCart = component.get("v.cpsWrap.offeringId");
+                    var offeringJson = JSON.stringify(component.get("v.cpsWrap"));
+                    //alert('***New Offerings.. '+offeringJson);
+                    if(existingOfferingInCart != "0"){
+                        tempList[existingOfferingInCart -1].quantity = "1";
+                        if(component.get("v.productChange")){
+                            component.set("v.cpsWrap.quantity", "1");
+                        } else {
+                            component.set("v.cpsWrap.quantity", "0");
+                        }
+                        component.set("v.productChange", false);
+                        tempList[existingOfferingInCart -1] = JSON.parse(offeringJson);
+                    } else {
+                        var offeringId = component.get("v.offeringId");
+                        offeringId = offeringId + 1;
+                        component.set("v.offeringId", offeringId);
+                        component.set("v.cpsWrap.offeringId", offeringId);
+                        component.set("v.cpsWrap.quantity", "1");
+                        offeringJson = JSON.stringify(component.get("v.cpsWrap"));
+                        tempList.push(JSON.parse(offeringJson));                    
+                    }
+                    component.set("v.offeringsList", tempList);
+                    //alert("Offerings " + JSON.stringify(component.get("v.offeringsList")));
+                    
+                    helper.updateProductQuantityMap(component,event,helper);
+    
+                    var offeringStartDate = $A.localizationService.formatDate(component.get("v.cpsWrap.sessionList[0].classDate"), "MM/dd/yyyy");
+                    alert("Offering " + component.get("v.cpsWrap.courseName") + " " +  offeringStartDate + " has been add to your shopping cart.\n\nTo continue adding offerings to your shopping cart click on the \"Add To Cart\" button. When you are finished adding offerings, click on the \"Next\" button to review your Order Summary.");
+                    helper.clearForm(component,event,helper);
+                    component.set("v.stepNumber", "One");    
+                }
+            },2000);
     },
     
     createClass : function(component, event, helper) {
@@ -520,14 +549,19 @@
     siteSelected: function(component, event, helper) {
         var siteId = component.get("v.selectedLookUpRecord5").Id;
         var selectedSite = component.get("v.selectedLookUpRecord5");
-        console.log("Site Selected: " + JSON.stringify(selectedSite));
-        component.set("v.cpsWrap.siteName", selectedSite["Name"]);
-        component.set("v.cpsWrap.address1", selectedSite["redwing__Address_1__c"]);
-        component.set("v.cpsWrap.address2", selectedSite["redwing__Address_2__c"]);
-        component.set("v.cpsWrap.city", selectedSite["redwing__City__c"]);
-        component.set("v.cpsWrap.state", selectedSite["redwing__State__c"]);
-        component.set("v.cpsWrap.zip", selectedSite["redwing__Postal_Code__c"]);
-        component.set('v.cpsWrap.locationId', siteId);
+        if(!$A.util.isUndefinedOrNull(siteId)){
+            console.log("Site Selected: " + JSON.stringify(selectedSite));
+            component.set("v.cpsWrap.siteName", selectedSite["Name"]);
+            component.set("v.cpsWrap.address1", selectedSite["redwing__Address_1__c"]);
+            component.set("v.cpsWrap.address2", selectedSite["redwing__Address_2__c"]);
+            component.set("v.cpsWrap.city", selectedSite["redwing__City__c"]);
+            component.set("v.cpsWrap.state", selectedSite["redwing__State__c"]);
+            component.set("v.cpsWrap.zip", selectedSite["redwing__Postal_Code__c"]);
+            component.set('v.cpsWrap.locationId', siteId);
+        	//alert("siteSelected Location ID " + siteId);
+            //alert("siteSelected Location ID " + component.get('v.cpsWrap.locationId'));            
+        }
+
     },
     updatePaymentComplete : function(component,event,helper){
 

@@ -1,15 +1,15 @@
 ({
-    doInit : function(component, event, helper) {        
+    doInit : function(component, event, helper) {
         helper.fetchClassDetails(component, event, helper);
         helper.isCommunityCls(component);
-        
     },
     
     showStep1 : function(component,event,helper){
 
         // add logic to differentiate - validateCart or find order
         var requestType = component.get("v.requestType");
-        if ((requestType !== "Full Service" && requestType !== "Community")) {
+        //if ((requestType !== "Full Service" && requestType !== "Community")) {
+        if (requestType.indexOf("Full Service") < 0 && requestType !== "Community") {
             helper.validateCart(component, event, helper);
         }
 
@@ -70,7 +70,8 @@
                            // if(isLegalCheckednext){
 
                 var requestType = component.get("v.requestType");
-                if (requestType != "Full Service" && requestType !== "Community") {
+                //if (requestType != "Full Service" && requestType !== "Community") {
+                if (requestType.indexOf("Full Service") < 0 && requestType !== "Community") {
                     var action = component.get("c.updateCartProducts");
 
                     action.setParams({opportunitySfid : component.get("v.opportunityId"),
@@ -221,11 +222,13 @@
     	console.log(requestType);
     	debugger;
 
-        if (requestType === "Full Service") {
+        //if (requestType === "Full Service") {
+        if (requestType.indexOf("Full Service") >= 0) {
             console.log('running update order FS');
             helper.updateOrder(cmp, event);
         }
-        if (requestType === "Full Service" || requestType === "Community") {
+        //if (requestType === "Full Service" || requestType === "Community") {
+        if (requestType.indexOf("Full Service") >= 0 || requestType === "Community") {
             console.log('running close class FS/Community');            
             helper.closingClass(cmp, event, helper);
         }

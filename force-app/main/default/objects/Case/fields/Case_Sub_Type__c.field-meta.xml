@@ -53,6 +53,11 @@
                 <label>AP/LTP – Classroom</label>
             </value>
             <value>
+                <fullName>Application &amp; Registration Fees Paid</fullName>
+                <default>false</default>
+                <label>Application &amp; Registration Fees Paid</label>
+            </value>
+            <value>
                 <fullName>Application Fee paid</fullName>
                 <default>false</default>
                 <label>Application Fee paid</label>
@@ -61,6 +66,11 @@
                 <fullName>Application Info sent to customer</fullName>
                 <default>false</default>
                 <label>Application Info sent to customer</label>
+            </value>
+            <value>
+                <fullName>Approved</fullName>
+                <default>false</default>
+                <label>Approved</label>
             </value>
             <value>
                 <fullName>AP Scheduling Tool</fullName>
@@ -168,6 +178,11 @@
                 <label>Correct</label>
             </value>
             <value>
+                <fullName>Correction of Cancellation Fee</fullName>
+                <default>false</default>
+                <label>Correction of Cancellation Fee</label>
+            </value>
+            <value>
                 <fullName>Cost of training</fullName>
                 <default>false</default>
                 <label>Cost of training</label>
@@ -241,6 +256,11 @@
                 <fullName>Curriculum question</fullName>
                 <default>false</default>
                 <label>Curriculum question</label>
+            </value>
+            <value>
+                <fullName>Denied</fullName>
+                <default>false</default>
+                <label>Denied</label>
             </value>
             <value>
                 <fullName>Digital Cert for Online Courses</fullName>
@@ -376,6 +396,11 @@
                 <fullName>Initial Inquiry</fullName>
                 <default>false</default>
                 <label>Initial Inquiry</label>
+            </value>
+            <value>
+                <fullName>Instructor</fullName>
+                <default>false</default>
+                <label>Instructor</label>
             </value>
             <value>
                 <fullName>Instructor&#39;s Corner</fullName>
@@ -693,6 +718,11 @@
                 <label>Registration Fee paid</label>
             </value>
             <value>
+                <fullName>Requested</fullName>
+                <default>false</default>
+                <label>Requested</label>
+            </value>
+            <value>
                 <fullName>Request for Old Version of Code</fullName>
                 <default>false</default>
                 <label>Request for Old Version of Code</label>
@@ -766,6 +796,11 @@
                 <fullName>Story Share</fullName>
                 <default>false</default>
                 <label>Story Share</label>
+            </value>
+            <value>
+                <fullName>Student</fullName>
+                <default>false</default>
+                <label>Student</label>
             </value>
             <value>
                 <fullName>Submitted by Email</fullName>
@@ -884,12 +919,32 @@
             <valueName>Request for Old Version of Code</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Achievement Assignment Issue</controllingFieldValue>
+            <valueName>Instructor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Achievement Assignment Issue</controllingFieldValue>
+            <valueName>Student</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Pro Bono Requests</controllingFieldValue>
             <valueName>Health Fairs</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Pro Bono Requests</controllingFieldValue>
             <valueName>Presentation</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prepayment on Account</controllingFieldValue>
+            <valueName>Approved</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prepayment on Account</controllingFieldValue>
+            <valueName>Denied</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Prepayment on Account</controllingFieldValue>
+            <valueName>Requested</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Instructors</controllingFieldValue>
@@ -995,6 +1050,10 @@
         <valueSettings>
             <controllingFieldValue>Field Request</controllingFieldValue>
             <valueName>Organization Request</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
+            <valueName>Application &amp; Registration Fees Paid</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nurse Assistant Training</controllingFieldValue>
@@ -1316,6 +1375,10 @@
         <valueSettings>
             <controllingFieldValue>Certificates</controllingFieldValue>
             <valueName>S/H Email Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Community Course Registration</controllingFieldValue>
+            <valueName>Correction of Cancellation Fee</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Community Course Registration</controllingFieldValue>

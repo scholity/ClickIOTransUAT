@@ -1459,7 +1459,7 @@
             <label>IfReserved</label>
         </rules>
     </decisions>
-    <description>Added Individual Account Record Type Check - Added Order already In Process check and Credit Card - Invalid Contract override</description>
+    <description>Added Individual Account Record Type Check - added additional fields to sOrder to allow for reducing SOQLs in On Hold Check</description>
     <formulas>
         <name>AddtoCourse</name>
         <dataType>Number</dataType>
@@ -1902,6 +1902,10 @@
             <field>Id</field>
         </outputAssignments>
         <outputAssignments>
+            <assignToReference>sOrder.Name</assignToReference>
+            <field>Name</field>
+        </outputAssignments>
+        <outputAssignments>
             <assignToReference>sOrder.Override_Credit_Limit__c</assignToReference>
             <field>Override_Credit_Limit__c</field>
         </outputAssignments>
@@ -1920,6 +1924,14 @@
         <outputAssignments>
             <assignToReference>sOrder.ccrz__Contact__c</assignToReference>
             <field>ccrz__Contact__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>sOrder.ccrz__Name__c</assignToReference>
+            <field>ccrz__Name__c</field>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>sOrder.ccrz__OrderId__c</assignToReference>
+            <field>ccrz__OrderId__c</field>
         </outputAssignments>
         <outputAssignments>
             <assignToReference>sOrder.ccrz__OrderStatus__c</assignToReference>

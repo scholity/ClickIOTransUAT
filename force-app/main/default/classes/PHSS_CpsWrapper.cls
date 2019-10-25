@@ -58,6 +58,7 @@ public class PHSS_CpsWrapper {
         this.offeringId = '0';
         this.courseName = '';
         this.classFormat = '';
+        this.locationId = '';
         this.siteName = '';
         this.address1 = '';
         this.address2 = '';

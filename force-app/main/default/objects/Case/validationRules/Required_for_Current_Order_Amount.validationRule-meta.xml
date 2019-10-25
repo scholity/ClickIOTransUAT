@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Required_for_Current_Order_Amount</fullName>
-    <active>false</active>
+    <active>true</active>
     <description>When Invoicing Case Type = Price</description>
     <errorConditionFormula>AND( 
 ISBLANK( Current_Order_Amount__c), 
@@ -9,7 +9,19 @@ ISBLANK( Current_Order_Amount__c),
 (RecordTypeId &lt;&gt; &quot;012d000000097TB&quot;), 
 RecordType.DeveloperName = &quot;Invoicing&quot;, 
 NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)),
-ISPICKVAL( Dispute_Issue__c , &quot;Price&quot; ), 
+OR
+(
+ISPICKVAL( Dispute_Issue__c , &#39;Price&#39; ), 
+ISPICKVAL( Dispute_Issue__c , &#39;Wrong Organization&#39; ),
+ISPICKVAL( Dispute_Issue__c , &#39;Customer Service Credit&#39; ),
+AND(
+ISPICKVAL( Dispute_Issue__c , &#39;Collections&#39;),
+OR(
+ISPICKVAL(Type_of_Price_Dispute__c,&#39;Bankruptcy Chp 7&#39;),
+ISPICKVAL(Type_of_Price_Dispute__c,&#39;Bankruptcy Chp 9 or 11&#39;)
+)
+)
+),
 $Setup.Validation_Rules__c.Bypass_Rules__c = false 
 )</errorConditionFormula>
     <errorDisplayField>Current_Order_Amount__c</errorDisplayField>

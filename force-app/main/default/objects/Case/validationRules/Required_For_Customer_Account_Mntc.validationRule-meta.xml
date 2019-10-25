@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Required_For_Customer_Account_Mntc</fullName>
+    <active>true</active>
+    <description>Required_for_Customer_Account_Maintenanc/Update RCS PO Amt/Date when below fields are blank
+1. RCS PO Start Date
+2. RCS PO Expiry Date
+3. RCS PO Number
+4. RCS PO Amount</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(Type, &#39;Invoicing&#39;),
+ISPICKVAL ( Dispute_Issue__c ,&#39;Customer Account Maintenance&#39;),
+ISPICKVAL(Type_of_Price_Dispute__c, &#39;Update RCS PO Amt/Date&#39;),
+OR(NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)), OwnerId = &#39;00Gd0000000SdP5&#39;),
+RecordType.DeveloperName = &quot;Invoicing&quot;,
+OR(
+ISBLANK(RCS_PO_Start_Date__c),
+ISBLANK(RCS_PO_Expiry_Date__c),
+ISBLANK(RCS_PO_Number__c),
+ISBLANK(RCS_PO_Amount__c)
+),
+$Setup.Validation_Rules__c.Bypass_Rules__c = FALSE
+)</errorConditionFormula>
+    <errorMessage>Please provide RCS PO Amount,RCS PO Number,RCS PO Start Date and RCS PO Expiry Date</errorMessage>
+</ValidationRule>
