@@ -101,6 +101,11 @@
                 <default>false</default>
                 <label>Customer Comments</label>
             </value>
+            <value>
+                <fullName>Prepayment on Account</fullName>
+                <default>false</default>
+                <label>Prepayment on Account</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

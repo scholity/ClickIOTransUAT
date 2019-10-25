@@ -123,6 +123,7 @@ public class SubmitOrderCreditController
                     storedPymt.ccrz__EndDate__c 			= Date.today().addDays(30);
 					storedPymt.ccrz__ExpMonth__c			= tPayment.ccrz__ExpirationMonth__c;
 					storedPymt.ccrz__ExpYear__c				= tPayment.ccrz__ExpirationYear__c;
+					storedPymt.ccrz__PaymentType__c			= tPayment.ccrz__PaymentType__c;
 					storedPymt.ccrz__Token__c				= tPayment.ccrz__Token__c;
                 
                 insert storedPymt;
@@ -131,7 +132,8 @@ public class SubmitOrderCreditController
             ccrz__E_TransactionPayment__c newTransPayment = tPayment.clone(false,false,false,false);
             
             newTransPayment.ccrz__CCOrder__c					= orderId;
-            newTransPayment.ccrz__ParentTransactionPayment__c 	= tPayment.Id; 
+            newTransPayment.ccrz__ParentTransactionPayment__c 	= tPayment.Id;
+			newTransPayment.ccrz__PaymentType__c				= tPayment.ccrz__PaymentType__c;
             newTransPayment.ccrz__Amount__c 					= ccCreditOrder.ccrz__SubtotalAmount__c;
             
             if(hasCreditOnAccount)

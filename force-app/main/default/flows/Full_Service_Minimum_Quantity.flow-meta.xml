@@ -762,6 +762,9 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>vInstCmpRatio</name>
@@ -770,6 +773,9 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>vInstructorQty</name>
@@ -778,6 +784,9 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>vStudentMinQty</name>

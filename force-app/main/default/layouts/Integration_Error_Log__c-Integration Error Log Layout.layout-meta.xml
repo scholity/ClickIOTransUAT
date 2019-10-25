@@ -23,6 +23,10 @@
                 <behavior>Edit</behavior>
                 <field>Order__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Parent_Integration_Error_Log__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -40,6 +44,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Transaction_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Source__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -90,6 +98,15 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Status__c</fields>
+        <fields>Order__c</fields>
+        <fields>Fulfillment_Item__c</fields>
+        <fields>Transaction_ID__c</fields>
+        <fields>Error_Details__c</fields>
+        <relatedList>Integration_Error_Log__c.Parent_Integration_Error_Log__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

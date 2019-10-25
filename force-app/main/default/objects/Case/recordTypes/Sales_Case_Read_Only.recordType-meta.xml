@@ -99,6 +99,10 @@
     <picklistValues>
         <picklist>Case_Sub_Type__c</picklist>
         <values>
+            <fullName>Application %26 Registration Fees Paid</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Blended Learning</fullName>
             <default>false</default>
         </values>
@@ -120,6 +124,10 @@
         </values>
         <values>
             <fullName>Compliment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correction of Cancellation Fee</fullName>
             <default>false</default>
         </values>
         <values>

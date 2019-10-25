@@ -52,6 +52,7 @@ public with sharing class phss_cc_OrderUtil {
     //
     private static final String CREDIT_DATA_KEY = 'creditData';
     private static final String DEFAULT_APPLIED_CREDIT_REASON = 'Using on balance amount';
+    private static final String PAYMENT_TYPE_KEY = 'paymentType';
     private static final String STOREFRONT_KEY = 'storefront';
     private static final String TRANSACTION_TYPE_KEY = 'transactionType';
 
@@ -139,6 +140,7 @@ public with sharing class phss_cc_OrderUtil {
                 Decimal requestAmount = (Decimal) creditData.get(SURPLUS_CREDIT_AMOUNT_KEY);
                 paymentDataMap = new Map<String, Object>{
                         ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_BALANCE,
+                        PAYMENT_TYPE_KEY => storedPayment.ccrz__PaymentType__c,
                         REQUEST_AMOUNT_KEY => requestAmount,
                         STORED_PAYMENT_ID_KEY => storedPayment.Id,
                         STORED_PAYMENT_SAVE_AS_STORED_PAYMENT => false,
@@ -162,6 +164,7 @@ public with sharing class phss_cc_OrderUtil {
 
                 paymentDataMap = new Map<String, Object>{
                         ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_CARD,
+                        PAYMENT_TYPE_KEY => storedPayment.ccrz__PaymentType__c,
                         EXPIRATION_MONTH_KEY => storedPayment.ccrz__ExpMonth__c,
                         EXPIRATION_YEAR_KEY => storedPayment.ccrz__ExpYear__c,
                         PAYMENT_TOKEN_KEY => storedPayment.ccrz__Token__c,

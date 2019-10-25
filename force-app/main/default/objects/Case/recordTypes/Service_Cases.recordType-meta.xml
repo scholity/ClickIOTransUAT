@@ -179,6 +179,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approved</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Aquatics Examiner Service%2E</fullName>
             <default>false</default>
         </values>
@@ -287,6 +291,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Denied</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Direct Links</fullName>
             <default>false</default>
         </values>
@@ -380,6 +388,10 @@
         </values>
         <values>
             <fullName>Initial Inquiry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instructor</fullName>
             <default>false</default>
         </values>
         <values>
@@ -579,6 +591,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Requested</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Retest</fullName>
             <default>false</default>
         </values>
@@ -616,6 +632,10 @@
         </values>
         <values>
             <fullName>Status of Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Student</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2232,6 +2252,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prepayment on Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Submission of Class Paperwork</fullName>
             <default>false</default>
         </values>
@@ -2969,11 +2993,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Eligible</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email Sent</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Error Message</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Expired</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extended</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3062,6 +3098,10 @@
         </values>
         <values>
             <fullName>Normal Shipping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Hold</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3165,6 +3205,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Voided</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Waiting on AHA Certification</fullName>
             <default>false</default>
         </values>
@@ -3222,6 +3266,10 @@
         <picklist>Type</picklist>
         <values>
             <fullName>AP Blended Learning</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Achievement Assignment Issue</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3286,6 +3334,10 @@
         </values>
         <values>
             <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prepayment on Account</fullName>
             <default>false</default>
         </values>
         <values>

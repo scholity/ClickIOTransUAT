@@ -852,6 +852,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ccrz__E_OrderItem__c.Supplemental_Information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ccrz__E_OrderItem__c.TS_LOC__c</field>
         <readable>true</readable>

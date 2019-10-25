@@ -382,6 +382,31 @@
                 <default>false</default>
                 <label>Remove Portal Access</label>
             </value>
+            <value>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+                <label>On Hold</label>
+            </value>
+            <value>
+                <fullName>Voided</fullName>
+                <default>false</default>
+                <label>Voided</label>
+            </value>
+            <value>
+                <fullName>Extended</fullName>
+                <default>false</default>
+                <label>Extended</label>
+            </value>
+            <value>
+                <fullName>Expired</fullName>
+                <default>false</default>
+                <label>Expired</label>
+            </value>
+            <value>
+                <fullName>Eligible</fullName>
+                <default>false</default>
+                <label>Eligible</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Granted Grace Period for Expired Base Level Cert</controllingFieldValue>
@@ -620,18 +645,21 @@
             <controllingFieldValue>Application Fee paid</controllingFieldValue>
             <controllingFieldValue>Registration Fee paid</controllingFieldValue>
             <controllingFieldValue>Refund Issued</controllingFieldValue>
+            <controllingFieldValue>Application &amp; Registration Fees Paid</controllingFieldValue>
             <valueName>Individual Pay</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Application Fee paid</controllingFieldValue>
             <controllingFieldValue>Registration Fee paid</controllingFieldValue>
             <controllingFieldValue>Refund Issued</controllingFieldValue>
+            <controllingFieldValue>Application &amp; Registration Fees Paid</controllingFieldValue>
             <valueName>Sponsored</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Application Fee paid</controllingFieldValue>
             <controllingFieldValue>Registration Fee paid</controllingFieldValue>
             <controllingFieldValue>Refund Issued</controllingFieldValue>
+            <controllingFieldValue>Application &amp; Registration Fees Paid</controllingFieldValue>
             <valueName>Grant Funded</valueName>
         </valueSettings>
         <valueSettings>
@@ -709,6 +737,31 @@
         <valueSettings>
             <controllingFieldValue>MTN Bridge</controllingFieldValue>
             <valueName>IC Access</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructor</controllingFieldValue>
+            <controllingFieldValue>Student</controllingFieldValue>
+            <valueName>On Hold</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructor</controllingFieldValue>
+            <controllingFieldValue>Student</controllingFieldValue>
+            <valueName>Voided</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructor</controllingFieldValue>
+            <controllingFieldValue>Student</controllingFieldValue>
+            <valueName>Extended</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructor</controllingFieldValue>
+            <controllingFieldValue>Student</controllingFieldValue>
+            <valueName>Expired</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Instructor</controllingFieldValue>
+            <controllingFieldValue>Student</controllingFieldValue>
+            <valueName>Eligible</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Certifications</controllingFieldValue>

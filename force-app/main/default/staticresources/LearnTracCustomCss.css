@@ -6,15 +6,16 @@
     display:none;
 }
 
-div.ltuiLearningListCmp > div.slds-grid.slds-grid_align-end > a.text-capitalize {
+.ltuiLearningListCmp a.slds-grid.slds-grid_align-end.text-capitalize {
     display: none;
 }
-div.ltuiUserAchievementsCmp > div.slds-grid.slds-grid_align-end > a {
+.ltuiUserAchievementsCmp div.slds-grid.slds-grid_align-end a {
     display: none;
 }
 .ltuiUserAchievementsCmp .add-certificate{
     display:none;
 }
+
 .ltuiILTEventViewerCmp .register button {
 	display: none !important;
 }

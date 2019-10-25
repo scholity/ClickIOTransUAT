@@ -1064,6 +1064,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RCAchievementAssignmentsHelper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RCClassHeaderCmpCtrl</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1286,6 +1290,10 @@
     <classAccesses>
         <apexClass>TestOpportunityTrigger</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestRCAchievementAssignmentsHelper</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TestSafeDML</apexClass>
@@ -1921,6 +1929,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>skedJobTrigger_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>skedJobtoILTClass</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9300,6 +9312,16 @@
         <editable>false</editable>
         <field>Integration_Error_Log__c.Order__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Integration_Error_Log__c.Parent_Integration_Error_Log__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Integration_Error_Log__c.Source__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

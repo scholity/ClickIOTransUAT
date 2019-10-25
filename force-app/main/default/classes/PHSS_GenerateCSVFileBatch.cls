@@ -139,6 +139,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                               'Order__r.ccrz__Account__r.nk_billto_org_id__c,' +
                               'ILT_Class__c,' +
             				  'AP_Code__c,' +
+            				  'CC_Category_Name__c,' +
                               'CC_Product__r.AP_Code__c ' +
                         'FROM Fulfillment_Item__c WHERE Status__c=\'Ready\' AND Fulfillment__r.Type__c!=\'Receipt\' AND Fulfillment__r.Payment_Method__c =\'po\'';
         
@@ -523,8 +524,10 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             // CRS Comments - No more than 50 characters, check for special characters
             String crsComments = '""';
             
-            if(fi.Supplemental_Information__c!=null)
+            if(fi.Supplemental_Information__c!=null && fi.CC_Category_Name__c != 'NAT Training' && fi.CC_Category_Name__c != 'NAT Testing')
             {
+                system.debug('***Inside CRS Commnets***');
+                
                 crsComments 	= fi.Supplemental_Information__c.replaceAll(regExp, '');
                 
                 if(crsComments.length()>50)
@@ -716,7 +719,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             
             String fullName = '""';
             // Max Instructor Full Name
-            String instructorName = '';
+            String instructorName = '""';
             // DE1194 For the following conditions, supply the student name (should be only one)
             if (('"6243"'.equals(apCode) || '"6244"'.equals(apCode)) && '"41"'.equals(focis))
             {
@@ -725,25 +728,65 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 if (fi.ILT_Class__c != null &&
                     ('COURSE'.equals(fi.CC_Product__r.ccrz__InventoryType__c) || 'COMMUNITY'.equals(fi.CC_Product__r.ccrz__InventoryType__c)))
                 {
-                    rosters = new List<redwing__ILT_Roster__c>([SELECT redwing__User__r.Name
-                    											  FROM redwing__ILT_Roster__c
-                    											 WHERE redwing__ILT_Class__c =:fi.ILT_Class__c]);
-                    if (rosters.size()> 0)
+                    //DE1854
+                    if(fi.CC_Category_Name__c == 'NAT Training' || fi.CC_Category_Name__c == 'NAT Testing')
                     {
-                    	instructorName = '"' + rosters[0].redwing__User__r.Name.replaceAll(regExp, '') + '"';
-                		fullName 	   = instructorName;
+                        if(String.isNotBlank(fi.Supplemental_Information__c))
+                        {
+                            instructorName 	= '"' + fi.Supplemental_Information__c.replaceAll(regExp, '') + '"';
+                            fullName	 	= instructorName;
+                        }
+                        else
+                        {
+                            isError = true;
+                            
+                            if(errString!='')
+                            {
+                                errString=errString+';';
+                            }
+                            errString = errString + 'NAT Student Name';
+                        }
                     }
                     else
                     {
-                        isError = true;
-                        if(errString!='')
+                    	rosters = new List<redwing__ILT_Roster__c>([SELECT redwing__User__r.Name
+                    											  FROM redwing__ILT_Roster__c
+                    											 WHERE redwing__ILT_Class__c =:fi.ILT_Class__c]);
+                        if (rosters.size()> 0)
                         {
-                            errString=errString+';';
+                            instructorName = '"' + rosters[0].redwing__User__r.Name.replaceAll(regExp, '') + '"';
+                            fullName 	   = instructorName;
                         }
-                		errString = errString + 'ILT Class-Roster User Name';
+                        else
+                        {
+                            isError = true;
+                            if(errString!='')
+                            {
+                                errString=errString+';';
+                            }
+                            errString = errString + 'ILT Class-Roster User Name';
+                        }
                     }
                 }
-                
+            }
+            //DE1854 
+            else if(fi.CC_Category_Name__c == 'NAT Training' || fi.CC_Category_Name__c == 'NAT Testing')
+            {
+                if(String.isNotBlank(fi.Supplemental_Information__c))
+                {
+                    instructorName 	= '"' + fi.Supplemental_Information__c.replaceAll(regExp, '') + '"';
+                    fullName		= instructorName;
+                }
+                else
+                {
+                    isError = true;
+                    
+                    if(errString!='')
+                    {
+                        errString=errString+';';
+                    }
+                    errString = errString + 'NAT Student Name';
+                }
                 
             }
             else if (fi.ILT_Class__c!=null && iltCIMap.containsKey(fi.ILT_Class__c) && iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__c!=null)
@@ -801,6 +844,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                 iErrorLog.Account__c 			= fi.Order__r.ccrz__Account__r.Id;
                 iErrorLog.Order__c 				= fi.Order__r.Id;
                 iErrorLog.Error_Details__c		= errString;
+                iErrorLog.Source__c				= 'CFS';
                 iErrorLog.Status__c				= 'Open';
                 
                 integrationErrorLogList.add(iErrorLog);
@@ -887,8 +931,30 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             
             system.debug('***integrationErrorLogList***'+integrationErrorLogList);
             
+            //DE1900
+            map<Id,Id> fiMap = new map<Id,Id>();
+            
+            List<Integration_Error_Log__c> existingErrorLogList = [SELECT Id,
+																		  Fulfillment_Item__c
+                                                                     FROM Integration_Error_Log__c
+                                                                    WHERE Status__c = 'Open'];
+            
+            for(Integration_Error_Log__c iel : existingErrorLogList)
+            {
+                fiMap.put(iel.Fulfillment_Item__c, iel.Id);
+            }
+            
             if(integrationErrorLogList.size() > 0)
             {
+                if(existingErrorLogList.size() > 0)
+                {
+                    system.debug('***existingErrorLogList***'+existingErrorLogList);
+                    for(Integration_Error_Log__c e : integrationErrorLogList)
+                    {
+                        system.debug('***Inside Error Log Loop***');
+                        e.Parent_Integration_Error_Log__c = fiMap.get(e.Fulfillment_Item__c );
+                    }
+                }
                 insert integrationErrorLogList;
             }
             

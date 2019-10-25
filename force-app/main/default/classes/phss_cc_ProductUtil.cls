@@ -6,19 +6,27 @@ public with sharing class phss_cc_ProductUtil {
     private static final String PRODUCT_SFID_KEY = 'sfid';
     private static final String PRODUCT_SFDCNAME_KEY = 'sfdcName';
     private static final String PRODUCT_PRICE_KEY = 'price';
+    private static final String PRODUCT_INVENTORY_TYPE_KEY = 'inventoryType';
     private static final String PRODUCT_COMPONENTS_KEY = 'componentProducts';
+    private static final String PRODUCT_SPECS_KEY = 'productSpecsS';
+    private static final String PRODUCT_SPEC_VALUE_KEY = 'specValue';
     private static final String PRODUCT_COMPONENT_ID_KEY = 'component';
     private static final String PRODUCT_RELATED_COMPONENT_KEY = 'componentR';
     private static final String PRODUCT_COMPOSITES_KEY = 'compositeProductsS';
 
+    // Product values
+    private static final String COMMUNITY_INVENTORY_TYPE = 'COMMUNITY';
+
     // Product Spec names and values
     public static final String CLASS_SPEC_NAME = 'Class';
     public static final String LEARN_TO_SWIM_PRODUCT_SPEC = 'LTS';
+    public static final String ONLINE_SPEC_VALUE = 'ONLINE';
 
     private static final String FAILED_TO_PERFORM_SEARCH_REQUEST = 'Failed to perform search request.';
     private static final String FAILED_TO_GET_PRODUCT_DETAILS = 'Failed to get Product Details.';
     private static final String FAILED_TO_PERFORM_SEARCH = 'Failed to perform search.';
     private static final String FAILED_TO_PERFORM_FILTERED_PRODUCT_SEARCH = 'Failed to perform filtered product search.';
+    private static final String FAILED_TO_PERFORM_SEARCH_EXCLUDING_COURSES = 'Failed to perform search excluding online community courses.';
     private static final String FAILED_TO_CREATE_A_PRODUCT_MAP = 'Failed to create a product map.';
     private static final String FAILED_TO_GET_PRODUCTS_MATCHING_SPECS = 'Failed to get products matching product specs.';
     private static final String FAILED_TO_GET_COMPONENT_AND_COMPOSITE_PRODUCTS = 'Failed to get component and composite products.';
@@ -141,6 +149,7 @@ public with sharing class phss_cc_ProductUtil {
             Boolean isSuccess = (Boolean) response.get(ccrz.ccAPI.SUCCESS);
             if (isSuccess) {
                 productDataList = (List<Map<String, Object>>) response.get(ccrz.ccAPIProduct.PRODUCTLIST);
+                system.debug('productDataList***'+productDataList);
             }
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_GET_PRODUCT_DETAILS);
@@ -190,6 +199,7 @@ public with sharing class phss_cc_ProductUtil {
                 if (productData!=null && !productData.isEmpty()){
                     productMap = getProductMapKeyedToSfidMap(productData);
                 }
+                system.debug('***productMap***'+productMap);
             }
 
             fetchComponentProducts(productMap);
@@ -225,6 +235,72 @@ public with sharing class phss_cc_ProductUtil {
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_PERFORM_FILTERED_PRODUCT_SEARCH, e);
         }
+    }
+
+    /**
+     * @description Fetches products, excluding non-online community courses
+     *
+     * @param opportunityId
+     * @param searchString
+     *
+     * @return
+     */
+    public static Map<String, Object> productSearchExcludingNonOnlineCommCourses(String opportunityId, String searchString) {
+        Map<String, Object> productMap = new Map<String, Object>();
+
+        try {
+            phss_cc_Context.setContext(opportunityId);
+            Set<String> productIDs = doSearch(searchString);
+            if (productIDs.size() > 0) {
+                List<Map<String, Object>> productData = getProductDetails(productIDs);
+                productMap = excludeNonOnlineCommunityCourses(productData);
+                fetchComponentProducts(productMap);
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_PERFORM_SEARCH_EXCLUDING_COURSES, e);
+        }
+
+        Map<String, Object> searchResponse = new Map<String, Object>{
+                PRODUCT_LIST_KEY => productMap.keySet(),
+                PRODUCT_MAP_KEY => productMap
+        };
+        return searchResponse;
+    }
+
+    /**
+     * @description Excludes from the list those products with an inventory type = 'COMMUNITY' and a product
+     * spec = 'ONLINE'
+     *
+     * @param productList
+     *
+     * @return
+     */
+    public static Map<String, Object> excludeNonOnlineCommunityCourses(List<Map<String, Object>> productList) {
+        Map<String, Object> productMap = new Map<String, Object>();
+
+        for (Map<String, Object> product : productList) {
+            String inventoryType = (String) product.get(PRODUCT_INVENTORY_TYPE_KEY);
+            if (inventoryType == COMMUNITY_INVENTORY_TYPE) {
+                List<Map<String, Object>> productSpecs = (List<Map<String, Object>>) product.get(PRODUCT_SPECS_KEY);
+                if (productSpecs != null && productSpecs.size() > 0) {
+                    for (Map<String, Object> productSpec : productSpecs) {
+                        String specValue = (String) productSpec.get(PRODUCT_SPEC_VALUE_KEY);
+                        if (specValue == ONLINE_SPEC_VALUE) {
+                        	String productId = (String) product.get(PRODUCT_SFID_KEY);
+                        	productMap.put(productId, product);
+                            break;
+                        }
+                    }
+                }
+
+            } else {
+                String productId = (String) product.get(PRODUCT_SFID_KEY);
+                productMap.put(productId, product);
+            }
+        }
+
+        return productMap;
     }
 
     public static Set<String> productsMatchingSpecs(Set<String> productIds, Map<String, String> filterMap) {

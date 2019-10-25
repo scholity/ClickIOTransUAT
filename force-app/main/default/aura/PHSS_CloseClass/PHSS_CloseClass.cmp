@@ -35,8 +35,9 @@
     <aura:attribute name="requestType" type="String" />
     <!--<aura:attribute name="ccOrderId" type="String" />-->
     <aura:attribute name="trainingEventId" type="String" description="Skedule training event Id" />
-    <aura:attribute name="eligibleForClose" type="Boolean" default="{! or(v.IsCarActive == true, v.requestType == 'Full Service')}" />
-    
+    <!--aura:attribute name="eligibleForClose" type="Boolean" default="{! or(v.IsCarActive == true, v.requestType == 'Full Service')}" /-->
+    <aura:attribute name="eligibleForClose" type="Boolean" default="true" />
+
     <aura:attribute name = "helpText" type = "String" default = "You must complete and submit this Close a Course entry. The information will not be saved to complete later."/> 
 
     <aura:attribute name = "displayPaymentInfo" type = "Boolean" default="true"/>

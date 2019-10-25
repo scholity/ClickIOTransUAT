@@ -12,9 +12,19 @@
         helper.getFormData(component, event, helper);
         window.addEventListener("message", function(event) {
 			var cyberSourceResponse = event.data;
-			if (cyberSourceResponse.startsWith('setImmediate$0')) {
-			    return;     // ignore this event
-			}
+
+			if (cyberSourceResponse == null) { return; }
+            if (typeof cyberSourceResponse == 'object') { return; }
+            if (typeof cyberSourceResponse == 'string') {
+                try {
+                    var json = JSON.parse(cyberSourceResponse);
+                    if (!json.hasOwnProperty('decision')) {
+                        return;
+                    }
+                } catch (error) {
+                    return;
+                }
+            }
 
             var requiresClick = helper.processCyberSourceCallback(component,cyberSourceResponse);
             window.scrollBy(0,1);

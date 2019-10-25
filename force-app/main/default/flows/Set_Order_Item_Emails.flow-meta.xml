@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>DoNothingCommerceCloud_Order</name>
+        <label>DoNothingCommerceCloud Order</label>
+        <locationX>163</locationX>
+        <locationY>572</locationY>
+        <actionName>Donothing</actionName>
+        <actionType>apex</actionType>
+    </actionCalls>
     <assignments>
-        <name>Individual_Update</name>
-        <label>Individual Update</label>
-        <locationX>675</locationX>
-        <locationY>635</locationY>
+        <name>Assign_Bill_To_Contact_Only</name>
+        <label>Assign Bill To Contact Only</label>
+        <locationX>748</locationX>
+        <locationY>403</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.Related_Contact_1__c</assignToReference>
             <operator>Assign</operator>
@@ -17,10 +25,30 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Email_Addresses</name>
-        <label>Set Email Addresses</label>
-        <locationX>676</locationX>
-        <locationY>483</locationY>
+        <name>Individual_Update</name>
+        <label>Individual Update</label>
+        <locationX>755</locationX>
+        <locationY>801</locationY>
+        <assignmentItems>
+            <assignToReference>sOrderItem.Related_Contact_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sAccount.Billing_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sOrderItem.Related_Contact_1__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Order_Line_Item</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Instructor_Email_Addresses</name>
+        <label>Set Instructor Email Addresses</label>
+        <locationX>745</locationX>
+        <locationY>515</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.Related_Contact_1__c</assignToReference>
             <operator>Assign</operator>
@@ -39,36 +67,88 @@
             <targetReference>Update_Order_Line_Item</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_Partner_Email_Address</name>
+        <label>Set Partner Email Address</label>
+        <locationX>754</locationX>
+        <locationY>637</locationY>
+        <assignmentItems>
+            <assignToReference>sOrderItem.Related_Contact_1__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sOrder.ccrz__Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sOrderItem.Related_Contact_2__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>sAccount.Billing_Contact__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Order_Line_Item</targetReference>
+        </connector>
+    </assignments>
+    <constants>
+        <name>PartnerProfileName</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SB PHSS-Partner-Community Plus Login</stringValue>
+        </value>
+    </constants>
     <decisions>
-        <name>Found_Instructor</name>
-        <label>Found Instructor</label>
-        <locationX>475</locationX>
-        <locationY>483</locationY>
+        <name>Check_Transaction_Payment_User_Exists</name>
+        <label>Check Transaction Payment User Exists</label>
+        <locationX>154</locationX>
+        <locationY>406</locationY>
         <defaultConnector>
-            <targetReference>Individual_Update</targetReference>
+            <targetReference>DoNothingCommerceCloud_Order</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Not_Instructor</name>
+            <name>isTPUExist</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>sRecordType.Id</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>sTransactionPayment.ccrz__User__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <elementReference>sAccount.RecordTypeId</elementReference>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Email_Addresses</targetReference>
+                <targetReference>Get_Transaction_Payment_user</targetReference>
             </connector>
-            <label>Not Instructor</label>
+            <label>isTPUExist</label>
+        </rules>
+        <rules>
+            <name>isContactNoUser</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sTransactionPayment.ccrz__User__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sTransactionPayment.ccrz__Contact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Bill_To_Contact_Only</targetReference>
+            </connector>
+            <label>isContactNoUser</label>
         </rules>
     </decisions>
     <decisions>
         <name>ILT_Instructor</name>
         <label>ILT Instructor</label>
-        <locationX>272</locationX>
-        <locationY>56</locationY>
+        <locationX>308</locationX>
+        <locationY>74</locationY>
         <defaultConnector>
             <targetReference>Get_Order</targetReference>
         </defaultConnector>
@@ -87,6 +167,68 @@
                 <targetReference>Get_ILT_Instructor</targetReference>
             </connector>
             <label>ILT Instructor Null?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Send_Payment_to</name>
+        <label>Send Payment to</label>
+        <locationX>481</locationX>
+        <locationY>649</locationY>
+        <defaultConnector>
+            <targetReference>Individual_Update</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isInstructor</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sRecordType.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>sAccount.RecordTypeId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Partner_Profile_ID.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Transaction_Payment_user.ProfileId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Instructor_Email_Addresses</targetReference>
+            </connector>
+            <label>isInstructor</label>
+        </rules>
+        <rules>
+            <name>isPartner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Partner_Profile_ID.Id</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Get_Transaction_Payment_user.ProfileId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Partner_Email_Address</targetReference>
+            </connector>
+            <label>isPartner</label>
+        </rules>
+        <rules>
+            <name>isCommerce</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>vUserLookUp</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Instructor_Email_Addresses</targetReference>
+            </connector>
+            <label>isCommerce</label>
         </rules>
     </decisions>
     <description>Set Instructor and Billing Contact on Order Line</description>
@@ -108,11 +250,11 @@
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
-        <locationX>675</locationX>
-        <locationY>203</locationY>
+        <locationX>754</locationX>
+        <locationY>289</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Record_Type</targetReference>
+            <targetReference>Get_Account_Record_Type</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -128,10 +270,37 @@
         <queriedFields>RecordTypeId</queriedFields>
     </recordLookups>
     <recordLookups>
+        <name>Get_Account_Record_Type</name>
+        <label>Get Account Record Type</label>
+        <locationX>496</locationX>
+        <locationY>297</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Transaction_Payment</targetReference>
+        </connector>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Individual_Account</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <object>RecordType</object>
+        <outputReference>sRecordType</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <name>Get_ILT_Instructor</name>
         <label>Get ILT Instructor</label>
-        <locationX>443</locationX>
-        <locationY>34</locationY>
+        <locationX>474</locationX>
+        <locationY>35</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_User_Info</targetReference>
@@ -158,8 +327,8 @@
     <recordLookups>
         <name>Get_Order</name>
         <label>Get Order</label>
-        <locationX>505</locationX>
-        <locationY>199</locationY>
+        <locationX>617</locationX>
+        <locationY>185</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account</targetReference>
@@ -175,15 +344,17 @@
         <outputReference>sOrder</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>ccrz__Account__c</queriedFields>
+        <queriedFields>ccrz__Contact__c</queriedFields>
+        <queriedFields>LastModifiedById</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Order_Item</name>
         <label>Get Order Item</label>
-        <locationX>172</locationX>
-        <locationY>52</locationY>
+        <locationX>162</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>ILT_Instructor</targetReference>
+            <targetReference>Get_Partner_Profile_ID</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -201,31 +372,65 @@
         <queriedFields>ccrz__Order__c</queriedFields>
     </recordLookups>
     <recordLookups>
-        <name>Get_Record_Type</name>
-        <label>Get Record Type</label>
-        <locationX>484</locationX>
-        <locationY>330</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <name>Get_Partner_Profile_ID</name>
+        <label>Get Partner Profile ID</label>
+        <locationX>160</locationX>
+        <locationY>185</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Found_Instructor</targetReference>
+            <targetReference>ILT_Instructor</targetReference>
         </connector>
         <filters>
-            <field>DeveloperName</field>
+            <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Individual_Account</stringValue>
+                <elementReference>PartnerProfileName</elementReference>
             </value>
         </filters>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Account</stringValue>
-            </value>
-        </filters>
-        <object>RecordType</object>
-        <outputReference>sRecordType</outputReference>
+        <object>Profile</object>
         <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Transaction_Payment</name>
+        <label>Get Transaction Payment</label>
+        <locationX>354</locationX>
+        <locationY>296</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Transaction_Payment_User_Exists</targetReference>
+        </connector>
+        <filters>
+            <field>ccrz__CCOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sOrderItem.ccrz__Order__c</elementReference>
+            </value>
+        </filters>
+        <object>ccrz__E_TransactionPayment__c</object>
+        <outputReference>sTransactionPayment</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ccrz__User__c</queriedFields>
+        <queriedFields>ccrz__Contact__c</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Transaction_Payment_user</name>
+        <label>Get Transaction Payment user</label>
+        <locationX>338</locationX>
+        <locationY>651</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Send_Payment_to</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>sTransactionPayment.ccrz__User__c</elementReference>
+            </value>
+        </filters>
+        <object>User</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>ProfileId</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_User_Info</name>
@@ -251,8 +456,8 @@
     <recordUpdates>
         <name>Update_Order_Line_Item</name>
         <label>Update Order Line Item</label>
-        <locationX>867</locationX>
-        <locationY>491</locationY>
+        <locationX>997</locationX>
+        <locationY>637</locationY>
         <inputReference>sOrderItem</inputReference>
     </recordUpdates>
     <startElementReference>Get_Order_Item</startElementReference>
@@ -313,11 +518,26 @@
         <objectType>RecordType</objectType>
     </variables>
     <variables>
+        <name>sTransactionPayment</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ccrz__E_TransactionPayment__c</objectType>
+    </variables>
+    <variables>
         <name>sUser</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>User</objectType>
+    </variables>
+    <variables>
+        <name>vUserLookUp</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

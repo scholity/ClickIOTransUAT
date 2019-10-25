@@ -25,10 +25,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Order_Item_to_Ship</name>
-        <label>Assign Order Item to Ship</label>
+        <name>Assign_Order_Item_to_In_Process</name>
+        <label>Assign Order Item to In Process</label>
         <locationX>677</locationX>
-        <locationY>328</locationY>
+        <locationY>327</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.ccrz__OrderItemStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -153,14 +153,10 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>sOrderItem.ccrz__OrderItemStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Order Submitted</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>sOrderItem.ccrz__OrderItemStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
             </conditions>
             <connector>
                 <targetReference>Get_Product</targetReference>
@@ -289,8 +285,8 @@
     <recordUpdates>
         <name>Ship_Order_Item</name>
         <label>Ship Order Item</label>
-        <locationX>675</locationX>
-        <locationY>479</locationY>
+        <locationX>676</locationX>
+        <locationY>478</locationY>
         <inputReference>sOrderItem</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -299,7 +295,7 @@
         <locationX>677</locationX>
         <locationY>196</locationY>
         <connector>
-            <targetReference>Assign_Order_Item_to_Ship</targetReference>
+            <targetReference>Assign_Order_Item_to_In_Process</targetReference>
         </connector>
         <inputReference>outVoucher</inputReference>
     </recordUpdates>

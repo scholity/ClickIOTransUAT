@@ -9,6 +9,7 @@ ISPICKVAL ( Dispute_Issue__c ,&#39;Customer Account Maintenance&#39;),
 OR(NOT(ISPICKVAL(Status, &#39;New&#39;) || ISPICKVAL(Status, &#39;New - Assigned&#39;)), OwnerId = &#39;00Gd0000000SdP5&#39;),
 RecordType.DeveloperName = &quot;Invoicing&quot;,
 ISBLANK(RCS_Email__c),
+ISPICKVAL(Type_of_Price_Dispute__c, &#39;Update RCS Login Email&#39;),
 $Setup.ETL_Configuration__c.Is_ETL_User__c = FALSE,
 $Setup.Validation_Rules__c.Bypass_Rules__c = FALSE
 )</errorConditionFormula>
