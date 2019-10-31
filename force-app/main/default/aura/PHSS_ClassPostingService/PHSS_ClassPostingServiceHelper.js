@@ -38,32 +38,6 @@
         $A.enqueueAction(action);	
 	},
 
-    initalizeProductQuantityList : function(component, event, helper) {
-        
-		var action = component.get("c.initProductQuantityList");
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") { 
-                var resp = response.getReturnValue();    
-                component.set("v.myProductQuantityList",resp);
-                //alert("Initalized ProductQuantityList");
-            }
-            else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        component.set("v.errorMessage",errors[0].message);
-                        component.set("v.showError",true);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
-            }
-        });
-        $A.enqueueAction(action);        
-        
-    },
-    
     initalizeProductQuantityMap : function(component, event, helper) {
         
 		var action = component.get("c.initProductQuantityMap");
@@ -120,7 +94,7 @@
         });
         $A.enqueueAction(action);
     },
-                         
+    
     validateFields : function(component, event, helper) {
         component.set("v.allValid",true);
         component.set("v.isUrlValid",true);

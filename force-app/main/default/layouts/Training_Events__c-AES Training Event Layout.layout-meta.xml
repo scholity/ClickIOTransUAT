@@ -203,6 +203,10 @@
                 <behavior>Edit</behavior>
                 <field>Champs_Set_up_Complete__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Report_Completed__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

@@ -145,7 +145,7 @@ public with sharing class phss_cc_OrderUtil {
                         STORED_PAYMENT_ID_KEY => storedPayment.Id,
                         STORED_PAYMENT_SAVE_AS_STORED_PAYMENT => false,
                         STOREFRONT_KEY => storedPayment.ccrz__Storefront__c,
-                        TRANSACTION_TYPE_KEY => 'BALANCE'
+                        TRANSACTION_TYPE_KEY => phss_cc_TransactionPaymentUtil.BALANCE_TRANSACTION_TYPE
                 };
 
             } else if (inputData.containsKey(CART_AMOUNT_KEY)) {

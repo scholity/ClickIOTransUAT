@@ -4,7 +4,6 @@
         
         helper.initializeWrapper(component, event, helper);
         helper.initalizeProductQuantityMap(component, event, helper);
-        helper.initalizeProductQuantityList(component, event, helper);
         
         var days = '7';
         

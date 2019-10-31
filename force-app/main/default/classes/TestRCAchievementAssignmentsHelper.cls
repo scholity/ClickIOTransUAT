@@ -4,7 +4,7 @@ public class TestRCAchievementAssignmentsHelper {
     public static void AcquisitionDateWithILTClassOnline() {
         redwing__Learning__c learning = new redwing__Learning__c(Name = 'Test Learning', redwing__Description__c = 'test description');
         insert learning;
-        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Online');
+        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Classroom');
         redwing__Achievement__c achievement = new redwing__Achievement__c(Name = 'Test Achievement', redwing__Type__c = 'Achievement', redwing__Expiration_Term__c = 1, redwing__Expiration_Term_Basis__c = 'Days');
         insert iltClass;
         insert achievement;
@@ -27,7 +27,7 @@ public class TestRCAchievementAssignmentsHelper {
     public static void AcquisitionDateWithILTClassOffline() {
         redwing__Learning__c learning = new redwing__Learning__c(Name = 'Test Learning', redwing__Description__c = 'test description');
         insert learning;
-        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Classroom');
+        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Online');
         redwing__Achievement__c achievement = new redwing__Achievement__c(Name = 'Test Achievement', redwing__Type__c = 'Achievement', redwing__Expiration_Term__c = 1, redwing__Expiration_Term_Basis__c = 'Weeks');
         insert iltClass;
         insert achievement;
@@ -48,7 +48,7 @@ public class TestRCAchievementAssignmentsHelper {
 
     @isTest
     public static void AcquisitionDateWithLearningPlanOffline() {
-        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Classroom');
+        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Online');
         insert tp;
         redwing__Achievement__c achievement = new redwing__Achievement__c(Name = 'Test Achievement', redwing__Type__c = 'Achievement', redwing__Expiration_Term__c = 1, redwing__Expiration_Term_Basis__c = 'Months');
         redwing__Training_Plan_Achievement__c tpa = new redwing__Training_Plan_Achievement__c(redwing__Achievement__c = achievement.Id, redwing__Training_Plan__c = tp.Id);
@@ -71,11 +71,11 @@ public class TestRCAchievementAssignmentsHelper {
 
     @isTest
     public static void AcquisitionDateWithLearningPlanOnline() {
-        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Online');
+        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Classroom');
         insert tp;
         redwing__Learning__c learning = new redwing__Learning__c(Name = 'Test Learning', redwing__Description__c = 'test description');
         insert learning;
-        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Classroom');
+        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Online');
         insert iltClass;
         redwing__Achievement__c achievement = new redwing__Achievement__c(Name = 'Test Achievement', redwing__Type__c = 'Achievement', redwing__Expiration_Term__c = 1, redwing__Expiration_Term_Basis__c = 'Months');
         redwing__Training_Plan_Achievement__c tpa = new redwing__Training_Plan_Achievement__c(redwing__Achievement__c = achievement.Id, redwing__Training_Plan__c = tp.Id);
@@ -101,9 +101,9 @@ public class TestRCAchievementAssignmentsHelper {
     public static void AcquisitionDateWithLearningPlanAndILTClassOnline() {
         redwing__Learning__c learning = new redwing__Learning__c(Name = 'Test Learning', redwing__Description__c = 'test description');
         insert learning;
-        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Online');
+        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Classroom');
         insert iltClass;
-        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Online');
+        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Classroom');
         insert tp;
         redwing__Achievement__c achievement = new redwing__Achievement__c(Name = 'Test Achievement', redwing__Type__c = 'Achievement', redwing__Expiration_Term__c = 1, redwing__Expiration_Term_Basis__c = 'Years');
         redwing__Training_Plan_Achievement__c tpa = new redwing__Training_Plan_Achievement__c(redwing__Achievement__c = achievement.Id, redwing__Training_Plan__c = tp.Id);
@@ -129,9 +129,9 @@ public class TestRCAchievementAssignmentsHelper {
     public static void AcquisitionDateWithLearningPlanAndILTClassOffline() {
         redwing__Learning__c learning = new redwing__Learning__c(Name = 'Test Learning', redwing__Description__c = 'test description');
         insert learning;
-        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Classroom');
+        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Online');
         insert iltClass;
-        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Classroom');
+        redwing__Training_Plan__c tp = new redwing__Training_Plan__c(Name = 'Test LP', redwing__Status__c = 'Active', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(4), Classroom_Setting__c = 'Online');
         insert tp;
         redwing__Achievement__c achievement = new redwing__Achievement__c(Name = 'Test Achievement', redwing__Type__c = 'Achievement', redwing__Expiration_Term__c = 1, redwing__Expiration_Term_Basis__c = 'Years');
         redwing__Training_Plan_Achievement__c tpa = new redwing__Training_Plan_Achievement__c(redwing__Achievement__c = achievement.Id, redwing__Training_Plan__c = tp.Id);
@@ -169,4 +169,32 @@ public class TestRCAchievementAssignmentsHelper {
         Test.stopTest();
             System.assertEquals(listAchievementAssignments[0].redwing__Acquisition_Date__c, Date.today());
     }
+    
+    @IsTest
+    public static void updateTriggerTest() {
+        redwing__Learning__c learning = new redwing__Learning__c(Name = 'Test Learning', redwing__Description__c = 'test description');
+        insert learning;
+        
+        redwing__ILT_Class__c iltClass = new redwing__ILT_Class__c(Name = 'Test ILT', redwing__Start_Date__c = Date.today(), redwing__End_Date__c = Date.today().addDays(2), redwing__Learning__c = learning.Id, Classroom_Setting__c = 'Online');
+        redwing__Achievement__c achievement = new redwing__Achievement__c(Name = 'Test Achievement', redwing__Type__c = 'Achievement', redwing__Expiration_Term__c = 1, redwing__Expiration_Term_Basis__c = 'Days');
+        insert iltClass;
+        insert achievement;
+        
+        redwing__Achievement_Assignment__c achievementAssignment = new redwing__Achievement_Assignment__c();
+        achievementAssignment.redwing__Achievement__c = achievement.Id;
+        achievementAssignment.ILT_Class__c = iltClass.Id;
+        achievementAssignment.redwing__Status__c = 'Acquired';
+        List<redwing__Achievement_Assignment__c> listAchievementAssignments = new List<redwing__Achievement_Assignment__c>();
+        listAchievementAssignments.add(achievementAssignment);
+        
+        insert listAchievementAssignments;
+
+        achievementAssignment = [SELECT redwing__Status__c FROM redwing__Achievement_Assignment__c LIMIT 1];
+        
+        achievementAssignment.redwing__Status__c = 'Eligible';
+        update achievementAssignment;
+        
+        System.assertEquals('Eligible', [SELECT redwing__Status__c FROM redwing__Achievement_Assignment__c LIMIT 1].redwing__Status__c);
+    }
+    
 }

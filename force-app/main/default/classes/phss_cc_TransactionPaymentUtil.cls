@@ -10,6 +10,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
     // transaction types
     public static final String AUTH_TRANSACTION_TYPE = 'AUTH';
     public static final String CAPTURE_TRANSACTION_TYPE = 'CAPTURE';
+    public static final String BALANCE_TRANSACTION_TYPE= 'BALANCE';
 
     // error messages
     public static final String FAILED_TO_CREATE_CAPTURE_TRANSACTION_PAYMENT_FROM_AUTH_TRANSACTION_PAYMENT = 'Failed to create CAPTURE transaction payment from AUTH transaction payment.';

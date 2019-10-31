@@ -219,18 +219,52 @@ global class skedJobService {
     }
 
     public static void updateJobStatus(Set<Id> jobIds) {
-        List<sked__Job__c> skedJobs = [SELECT Id, sked__Job_Allocation_Count__c, sked__Job_Status__c
+        List<sked__Job__c> skedJobs = [SELECT Id, sked__Job_Allocation_Count__c, sked__Job_Status__c, sked__Type__c,
+                                       Number_of_Evaluators__c, Number_of_Instructors__c, 
+                                       (SELECT Id, sked__Status__c, sked__Resource__r.Employment_Type__c, 
+                                        Number_of_Resources__c
+                                        FROM sked__Job_Allocations__r
+                                        WHERE sked__Status__c != :skedConstants.JOB_ALLOCATION_STATUS_DELETED) 
                                        FROM sked__Job__c 
                                        WHERE Id IN :jobIds];
         List<sked__Job__c> skedJobsToUpdate = new List<sked__Job__c>();
         for (sked__Job__c skedJob : skedJobs) {
-            if (skedJob.sked__Job_Allocation_Count__c == 0) {
+            integer noOfRequriedResources;
+            integer noOfAssignedResources = 0;
+
+            if (skedJob.Number_of_Instructors__c != NULL) {
+                noOfRequriedResources = integer.valueOf(skedJob.Number_of_Instructors__c);
+            }
+            else if (skedJob.Number_of_Evaluators__c != NULL) {
+                noOfRequriedResources = integer.valueOf(skedJob.Number_of_Evaluators__c);
+            }
+
+            boolean isAnyPendingDispatch = false;
+            for (sked__Job_Allocation__c skedAllocation : skedJob.sked__Job_Allocations__r) {
+                if (skedAllocation.sked__Resource__r.Employment_Type__c == skedConstants.RESOURCE_EMPLOYMENT_TYPE_SUBCONTRACTOR) {
+                    noOfAssignedResources += integer.valueOf(skedAllocation.Number_of_Resources__c);
+                }
+                else {
+                    noOfAssignedResources++;
+                }
+                if (skedAllocation.sked__Status__c == skedConstants.JOB_ALLOCATION_STATUS_PENDING_DISPATCH) {
+                    isAnyPendingDispatch = true;
+                }
+            }
+            if (noOfAssignedResources == 0) {
                 skedJob.sked__Job_Status__c = skedConstants.JOB_STATUS_PENDING_ALLOCATION;
                 skedJobsToUpdate.add(skedJob);
             }
-            else if (skedJob.sked__Job_Allocation_Count__c > 0 && skedJob.sked__Job_Status__c == skedConstants.JOB_STATUS_PENDING_ALLOCATION) {
-                skedJob.sked__Job_Status__c = skedConstants.JOB_STATUS_PENDING_DISPATCH;
-                skedJobsToUpdate.add(skedJob);
+            else if (noOfRequriedResources == noOfAssignedResources) {
+                if (skedJob.sked__Job_Status__c == skedConstants.JOB_STATUS_PENDING_ALLOCATION || skedJob.sked__Job_Status__c == skedConstants.JOB_STATUS_PENDING_DISPATCH) {
+                    if (isAnyPendingDispatch == true) {
+                        skedJob.sked__Job_Status__c = skedConstants.JOB_STATUS_PENDING_DISPATCH;
+                    }
+                    else {
+                        skedJob.sked__Job_Status__c = skedConstants.JOB_STATUS_DISPATCHED;
+                    }
+                    skedJobsToUpdate.add(skedJob);
+                }
             }
         }
         if (!skedJobsToUpdate.isEmpty()) {
@@ -239,6 +273,74 @@ global class skedJobService {
         if (!skedJobsToUpdate.isEmpty()) {
             update skedJobsToUpdate;
         }
+    }
+    
+    public static List<sked__Job__c> validateQueuedJobsInMonth(string regionId, Date jobMonth) {
+        List<sked__Job__c> queuedJobs = [SELECT Id, Name, sked__Region__c, sked__Address__c, sked__Contact__c, sked__Recurring_Schedule__c,
+                                         sked__GeoLocation__Latitude__s, sked__GeoLocation__Longitude__s, sked__GeoLocation__c,
+                                         sked__Timezone__c, sked__Start__c, sked__Finish__c, sked__Duration__c, sked__Type__c, 
+                                         sked__Job_Status__c, Copy_Result_Message__c, Number_of_Instructors__c, Job_Month__c,
+                                         sked__Location__c, Course_Catalog__c, Course_Catalog__r.Name, Break_Duration__c, 
+                                         Number_of_Breaks__c, Special_Instructions__c, ClasS_Sub_Type__c, Course_Code__c, Display_Order__c,
+                                         sked__Parent__c, Is_Stacked_Class__c, Is_Master_Class__c
+                                         FROM sked__Job__c
+                                         WHERE Job_Month__c = :jobMonth
+                                         AND sked__Region__c = :regionId
+                                         AND Is_Queued__c = TRUE
+                                         AND (Is_Stacked_Class__c = FALSE OR Is_Master_Class__c = TRUE)];
+        return skedJobService.validateQueuedJobs(regionId, queuedJobs);
+    }
+    
+    public static List<sked__Job__c> validateQueuedJobs(string regionId, List<sked__Job__c> queuedJobs) {
+        if (queuedJobs.size() == 0) {
+            return queuedJobs;
+        }
+        DateTime startTime, endTime;
+        for (sked__Job__c queuedJob : queuedJobs) {
+            if (startTime == NULL || startTime > queuedJob.sked__Start__c) {
+                startTime = queuedJob.sked__Start__c;
+            }
+            if (endTime == NULL || endTime < queuedJob.sked__Finish__c) {
+                endTime = queuedJob.sked__Finish__c;
+            }
+        }
+        sked__Region__c skedRegion = [SELECT Id, sked__Timezone__c FROM sked__Region__c WHERE Id = :regionId];
+        string timezoneSidId = skedRegion.sked__Timezone__c;
+        startTime = skedDateTimeUtils.getStartOfDate(startTime, timezoneSidId);
+        endTime = skedDateTimeUtils.getEndOfDate(endTime, timezoneSidId);
+
+        List<sked__Job__c> activeJobs = [SELECT Id, Name, sked__Start__c, sked__Finish__c, sked__Location__c, sked__Recurring_Schedule__c
+                                         FROM sked__Job__c
+                                         WHERE sked__Region__c = :regionId
+                                         AND sked__Type__c = :skedConstants.JOB_TYPE_COMMUNITY
+                                         AND sked__Job_Status__c != :skedConstants.JOB_STATUS_CANCELLED
+                                         AND Is_Queued__c = FALSE
+                                         AND sked__Start__c < :endTime
+                                         AND sked__Finish__c > :startTime
+                                         AND (Is_Stacked_Class__c = FALSE OR Is_Master_Class__c = TRUE)
+                                         ORDER BY sked__Start__c];
+        List<sked__Job__c> jobsToUpdate = new List<sked__Job__c>();
+        for (sked__Job__c queuedJob : queuedJobs) {
+            queuedJob.Copy_Result_Message__c = '';
+
+            Date jobMonthStart = queuedJob.Job_Month__c;
+            Date jobMonthEnd = jobMonthStart.addMonths(1).addDays(-1);
+            if (queuedJob.sked__Start__c.date() > jobMonthEnd) {
+                queuedJob.Copy_Result_Message__c = skedConstants.COMMUNITY_COPY_OUT_OF_MONTH + '. ';
+            }
+
+            for (sked__Job__c activeJob : activeJobs) {
+                if (queuedJob.sked__Location__c == activeJob.sked__Location__c) {
+                    if (queuedJob.sked__Start__c < activeJob.sked__Finish__c && queuedJob.sked__Finish__c > activeJob.sked__Start__c) {
+                        queuedJob.Copy_Result_Message__c += skedConstants.COMMUNITY_COPY_ROOM_CONFLICT + '. ';
+                        break;
+                    }
+                }
+            }
+        }
+        update queuedJobs;
+
+        return queuedJobs;
     }
 
     public virtual class jobSaveModelBase {

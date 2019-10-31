@@ -724,9 +724,10 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             if (('"6243"'.equals(apCode) || '"6244"'.equals(apCode)) && '"41"'.equals(focis))
             {
                 List<redwing__ILT_Roster__c > rosters = new List<redwing__ILT_Roster__c >();
-                
-                if (fi.ILT_Class__c != null &&
-                    ('COURSE'.equals(fi.CC_Product__r.ccrz__InventoryType__c) || 'COMMUNITY'.equals(fi.CC_Product__r.ccrz__InventoryType__c)))
+
+                List<String> inventoryTypes = new List<String>{'COMMUNITY', 'COURSE'};
+                if ((fi.ILT_Class__c == null && fi.CC_Product__r.ccrz__InventoryType__c == 'FEE')
+                        || (fi.ILT_Class__c != null && inventoryTypes.contains(fi.CC_Product__r.ccrz__InventoryType__c)))
                 {
                     //DE1854
                     if(fi.CC_Category_Name__c == 'NAT Training' || fi.CC_Category_Name__c == 'NAT Testing')

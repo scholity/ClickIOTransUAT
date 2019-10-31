@@ -11,8 +11,8 @@
     <assignments>
         <name>Add_Catalog_Account_for_Output</name>
         <label>Add Catalog Account for Output</label>
-        <locationX>238</locationX>
-        <locationY>523</locationY>
+        <locationX>316</locationX>
+        <locationY>531</locationY>
         <assignmentItems>
             <assignToReference>outCatalogAccount</assignToReference>
             <operator>Add</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>Clear_Achievement_Assignment_Collection</name>
         <label>Clear Achievement Assignment Collection</label>
-        <locationX>229</locationX>
-        <locationY>83</locationY>
+        <locationX>190</locationX>
+        <locationY>305</locationY>
         <assignmentItems>
             <assignToReference>colAchievementAssignment</assignToReference>
             <operator>Assign</operator>
@@ -73,8 +73,8 @@
     <assignments>
         <name>Reset_Loop_Variables</name>
         <label>Reset Loop Variables</label>
-        <locationX>560</locationX>
-        <locationY>406</locationY>
+        <locationX>655</locationX>
+        <locationY>408</locationY>
         <assignmentItems>
             <assignToReference>outCatalogAccount</assignToReference>
             <operator>Assign</operator>
@@ -96,8 +96,8 @@
     <assignments>
         <name>Set_Learning_Catalog_Account</name>
         <label>Set Learning Catalog Account</label>
-        <locationX>239</locationX>
-        <locationY>237</locationY>
+        <locationX>307</locationX>
+        <locationY>375</locationY>
         <assignmentItems>
             <assignToReference>sCatalogAccount.Expiration_Date__c</assignToReference>
             <operator>Assign</operator>
@@ -193,8 +193,8 @@
     <decisions>
         <name>Found_Expired_Achievement_Assignments</name>
         <label>Found Expired Achievement Assignments</label>
-        <locationX>480</locationX>
-        <locationY>99</locationY>
+        <locationX>509</locationX>
+        <locationY>98</locationY>
         <defaultConnector>
             <targetReference>Loop_through_Achievement_Assignments</targetReference>
         </defaultConnector>
@@ -216,10 +216,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>isFound</name>
+        <label>isFound</label>
+        <locationX>44</locationX>
+        <locationY>292</locationY>
+        <defaultConnector>
+            <targetReference>Clear_Achievement_Assignment_Collection</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Records_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sAchievementAssignmentCheck</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_Status_of_Expired_Achievement_Assignment_Records</targetReference>
+            </connector>
+            <label>Records Found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>LoopCounter1</name>
         <label>LoopCounter1</label>
-        <locationX>366</locationX>
-        <locationY>526</locationY>
+        <locationX>447</locationX>
+        <locationY>536</locationY>
         <defaultConnector>
             <targetReference>Loop_through_Achievement_Assignments</targetReference>
         </defaultConnector>
@@ -240,7 +265,7 @@
             <label>isEqual1960</label>
         </rules>
     </decisions>
-    <description>Add Recertification Expiration Assignments</description>
+    <description>Add Recertification Expiration Assignments - Added Expiration Check</description>
     <formulas>
         <name>Expirationdate90daysfromnow</name>
         <dataType>Date</dataType>
@@ -290,8 +315,8 @@
     <recordCreates>
         <name>Create_Catalog_Account_in_Loop</name>
         <label>Create Catalog Account in Loop</label>
-        <locationX>563</locationX>
-        <locationY>519</locationY>
+        <locationX>662</locationX>
+        <locationY>537</locationY>
         <connector>
             <targetReference>Reset_Loop_Variables</targetReference>
         </connector>
@@ -300,8 +325,8 @@
     <recordCreates>
         <name>Create_Catalog_Account_Records</name>
         <label>Create Catalog Account Records</label>
-        <locationX>564</locationX>
-        <locationY>240</locationY>
+        <locationX>607</locationX>
+        <locationY>214</locationY>
         <connector>
             <targetReference>Clear_Catalog_Account</targetReference>
         </connector>
@@ -322,11 +347,38 @@
         <object>redwing__Learning_Category_Account__c</object>
     </recordDeletes>
     <recordLookups>
+        <name>Get_Achievement_Assignment_Records</name>
+        <label>Get Achievement Assignment Records</label>
+        <locationX>50</locationX>
+        <locationY>162</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>isFound</targetReference>
+        </connector>
+        <filters>
+            <field>redwing__Expiration_Date__c</field>
+            <operator>LessThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>redwing__Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Acquired</stringValue>
+            </value>
+        </filters>
+        <object>redwing__Achievement_Assignment__c</object>
+        <outputReference>sAchievementAssignmentCheck</outputReference>
+        <queriedFields>Id</queriedFields>
+    </recordLookups>
+    <recordLookups>
         <description>Search for Certificates expiring in 90 days and add to the Recertification Catalog</description>
         <name>Get_Achievements_Expiring_in_90_Days</name>
         <label>Get Achievements Expiring in 90 Days</label>
-        <locationX>380</locationX>
-        <locationY>23</locationY>
+        <locationX>252</locationX>
+        <locationY>89</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_Expired_Achievement_Assignments</targetReference>
@@ -409,8 +461,8 @@
         <description>Searches for Achievement Assignments that have passed the expiration date - May have been replaced by Appinium function</description>
         <name>Change_Status_of_Expired_Achievement_Assignment_Records</name>
         <label>Change Status of Expired Achievement Assignment Records</label>
-        <locationX>50</locationX>
-        <locationY>200</locationY>
+        <locationX>65</locationX>
+        <locationY>506</locationY>
         <connector>
             <targetReference>Clear_Achievement_Assignment_Collection</targetReference>
         </connector>
@@ -541,7 +593,7 @@
         </inputAssignments>
         <object>redwing__Training_Plan_Assignment__c</object>
     </recordUpdates>
-    <startElementReference>Change_Status_of_Expired_Achievement_Assignment_Records</startElementReference>
+    <startElementReference>Get_Achievement_Assignment_Records</startElementReference>
     <status>Active</status>
     <variables>
         <name>colAchievementAssignment</name>
@@ -596,6 +648,14 @@
     </variables>
     <variables>
         <name>sAchievementAssignment</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>redwing__Achievement_Assignment__c</objectType>
+    </variables>
+    <variables>
+        <name>sAchievementAssignmentCheck</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

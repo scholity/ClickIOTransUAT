@@ -118,7 +118,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>LoopCounter</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <operator>GreaterThan</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
                 </rightValue>

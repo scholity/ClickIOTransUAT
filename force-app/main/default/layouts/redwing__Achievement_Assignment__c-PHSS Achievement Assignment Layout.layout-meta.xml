@@ -145,6 +145,10 @@
                 <behavior>Edit</behavior>
                 <field>Online_Class__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Request_Type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

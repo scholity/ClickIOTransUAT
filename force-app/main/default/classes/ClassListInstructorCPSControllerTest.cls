@@ -74,7 +74,7 @@ public without sharing class ClassListInstructorCPSControllerTest
         u.Alias = 'smu';
         u.Email = 'some@user.usr';
         u.Username = '232343some@user.de';
-        u.ProfileId = [SELECT Id FROM Profile WHERE Name = 'Customer Community User' LIMIT 1].Id;
+        u.ProfileId = [SELECT Id FROM Profile WHERE Name = 'CloudCraze Customer Community User' LIMIT 1].Id;
         u.TimeZoneSidKey = 'America/Los_Angeles';
         u.EmailEncodingKey = 'UTF-8';
         u.LanguageLocaleKey = 'en_US';

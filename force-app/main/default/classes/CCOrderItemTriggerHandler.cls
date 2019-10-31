@@ -159,7 +159,10 @@ public without sharing class CCOrderItemTriggerHandler {
                 if (String.isEmpty(zip)) {
                     zip = getPaymentPostalCodeForOrder(oi.ccrz__Order__c);
                 }
-                
+                // all else fails
+                if (String.isEmpty(zip)) {
+                    zip = '00000';
+                }
                 system.debug('***zip0***'+zip);
                 zip = zip.substring(0,5);
                 system.debug('***zip1***'+zip);

@@ -135,12 +135,13 @@ public class SubmitOrderCreditController
             newTransPayment.ccrz__ParentTransactionPayment__c 	= tPayment.Id;
 			newTransPayment.ccrz__PaymentType__c				= tPayment.ccrz__PaymentType__c;
             newTransPayment.ccrz__Amount__c 					= ccCreditOrder.ccrz__SubtotalAmount__c;
-            
-            if(hasCreditOnAccount)
+
+			if(hasCreditOnAccount)
             {
-                newTransPayment.ccrz__AccountType__c 			= 'cb';
-                newTransPayment.ccrz__StoredPayment__c 			= storedPymt.Id; 
-            }
+				newTransPayment.ccrz__AccountType__c 			= 'cb';
+				newTransPayment.ccrz__StoredPayment__c 			= storedPymt.Id;
+				newTransPayment.ccrz__TransactionType__c		= phss_cc_TransactionPaymentUtil.BALANCE_TRANSACTION_TYPE;
+			}
             
             insert newTransPayment;
             

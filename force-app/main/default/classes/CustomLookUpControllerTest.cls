@@ -170,6 +170,8 @@ public class CustomLookUpControllerTest
         raa.redwing__Achievement__c = ra.id;
         raa.redwing__User__c = u1.id;
         raa.redwing__Status__c = 'Acquired';
+        raa.redwing__Contact__c = c1.id;
+        raa.Evaluation_Result__c = 'Successful';
         insert raa;
         
         redwing__Prerequisite_Item__c rpi = new redwing__Prerequisite_Item__c();
@@ -196,9 +198,9 @@ public class CustomLookUpControllerTest
         
         Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
         clsRecord.Skedulo_Account__c = a.id;
-        clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
+        clsRecord.redwing__End_Date__c = Date.Parse('12/12/2019');
         clsRecord.redwing__End_Time__c= '13:00';
-        clsRecord.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
+        clsRecord.redwing__Start_Date__c = Date.Parse('12/12/2019');// Assuming Start date = End date
         clsRecord.redwing__Start_Time__c = '12:00';
         clsRecord.Name = 'Test';
         clsRecord.Learning_Plan__c = lPlan2.Id;
@@ -242,9 +244,9 @@ public class CustomLookUpControllerTest
         
         Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
         clsRecord.Skedulo_Account__c = accounts[0].id;
-        clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
+        clsRecord.redwing__End_Date__c = Date.Parse('12/12/2019');
         clsRecord.redwing__End_Time__c= '13:00';
-        clsRecord.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
+        clsRecord.redwing__Start_Date__c = Date.Parse('12/12/2019');// Assuming Start date = End date
         clsRecord.redwing__Start_Time__c = '12:00';
         clsRecord.Name = 'Test';
         //clsRecord.Learning_Plan__c = lPlan2.Id;

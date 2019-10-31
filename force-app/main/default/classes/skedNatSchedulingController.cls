@@ -433,10 +433,11 @@ global class skedNatSchedulingController {
                         currentClassDay = new classDayModel();
                         currentClassDay.dateValue = dateValue;
                         currentClassDay.dateStart = skedDateTimeUtils.getStartOfDate(dateValue, model.timezoneSidId);
-                        //currentClassDay.remainDuration = integer.valueOf(model.maxHoursPerDay * 60);
+                        currentClassDay.remainDuration = integer.valueOf(model.maxHoursPerDay * 60);
+                        //currentClassDay.remainDuration = classTypeEndInMinutes - classTypeStartInMinutes;
                         currentClassDay.startInMinutes = classTypeStartInMinutes;
-                        currentClassDay.endInMinutes = classTypeEndInMinutes;
-                        currentClassDay.remainDuration = classTypeEndInMinutes - classTypeStartInMinutes;
+                        //currentClassDay.endInMinutes = classTypeEndInMinutes;
+                        currentClassDay.endInMinutes = classTypeStartInMinutes + integer.valueOf(model.maxHoursPerDay * 60);
                         mapClassDay.put(dateValue, currentClassDay);
                     }
 
@@ -567,8 +568,10 @@ global class skedNatSchedulingController {
                 if (currentClassDay != NULL && !currentClassDay.jobs.isEmpty()) {
                     jobModel lastJob = currentClassDay.jobs.get(currentClassDay.jobs.size() - 1);
                     string samedayKey = courseClassType.id + '_' + lastJob.classType;
+                    
                     if (setSameDayClassTypes.contains(samedayKey)) {
                         integer jobDuration = currentClassDay.remainDuration - (lastJob.afterClassDuration + breakTime + sourceJob.beforeClassDuration);
+                        
                         if (jobDuration >= durationToHave2ndClass) {
                             if (jobDuration > durationToCreateJob) {
                                 jobDuration = durationToCreateJob;
@@ -620,10 +623,11 @@ global class skedNatSchedulingController {
                         currentClassDay = new classDayModel();
                         currentClassDay.dateValue = dateValue;
                         currentClassDay.dateStart = skedDateTimeUtils.getStartOfDate(dateValue, model.timezoneSidId);
-                        //currentClassDay.remainDuration = integer.valueOf(model.maxHoursPerDay * 60);
+                        currentClassDay.remainDuration = integer.valueOf(model.maxHoursPerDay * 60);
+                        //currentClassDay.remainDuration = classTypeEndInMinutes - classTypeStartInMinutes;
                         currentClassDay.startInMinutes = classTypeStartInMinutes;
-                        currentClassDay.endInMinutes = classTypeEndInMinutes;
-                        currentClassDay.remainDuration = classTypeEndInMinutes - classTypeStartInMinutes;
+                        //currentClassDay.endInMinutes = classTypeEndInMinutes;
+                        currentClassDay.endInMinutes = classTypeStartInMinutes + integer.valueOf(model.maxHoursPerDay * 60);
                         mapClassDay.put(dateValue, currentClassDay);
                     }
 
@@ -665,6 +669,8 @@ global class skedNatSchedulingController {
                     if (durationToCreateJob > 0) {
                         currentClassDay.remainDuration = 0;
                     }
+                    
+                    system.debug('#currentClassDay.remainDuration#' + currentClassDay.remainDuration);
                 }
             }
 
