@@ -1,0 +1,94 @@
+<aura:component controller="AccountAffiliationController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:handler name = "init" value="{!this}" action = "{!c.doInit}" /> 
+    
+    <aura:attribute name = "accountContactsList" type = "List" default = "[]"/>
+    <aura:attribute name="isSelectAll" type="Boolean" default="false" />
+    <aura:attribute name="loadingSpinner" type="Boolean" default="false" />
+    
+    <!-- Message components -->
+    <aura:attribute name = "messageType"              type = "String"     default = "" />
+    <aura:attribute name = "message"              type = "String"     default = "" /> 
+    <aura:attribute name = "isError"              type = "Boolean"     default = "false" /> 
+    
+    <br/>
+    <div class="slds-grid">
+        <div class="slds-col">
+            <lightning:layout >
+                <aura:if isTrue="{!v.isError}">
+                    <c:MessageComponent type="{!v.messageType}" message="{!v.message}"/>
+                </aura:if>
+            </lightning:layout>
+        </div>
+        <div class="slds-col slds-text-align_right">
+            <lightning:button label="Remove Affiliation" onclick="{!c.removeAffiliation}" />  
+        </div>        
+    </div>  
+    <br/>
+    
+    <aura:if isTrue="{!v.loadingSpinner }">
+        <lightning:spinner alternativeText="Loading" variant="brand" size="large"/>
+    </aura:if>
+    
+    <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th scope="col" style="width:3.25rem">
+                    <span id="column-group-header" class="slds-assistive-text">Choose a row</span>
+                    <div class="slds-th__action slds-th__action_form">
+                        <div class="slds-checkbox">
+                            <label class="slds-checkbox">
+                                <ui:inputCheckbox value="{!v.isSelectAll}" change="{!c.handleIsSelectAll}" aura:id="selectAll"/>
+                                <span class="slds-checkbox--faux" />
+                                <span class="slds-form-element__label"></span>
+                            </label>
+                        </div>
+                    </div>
+                </th>
+                <th aria-label="Organization " aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                        <span class="slds-truncate" title="Organization ">Organization</span>
+                    </div>
+                </th>
+                <th aria-label="Organization Address" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                        <span class="slds-truncate" title="Organization Address">Organization Address</span>
+                    </div>
+                </th>
+                <th aria-label="Role" aria-sort="none" class="slds-is-resizable slds-is-sortable" scope="col">
+                    <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                        <span class="slds-truncate" title="Role">Role</span>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.accountContactsList}" var="accConRel">
+                <tr aria-selected="false" class="slds-hint-parent">
+                    <td role="gridcell">
+                        <div class="slds-checkbox">
+                            <label class="slds-checkbox__label" for="checkbox-01" id="check-button-label-01">
+                                <span><lightning:input type="checkbox" name="input2" checked="{!accConRel.isChecked}"/></span>
+                                <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+                            </label>
+                        </div>
+                    </td>
+                    <th scope="row">
+                        <div class="slds-truncate">
+                            <div class="slds-truncate">{!accConRel.accountName}</div>
+                        </div>
+                    </th>
+                    <td role="gridcell">
+                        <div class="slds-truncate">
+                            <p><lightning:formattedText value="{!accConRel.accountBillingDetails.address1}" /></p>
+                            <p><lightning:formattedText value="{!accConRel.accountBillingDetails.city+' '+accConRel.accountBillingDetails.country}"/></p>
+                            <p><lightning:formattedText linkify="true" value="{!accConRel.accountBillingDetails.province+' '+accConRel.accountBillingDetails.postalCode}" /></p>
+                        </div>
+                    </td>
+                    <td role="gridcell">
+                        <div class="slds-truncate">{!accConRel.contactRole}</div>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

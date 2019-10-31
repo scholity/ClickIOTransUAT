@@ -184,11 +184,6 @@
                 <label>Increase Credit Limit</label>
             </value>
             <value>
-                <fullName>Increase Limit-New Customer</fullName>
-                <default>false</default>
-                <label>Increase Limit-New Customer</label>
-            </value>
-            <value>
                 <fullName>In-Progress</fullName>
                 <default>false</default>
                 <label>In-Progress</label>
@@ -598,10 +593,6 @@
         <valueSettings>
             <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
             <valueName>Increase Credit Limit</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>
-            <valueName>Increase Limit-New Customer</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Request Invoicing Privileges</controllingFieldValue>

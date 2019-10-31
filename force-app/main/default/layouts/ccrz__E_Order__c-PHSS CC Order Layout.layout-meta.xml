@@ -560,6 +560,10 @@
         <fields>CONTACT.ACCOUNT</fields>
         <relatedList>Case.CC_Order__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>redwing__ILT_Class__c.CPS_Order__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>

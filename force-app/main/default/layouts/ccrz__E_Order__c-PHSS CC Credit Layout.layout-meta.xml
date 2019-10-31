@@ -528,6 +528,10 @@
         <fields>Account__c</fields>
         <relatedList>redwing__ILT_Class__c.CC_Order_Number__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>redwing__ILT_Class__c.CPS_Order__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
     <showInteractionLogPanel>true</showInteractionLogPanel>

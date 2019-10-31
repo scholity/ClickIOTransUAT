@@ -208,7 +208,7 @@ global class skedCommunitySchedulingController {
             //find recurring schedules which were within the source month
             Map<Id, sked__Recurring_Schedule__c> mapEligibleSchedule = new Map<Id, sked__Recurring_Schedule__c>();
             if (!sourceScheduleIds.isEmpty()) {
-                List<sked__Recurring_Schedule__c> sourceSchedules = [SELECT Id, Frequency__c, Pattern__c, sked__Summary__c,
+                List<sked__Recurring_Schedule__c> sourceSchedules = [SELECT Id, Name, Frequency__c, Pattern__c, sked__Summary__c,
                                                                      (SELECT Id, sked__Start__c, sked__Finish__c
                                                                       FROM sked__Jobs__r
                                                                       ORDER BY sked__Start__c ASC)
@@ -218,6 +218,7 @@ global class skedCommunitySchedulingController {
                     if (sourceSchedule.sked__Jobs__r != NULL && !sourceSchedule.sked__Jobs__r.isEmpty()) {
                         sked__Job__c firstJob = sourceSchedule.sked__Jobs__r.get(0);
                         sked__Job__c lastJob = sourceSchedule.sked__Jobs__r.get(sourceSchedule.sked__Jobs__r.size() - 1);
+                        
                         if (sourceStartTime > firstJob.sked__Start__c || lastJob.sked__Finish__c >= sourceEndTime) {
                             continue;
                         }
@@ -311,52 +312,31 @@ global class skedCommunitySchedulingController {
             }
 
             if (!copiedJobs.isEmpty()) {
-                insert copiedJobs;
-
-                Map<Id, sked__Job__c> mapSourceJob = new Map<Id, sked__Job__c>(sourceJobs);
-                if (isIncludingSubclasses == TRUE) {
-                    List<sked__Job__c> subClasses = new List<sked__Job__c>();
-                    for (sked__Job__c copiedJob : copiedJobs) {
-                        sked__Job__c sourceJob = mapSourceJob.get(copiedJob.Source_Job__c);
-                        if (sourceJob.Is_Stacked_Class__c == TRUE && sourceJob.sked__Followups__r != NULL) {
-                            for (sked__Job__c sourceSubClass : sourceJob.sked__Followups__r) {
-                                sked__Job__c subClass = sourceSubClass.clone();
-                                subClass.sked__Parent__c = copiedJob.Id;
-                                subClass.sked__Start__c = skedDateTimeUtils.addDays(subClass.sked__Start__c, daysDifferent, timezoneSidId);
-                                subClass.sked__Finish__c = skedDateTimeUtils.addDays(subClass.sked__Finish__c, daysDifferent, timezoneSidId);
-                                subClass.sked__Job_Status__c = skedConstants.JOB_STATUS_QUEUED;
-                                subClass.sked__Recurring_Schedule__c = NULL;
-                                subClasses.add(subClass);
-                            }
-                        }
-                    }
-                    if (!subClasses.isEmpty()) {
-                        insert subClasses;
-                    }
-                }
-
-                List<sked__Job_Tag__c> copiedJobTags = new List<sked__Job_Tag__c>();
-                for (sked__Job__c copiedJob : copiedJobs) {
-                    Course_Catalog__c skedCourseCatalog = mapSourceCourseCatalog.get(copiedJob.Course_Catalog__c);
-
-                    for (Course_Catalog_Tag__c courseCatalogTag : skedCourseCatalog.Course_Catalog_Tags__r) {
-                        sked__Job_Tag__c copiedJobTag = new sked__Job_Tag__c(
-                            sked__Job__c = copiedJob.Id,
-                            sked__Tag__c = courseCatalogTag.Tag__c
-                        );
-                        copiedJobTags.add(copiedJobTag);
-                    }
-                }
-                if (!copiedJobTags.isEmpty()) {
-                    insert copiedJobTags;
-                }
+                Database.executeBatch(new skedCopyCommunityJobBatch(copiedJobs, sourceJobs, isIncludingSubclasses, timezoneSidId, daysDifferent), 100);
             }
-
-            validateQueuedJobs(regionId, copiedJobs);
         }
         catch (Exception ex) {
             result.getError(ex);
             Database.rollback(sp);
+        }
+        return result;
+    }
+    
+    @remoteAction 
+    global static skedRemoteResultModel isAnyBatchInProcess() {
+        skedRemoteResultModel result = new skedRemoteResultModel();
+        try {
+            List<AsyncApexJob> asyncApexJobs = [SELECT Id
+                                                FROM AsyncApexJob
+                                                WHERE Status != 'Aborted' AND Status != 'Completed' AND Status != 'Failed'
+                                                AND (ApexClass.Name = 'skedCopyCommunityJobBatch'
+                                                     OR ApexClass.Name = 'skedResolveCommunityJobBatch'
+                                                     OR ApexClass.Name = 'skedDeleteJobBatch')];
+ 
+            result.data = !asyncApexJobs.isEmpty();
+        }
+        catch (Exception ex) {
+            result.getError(ex);
         }
         return result;
     }
@@ -600,7 +580,7 @@ global class skedCommunitySchedulingController {
             }
 
             Date jobMonth = selectedDate.toStartOfMonth();
-            validateQueuedJobsInMonth(model.regionId, jobMonth);
+            skedJobService.validateQueuedJobsInMonth(model.regionId, jobMonth);
 
             result.data = skedJob.Id;
         }
@@ -625,7 +605,7 @@ global class skedCommunitySchedulingController {
                                          FROM sked__JobTags__r)
                                         FROM sked__Job__c 
                                         WHERE Id = :model.id];
-                validateQueuedJobsInMonth(skedJob.sked__Region__c, skedJob.Job_Month__c);
+                skedJobService.validateQueuedJobsInMonth(skedJob.sked__Region__c, skedJob.Job_Month__c);
             }
 
             result.data = conflictAllocations;
@@ -642,39 +622,7 @@ global class skedCommunitySchedulingController {
         skedRemoteResultModel result = new skedRemoteResultModel();
         SavePoint sp = Database.setSavePoint();
         try {
-            List<sked__Job__c> skedJobs = [SELECT Id, Job_Month__c, sked__Region__c 
-                                           FROM sked__Job__c 
-                                           WHERE Id IN :jobIds];
-            sked__Job__c firstJob = skedJobs.get(0);
-
-            List<sked__Job__c> validatedQueuedJobs = validateQueuedJobsInMonth(firstJob.sked__Region__c, firstJob.Job_Month__c);
-            Map<Id, sked__Job__c> mapValidatedQueuedJobs = new Map<Id, sked__Job__c>(validatedQueuedJobs);
-            Set<Id> errorRecurringScheduleIds = new Set<Id>();
-            for (sked__Job__c validatedQueuedJob : validatedQueuedJobs) {
-                if (!string.isBlank(validatedQueuedJob.Copy_Result_Message__c) && validatedQueuedJob.sked__Recurring_Schedule__c != NULL) {
-                    errorRecurringScheduleIds.add(validatedQueuedJob.sked__Recurring_Schedule__c);
-                }
-            }
-
-            List<sked__Job__c> jobsToUpdate = new List<sked__Job__c>();
-
-            for (sked__Job__c skedJob : skedJobs) {
-                if (mapValidatedQueuedJobs.containsKey(skedJob.Id)) {
-                    sked__Job__c validatedQueuedJob = mapValidatedQueuedJobs.get(skedJob.Id);
-                    if (string.isBlank(validatedQueuedJob.Copy_Result_Message__c) 
-                        || (validatedQueuedJob.Copy_Result_Message__c == skedConstants.COMMUNITY_COPY_OUT_OF_MONTH + '. ')) {
-                        if (validatedQueuedJob.sked__Recurring_Schedule__c == NULL || !errorRecurringScheduleIds.contains(validatedQueuedJob.sked__Recurring_Schedule__c)) {
-                            skedJob.sked__Job_Status__c = skedConstants.JOB_STATUS_PENDING_ALLOCATION;
-                            skedJob.Is_Queued__c = FALSE;
-                            skedJob.Job_Month__c = NULL;
-                            jobsToUpdate.add(skedJob);
-                        }
-                    }
-                }
-            }
-            if (!jobsToUpdate.isEmpty()) {
-                update jobsToUpdate;
-            }
+            Database.executeBatch(new skedResolveCommunityJobBatch(jobIds), 100);
         }
         catch (Exception ex) {
             result.getError(ex);
@@ -682,13 +630,18 @@ global class skedCommunitySchedulingController {
         }
         return result;
     }
-
+                                  
     @remoteAction
     global static skedRemoteResultModel deleteJobs(string[] jobIds) {
         skedRemoteResultModel result = new skedRemoteResultModel();
         SavePoint sp = Database.setSavePoint();
         try {
-            skedJobService.deleteJobs(jobIds);
+            if (jobIds.size() == 1) {
+                skedJobService.deleteJobs(jobIds);
+            }
+            else {
+                Database.executeBatch(new skedDeleteJobBatch(jobIds), 100);
+            }
         }
         catch (Exception ex) {
             result.getError(ex);
@@ -712,74 +665,6 @@ global class skedCommunitySchedulingController {
     }
     
     /**************************************************************** Private methods ***********************************************************************/
-    private static List<sked__Job__c> validateQueuedJobsInMonth(string regionId, Date jobMonth) {
-        List<sked__Job__c> queuedJobs = [SELECT Id, Name, sked__Region__c, sked__Address__c, sked__Contact__c, sked__Recurring_Schedule__c,
-                                         sked__GeoLocation__Latitude__s, sked__GeoLocation__Longitude__s, sked__GeoLocation__c,
-                                         sked__Timezone__c, sked__Start__c, sked__Finish__c, sked__Duration__c, sked__Type__c, 
-                                         sked__Job_Status__c, Copy_Result_Message__c, Number_of_Instructors__c, Job_Month__c,
-                                         sked__Location__c, Course_Catalog__c, Course_Catalog__r.Name, Break_Duration__c, 
-                                         Number_of_Breaks__c, Special_Instructions__c, ClasS_Sub_Type__c, Course_Code__c, Display_Order__c,
-                                         sked__Parent__c, Is_Stacked_Class__c, Is_Master_Class__c
-                                         FROM sked__Job__c
-                                         WHERE Job_Month__c = :jobMonth
-                                         AND sked__Region__c = :regionId
-                                         AND Is_Queued__c = TRUE
-                                         AND (Is_Stacked_Class__c = FALSE OR Is_Master_Class__c = TRUE)];
-        return validateQueuedJobs(regionId, queuedJobs);
-    }
-
-    private static List<sked__Job__c> validateQueuedJobs(string regionId, List<sked__Job__c> queuedJobs) {
-        if (queuedJobs.size() == 0) {
-            return queuedJobs;
-        }
-        DateTime startTime, endTime;
-        for (sked__Job__c queuedJob : queuedJobs) {
-            if (startTime == NULL || startTime > queuedJob.sked__Start__c) {
-                startTime = queuedJob.sked__Start__c;
-            }
-            if (endTime == NULL || endTime < queuedJob.sked__Finish__c) {
-                endTime = queuedJob.sked__Finish__c;
-            }
-        }
-        sked__Region__c skedRegion = [SELECT Id, sked__Timezone__c FROM sked__Region__c WHERE Id = :regionId];
-        string timezoneSidId = skedRegion.sked__Timezone__c;
-        startTime = skedDateTimeUtils.getStartOfDate(startTime, timezoneSidId);
-        endTime = skedDateTimeUtils.getEndOfDate(endTime, timezoneSidId);
-
-        List<sked__Job__c> activeJobs = [SELECT Id, Name, sked__Start__c, sked__Finish__c, sked__Location__c, sked__Recurring_Schedule__c
-                                         FROM sked__Job__c
-                                         WHERE sked__Region__c = :regionId
-                                         AND sked__Type__c = :skedConstants.JOB_TYPE_COMMUNITY
-                                         AND sked__Job_Status__c != :skedConstants.JOB_STATUS_CANCELLED
-                                         AND Is_Queued__c = FALSE
-                                         AND sked__Start__c < :endTime
-                                         AND sked__Finish__c > :startTime
-                                         AND (Is_Stacked_Class__c = FALSE OR Is_Master_Class__c = TRUE)
-                                         ORDER BY sked__Start__c];
-        List<sked__Job__c> jobsToUpdate = new List<sked__Job__c>();
-        for (sked__Job__c queuedJob : queuedJobs) {
-            queuedJob.Copy_Result_Message__c = '';
-
-            Date jobMonthStart = queuedJob.Job_Month__c;
-            Date jobMonthEnd = jobMonthStart.addMonths(1).addDays(-1);
-            if (queuedJob.sked__Start__c.date() > jobMonthEnd) {
-                queuedJob.Copy_Result_Message__c = skedConstants.COMMUNITY_COPY_OUT_OF_MONTH + '. ';
-            }
-
-            for (sked__Job__c activeJob : activeJobs) {
-                if (queuedJob.sked__Location__c == activeJob.sked__Location__c) {
-                    if (queuedJob.sked__Start__c < activeJob.sked__Finish__c && queuedJob.sked__Finish__c > activeJob.sked__Start__c) {
-                        queuedJob.Copy_Result_Message__c += skedConstants.COMMUNITY_COPY_ROOM_CONFLICT + '. ';
-                        break;
-                    }
-                }
-            }
-        }
-        update queuedJobs;
-
-        return queuedJobs;
-    }
-
     private static List<sked__Job__c> processRecurring(sked__Job__c sourceJob, jobSaveModel model) {
         List<sked__Job__c> recurringJobs;
 

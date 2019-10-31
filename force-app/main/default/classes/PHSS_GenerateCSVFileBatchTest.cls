@@ -19,6 +19,19 @@ public class PHSS_GenerateCSVFileBatchTest {
         Test.stopTest();
     }
     
+    @isTest static void testExecuteBatch2(){
+        
+        generateTestData2();
+        
+        Test.startTest();
+        
+        database.executeBatch(new PHSS_GenerateCSVFileBatch(), 100);
+        
+        sendCSVToCFS.generateCSV();
+        
+        Test.stopTest();
+    }
+    
     private static void generateTestData(){
         
         Switch__c switchCustomSetting = new Switch__c(
@@ -26,6 +39,15 @@ public class PHSS_GenerateCSVFileBatchTest {
             Switch__c = false
         );
         insert switchCustomSetting;
+        
+        Id recordTypeId1 = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Bucket Account').getRecordTypeId();
+        
+        Bucket_Account_Settings__c bas = Bucket_Account_Settings__c.getOrgDefaults();
+        bas.Bucket_Account_Owner_ID__c = UserInfo.getUserID();
+        bas.Bucket_Account_RecordTypeID__c = recordTypeId1;
+        bas.Default_Bucket_Name__c = 'Bucket Account';
+        bas.Maximum_Size_of_Bucket__c = 5000;
+        insert bas;
         
         Account testAccount = new Account(
             Name='SalesforcetestOrg',
@@ -37,6 +59,17 @@ public class PHSS_GenerateCSVFileBatchTest {
             Phone='9934200234'
         );
         insert testAccount;
+        
+        Contact c = new Contact(FirstName = 'Test',
+                                LastName = 'Contact',
+                                Phone = '9998887777',
+                                Email = 'teset@tst.com',
+                                AccountId = testAccount.Id);
+        insert c;
+        
+        Account acc = new Account(Id = testAccount.Id, Billing_Contact__c = c.Id);
+        update acc;
+        
         
         Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('RCS PO').getRecordTypeId();
         
@@ -139,6 +172,7 @@ public class PHSS_GenerateCSVFileBatchTest {
         
         ccrz__E_OrderItem__c testOrderItem = new ccrz__E_OrderItem__c(
             ccrz__Product__c = testProduct.Id,
+            Payment_Category__c = '',
             ccrz__Order__c = testOrder.id,
             ccrz__Price__c=100,
             ccrz__Quantity__c=100.00,
@@ -176,7 +210,186 @@ public class PHSS_GenerateCSVFileBatchTest {
             CC_Product__c = testProduct.Id
         );
         insert new List<Fulfillment_Item__c>{testFulfillmentItem1, testFulfillmentItem2};
+        
+            List<Fulfillment_Item__c> ffItemList1 = [SELECT Id, Product_SKU__c, AP_Code__c FROM Fulfillment_Item__c];
             
+    }
+    
+    private static void generateTestData2(){
+        
+        Switch__c switchCustomSetting = new Switch__c(
+            Name = 'EmailMessageServiceSwitch',
+            Switch__c = false
+        );
+        insert switchCustomSetting;
+        
+        Account testAccount = new Account(
+            Name='SalesforcetestOrg',
+            BillingStreet='',
+            BillingCity='',
+            BillingState='',
+            BillingPostalCode='',
+            BillingCountry='',
+            Phone='',
+            Special_Invoicing__c = 'DO NOT MAIL'
+        );
+        insert testAccount;
+        
+        Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('RCS PO').getRecordTypeId();
+        
+        Case testCase = new Case(
+            RecordTypeId=recordTypeId,
+            Status='PO On-Hold CFS',
+            Sent_to_CFS__c=false,             
+            AccountId=testAccount.Id, 
+            Billing_Contact_Email__c='sanford.trudi@jobcorps.org', 
+            Billing_Contact_Phone__c='4124418698', 
+            Billing_Address_1__c='7175 HIGHLAND DRIVE', 
+            Billing_City__c='PITTSBURGH', 
+            Billing_State__c='PA', 
+            Billing_Zip__c='15206', 
+            Billing_Country_Name__c='USA', 
+            Billing_Country_Code__c='US', 
+            Billing_Contact_Last_Name__c='SANFORD', 
+            Billing_Contact_First_Name__c='TRUDI', 
+            Shipping_Contact_First_Name__c='TRUDI', 
+            Shipping_Contact_Last_Name__c='SANFORD', 
+            Terms__c='NET 30', 
+            IsNewRecord__c='Yes', 
+            Invoice_delivery_Email__c='sanford.trudi@jobcorps.org', 
+            Company_Name__c='PITTSBURGH JOB CORPS CENTER', 
+            Usage__c='BILL TO', 
+            Shipping_Address_1__c='7175 HIGHLAND DRIVE', 
+            Shipping_State__c='PA', 
+            Shipping_City__c='PITTSBURGH', 
+            Shipping_Zip__c='15206', 
+            Shipping_Country_Name__c='USA', 
+            Shipping_Country_Code__c='US', 
+            Customer_First_name__c='TRUDI', 
+            Customer_Last_name__c='SANFORD', 
+            Shipping_Contact_Phone__c='4124418698', 
+            External_LOGIN_EMAIL__c='sanford.trudi@jobcorps.org', 
+            PO_Number__c='PO0002039', 
+            PO_Amount__c=2484.70, 
+            /*
+            PO_Start_Date__c=2018-11-17T05:00:00z, 
+            PO_End_Date__c=2019-12-21T14:51:43z, 
+            */
+            Site_Name1__c='PITTSBURGH');
+        
+        redwing__Learning__c testLearning = new redwing__Learning__c(
+            Name = 'testLearning',
+            redwing__Published__c = true,
+            RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('ILT Event').getRecordTypeId()
+        );
+        insert testLearning;
+        
+        Redwing__ILT_Class__c testITLClass = new Redwing__ILT_Class__c(
+            Skedulo_Account__c = testAccount.Id,
+            redwing__End_Date__c = Date.Parse('12/19/2018'),
+            redwing__End_Time__c= '13:00',
+            redwing__Start_Date__c = Date.Parse('12/19/2018'),
+            redwing__Start_Time__c = '12:00',
+            Name = 'testITLClass',
+            Request_Type__c='Community',
+            redwing__Learning__c = testLearning.Id
+        );
+        insert testITLClass;
+        
+        redwing__ILT_Instructor__c testInstructor = new redwing__ILT_Instructor__c(
+            redwing__Instructor__c = UserInfo.getUserId(),
+            redwing__ILT_Class__c = testITLClass.id,
+            redwing__Primary__c = true
+        );
+        
+        redwing__ILT_Instructor__c testInstructor2 = new redwing__ILT_Instructor__c(
+            redwing__Instructor__c = UserInfo.getUserId(),
+            redwing__ILT_Class__c = testITLClass.id,
+            redwing__Primary__c = false
+        );
+        insert new List<redwing__ILT_Instructor__c>{testInstructor, testInstructor2};
+            
+            redwing__Training_Plan__c testLearningPlan = new redwing__Training_Plan__c(
+                Name = 'testLearningPlan'
+            );
+        insert testLearningPlan;
+        
+        ccrz__E_Category__c ccCategory = new ccrz__E_Category__c ();
+        ccCategory.Name = 'NAT Training';
+        ccCategory.ccrz__Sequence__c = 500;
+        ccCategory.ccrz__StartDate__c = System.Today();
+        ccCategory.ccrz__EndDate__c = System.Today().addDays(20);
+        ccCategory.ccrz__CategoryID__c = 'Test';
+        insert ccCategory;
+        
+        ccrz__E_Product__c testProduct = new ccrz__E_Product__c(
+            Name = 'Test Prod',
+            ccrz__SKU__c = String.ValueOf(System.Now()),
+            ccrz__Quantityperunit__c = 2.0,
+            ccrz__StartDate__c =  System.Today().addDays(2),
+            ccrz__EndDate__c = System.Today().addDays(20),
+            LMS_Learning_Plan__c = testLearningPlan.id,
+            CC_Category__c = ccCategory.Id,
+            AP_Code__c = '6243',
+            ccrz__InventoryType__c = 'COURSE',
+            ccrz__ProductType__c = 'KIT'
+        );
+        insert testProduct;
+        
+        
+        
+        
+        ccrz__E_TransactionPayment__c testTransactionPayment = new ccrz__E_TransactionPayment__c(ccrz__AccountType__c = 'po');
+        insert testTransactionPayment;
+        
+        ccrz__E_Order__c testOrder = new ccrz__E_Order__c(
+            NSSCCConnector_SFCC_Order_Number__c = '3114226',
+            NSSCCConnector_from_SFCC__c = true,
+            ccrz__Account__c = testAccount.Id
+        );
+        insert testOrder;
+        
+        ccrz__E_OrderItem__c testOrderItem = new ccrz__E_OrderItem__c(
+            ccrz__Product__c = testProduct.Id,
+            ccrz__Order__c = testOrder.id,
+            ccrz__Price__c=100,
+            ccrz__Quantity__c=100.00,
+            ccrz__SubAmount__c=100.00,
+            ILT_Class__c = testITLClass.Id
+        );
+        insert testOrderItem;
+        
+        Fulfillment__c testFulfillment = new Fulfillment__c(
+            Type__c='Invoice',
+            Status__c='Open',
+            Order__c = testOrder.Id,
+            CC_Transaction_Payment__c= testTransactionPayment.Id
+        );
+        insert testFulfillment;
+        
+        Fulfillment_Item__c testFulfillmentItem1 = new Fulfillment_Item__c(
+            Type__c = 'Training',
+            Status__c ='Ready',
+            Fulfillment__c = testFulfillment.Id,
+            Order__c = testOrder.Id,
+            Order_Item__c = testOrderItem.Id,
+            CC_Product__c = testProduct.Id,
+            ILT_Class__c = testITLClass.Id,
+            Quantity__c = 1,
+            Supplemental_Information__c = 'Test123'
+        );
+        
+        Fulfillment_Item__c testFulfillmentItem2 = new Fulfillment_Item__c(
+            Type__c = 'Training',
+            Status__c = 'Ready',
+            Fulfillment__c = testFulfillment.Id,
+            Order__c = testOrder.Id,
+            Order_Item__c = testOrderItem.Id,
+            CC_Product__c = testProduct.Id
+        );
+        insert new List<Fulfillment_Item__c>{testFulfillmentItem1, testFulfillmentItem2};
+        
+        List<Fulfillment_Item__c> ffItemList = [SELECT Id, Product_SKU__c, AP_Code__c FROM Fulfillment_Item__c];
     }
     
     /*

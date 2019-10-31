@@ -176,6 +176,14 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>AccountAffiliationController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountAffiliationControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountPricingAgreementCleanUpBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -884,14 +892,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PHSS_RegistrationController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_RegistrationControllerTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PHSS_RegistrationRestService</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -985,14 +985,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_eCommerceIntegrationFilesTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletion</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletionTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1832,6 +1824,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>skedCopyCommunityJobBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>skedCourseCatalogHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1845,6 +1841,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>skedDateTimeUtils</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>skedDeleteJobBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1969,6 +1969,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>skedRemoteResultModel</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>skedResolveCommunityJobBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -13844,6 +13848,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Training_Events__c.Report_Completed__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Training_Events__c.Report_Sent_Date__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -15269,7 +15278,7 @@
         <layout>redwing__Achievement__c-PHSS Achievement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>redwing__ILT_Class__c-PHSS ILT Class Layout</layout>
+        <layout>redwing__ILT_Class__c-PHSS Community ILT Class Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>redwing__ILT_Event__c-PHSS ILT Event Layout</layout>

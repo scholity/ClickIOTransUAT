@@ -70,6 +70,8 @@ public class CommunitypageInstructorstest{
         raa.redwing__User__c =u3.id;
         raa.redwing__Expiration_Date__c = System.today() + 100;
         raa.redwing__Training_Plan_Achievement__c = tpa.id;
+        raa.redwing__Contact__c=conRecord.id;
+        raa.Evaluation_Result__c = 'Successful';
         insert raa;
         
         System.debug('Achievement Assignment acquired'+u3.Name);

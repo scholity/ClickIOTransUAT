@@ -181,10 +181,65 @@
             <name>myRule_4</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_4</leftValueReference>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.redwing__Status__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Pending Assignment</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Request_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Community</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -242,6 +297,37 @@
                     <stringValue>Pending Assignment</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Evaluation_Result__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_6_A1</targetReference>
             </connector>
@@ -262,7 +348,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_8</name>
-            <conditionLogic>1 and (2 or 3)</conditionLogic>
+            <conditionLogic>(1 and 4) and (2 or 3)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -354,6 +440,37 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Certifications</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Evaluation_Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Successful</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -398,7 +515,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myPreWaitRule_myWait_myRule_8</name>
-            <conditionLogic>1 and (2 or 3)</conditionLogic>
+            <conditionLogic>(1 and 4) and (2 or 3)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -492,6 +609,37 @@
                     <stringValue>Certifications</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Evaluation_Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Successful</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myDecision</targetReference>
             </connector>
@@ -524,7 +672,7 @@
         </rules>
         <rules>
             <name>myRule_8_pmetrule</name>
-            <conditionLogic>1 and (2 or 3)</conditionLogic>
+            <conditionLogic>(1 and 4) and (2 or 3)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -618,45 +766,42 @@
                     <stringValue>Certifications</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_old.Evaluation_Result__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Successful</stringValue>
+                </rightValue>
+            </conditions>
             <label>Previously Met - Prev</label>
         </rules>
     </decisions>
     <description>Controls changes made on the Achievement Assignment Record</description>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue> IF(
-	ISNULL([redwing__Achievement_Assignment__c].ILT_Class__c),
-	FALSE,
-	IF(
-		AND(
-			ISPICKVAL([redwing__Achievement_Assignment__c].redwing__Status__c, &#39;Pending Assignment&#39;),
-			ISPICKVAL([redwing__Achievement_Assignment__c].ILT_Class__c.Request_Type__c, &#39;Community&#39;)
-		),
-		TRUE,
-		FALSE
-	)
-)
-  </stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_4</name>
-        <dataType>Boolean</dataType>
-        <expression> IF(
-	ISNULL({!myVariable_current.ILT_Class__c}),
-	FALSE,
-	IF(
-		AND(
-			ISPICKVAL({!myVariable_current.redwing__Status__c}, &#39;Pending Assignment&#39;),
-			ISPICKVAL({!myVariable_current.ILT_Class__r.Request_Type__c}, &#39;Community&#39;)
-		),
-		TRUE,
-		FALSE
-	)
-)</expression>
-    </formulas>
-    <interviewLabel>Achievement_Assignment_Controller-26_InterviewLabel</interviewLabel>
+    <interviewLabel>Achievement_Assignment_Controller-40_InterviewLabel</interviewLabel>
     <label>Achievement Assignment Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -674,12 +819,6 @@
         <name>OldObjectVariable</name>
         <value>
             <elementReference>myVariable_old</elementReference>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>RecursiveCountVariable</name>
-        <value>
-            <elementReference>RecursiveCountVariable</elementReference>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -1504,7 +1643,7 @@
             <field>Online_Class__c</field>
             <operator>IsNull</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <inputAssignments>
@@ -2119,14 +2258,6 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
-    </variables>
-    <variables>
-        <name>RecursiveCountVariable</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <scale>2</scale>
     </variables>
     <waits>
         <name>myWait_myRule_8</name>

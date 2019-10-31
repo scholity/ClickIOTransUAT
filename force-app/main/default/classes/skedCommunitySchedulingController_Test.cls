@@ -43,7 +43,8 @@ private class skedCommunitySchedulingController_Test {
         Date destinationWeekStartDate = startDate.addDays(7);
         
         Test.startTest();
-        skedCommunitySchedulingController.copyClassPattern(Json.serialize(startDate).replace('"', ''), Json.serialize(destinationWeekStartDate).replace('"', ''), sanFranciscoRegion.id);
+        skedCommunitySchedulingController.copyClassPattern(Json.serialize(startDate).replace('"', ''), 
+                                                           Json.serialize(destinationWeekStartDate).replace('"', ''), sanFranciscoRegion.id, true);
         Test.stopTest();
     }
     
@@ -69,7 +70,7 @@ private class skedCommunitySchedulingController_Test {
         DateTime nextWeekStartTime = DateTime.newInstance(nextWeekStartDate, time.newInstance(0, 0, 0, 0));
         
         map<string, sObject> mapTestData = skedDataSetup.setupCommunitySchedulingData();
-        Course_Catalog__c courseCatalog2 = (Course_Catalog__c)mapTestData.get('courseCatalog2');
+        Course_Catalog__c courseCatalog1 = (Course_Catalog__c)mapTestData.get('courseCatalog1');
         sked__Region__c sanFranciscoRegion = (sked__Region__c)mapTestData.get('sanFranciscoRegion');
         Contact testContact = (Contact)mapTestData.get('testContact');
         sked__Location__c communityLocation1 = (sked__Location__c)mapTestData.get('communityLocation1');
@@ -79,11 +80,11 @@ private class skedCommunitySchedulingController_Test {
         
         skedCommunitySchedulingController.jobSaveModel model = new skedCommunitySchedulingController.jobSaveModel();
         
-        model.courseCatalogId = courseCatalog2.id;
+        model.courseCatalogId = courseCatalog1.id;
         model.numberOfInstructors = 1;
-        model.numberOfStudents = 20;
-        model.classDuration = 180;
-        model.breakDuration = 30;
+        model.numberOfStudents = 30;
+        model.classDuration = 240;
+        model.breakDuration = 60;
         model.numberOfBreaks = 1;
         model.locationConfirmed = false;
         
@@ -101,7 +102,7 @@ private class skedCommunitySchedulingController_Test {
         model.regionId = sanFranciscoRegion.Id;        
         model.selectedDate = Json.serialize(startDate).replace('"', '');
         model.startTime = 1000;
-        model.finishTime = 1200;
+        model.finishTime = 1400;
         
         model.offerings = new List<skedCommunitySchedulingController.offeringModel>();
         skedCommunitySchedulingController.offeringModel offering1 = new skedCommunitySchedulingController.offeringModel();
@@ -110,6 +111,24 @@ private class skedCommunitySchedulingController_Test {
         
         model.tagIds = new List<string>();
         model.tagIds.add(tagPickup.Id);
+        
+        model.isStackedClass = true;
+        model.courseCode = 'SFA516';
+        
+        model.subclasses = new List<skedCommunitySchedulingController.jobModel>();
+        skedCommunitySchedulingController.jobModel subclass1 = new skedCommunitySchedulingController.jobModel();
+        subclass1.startTime = 1000;
+        subclass1.duration = 45;
+        subclass1.displayOrder = 1;
+        subclass1.courseCode = 'SFA511';
+        model.subclasses.add(subclass1);
+        
+        skedCommunitySchedulingController.jobModel subclass2 = new skedCommunitySchedulingController.jobModel();
+        subclass2.startTime = 1000;
+        subclass2.duration = 90;
+        subclass2.displayOrder = 2;
+        subclass2.courseCode = 'SFA513';
+        model.subclasses.add(subclass2);
         
         skedRemoteResultModel result = skedCommunitySchedulingController.saveJob(model, true);
         
@@ -128,7 +147,7 @@ private class skedCommunitySchedulingController_Test {
         DateTime nextWeekStartTime = DateTime.newInstance(nextWeekStartDate, time.newInstance(0, 0, 0, 0));
         
         map<string, sObject> mapTestData = skedDataSetup.setupCommunitySchedulingData();
-        Course_Catalog__c courseCatalog2 = (Course_Catalog__c)mapTestData.get('courseCatalog2');
+        Course_Catalog__c courseCatalog1 = (Course_Catalog__c)mapTestData.get('courseCatalog1');
         sked__Region__c sanFranciscoRegion = (sked__Region__c)mapTestData.get('sanFranciscoRegion');
         Contact testContact = (Contact)mapTestData.get('testContact');
         sked__Location__c communityLocation2 = (sked__Location__c)mapTestData.get('communityLocation2');
@@ -141,7 +160,7 @@ private class skedCommunitySchedulingController_Test {
         skedCommunitySchedulingController.jobSaveModel model = new skedCommunitySchedulingController.jobSaveModel();
         
         model.Id = dispatchjob.id;
-        model.courseCatalogId = courseCatalog2.id;
+        model.courseCatalogId = courseCatalog1.id;
         model.numberOfInstructors = 1;
         model.numberOfStudents = 20;
         model.classDuration = 180;
@@ -161,6 +180,24 @@ private class skedCommunitySchedulingController_Test {
         
         model.tagIds = new List<string>();
         model.tagIds.add(tagPickup.Id);
+        
+        model.isStackedClass = true;
+        model.courseCode = 'SFA516';
+        
+        model.subclasses = new List<skedCommunitySchedulingController.jobModel>();
+        skedCommunitySchedulingController.jobModel subclass1 = new skedCommunitySchedulingController.jobModel();
+        subclass1.startTime = 1000;
+        subclass1.duration = 45;
+        subclass1.displayOrder = 1;
+        subclass1.courseCode = 'SFA511';
+        model.subclasses.add(subclass1);
+        
+        skedCommunitySchedulingController.jobModel subclass2 = new skedCommunitySchedulingController.jobModel();
+        subclass2.startTime = 1000;
+        subclass2.duration = 90;
+        subclass2.displayOrder = 2;
+        subclass2.courseCode = 'SFA513';
+        model.subclasses.add(subclass2);
         
         skedRemoteResultModel result = skedCommunitySchedulingController.saveJob(model, true);
         
@@ -183,7 +220,6 @@ private class skedCommunitySchedulingController_Test {
         sked__Region__c sanFranciscoRegion = (sked__Region__c)mapTestData.get('sanFranciscoRegion');
         Contact testContact = (Contact)mapTestData.get('testContact');
         sked__Location__c communityLocation2 = (sked__Location__c)mapTestData.get('communityLocation2');
-        Attendee__c attendeeTest = (Attendee__c)mapTestData.get('attendee');
         sked__Tag__c tagPickup = (sked__Tag__c)mapTestData.get('tagPickup');
         sked__Job__c dispatchjob = (sked__Job__c)mapTestData.get('dispatchjob');
         Offering__c offferingDispatch = (Offering__c)mapTestData.get('offferingDispatch');
@@ -236,6 +272,7 @@ private class skedCommunitySchedulingController_Test {
         sked__Job__c dispatchjob = (sked__Job__c)mapTestData.get('dispatchjob');
         list<id> jobIds = new list<id>();
         jobIds.add(dispatchjob.id);
+        jobIds.add(dispatchjob.id);
         
         Test.startTest();
         skedCommunitySchedulingController.deleteJobs(jobIds);
@@ -252,4 +289,11 @@ private class skedCommunitySchedulingController_Test {
         skedCommunitySchedulingController.cancelJobs(jobIds);
         Test.stopTest();
     }
+    
+    static testmethod void testIsAnyBatchInProcess() {
+        Test.startTest();
+        skedCommunitySchedulingController.isAnyBatchInProcess();
+        Test.stopTest();
+    }
+        
 }

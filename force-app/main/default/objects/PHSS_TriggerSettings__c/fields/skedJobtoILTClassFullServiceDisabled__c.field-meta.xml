@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>skedJobtoILTClassFullServiceDisabled__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Disables the job-to-ILT class integration for full service jobs</description>
+    <externalId>false</externalId>
+    <label>skedJobtoILTClassFullServiceDisabled</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

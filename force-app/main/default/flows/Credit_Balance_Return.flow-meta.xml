@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Do_Nothing</name>
+        <label>Do Nothing</label>
+        <locationX>494</locationX>
+        <locationY>547</locationY>
+        <actionName>Donothing</actionName>
+        <actionType>apex</actionType>
+    </actionCalls>
     <assignments>
         <name>Set_Return_Amount</name>
         <label>Set Return Amount</label>
-        <locationX>291</locationX>
-        <locationY>255</locationY>
+        <locationX>301</locationX>
+        <locationY>194</locationY>
         <assignmentItems>
             <assignToReference>vRetAmount</assignToReference>
             <operator>Assign</operator>
@@ -16,6 +24,81 @@
             <targetReference>sProduct</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>check_CC_Order</name>
+        <label>check CC Order</label>
+        <locationX>217</locationX>
+        <locationY>389</locationY>
+        <defaultConnector>
+            <targetReference>Do_Nothing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>cc_Order_is_Not_Null</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sTransPayment.ccrz__CCOrder__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Return_Amount</targetReference>
+            </connector>
+            <label>cc Order is Not Null</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_if_CC_Order_Exists</name>
+        <label>Check if CC Order Exists</label>
+        <locationX>478</locationX>
+        <locationY>193</locationY>
+        <defaultConnector>
+            <targetReference>Do_Nothing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ccOrderExist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sOrder</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Order_Receipt</targetReference>
+            </connector>
+            <label>ccOrderExist</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Find_Stored_Payment</name>
+        <label>Find Stored Payment</label>
+        <locationX>64</locationX>
+        <locationY>391</locationY>
+        <defaultConnector>
+            <targetReference>Do_Nothing</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Stored_Payment_Exists</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Stored_Payment</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Transaction_Payment_Record</targetReference>
+            </connector>
+            <label>Stored Payment Exists</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>fRetAmount</name>
         <dataType>Currency</dataType>
@@ -40,8 +123,8 @@
     <recordCreates>
         <name>Create_Order_Receipt</name>
         <label>Create Order Receipt</label>
-        <locationX>502</locationX>
-        <locationY>219</locationY>
+        <locationX>648</locationX>
+        <locationY>177</locationY>
         <assignRecordIdToReference>vOrderId</assignRecordIdToReference>
         <connector>
             <targetReference>sOrderItem</targetReference>
@@ -165,18 +248,12 @@
     <recordCreates>
         <name>sFulfillment</name>
         <label>sFulfillment</label>
-        <locationX>501</locationX>
-        <locationY>387</locationY>
+        <locationX>617</locationX>
+        <locationY>352</locationY>
         <assignRecordIdToReference>vFulfillment</assignRecordIdToReference>
         <connector>
             <targetReference>sFulItem</targetReference>
         </connector>
-        <inputAssignments>
-            <field>CC_Transaction_Payment__c</field>
-            <value>
-                <elementReference>vTransPay</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>Order__c</field>
             <value>
@@ -200,8 +277,8 @@
     <recordCreates>
         <name>sFulItem</name>
         <label>sFulItem</label>
-        <locationX>501</locationX>
-        <locationY>536</locationY>
+        <locationX>617</locationX>
+        <locationY>523</locationY>
         <connector>
             <targetReference>Update_Stored_Payment_Remaining_Balance</targetReference>
         </connector>
@@ -252,8 +329,8 @@
     <recordCreates>
         <name>sOrderItem</name>
         <label>sOrderItem</label>
-        <locationX>646</locationX>
-        <locationY>220</locationY>
+        <locationX>819</locationX>
+        <locationY>177</locationY>
         <assignRecordIdToReference>vOrderItem</assignRecordIdToReference>
         <connector>
             <targetReference>sTransPay</targetReference>
@@ -371,8 +448,8 @@
     <recordCreates>
         <name>sTransPay</name>
         <label>sTransPayment</label>
-        <locationX>800</locationX>
-        <locationY>386</locationY>
+        <locationX>821</locationX>
+        <locationY>351</locationY>
         <assignRecordIdToReference>vTransPay</assignRecordIdToReference>
         <connector>
             <targetReference>sFulfillment</targetReference>
@@ -466,11 +543,11 @@
     <recordLookups>
         <name>Get_Stored_Payment</name>
         <label>Get Stored Payment</label>
-        <locationX>117</locationX>
-        <locationY>256</locationY>
+        <locationX>49</locationX>
+        <locationY>189</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Transaction_Payment_Record</targetReference>
+            <targetReference>Find_Stored_Payment</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -493,11 +570,11 @@
     <recordLookups>
         <name>Get_Transaction_Payment_Record</name>
         <label>Get Transaction Payment Record</label>
-        <locationX>166</locationX>
-        <locationY>47</locationY>
+        <locationX>179</locationX>
+        <locationY>188</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Return_Amount</targetReference>
+            <targetReference>check_CC_Order</targetReference>
         </connector>
         <filters>
             <field>ccrz__AccountType__c</field>
@@ -539,10 +616,10 @@
         <name>sOrder</name>
         <label>sOrder</label>
         <locationX>502</locationX>
-        <locationY>50</locationY>
+        <locationY>49</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Create_Order_Receipt</targetReference>
+            <targetReference>Check_if_CC_Order_Exists</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -573,8 +650,8 @@
         <description>Get the Return Product Fee type</description>
         <name>sProduct</name>
         <label>sProduct</label>
-        <locationX>340</locationX>
-        <locationY>52</locationY>
+        <locationX>303</locationX>
+        <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>sOrder</targetReference>
@@ -603,13 +680,13 @@
     <recordUpdates>
         <name>Update_Stored_Payment_Remaining_Balance</name>
         <label>Update Stored Payment Remaining Balance</label>
-        <locationX>685</locationX>
-        <locationY>536</locationY>
+        <locationX>831</locationX>
+        <locationY>523</locationY>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>sTransPayment.ccrz__StoredPayment__c</elementReference>
+                <elementReference>frmStoredPayment</elementReference>
             </value>
         </filters>
         <inputAssignments>

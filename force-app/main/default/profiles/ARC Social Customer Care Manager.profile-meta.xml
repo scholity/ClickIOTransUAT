@@ -176,6 +176,14 @@
         <visible>false</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>AccountAffiliationController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountAffiliationControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountPricingAgreementCleanUpBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -884,14 +892,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>PHSS_RegistrationController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_RegistrationControllerTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PHSS_RegistrationRestService</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -985,14 +985,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_eCommerceIntegrationFilesTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletion</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>PHSS_fetchCompletionTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1832,6 +1824,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>skedCopyCommunityJobBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>skedCourseCatalogHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1845,6 +1841,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>skedDateTimeUtils</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>skedDeleteJobBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -1969,6 +1969,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>skedRemoteResultModel</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>skedResolveCommunityJobBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -13841,6 +13845,11 @@
         <editable>false</editable>
         <field>Training_Events__c.Region__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Training_Events__c.Report_Completed__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

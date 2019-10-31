@@ -1,8 +1,9 @@
 ({
     initialize: function(component, event, helper) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)); //You get the whole decoded URL of the page.
-        var indx = sPageURL.indexOf('startURL');
-        sPageURL = sPageURL.substring(indx);
+        var indxB2C = sPageURL.indexOf('RemoteAccessAuthorizationPage');
+        var indxStartUrl = sPageURL.indexOf('startURL');
+        sPageURL = sPageURL.substring(indxStartUrl);
         console.log('sPageUrl '+sPageURL );
         component.set("v.startUrl",sPageURL);
         
@@ -13,7 +14,8 @@
         component.set("v.communityForgotPasswordUrl", helper.getCommunityForgotPasswordUrl(component, event, helper));
         component.set("v.communitySelfRegisterUrl", helper.getCommunitySelfRegisterUrl(component, event, helper));
 
-        if (sPageURL) {
+        if (indxB2C >= 0) {
+        //if (sPageURL) {
             component.set("v.b2c_origin", true);
         } else {
             component.set("v.b2c_origin", false);
@@ -27,7 +29,6 @@
     },
     
     setStartUrl: function (component, event, helper) {
-        
         var startUrl = event.getParam('startURL');
         if(startUrl) {
             component.set("v.startUrl", startUrl);

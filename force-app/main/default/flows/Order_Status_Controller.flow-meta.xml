@@ -27,14 +27,76 @@
                 <stringValue>Manage Order Status</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_14_A1</name>
+        <name>myRule_12_A1</name>
+        <label>Return Items</label>
+        <locationX>1200</locationX>
+        <locationY>200</locationY>
+        <actionName>Manage_Order_Status</actionName>
+        <actionType>flow</actionType>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>frmOrderId</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>1.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>frmOrderId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>flow</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>Manage Order Status</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_16_A1</name>
         <label>Manage Order Status</label>
-        <locationX>1400</locationX>
+        <locationX>1600</locationX>
         <locationY>200</locationY>
         <actionName>Manage_Order_Status</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myRule_14_A2</targetReference>
+            <targetReference>myRule_16_A2</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -92,14 +154,14 @@
                 <stringValue>Create Training Event from Opportunity</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_17_A1</name>
+        <name>myRule_19_A1</name>
         <label>Create Training Event</label>
-        <locationX>1700</locationX>
+        <locationX>1900</locationX>
         <locationY>200</locationY>
         <actionName>Create_Training_Event_from_Opputunity</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myRule_17_A2</targetReference>
+            <targetReference>myRule_19_A2</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -157,14 +219,14 @@
                 <stringValue>Manage Order Status</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_17_A2</name>
+        <name>myRule_19_A2</name>
         <label>Fulfill Order</label>
-        <locationX>1700</locationX>
+        <locationX>1900</locationX>
         <locationY>300</locationY>
         <actionName>Manage_Order_Status</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myRule_17_A3</targetReference>
+            <targetReference>myRule_19_A3</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -284,14 +346,14 @@
                 <stringValue>Manage Order Status</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_20_A1</name>
+        <name>myRule_22_A1</name>
         <label>Validate Order ready for Fulfillment</label>
-        <locationX>2000</locationX>
+        <locationX>2200</locationX>
         <locationY>200</locationY>
         <actionName>Manage_Order_Status</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myRule_20_A2</targetReference>
+            <targetReference>myRule_22_A2</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -349,14 +411,14 @@
                 <stringValue>Order Item Set Reservations</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_23_A1</name>
+        <name>myRule_25_A1</name>
         <label>Set Item Reservation Status</label>
-        <locationX>2300</locationX>
+        <locationX>2500</locationX>
         <locationY>200</locationY>
         <actionName>Order_Item_Set_Reservations</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myRule_23_A2</targetReference>
+            <targetReference>myRule_25_A2</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -414,9 +476,9 @@
                 <stringValue>Manage Order Status</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_25_A1</name>
+        <name>myRule_27_A1</name>
         <label>Fulfill Order2</label>
-        <locationX>2500</locationX>
+        <locationX>2700</locationX>
         <locationY>200</locationY>
         <actionName>Manage_Order_Status</actionName>
         <actionType>flow</actionType>
@@ -713,6 +775,61 @@
                 <processMetadataValues>
                     <name>inputDataType</name>
                     <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.ccrz__OrderStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Return Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_12_A1</targetReference>
+            </connector>
+            <label>Return Submitted</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>6.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision13</name>
+        <label>myDecision13</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision15</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_14</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
@@ -747,7 +864,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_12_A1</targetReference>
+                <targetReference>myRule_14_A1</targetReference>
             </connector>
             <label>Is Oppty Set</label>
         </rules>
@@ -756,19 +873,19 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>6.0</numberValue>
+                <numberValue>7.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision13</name>
-        <label>myDecision13</label>
+        <name>myDecision15</name>
+        <label>myDecision15</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision16</targetReference>
+            <targetReference>myDecision18</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_14</name>
+            <name>myRule_16</name>
             <conditionLogic>(2 and 4) AND (1 OR 3) AND (5 OR 6)</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -957,7 +1074,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_14_A1</targetReference>
+                <targetReference>myRule_16_A1</targetReference>
             </connector>
             <label>IS CREStore or CPS?</label>
         </rules>
@@ -966,19 +1083,19 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>7.0</numberValue>
+                <numberValue>8.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision16</name>
-        <label>myDecision16</label>
+        <name>myDecision18</name>
+        <label>myDecision18</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision19</targetReference>
+            <targetReference>myDecision21</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_17</name>
+            <name>myRule_19</name>
             <conditionLogic>(1 AND 2 AND 3) OR (1 AND 2 AND 4)</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -1105,188 +1222,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_17_A1</targetReference>
+                <targetReference>myRule_19_A1</targetReference>
             </connector>
             <label>Is Only Order</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>8.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision19</name>
-        <label>myDecision19</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision22</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_20</name>
-            <conditionLogic>(5 AND 3) AND (1 OR 2 OR 4)</conditionLogic>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Opportunity_Order__r.StageName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Reservation</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Opportunity_Order__r.StageName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Closed Won</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.ccrz__OrderStatus__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Order Submitted</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Opportunity_Order__r.StageName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Only for Orders</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.ccrz__Storefront__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>CREStore</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_20_A1</targetReference>
-            </connector>
-            <label>Is Submitted AND Oppty to be processed</label>
         </rules>
     </decisions>
     <decisions>
@@ -1506,8 +1444,8 @@
                 <numberValue>9.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision22</name>
-        <label>myDecision22</label>
+        <name>myDecision21</name>
+        <label>myDecision21</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
@@ -1515,7 +1453,186 @@
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_23</name>
+            <name>myRule_22</name>
+            <conditionLogic>(5 AND 3) AND (1 OR 2 OR 4)</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Opportunity_Order__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reservation</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Opportunity_Order__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.ccrz__OrderStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Order Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Opportunity_Order__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Only for Orders</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.ccrz__Storefront__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>CREStore</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_22_A1</targetReference>
+            </connector>
+            <label>Is Submitted AND Oppty to be processed</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>10.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision24</name>
+        <label>myDecision24</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision26</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_25</name>
             <conditionLogic>(1 AND 4)  AND ( 2 OR 3)</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -1642,7 +1759,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_23_A1</targetReference>
+                <targetReference>myRule_25_A1</targetReference>
             </connector>
             <label>Is Submitted Oppty Not ready</label>
         </rules>
@@ -1651,16 +1768,16 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>10.0</numberValue>
+                <numberValue>11.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision24</name>
-        <label>myDecision24</label>
+        <name>myDecision26</name>
+        <label>myDecision26</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_25</name>
+            <name>myRule_27</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -1725,7 +1842,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_25_A1</targetReference>
+                <targetReference>myRule_27_A1</targetReference>
             </connector>
             <label>Order Shipment Processing</label>
         </rules>
@@ -1903,7 +2020,7 @@
                 <stringValue>[ccrz__E_Order__c].ccrz__Account__c.Open_Order_Amount__c + [ccrz__E_Order__c].ccrz__TotalAmount__c</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_15_myRule_14_A2_6486892311</name>
+        <name>formula_17_myRule_16_A2_7259341899</name>
         <dataType>Currency</dataType>
         <expression>{!myVariable_current.ccrz__Account__r.Open_Order_Amount__c} + {!myVariable_current.ccrz__TotalAmount__c}</expression>
         <scale>18</scale>
@@ -1915,7 +2032,7 @@
                 <stringValue>[ccrz__E_Order__c].ccrz__Account__c.Open_Order_Amount__c + [ccrz__E_Order__c].ccrz__TotalAmount__c</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_18_myRule_17_A3_1608917705</name>
+        <name>formula_20_myRule_19_A3_7999082795</name>
         <dataType>Currency</dataType>
         <expression>{!myVariable_current.ccrz__Account__r.Open_Order_Amount__c} + {!myVariable_current.ccrz__TotalAmount__c}</expression>
         <scale>18</scale>
@@ -1927,12 +2044,12 @@
                 <stringValue>[ccrz__E_Order__c].ccrz__Account__c.Open_Order_Amount__c + [ccrz__E_Order__c].ccrz__TotalAmount__c</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_21_myRule_20_A2_8889290863</name>
+        <name>formula_23_myRule_22_A2_9065418116</name>
         <dataType>Currency</dataType>
         <expression>{!myVariable_current.ccrz__Account__r.Open_Order_Amount__c} + {!myVariable_current.ccrz__TotalAmount__c}</expression>
         <scale>18</scale>
     </formulas>
-    <interviewLabel>Order_Status_Controller-28_InterviewLabel</interviewLabel>
+    <interviewLabel>Order_Status_Controller-33_InterviewLabel</interviewLabel>
     <label>Order Status Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1990,12 +2107,12 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_12_A1</name>
+        <name>myRule_14_A1</name>
         <label>Set Order Oppty</label>
-        <locationX>1200</locationX>
+        <locationX>1400</locationX>
         <locationY>200</locationY>
         <connector>
-            <targetReference>myRule_12_A2</targetReference>
+            <targetReference>myRule_14_A2</targetReference>
         </connector>
         <filters>
             <processMetadataValues>
@@ -2158,12 +2275,12 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_12_A2</name>
+        <name>myRule_14_A2</name>
         <label>Set Course to Reservation</label>
-        <locationX>1200</locationX>
+        <locationX>1400</locationX>
         <locationY>300</locationY>
         <connector>
-            <targetReference>myDecision13</targetReference>
+            <targetReference>myDecision15</targetReference>
         </connector>
         <filters>
             <processMetadataValues>
@@ -2339,9 +2456,9 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_14_A2</name>
+        <name>myRule_16_A2</name>
         <label>Update Open Order</label>
-        <locationX>1400</locationX>
+        <locationX>1600</locationX>
         <locationY>300</locationY>
         <filters>
             <processMetadataValues>
@@ -2389,7 +2506,7 @@
             </processMetadataValues>
             <field>Open_Order_Amount__c</field>
             <value>
-                <elementReference>formula_15_myRule_14_A2_6486892311</elementReference>
+                <elementReference>formula_17_myRule_16_A2_7259341899</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -2419,9 +2536,9 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_17_A3</name>
+        <name>myRule_19_A3</name>
         <label>Update Open Amount 1</label>
-        <locationX>1700</locationX>
+        <locationX>1900</locationX>
         <locationY>400</locationY>
         <filters>
             <processMetadataValues>
@@ -2469,7 +2586,7 @@
             </processMetadataValues>
             <field>Open_Order_Amount__c</field>
             <value>
-                <elementReference>formula_18_myRule_17_A3_1608917705</elementReference>
+                <elementReference>formula_20_myRule_19_A3_7999082795</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -2499,9 +2616,9 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_20_A2</name>
+        <name>myRule_22_A2</name>
         <label>Update Account Open Order 2</label>
-        <locationX>2000</locationX>
+        <locationX>2200</locationX>
         <locationY>300</locationY>
         <filters>
             <processMetadataValues>
@@ -2549,7 +2666,7 @@
             </processMetadataValues>
             <field>Open_Order_Amount__c</field>
             <value>
-                <elementReference>formula_21_myRule_20_A2_8889290863</elementReference>
+                <elementReference>formula_23_myRule_22_A2_9065418116</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -2579,12 +2696,12 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_23_A2</name>
+        <name>myRule_25_A2</name>
         <label>Update Oppty to Reservation</label>
-        <locationX>2300</locationX>
+        <locationX>2500</locationX>
         <locationY>300</locationY>
         <connector>
-            <targetReference>myRule_23_A3</targetReference>
+            <targetReference>myRule_25_A3</targetReference>
         </connector>
         <filters>
             <processMetadataValues>
@@ -2662,9 +2779,9 @@
         <processMetadataValues>
             <name>referenceTargetField</name>
         </processMetadataValues>
-        <name>myRule_23_A3</name>
+        <name>myRule_25_A3</name>
         <label>Set Highest Discount on Opportunity</label>
-        <locationX>2300</locationX>
+        <locationX>2500</locationX>
         <locationY>400</locationY>
         <filters>
             <processMetadataValues>
