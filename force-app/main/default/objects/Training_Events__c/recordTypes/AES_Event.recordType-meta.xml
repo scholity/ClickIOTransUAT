@@ -630,6 +630,18 @@
             <default>true</default>
         </values>
         <values>
+            <fullName>Course Record Processed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Discussion - Customer Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Discussion - Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In-Discussion</fullName>
             <default>false</default>
         </values>

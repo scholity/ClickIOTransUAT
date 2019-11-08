@@ -23,19 +23,18 @@ Global without sharing class PHSS_CreateOrderRestService {
         String action = (String)mapJSONObjects.get('action');
         
         //to store learning plan Id and prooduct id
-        List<String> lst_clsId;
-        List<String> lst_onlineclsId;
-        List<String> lst_productId;
-        List<String> lst_LPId;
-        
-        Map<String,String> map_clsIDtoLPId;
-        Map<String,String> map_LPIDtoProductId;
-        Map<String,String> map_onlineclsIDtoLPId;
-        Map<String,String> map_onlineLPIDtoProductId;   
-        //Map<String,String> map_onlineclsIDtoLearning;
-        Map<String,String> map_productIdToOrderItem;  
-        Map<String,String> map_physicalSKUToProductId;  
-        //Map<Id,Id> map_onlineLearningToClsId;
+        List<String> lst_clsId = new List<String>();
+        List<String> lst_onlineclsId = new List<String>();
+        List<String> lst_productId = new List<String>();
+        List<String> lst_LPId = new List<String>();
+
+        Map<String,String> map_clsIDtoLPId = new Map<String,String>();
+        Map<String,String> map_LPIDtoProductId = new Map<String,String>();
+        Map<String,String> map_onlineclsIDtoLPId = new Map<String,String>();
+        Map<String,String> map_onlineLPIDtoProductId = new Map<String,String>();
+        //Map<String,String> map_onlineclsIDtoLearning = new Map<String,String>();
+        Map<String,String> map_productIdToOrderItem = new Map<String,String>();
+        Map<String,String> map_physicalSKUToProductId = new Map<String, String>();
                 
         Rest_Service_Calls__c serviceLog = new Rest_Service_Calls__c();
         serviceLog.Name = 'PHSS/createOrder';
@@ -90,21 +89,6 @@ Global without sharing class PHSS_CreateOrderRestService {
         }
         
         else{
-            lst_clsId = new List<String>();
-            lst_onlineclsId = new List<String>();
-            lst_productId = new List<String>();
-            
-            map_productIdToOrderItem = new Map<String,String>();   
-            map_physicalSKUToProductId = new Map<String, String>();         
-            
-            map_clsIDtoLPId = new Map<String,String>();
-            map_LPIDtoProductId = new Map<String,String>();
-            
-            //map_onlineclsIDtoLearning = new Map<String,String>();
-            map_onlineclsIDtoLPId = new Map<String,String>();
-            map_onlineLPIDtoProductId = new Map<String,String>();   
-            //map_onlineLearningToClsId = new Map<Id, Id>();
-            
 	 		String clsILTPrefix = Schema.getGlobalDescribe().get('redwing__ILT_Class__c').getDescribe().getKeyPrefix(); 
 	 		String clsOnlinePrefix = Schema.getGlobalDescribe().get('redwing__Learning__c').getDescribe().getKeyPrefix(); 	 		
 
@@ -119,7 +103,7 @@ Global without sharing class PHSS_CreateOrderRestService {
 		           if (product.product_id!=NULL && product.product_id!='') {
 		           		if (product.product_id.length()>2) {
 		           			if (product.product_id.substring(0,3).equals(clsILTPrefix)) {
-		               			lst_clsId.add(product.product_id);		           			
+		               			lst_clsId.add(product.product_id);
 		           			} else if (product.product_id.substring(0,3).equals(clsOnlinePrefix)) {
 		           				lst_onlineclsId.add(product.product_id);
 		           			} else lst_productId.add(product.product_id);
@@ -294,31 +278,39 @@ Global without sharing class PHSS_CreateOrderRestService {
                     //  Retrieve vouchers that correspond to product(s) purchased in this order                 
                     List<Voucher__c> vouchList = [Select Id, ILT_Class__c, RCO_Order_Id__c From Voucher__c 
                         Where ILT_Class__c IN :orderItemClass And RCO_Order_Id__c IN :orderItemOrderNo];
-                    Map<Id, Id> classToVoucherMap = new Map<Id,Id>();
-                    for (Voucher__c theVoucher : vouchList) {
-                        classToVoucherMap.put(theVoucher.ILT_Class__c, theVoucher.Id);
-                    }
-                    
-                    // Populate the order and order Id fields on the corresponding voucher record for this order/product (if applicable) 
-                    List<Voucher__c> updateVouchList = new List<Voucher__c>();
-                    for (ccrz__E_OrderItem__c theOrderItem : lst_newOrderItems) {  
-                    	if (theOrderItem.ILT_Class__c == null) continue; 
-                        String theProductId = theOrderItem.ILT_Class__c;
-                        if (theProductId.length()>15) theProductId = theProductId.substring(0,15);
-                                                
-                        Voucher__c vouch = new Voucher__c();
-                        vouch.Id = classToVoucherMap.get(theProductId);
-                        vouch.Account__c = obj_order.ccrz__Account__c;
-                        vouch.CC_Order__c = obj_order.id;
-                        vouch.CC_Order_Item__c = theOrderItem.id;                       
-                        
-                        if (map_LPIDtoProductId.containsKey(map_clsIDtoLPId.get(theProductId))) {
-                            vouch.CC_Product__c = map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId));
+
+                    if (vouchList != null && vouchList.size() > 0) {
+                        Map<Id, Id> classToVoucherMap = new Map<Id, Id>();
+                        for (Voucher__c theVoucher : vouchList) {
+                            classToVoucherMap.put(theVoucher.ILT_Class__c, theVoucher.Id);
                         }
-                        
-                        updateVouchList.add(vouch);      
-                    }                  
-                    update updateVouchList;                    
+
+                        // Populate the order and order Id fields on the corresponding voucher record for this order/product (if applicable)
+                        List<Voucher__c> updateVouchList = new List<Voucher__c>();
+                        for (ccrz__E_OrderItem__c theOrderItem : lst_newOrderItems) {
+                            if (theOrderItem.ILT_Class__c == null) continue;
+                            String theProductId = theOrderItem.ILT_Class__c;
+                            if (theProductId.length() > 15) theProductId = theProductId.substring(0, 15);
+
+                            if (theProductId != null && classToVoucherMap.containsKey(theProductId)) {
+                                Voucher__c vouch = new Voucher__c();
+                                vouch.Id = classToVoucherMap.get(theProductId);
+                                vouch.Account__c = obj_order.ccrz__Account__c;
+                                vouch.CC_Order__c = obj_order.id;
+                                vouch.CC_Order_Item__c = theOrderItem.id;
+
+                                if (map_LPIDtoProductId.containsKey(map_clsIDtoLPId.get(theProductId))) {
+                                    vouch.CC_Product__c = map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId));
+                                }
+
+                                updateVouchList.add(vouch);
+                            }
+                        }
+
+                        if (!updateVouchList.isEmpty()) {
+                            update updateVouchList;
+                        }
+                    }
                     
                     // create payment transaction detail record
                     List<ccrz__E_TransactionPayment__c> lst_paymentDetail = createPaymentDetail(OrderWrapper,obj_order,exisOrder);
@@ -608,14 +600,15 @@ Global without sharing class PHSS_CreateOrderRestService {
                 System.debug('Inventory Type--->'+obj_orderitem.Inventory_Type__c);
                 System.debug(obj_orderitem);
 
-                obj_orderitem.ccrz__Quantity__c = product.quantity;
-                obj_orderitem.ccrz__OriginalQuantity__c = product.quantity;
-                obj_orderitem.ccrz__Price__c = product.price;
-                obj_orderitem.ccrz__AdjustmentAmount__c  =  product.adjustment_amount;
-                obj_orderitem.ccrz__OriginalItemPrice__c = product.original_price;
-                obj_orderitem.ccrz__SubAmount__c = (product.price * product.quantity) - product.adjustment_amount;
+                obj_orderitem.ccrz__Quantity__c = (product.quantity != null) ? product.quantity : 0;
+                obj_orderitem.ccrz__OriginalQuantity__c = (product.quantity != null) ? product.quantity : 0;
+                obj_orderitem.ccrz__Price__c = (product.price != null) ? product.price : 0.00;
+                obj_orderitem.ccrz__AdjustmentAmount__c  =  (product.adjustment_amount != null) ? product.adjustment_amount : 0.00;
+                obj_orderitem.ccrz__OriginalItemPrice__c = (product.original_price != null) ? product.original_price : 0.00;
+                obj_orderitem.ccrz__SubAmount__c = (obj_orderitem.ccrz__Price__c * obj_orderitem.ccrz__Quantity__c) - obj_orderitem.ccrz__AdjustmentAmount__c;
 
-                //obj_orderitem.Adjustment_Types__c = 'Course Credit Adjustment'; // Commented after validation rule on reason code deactivated
+                // Commented after validation rule on reason code deactivated
+                //obj_orderitem.Adjustment_Types__c = 'Course Credit Adjustment';
                 //obj_orderitem.Reason_Codes__c = 'Duplicate';
                 //obj_orderitem.ccrz__OriginalItemPrice__c = product.base_price;
                 //obj_orderitem.ccrz__TaxAmount__c = product.adjusted_tax;
@@ -627,8 +620,7 @@ Global without sharing class PHSS_CreateOrderRestService {
                 obj_orderitem.ccrz__PricingType__c = 'external';
               
                 System.debug('Sub Amount--->'+ obj_orderitem.ccrz__SubAmount__c);
-                
-                
+
                 lst_orderItems.add(obj_orderitem);
                 System.debug('lst_orderItems--->'+lst_orderItems);
         }

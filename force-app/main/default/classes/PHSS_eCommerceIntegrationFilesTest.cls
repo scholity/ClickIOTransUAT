@@ -38,8 +38,8 @@ private class PHSS_eCommerceIntegrationFilesTest {
         theLocation.redwing__Country__c     = 'US'; 
         insert theLocation;
 
-        String startTime = String.valueOf(Datetime.now().addHours(1).time()).left(5);
-        String endTime = String.valueOf(Datetime.now().addHours(3).time()).left(5);
+        String startTime = '12:00';//String.valueOf(Datetime.now().addHours(1).time()).left(5);
+        String endTime = '15:00';//String.valueOf(Datetime.now().addHours(3).time()).left(5);
         
         // create records for activeCommunityClasses
         redwing__ILT_Event__c event = (redwing__ILT_Event__c) learningObjects.get(phss_cc_TestDataFactory.TEST_ILT_EVENT);
@@ -52,6 +52,8 @@ private class PHSS_eCommerceIntegrationFilesTest {
         iltClass.Site_Postal_Code__c = '10012';
         iltClass.redwing__Start_Time__c = startTime;
         iltClass.redwing__End_Time__c = endTime;
+        iltClass.redwing__Start_Date__c = Date.today();
+        iltClass.redwing__End_Date__c = Date.today().addDays(1);
         update iltClass;
 
         redwing__ILT_Session__c iltSession = new redwing__ILT_Session__c(

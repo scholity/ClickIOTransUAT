@@ -50,6 +50,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Agreement_Coverage__c</picklist>
+        <values>
+            <fullName>Hybrid Training Contract</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Memorandum of Understanding %28MOU%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>National Training Contract</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regional Training Contract</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Agreement_Covers__c</picklist>
         <values>
             <fullName>All Domestic Locations</fullName>

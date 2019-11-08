@@ -11,7 +11,7 @@
     <assignments>
         <name>Assign_Bill_To_Contact_Only</name>
         <label>Assign Bill To Contact Only</label>
-        <locationX>748</locationX>
+        <locationX>750</locationX>
         <locationY>403</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.Related_Contact_1__c</assignToReference>
@@ -19,6 +19,10 @@
             <value>
                 <elementReference>sAccount.Billing_Contact__c</elementReference>
             </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sOrderItem.Related_Contact_2__c</assignToReference>
+            <operator>Assign</operator>
         </assignmentItems>
         <connector>
             <targetReference>Update_Order_Line_Item</targetReference>
@@ -47,8 +51,8 @@
     <assignments>
         <name>Set_Instructor_Email_Addresses</name>
         <label>Set Instructor Email Addresses</label>
-        <locationX>745</locationX>
-        <locationY>515</locationY>
+        <locationX>746</locationX>
+        <locationY>523</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.Related_Contact_1__c</assignToReference>
             <operator>Assign</operator>
@@ -172,12 +176,27 @@
     <decisions>
         <name>Send_Payment_to</name>
         <label>Send Payment to</label>
-        <locationX>481</locationX>
-        <locationY>649</locationY>
+        <locationX>491</locationX>
+        <locationY>651</locationY>
         <defaultConnector>
             <targetReference>Individual_Update</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isRestrictEmailDistribution</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>sAccount.Restrict_Order_Confirmation_Email__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Bill_To_Contact_Only</targetReference>
+            </connector>
+            <label>isRestrictEmailDistribution</label>
+        </rules>
         <rules>
             <name>isInstructor</name>
             <conditionLogic>and</conditionLogic>
@@ -195,6 +214,13 @@
                     <elementReference>Get_Transaction_Payment_user.ProfileId</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>sAccount.Restrict_Order_Confirmation_Email__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_Instructor_Email_Addresses</targetReference>
             </connector>
@@ -210,6 +236,13 @@
                     <elementReference>Get_Transaction_Payment_user.ProfileId</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>sAccount.Restrict_Order_Confirmation_Email__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_Partner_Email_Address</targetReference>
             </connector>
@@ -223,6 +256,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sAccount.Restrict_Order_Confirmation_Email__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -268,6 +308,7 @@
         <queriedFields>Id</queriedFields>
         <queriedFields>Billing_Contact__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
+        <queriedFields>Restrict_Order_Confirmation_Email__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Account_Record_Type</name>

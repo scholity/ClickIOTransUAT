@@ -262,11 +262,13 @@
         <profile>Admin</profile>
         <profile>SB PHSS-IC-Community Plus Login</profile>
         <profile>SB PHSS-Partner-Community Plus Login</profile>
-        <profile>Learner Community Profile</profile>
+        <profile>Learner Community Profile - OLD</profile>
         <profile>SB ARC Business User Profile</profile>
-        <profile>SB ARC %2F TSC Manager</profile>
         <profile>SB ARC %2F TSC Agent</profile>
+        <profile>SB ARC %2F TSC Manager</profile>
         <profile>SB ARC SD Instructor</profile>
+        <profile>Learner Community Profile - Incorrect</profile>
+        <profile>Learner Community Profile</profile>
     </networkMemberGroups>
     <networkPageOverrides>
         <changePasswordPageOverrideSetting>Standard</changePasswordPageOverrideSetting>

@@ -42,7 +42,12 @@ public class PHSS_FetchCompletionRestServiceTest {
         con.Email = 'test@test.com';
         con.AccountId = a.id;
         insert con;
-        
+
+        redwing__Training_Plan__c theLearningPlan = new redwing__Training_Plan__c();
+        theLearningPlan.Name = 'The Learning Plan';
+        theLearningPlan.Classroom_Setting__c = 'Classroom';
+        insert theLearningPlan;
+
         redwing__Learning__c learning = new redwing__Learning__c();
         learning.Name = 'Test learning';
         learning.redwing__Published__c = true;
@@ -67,9 +72,9 @@ public class PHSS_FetchCompletionRestServiceTest {
         obj_la.RCO_Order_Id__c = '1234';
         insert obj_la;
         
-        
         redwing__Learning_Assignment__c obj_lailtclass = new redwing__Learning_Assignment__c();
         obj_lailtclass.redwing__Learning__c=learningiltclass.id;
+        obj_lailtclass.redwing__Training_Plan__c = theLearningPlan.Id;
         obj_lailtclass.redwing__Evaluation_Result__c = 'Successful';
         obj_lailtclass.redwing__Evaluation_Score__c = 100;
         obj_lailtclass.Grade_Reason__c = '';
@@ -79,7 +84,7 @@ public class PHSS_FetchCompletionRestServiceTest {
         obj_lailtclass.redwing__Completed_On__c = System.today();
         obj_lailtclass.RCO_Order_Id__c = '1244';
         insert obj_lailtclass;
-        
+
         Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
         clsRecord.Skedulo_Account__c = a.id;
         clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
@@ -88,8 +93,9 @@ public class PHSS_FetchCompletionRestServiceTest {
         clsRecord.redwing__Start_Time__c = '12:00';
         clsRecord.Name = 'Test';
         clsRecord.redwing__Learning__c = learning.Id;
+        clsRecord.Learning_Plan__c = theLearningPlan.Id;
         insert clsRecord;
-        
+
         Redwing__ILT_Class__c clsRecordnew = new Redwing__ILT_Class__c();
         clsRecordnew.Skedulo_Account__c = a1.id;
         clsRecordnew.redwing__End_Date__c = Date.Parse('12/19/2018');
@@ -98,7 +104,16 @@ public class PHSS_FetchCompletionRestServiceTest {
         clsRecordnew.redwing__Start_Time__c = '12:00';
         clsRecordnew.Name = 'TestILTClass';
         clsRecordnew.redwing__Learning__c = learningiltclass.Id;
+        clsRecordnew.Learning_Plan__c = theLearningPlan.Id;
         insert clsRecordnew;
+
+        voucher__c theVoucher = new voucher__c();
+        theVoucher.RCO_Order_Id__c = '1244';
+        theVoucher.ILT_Class__c = clsRecordnew.Id;
+        theVoucher.Account__c = a1.Id;
+        theVoucher.Learning_Plan__c = theLearningPlan.Id;
+        insert theVoucher;
+
     }
     
     static testMethod void RequiredDataMissingtestService()
@@ -147,7 +162,7 @@ public class PHSS_FetchCompletionRestServiceTest {
         RestContext.response = res;
         Test.startTest();
         PHSS_FetchCompletionRestService.fetchCompletionResponse respo = PHSS_FetchCompletionRestService.fetchCompletion();
-        System.assertEquals('No related Learning Assignment record found',respo.FetchCompletion.status.description); 
+        System.assertEquals('No related voucher or learning plan record found',respo.FetchCompletion.status.description);
         Test.stopTest();
     }
     
@@ -175,7 +190,7 @@ public class PHSS_FetchCompletionRestServiceTest {
         PHSS_FetchCompletionRestService.fetchCompletionResponse respo = PHSS_FetchCompletionRestService.fetchCompletion(); 
 
         System.debug('RestContext>>>>>>>>>>'+respo);
-        System.assertEquals('No related Learning Assignment record found',respo.FetchCompletion.status.description);
+        System.assertEquals('No related voucher or learning plan record found',respo.FetchCompletion.status.description);
         
         Test.stopTest();
     }
@@ -228,7 +243,7 @@ public class PHSS_FetchCompletionRestServiceTest {
 
         Test.startTest();
         PHSS_FetchCompletionRestService.fetchCompletionResponse respo = PHSS_FetchCompletionRestService.fetchCompletion();
-        System.assertEquals('No related Learning Assignment record found',respo.FetchCompletion.status.description); 
+        System.assertEquals('No related voucher or learning plan record found',respo.FetchCompletion.status.description);
         Test.stopTest();
     }
 }

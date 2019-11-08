@@ -708,7 +708,7 @@ public with sharing class phss_cc_CyberSourceUtil {
         return signableString;
     }
 
-
+    @TestVisible
     private static Map<String, String> getFormDataFromHTML(Dom.XmlNode html) {
         Map<String, String> formData = new Map<String, String>();
 
@@ -753,43 +753,6 @@ public with sharing class phss_cc_CyberSourceUtil {
         }
     }
 
-
-    /******* *
-     *
-     * Credit-related functions
-     */
-    /******* */
-
-
-    /**
-     * @description Creates a credit transaction in CyberSource for a capture payment transaction payment
-     *
-     * @param transactionPaymentId
-     */
-    @testVisible
-    public static void creditTransactionPayment(String transactionPaymentId) {
-
-        if (String.isBlank(transactionPaymentId)) {
-            return;
-        }
-
-        try {
-            ccrz__E_TransactionPayment__c transactionPayment = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(transactionPaymentId);
-            if (phss_cc_TransactionPaymentUtil.isCaptureTransaction(transactionPayment)) {
-                String creditRequst = buildCreditRequestBody(transactionPayment);
-            }
-
-        } catch (Exception e) {
-            throw new phss_cc_Exception(FAILED_TO_CREDIT_TRANSACTION_PAYMENT, e);
-        }
-    }
-
-	@testVisible
-    private static String buildCreditRequestBody(Object obj) {
-
-        return null;
-    }
-	
     @testVisible
     private static void getUserIPAddress() {
         try {

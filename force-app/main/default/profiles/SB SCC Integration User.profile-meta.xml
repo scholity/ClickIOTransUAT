@@ -777,7 +777,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_FetchCompletionRestServiceTest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_FutureActions</apexClass>
@@ -1005,7 +1005,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_skedJobToILTClass_Test</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_skedJobtoILTClass</apexClass>
@@ -1453,6 +1453,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>cc_phss_ccLogicCartAddTo</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>cc_phss_ccLogicCartAddToTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2172,6 +2176,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Agreement_Coverage_Flag__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Agreement_Coverage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account.Agreement_Covers__c</field>
         <readable>true</readable>
@@ -2799,6 +2813,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.Red_Cross_PO_expiration_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Restrict_Order_Confirmation_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

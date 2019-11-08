@@ -61,6 +61,7 @@ public without sharing class PHSS_CpsController {
         try {
             
             List<ccrz__E_CartItem__c> updatedCartItems = new list<ccrz__E_CartItem__c>();
+            List<ccrz__E_Order__c> updatedOrders = new List<ccrz__E_Order__c>();
             
             //System.debug('JSON:'+jsonStr);
             PHSS_CpsWrapper cpsWrap = (PHSS_CpsWrapper)JSON.deserialize(jsonStr, PHSS_CpsWrapper.class);
@@ -171,6 +172,11 @@ public without sharing class PHSS_CpsController {
                                                           Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :cpsWrap.oppId And ccrz__E_OrderItem__c.ccrz__Product__c = :cpsWrap.ccProductId]) {
                             newClass.CPS_Order__c = theOrderItem.ccrz__Order__c;
                             newClass.CPS_Order_Item__c = theOrderItem.Id;
+
+                            ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                            newOrder.Id = theOrderItem.ccrz__Order__c;
+                            newOrder.CRE_Request_Processed__c = true;
+                            updatedOrders.add(newOrder);                                            
                 }
             }
 
@@ -238,6 +244,10 @@ public without sharing class PHSS_CpsController {
             
             if (updatedCartItems.size() > 0) {
                 update updatedCartItems;
+            }
+            
+            if (updatedOrders.size() > 0) {
+                update updatedOrders;
             }
             
 
@@ -397,7 +407,7 @@ public without sharing class PHSS_CpsController {
         
         return addToCartResult;
 	}
-
+	/*
     @AuraEnabled 
     public static Boolean checkURL(String url) { 
     
@@ -414,6 +424,6 @@ public without sharing class PHSS_CpsController {
         
 			return false;
     }
-
+	*/
 
 }

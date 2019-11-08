@@ -750,6 +750,14 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                     }
                     else
                     {
+                        // DE1932
+                        if (fi.ILT_Class__c != null) {
+                            instructorName = getNameOfInstructor(iltCIMap.get(fi.ILT_Class__c));
+                            fullName = instructorName;
+                        }
+
+                        /*  // removed per DE1932
+
                     	rosters = new List<redwing__ILT_Roster__c>([SELECT redwing__User__r.Name
                     											  FROM redwing__ILT_Roster__c
                     											 WHERE redwing__ILT_Class__c =:fi.ILT_Class__c]);
@@ -767,6 +775,8 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
                             }
                             errString = errString + 'ILT Class-Roster User Name';
                         }
+
+                         */
                     }
                 }
             }
@@ -792,16 +802,7 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
             }
             else if (fi.ILT_Class__c!=null && iltCIMap.containsKey(fi.ILT_Class__c) && iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__c!=null)
             {
-                instructorName = '"';
-                if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.FirstName!=null)
-                {
-                    instructorName = instructorName + iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.FirstName.replaceAll(regExp, '') + ' ';
-                }
-                if(iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.LastName!=null)
-                {
-                    instructorName = instructorName + iltCIMap.get(fi.ILT_Class__c).redwing__Instructor__r.LastName.replaceAll(regExp, '');
-                }
-                instructorName = instructorName + '"';
+                instructorName = getNameOfInstructor(iltCIMap.get(fi.ILT_Class__c));
             }
             if ('COURSE'.equals(fi.CC_Product__r.ccrz__InventoryType__c) && 'KIT'.equals(fi.CC_Product__r.ccrz__ProductType__c))
             {
@@ -882,6 +883,20 @@ global class PHSS_GenerateCSVFileBatch implements Database.Batchable<sOBject>, D
         {
           
         }         
+    }
+
+    global String getNameOfInstructor(redwing__ILT_Instructor__c trainingInstructor) {
+        String firstName;
+        String lastName;
+
+        if (trainingInstructor != null) {
+            firstName = trainingInstructor.redwing__Instructor__r.FirstName;
+            lastName = trainingInstructor.redwing__Instructor__r.LastName;
+        }
+
+        firstName = firstName == null ? '' : firstName.replaceAll(regExp, '');
+        lastName = lastName == null ? '' : lastName.replaceAll(regExp, '');
+        return '"' + (firstName + ' ' + lastName).trim() + '"';
     }
     
     global void finish(Database.BatchableContext BC)

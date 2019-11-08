@@ -140,6 +140,9 @@ private class PHSS_CpsControllerTest {
                 String oppId = PHSS_CpsController.createOppForCCUpdate(testAcc.Id, 'CPS', testOpportunity.Id);
                 
                 //PHSS_CpsController.updateCartProducts(testOpportunity.Id, lPlan.CC_Product__c, '1');
+                Map<String, Object> testMap = PHSS_CpsController.initProductQuantityMap();
+                testMap = PHSS_CpsController.updateProductQuantityMap(testMap,lPlan.CC_Product__c, '1');
+                testMap = PHSS_CpsController.updateCartProducts(ccprod.Id,testMap);
                 
                 PHSS_CpsController.getLearningPlanId(ccprod.Id);
                	PHSS_CpsController.getLearningPlanAttributes(ccprod.Id);

@@ -12,12 +12,12 @@
         <label>Pricing Agreement</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Inherit_Parent_Terms__c</field>
+                <behavior>Readonly</behavior>
+                <field>Agreement_Coverage_Flag__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Agreement_Flag__c</field>
+                <behavior>Edit</behavior>
+                <field>Inherit_Parent_Terms__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -35,11 +35,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Agreement_Covers__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Details_of_Agreement_Coverage__c</field>
+                <field>Agreement_Coverage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -110,6 +106,18 @@
                 <behavior>Edit</behavior>
                 <field>Scheduling_Notes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Agreement_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agreement_Covers__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Details_of_Agreement_Coverage__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -139,6 +147,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Extension__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Fax</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

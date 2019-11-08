@@ -2012,7 +2012,7 @@
             <label>Is B2C Store</label>
         </rules>
     </decisions>
-    <description>Manages Order Status Changes - Add Return and Credit Decision</description>
+    <description>Manages Order Status Changes - Add Return and Credit Decision - Stop Recursion</description>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
@@ -2020,7 +2020,7 @@
                 <stringValue>[ccrz__E_Order__c].ccrz__Account__c.Open_Order_Amount__c + [ccrz__E_Order__c].ccrz__TotalAmount__c</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_17_myRule_16_A2_7259341899</name>
+        <name>formula_17_myRule_16_A2_6886361993</name>
         <dataType>Currency</dataType>
         <expression>{!myVariable_current.ccrz__Account__r.Open_Order_Amount__c} + {!myVariable_current.ccrz__TotalAmount__c}</expression>
         <scale>18</scale>
@@ -2032,7 +2032,7 @@
                 <stringValue>[ccrz__E_Order__c].ccrz__Account__c.Open_Order_Amount__c + [ccrz__E_Order__c].ccrz__TotalAmount__c</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_20_myRule_19_A3_7999082795</name>
+        <name>formula_20_myRule_19_A3_6914807474</name>
         <dataType>Currency</dataType>
         <expression>{!myVariable_current.ccrz__Account__r.Open_Order_Amount__c} + {!myVariable_current.ccrz__TotalAmount__c}</expression>
         <scale>18</scale>
@@ -2044,12 +2044,12 @@
                 <stringValue>[ccrz__E_Order__c].ccrz__Account__c.Open_Order_Amount__c + [ccrz__E_Order__c].ccrz__TotalAmount__c</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_23_myRule_22_A2_9065418116</name>
+        <name>formula_23_myRule_22_A2_9920605531</name>
         <dataType>Currency</dataType>
         <expression>{!myVariable_current.ccrz__Account__r.Open_Order_Amount__c} + {!myVariable_current.ccrz__TotalAmount__c}</expression>
         <scale>18</scale>
     </formulas>
-    <interviewLabel>Order_Status_Controller-33_InterviewLabel</interviewLabel>
+    <interviewLabel>Order_Status_Controller-34_InterviewLabel</interviewLabel>
     <label>Order Status Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -2067,12 +2067,6 @@
         <name>OldObjectVariable</name>
         <value>
             <elementReference>myVariable_old</elementReference>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>RecursiveCountVariable</name>
-        <value>
-            <elementReference>RecursiveCountVariable</elementReference>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -2506,7 +2500,7 @@
             </processMetadataValues>
             <field>Open_Order_Amount__c</field>
             <value>
-                <elementReference>formula_17_myRule_16_A2_7259341899</elementReference>
+                <elementReference>formula_17_myRule_16_A2_6886361993</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -2586,7 +2580,7 @@
             </processMetadataValues>
             <field>Open_Order_Amount__c</field>
             <value>
-                <elementReference>formula_20_myRule_19_A3_7999082795</elementReference>
+                <elementReference>formula_20_myRule_19_A3_6914807474</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -2666,7 +2660,7 @@
             </processMetadataValues>
             <field>Open_Order_Amount__c</field>
             <value>
-                <elementReference>formula_23_myRule_22_A2_9065418116</elementReference>
+                <elementReference>formula_23_myRule_22_A2_9920605531</elementReference>
             </value>
         </inputAssignments>
         <object>Account</object>
@@ -2851,13 +2845,5 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>ccrz__E_Order__c</objectType>
-    </variables>
-    <variables>
-        <name>RecursiveCountVariable</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-        <scale>2</scale>
     </variables>
 </Flow>

@@ -551,6 +551,28 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Case_Queue_Update_MTN_Tier_III</fullName>
+        <description>Updates the case owner to MTN Tier III Queue</description>
+        <field>OwnerId</field>
+        <lookupValue>MTN_Tier_III</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Case Queue Update - MTN Tier III</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Case_Queue_Update_Military_Trng_Netwrk</fullName>
+        <description>Updates the case owner to MTN Bridge queue</description>
+        <field>OwnerId</field>
+        <lookupValue>MTN_Bridge</lookupValue>
+        <lookupValueType>Queue</lookupValueType>
+        <name>Case Queue Update - Military Trng Netwrk</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Case_Queue_Update_Outbound</fullName>
         <field>OwnerId</field>
         <lookupValue>Outbound_Group_Queue</lookupValue>

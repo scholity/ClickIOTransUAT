@@ -11,6 +11,10 @@
         <label>Fields</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Agreement_Coverage_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
@@ -59,18 +63,6 @@
                 <field>Strategic_Account_Type__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Agreement_Covers__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Agreement_Flag__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Details_of_Agreement_Coverage__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Salesforce_Auto_Number__c</field>
             </layoutItems>
@@ -90,8 +82,24 @@
                 <behavior>Edit</behavior>
                 <field>Scheduling_Notes__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Agreement_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agreement_Covers__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Details_of_Agreement_Coverage__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agreement_Coverage__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ccrz__E_AccountGroup__c</field>
@@ -371,6 +379,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Customer_PO_Required_on_Invoice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Restrict_Order_Confirmation_Email__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
