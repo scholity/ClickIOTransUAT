@@ -284,8 +284,7 @@
         <searchFilterFields>ACCOUNT.ADDRESS1_STATE</searchFilterFields>
         <searchFilterFields>ACCOUNT.ADDRESS1_ZIP</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Pricing_Agreement__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Agreement_Covers__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Agreement_Coverage__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>SABA_LMS_Code__c</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.ADDRESS2_CITY</searchResultsAdditionalFields>

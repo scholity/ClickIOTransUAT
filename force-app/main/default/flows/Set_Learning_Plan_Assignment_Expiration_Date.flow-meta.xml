@@ -19,13 +19,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>sLearningPlanAssignment.OwnerId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>sLearningPlanAssignment.redwing__User__c</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Update_Learning_Plan_Assignment</targetReference>
         </connector>
@@ -40,13 +33,6 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>sLearningPlanAssignment.OwnerId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>sLearningPlanAssignment.redwing__User__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -78,7 +64,7 @@
             <label>Found</label>
         </rules>
     </decisions>
-    <description>Updates the Learning Plan Expiration Date</description>
+    <description>Updates the Learning Plan Expiration Date - Removed Owner Assignement from Redwing User</description>
     <formulas>
         <name>fLast90Days</name>
         <dataType>Date</dataType>

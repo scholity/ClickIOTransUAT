@@ -584,6 +584,9 @@
         <connector>
             <targetReference>Success_Screen</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>ErrorMsgTEFailure</targetReference>
+        </faultConnector>
         <inputReference>sTrainingEvent2</inputReference>
     </recordCreates>
     <recordLookups>
@@ -864,6 +867,22 @@
         <fields>
             <name>EventCancelled</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 20px;&quot;&gt;CANCELLED&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Training Events have not been created&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>ErrorMsgTEFailure</name>
+        <label>ErrorMsgTEFailure</label>
+        <locationX>1272</locationX>
+        <locationY>232</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>TECreateError</name>
+            <fieldText>&lt;p&gt;Cannot create training event.&lt;/p&gt;&lt;p&gt;Check to see if the Opportunity Owner Role is in a different territory hierarchy as yourself.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

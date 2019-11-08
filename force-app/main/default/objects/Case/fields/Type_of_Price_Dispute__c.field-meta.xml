@@ -299,11 +299,6 @@
                 <label>Prepaid PO Issue</label>
             </value>
             <value>
-                <fullName>Prepay - RDC</fullName>
-                <default>false</default>
-                <label>Prepay - RDC</label>
-            </value>
-            <value>
                 <fullName>Privileges Terminated</fullName>
                 <default>false</default>
                 <label>Privileges Terminated</label>
@@ -625,10 +620,6 @@
         <valueSettings>
             <controllingFieldValue>Invoice Payments</controllingFieldValue>
             <valueName>Portal Posting Request</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Invoice Payments</controllingFieldValue>
-            <valueName>Prepay - RDC</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Vendor Forms</controllingFieldValue>

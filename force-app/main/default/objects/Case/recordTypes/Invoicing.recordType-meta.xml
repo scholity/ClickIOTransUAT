@@ -5618,10 +5618,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prepay - RDC</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Privileges Terminated</fullName>
             <default>false</default>
         </values>

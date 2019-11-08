@@ -234,15 +234,18 @@ public with sharing class phss_cc_CyberSourceUtilTest {
         
         Test.stopTest();
     }
-    
-    @isTest static void testCreditTransactionPayment(){
-        
-        setupTestData();
-        
-        Test.startTest();
-        
-        phss_cc_CyberSourceUtil.creditTransactionPayment(testAuthTransactionPayment.Id);
-        
-        Test.stopTest();
+
+    @IsTest
+    public static void testGetFormDataFromHTML() {
+        String htmlString = '<html><body><form><input name=\'testInput1\' value=\'test\'/></form></body></html>';
+
+        Dom.Document htmlDoc = new Dom.Document();
+        htmlDoc.load(htmlString);
+
+        Dom.XmlNode html = htmlDoc.getRootElement();
+        Map<String, String> formElements = phss_cc_CyberSourceUtil.getFormDataFromHTML(html);
+
+        System.assert(formElements.containsKey('testInput1'));
+        System.assertEquals('test', formElements.get('testInput1'));
     }
 }

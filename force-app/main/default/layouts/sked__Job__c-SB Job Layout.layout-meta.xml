@@ -465,17 +465,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Last_Name__c</fields>
-        <fields>Attended__c</fields>
-        <fields>Mobile_Phone__c</fields>
-        <fields>Email__c</fields>
-        <fields>Comments__c</fields>
-        <relatedList>Attendee__c.Job__c</relatedList>
-        <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>Display_Order__c</fields>
         <fields>Course_Code__c</fields>
         <fields>sked__Start__c</fields>
@@ -533,7 +522,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5B000000tfEP</masterLabel>
+        <masterLabel>00h21000000Sd8h</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

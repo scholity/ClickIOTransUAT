@@ -39,7 +39,6 @@ public with sharing class phss_cc_ProductUtilTest {
         System.assert(productMapFromResult.size() > 0);
     }
     
-    //filteredProductSearch(String opportunityId, String searchString, Map<String, String> filterMap)
     @isTest
     public static void testfilteredProductSearch(){
         
@@ -59,7 +58,24 @@ public with sharing class phss_cc_ProductUtilTest {
 
         
     }
-    //productsMatchingSpecs(Set<String> productIds, Map<String, String> filterMap) {getProductDetailsKeyedToSfidMap
+
+    @IsTest
+    public static void testProductSearchExcludingNonOnlineCommCourses() {
+
+        setupTestData();
+        Id [] fixedSearchResults= new Id[1];
+        fixedSearchResults[0] = testProducts.get(0).Id;
+
+        Test.startTest();
+        Test.setFixedSearchResults(fixedSearchResults);
+        Map<String, Object> searchResult = phss_cc_ProductUtil.productSearchExcludingNonOnlineCommCourses(testOpportunity.Id, TEST_SEARCH_STRING);
+        Test.stopTest();
+
+        System.assertNotEquals(null, searchResult);
+        System.assert(searchResult.containsKey(phss_cc_ProductUtil.PRODUCT_LIST_KEY));
+        System.assert(searchResult.containsKey(phss_cc_ProductUtil.PRODUCT_MAP_KEY));
+    }
+
     @isTest
     public static void testgetProductDetailsKeyedToSfidMap(){
         

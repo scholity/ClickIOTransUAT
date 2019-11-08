@@ -159,7 +159,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
      */
     public static void designateContactForTransactionPayment(ccrz__E_TransactionPayment__c transactionPayment) {
         try {
-            AccountContactRelation relation = [
+            List<AccountContactRelation> relations = [
                     SELECT
                             ContactId
                     FROM
@@ -169,11 +169,13 @@ public with sharing class phss_cc_TransactionPaymentUtil {
                             AND IsDirect = true
                     ORDER BY
                             CreatedDate DESC
-                    LIMIT 1
             ];
-            if (relation != null && relation.ContactId != null) {
-                transactionPayment.ccrz__Contact__c = relation.ContactId;
-                update transactionPayment;
+            if (relations != null && relations.size() > 0) {
+                AccountContactRelation relation = relations[0];
+                if (relation.ContactId != null) {
+                    transactionPayment.ccrz__Contact__c = relation.ContactId;
+                    update transactionPayment;
+                }
             }
 
         } catch (Exception e) {

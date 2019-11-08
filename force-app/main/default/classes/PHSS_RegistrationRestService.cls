@@ -514,8 +514,7 @@ global without sharing class PHSS_RegistrationRestService {
        
         List<redwing__ILT_Class__c> theClassList = [Select Id, Name, Learning_Plan__c, 
                           redwing__Max_Seats__c, redwing__Cancelled__c, Skedulo_Job_Id__c 
-                          From redwing__ILT_Class__c Where Id = :recordId 
-                          And Request_Type__c = 'Community' Limit 1];
+                          From redwing__ILT_Class__c Where Id = :recordId Limit 1];
                               
         return theClassList;
    }

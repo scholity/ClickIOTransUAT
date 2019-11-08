@@ -13,23 +13,25 @@ Objective:  This trigger does the following:
  
 *****************************************************************************************************/ 
 trigger ContactTrigger on Contact (before insert, before delete, after undelete, before update, after update) {
-        if (Trigger.isBefore && Trigger.isInsert) { 
-            BucketAssignmentModel.handleNewContacts(Trigger.new);
-        }
-        if (Trigger.isBefore && Trigger.isDelete) {
-            BucketAssignmentModel.handleDeletedContacts(Trigger.oldMap);
-        }
-        if (Trigger.isAfter && Trigger.isUndelete) {
-            BucketAssignmentModel.handleUndeletedContacts(Trigger.new);
-        }
-        if (Trigger.isBefore && Trigger.isUpdate) {
-            BucketAssignmentModel.handleUpdatedContacts(Trigger.oldMap,Trigger.new);
+    if (!PHSS_TriggerSettings__c.getOrgDefaults().ContactTrigger_Disabled__c) {
+        if (!PHSS_TriggerSettings__c.getOrgDefaults().ContactTrigger_Bucket_Assign_Disabled__c) {
+            if (Trigger.isBefore && Trigger.isInsert) {
+                BucketAssignmentModel.handleNewContacts(Trigger.new);
+            }
+            if (Trigger.isBefore && Trigger.isDelete) {
+                BucketAssignmentModel.handleDeletedContacts(Trigger.oldMap);
+            }
+            if (Trigger.isAfter && Trigger.isUndelete) {
+                BucketAssignmentModel.handleUndeletedContacts(Trigger.new);
+            }
+            if (Trigger.isBefore && Trigger.isUpdate) {
+                BucketAssignmentModel.handleUpdatedContacts(Trigger.oldMap, Trigger.new);
+            }
         }
         // Added by Alejandra O, Salesforce Services
-        if (!PHSS_TriggerSettings__c.getOrgDefaults().ContactTrigger_Disabled__c) {
         ContactTriggerHandler handler = new ContactTriggerHandler();
         if (Trigger.isAfter && Trigger.isUpdate) {
             handler.onAfterUpdate(Trigger.new, Trigger.old, Trigger.newMap, Trigger.oldMap);
-        } 
         }
+    }
 }

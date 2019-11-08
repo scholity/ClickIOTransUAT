@@ -188,6 +188,7 @@ public without sharing class CCOrderItemTriggerHandler {
      *
      * @return
      */
+    @TestVisible
     private String getPaymentPostalCodeForOrder(String orderId) {
         String postalCode;
         ccrz__E_Order__c order = [

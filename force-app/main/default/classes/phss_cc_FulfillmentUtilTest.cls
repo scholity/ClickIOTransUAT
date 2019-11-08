@@ -82,9 +82,13 @@ public class phss_cc_FulfillmentUtilTest {
             SABA_Org_Type__c = 'AP'
         );
         insert testAccount;
-        
+
+        System.debug('JASON: creating test opportunity');
         Opportunity testOpportunity = phss_cc_TestDataFactory.createInsertTestOpportunity(testAccount);
-        
+        System.debug('JASON: creating test contract');
+        Contract testContract = phss_cc_TestDataFactory.createInsertTestContract(testAccount, testOpportunity);
+        System.debug('JASON: finished created test contract');
+
         redwing__Learning__c testLearning = new redwing__Learning__c(
             Name = 'testLearning',
             redwing__Published__c = true,
@@ -151,14 +155,16 @@ public class phss_cc_FulfillmentUtilTest {
         insert testOrderItem;
         
         testAuthTransactionPayment = new ccrz__E_TransactionPayment__c(
-        	ccrz__CCOrder__c = testOrder.Id,
-            ccrz__AccountType__c = phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE,
-            ccrz__Amount__c = 1,
-            ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
+                ccrz__Account__c = testAccount.Id,
+                ccrz__CCOrder__c = testOrder.Id,
+                ccrz__AccountType__c = phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE,
+                ccrz__Amount__c = 1,
+                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
         );
         insert testAuthTransactionPayment;
 
         testCaptureTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__Account__c = testAccount.Id,
                 ccrz__CCOrder__c = testOrder.Id,
                 ccrz__AccountType__c = phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE,
                 ccrz__Amount__c = 1,

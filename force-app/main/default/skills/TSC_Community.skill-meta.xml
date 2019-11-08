@@ -2,7 +2,6 @@
 <Skill xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
         <users>
-            <user>aaron.anderson@redcross.org</user>
             <user>amber.chick@redcross.org</user>
             <user>ashley.armstrong@redcross.org</user>
             <user>cheryl.jackson@redcross.org</user>
@@ -27,7 +26,6 @@
             <user>sha-retha.jackson@redcross.org</user>
             <user>sharon.reynolds@redcross.org</user>
             <user>sheila.meade@redcross.org</user>
-            <user>shelia.rose@redcross.org</user>
             <user>tracy.quinn@redcross.org</user>
             <user>yolanda.jones@redcross.org</user>
         </users>

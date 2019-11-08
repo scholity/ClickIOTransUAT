@@ -770,7 +770,7 @@ public without sharing class PHSS_skedJobtoILTClass {
                     clsRecord.redwing__Description__c = curJobRecord.sked__Description__c;
                     clsRecord.Request_Type__c = curJobRecord.sked__Type__c;
                     clsRecord.Ready_to_Publish__c = curJobRecord.Ready_to_Publish__c;
-                    if (!curJobRecord.sked__Type__c.contains('Full Service')) {
+                    if (curJobRecord.sked__Type__c != null && !curJobRecord.sked__Type__c.contains('Full Service')) {
                         if (String.isNotBlank(curJobRecord.sked__Location__c) && locationToILTLocationMap.containsKey(curJobRecord.sked__Location__c)) {
                             clsRecord.redwing__Location__c = locationToILTLocationMap.get(curJobRecord.sked__Location__c);
                         } else {
@@ -792,7 +792,7 @@ public without sharing class PHSS_skedJobtoILTClass {
                     clsRecord.Class_Online__c = true;
                     clsRecord.Course_Class_Type__c = curJobRecord.Course_Class_Type__c;
 
-                    if (curJobRecord.sked__Type__c.contains('Full Service')) {
+                    if (curJobRecord.sked__Type__c != null && curJobRecord.sked__Type__c.contains('Full Service')) {
                         if (skedJobsMap.get(curJobRecord.Id) != null && skedJobsMap.get(curJobRecord.Id).Training_Event__c != null) {
                             clsRecord.Opportunity__c = skedJobsMap.get(curJobRecord.Id).Training_Event__r.Opportunity__c;
                         }
@@ -1013,7 +1013,7 @@ public without sharing class PHSS_skedJobtoILTClass {
                     sessionRecord.Skedulo_Account__c = curJobRecord.sked__Account__c;
                     sessionRecord.redwing__Description__c = curJobRecord.sked__Description__c;
 
-                    if (!curJobRecord.sked__Type__c.contains('Full Service')) {
+                    if (curJobRecord.sked__Type__c != null && !curJobRecord.sked__Type__c.contains('Full Service')) {
                         if (String.isNotBlank(curJobRecord.sked__Location__c) && locationToILTLocationMap.containsKey(curJobRecord.sked__Location__c)) {
                             sessionRecord.redwing__Location__c = locationToILTLocationMap.get(curJobRecord.sked__Location__c);
                         } else {
@@ -1154,7 +1154,7 @@ public without sharing class PHSS_skedJobtoILTClass {
                     // iterate through order items, populate ILT class, add to the order items List
                     // update order items
 
-                    if (clsRecord.Request_Type__c.contains('Full Service')) {
+                    if (clsRecord.Request_Type__c != null && clsRecord.Request_Type__c.contains('Full Service')) {
                         Set<ccrz__E_OrderItem__c> orderItemSet = jobIdOrderItems.get(clsRecord.Skedulo_Job_Id__c);
                         if (orderItemSet != null && !orderItemSet.isEmpty()) {
                             Id theOrderId;
@@ -1192,7 +1192,7 @@ public without sharing class PHSS_skedJobtoILTClass {
                 // Skip full service classes:  Vouchers for full service-type classes are created using TE process (they
                 // are created in process builder 'Create Voucher From TE' and associate a new voucher to an order, order line, and TE
 
-                if (!theClass.Request_Type__c.contains('Full Service')) {
+                if (theClass.Request_Type__c != null && !theClass.Request_Type__c.contains('Full Service')) {
                     // Insure that the Learning Plan Id will be available if we need to create voucher, otherwise need to skip
                     if (catalogIds.get(jobCatalogMap.get(theClass.Skedulo_Job_Id__c)) != null) {
                         // For new ILT Class records use the previously calculated max seats(number of students) for voucher count
@@ -1538,6 +1538,34 @@ public without sharing class PHSS_skedJobtoILTClass {
                 // Skip CEP class creation if not ready to publish
                 ((jobType == 'Nurse Assistant Testing') && !readyToPublish)) {
             return false; // Take no action on this job
+        } else if (jobType != null && jobType.contains('Full Service')) {
+            if (PHSS_TriggerSettings__c.getOrgDefaults().skedJobtoILTClassFullServiceDisabled__c) {
+                return false; // Ignore full service jobs if this custom setting disabled
+            } else {
+                // Check to see if this full service job has cloud craze order/order item numbers associated to it
+                if (jobRecord.Training_Event__r.CC_Order__c == null || jobRecord.Training_Event__r.CC_Order_Item__c == null) {               
+                    List<User>theUser = [Select Email From User Where Id = :jobRecord.LastModifiedById Limit 1];
+                    String emailToAddress = theUser[0].Email;
+                    if (String.isNotBlank(emailToAddress)) {                    
+                        // Send email to scheduler that full service job is being processed without a cloud craze order associated to it
+                        String emailBody = 'The full service job you have scheduled, Job ' + jobRecord.Name +
+                                ', resulted in a ILT Class which does not have a Cloud Craze order associated to it.';
+                        String emailSubject = 'ILT Class Created Without Cloud Craze Order - Job' + jobRecord.Name;
+                        // Create email
+                        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+                        email.setSubject(emailSubject);
+                        email.setToAddresses(new String[]{
+                                emailToAddress
+                        });
+                        email.setPlainTextBody(emailBody);
+                        system.debug('=======email:'+email);
+                        if (!Test.isRunningTest()) {
+                            Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
+                        }
+                    }
+                }
+                return true;  // Process this full service job
+            }
         } else {
             return true;  // Process this job
         }

@@ -42,7 +42,6 @@ public with sharing class phss_cc_CommunityClassSearchController {
     private static final String FAILED_TO_GET_SKEDULO_JOBS = 'Failed to get the Skedulo jobs.';
 
 
-
     /**
      * @description Adds classes to the active cart associated with the specified opportunity
      *
@@ -98,7 +97,8 @@ public with sharing class phss_cc_CommunityClassSearchController {
             Date endDate = (Date) JSON.deserialize(endDateStr, Date.class);
 
             Map<String, Object> courses = searchCommunityCourses(opportunityId, searchTerm);
-            Map<Id, Id> jobCourses = getCoursesKeyedToJobs(courses.keySet());
+            Set<String> courseIdentifiers = courses.keySet();
+            Map<Id, Id> jobCourses = getCoursesKeyedToJobs(courseIdentifiers);
             List<redwing__ILT_Class__c> classes = getILTClasses(jobCourses.keySet(), startDate, endDate);
             Map<Id, Integer> seatsAvailable = getAvailabilityForClasses(new Map<Id, redwing__ILT_Class__c>(classes).keySet());
 

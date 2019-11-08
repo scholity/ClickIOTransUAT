@@ -1456,6 +1456,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>cc_phss_ccLogicCartAddToTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>cc_phss_ccLogicPLEntLists</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2173,6 +2177,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Agreement_Coverage_Flag__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Agreement_Coverage__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Agreement_Covers__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -2414,7 +2428,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Details_of_Agreement_Coverage__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2800,6 +2814,11 @@
         <editable>false</editable>
         <field>Account.Red_Cross_PO_expiration_Date__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Restrict_Order_Confirmation_Email__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

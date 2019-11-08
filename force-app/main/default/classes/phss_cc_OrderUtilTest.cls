@@ -235,8 +235,13 @@ public with sharing class phss_cc_OrderUtilTest {
     public static void testPlaceOrderOnCartCBNoStoredPayments() {
         setupTestData(phss_cc_StoredPaymentUtil.STORED_PAYMENT_TYPE_CB);
 
+        List<String> storedPaymentIdList = new List<String>();
+        for (ccrz__E_StoredPayment__c storedPayment : testStoredPayments) {
+            storedPaymentIdList.add(storedPayment.Id);
+        }
+
         Test.startTest();
-        Map<String, Object> result = phss_cc_OrderUtil.placeOrderOnCartCB(testOpportunity.Id, testCart.ccrz__EncryptedId__c, null);
+        Map<String, Object> result = phss_cc_OrderUtil.placeOrderOnCartCB(testOpportunity.Id, testCart.ccrz__EncryptedId__c, storedPaymentIdList);
         Test.stopTest();
 
         System.assertNotEquals(null, result);

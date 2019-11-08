@@ -257,6 +257,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Geo_Location__c.TS_Loc__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.CC_Account_Group__c</field>
         <readable>true</readable>
@@ -364,6 +369,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Voucher__c.RCO_Reservation_Timestamp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Related_Order_Contact_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Related_Order_Contact_2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -778,6 +793,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ccrz__E_OrderItem__c.Coupon_Formula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ccrz__E_OrderItem__c.Coupon_Used__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ccrz__E_OrderItem__c.Coupon__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -892,7 +917,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ccrz__E_OrderItem__c.ccrz__Coupon__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1873,6 +1898,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>redwing__ILT_Class__c.CPS_Order_Item__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>redwing__ILT_Class__c.CPS_Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>redwing__ILT_Class__c.CPS_Registration_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1988,6 +2023,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>redwing__ILT_Class__c.Site_Address_1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>redwing__ILT_Class__c.Site_Address_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>redwing__ILT_Class__c.Site_City__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1999,6 +2044,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>redwing__ILT_Class__c.Site_Postal_Code__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>redwing__ILT_Class__c.Skedulo_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2153,7 +2203,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>redwing__ILT_Location__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>redwing__ILT_Location__c.Dev_External_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>redwing__ILT_Location__c.GeoLocation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2284,6 +2344,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>sked__Job__c.Break_Duration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sked__Job__c.Cancellation_Detail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sked__Job__c.Cancellation_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2659,6 +2729,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>sked__Job__c.sked__Locked__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sked__Job__c.sked__Max_Attendees__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>sked__Job__c.sked__Min_Attendees__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

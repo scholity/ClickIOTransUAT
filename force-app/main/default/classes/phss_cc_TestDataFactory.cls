@@ -56,9 +56,9 @@ public with sharing class phss_cc_TestDataFactory {
     public static final String TEST_REFUND_TRANSACTION_PAYMENT = 'TestRefundTransactionPayment';
     public static final String TEST_STORED_PAYMENT = 'TestStoredPayment';
     public static final String TEST_ENCRYPTED_ID_CART = 'encid-';
-    private static final String CART_AUTH_USER_VALIDATED = 'CartAuthUserValidated';
-    private static final String CART_STATUS_OPEN = 'Open';
-    private static final String CART_TYPE = 'Cart';
+    public static final String CART_AUTH_USER_VALIDATED = 'CartAuthUserValidated';
+    public static final String CART_STATUS_OPEN = 'Open';
+    public static final String CART_TYPE = 'Cart';
 
     // Learning-related keys
     public static final String TEST_ILT_CLASS = 'TestILTClass';
@@ -112,9 +112,34 @@ public with sharing class phss_cc_TestDataFactory {
         ProfilesList.add(indiv);
         insert ProfilesList;
 
-        Opportunity testOpportunity = new Opportunity(Name = TEST_OPPORTUNITY, CloseDate = System.today(), StageName = 'Closed Won', Type = 'New Business - FS', AccountId = acc.Id);
+        RecordType rt = [SELECT Id FROM RecordType WHERE SobjectType = 'Opportunity' AND DeveloperName = 'Order_Opportunity'];
+        Opportunity testOpportunity = new Opportunity(
+                Name = TEST_OPPORTUNITY,
+                CloseDate = System.today(),
+                StageName = 'Closed Won',
+                Type = 'New Business - FS',
+                AccountId = acc.Id,
+                RecordType = rt
+        );
         insert testOpportunity;
         return testOpportunity;
+    }
+
+
+    public static Contract createInsertTestContract(Account account, Opportunity opportunity) {
+        Integer contractTerm = 24;      // 24 months
+        Date startDate = Date.today();
+
+        Contract contract = new Contract(
+                Account__c = account.Id,
+                AccountId = account.Id,
+                StartDate = startDate,
+                ContractTerm = contractTerm,
+                Opportunity__c = opportunity.Id
+        );
+
+        insert contract;
+        return contract;
     }
 
 
@@ -206,12 +231,10 @@ public with sharing class phss_cc_TestDataFactory {
                     AP_Code__c = '6200',
                     FCC__c = '32620',
                     OMSProductName__c = '1234'
-
             );
-
             products.add(product);
-
         }
+
         insert products;
         return products;
     }
@@ -388,6 +411,7 @@ public with sharing class phss_cc_TestDataFactory {
         insert order;
 
         ccrz__E_TransactionPayment__c authTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__Account__c = account.Id,
                 ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
                 ccrz__CCOrder__c = order.Id,
                 ccrz__Token__c = TEST_AUTH_TXN_PMT_TOKEN,
@@ -396,6 +420,7 @@ public with sharing class phss_cc_TestDataFactory {
         insert authTransactionPayment;
 
         ccrz__E_TransactionPayment__c captureTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__Account__c = account.Id,
                 ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
                 ccrz__CCOrder__c = order.Id,
                 ccrz__Token__c = 'testToken',
@@ -420,6 +445,7 @@ public with sharing class phss_cc_TestDataFactory {
         insert storedPayment;
 
         ccrz__E_TransactionPayment__c creditTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__Account__c = account.Id,
                 ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_BALANCE,
                 ccrz__CCOrder__c = creditOrder.Id,
                 ccrz__ParentTransactionPayment__c = authTransactionPayment.Id,
@@ -436,6 +462,7 @@ public with sharing class phss_cc_TestDataFactory {
         insert appliedCreditOrder;
 
         ccrz__E_TransactionPayment__c refundTransactionPayment = new ccrz__E_TransactionPayment__c(
+                ccrz__Account__c = account.Id,
                 ccrz__AccountType__c = phss_cc_OrderUtil.ACCOUNT_TYPE_CREDIT_CARD,
                 ccrz__CCOrder__c = appliedCreditOrder.Id,
                 ccrz__Comments__c = phss_cc_OrderUtil.REFUND_COMMENT + storedPayment.Id,

@@ -113,7 +113,7 @@
     <applicationVisibilities>
         <application>standard__Chatter</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__Community</application>
@@ -133,12 +133,12 @@
     <applicationVisibilities>
         <application>standard__LightningSales</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningSalesConsole</application>
         <default>false</default>
-        <visible>true</visible>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__LightningService</application>
@@ -167,8 +167,8 @@
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__Service</application>
-        <default>true</default>
-        <visible>true</visible>
+        <default>false</default>
+        <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>standard__ServiceConsole</application>
@@ -237,11 +237,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AutoFixMentions</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AutoFixMentionsTest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>BroadcastMessageApexController</apexClass>
@@ -317,7 +317,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CaseTriggerHandler</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CaseTriggerHandlerTests</apexClass>
@@ -493,35 +493,35 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandler</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandlerCPS</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandlerCPStest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandlerInstCert</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandlerInstCerttest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandlerStudents</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandlerStudentstest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GeneratePDFHandlertest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GetConstituentDetailMockImpl</apexClass>
@@ -1341,7 +1341,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TriggerHandler</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TriggerHandler_Test</apexClass>
@@ -1389,7 +1389,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserUtils</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>UserUtilsHelper</apexClass>
@@ -1453,6 +1453,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>cc_phss_ccLogicCartAddTo</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>cc_phss_ccLogicCartAddToTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2169,7 +2173,17 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Add_Roster__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Agreement_Coverage_Flag__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Agreement_Coverage__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2309,12 +2323,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Collections_Termination_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Consolidate_Period_Fulfillments__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -2412,9 +2426,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Account.Details_of_Agreement_Coverage__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -2737,9 +2751,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.REPORT_AR_121_180_Days__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -2800,6 +2814,11 @@
         <editable>true</editable>
         <field>Account.Red_Cross_PO_expiration_Date__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Restrict_Order_Confirmation_Email__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -2969,7 +2988,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Special_Invoicing__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3124,7 +3143,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AccountContactRelation.Display_Payment_Info__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -3272,14 +3291,14 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Associated_Orders__c.Case__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Associated_Orders__c.Order_Number__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3287,9 +3306,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Associated_Orders__c.Order__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -3302,9 +3321,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Attendee__c.Comments__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6742,149 +6761,149 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Adult_Swim_Improving_Skills_and_Swimming__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Adult_Swim_Learning_the_Basics__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Basic_Swim_Instructor__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Centennial_Campaign__c.Centennial_Campaign_Reporting__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Comments__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Facility_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Junior_Lifeguarding__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Learn_to_Swim_Level_1__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Learn_to_Swim_Level_2__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Learn_to_Swim_Level_3__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Learn_to_Swim__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Lifeguarding_Instructor_Trainer__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Lifeguarding_Instructor__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Lifeguarding_Management__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Lifeguarding__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Month__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Organization_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Parent_and_Child_Aquatics__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Parents_Caregivers_Pediatric_CPR_AED__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Parents_Caregivers_Water_Safety_Educat__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Preschool_Level_1__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Preschool_Level_2__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Preschool_Level_3__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Centennial_Campaign__c.Reporting_of_Total_Participation__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Centennial_Campaign__c.Total_Students_Taught__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Water_Safety_Instructor_Trainer__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Water_Safety_Instructor__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Centennial_Campaign__c.Year__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -6922,9 +6941,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Channel_Compensation__c.End_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7002,9 +7021,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Channel_Compensation__c.SubPG__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7029,7 +7048,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Channel_Compensation__c.YoY_Comparison_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7037,19 +7056,19 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Class_Instructor__c.Class_Taught__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Class_Instructor__c.Course_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Class_Instructor__c.Instructor__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -7147,9 +7166,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.Deactivation_Date__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -7227,7 +7246,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Contact.FN__Find_Nearby__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8032,9 +8051,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Course_Catalog__c.Master_Class_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -8847,79 +8866,79 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Address__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.City__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Course_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Date__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Facility_Name__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Grant_Funded__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Organization__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Other_Topic__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.State__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Topic__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Total_Students_Taught__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.Zip_Code__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.of_Students_not_Evaluated__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.of_Successful_Students__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Free_Class__c.of_Unsuccessful_Students__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -8989,7 +9008,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Fulfillment_Item__c.Payment_Category__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9029,7 +9048,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Fulfillment_Item__c.Transaction_Date__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9044,7 +9063,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Fulfillment_Item__c.Unit_Code__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9074,7 +9093,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Fulfillment__c.Open_Fulfillment_Items__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10269,7 +10288,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Account_Owner__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -10287,9 +10306,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Opportunity.Approved_Process_Deviations__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10652,14 +10671,14 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Opportunity.Multi_Jurisdictional_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Opportunity.Multi_Jurisdictional__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -10859,7 +10878,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>OpportunityLineItem.Discount_Percentage__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -11392,9 +11411,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>PHSS_Material__c.Short_Tags__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -12902,9 +12921,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Skills_Achievement__c.Skill__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -13277,9 +13296,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>SocialPost.scss__Thread_Root_Post__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -13584,12 +13603,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Training_Events__c.CC_Order_Item__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Training_Events__c.CC_Order__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -13614,7 +13633,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Training_Events__c.Closed_Won_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13687,9 +13706,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Training_Events__c.DocuSign_Status__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13772,9 +13791,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Training_Events__c.Is_Completed_Date_Updated__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13834,7 +13853,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Training_Events__c.Quantity_1__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13944,7 +13963,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Training_Events__c.TE_Owner_Manager__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -13967,9 +13986,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Training_Events__c.Times_Rescheduled__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14202,9 +14221,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>User.sked__skeduloUserType__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14262,9 +14281,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Voucher__c.CC_Cart_Item__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14307,9 +14326,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Voucher__c.Opportunity__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14545,6 +14564,10 @@
         <layout>CampaignMember-Campaign Member Page Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-CRE RBC Case Layout</layout>
+        <recordType>Case.Read_Only_Invoicing</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-Community Case</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -14590,10 +14613,6 @@
     <layoutAssignments>
         <layout>Case-Community Case</layout>
         <recordType>Case.RCS_PO</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Community Case</layout>
-        <recordType>Case.Read_Only_Invoicing</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Community Case</layout>
@@ -14863,7 +14882,7 @@
         <recordType>Free_Class__c.Learn_to_Swim_Class</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Free_Class__c-Safety Outreach</layout>
+        <layout>Free_Class__c-Free Class Layout</layout>
         <recordType>Free_Class__c.Safety_Outreach</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -15106,11 +15125,11 @@
         <layout>SABA_AccountRelationship__c-SABA AccountRelationship Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SFDC_Budget_Entry__c-Accrual Layout</layout>
-        <recordType>SFDC_Budget_Entry__c.Accrual</recordType>
+        <layout>SFDC_Budget_Entry__c-Budget Entry Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SFDC_Budget_Entry__c-Standard Layout</layout>
+        <layout>SFDC_Budget_Entry__c-Budget Entry Layout</layout>
+        <recordType>SFDC_Budget_Entry__c.Accrual</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SFDC_Budget_Entry__c-Standard Layout</layout>
@@ -15194,7 +15213,7 @@
         <layout>User-User Layout Update</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>UserAlt-RCLC Community User</layout>
+        <layout>UserAlt-User Profile Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>UserAppMenuItem-Application Layout</layout>
@@ -15218,16 +15237,10 @@
         <layout>ccrz__E_CompositeProduct__c-PHSS CC Composite Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ccrz__E_FeaturedProduct__c-PHSS CC Featured Product Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>ccrz__E_Invoice__c-PHSS CC Invoice Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ccrz__E_OrderItem__c-PHSS CC Order Item Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ccrz__E_OrderShipmentItem__c-PHSS CC Order Shipment Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ccrz__E_Order__c-PHSS CC Order Layout</layout>
@@ -15251,16 +15264,7 @@
         <layout>ccrz__E_PriceList__c-PHSS CC Price List Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ccrz__E_ProductTab__c-PHSS CC Product Tab Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>ccrz__E_Product__c-PHSS CC Product Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ccrz__E_Promo__c-PHSS CC Promotion Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>ccrz__E_Spec__c-PHSS CC Spec Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ccrz__E_StoredPayment__c-PHSS CC Stored Payment Layout</layout>
@@ -15290,19 +15294,7 @@
         <layout>redwing__ILT_Session__c-PHSS ILT Session Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>redwing__Instructor__c-PHSS Instructor Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>redwing__Learning_Assignment__c-PHSS Learning Assignment Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>redwing__Training_Plan_Assignment__c-PHSS Training Plan Assignment Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>redwing__Training_Plan__c-PHSS Training Plan Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>redwing__User_Certification__c-PHSS User Certification Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>zConversion__c-zConversion Layout</layout>
@@ -15332,15 +15324,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Case</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Class_Instructor__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -15412,15 +15395,6 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>PHSS_Material__c</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
         <object>Pricebook2</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -15440,15 +15414,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Question</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>ServiceContract</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -15550,15 +15515,15 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>GeneratePDFHelper</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>GeneratePDFHelperCPS</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>GeneratePDFHelperStudent</apexPage>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ILTClassRosterPDF</apexPage>
@@ -15897,6 +15862,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Contract.Full_Service</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -15931,14 +15897,14 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Free_Class__c.Learn_to_Swim_Class</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Free_Class__c.Safety_Outreach</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -16044,22 +16010,22 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SFDC_Budget_Entry__c.Accrual</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>SFDC_Budget_Entry__c.Standard</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>SFDC_Budget__c.Coop</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SFDC_Budget__c.MDF</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -16078,7 +16044,7 @@
     </recordTypeVisibilities>
     <tabVisibilities>
         <tab>Associated_Orders__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Attendee__c</tab>
@@ -16126,7 +16092,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Centennial_Campaign__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Channel_Compensation__c</tab>
@@ -16138,7 +16104,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Community_Scheduling</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Coupon__c</tab>
@@ -16146,7 +16112,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Course_Catalog_Tag__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Course_Catalog__c</tab>
@@ -16182,7 +16148,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Free_Class__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Fulfillment_Item__c</tab>
@@ -16214,7 +16180,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Integration_Log__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Lead__c</tab>
@@ -16302,7 +16268,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Resource_Activity_Report</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>SFDC_Budget__c</tab>
@@ -16354,7 +16320,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ccrz__E_AccountSetting__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ccrz__E_Attribute__c</tab>
@@ -16366,7 +16332,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ccrz__E_CompositeProduct__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ccrz__E_ConfigurationMeta__c</tab>
@@ -16402,11 +16368,11 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>ccrz__E_PriceGroup__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ccrz__E_PriceListItem__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>ccrz__E_StoredPayment__c</tab>
@@ -16430,7 +16396,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>redwing__ILT_Class__c</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>redwing__ILT_Instructor__c</tab>
@@ -16438,7 +16404,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>redwing__ILT_Roster__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>redwing__Training_Plan_Achievement__c</tab>
@@ -16446,7 +16412,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>redwing__User_Certification__c</tab>
-        <visibility>DefaultOff</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>sked__Availability__c</tab>
@@ -16486,7 +16452,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Case</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-ChannelProgram</tab>
@@ -16530,7 +16496,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Entitlement</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Event</tab>
@@ -16538,7 +16504,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Idea</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Image</tab>
@@ -16606,7 +16572,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Quote</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Recommendation</tab>
@@ -16618,7 +16584,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-ServiceContract</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-SocialPersona</tab>
@@ -16630,7 +16596,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Solution</tab>
-        <visibility>DefaultOn</visibility>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-StreamingChannel</tab>
@@ -16652,5 +16618,5 @@
         <tab>standard-WorkBadgeDefinition</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
-    <userLicense>Customer Community Plus Login</userLicense>
+    <userLicense>Customer Community Login</userLicense>
 </Profile>

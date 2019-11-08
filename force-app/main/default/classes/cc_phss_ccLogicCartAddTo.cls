@@ -1,16 +1,17 @@
 global with sharing class cc_phss_ccLogicCartAddTo extends ccrz.ccLogicCartAddTo
 {
-	private static final String CLASS_UNIT_OF_MEASURE = 'Class';
-	private static final String COMPONENT_KEY = 'component';
-	private static final String COMPOSITE_PRODUCTS_KEY = 'compositeProductsS';
-	private static final String FEE_INVENTORY_TYPE = 'FEE';
-	private static final String ILT_CLASS_FIELD = 'ILT_Class__c';
-	private static final String INSTRUCTOR_UNIT_OF_MEASURE = 'Instructor';
-	private static final String PRODUCT_PRODUCT_TYPE = 'Product';
-	private static final String MAJOR_CART_ITEM_TYPE = 'Major';
-	private static final String MINOR_CART_ITEM_TYPE = 'Minor';
-	private static final String STUDENT_RATIO_KEY = 'studentRatio';
+	@TestVisible private static final String CLASS_UNIT_OF_MEASURE = 'Class';
+	@TestVisible private static final String COMPONENT_KEY = 'component';
+	@TestVisible private static final String COMPOSITE_PRODUCTS_KEY = 'compositeProductsS';
+	@TestVisible private static final String FEE_INVENTORY_TYPE = 'FEE';
+	@TestVisible private static final String ILT_CLASS_FIELD = 'ILT_Class__c';
+	@TestVisible private static final String INSTRUCTOR_UNIT_OF_MEASURE = 'Instructor';
+	@TestVisible private static final String PRODUCT_PRODUCT_TYPE = 'Product';
+	@TestVisible private static final String MAJOR_CART_ITEM_TYPE = 'Major';
+	@TestVisible private static final String MINOR_CART_ITEM_TYPE = 'Minor';
+	@TestVisible private static final String STUDENT_RATIO_KEY = 'studentRatio';
 
+	@TestVisible
 	private static Map<String, Object> productStudentRatioMap = new Map<String, Object>();
 
 	/**
