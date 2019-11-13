@@ -636,7 +636,7 @@ Global without sharing class PHSS_CreateOrderRestService {
         if(OrderWrapper.Order.order_transaction.transaction_dtls.ccTransactionDtls.size()>0){
         for(CreateOrderWrapper.ccTransactionDtls trd : OrderWrapper.Order.order_transaction.transaction_dtls.ccTransactionDtls)
         {
-            System.debug('Transaction Payment issueee>>>>>');
+            System.debug('Transaction Payment issue>>>>>');
             /*if(exisOrder!=null){
               System.debug('Transaction Payment Order present>>>>>');
                 if(exisOrder.Id != NULL)
@@ -649,16 +649,32 @@ Global without sharing class PHSS_CreateOrderRestService {
                  }
                 }
             }*/
-            System.debug('Transaction Payment issueee2222>>>>>');
+            System.debug('Transaction Payment issue2222>>>>>');
             obj_paymentDetails.ccrz__CCOrder__c = obj_order.id;
             obj_paymentDetails.ccrz__Account__c = obj_order.ccrz__Account__c;
+
+            // DE1935 - Define Bill To and Sold to as Account
+            obj_paymentDetails.ccrz__BillTo__c = obj_paymentDetails.ccrz__Account__c;
+            obj_paymentDetails.ccrz__SoldTo__c = obj_paymentDetails.ccrz__Account__c;
+
             obj_paymentDetails.ccrz__Contact__c = obj_order.ccrz__Contact__c;
             obj_paymentDetails.ccrz__Address__c = obj_order.ccrz__BillTo__c;
             obj_paymentDetails.ccrz__CCOrder__c = obj_order.Id;
-            obj_paymentDetails.ccrz__TransactionType__c = trd.transacrtion_type;
+
+            // DE1935 - Override incoming Transaction Type value with 'CAPTURE'
+            obj_paymentDetails.ccrz__TransactionType__c = 'CAPTURE';
+            //obj_paymentDetails.ccrz__TransactionType__c = trd.transacrtion_type;
+            // DE1935 - Define incoming Account Type as 'cc'
+            obj_paymentDetails.ccrz__AccountType__c = 'cc';
+
             obj_paymentDetails.ccrz__TransactionTS__c = trd.transaction_time;
             obj_paymentDetails.ccrz__TransactionPaymentId__c = trd.transaction_id;
             obj_paymentDetails.ccrz__RequestAmount__c = decimal.valueOf(trd.auth_request_amount);
+
+            // DE1935 - Define Amount as Requested Amount
+            // Question - shouldn't this be Capture amount rather than Request amount to match pp below?
+            obj_paymentDetails.ccrz__Amount__c = obj_paymentDetails.ccrz__RequestAmount__c;
+
             //obj_paymentDetails.ccrz__Storefront__c = trd.storefront;
             obj_paymentDetails.ccrz__PaymentType__c = trd.payment_type;
             obj_paymentDetails.ccrz__Token__c = trd.token;
@@ -679,8 +695,19 @@ Global without sharing class PHSS_CreateOrderRestService {
             obj_paymentDetails = new ccrz__E_TransactionPayment__c();
             obj_paymentDetails.ccrz__CCOrder__c = obj_order.id;
             obj_paymentDetails.ccrz__Account__c = obj_order.ccrz__Account__c;
+
+            // DE1935 - Define Bill To and Sold to as Account
+            obj_paymentDetails.ccrz__BillTo__c = obj_paymentDetails.ccrz__Account__c;
+            obj_paymentDetails.ccrz__SoldTo__c = obj_paymentDetails.ccrz__Account__c;
+
             obj_paymentDetails.ccrz__Contact__c = obj_order.ccrz__Contact__c;
             obj_paymentDetails.ccrz__Address__c = obj_order.ccrz__BillTo__c;
+
+            // DE1935 - Override incoming Transaction Type value with 'CAPTURE'
+            obj_paymentDetails.ccrz__TransactionType__c = 'CAPTURE';
+            // DE1935 - Define incoming Account Type as 'cc'
+            obj_paymentDetails.ccrz__AccountType__c = 'cc';
+
             obj_paymentDetails.ccrz__TransactionTS__c = tpd.transaction_time;
             obj_paymentDetails.ccrz__TransactionPaymentId__c = tpd.paypalTransactionID;
             obj_paymentDetails.ccrz__Amount__c = decimal.Valueof(tpd.auth_capture_amount);

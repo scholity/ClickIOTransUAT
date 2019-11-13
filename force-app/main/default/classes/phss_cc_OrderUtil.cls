@@ -7,9 +7,11 @@ public with sharing class phss_cc_OrderUtil {
     //CyberSource Response message keys.
     private static final String CYBER_SOURCE_RESPONSE_PAYMENT_TOKEN = 'payment_token';
     private static final String CYBER_SOURCE_RESPONSE_CARD_EXPIRATION_KEY = 'req_card_expiry_date';
+    private static final String CYBER_SOURCE_RESPONSE_CARD_TYPE_KEY = 'req_card_type';
     private static final String CYBER_SOURCE_RESPONSE_BILL_TO_POSTAL_CODE_KEY = 'req_bill_to_address_postal_code';
     private static final String CYBER_SOURCE_TRANSACTION_DECISION_KEY = 'decision';
     private static final String CYBER_SOURCE_DECISION_ACCEPT = 'ACCEPT';
+    private static final String CYBER_SOURCE_TRANSACTION_ID_KEY = 'transaction_id';
     @TestVisible private static final String CYBER_SOURCE_AUTH_RESPONSE_CODE_KEY = 'auth_response';
 
     //CyberSource Error Codes
@@ -40,6 +42,7 @@ public with sharing class phss_cc_OrderUtil {
     public static final String ACCOUNT_TYPE_CREDIT_CARD = 'cc';
     public static final String ACCOUNT_TYPE_PURCHASE_ORDER = 'po';
     public static final String REFUND_COMMENT = 'Refund for Stored Payment. Id=';
+    public static final String TRANSACTION_PAYMENT_ID_KEY = 'transactionPaymentId';
     @TestVisible private static final String SUCCESS_KEY = 'success';
 
     // Credit response keys
@@ -127,11 +130,21 @@ public with sharing class phss_cc_OrderUtil {
                     expYear = Decimal.valueOf(cardExpirationSplit[1]);
                 }
 
+                String cardType = (String) inputData.get(CYBER_SOURCE_RESPONSE_CARD_TYPE_KEY);
+                if (String.isNotBlank(cardType)) {
+                    cardType = phss_cc_CyberSourceUtil.getCardTypes().get(cardType);
+                }
+
+                String transactionId = (String) inputData.get(CYBER_SOURCE_TRANSACTION_ID_KEY);
+
                 paymentDataMap = new Map<String, Object>{
                         PAYMENT_TOKEN_KEY => inputData.get(CYBER_SOURCE_RESPONSE_PAYMENT_TOKEN),
                         EXPIRATION_MONTH_KEY => expMonth,
                         EXPIRATION_YEAR_KEY => expYear,
-                        ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_CARD
+                        PAYMENT_TYPE_KEY => cardType,
+                        ACCOUNT_TYPE_KEY => ACCOUNT_TYPE_CREDIT_CARD,
+                        TRANSACTION_PAYMENT_ID_KEY => transactionId,
+                        TRANSACTION_TYPE_KEY => phss_cc_TransactionPaymentUtil.AUTH_TRANSACTION_TYPE
                 };
 
             } else if (inputData.containsKey(ACCOUNT_TYPE_KEY) && inputData.get(ACCOUNT_TYPE_KEY) == ACCOUNT_TYPE_CREDIT_BALANCE) {

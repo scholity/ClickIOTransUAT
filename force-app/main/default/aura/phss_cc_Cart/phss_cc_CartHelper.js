@@ -122,7 +122,6 @@
      * @param helper
      */
     doPlaceOrderCC: function (component, event, helper, cyberSourceResponse) {
-        console.log('JASON: doPlaceOrderCC()');
         component.set('v.renderComplete', false);
         if (cyberSourceResponse === undefined)
             cyberSourceResponse = null;

@@ -74,6 +74,14 @@
                 <behavior>Readonly</behavior>
                 <field>Customer_Fax__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CC_Price_Group__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CC_Price_Group_Account__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -339,6 +347,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>SSign__SSEnvelope__c.Contract__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ccrz__E_PriceGroupPricelist__c.Contract__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

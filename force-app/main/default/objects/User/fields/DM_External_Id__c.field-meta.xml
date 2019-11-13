@@ -6,7 +6,7 @@
     <externalId>true</externalId>
     <inlineHelpText>This field is utilized to support the data migration process.  It will contain a combination of the source system identifier and the source system&#39;s unique record identifier.  This field should be deleted after all migration activities are complete.</inlineHelpText>
     <label>DM External Id</label>
-    <length>70</length>
+    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <type>Text</type>

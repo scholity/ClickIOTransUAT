@@ -383,6 +383,10 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ccrz__E_PriceGroupItem__c.ccrz__Product__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <customButtons>Add_New_Price_List</customButtons>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
@@ -569,7 +573,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h5B000000HZUf</masterLabel>
+        <masterLabel>00h21000000S90n</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

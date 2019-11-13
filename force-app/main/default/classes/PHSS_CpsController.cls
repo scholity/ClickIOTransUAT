@@ -158,12 +158,14 @@ public without sharing class PHSS_CpsController {
             newClass.CPS_Approval_Status__c = 'Submitted';
             newClass.redwing__Learning__c = objLearning.Id;
             newClass.Classroom_Setting__c = cpsWrap.classFormat;
+            /*
             newClass.Class_Online_From__c = rco_post_startTime.dateGmt();
             if(cpsWrap.classFormat == 'Classroom'){
                 newClass.Class_Online_To__c = startTime.dateGmt();
             } else {
                 newClass.Class_Online_To__c = rco_post_endTime.dateGmt();
             }
+			*/
             newClass.Class_Searchable__c = true;
             
             //Get Order Item information

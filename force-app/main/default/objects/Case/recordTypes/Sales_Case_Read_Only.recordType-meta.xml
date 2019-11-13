@@ -151,6 +151,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Expedited Certificate Fee Charged</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Facility Request</fullName>
             <default>false</default>
         </values>
@@ -208,6 +212,10 @@
         </values>
         <values>
             <fullName>Shop StayWell</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard Certificate Fee Charged</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2162,6 +2170,10 @@
         </values>
         <values>
             <fullName>Invoicing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LTS-Registration Fee</fullName>
             <default>false</default>
         </values>
         <values>

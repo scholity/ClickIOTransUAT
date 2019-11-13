@@ -1592,11 +1592,23 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_CyberSourceCaptureUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_CyberSourceCreditUtil</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_CyberSourceCreditUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_CyberSourceRestApiUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_CyberSourceRestRequest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>

@@ -4,6 +4,10 @@ public without sharing class PHSS_skedJobtoILTClass {
     public static Set<Id> updatedJobs = new Set<Id>();
     public static Set<Id> canceledJobs = new Set<Id>();
 
+    // DE1988
+    List<Messaging.SingleEmailMessage> emailList = new List<Messaging.SingleEmailMessage>();
+    Map<Id, String> emailAddressMap = new Map<Id, String>();
+
     public void afterInsert(List<sked__Job__c> newRecords) {
         // Create dummy old list of jobs (Map with no values) so we have one entry point to process jobs (UpsertILTClass)
         Map<Id, sked__Job__c> oldRecords = new Map<Id, sked__Job__c>();
@@ -18,6 +22,17 @@ public without sharing class PHSS_skedJobtoILTClass {
         updateRecords = false;
         
         List<sked__Job__c> lstnewRecords = new List<sked__Job__c>();
+
+        // DE1988 - The following block maps the job last modified user Id to the user's email address
+        // Required since email address is NOT included in the newRecords job list passed from trigger to handler
+        Set<Id> userIds = new Set<Id>();
+        for (sked__Job__c theJob : newRecords) {
+            userIds.add(theJob.LastModifiedById);
+        }
+        List<User> theUserList = [SELECT Id, Email FROM User WHERE Id IN :userIds];
+        for (User theUser : theUserList) {
+            emailAddressMap.put(theUser.Id, theUser.Email);
+        }
             
         for(sked__Job__c jobRecord : newRecords) {
             System.debug('tst: new: jobRecord.Id='+jobRecord.Id);
@@ -34,6 +49,9 @@ public without sharing class PHSS_skedJobtoILTClass {
             }
         }
         upsertILTClass(lstnewRecords, oldRecords);
+
+        // DE1988
+        sendEmails();
     }
     
     public void afterUpdate(List<sked__Job__c> newRecords, Map<Id, sked__Job__c> oldRecords) {
@@ -48,6 +66,17 @@ public without sharing class PHSS_skedJobtoILTClass {
 
         List<sked__Job__c> lstnewRecords = new List<sked__Job__c>();
         Map<Id, sked__Job__c> mapCanceledJobs = new Map<Id, sked__Job__c>();
+
+        // DE1988 - The following block maps the job last modified user Id to the user's email address
+        // Required since email address is NOT included in the newRecords job list passed from trigger to handler
+        Set<Id> userIds = new Set<Id>();
+        for (sked__Job__c theJob : newRecords) {
+            userIds.add(theJob.LastModifiedById);
+        }
+        List<User> theUserList = [SELECT Id, Email FROM User WHERE Id IN :userIds];
+        for (User theUser : theUserList) {
+            emailAddressMap.put(theUser.Id, theUser.Email);
+        }
             
         for(sked__Job__c jobRecord : newRecords) {
             System.debug('tst: update: jobRecord.Id='+jobRecord.Id);
@@ -92,7 +121,10 @@ public without sharing class PHSS_skedJobtoILTClass {
                 }
             }       
             cancelRelatedRecords(mapCanceledJobs); 
-        }   
+        }
+
+        // DE1988
+        sendEmails();
     }
     
     public List<sked__Job__c> addDependentStackedClasses(List<sked__Job__c> jobList, Boolean bCancel) {
@@ -1543,9 +1575,12 @@ public without sharing class PHSS_skedJobtoILTClass {
                 return false; // Ignore full service jobs if this custom setting disabled
             } else {
                 // Check to see if this full service job has cloud craze order/order item numbers associated to it
-                if (jobRecord.Training_Event__r.CC_Order__c == null || jobRecord.Training_Event__r.CC_Order_Item__c == null) {               
-                    List<User>theUser = [Select Email From User Where Id = :jobRecord.LastModifiedById Limit 1];
-                    String emailToAddress = theUser[0].Email;
+                if (jobRecord.Training_Event__c == null ||
+                        jobRecord.Training_Event__r.CC_Order__c == null ||
+                            jobRecord.Training_Event__r.CC_Order_Item__c == null) {
+                    String emailToAddress = emailAddressMap.get(jobRecord.LastModifiedById);
+
+                    //String emailToAddress = theUser[0].Email;
                     if (String.isNotBlank(emailToAddress)) {                    
                         // Send email to scheduler that full service job is being processed without a cloud craze order associated to it
                         String emailBody = 'The full service job you have scheduled, Job ' + jobRecord.Name +
@@ -1559,15 +1594,22 @@ public without sharing class PHSS_skedJobtoILTClass {
                         });
                         email.setPlainTextBody(emailBody);
                         system.debug('=======email:'+email);
-                        if (!Test.isRunningTest()) {
-                            Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
-                        }
+
+                        emailList.add(email);
                     }
                 }
                 return true;  // Process this full service job
             }
         } else {
             return true;  // Process this job
+        }
+    }
+
+    private void sendEmails() {
+        if (!Test.isRunningTest()) {
+            if (emailList.size() > 0) {
+                Messaging.SendEmailResult[] r = Messaging.sendEmail(emailList);
+            }
         }
     }
 
