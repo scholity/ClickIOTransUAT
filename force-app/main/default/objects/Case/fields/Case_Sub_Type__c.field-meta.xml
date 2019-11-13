@@ -283,6 +283,11 @@
                 <label>Donations</label>
             </value>
             <value>
+                <fullName>Expedited Certificate Fee Charged</fullName>
+                <default>false</default>
+                <label>Expedited Certificate Fee Charged</label>
+            </value>
+            <value>
                 <fullName>Extend Existing Coupon</fullName>
                 <default>false</default>
                 <label>Extend Existing Coupon</label>
@@ -786,6 +791,11 @@
                 <fullName>Sponsored</fullName>
                 <default>false</default>
                 <label>Sponsored</label>
+            </value>
+            <value>
+                <fullName>Standard Certificate Fee Charged</fullName>
+                <default>false</default>
+                <label>Standard Certificate Fee Charged</label>
             </value>
             <value>
                 <fullName>Status of Order</fullName>
@@ -1334,6 +1344,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Expedited Certificate Fee Charged</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
             <valueName>Granted Grace Period for Expired Base Level Cert</valueName>
         </valueSettings>
         <valueSettings>
@@ -1375,6 +1389,10 @@
         <valueSettings>
             <controllingFieldValue>Certificates</controllingFieldValue>
             <valueName>S/H Email Sent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Certificates</controllingFieldValue>
+            <valueName>Standard Certificate Fee Charged</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Community Course Registration</controllingFieldValue>

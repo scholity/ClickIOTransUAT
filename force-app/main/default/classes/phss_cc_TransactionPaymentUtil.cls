@@ -15,6 +15,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
     // error messages
     public static final String FAILED_TO_CREATE_CAPTURE_TRANSACTION_PAYMENT_FROM_AUTH_TRANSACTION_PAYMENT = 'Failed to create CAPTURE transaction payment from AUTH transaction payment.';
     public static final String FAILED_TO_DESIGNATE_CONTACT = 'Failed to designate contact on the transaction payment.';
+    public static final String FAILED_TO_FETCH_AUTH_TRANSACTION_PAYMENT_FOR_FULFILLMENT = 'Failed to fetch the auth transaction payment for the fulfillment.';
     public static final String FAILED_TO_OBTAIN_TRANSACTION_PAYMENTS_FOR_STORED_PAYMENT = 'Failed to obtain the transaction payments for the stored payment.';
 
 
@@ -39,6 +40,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
                             ccrz__CCOrder__c,
                             ccrz__CCOrder__r.Opportunity_Order__c,
                             ccrz__Contact__c,
+                            ccrz__CurrencyISOCode__c,
                             ccrz__InvoiceAppliedFor__c,
                             ccrz__ParentTransactionPayment__c,
                             ccrz__PaymentType__c,
@@ -58,6 +60,53 @@ public with sharing class phss_cc_TransactionPaymentUtil {
 
         } catch (Exception e) {
             throw new phss_cc_Exception('Failed to fetch transaction payment', e);
+        }
+
+        return transactionPayment;
+    }
+
+    /**
+     *
+     *
+     * @param fulfillmentId
+     *
+     * @return
+     */
+    public static ccrz__E_TransactionPayment__c getTransactionPaymentForFulfillment(String fulfillmentId) {
+        ccrz__E_TransactionPayment__c transactionPayment;
+
+        try {
+            Id identifier = Id.valueOf(fulfillmentId);
+
+            String orderId;
+            List<Fulfillment__c> fulfillments = [
+                    SELECT Order__c FROM Fulfillment__c WHERE Id = :identifier ORDER BY CreatedDate
+            ];
+            if (fulfillments != null) {
+                 for (Fulfillment__c fulfillment : fulfillments) {
+                     if (String.isNotBlank(fulfillment.Order__c)) {
+                         orderId = fulfillment.Order__c;
+                         break;
+                     }
+                 }
+            }
+
+            String paymentId;
+            if (String.isNotBlank(orderId)) {
+                List<ccrz__E_TransactionPayment__c> payments = [
+                        SELECT Id FROM ccrz__E_TransactionPayment__c WHERE ccrz__CCOrder__c = :orderId ORDER BY CreatedDate
+                ];
+                if (payments != null && payments.size() > 0) {
+                    paymentId = payments[0].Id;
+                }
+            }
+
+            if (String.isNotBlank(paymentId)) {
+                transactionPayment = fetchTransactionPayment(paymentId);
+            }
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_FETCH_AUTH_TRANSACTION_PAYMENT_FOR_FULFILLMENT, e);
         }
 
         return transactionPayment;
@@ -137,6 +186,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
             captureTxnPmt.ccrz__BillTo__c = authTxnPmt.ccrz__BillTo__c;
             captureTxnPmt.ccrz__CCOrder__c = authTxnPmt.ccrz__CCOrder__c;
             captureTxnPmt.ccrz__Contact__c = authTxnPmt.ccrz__Contact__c;
+            captureTxnPmt.ccrz__CurrencyISOCode__c = authTxnPmt.ccrz__CurrencyISOCode__c;
             captureTxnPmt.ccrz__SoldTo__c = authTxnPmt.ccrz__SoldTo__c;
             captureTxnPmt.ccrz__SourceTransactionPayment__c = authTxnPmt.Id;
             captureTxnPmt.ccrz__Storefront__c = authTxnPmt.ccrz__Storefront__c;

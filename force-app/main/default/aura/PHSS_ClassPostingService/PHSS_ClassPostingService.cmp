@@ -94,6 +94,8 @@
                         class	= "slds-text-heading_medium">
                         Red Cross Class Posting Request
                     </h2>
+                    <br/>
+                    <div align="center" style="font-size:1.75em;color:red;"><b>DO NOT USE! Coming Soon, CPS will be available beginning December 10th</b></div>
                     <aura:renderIf isTrue="{!v.showError}">
                         <div class="errMsg">
                             <ui:outputRichText value="{!v.errorMessage}"/>
@@ -712,19 +714,25 @@
                             
                                <aura:if isTrue="{!v.stepNumber == 'One'}">
                                     <div class="slds-col">
+                                        <!-- <button class="slds-button slds-button_neutral customButton"
+                                                onclick="{!c.onclickAddToCart}" disabled="true" style="background-color:#D3D3D3;" > -->
                                         <button class="slds-button slds-button_neutral customButton"
                                                 onclick="{!c.onclickAddToCart}" >
                                             Add To Cart
                                         </button>
                                     </div>
                                     <div class="slds-col">
-                                        <button class="slds-button slds-button_neutral customButton"
-                                                onclick="{!c.onclickNext}" >
+                                       <!-- <button class="slds-button slds-button_neutral customButton"
+                                                onclick="{!c.onclickNext}" disabled="true" style="background-color:#D3D3D3;" > -->
+                                       <button class="slds-button slds-button_neutral customButton"
+                                                onclick="{!c.onclickNext}" > 
                                             Next
                                         </button> 
                                     </div>                                
                             <aura:set attribute="else"> 
                                 <div class="slds-col">
+                                    <!-- <button class="slds-button slds-button_neutral customButton"
+                                            	onclick="{!c.onclickNext}" disabled="true" style="background-color:#D3D3D3;" >   -->
                                     <button class="slds-button slds-button_neutral customButton"
                                             	onclick="{!c.onclickNext}" >
                                         	Submit

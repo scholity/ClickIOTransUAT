@@ -64,7 +64,8 @@ public class SubmitOrderCreditController
 												(SELECT Id
 												   FROM ccrz__E_Orders__r),
 												(SELECT Id
-												   FROM ccrz__TransactionPayments__r)
+												   FROM ccrz__TransactionPayments__r
+                                                  WHERE ccrz__TransactionType__c = 'CAPTURE') /*DE1935*/
 												   
 										   FROM ccrz__E_Order__c
 										  WHERE Id =: ccCreditOrder.ccrz__Order__c];
@@ -135,6 +136,9 @@ public class SubmitOrderCreditController
             newTransPayment.ccrz__ParentTransactionPayment__c 	= tPayment.Id;
 			newTransPayment.ccrz__PaymentType__c				= tPayment.ccrz__PaymentType__c;
             newTransPayment.ccrz__Amount__c 					= ccCreditOrder.ccrz__SubtotalAmount__c;
+            newTransPayment.ccrz__TransactionPaymentId__c		= '';
+            newTransPayment.ccrz__SourceTransactionPayment__c 	= tPayment.Id;			/*DE1935*/
+            newTransPayment.ccrz__TransactionType__c			= 'CREDIT';				/*DE1935*/
 
 			if(hasCreditOnAccount)
             {

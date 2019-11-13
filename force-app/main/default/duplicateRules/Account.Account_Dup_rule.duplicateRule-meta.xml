@@ -10,7 +10,7 @@
         <matchingRule>Custom_Account_Matching_Rule</matchingRule>
         <objectMapping xsi:nil="true"/>
     </duplicateRuleMatchRules>
-    <isActive>true</isActive>
+    <isActive>false</isActive>
     <masterLabel>Account Dup rule</masterLabel>
     <operationsOnInsert>Report</operationsOnInsert>
     <securityOption>EnforceSharingRules</securityOption>

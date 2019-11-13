@@ -1592,11 +1592,23 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_CyberSourceCaptureUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_CyberSourceCreditUtil</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>phss_cc_CyberSourceCreditUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_CyberSourceRestApiUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_CyberSourceRestRequest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -14652,6 +14664,74 @@
         <recordType>Case.Troubleshooting_Case</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.CRE_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Community_Instructor_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Community_Learner_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Community_Partner_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Data_Quality_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Invoicing</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.LTP_on_RCO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Learn_to_Swim_Facility_Registration</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Non_Training_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.RBC_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.RCS_PO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Read_Only_Invoicing</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Read_Only_Non_Training_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Read_Only_RCS_PO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Read_Only_Troubleshooting_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Social_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Invoicing Close Case</layout>
+        <recordType>Case.Troubleshooting_Case</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-Read Only Sales Case Close Layout</layout>
         <recordType>Case.Sales_Case</recordType>
     </layoutAssignments>
@@ -15266,7 +15346,7 @@
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
+        <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Case</object>

@@ -8,36 +8,13 @@
             </value>
         </processMetadataValues>
         <name>myRule_1_A1</name>
-        <label>Notify Instructor1</label>
+        <label>Notify of Assignment</label>
         <locationX>100</locationX>
         <locationY>200</locationY>
         <actionName>AccountContactRelation.Send_Notification_to_Instructor</actionName>
         <actionType>emailAlert</actionType>
         <connector>
-            <targetReference>myWait_myRule_1</targetReference>
-        </connector>
-        <inputParameters>
-            <name>SObjectRowId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>emailAlertSelection</name>
-            <value>
-                <stringValue>Send_Notification_to_Instructor</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_3_A1</name>
-        <label>Notify Partner</label>
-        <locationX>300</locationX>
-        <locationY>200</locationY>
-        <actionName>AccountContactRelation.Send_Notification_to_Instructor</actionName>
-        <actionType>emailAlert</actionType>
-        <connector>
-            <targetReference>myWait_myRule_3</targetReference>
+            <targetReference>myDecision2</targetReference>
         </connector>
         <inputParameters>
             <name>SObjectRowId</name>
@@ -59,14 +36,14 @@
                 <stringValue>Update Instructor or Partner Profile ID</stringValue>
             </value>
         </processMetadataValues>
-        <name>myWaitEvent_myWait_myRule_1_event_0_SA1</name>
+        <name>myWaitEvent_myWait_myRule_3_event_0_SA1</name>
         <label>Set Instructor Profile</label>
-        <locationX>100</locationX>
+        <locationX>300</locationX>
         <locationY>200</locationY>
         <actionName>Update_Instructor_or_Partner_Profile_ID</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</targetReference>
+            <targetReference>myWaitEvent_myWait_myRule_3_event_0_postWaitExecutionAssignment</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -166,14 +143,14 @@
                 <stringValue>Create Appinium Instructor</stringValue>
             </value>
         </processMetadataValues>
-        <name>myWaitEvent_myWait_myRule_1_event_1_SA1</name>
+        <name>myWaitEvent_myWait_myRule_3_event_1_SA1</name>
         <label>Create Appinium Instructor</label>
-        <locationX>100</locationX>
+        <locationX>300</locationX>
         <locationY>200</locationY>
         <actionName>Create_Appinium_Instructor</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myWaitEvent_myWait_myRule_1_event_1_postWaitExecutionAssignment</targetReference>
+            <targetReference>myWaitEvent_myWait_myRule_3_event_1_postWaitExecutionAssignment</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -231,14 +208,14 @@
                 <stringValue>Update Instructor or Partner Profile ID</stringValue>
             </value>
         </processMetadataValues>
-        <name>myWaitEvent_myWait_myRule_3_event_0_SA1</name>
+        <name>myWaitEvent_myWait_myRule_5_event_0_SA1</name>
         <label>Set Partner Profile ID</label>
-        <locationX>300</locationX>
+        <locationX>500</locationX>
         <locationY>200</locationY>
         <actionName>Update_Instructor_or_Partner_Profile_ID</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myWaitEvent_myWait_myRule_3_event_0_postWaitExecutionAssignment</targetReference>
+            <targetReference>myWaitEvent_myWait_myRule_5_event_0_postWaitExecutionAssignment</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -338,14 +315,14 @@
                 <stringValue>Create Appinium Instructor</stringValue>
             </value>
         </processMetadataValues>
-        <name>myWaitEvent_myWait_myRule_3_event_1_SA1</name>
+        <name>myWaitEvent_myWait_myRule_5_event_1_SA1</name>
         <label>Create Appinium Instructor</label>
-        <locationX>300</locationX>
+        <locationX>500</locationX>
         <locationY>200</locationY>
         <actionName>Create_Appinium_Instructor</actionName>
         <actionType>flow</actionType>
         <connector>
-            <targetReference>myWaitEvent_myWait_myRule_3_event_1_postWaitExecutionAssignment</targetReference>
+            <targetReference>myWaitEvent_myWait_myRule_5_event_1_postWaitExecutionAssignment</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -391,38 +368,6 @@
         </inputParameters>
     </actionCalls>
     <assignments>
-        <name>myVariable_waitStartTimeAssignment</name>
-        <label>myVariable_waitStartTimeAssignment</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>myVariable_waitStartTimeVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>myPreWaitDecision_myWait_myRule_3</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>myWaitAssignment_myWait_myRule_1</name>
-        <label>myWaitAssignment_myWait_myRule_1</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>cancelWaits</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>myWait_myRule_1</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>myDecision</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>myWaitAssignment_myWait_myRule_3</name>
         <label>myWaitAssignment_myWait_myRule_3</label>
         <locationX>0</locationX>
@@ -435,39 +380,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>myPreWaitDecision_myWait_myRule_1</targetReference>
+            <targetReference>myDecision</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</name>
-        <label>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</label>
+        <name>myWaitAssignment_myWait_myRule_5</name>
+        <label>myWaitAssignment_myWait_myRule_5</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>myWaitEvent_myWait_myRule_1_event_0_postActionExecutionVariable</assignToReference>
-            <operator>Assign</operator>
+            <assignToReference>cancelWaits</assignToReference>
+            <operator>Add</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <stringValue>myWait_myRule_5</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>myWait_myRule_1</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>myWaitEvent_myWait_myRule_1_event_1_postWaitExecutionAssignment</name>
-        <label>myWaitEvent_myWait_myRule_1_event_1_postWaitExecutionAssignment</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>myWaitEvent_myWait_myRule_1_event_1_postActionExecutionVariable</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>myWait_myRule_1</targetReference>
+            <targetReference>myPreWaitDecision_myWait_myRule_3</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -502,6 +431,38 @@
             <targetReference>myWait_myRule_3</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>myWaitEvent_myWait_myRule_5_event_0_postWaitExecutionAssignment</name>
+        <label>myWaitEvent_myWait_myRule_5_event_0_postWaitExecutionAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myWaitEvent_myWait_myRule_5_event_0_postActionExecutionVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myWait_myRule_5</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>myWaitEvent_myWait_myRule_5_event_1_postWaitExecutionAssignment</name>
+        <label>myWaitEvent_myWait_myRule_5_event_1_postWaitExecutionAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myWaitEvent_myWait_myRule_5_event_1_postActionExecutionVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myWait_myRule_5</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <processMetadataValues>
             <name>index</name>
@@ -519,6 +480,123 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
+            <conditionLogic>1 and (2 or 3)</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Contact.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Roles</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Instructor</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Roles</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Notify of Assignment</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision2</name>
+        <label>myDecision2</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -552,7 +630,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_1_pmetdec</targetReference>
+                <targetReference>myRule_3_pmetdec</targetReference>
             </connector>
             <label>Instructor Role</label>
         </rules>
@@ -561,16 +639,16 @@
         <processMetadataValues>
             <name>index</name>
             <value>
-                <numberValue>1.0</numberValue>
+                <numberValue>2.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision2</name>
-        <label>myDecision2</label>
+        <name>myDecision4</name>
+        <label>myDecision4</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_3</name>
+            <name>myRule_5</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -603,60 +681,41 @@
                     <stringValue>Administrator</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Contact.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>myRule_3_pmetdec</targetReference>
+                <targetReference>myRule_5_pmetdec</targetReference>
             </connector>
             <label>Partner Role</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_0</name>
-        <label>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_0</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myWaitEvent_myWait_myRule_1_event_0_postWaitExecutionAssignment</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myPostWaitRule_myWaitEvent_myWait_myRule_1_event_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myWaitEvent_myWait_myRule_1_event_0_SA1</targetReference>
-            </connector>
-            <label>myPostWaitRule_myWaitEvent_myWait_myRule_1_event_0</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_1</name>
-        <label>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_1</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myWaitEvent_myWait_myRule_1_event_1_postWaitExecutionAssignment</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myPostWaitRule_myWaitEvent_myWait_myRule_1_event_1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myWaitEvent_myWait_myRule_1_event_1_SA1</targetReference>
-            </connector>
-            <label>myPostWaitRule_myWaitEvent_myWait_myRule_1_event_1</label>
         </rules>
     </decisions>
     <decisions>
@@ -710,52 +769,53 @@
         </rules>
     </decisions>
     <decisions>
-        <name>myPreWaitDecision_myWait_myRule_1</name>
-        <label>myPreWaitDecision_myWait_myRule_1</label>
+        <name>myPostWaitDecision_myWaitEvent_myWait_myRule_5_event_0</name>
+        <label>myPostWaitDecision_myWaitEvent_myWait_myRule_5_event_0</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myWaitAssignment_myWait_myRule_1</targetReference>
+            <targetReference>myWaitEvent_myWait_myRule_5_event_0_postWaitExecutionAssignment</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myPreWaitRule_myWait_myRule_1</name>
+            <name>myPostWaitRule_myWaitEvent_myWait_myRule_5_event_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>MultiPicklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>MultiPicklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>MultiPicklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.Roles</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Instructor</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myDecision</targetReference>
+                <targetReference>myWaitEvent_myWait_myRule_5_event_0_SA1</targetReference>
             </connector>
-            <label>myPreWaitRule_myWait_myRule_1</label>
+            <label>myPostWaitRule_myWaitEvent_myWait_myRule_5_event_0</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myPostWaitDecision_myWaitEvent_myWait_myRule_5_event_1</name>
+        <label>myPostWaitDecision_myWaitEvent_myWait_myRule_5_event_1</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myWaitEvent_myWait_myRule_5_event_1_postWaitExecutionAssignment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myPostWaitRule_myWaitEvent_myWait_myRule_5_event_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myWaitEvent_myWait_myRule_5_event_1_SA1</targetReference>
+            </connector>
+            <label>myPostWaitRule_myWaitEvent_myWait_myRule_5_event_1</label>
         </rules>
     </decisions>
     <decisions>
@@ -798,26 +858,106 @@
                 <leftValueReference>myVariable_current.Roles</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Administrator</stringValue>
+                    <stringValue>Instructor</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myPreWaitDecision_myWait_myRule_1</targetReference>
+                <targetReference>myDecision</targetReference>
             </connector>
             <label>myPreWaitRule_myWait_myRule_3</label>
         </rules>
     </decisions>
     <decisions>
-        <name>myRule_1_pmetdec</name>
+        <name>myPreWaitDecision_myWait_myRule_5</name>
+        <label>myPreWaitDecision_myWait_myRule_5</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myWaitAssignment_myWait_myRule_5</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myPreWaitRule_myWait_myRule_5</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>MultiPicklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Roles</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Contact.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myPreWaitDecision_myWait_myRule_3</targetReference>
+            </connector>
+            <label>myPreWaitRule_myWait_myRule_5</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>myRule_3_pmetdec</name>
         <label>Previously Met Decision</label>
-        <locationX>100</locationX>
+        <locationX>300</locationX>
         <locationY>100</locationY>
         <defaultConnector>
-            <targetReference>myRule_1_A1</targetReference>
+            <targetReference>myWait_myRule_3</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
         <rules>
-            <name>myRule_1_pmetnullrule</name>
+            <name>myRule_3_pmetnullrule</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -827,12 +967,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_1_A1</targetReference>
+                <targetReference>myWait_myRule_3</targetReference>
             </connector>
             <label>Previously Met - Null</label>
         </rules>
         <rules>
-            <name>myRule_1_pmetrule</name>
+            <name>myRule_3_pmetrule</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -869,16 +1009,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>myRule_3_pmetdec</name>
+        <name>myRule_5_pmetdec</name>
         <label>Previously Met Decision</label>
-        <locationX>300</locationX>
+        <locationX>500</locationX>
         <locationY>100</locationY>
         <defaultConnector>
-            <targetReference>myRule_3_A1</targetReference>
+            <targetReference>myWait_myRule_5</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Not Previously Met</defaultConnectorLabel>
         <rules>
-            <name>myRule_3_pmetnullrule</name>
+            <name>myRule_5_pmetnullrule</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>myVariable_old</leftValueReference>
@@ -888,12 +1028,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_3_A1</targetReference>
+                <targetReference>myWait_myRule_5</targetReference>
             </connector>
             <label>Previously Met - Null</label>
         </rules>
         <rules>
-            <name>myRule_3_pmetrule</name>
+            <name>myRule_5_pmetrule</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -924,6 +1064,37 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Administrator</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_old.Contact.Email</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <label>Previously Met - Prev</label>
@@ -957,7 +1128,7 @@
         </value>
     </processMetadataValues>
     <processType>Workflow</processType>
-    <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
+    <startElementReference>myPreWaitDecision_myWait_myRule_5</startElementReference>
     <status>Active</status>
     <variables>
         <name>cancelWaits</name>
@@ -983,36 +1154,6 @@
         <objectType>AccountContactRelation</objectType>
     </variables>
     <variables>
-        <name>myVariable_waitStartTimeVariable</name>
-        <dataType>DateTime</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <elementReference>$Flow.CurrentDateTime</elementReference>
-        </value>
-    </variables>
-    <variables>
-        <name>myWaitEvent_myWait_myRule_1_event_0_postActionExecutionVariable</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>myWaitEvent_myWait_myRule_1_event_1_postActionExecutionVariable</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
         <name>myWaitEvent_myWait_myRule_3_event_0_postActionExecutionVariable</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -1032,117 +1173,26 @@
             <booleanValue>false</booleanValue>
         </value>
     </variables>
-    <waits>
-        <name>myWait_myRule_1</name>
-        <label>myWait_myRule_1</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>defaultLabel</defaultConnectorLabel>
-        <waitEvents>
-            <processMetadataValues>
-                <name>inputParameterType</name>
-                <value>
-                    <stringValue>referenced</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>myWaitEvent_myWait_myRule_1_event_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myWaitEvent_myWait_myRule_1_event_0_postActionExecutionVariable</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_0</targetReference>
-            </connector>
-            <eventType>DateRefAlarmEvent</eventType>
-            <inputParameters>
-                <name>TimeTableColumnEnumOrId</name>
-                <value>
-                    <stringValue>AccountContactRelation</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>EntityObjectId</name>
-                <value>
-                    <elementReference>myVariable_current.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffsetUnit</name>
-                <value>
-                    <stringValue>Days</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffset</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeFieldColumnEnumOrId</name>
-                <value>
-                    <stringValue>LastModifiedDate</stringValue>
-                </value>
-            </inputParameters>
-            <label>myWaitEvent_myWait_myRule_1_event_0</label>
-        </waitEvents>
-        <waitEvents>
-            <processMetadataValues>
-                <name>inputParameterType</name>
-                <value>
-                    <stringValue>referenced</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>myWaitEvent_myWait_myRule_1_event_1</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myWaitEvent_myWait_myRule_1_event_1_postActionExecutionVariable</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myPostWaitDecision_myWaitEvent_myWait_myRule_1_event_1</targetReference>
-            </connector>
-            <eventType>DateRefAlarmEvent</eventType>
-            <inputParameters>
-                <name>TimeTableColumnEnumOrId</name>
-                <value>
-                    <stringValue>AccountContactRelation</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>EntityObjectId</name>
-                <value>
-                    <elementReference>myVariable_current.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffsetUnit</name>
-                <value>
-                    <stringValue>Days</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeOffset</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>TimeFieldColumnEnumOrId</name>
-                <value>
-                    <stringValue>LastModifiedDate</stringValue>
-                </value>
-            </inputParameters>
-            <label>myWaitEvent_myWait_myRule_1_event_1</label>
-        </waitEvents>
-    </waits>
+    <variables>
+        <name>myWaitEvent_myWait_myRule_5_event_0_postActionExecutionVariable</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>myWaitEvent_myWait_myRule_5_event_1_postActionExecutionVariable</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <waits>
         <name>myWait_myRule_3</name>
         <label>myWait_myRule_3</label>
@@ -1252,6 +1302,117 @@
                 </value>
             </inputParameters>
             <label>myWaitEvent_myWait_myRule_3_event_1</label>
+        </waitEvents>
+    </waits>
+    <waits>
+        <name>myWait_myRule_5</name>
+        <label>myWait_myRule_5</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>defaultLabel</defaultConnectorLabel>
+        <waitEvents>
+            <processMetadataValues>
+                <name>inputParameterType</name>
+                <value>
+                    <stringValue>referenced</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>myWaitEvent_myWait_myRule_5_event_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myWaitEvent_myWait_myRule_5_event_0_postActionExecutionVariable</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myPostWaitDecision_myWaitEvent_myWait_myRule_5_event_0</targetReference>
+            </connector>
+            <eventType>DateRefAlarmEvent</eventType>
+            <inputParameters>
+                <name>TimeTableColumnEnumOrId</name>
+                <value>
+                    <stringValue>AccountContactRelation</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>EntityObjectId</name>
+                <value>
+                    <elementReference>myVariable_current.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Days</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeFieldColumnEnumOrId</name>
+                <value>
+                    <stringValue>LastModifiedDate</stringValue>
+                </value>
+            </inputParameters>
+            <label>myWaitEvent_myWait_myRule_5_event_0</label>
+        </waitEvents>
+        <waitEvents>
+            <processMetadataValues>
+                <name>inputParameterType</name>
+                <value>
+                    <stringValue>referenced</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>myWaitEvent_myWait_myRule_5_event_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myWaitEvent_myWait_myRule_5_event_1_postActionExecutionVariable</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myPostWaitDecision_myWaitEvent_myWait_myRule_5_event_1</targetReference>
+            </connector>
+            <eventType>DateRefAlarmEvent</eventType>
+            <inputParameters>
+                <name>TimeTableColumnEnumOrId</name>
+                <value>
+                    <stringValue>AccountContactRelation</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>EntityObjectId</name>
+                <value>
+                    <elementReference>myVariable_current.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Days</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeFieldColumnEnumOrId</name>
+                <value>
+                    <stringValue>LastModifiedDate</stringValue>
+                </value>
+            </inputParameters>
+            <label>myWaitEvent_myWait_myRule_5_event_1</label>
         </waitEvents>
     </waits>
 </Flow>

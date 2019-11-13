@@ -643,7 +643,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Order_Status_Controller-34</fullName>
+            <fullName>Order_Status_Controller-39</fullName>
         </flows>
         <fullName>Order_Status_Controller</fullName>
     </flowDefinitions>
@@ -1448,6 +1448,12 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
+            <fullName>Update_B2C_Vouchers-2</fullName>
+        </flows>
+        <fullName>Update_B2C_Vouchers</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
             <fullName>Update_Case_Resolution-2</fullName>
         </flows>
         <fullName>Update_Case_Resolution</fullName>
@@ -1782,7 +1788,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>AccountContractRelationshipController-4</fullName>
+            <fullName>AccountContractRelationshipController-6</fullName>
         </flows>
         <fullName>AccountContractRelationshipController</fullName>
     </flowDefinitions>

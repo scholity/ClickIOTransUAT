@@ -4,6 +4,8 @@ public class SubmitOrderCreditControllerTest
     @testSetup 
     public static void initTestData()
     {
+        Id accRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Individual Account').getRecordTypeId();
+        
         Account a = new Account();
         a.Name='SalesforcetestOrg';
         a.DM_External_Id__c ='SalesforcetestOrgtest@test.com';
@@ -12,7 +14,8 @@ public class SubmitOrderCreditControllerTest
         a.BillingState='California';
         a.BillingPostalCode='94017';
         a.BillingCountry='USA';
-        a.Phone='9934200234'; 
+        a.Phone='9934200234';
+        a.recordTypeId = accRecordTypeId;
         insert a;
         
         Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Bucket Account').getRecordTypeId();
@@ -26,7 +29,7 @@ public class SubmitOrderCreditControllerTest
         insert bas;
         
         Contact con = new Contact();
-        con.FirstName = '';
+        con.FirstName = 'Test';
         con.LastName = 'SalesforcetestOrg';
         con.Email = 'test@test.com';
         con.AccountId = a.id;
@@ -116,7 +119,7 @@ public class SubmitOrderCreditControllerTest
         //ccoItems2.ccrz__OrderItemStatus__c = 'Shipped';
         insert ccoItems2;
         
-        ccrz__E_TransactionPayment__c ctp= new ccrz__E_TransactionPayment__c(ccrz__CCOrder__c = cco.Id, ccrz__AccountType__c  = 'cc');
+        ccrz__E_TransactionPayment__c ctp= new ccrz__E_TransactionPayment__c(ccrz__CCOrder__c = cco.Id, ccrz__AccountType__c  = 'cc', ccrz__TransactionType__c = 'CAPTURE');
         insert ctp;
 
     }

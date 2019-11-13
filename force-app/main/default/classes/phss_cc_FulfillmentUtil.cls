@@ -4,48 +4,15 @@
 
 public with sharing class phss_cc_FulfillmentUtil {
 
-    private static final String INVOICE_STATUS_CLOSED = 'Closed';
-    private static final String FULFILLMENT_ITEM_STATUS_READY = 'Ready';
-    private static final String FULFILLMENT_ITEM_STATUS_COMPLETE = 'Complete';
-    private static final String FULFILLMENT_ITEM_STATUS_IN_PROGRESS = 'In Progress';
+    private static final String INVOICE_STATUS_CLOSED                   = 'Closed';
+    private static final String FULFILLMENT_ITEM_STATUS_READY           = 'Ready';
+    private static final String FULFILLMENT_ITEM_STATUS_IN_PROGRESS     = 'In Progress';
 
     //  error messages
-    private static final String FAILED_TO_CAPTURE_PAYMENT = 'Failed to capture payment.';
     private static final String FAILED_TO_COMPLETE_FULFILLMENT = 'Failed to complete fulfillment.';
     private static final String FAILED_TO_CREATE_INVOICE = 'Failed to create invoice.';
     private static final String FAILED_TO_CREATE_CAPTURE_TRANSACTION_PAYMENT = 'Failed to create the transaction payment for the payment capture.';
     private static final String FAILED_TO_FINALIZE_PAYMENT = 'Failed to finalize payment.';
-
-
-    /**
-     * @description Captures the payment information related to the Fulfillment
-     *
-     * @param fulfillment
-     */
-    public static void capturePayment(Fulfillment__c fulfillment) {
-
-        if (fulfillment == null || fulfillment.Order__c == null) {
-            System.debug('capture payment: the fulfillment object is null');
-            return;
-        }
-
-        try {
-            ccrz__E_TransactionPayment__c authTxnPmt = getTransactionPaymentForOrder(fulfillment.Order__c);
-            if (authTxnPmt != null && authTxnPmt.ccrz__AccountType__c == phss_cc_TransactionPaymentUtil.CREDIT_CARD_PAYMENT_TYPE && authTxnPmt.ccrz__Amount__c > 0) {
-
-                Boolean isIndividualAccount = phss_cc_AccountUtil.isIndividualAccount(authTxnPmt.ccrz__Account__c);
-                if (isIndividualAccount) {
-                    phss_cc_TransactionPaymentUtil.designateContactForTransactionPayment(authTxnPmt);
-                }
-
-                ccrz__E_TransactionPayment__c captureTxnPmt = phss_cc_TransactionPaymentUtil.createCaptureTransactionPaymentFromAuthTransactionPayment(authTxnPmt.Id);
-                phss_cc_CyberSourceUtil.capturePayment(fulfillment.Id, authTxnPmt.Id, captureTxnPmt.Id);
-            }
-
-        } catch (Exception e) {
-            throw new phss_cc_Exception(FAILED_TO_CAPTURE_PAYMENT, e);
-        }
-    }
 
 
     /**
@@ -132,48 +99,15 @@ public with sharing class phss_cc_FulfillmentUtil {
     }
 
 
-    private static ccrz__E_TransactionPayment__c completeCaptureTransactionPayment(String transactionPaymentId, String invoiceId, Map<String, Object> cyberSourceResponseMap) {
+    private static ccrz__E_TransactionPayment__c completeCaptureTransactionPayment(String transactionPaymentId, String invoiceId, String externalId, String cardType, Decimal amount, String timestamp) {
 
         try {
             ccrz__E_TransactionPayment__c transactionPayment = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(transactionPaymentId);
             transactionPayment.ccrz__InvoiceAppliedFor__c = invoiceId;
-
-            String cardTypeCode = (String) cyberSourceResponseMap.get(phss_cc_CyberSourceUtil.CYBER_SOURCE_REQ_CARD_TYPE_KEY);
-            if (String.isNotBlank(cardTypeCode)) {
-                Map<String, Object> cardTypes = phss_cc_CyberSourceUtil.translateCardTypes(cardTypeCode);
-                String cardType = (String) cardTypes.get(cardTypeCode);
-                if (String.isNotBlank(cardType)) {
-                    transactionPayment.ccrz__PaymentType__c = cardType;
-                }
-            }
-
-            String requestToken = (String) cyberSourceResponseMap.get(phss_cc_CyberSourceUtil.CYBER_SOURCE_REQUEST_TOKEN_KEY);
-            if (String.isNotBlank(requestToken)) {
-                transactionPayment.ccrz__Token__c = requestToken;
-            }
-
-            String transactionId = (String) cyberSourceResponseMap.get(phss_cc_CyberSourceUtil.CYBER_SOURCE_TRANSACTION_ID_KEY);
-            if (String.isNotEmpty(transactionId)) {
-                transactionPayment.ccrz__TransactionPaymentId__c = transactionId;
-            }
-
-            String authTime = (String) cyberSourceResponseMap.get(phss_cc_CyberSourceUtil.CYBER_SOURCE_AUTH_TIME_KEY);
-            if (String.isNotBlank(authTime)) {
-                Datetime timestamp = parseDatetime(authTime);
-                transactionPayment.ccrz__TransactionTS__c = timestamp;
-            }
-
-            String authAmount = (String) cyberSourceResponseMap.get(phss_cc_CyberSourceUtil.CYBER_SOURCE_AUTH_AMOUNT_KEY);
-            if (String.isNotBlank(authAmount)) {
-                Decimal amount = Decimal.valueOf(authAmount);
-                transactionPayment.ccrz__Amount__c = amount;
-            }
-
-            String reqAmount = (String) cyberSourceResponseMap.get(phss_cc_CyberSourceUtil.CYBER_SOURCE_REQ_AMOUNT_KEY);
-            if (String.isNotBlank(reqAmount)) {
-                Decimal amount = Decimal.valueOf(reqAmount);
-                transactionPayment.ccrz__RequestAmount__c = amount;
-            }
+            transactionPayment.ccrz__PaymentType__c = cardType;
+            transactionPayment.ccrz__TransactionPaymentId__c = externalId;
+            transactionPayment.ccrz__TransactionTS__c = DatetimeUtil.parse(timestamp, DatetimeUtil.format.YYYY_MM_DDTHH_MM_SSZ);
+            transactionPayment.ccrz__Amount__c = amount;
 
             update transactionPayment;
             return transactionPayment;
@@ -190,16 +124,12 @@ public with sharing class phss_cc_FulfillmentUtil {
      * @param paymentId
      * @param fulfillmentId
      */
-    public static void finalizePayment(String authTransactionPaymentId, String captureTransactionPaymentId, String fulfillmentId, Map<String, Object> cyberSourceResponseMap) {
+    public static void finalizePayment(String fulfillmentId, String authTransactionPaymentId, String captureTransactionPaymentId, String externalCaptureTxnPmtId, Decimal amount, String timestamp) {
         try {
             ccrz__E_Invoice__c invoice = createInvoiceForPayment(authTransactionPaymentId);
-            completeFulfillment(fulfillmentId, captureTransactionPaymentId);
-            
             ccrz__E_TransactionPayment__c authTransactionPayment = completeAuthTransactionPayment(authTransactionPaymentId, invoice.Id);
-            ccrz__E_TransactionPayment__c captureTransactionPayment = completeCaptureTransactionPayment(captureTransactionPaymentId, invoice.Id, cyberSourceResponseMap);
-
-            authTransactionPayment.ccrz__PaymentType__c = captureTransactionPayment.ccrz__PaymentType__c;
-            update authTransactionPayment;
+            ccrz__E_TransactionPayment__c captureTransactionPayment = completeCaptureTransactionPayment(captureTransactionPaymentId, invoice.Id, externalCaptureTxnPmtId, authTransactionPayment.ccrz__PaymentType__c, amount, timestamp);
+            completeFulfillment(fulfillmentId, captureTransactionPayment.Id);
 
         } catch (Exception e) {
             throw new phss_cc_Exception(FAILED_TO_FINALIZE_PAYMENT, e);
