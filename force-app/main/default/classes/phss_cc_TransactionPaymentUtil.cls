@@ -10,6 +10,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
     // transaction types
     public static final String AUTH_TRANSACTION_TYPE = 'AUTH';
     public static final String CAPTURE_TRANSACTION_TYPE = 'CAPTURE';
+    public static final String CREDIT_TRANSACTION_TYPE = 'CREDIT';
     public static final String BALANCE_TRANSACTION_TYPE= 'BALANCE';
 
     // error messages
@@ -26,8 +27,7 @@ public with sharing class phss_cc_TransactionPaymentUtil {
     public static Boolean isCaptureTransaction(ccrz__E_TransactionPayment__c tp) {
         return tp.ccrz__TransactionType__c == CAPTURE_TRANSACTION_TYPE;
     }
-
-
+    
     public static ccrz__E_TransactionPayment__c fetchTransactionPayment(String transactionPaymentId) {
         ccrz__E_TransactionPayment__c transactionPayment;
         try {

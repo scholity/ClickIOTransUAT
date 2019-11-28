@@ -47,6 +47,10 @@
                 <behavior>Edit</behavior>
                 <field>Opportunity__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Learner_Community_Class_URL__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

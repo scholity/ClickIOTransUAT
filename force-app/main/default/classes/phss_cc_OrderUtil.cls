@@ -377,7 +377,6 @@ public with sharing class phss_cc_OrderUtil {
                 if (POSfid != null && !String.isEmpty(POSfid)) {
                     Boolean shouldUpdatePOAmount = (Boolean) PODetailsMap.get(UPDATE_PO_KEY);
                     String updatedPOAmount = (String) PODetailsMap.get(UPDATED_PO_AMOUNT_KEY);
-                    System.debug('shouldUpdatePOAmount ' + shouldUpdatePOAmount);
                     if (shouldUpdatePOAmount) {
                         updateRemainingPOAmount(POSfid, updatedPOAmount);
                     }
@@ -599,7 +598,8 @@ public with sharing class phss_cc_OrderUtil {
                             ccrz__AccountType__c = ACCOUNT_TYPE_CREDIT_BALANCE,
                             ccrz__CCOrder__c = orderId,
                             ccrz__Amount__c = storedPayment.Remaining_PO_Amount__c,
-                            ccrz__StoredPayment__c = storedPayment.Id
+                            ccrz__StoredPayment__c = storedPayment.Id,
+                            ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CREDIT_TRANSACTION_TYPE
                     );
                     transactionPayments.add(transactionPayment);
 
@@ -639,7 +639,8 @@ public with sharing class phss_cc_OrderUtil {
                                 ccrz__ParentTransactionPayment__c = txnPayments[0].Id,
                                 ccrz__StoredPayment__c = storedPayment.Id,
                                 ccrz__Storefront__c = txnPayments[0].ccrz__Storefront__c,
-                                ccrz__Token__c = storedPayment.ccrz__Token__c
+                                ccrz__Token__c = storedPayment.ccrz__Token__c,
+                                ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CREDIT_TRANSACTION_TYPE
                         );
                         transactionPayments.add(transactionPayment);
                     }

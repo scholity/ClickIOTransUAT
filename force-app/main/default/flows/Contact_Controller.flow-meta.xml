@@ -616,7 +616,7 @@
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>isChangedDecision2_myRule_1_FirstName</startElementReference>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

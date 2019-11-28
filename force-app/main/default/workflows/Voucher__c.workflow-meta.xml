@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Send_Email_to_Existing_Student_When_Added_to_Online_Class</fullName>
+        <description>Send Email to Existing Student When Added to Online Class</description>
+        <protected>false</protected>
+        <recipients>
+            <field>User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>no-reply@redcross.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/Online_Confirm_Registration_Existing_Student</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_New_to_Existing_Student_When_Added_to_Online_Class</fullName>
+        <description>Send Email to New Student When Added to Online Class</description>
+        <protected>false</protected>
+        <recipients>
+            <field>User__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderAddress>no-reply@redcross.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/Online_Confirm_Registration_New_Student</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Reset_Voucher_RCO_Order_Id</fullName>
         <field>RCO_Order_Id__c</field>
@@ -27,6 +51,32 @@
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
+    <rules>
+        <fullName>Online - Confirm Class Registration - Existing Student</fullName>
+        <actions>
+            <name>Send_Email_to_Existing_Student_When_Added_to_Online_Class</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Workflow sent to contact when they&#39;re signed up/registered for an Online Class via a Voucher.</description>
+        <formula>AND( Online_Class__c  != &#39;&#39;,
+       ISPICKVAL(Status__c, &#39;Claimed&#39;) , 
+       User__r.Contact.CreatedDate &lt; DATETIMEVALUE(TODAY())  )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Online - Confirm Class Registration - New Student</fullName>
+        <actions>
+            <name>Send_New_to_Existing_Student_When_Added_to_Online_Class</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Workflow sent to contact when they&#39;re signed up/registered for an Online Class via a Voucher.</description>
+        <formula>AND( Online_Class__c  != &#39;&#39;,
+       ISPICKVAL(Status__c, &#39;Claimed&#39;) , 
+       User__r.Contact.CreatedDate = DATETIMEVALUE(TODAY())  )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
     <rules>
         <fullName>Release Expired Hold</fullName>
         <active>true</active>

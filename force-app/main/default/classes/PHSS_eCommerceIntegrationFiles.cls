@@ -388,13 +388,17 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
             theClassQuery += 'Class_Online_To__c, Class_Searchable__c, Class_Searchable_If_Unavailable__c, Classroom_Setting__c, ';
             theClassQuery += 'Request_Type__c, Registration_Fee__c, CPS_Registration_Phone__c, redwing__Location__c, ';
             theClassQuery += 'CPS_Registration_URL__c, Skedulo_Account__r.Name, Learning_Plan__r.Classroom_Setting__c, ';
-            theClassQuery += 'redwing__Start_Date__c, redwing__Start_Time__c, redwing__End_Time__c, redwing__Timezone__c ';
+            theClassQuery += 'redwing__Start_Date__c, redwing__Start_Time__c, redwing__End_Time__c, redwing__Timezone__c, ';
+            // DE2044/DE1949 - Query simplification for price override lookup
+            theClassQuery += 'redwing__Location__r.redwing__Postal_Code__c, Available_Seats__c ';
             theClassQuery += 'From redwing__ILT_Class__c ';
             theClassQuery += 'Where ((Request_Type__c = \'Community\' And Skedulo_Job_Active__c = true) ';
             theClassQuery += 'OR (Request_Type__c = \'Nurse Assistant Testing\' And Skedulo_Job_Active__c = true And ((Is_Stacked_Class__c = false) OR (Is_Stacked_Class__c = true And Is_Master_Class__c = true))) '; 
             theClassQuery += 'OR (Request_Type__c = \'CPS\') ';
             // US1562 - Export community class if cancelled so DemandWare product can be updated appropriately
             theClassQuery += 'OR (Request_Type__c IN (\'Community\',\'Nurse Assistant Testing\') And Skedulo_Job_Status__c = \'Cancelled\')) ';
+            // DExxxx - Filter out classes that have occurred in the past (no reason these should be pushed forward)
+            theClassQuery += 'AND redwing__End_Date__c >= Today ';
             theClassQuery += incrementalExport;
         
         activeCommunityClasses = Database.query(theClassQuery);
@@ -458,7 +462,7 @@ public without sharing class PHSS_eCommerceIntegrationFiles {
                 }
             }
         }
-system.debug(locationCPSPhoneMap);
+
         // **** No longer required - CPS provides physical location records (was used for zip-code based GPS coords)
         /*
         activeCommunityGeoCodes = [Select Id, Postal_Code__c, Coordinates__c From Geo_Location__c
@@ -509,7 +513,6 @@ system.debug(locationCPSPhoneMap);
             if (!locationXMLMap.containsKey(theLocation.Id)) {
                 String thePhoneNumber = '';
                 if (locationCPSPhoneMap.containsKey(theLocation.Id)) thePhoneNumber = locationCPSPhoneMap.get(theLocation.Id);
-                system.debug(thePhoneNumber);
                 locationXMLMap.put(theLocation.Id, getLocationXML(theLocation, thePhoneNumber));
             }
         }
@@ -696,82 +699,105 @@ system.debug(locationCPSPhoneMap);
         // Get zip code specific pricing (if defined)
             
         String storeFront = 'GeneralStore';
-        Set<Id> ccProducts = new Set<Id>();
-        Set<Id> communityClasses = new Set<Id>();
+        Set <Id> activePriceListProductSet = new Set<Id>();
+        //Set<Id> ccProducts = new Set<Id>();
+        //Set<Id> communityClasses = new Set<Id>();
         
-        Set<String> priceLists = new Set<String>();
+        //Set<String> priceListNames = new Set<String>();
         
         List<ccrz__E_Product__c> ccProductList = new List<ccrz__E_Product__c>();
-        List<redwing__ILT_Session__c> classSessionList = new List<redwing__ILT_Session__c>();
+        List<ccrz__E_PriceListItem__c> activePriceList = new List<ccrz__E_PriceListItem__c>();
+        //List<redwing__ILT_Session__c> classSessionList = new List<redwing__ILT_Session__c>();
         
         Map<Id, Double> communityPrices = new Map<Id, Double>();
         Map<Id, Id> ccProductMap = new Map<Id, Id>();
-        Map<Id, String> classPriceListMap = new Map<Id, String>();
-        
+        Map<Id, String> classPriceListNameMap = new Map<Id, String>();
+        Map<String, List<ccrz__E_PriceListItem__c>> activePriceListMap = new Map<String, List<ccrz__E_PriceListItem__c>>();
+        return communityPrices;
         ccProductList = [Select Id, LMS_Learning_Plan__c From ccrz__E_Product__c Where LMS_Learning_Plan__c IN :communityCourseSet];
         for (ccrz__E_Product__c theCCProduct : ccProductList) {
-            ccProducts.add(theCCProduct.Id);
+            //ccProducts.add(theCCProduct.Id);
             if (theCCProduct.LMS_Learning_Plan__c != null) ccProductMap.put(theCCProduct.LMS_Learning_Plan__c, theCCProduct.Id);
         }
+
+        // DE2044/DE1949 - No longer needed (query eliminated below)
+        /*
         for (redwing__ILT_Class__c theClass : communityClassList) {
             communityClasses.add(theClass.Id);
         }
-        
+        */
+
+        // DE2044/DE1949 - Eliminate query (Location is now stored at class level)
+        /*
         classSessionList = [Select Id, redwing__Location__r.redwing__Postal_Code__c, redwing__ILT_Class__c
             From redwing__ILT_Session__c
             Where redwing__ILT_Class__c In :communityClasses];
-            
-        for (redwing__ILT_Session__c theSession : classSessionList) {
+        */
+
+        //for (redwing__ILT_Session__c theSession : classSessionList) {
+        for (redwing__ILT_Class__c theClass : communityClassList) {
             String zip = '';
-            String pricelist = '';
-            if (theSession.redwing__Location__r.redwing__Postal_Code__c != null) {
-                zip = theSession.redwing__Location__r.redwing__Postal_Code__c;
+            String pricelistName = '';
+
+            if (theClass.redwing__Location__r.redwing__Postal_Code__c != null) {
+                zip = theClass.redwing__Location__r.redwing__Postal_Code__c;
                 if (zip.length() > 5) zip = zip.substring(0,5);
-                pricelist='ZIP-'+zip;
-                priceLists.add(pricelist);
+                pricelistName='ZIP-'+zip;
+
+                classPriceListNameMap.put(theClass.Id, pricelistName);
+                //priceListNames.add(pricelistName);
             }
-            classPriceListMap.put(theSession.redwing__ILT_Class__c, pricelist);
         }
 
         List<ccrz__E_PriceListItem__c> priceListItems = [SELECT ccrz__Product__c, ccrz__PriceList__r.ccrz__StartDate__c, ccrz__PriceList__r.ccrz__EndDate__c, 
             ccrz__PriceList__r.Name, ccrz__StartDate__c, ccrz__EndDate__c, ccrz__Price__c
-             FROM ccrz__E_PriceListItem__c WHERE ccrz__Product__c IN :ccProducts AND ccrz__PriceList__r.Name IN :priceLists
+             FROM ccrz__E_PriceListItem__c WHERE ccrz__Product__c IN :ccProductMap.values() AND ccrz__PriceList__r.Name IN :classPriceListNameMap.values()
              AND ccrz__PriceList__r.ccrz__Enabled__c = True AND ccrz__PriceList__r.ccrz__Storefront__c = :storeFront];
 
+        for (ccrz__E_PriceListItem__c thePriceListItem : priceListItems) {
+            activePriceListProductSet.add(thePriceListItem.ccrz__Product__c);
+            if (activePriceListMap.containsKey(thePriceListItem.ccrz__PriceList__r.Name)) {
+                activePriceList = activePriceListMap.get(thePriceListItem.ccrz__PriceList__r.Name);
+            } else {
+                activePriceList = new List<ccrz__E_PriceListItem__c>();
+            }
+            activePriceList.add(thePriceListItem);
+            activePriceListMap.put(thePriceListItem.ccrz__PriceList__r.Name, activePriceList);
+        }
+
         for (redwing__ILT_Class__c theClass : communityClassList) {
-            if (classPriceListMap.get(theClass.Id) != null) {
-                String priceListName = classPriceListMap.get(theClass.Id);
-                if (theClass.Learning_Plan__c != null) {
-                    Id ccProductId = ccProductMap.get(theClass.Learning_Plan__c);
-                    if (ccProductId != null && theClass.redwing__Start_Date__c != null) {
-                        for (ccrz__E_PriceListItem__c thePriceListItem : priceListItems) {
-                            
-                            Boolean itemStartDate = true;
-                            Boolean itemEndDate = true;
-                            Boolean listStartDate = true;
-                            Boolean listEndDate = true;
-                            Date classDate = theClass.redwing__Start_Date__c;
-                                                        
-                            if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c != null) {
-                                if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c > classDate) listStartDate = false;
-                            }
-                            if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c != null) {
-                                if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c < classDate) listEndDate = false;
-                            }   
-                            if (thePriceListItem.ccrz__StartDate__c != null) {
-                                if (thePriceListItem.ccrz__StartDate__c > classDate) itemStartDate = false;
-                            }
-                            if (thePriceListItem.ccrz__EndDate__c != null) {
-                                if (thePriceListItem.ccrz__EndDate__c < classDate) itemEndDate = false;
-                            }
-                            
-                            if ((thePriceListItem.ccrz__Product__c != null && thePriceListItem.ccrz__Product__c == ccProductId) &&
-                                (thePriceListItem.ccrz__PriceList__r.Name == priceListName) &&
-                                (itemStartDate && itemEndDate && listStartDate && listEndDate)) {
-                                // Add price override to map
-                                communityPrices.put(theClass.Id, thePriceListItem.ccrz__Price__c);  
-                            }
-                        }
+            String priceListName = classPriceListNameMap.get(theClass.Id);
+            // DE2044/DE1949 - Simplify query (ignore this class if no override defined for class location zip/product)
+            if (!(activePriceListMap.containsKey(priceListName) && theClass.Learning_Plan__c != null &&
+                  activePriceListProductSet.contains(ccProductMap.get(theClass.Learning_Plan__c)))) continue; // No override defined for this class location zip
+
+            Id ccProductId = ccProductMap.get(theClass.Learning_Plan__c);
+            if (ccProductId != null && theClass.redwing__Start_Date__c != null) {
+                for (ccrz__E_PriceListItem__c thePriceListItem : activePriceListMap.get(priceListName) ) {
+                    Boolean itemStartDate = true;
+                    Boolean itemEndDate = true;
+                    Boolean listStartDate = true;
+                    Boolean listEndDate = true;
+                    Date classDate = theClass.redwing__Start_Date__c;
+
+                    if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c != null) {
+                        if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c > classDate) listStartDate = false;
+                    }
+                    if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c != null) {
+                        if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c < classDate) listEndDate = false;
+                    }
+                    if (thePriceListItem.ccrz__StartDate__c != null) {
+                        if (thePriceListItem.ccrz__StartDate__c > classDate) itemStartDate = false;
+                    }
+                    if (thePriceListItem.ccrz__EndDate__c != null) {
+                        if (thePriceListItem.ccrz__EndDate__c < classDate) itemEndDate = false;
+                    }
+
+                    if ((thePriceListItem.ccrz__Product__c != null && thePriceListItem.ccrz__Product__c == ccProductId) &&
+                        (thePriceListItem.ccrz__PriceList__r.Name == priceListName) &&
+                        (itemStartDate && itemEndDate && listStartDate && listEndDate)) {
+                        // Add price override to map
+                        communityPrices.put(theClass.Id, thePriceListItem.ccrz__Price__c);
                     }
                 }
             }
@@ -1269,16 +1295,25 @@ system.debug(locationCPSPhoneMap);
        
        // Exclude Class Posting Service (CPS) classes from dynamic inventory calculations (exclude CPS)
        for (redwing__ILT_Class__c theClass : communityClassList) {
-            if (theClass.Request_Type__c != 'CPS') theClassSet.add(theClass.Id);
+            if (theClass.Request_Type__c != 'CPS') {
+                // 11-25-2019 (SJC) - Avoid Large SOQL Query By Using Inventory Maintained in ILT Class Record
+                //theClassSet.add(theClass.Id);
+                classInventory.put(theClass.Id, (Integer)theClass.Available_Seats__c);
+            } else {
+                // Calculate inventory for each CPS class as a fixed amount (10,000)
+                classInventory.put(theClass.Id, 10000);
+            }
        }
 
        // *** Rework this - levearage SOQL group by/iterate over aggregate result set for inventory values
 
        // Determine number of available (unsold) seats in each class represented by 'Issued' vouchers
-       List<Voucher__c> theVoucherList = [Select Id, Name, Status__c, Learning_Plan__c, ILT_Class__c
+       /*List<Voucher__c> theVoucherList = [Select Id, Name, Status__c, Learning_Plan__c, ILT_Class__c
             From Voucher__c Where Status__c = 'Issued' And ILT_Class__c IN :theClassSet];
-       
+       */
+
        // Calculate inventory for each non-CPS class as number of vouchers in 'Issued' (unsold) status
+       /*
        for (Voucher__c theVoucher : theVoucherList) {
             if (classInventory.containsKey(theVoucher.ILT_Class__c)) {
                 classVoucherCount = classInventory.get(theVoucher.ILT_Class__c);    
@@ -1286,13 +1321,14 @@ system.debug(locationCPSPhoneMap);
             } else {
                 classInventory.put(theVoucher.ILT_Class__c, 1);
             }
-       }                       
-       
+       }
+
        // Calculate inventory for each CPS class as a fixed amount (10,000)
        for (redwing__ILT_Class__c theClass : communityClassList) {
        		if (theClass.Request_Type__c == 'CPS') classInventory.put(theClass.Id, 10000);
        }
-       
+       */
+
        return classInventory;
    }       
 
@@ -2114,8 +2150,6 @@ system.debug(locationCPSPhoneMap);
                 } else if (unformattedPhone.length() == 11 && unformattedPhone.substring(0,1) == '1') {
                     formattedPhone = unformattedPhone.substring(1, 4) + '-' + unformattedPhone.substring(4, 7) + '-' + unformattedPhone.substring(7);
                 }
-                system.debug(unformattedPhone);
-                system.debug(formattedPhone);
                 if (String.isNotBlank(formattedPhone)) {
                     xmlW.writeStartElement(null, 'phone', null);
                     xmlW.writeCharacters(formattedPhone);

@@ -451,6 +451,9 @@ public with sharing class phss_cc_CyberSourceCreditUtil {
                 'clientReferenceInformation' => new Map<String, String>{
                         'code' => transactionPaymentName
                 },
+                'processingInformation' => new Map<String, String>{
+                        'reconciliationId' => transactionPaymentName.replaceAll('-', '')        // remove dash (-) per DE2025
+                },
                 'orderInformation' => new Map<String, Object>{
                         'amountDetails' => new Map<String, Object>{
                                 'totalAmount' => amount,

@@ -5332,6 +5332,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Tier_III_Disposition__c</picklist>
+        <values>
+            <fullName>Business as Usual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality Issue - DISH Ticket Created</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality Issue - Resolved by Agent</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Time_Frame__c</picklist>
         <values>
             <fullName>Beyond 31 days</fullName>

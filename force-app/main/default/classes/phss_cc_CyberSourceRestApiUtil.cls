@@ -4,17 +4,17 @@
 
 public with sharing class phss_cc_CyberSourceRestApiUtil {
 
-    private static final String CAPTURE_MODULE_PREFIX       = 'pgcsc';
-    private static final String CREDIT_MODULE_PREFIX        = 'pgcsc';
+    @TestVisible private static final String CAPTURE_MODULE_PREFIX      = 'pgcsc';
+    @TestVisible private static final String CREDIT_MODULE_PREFIX       = 'pgcsc';
 
     // CyberSource configuration setting names
-    private static final String CS_CAPTURE_ENDPOINT_KEY     = 'urlcapture';
-    private static final String CS_CREDIT_ENDPOINT_KEY      = 'urlrefund';
-    private static final String CS_MERCHANT_ID_KEY          = 'merchantidentifier';
-    private static final String CS_SERIAL_NUMBER_KEY        = 'serialnumber';
-    private static final String CS_SECRET_KEY_KEY           = 'secretkey';
+    @TestVisible private static final String CS_CAPTURE_ENDPOINT_KEY    = 'urlcapture';
+    @TestVisible private static final String CS_CREDIT_ENDPOINT_KEY     = 'urlrefund';
+    @TestVisible private static final String CS_MERCHANT_ID_KEY         = 'merchantidentifier';
+    @TestVisible private static final String CS_SERIAL_NUMBER_KEY       = 'serialnumber';
+    @TestVisible private static final String CS_SECRET_KEY_KEY          = 'secretkey';
 
-    public static final String URL_ID_PLACEHOLDER           = '{id}';
+    @TestVisible public static final String URL_ID_PLACEHOLDER          = '{id}';
 
     // Configuration settings keys
     public static final String CONFIG_HOST_KEY              = 'host';
@@ -33,7 +33,7 @@ public with sharing class phss_cc_CyberSourceRestApiUtil {
     private static final String MISSING_URL_ID_PLACEHOLDER = 'Missing ID placeholder in URL for CyberSource REST API.';
     private static final String MISSING_URL_PATH = 'Missing URL path.';
 
-    
+
 
     /**
      * @description Returns the configuration settings for a CyberSource REST API capture request
@@ -170,6 +170,7 @@ public with sharing class phss_cc_CyberSourceRestApiUtil {
      *
      * @return
      */
+    @TestVisible
     private static Map<String, Object> loadConfigurationSettings(final String module, final String storefront) {
         Map<String, Object> configs = new Map<String, Object>();
         final Map<String, Object> input = new Map<String, Object>{

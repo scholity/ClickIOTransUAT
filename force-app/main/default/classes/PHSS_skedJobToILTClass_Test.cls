@@ -83,6 +83,8 @@ private class PHSS_skedJobToILTClass_Test {
         job.Number_of_Instructors__c = 1;
         job.sked__Location__c = objLocation.Id;
         job.sked__Recurring_Schedule__c = schedule.Id;
+        job.sked__address__c = '100 W Main, Anytown, MA 12345';
+        job.sked__Type__c = 'Full Service';
         newJobs.add(job);
 
         sked__Job__c job2 = new sked__Job__c();

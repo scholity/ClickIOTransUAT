@@ -25,7 +25,7 @@
     <enableTopicAssignmentRules>true</enableTopicAssignmentRules>
     <enableTopicSuggestions>false</enableTopicSuggestions>
     <enableUpDownVote>true</enableUpDownVote>
-    <forgotPasswordTemplate>redwing__LMS_Email_Templates/Password_Reset</forgotPasswordTemplate>
+    <forgotPasswordTemplate>All/PHSS_ICommunity_Forgot_Password</forgotPasswordTemplate>
     <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
     <logoutUrl>https://transuat-americanredcross.cs26.force.com/learner</logoutUrl>
     <navigationLinkSet>

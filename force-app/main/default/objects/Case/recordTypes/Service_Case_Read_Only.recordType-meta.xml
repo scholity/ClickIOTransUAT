@@ -1074,6 +1074,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RCLC Escalations</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RDC Queue</fullName>
             <default>false</default>
         </values>
@@ -3111,6 +3115,21 @@
         </values>
         <values>
             <fullName>Warranty</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tier_III_Disposition__c</picklist>
+        <values>
+            <fullName>Business as Usual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality Issue - DISH Ticket Created</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Functionality Issue - Resolved by Agent</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -801,7 +801,7 @@
         </rules>
     </decisions>
     <description>Controls changes made on the Achievement Assignment Record</description>
-    <interviewLabel>Achievement_Assignment_Controller-40_InterviewLabel</interviewLabel>
+    <interviewLabel>Achievement_Assignment_Controller-41_InterviewLabel</interviewLabel>
     <label>Achievement Assignment Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1403,6 +1403,9 @@
         <label>Unsuccessful</label>
         <locationX>400</locationX>
         <locationY>300</locationY>
+        <connector>
+            <targetReference>myDecision5</targetReference>
+        </connector>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -2075,6 +2078,9 @@
         <label>Classroom Fail</label>
         <locationX>600</locationX>
         <locationY>500</locationY>
+        <connector>
+            <targetReference>myDecision7</targetReference>
+        </connector>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>

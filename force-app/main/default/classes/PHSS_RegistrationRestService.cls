@@ -449,7 +449,7 @@ global without sharing class PHSS_RegistrationRestService {
                             System.debug('====== LearningPlanId:'+theLearningPlanId);
                             
                             if (theLearningPlanId != null) {                                        
-                                ILTInstructorCommunity.enrollStudents(JSONStudentList, theLearningPlanId, theClassroomSetting, orderId); // Enroll this student 
+                                ILTInstructorCommunity.enrollStudents(JSONStudentList, theLearningPlanId, theOfferingId, theClassroomSetting, orderId); // Enroll this student
                                 statuscode = 100;
                                 enrollResponseBody.createOrder.status.description = 'Enrollment Successful'; 
                             } else {

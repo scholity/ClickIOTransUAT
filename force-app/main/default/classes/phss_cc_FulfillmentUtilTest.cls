@@ -1,15 +1,6 @@
 @isTest(SeeAllData=false)
 public class phss_cc_FulfillmentUtilTest {
 	
-    @isTest static void testCapturePayment(){
-        
-        generateTestData();
-        
-        phss_cc_FulfillmentUtil.capturePayment(null); //hit return lines
-        
-        phss_cc_FulfillmentUtil.capturePayment(testFulfillment);
-    }
-    
     @isTest static void testCompleteFulfillment(){
         
         generateTestData();
@@ -24,13 +15,6 @@ public class phss_cc_FulfillmentUtilTest {
         generateTestData();
         
         ccrz__E_TransactionPayment__c completedPayment = phss_cc_FulfillmentUtil.completeAuthTransactionPayment(testAuthTransactionPayment.Id, phss_cc_FulfillmentUtil.createInvoiceForPayment(testAuthTransactionPayment.Id).Id);
-    }
-    
-    @isTest static void testFinalizePayment(){
-        
-        generateTestData();
-        
-        phss_cc_FulfillmentUtil.finalizePayment(testAuthTransactionPayment.Id, testCaptureTransactionPayment.Id, testFulfillment.Id, new Map<String, Object>{'test' => 'test'});
     }
     
     @isTest static void testGetRecords(){
@@ -56,7 +40,33 @@ public class phss_cc_FulfillmentUtilTest {
             //need to figure out how the expected DT string is formatted to assert
         }
     }
-    
+
+    @IsTest
+    static void testFinalizePayment() {
+
+        generateTestData();
+
+        String externalID = 'testExternalId';
+        Decimal amount = 10;
+        String timestamp = '2019-11-01T08:00:00Z';
+
+        Test.startTest();
+        phss_cc_FulfillmentUtil.finalizePayment(testFulfillment.Id, testAuthTransactionPayment.Id, testCaptureTransactionPayment.Id, externalID, amount, timestamp);
+        Test.stopTest();
+
+    }
+
+
+    @IsTest
+    static void testGetFulfillment() {
+        generateTestData();
+
+        Test.startTest();
+        Fulfillment__c fulfillment = phss_cc_FulfillmentUtil.getFulfillment(testFulfillment.Id);
+        Test.stopTest();
+    }
+
+
     private static Fulfillment__c testFulfillment;
     
     private static Fulfillment_Item__c testFulfillmentItem1;
@@ -83,11 +93,8 @@ public class phss_cc_FulfillmentUtilTest {
         );
         insert testAccount;
 
-        System.debug('JASON: creating test opportunity');
         Opportunity testOpportunity = phss_cc_TestDataFactory.createInsertTestOpportunity(testAccount);
-        System.debug('JASON: creating test contract');
         Contract testContract = phss_cc_TestDataFactory.createInsertTestContract(testAccount, testOpportunity);
-        System.debug('JASON: finished created test contract');
 
         redwing__Learning__c testLearning = new redwing__Learning__c(
             Name = 'testLearning',
@@ -195,5 +202,5 @@ public class phss_cc_FulfillmentUtilTest {
         );
         insert testFulfillmentItem1;
     }
-    
+
 }

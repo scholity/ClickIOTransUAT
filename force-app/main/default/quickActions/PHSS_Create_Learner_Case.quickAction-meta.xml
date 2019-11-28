@@ -4,6 +4,10 @@
         <field>Subject</field>
         <formula>&quot;PHSS-IC-Question&quot;</formula>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>Type</field>
+        <literalValue>Community Course Support</literalValue>
+    </fieldOverrides>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>
         <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>

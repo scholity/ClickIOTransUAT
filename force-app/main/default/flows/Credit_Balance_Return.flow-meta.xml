@@ -77,7 +77,7 @@
     <decisions>
         <name>Find_Stored_Payment</name>
         <label>Find Stored Payment</label>
-        <locationX>53</locationX>
+        <locationX>64</locationX>
         <locationY>391</locationY>
         <defaultConnector>
             <targetReference>Do_Nothing</targetReference>
@@ -248,8 +248,8 @@
     <recordCreates>
         <name>sFulfillment</name>
         <label>sFulfillment</label>
-        <locationX>616</locationX>
-        <locationY>352</locationY>
+        <locationX>617</locationX>
+        <locationY>353</locationY>
         <assignRecordIdToReference>vFulfillment</assignRecordIdToReference>
         <connector>
             <targetReference>sFulItem</targetReference>
@@ -283,8 +283,8 @@
     <recordCreates>
         <name>sFulItem</name>
         <label>sFulItem</label>
-        <locationX>617</locationX>
-        <locationY>523</locationY>
+        <locationX>621</locationX>
+        <locationY>522</locationY>
         <connector>
             <targetReference>Update_Stored_Payment_Remaining_Balance</targetReference>
         </connector>
@@ -335,7 +335,7 @@
     <recordCreates>
         <name>sOrderItem</name>
         <label>sOrderItem</label>
-        <locationX>822</locationX>
+        <locationX>819</locationX>
         <locationY>177</locationY>
         <assignRecordIdToReference>vOrderItem</assignRecordIdToReference>
         <connector>
@@ -454,8 +454,8 @@
     <recordCreates>
         <name>sTransPay</name>
         <label>sTransPayment</label>
-        <locationX>823</locationX>
-        <locationY>352</locationY>
+        <locationX>824</locationX>
+        <locationY>353</locationY>
         <assignRecordIdToReference>vTransPay</assignRecordIdToReference>
         <connector>
             <targetReference>sFulfillment</targetReference>
@@ -497,21 +497,9 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>ccrz__ExpirationMonth__c</field>
-            <value>
-                <elementReference>sTransPayment.ccrz__ExpirationMonth__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ccrz__ExpirationYear__c</field>
-            <value>
-                <elementReference>sTransPayment.ccrz__ExpirationYear__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>ccrz__ParentTransactionPayment__c</field>
             <value>
-                <elementReference>sTransPayment.Id</elementReference>
+                <elementReference>sTransPayment.ccrz__SourceTransactionPayment__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -523,7 +511,7 @@
         <inputAssignments>
             <field>ccrz__RequestAmount__c</field>
             <value>
-                <elementReference>vRetAmount</elementReference>
+                <elementReference>fRetAmount</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -594,8 +582,8 @@
     <recordLookups>
         <name>Get_Transaction_Payment_Record</name>
         <label>Get Transaction Payment Record</label>
-        <locationX>155</locationX>
-        <locationY>193</locationY>
+        <locationX>179</locationX>
+        <locationY>188</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>check_CC_Order</targetReference>
@@ -635,14 +623,12 @@
         <queriedFields>ccrz__TransactionCode__c</queriedFields>
         <queriedFields>ccrz__TransactionType__c</queriedFields>
         <queriedFields>ccrz__SourceTransactionPayment__c</queriedFields>
-        <queriedFields>ccrz__ExpirationMonth__c</queriedFields>
-        <queriedFields>ccrz__ExpirationYear__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>sOrder</name>
         <label>sOrder</label>
-        <locationX>484</locationX>
-        <locationY>50</locationY>
+        <locationX>502</locationX>
+        <locationY>49</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_if_CC_Order_Exists</targetReference>
@@ -706,7 +692,7 @@
     <recordUpdates>
         <name>Update_Stored_Payment_Remaining_Balance</name>
         <label>Update Stored Payment Remaining Balance</label>
-        <locationX>830</locationX>
+        <locationX>826</locationX>
         <locationY>523</locationY>
         <filters>
             <field>Id</field>
@@ -724,7 +710,7 @@
         <object>ccrz__E_StoredPayment__c</object>
     </recordUpdates>
     <startElementReference>Get_Stored_Payment</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>frmReturnSku</name>
         <dataType>String</dataType>

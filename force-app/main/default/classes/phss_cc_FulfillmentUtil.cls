@@ -276,4 +276,33 @@ public with sharing class phss_cc_FulfillmentUtil {
             throw new phss_cc_Exception('Failed to parse String (' + dtStr + ') as Datetime', e);
         }
     }
+
+
+    public static Fulfillment__c getFulfillment(String fulfillmentId) {
+        Id identifier = Id.valueOf(fulfillmentId);
+        Fulfillment__c fulfillment = [
+                SELECT
+                        Account__c,
+                        CC_Transaction_Payment__c,
+                        CC_Transaction_Payment_Date__c,
+                        FOCIS_Category__c,
+                        Fulfillment_Date__c,
+                        Id,
+                        Name,
+                        Open_Fulfillment_Items__c,
+                        Order__c,
+                        OwnerId,
+                        Payment_Method__c,
+                        Payment_Type__c,
+                        Status__c,
+                        Stored_Payment_Name__c,
+                        Supplemental_Information__c,
+                        Type__c
+                FROM
+                        Fulfillment__c
+                WHERE
+                        Id = :identifier
+        ];
+        return fulfillment;
+    }
 }

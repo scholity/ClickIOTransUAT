@@ -3,8 +3,8 @@
     <assignments>
         <name>Add_Voucher_to_Collection</name>
         <label>Add Voucher to Collection</label>
-        <locationX>910</locationX>
-        <locationY>539</locationY>
+        <locationX>953</locationX>
+        <locationY>337</locationY>
         <assignmentItems>
             <assignToReference>collVoucher</assignToReference>
             <operator>Add</operator>
@@ -19,8 +19,8 @@
     <assignments>
         <name>Set_Loop_Counter</name>
         <label>Set Loop Counter</label>
-        <locationX>920</locationX>
-        <locationY>215</locationY>
+        <locationX>1101</locationX>
+        <locationY>55</locationY>
         <assignmentItems>
             <assignToReference>LoopCounter</assignToReference>
             <operator>Assign</operator>
@@ -36,7 +36,7 @@
         <name>Set_Voucher</name>
         <label>Set Voucher</label>
         <locationX>1116</locationX>
-        <locationY>531</locationY>
+        <locationY>240</locationY>
         <assignmentItems>
             <assignToReference>sVoucher.CC_Product__c</assignToReference>
             <operator>Assign</operator>
@@ -107,10 +107,10 @@
     <decisions>
         <name>Loop_for_Vouchers</name>
         <label>Loop-for-Vouchers</label>
-        <locationX>918</locationX>
-        <locationY>334</locationY>
+        <locationX>945</locationX>
+        <locationY>186</locationY>
         <defaultConnector>
-            <targetReference>Create_Voucher</targetReference>
+            <targetReference>Loop_through_TE_Jobs</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
@@ -129,6 +129,7 @@
             <label>MainLoop</label>
         </rules>
     </decisions>
+    <description>Updated to handle Stacked Classes</description>
     <formulas>
         <name>DecrementLoop</name>
         <dataType>Number</dataType>
@@ -143,6 +144,21 @@
     </formulas>
     <interviewLabel>Create Vouchers from TE {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create Vouchers from TE V2</label>
+    <loops>
+        <name>Loop_through_TE_Jobs</name>
+        <label>Loop through TE Jobs</label>
+        <locationX>805</locationX>
+        <locationY>46</locationY>
+        <assignNextValueToReference>sJob</assignNextValueToReference>
+        <collectionReference>colJob</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_ILT_Class_ID</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Create_Voucher</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -153,18 +169,18 @@
     <recordCreates>
         <name>Create_Voucher</name>
         <label>Create Voucher</label>
-        <locationX>714</locationX>
-        <locationY>538</locationY>
+        <locationX>800</locationX>
+        <locationY>348</locationY>
         <inputReference>collVoucher</inputReference>
     </recordCreates>
     <recordLookups>
         <name>Get_ILT_Class_ID</name>
         <label>Get ILT Class ID</label>
-        <locationX>532</locationX>
-        <locationY>50</locationY>
+        <locationX>961</locationX>
+        <locationY>56</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Order_Item</targetReference>
+            <targetReference>Set_Loop_Counter</targetReference>
         </connector>
         <filters>
             <field>Skedulo_Job_Id__c</field>
@@ -180,11 +196,11 @@
     <recordLookups>
         <name>Get_Job_ID</name>
         <label>Get Job ID</label>
-        <locationX>354</locationX>
-        <locationY>50</locationY>
+        <locationX>651</locationX>
+        <locationY>47</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_ILT_Class_ID</targetReference>
+            <targetReference>Loop_through_TE_Jobs</targetReference>
         </connector>
         <filters>
             <field>Training_Event__c</field>
@@ -194,14 +210,17 @@
             </value>
         </filters>
         <object>sked__Job__c</object>
-        <outputReference>sJob</outputReference>
+        <outputReference>colJob</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>Training_Event__c</queriedFields>
+        <queriedFields>Is_Master_Class__c</queriedFields>
+        <queriedFields>Is_Stacked_Class__c</queriedFields>
     </recordLookups>
     <recordLookups>
         <name>Get_Order_Item</name>
         <label>Get Order Item</label>
-        <locationX>740</locationX>
-        <locationY>48</locationY>
+        <locationX>351</locationX>
+        <locationY>49</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Product</targetReference>
@@ -227,11 +246,11 @@
     <recordLookups>
         <name>Get_Product</name>
         <label>Get Product</label>
-        <locationX>919</locationX>
-        <locationY>46</locationY>
+        <locationX>498</locationX>
+        <locationY>48</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Loop_Counter</targetReference>
+            <targetReference>Get_Job_ID</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -253,7 +272,7 @@
         <locationY>50</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Job_ID</targetReference>
+            <targetReference>Get_Order_Item</targetReference>
         </connector>
         <filters>
             <field>Id</field>
@@ -277,6 +296,14 @@
     </recordLookups>
     <startElementReference>Get_Training_ID_Fields</startElementReference>
     <status>Active</status>
+    <variables>
+        <name>colJob</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>sked__Job__c</objectType>
+    </variables>
     <variables>
         <name>collVoucher</name>
         <dataType>SObject</dataType>

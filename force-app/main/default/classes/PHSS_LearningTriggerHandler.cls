@@ -11,6 +11,7 @@ public with sharing class PHSS_LearningTriggerHandler {
         Map<Id, Integer> voucherCountMap = new Map<Id, Integer>();
 
         Id mediaRecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('Media').getRecordTypeId();
+
         for (redwing__Learning__c theLearningObject : newLearningObjects) {
             if (theLearningObject.RecordTypeId == mediaRecordTypeId && theLearningObject.redwing__Published__c == true) {
                 newOnlineLearningId.add(theLearningObject.Id);
@@ -19,9 +20,12 @@ public with sharing class PHSS_LearningTriggerHandler {
 
         if (!newOnlineLearningId.isEmpty()) {
             List<redwing__Training_Plan_Section_Item__c> newOnlineTPSI = [
-                    SELECT Id, redwing__Learning__c, redwing__Training_Plan_Section__r.redwing__Training_Plan__c
+                    SELECT Id, redwing__Learning__c, redwing__Training_Plan_Section__r.redwing__Training_Plan__c,
+                            redwing__Training_Plan_Section__r.redwing__Training_Plan__r.Classroom_Setting__c
                     FROM redwing__Training_Plan_Section_Item__c
                     WHERE redwing__Learning__c IN :newOnlineLearningId
+                    // Insure that the only Learning Objects of type Media that are processed are related to Online classes
+                    AND redwing__Training_Plan_Section__r.redwing__Training_Plan__r.Classroom_Setting__c = 'Online'
             ];
             if (!newOnlineTPSI.isEmpty()) {
                 // Determine if we need to create the first Issued voucher for this class
