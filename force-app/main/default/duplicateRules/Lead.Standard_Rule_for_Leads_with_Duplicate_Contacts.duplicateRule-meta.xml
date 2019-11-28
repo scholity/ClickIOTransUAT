@@ -2,7 +2,7 @@
 <DuplicateRule xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOnInsert>Allow</actionOnInsert>
     <actionOnUpdate>Allow</actionOnUpdate>
-    <alertText xsi:nil="true"/>
+    <alertText>Use one of these records?</alertText>
     <description>Identify leads with duplicate contacts.</description>
     <duplicateRuleFilter xsi:nil="true"/>
     <duplicateRuleMatchRules>
@@ -62,9 +62,11 @@
             <outputObject>Contact</outputObject>
         </objectMapping>
     </duplicateRuleMatchRules>
-    <isActive>false</isActive>
+    <isActive>true</isActive>
     <masterLabel>Standard Rule for Leads with Duplicate Contacts</masterLabel>
+    <operationsOnInsert>Alert</operationsOnInsert>
     <operationsOnInsert>Report</operationsOnInsert>
+    <operationsOnUpdate>Alert</operationsOnUpdate>
     <operationsOnUpdate>Report</operationsOnUpdate>
     <securityOption>EnforceSharingRules</securityOption>
     <sortOrder>1</sortOrder>

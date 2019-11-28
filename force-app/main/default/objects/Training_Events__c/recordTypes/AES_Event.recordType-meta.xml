@@ -618,10 +618,6 @@
     <picklistValues>
         <picklist>Scheduling_Status__c</picklist>
         <values>
-            <fullName>Canceled</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Completed</fullName>
             <default>false</default>
         </values>
@@ -634,23 +630,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In Discussion - Customer Hold</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Discussion - Scheduling</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In-Discussion</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Open</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Requested</fullName>
+            <fullName>On Hold</fullName>
             <default>false</default>
         </values>
         <values>
@@ -658,7 +638,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Reserved</fullName>
+            <fullName>Schedule - Contact</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Schedule - No Contact</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1389,22 +1373,6 @@
         </values>
         <values>
             <fullName>Customer Declined</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Incorrect Product</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pre-Approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Returned to Sales</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Returned to Sales - Reschedule</fullName>
             <default>false</default>
         </values>
     </picklistValues>

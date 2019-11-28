@@ -60,7 +60,7 @@ Global without sharing class PHSS_CreateOrderRestService {
         responseLog.Request_Method__c = 'POST';
         responseLog.Service_Action__c = action;     
         // Order number cannot be blank
-        if(OrderWrapper.order.Order_header.order_no == NULL || OrderWrapper.order.Order_header.order_no == ''){
+        if(String.isBlank(OrderWrapper.order.Order_header.order_no)){
             ResponseWrapper responseWrap = new ResponseWrapper('Failure',301,'order_no cannot be blank.','');
             Createccorder ccorder = new Createccorder(responseWrap);
             JSONResponse jsonResp = new JSONResponse(ccorder);    
@@ -263,47 +263,65 @@ Global without sharing class PHSS_CreateOrderRestService {
 
                     // Obtain record ids for new order line items
                     List<ccrz__E_OrderItem__c> lst_newOrderItems = [
-                            Select Id, ccrz__Order__c, ILT_Class__c,
-                        ccrz__Order__r.NSSCCConnector_SFCC_Order_Number__c
+                        Select Id, ccrz__Order__c, ILT_Class__c, Online_Class__c,
+                            ccrz__Order__r.NSSCCConnector_SFCC_Order_Number__c
                         From ccrz__E_OrderItem__c
                         Where ccrz__E_OrderItem__c.ccrz__Order__c = :obj_order.Id];
+
                     Set<Id> orderItemClass = new Set<Id>();
                     Set<String> orderItemOrderNo = new Set<String>();
+
                     for (ccrz__E_OrderItem__c theOrderItem : lst_newOrderItems) {
-                    	if (theOrderItem.ILT_Class__c == null) continue;
-                        orderItemClass.add(theOrderItem.ILT_Class__c);
+                    	if (theOrderItem.ILT_Class__c != null) {
+                            orderItemClass.add(theOrderItem.ILT_Class__c);
+                        } else if (theOrderItem.Online_Class__c != null) {
+                            orderItemClass.add(theOrderItem.Online_Class__c);
+                        } else continue;
                         orderItemOrderNo.add(theOrderItem.ccrz__Order__r.NSSCCConnector_SFCC_Order_Number__c);
                     }
                 
                     //  Retrieve vouchers that correspond to product(s) purchased in this order                 
-                    List<Voucher__c> vouchList = [Select Id, ILT_Class__c, RCO_Order_Id__c From Voucher__c 
-                        Where ILT_Class__c IN :orderItemClass And RCO_Order_Id__c IN :orderItemOrderNo];
+                    List<Voucher__c> vouchList = [SELECT Id, ILT_Class__c, Online_Class__c, RCO_Order_Id__c
+                        FROM Voucher__c
+                        WHERE (ILT_Class__c IN :orderItemClass OR Online_Class__c IN :orderItemClass)
+                            AND RCO_Order_Id__c IN :orderItemOrderNo];
 
                     if (vouchList != null && vouchList.size() > 0) {
                         Map<Id, Id> classToVoucherMap = new Map<Id, Id>();
                         for (Voucher__c theVoucher : vouchList) {
-                            classToVoucherMap.put(theVoucher.ILT_Class__c, theVoucher.Id);
+                            if (theVoucher.ILT_Class__c != null) {
+                                classToVoucherMap.put(theVoucher.ILT_Class__c, theVoucher.Id);
+                            } else {
+                                classToVoucherMap.put(theVoucher.Online_Class__c, theVoucher.Id);
+                            }
                         }
 
                         // Populate the order and order Id fields on the corresponding voucher record for this order/product (if applicable)
                         List<Voucher__c> updateVouchList = new List<Voucher__c>();
                         for (ccrz__E_OrderItem__c theOrderItem : lst_newOrderItems) {
-                            if (theOrderItem.ILT_Class__c == null) continue;
-                            String theProductId = theOrderItem.ILT_Class__c;
-                            if (theProductId.length() > 15) theProductId = theProductId.substring(0, 15);
+                            String theProductId = '';
+                            if (theOrderItem.ILT_Class__c != Null) {
+                                theProductId = theOrderItem.ILT_Class__c;
+                            } else if (theOrderItem.Online_Class__c != Null) {
+                                theProductId = theOrderItem.Online_Class__c;
+                            }
 
-                            if (theProductId != null && classToVoucherMap.containsKey(theProductId)) {
-                                Voucher__c vouch = new Voucher__c();
-                                vouch.Id = classToVoucherMap.get(theProductId);
-                                vouch.Account__c = obj_order.ccrz__Account__c;
-                                vouch.CC_Order__c = obj_order.id;
-                                vouch.CC_Order_Item__c = theOrderItem.id;
+                            if (String.isNotBlank(theProductId)) {
+                                if (theProductId.length() > 15) theProductId = theProductId.substring(0, 15);
+                                if (classToVoucherMap.containsKey(theProductId)) {
+                                    Voucher__c vouch = new Voucher__c();
+                                    vouch.Id = classToVoucherMap.get(theProductId);
+                                    vouch.Account__c = obj_order.ccrz__Account__c;
+                                    vouch.CC_Order__c = obj_order.id;
+                                    vouch.CC_Order_Item__c = theOrderItem.id;
 
-                                if (map_LPIDtoProductId.containsKey(map_clsIDtoLPId.get(theProductId))) {
-                                    vouch.CC_Product__c = map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId));
+                                    if (map_LPIDtoProductId.containsKey(map_clsIDtoLPId.get(theProductId))) {
+                                        vouch.CC_Product__c = map_LPIDtoProductId.get(map_clsIDtoLPId.get(theProductId));
+                                    } else if (map_onlineLPIDtoProductId.containsKey(map_onlineclsIDtoLPId.get(theProductId))) {
+                                        vouch.CC_Product__c = map_onlineLPIDtoProductId.get(map_onlineclsIDtoLPId.get(theProductId));
+                                    }
+                                    updateVouchList.add(vouch);
                                 }
-
-                                updateVouchList.add(vouch);
                             }
                         }
 
@@ -536,7 +554,7 @@ Global without sharing class PHSS_CreateOrderRestService {
                 if (map_clsIDtoLPId.containsKey(theProductId)) {
                     obj_orderitem.ILT_Class__c = theProductId;
                 } else if (map_onlineclsIDtoLPId.containsKey(theProductId)) {
-                	// obj_orderitem.Online_Class__c = theProductId;  // can't load record Id of online learning object
+                	obj_orderitem.Online_Class__c = theProductId;
                 }
                 
                 System.debug('Product ID--->'+product.product_id);

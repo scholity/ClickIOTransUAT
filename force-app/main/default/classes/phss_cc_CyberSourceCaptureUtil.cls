@@ -58,58 +58,64 @@ public with sharing class phss_cc_CyberSourceCaptureUtil {
 
             String storefront = (String) data.get(STOREFRONT_KEY);
             Map<String, Object> settings = phss_cc_CyberSourceRestApiUtil.getCaptureConfigurationSettings(storefront);
-
             phss_cc_CyberSourceRestRequest cyberSource = createCyberSourceRestRequest(data, settings);
+
             HttpRequest request = cyberSource.createHttpRequest();
-            try {
-                Http http = new Http();
-                HttpResponse response = http.send(request);
-                Map<String, Object> responseBody = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            Http http = new Http();
+            HttpResponse response = http.send(request);
+            Map<String, Object> responseBody = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
 
-                /*
+            /*
 
-                'responseBody' keys and values
+            'responseBody' keys and values
 
-                clientReferenceInformation: {code=TP-0000002698}
-                id: 						5732582844156900703003
-                orderInformation: 			{amountDetails={currency=USD, totalAmount=401.54}}
-                reconciliationId: 			71177833F2D6CRQH
-                status: 					PENDING
-                submitTimeUtc: 				2019-11-09T00:11:24Z
-                _links: 					{refund={href=/pts/v2/captures/5732582844156900703003/refunds, method=POST}, self={href=/pts/v2/captures/5732582844156900703003, method=GET}, void={href=/pts/v2/captures/5732582844156900703003/voids, method=POST}}
+            clientReferenceInformation: {code=TP-0000002698}
+            id: 						5732582844156900703003
+            orderInformation: 			{amountDetails={currency=USD, totalAmount=401.54}}
+            reconciliationId: 			71177833F2D6CRQH
+            status: 					PENDING
+            submitTimeUtc: 				2019-11-09T00:11:24Z
+            _links: 					{refund={href=/pts/v2/captures/5732582844156900703003/refunds, method=POST}, self={href=/pts/v2/captures/5732582844156900703003, method=GET}, void={href=/pts/v2/captures/5732582844156900703003/voids, method=POST}}
 
-                 */
+             */
 
-                if (response.getStatusCode() == HTTP_STATUS_CODE_CREATED) {
+            if (response.getStatusCode() == HTTP_STATUS_CODE_CREATED) {
 
-                    Map<String, Object> orderInformation = (Map<String, Object>) responseBody.get('orderInformation');
-                    Map<String, Object> amountDetails = (Map<String, Object>) orderInformation.get('amountDetails');
-                    String totalAmount = (String) amountDetails.get('totalAmount');
+                Map<String, Object> orderInformation = (Map<String, Object>) responseBody.get('orderInformation');
+                Map<String, Object> amountDetails = (Map<String, Object>) orderInformation.get('amountDetails');
+                String totalAmount = (String) amountDetails.get('totalAmount');
 
-                    String authTransactionPaymentId = (String) data.get(AUTH_TRANSACTION_PAYMENT_ID_KEY);
-                    String captureTransactionPaymentId = (String) data.get(CAPTURE_TRANSACTION_PAYMENT_ID_KEY);
-                    String externalCaptureTxnPmtId = (String) responseBody.get(TRANSACTION_ID_KEY);
+                String authTransactionPaymentId = (String) data.get(AUTH_TRANSACTION_PAYMENT_ID_KEY);
+                String captureTransactionPaymentId = (String) data.get(CAPTURE_TRANSACTION_PAYMENT_ID_KEY);
+                String externalCaptureTxnPmtId = (String) responseBody.get(TRANSACTION_ID_KEY);
 
-                    String submitTimeUTC = (String) responseBody.get(SUBMIT_TIME_UTC_KEY);
+                String submitTimeUTC = (String) responseBody.get(SUBMIT_TIME_UTC_KEY);
 
-                    phss_cc_FulfillmentUtil.finalizePayment(fulfillmentId, authTransactionPaymentId, captureTransactionPaymentId, externalCaptureTxnPmtId, Decimal.valueOf(totalAmount), submitTimeUTC);
+                phss_cc_FulfillmentUtil.finalizePayment(fulfillmentId, authTransactionPaymentId, captureTransactionPaymentId, externalCaptureTxnPmtId, Decimal.valueOf(totalAmount), submitTimeUTC);
 
-                } else if (response.getStatusCode() == HTTP_STATUS_CODE_INVALID_REQUEST) {
-                    // log the response
-                } else if (response.getStatusCode() == HTTP_STATUS_CODE_UNEXPECTED_ERROR_OR_TIMEOUT) {
-                    // log the response
-                } else {
-                    // log the response
-                }
-
-            } catch (Exception e) {
-                System.debug('Exception caught: ' + e.getMessage() + ' lineNumber=' + e.getLineNumber() + ' stackTrace=' + e.getStackTraceString());
+            } else if (response.getStatusCode() == HTTP_STATUS_CODE_INVALID_REQUEST) {
+                logError(fulfillmentId, 'status code for CyberSource CAPTURE: ' + response.getStatusCode());
+            } else if (response.getStatusCode() == HTTP_STATUS_CODE_UNEXPECTED_ERROR_OR_TIMEOUT) {
+                logError(fulfillmentId, 'status code for CyberSource CAPTURE: ' + response.getStatusCode());
+            } else {
+                logError(fulfillmentId, 'unknown status code for CyberSource CAPTURE: ' + response.getStatusCode() + '  response: ' + response.getBody());
             }
 
         } catch (Exception e) {
-            System.debug('Outer exception caught: ' + e.getMessage() + ' lineNumber=' + e.getLineNumber() + ' stackTrace=' + e.getStackTraceString());
-            // TODO: Need to log exception
+            logError(fulfillmentId, 'exception caught during CyberSource CAPTURE: ' + e.getMessage());
+            System.debug('exception caught during CyberSource CAPTURE: ' + e.getMessage());
         }
+    }
+
+    @TestVisible
+    private static Integration_Error_Log__c logError(String fulfillmentId, String description) {
+        Fulfillment__c fulfillment = phss_cc_FulfillmentUtil.getFulfillment(fulfillmentId);
+        Integration_Error_Log__c log = new Integration_Error_Log__c(
+                Error_Details__c = 'Fulfillment__c.Id=' + fulfillmentId + ': ' + description,
+                Status__c = 'Open'
+        );
+        insert log;
+        return log;
     }
 
     /**
@@ -195,7 +201,7 @@ public with sharing class phss_cc_CyberSourceCaptureUtil {
                         'code' => transactionPaymentName
                 },
                 'processingInformation' => new Map<String, String>{
-                        'reconciliationId' => transactionPaymentName
+                        'reconciliationId' => transactionPaymentName.replaceAll('-', '')        // remove dash (-) per DE2025
                 },
                 'orderInformation' => new Map<String, Object>{
                         'amountDetails' => new Map<String, Object>{
@@ -294,84 +300,4 @@ public with sharing class phss_cc_CyberSourceCaptureUtil {
 
         return data;
     }
-
-
-
-/*
-    @Future (Callout=true)
-    public static void creditFulfillment(String fulfillmentId) {
-
-        try {
-            Map<String, Object> objectMap = new Map<String, Object>();
-            getFulfillmentData(fulfillmentId, objectMap);
-
-            String orderId = (String) objectMap.get(ORDER_KEY);
-            getTransactionReferenceId(orderId, objectMap);
-
-            String authTxnPmtId = (String) objectMap.get(AUTH_TRANSACTION_PAYMENT_ID_KEY);
-            getCaptureTransactionPaymentInfo(authTxnPmtId, objectMap);
-
-            String storefront = (String) objectMap.get(STOREFRONT_KEY);
-            Map<String, Object> settings = phss_cc_CyberSourceRestApiUtil.getCaptureConfigurationSettings(storefront);
-
-            HttpRequest request = buildRefundRequest(objectMap);
-            try {
-                Http http = new Http();
-                HttpResponse response = http.send(request);
-                if (response.getStatusCode() == HTTP_STATUS_CODE_CREATED) {
-                    Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-                    String captureTxnPmtId = (String) objectMap.get(CAPTURE_TRANSACTION_PAYMENT_ID_KEY);
-                    saveRefundCapture(data, authTxnPmtId, captureTxnPmtId);
-                    phss_cc_FulfillmentUtil.completeFulfillment(fulfillmentId, captureTxnPmtId);
-                }
-                else {
-                    System.debug('UNEXPECTED RESPONSE: ' + response.getStatusCode() + ' ' + response.getStatus());
-                    System.debug('response headers');
-                    List<String> headers = response.getHeaderKeys();
-                    for (String header : headers) {
-                        System.debug(header + '=' + response.getHeader(header));
-                    }
-                    System.debug('response body: ' + response.getBody());
-                    throw new phss_cc_Exception(UNEXPECTED_REFUND_CAPTURE_RESPONSE);
-                }
-
-            } catch (Exception e) {
-                System.debug('Exception caught: ' + e.getMessage());
-            }
-
-        } catch (Exception e) {
-            System.debug('Exception caught: ' + e.getMessage());
-            throw e;
-        }
-    }
-
- */
-
-    /*
-
-    @TestVisible
-    public static void createRefundTransactionPayment(String authTransactionPaymentId) {
-        try {
-            ccrz__E_TransactionPayment__c authTxn = phss_cc_TransactionPaymentUtil.fetchTransactionPayment(authTransactionPaymentId);
-
-            ccrz__E_TransactionPayment__c captureTxn = new ccrz__E_TransactionPayment__c();
-            captureTxn.ccrz__Account__c = authTxn.ccrz__Account__c;
-            captureTxn.ccrz__AccountType__c = authTxn.ccrz__AccountType__c;
-            captureTxn.ccrz__Amount__c = authTxn.ccrz__Amount__c;
-            captureTxn.ccrz__CCOrder__c = authTxn.ccrz__CCOrder__c;
-            captureTxn.ccrz__InvoiceAppliedFor__c = authTxn.ccrz__InvoiceAppliedFor__c;
-            captureTxn.ccrz__PaymentType__c = authTxn.ccrz__PaymentType__c;
-            captureTxn.ccrz__RequestAmount__c = authTxn.ccrz__Amount__c * -1;      // REVERSE THE SIGN to make the amount a positive number
-            captureTxn.ccrz__SourceTransactionPayment__c = authTxn.Id;
-            captureTxn.ccrz__Storefront__c = authTxn.ccrz__Storefront__c;
-            captureTxn.ccrz__TransactionType__c = phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE;
-            insert captureTxn;
-
-        } catch (Exception e) {
-            throw new phss_cc_Exception(FAILED_TO_INITIALIZE_REFUND_TRANSACTION_PAYMENT, e);
-        }
-    }
-
-     */
-
 }

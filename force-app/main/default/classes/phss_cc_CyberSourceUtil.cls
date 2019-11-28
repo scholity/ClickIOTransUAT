@@ -80,7 +80,8 @@ public with sharing class phss_cc_CyberSourceUtil {
     //Misc
     private static final String NA_EMAIL = 'NA@NA.com';
     private static final String SALESFORCE_CLASSIC_DOMAIN = '.my.salesforce.com';
-    private static final String VISUAL_FORCE_DOMAIN = '.visual.force.com';
+    //private static final String VISUAL_FORCE_DOMAIN = '.visual.force.com';
+    private static final String VISUAL_FORCE_DOMAIN = System.Label.VISUAL_FORCE_DOMAIN;
     private static final String LIGHTNING_DOMAIN_NAME = '.lightning.force.com';
     private static final String CYBER_SOURCE_RESPONSE_SIGNED_FIELD_NAMES_KEY = 'signed_field_names';
     private static final String CYBER_SOURCE_RESPONSE_SIGNATURE_KEY = 'signature';
@@ -206,9 +207,12 @@ public with sharing class phss_cc_CyberSourceUtil {
             iFRAME_URL = commUrl + vfPageUrl.substringAfter('/apex');
         }
         else {
-        	iFRAME_URL = Url.getSalesforceBaseUrl().toExternalForm() + Page.phss_cc_CyberSourceCCProcessorIframeForm.getUrl();
+        	iFRAME_URL = Url.getOrgDomainUrl().toExternalForm() + Page.phss_cc_CyberSourceCCProcessorIframeForm.getUrl();
+            system.debug('***iFRAME_URL1***'+iFRAME_URL);
             iFRAME_URL = iFRAME_URL.replaceFirst('[.]', '--c.');  //TODO: This is a hack. This will be fixed in Spring 2019.
+            system.debug('***iFRAME_URL2***'+iFRAME_URL);
             iFRAME_URL = iFRAME_URL.replaceFirst(SALESFORCE_CLASSIC_DOMAIN, VISUAL_FORCE_DOMAIN);
+            system.debug('***iFRAME_URL3***'+iFRAME_URL);
         }
         
         if(userType != 'Standard') {
@@ -217,8 +221,11 @@ public with sharing class phss_cc_CyberSourceUtil {
         }
         else {
             RETURN_URL = Url.getSalesforceBaseUrl().toExternalForm() + Page.phss_cc_CyberSourceCCProcessorPostBack.getUrl();
+            system.debug('***RETURN_URL1***'+RETURN_URL);
             RETURN_URL = RETURN_URL.replaceFirst('[.]', '--c.');  //TODO: This is a hack. This will be fixed in Spring 2019.
+            system.debug('***RETURN_URL2***'+RETURN_URL);
             RETURN_URL = RETURN_URL.replaceFirst(SALESFORCE_CLASSIC_DOMAIN, VISUAL_FORCE_DOMAIN);
+            system.debug('***RETURN_URL3***'+RETURN_URL);
         }
         
         // Access Key/Profile ID/ Secret/Auth Amount

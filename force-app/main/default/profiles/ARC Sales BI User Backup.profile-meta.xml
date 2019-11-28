@@ -408,6 +408,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ConvertLearnerToInstructorController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>CreateOrderWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -984,6 +988,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_eCommerceIntegrationFilesBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_eCommerceIntegrationFilesTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1038,6 +1046,10 @@
     <classAccesses>
         <apexClass>PriceLineItemTrigger_Test</apexClass>
         <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ProfileUpdate</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>RBCWrapper</apexClass>
@@ -1596,6 +1608,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_CyberSourceCaptureUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_CyberSourceCreditUtil</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1608,7 +1624,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>phss_cc_CyberSourceRestApiUtilTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>phss_cc_CyberSourceRestRequest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_CyberSourceRestRequestMock</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>phss_cc_CyberSourceRestRequestTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -5648,6 +5676,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Date_Closed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.Day_of_the_Week__c</field>
         <readable>true</readable>
@@ -6269,6 +6302,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.RCLC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.RCO_Order__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6625,6 +6663,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Third_Response_Time_minutes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Tier_III_Disposition__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8408,6 +8451,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Dedicated_Internal_Salesforce_Helpdesk__c.Follow_Up_SLA_Time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Dedicated_Internal_Salesforce_Helpdesk__c.In_UAT_Sandbox_for_Approval__c</field>
         <readable>true</readable>
@@ -8455,6 +8503,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Dedicated_Internal_Salesforce_Helpdesk__c.Priority__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Dedicated_Internal_Salesforce_Helpdesk__c.RCLC_Issue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14183,6 +14236,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>User.Send_Welcome_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>User.ccrz__CC_CurrencyCode__c</field>
         <readable>false</readable>
@@ -14326,6 +14384,11 @@
         <editable>false</editable>
         <field>Voucher__c.Is_My_Voucher__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Learner_Community_Class_URL__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14782,6 +14845,10 @@
     <layoutAssignments>
         <layout>Dedicated_Internal_Salesforce_Helpdesk__c-New User Request</layout>
         <recordType>Dedicated_Internal_Salesforce_Helpdesk__c.User_Creation_Request</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Dedicated_Internal_Salesforce_Helpdesk__c-RCLC</layout>
+        <recordType>Dedicated_Internal_Salesforce_Helpdesk__c.RCLC</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Dedicated_Internal_Salesforce_Helpdesk__c-Report Request</layout>
@@ -16533,6 +16600,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>ConvertLearnerToInstructor</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>CustomerUserDetailRedirect</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -16921,6 +16992,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Dedicated_Internal_Salesforce_Helpdesk__c.Configuration_Request</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Dedicated_Internal_Salesforce_Helpdesk__c.RCLC</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

@@ -24,15 +24,15 @@ public with sharing class phss_cc_CyberSourceRestRequest {
     public Map<String, Object> messageBody;
 
     // error messages
-    private static final String MISSING_HOST = 'Missing host.';
-    private static final String MISSING_MERCHANT_ID = 'Missing merchant identifier.';
-    private static final String MISSING_MESSAGE_BODY = 'Missing message body.';
-    private static final String MISSING_PATH = 'Missing path.';
-    private static final String MISSING_SECRET_KEY = 'Missing secret key.';
-    private static final String MISSING_SERIAL_NUMBER = 'Missing serial number.';
-    private static final String MISSING_VALUE_FOR_REQUIRED_KEY = 'Missing value for required key';
+    @TestVisible private static final String MISSING_HOST = 'Missing host.';
+    @TestVisible private static final String MISSING_MERCHANT_ID = 'Missing merchant identifier.';
+    @TestVisible private static final String MISSING_MESSAGE_BODY = 'Missing message body.';
+    @TestVisible private static final String MISSING_PATH = 'Missing path.';
+    @TestVisible private static final String MISSING_SECRET_KEY = 'Missing secret key.';
+    @TestVisible private static final String MISSING_SERIAL_NUMBER = 'Missing serial number.';
+    @TestVisible private static final String MISSING_VALUE_FOR_REQUIRED_KEY = 'Missing value for required key';
 
-    
+
 
     /**
      * @description Creates a HTTP request against the CyberSource REST API

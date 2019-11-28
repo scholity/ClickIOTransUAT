@@ -120,6 +120,17 @@
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/DISH_User_Access_Request_IC_and_Sharepoint</template>
     </alerts>
+    <alerts>
+        <fullName>RCLC_DISH_Ticket_Created_Email</fullName>
+        <description>RCLC DISH Ticket Created Email</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>gita.borovsky@redcross.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/RCLC_DISH_Ticket_Created</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Dish_Owner</fullName>
         <field>OwnerId</field>
@@ -217,6 +228,11 @@
             <operation>equals</operation>
             <value>TODAY</value>
         </criteriaItems>
+        <criteriaItems>
+            <field>Dedicated_Internal_Salesforce_Helpdesk__c.RecordTypeId</field>
+            <operation>notEqual</operation>
+            <value>RCLC</value>
+        </criteriaItems>
         <description>Send email Alert when ticket is created</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
@@ -261,6 +277,26 @@
         </criteriaItems>
         <description>Send email Alert when User Access is Saba LMS.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>RCLC DISH Ticket Created</fullName>
+        <actions>
+            <name>RCLC_DISH_Ticket_Created_Email</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Dedicated_Internal_Salesforce_Helpdesk__c.CreatedDate</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Dedicated_Internal_Salesforce_Helpdesk__c.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>RCLC</value>
+        </criteriaItems>
+        <description>Send email Alert when an RCLC ticket is created</description>
+        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Sandbox Notification</fullName>

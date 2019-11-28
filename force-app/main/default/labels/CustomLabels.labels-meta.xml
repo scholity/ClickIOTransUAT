@@ -707,6 +707,13 @@ Select a voucher(s) with a status of &#39;Issued&#39;. Copy and paste the self-r
         <value>Product Search</value>
     </labels>
     <labels>
+        <fullName>ProfileUpdateURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ProfileUpdateURL</shortDescription>
+        <value>https://arc-phss--transuat.lightning.force.com</value>
+    </labels>
+    <labels>
         <fullName>Reported</fullName>
         <categories>Custom RC UI</categories>
         <language>en_US</language>
@@ -854,6 +861,13 @@ Select a voucher(s) with a status of &#39;Issued&#39;. Copy and paste the self-r
         <protected>false</protected>
         <shortDescription>UserID</shortDescription>
         <value>Salesforce Automation Account</value>
+    </labels>
+    <labels>
+        <fullName>VISUAL_FORCE_DOMAIN</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>VISUAL_FORCE_DOMAIN</shortDescription>
+        <value>.visual.force.com</value>
     </labels>
     <labels>
         <fullName>Yes</fullName>

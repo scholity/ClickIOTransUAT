@@ -38,7 +38,7 @@
             <outputObject>Lead</outputObject>
         </objectMapping>
     </duplicateRuleMatchRules>
-    <isActive>false</isActive>
+    <isActive>true</isActive>
     <masterLabel>Standard Rule for Contacts with Duplicate Leads</masterLabel>
     <operationsOnInsert>Report</operationsOnInsert>
     <operationsOnUpdate>Report</operationsOnUpdate>

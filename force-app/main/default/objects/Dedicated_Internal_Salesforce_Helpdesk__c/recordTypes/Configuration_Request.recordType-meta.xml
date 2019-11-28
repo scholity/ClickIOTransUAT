@@ -109,6 +109,33 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RCLC_Issue__c</picklist>
+        <values>
+            <fullName>Content on IC %28Instructor resources%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Course Links</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Launching Content</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Login Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Password Reset Issue</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Report_Object__c</picklist>
         <values>
             <fullName>Accounts</fullName>

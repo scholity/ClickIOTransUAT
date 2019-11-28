@@ -190,28 +190,7 @@ public with sharing class phss_cc_CyberSourceUtilTest {
         String token = phss_cc_TestDataFactory.TEST_AUTH_TXN_PMT_TOKEN;
         System.assertEquals(testAuthTransactionPayment.Id, phss_cc_CyberSourceUtil.fetchTransactionPaymentForToken(token).Id);
     }
-    
-    @isTest static void testCapturePayment(){
-        
-        setupTestData();
-        
-        ccrz__E_Cart__c testCart = new ccrz__E_Cart__c(
-            Opportunity__c = testOpportunity.Id,
-            ccrz__ActiveCart__c = true,
-            ccrz__EncryptedId__c = 'testId1234'
-        );
-        insert testCart;
-        
-        testOrder.ccrz__OriginatedCart__c = testCart.Id;
-        
-        Test.startTest();
-        
-        phss_cc_CyberSourceUtil.capturePayment(testFulfillment.Id, testAuthTransactionPayment.Id, testCaptureTransactionPayment.Id);
-        
-        test.stopTest();
-        
-    }
-    
+
     //requestPaymentCapture(Map<String, Object> captureData)
     @isTest static void testRequestPaymentCapture(){
         

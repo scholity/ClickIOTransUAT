@@ -2,7 +2,7 @@
  * Created by jbarker on 2019-07-30.
  */
 
-public with sharing class phss_cc_StoredPaymentUtil {
+public without sharing class phss_cc_StoredPaymentUtil {
 
     @TestVisible private static final String STORED_PAYMENT_LIST_KEY = 'storedPaymentList';
     @TestVisible private static final String STORED_PAYMENT_MAP_KEY = 'storedPaymentMap';

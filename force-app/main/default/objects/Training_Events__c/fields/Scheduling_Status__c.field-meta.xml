@@ -76,6 +76,21 @@
                 <default>false</default>
                 <label>Course Record Processed</label>
             </value>
+            <value>
+                <fullName>Schedule - Contact</fullName>
+                <default>false</default>
+                <label>Schedule - Contact</label>
+            </value>
+            <value>
+                <fullName>Schedule - No Contact</fullName>
+                <default>false</default>
+                <label>Schedule - No Contact</label>
+            </value>
+            <value>
+                <fullName>On Hold</fullName>
+                <default>false</default>
+                <label>On Hold</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>On Hold</controllingFieldValue>

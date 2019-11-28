@@ -348,10 +348,6 @@
         <fields>NAME</fields>
         <relatedList>SSign__SSEnvelope__c.Contract__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>ccrz__E_PriceGroupPricelist__c.Contract__c</relatedList>
-    </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

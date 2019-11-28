@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Migration_Welcome_Email</fullName>
+        <description>Migration Welcome Email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Email</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>no-reply@redcross.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>All/PHSS_Mig_Welcome_Email</template>
+    </alerts>
+</Workflow>

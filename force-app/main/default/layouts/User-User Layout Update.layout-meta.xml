@@ -66,6 +66,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_Appinium_Instructor__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Send_Welcome_Email__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

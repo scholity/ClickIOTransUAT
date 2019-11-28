@@ -1199,7 +1199,11 @@ public without sharing class PHSS_skedJobtoILTClass {
                             }
                             ccrz__E_Order__c theOrder = new ccrz__E_Order__c();
                             theOrder.Id = theOrderId;
-                            theOrder.CRE_Request_Processed__c = true;
+                            // DE1987 - Change CRE Request Processed flag setting to False (per the defect
+                            // setting this to true here when class is created was causing downstream
+                            // order management issues
+                            theOrder.CRE_Request_Processed__c = false;
+                            // theOrder.CRE_Request_Processed__c = true;
                             lstOrders.add(theOrder);
                         }
                     }

@@ -407,9 +407,9 @@ public without sharing class ILTInstructorCommunity{
     }
     
     // method to enroll students to a class purchased via eCommerce (invocation from PHSS_RegistrationController)
-    // note the use of auraException = true to avoid raising Aura exceptions
+    // note the use of auraException = false to avoid raising Aura exceptions
     
-    public Static void enrollStudents(String JSON, Id theLearningPlan, String theClassroomSetting, String orderNumber) {
+    public Static void enrollStudents(String JSON, Id theLearningPlan, Id theOfferingId, String theClassroomSetting, String orderNumber) {
         auraException = false;
         
         if (theClassroomSetting == 'Online') onlineCourse = true;
@@ -417,7 +417,7 @@ public without sharing class ILTInstructorCommunity{
         
         learningPlanId = theLearningPlan;
         //sessionId = ''; // this variable is never used
-        classId = learningPlanId; // question this assignment - this value is used primarily for external Id assignments
+        classId = theOfferingId;
         
         addStudents(JSON);
         return;
@@ -438,6 +438,7 @@ public without sharing class ILTInstructorCommunity{
         
         Boolean boolErrorExists = false;
         List<JSONWrapper.Students> studentList = JSONWrapper.arrayOfStudents(System.JSON.createParser(json));
+
         Set<string> studentLastNames = new Set<string>();
         Set<String> studentFirstNames = new Set<String>();
         Set<String> studentEmails = new Set<String>();
@@ -447,7 +448,7 @@ public without sharing class ILTInstructorCommunity{
         String ermsg;
         Set<String> exisVoucher = new set<String>();
         Set<String> Idvoucher = new set<String>();
-        
+
         // DE512 - User email addresses as user names
         // If a user's email address is already being used for a user name, and this is a different
         // student (based on different first name and last name), use the email address local name as
@@ -456,49 +457,49 @@ public without sharing class ILTInstructorCommunity{
 
         Set<String>userNameFilters = new Set<String>();
         Pattern emailDomainPattern = Pattern.compile('^(.*?)(@.*)'); // Isolate email address domain (group 1)
-        
+
         for(JSONWrapper.Students student : studentList){
             Idvoucher.add(student.voucherid);
-            
+
             // Create list of email stem filters used to search for existing users with same/similar user names
             if (String.IsNotBlank(student.Email)) {
                 Matcher emailMatcher = emailDomainPattern.matcher(student.Email);
                 if (emailMatcher.matches() && emailMatcher.groupCount() >=2) {
-                    userNameFilters.add(emailMatcher.group(1)+'%'+emailMatcher.group(2));               
+                    userNameFilters.add(emailMatcher.group(1)+'%'+emailMatcher.group(2));
                 }
             }
         }
-        
+
         // DE512 - Store user name by email address for use later in new user creation logic
         // These will be used to see if a new user has the same email address (user name) as an existing user
         // If so, a unique suffix will be created on the local name to insure the user name is unique
 
         List<User> userNameEmailList = [Select Id, UserName, Email From User Where UserName Like :userNameFilters];
         userNameEmailMap = new Map<String, String>();
-        
+
         for (User theUser : userNameEmailList) {
             userNameEmailMap.put(theUser.UserName, theUser.Email);
         }
-        
-        set<String> allVoucher = new set<String>(); 
-        
+
+        set<String> allVoucher = new set<String>();
+
         List<Voucher__c> lstVoucher = [Select Id, Voucher_Claim__c, status__c from Voucher__c where Voucher_Claim__c IN: Idvoucher];
         system.debug(lstVoucher);
-        
+
         for(Voucher__c objVoucher : lstVoucher){
             allVoucher.add(objVoucher.Voucher_Claim__c);
             if(objVoucher.Status__c == 'Claimed')
                 exisVoucher.add(objVoucher.Voucher_Claim__c);
         }
-        
+
         List<redwing__Training_Plan_Achievement__c> trpac = [select id, Name from redwing__Training_Plan_Achievement__c where redwing__Training_Plan__c=: learningPlanId];
         System.debug('trpaclist '+trpac);
-        
+
         for(JSONWrapper.Students student : studentList){
             studentLastNames.add(student.LastName);
             studentFirstNames.add(student.FirstName);
             studentEmails.add(student.Email);
-            
+
             //if (!onlineCourse) {
             if(String.IsNotBlank(student.voucherid)) {
                 try {
@@ -509,10 +510,10 @@ public without sharing class ILTInstructorCommunity{
                     }
                 } catch (Exception e) {
                     System.debug('Wrong voucher id');
-                    boolErrorExists = true;  
+                    boolErrorExists = true;
                     if (auraException) throw new AuraHandledException('Invalid Voucher'); else throw new enrollException('Invalid Voucher');
                 }
-                
+
                 if (!boolErrorExists && !exisVoucher.isEmpty() && exisVoucher.contains(student.voucherid)) {
                     System.debug('objVoucher');
                     ermsg = 'Voucher already Claimed';
@@ -524,8 +525,8 @@ public without sharing class ILTInstructorCommunity{
                 }
             }
             //}
-        }      
-        
+        }
+
         if (!boolErrorExists) {
             userMap = new Map<String, User>();
             //contactMap = new Map<String, Contact>();
@@ -551,7 +552,7 @@ public without sharing class ILTInstructorCommunity{
 
                 }
 
-            
+
                 // contactMap to check if student has existing contacts or not = Not required for CRE
                 // Updated (SJC) - Contact matching rule is always LN+FN+Email
 
@@ -584,7 +585,7 @@ public without sharing class ILTInstructorCommunity{
                     studentvoucherMap.put(v.Voucher_Claim__c, v);
                 }
             }
-            
+
             //Commented for multiple sessions
             /*vILTClasslist = new list<Id>();
             if(studentvoucherMap!=null){
@@ -593,7 +594,7 @@ public without sharing class ILTInstructorCommunity{
             System.debug('ILTClasslist'+vclasslist.ILT_Class__c);
             vILTClasslist.add(vclasslist.ILT_Class__c);
             }
-            
+
             vILTclasssessionlist = [Select id,(SELECT Id, Name FROM redwing__ILT_Sessions__r), Name from redwing__ILT_Class__c where Id IN:vILTClasslist];
             vILTClassSessionMap = new Map<Id,list<redwing__ILT_Session__c>>();
             for(redwing__ILT_Class__c r : vILTclasssessionlist)
@@ -606,10 +607,12 @@ public without sharing class ILTInstructorCommunity{
                     // Needs rework - this assumes same learning plan/class for each student!!
                     learningPlanId = studentvoucherMap.get((student.voucherid)).Learning_Plan__c;
                     classLearningId = studentvoucherMap.get((student.voucherid)).ILT_Class__r.redwing__Learning__c;
-                    
+                    classId = studentvoucherMap.get((student.voucherid)).ILT_Class__c;
+
                     System.debug('students voucher lp' + learningPlanId);
                     System.debug('students voucher learning' + classLearningId);
-                    
+                    System.debug('student voucher class Id' + classId);
+
                     If (learningPlanId==null)
                     {
                         if (auraException) throw new AuraHandledException('Learning Plan is Empty'); else throw new enrollException('Learning Plan is Empty');
@@ -620,10 +623,10 @@ public without sharing class ILTInstructorCommunity{
             }
             //}
             System.debug('post class lp' +learningPlanId);
-            
+
             Map<id,id> rtpa = new map<id,id>();// To retrieve Learning plan Achievement belonging to the current learning plan
             Map<id,id> rtpaac = new map<id, id>();// To retrieve Achievement belonging to the current learning plan Achievement
-            
+
             List <redwing__Training_Plan_Section__c> trpseclst = [select id, redwing__Training_Plan__c, redwing__Order__c from redwing__Training_Plan_Section__c where redwing__Training_Plan__c=: learningPlanId];
 
             map<id,list<redwing__Training_Plan_Achievement__c>> mapTrainingPlanWithTrainingPlanAchievements = new map<id,list<redwing__Training_Plan_Achievement__c>>();
@@ -638,36 +641,36 @@ public without sharing class ILTInstructorCommunity{
                     mapTrainingPlanWithTrainingPlanAchievements.put(rtpalist.redwing__Training_Plan__c,lstRTPA);
                 }
             }
-            
+
             tpsiRecordTypeMap = new map<String,redwing__Training_Plan_Section_Item__c>();
-            
+
             // To differentiate that the value comes from post class
             System.debug('Getting in>>>');
-            
+
             redwing__Training_Plan_Section_Item__c[] learningPlanILTEventItem = [Select Id, redwing__Learning__c, redwing__Learning__r.recordtype.Name, redwing__Training_Plan_Section__r.redwing__Order__c,
                                                                                  redwing__Learning__r.redwing__Current_Published_Version__c, redwing__Training_Plan_Section__c
-                                                                                 From redwing__Training_Plan_Section_Item__c Where redwing__Training_Plan_Section__r.redwing__Training_Plan__c =: learningPlanId 
+                                                                                 From redwing__Training_Plan_Section_Item__c Where redwing__Training_Plan_Section__r.redwing__Training_Plan__c =: learningPlanId
                                                                                  And redwing__Learning__c != null And redwing__Learning__r.recordtype.Name != null
                                                                                  And redwing__Learning__r.redwing__Current_Published_Version__c != null];
 
             for (redwing__Training_Plan_Section_Item__c tpsi: learningPlanILTEventItem ){
                 tpsiRecordTypeMap.put(tpsi.redwing__Learning__r.recordtype.Name,tpsi ); // Used while creating learning assignments with leaprnign plan section
             }
-            
+
             profileId = [SELECT Id, Name FROM Profile WHERE Name = 'Learner Community Profile' LIMIT 1];//Can be changed based
-            
+
             rosterList = new list<redwing__ILT_Roster__c>();
             accList = new list<account>();
             conList = new List<contact>();
             lstuser = new list<user>();
-            
-            assignmentList = new list<redwing__Training_Plan_Assignment__c>();            
+
+            assignmentList = new list<redwing__Training_Plan_Assignment__c>();
             lpsAssignmentList = new list<redwing__Training_Plan_Section_Assignment__c>();
-            learningAssignmentList = new list<redwing__Learning_Assignment__c>();            
-            AchievementAssignmentList = new list<redwing__Achievement_Assignment__c>();  
-            
+            learningAssignmentList = new list<redwing__Learning_Assignment__c>();
+            AchievementAssignmentList = new list<redwing__Achievement_Assignment__c>();
+
             Integer countValue = -1 ;
-            
+
             for (JSONWrapper.Students student : studentList) {
                 countValue++;
                 System.debug('student '+student.LastName+student.FirstName);
@@ -675,77 +678,77 @@ public without sharing class ILTInstructorCommunity{
                 redwing__Training_Plan_Assignment__c planAssignment = new redwing__Training_Plan_Assignment__c();
                 if (blend == true || other==true || onlineCourse) {
                     /**************Create a learning plan assignment **************/
- 
+
                     if (String.IsNotBlank(student.voucherid) && studentvoucherMap.containskey(student.voucherid)) {
-                        
+
                         System.debug('Came here');
-                        
+
                         planAssignment.redwing__Training_Plan__c=studentvoucherMap.get((student.voucherid)).Learning_Plan__c;
-                        
+
                     } else {
-                        System.debug('Not here');                
+                        System.debug('Not here');
                         planAssignment.redwing__Training_Plan__c = learningPlanId; // Retrieved learning plan id based on the course selected in page 1
                     }
-                    
+
                     // Contact matching logic is always LN+FN+Email
                     /*
                     if (String.IsBlank(student.Email) && contactMap.containsKey((student.LastName+student.FirstName).toLowerCase())){
                         planAssignment.redwing__Contact__c = contactMap.get((student.LastName+student.FirstName).toLowerCase()).Id;
                     }
-                    
-                    else 
+
+                    else
                     */
-                    
+
                     if (String.IsNotBlank(student.Email) && contactEmailMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())){
                         planAssignment.redwing__Contact__c = contactEmailMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;
                     }
-                    
+
                     else {
-                        planAssignment.redwing__Contact__r = fetchContact(student, false);// Create new contact 
+                        planAssignment.redwing__Contact__r = fetchContact(student, false);// Create new contact
                     }
-                    
+
                     if (userMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())){
                         planAssignment.redwing__User__c = userMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;// Converting to lower case since map seems to be case sensitive
                     }
                     else {
-                        planAssignment.redwing__User__r = fetchUser(student, false);// Create new user 
+                        planAssignment.redwing__User__r = fetchUser(student, false);// Create new user
                     }
                     System.debug('Initial assignment of user:'+planAssignment.redwing__User__c);
-                    
+
                     if (String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                         if (!onlineCourse) {
                             planAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c;
                         } else {
                             planAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c;
                         }
-                    } else { 
+                    } else {
                         planAssignment.External_Id__c = student.Email+student.lastName+student.FirstName+classId;
                     }
-                    
+
                     planAssignment.redwing__Status__c = 'Not Started';
-                    
+
                     assignmentList.add(planAssignment);
-                    
+
                     System.debug('Plan assignment record creation ='+planAssignment);
-                    
+
                     if (!onlineCourse) {
                         /**************Create a learning assignment with ILT Class learning object ***********************/
-                        
+
                         redwing__Learning_Assignment__c learningAssignment = new redwing__Learning_Assignment__c();
-                    
-                        // Contact matching logic is always LN+FN+Email 
-                        /*                       
+
+                        // Contact matching logic is always LN+FN+Email
+                        /*
                         if (String.IsBlank(student.Email) && contactMap.containsKey((student.LastName+student.FirstName).toLowerCase())){
                             learningAssignment.redwing__Contact__c = contactMap.get((student.LastName+student.FirstName).toLowerCase()).Id;
                         }
-                        
-                        else 
+
+                        else
                         */
-                        
+
                         if (String.IsNotBlank(student.Email) && contactEmailMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())){
                             learningAssignment.redwing__Contact__c = contactEmailMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;
                         }
-                        
+
                         else {
                             learningAssignment.redwing__Contact__r = fetchContact(student, true);// Create new contact or use exisitng method called
                         }
@@ -755,17 +758,17 @@ public without sharing class ILTInstructorCommunity{
                             learningAssignment.External_Id__c               = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c+studentvoucherMap.get((student.voucherid)).ILT_Class__r.redwing__Learning__c; //Can be chaged if needed
                             learningAssignment.redwing__Training_Plan__c    = studentvoucherMap.get((student.voucherid)).Learning_Plan__c;
                             learningAssignment.redwing__Learning__c         = studentvoucherMap.get((student.voucherid)).ILT_Class__r.redwing__Learning__c;
-                            learningAssignment.redwing__Learning_Version__c = studentvoucherMap.get((student.voucherid)).ILT_Class__r.redwing__Learning__r.redwing__Current_Published_Version__c;                            
+                            learningAssignment.redwing__Learning_Version__c = studentvoucherMap.get((student.voucherid)).ILT_Class__r.redwing__Learning__r.redwing__Current_Published_Version__c;
                             learningAssignment.RCO_Order_Id__c              = studentvoucherMap.get((student.voucherid)).RCO_Order_Id__c;
                         }
                         else
                         {
                             learningAssignment.External_Id__c               = student.Email+student.LastName+student.FirstName+classId+classLearningId; //Can be changed if needed
                             learningAssignment.redwing__Learning__c         = learningId; //classLearningId; // Retrieve learning id from page 1 //DE1466 // learningId is defined in PostClass
-                            learningAssignment.redwing__Learning_Version__c = learningVersionId;//classLearningId.redwing__Current_Published_Version__c; // Need object?                        
+                            learningAssignment.redwing__Learning_Version__c = learningVersionId;//classLearningId.redwing__Current_Published_Version__c; // Need object?
                             learningAssignment.redwing__Training_Plan__c    = learningPlanId;
                         }
-                        
+
                         /*if(userMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase()))
                         {
                         learningAssignment.redwing__User__c = userMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;// Converting to lower case since map seems to be case sensitive
@@ -774,42 +777,42 @@ public without sharing class ILTInstructorCommunity{
                         {
                         learningAssignment.redwing__User__r = new User(DM_External_Id__c = student.FirstName+student.lastName+student.Email);// Create new user or use exisitng method called
                         }*/
-                        
+
                         if (userMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())){
                             learningAssignment.redwing__User__c = planAssignment.redwing__User__c;// Converting to lower case since map seems to be case sensitive
                         } else {
-                            learningAssignment.redwing__User__r = fetchUser(student, true);// Create new user or use exisitng method called         
+                            learningAssignment.redwing__User__r = fetchUser(student, true);// Create new user or use exisitng method called
                             //learningAssignment.redwing__User__r = new User(DM_External_Id__c = student.FirstName+student.lastName+student.Email);// Create new user or use exisitng method called
                         }
-                        
+
                         learningAssignment.redwing__Evaluation_Result__c = student.Grade;
-                        //learningAssignment.Grade_Reason__c = Student.Fail_Reason; 
-                        learningAssignment.Grade_Additional_Info__c = student.AdditionalInfo; 
+                        //learningAssignment.Grade_Reason__c = Student.Fail_Reason;
+                        learningAssignment.Grade_Additional_Info__c = student.AdditionalInfo;
                         learningAssignment.redwing__Progress__c = 'Not Started';
-                        learningAssignment.redwing__Progress_Percentage__c = 0;                        
-                                                
+                        learningAssignment.redwing__Progress_Percentage__c = 0;
+
                         learningAssignmentList.add(learningAssignment);
                     }
-                    
+
                     /******************Create learning assignments for all learning objects defined in learning plan***********/
                     for (String learningRecordType:tpsiRecordTypeMap.keyset()) {
                         redwing__Learning_Assignment__c learningAssignment = new redwing__Learning_Assignment__c();
-                        
-                        // Contact matching logic is always LN+FN+Email 
-                        /*                       
+
+                        // Contact matching logic is always LN+FN+Email
+                        /*
                         if (String.IsBlank(student.Email) && contactMap.containsKey((student.LastName+student.FirstName).toLowerCase())){
                             learningAssignment.redwing__Contact__c = contactMap.get((student.LastName+student.FirstName).toLowerCase()).Id;
                         }
-                        
-                        else 
+
+                        else
                         */
-                        
+
                         if(String.IsNotBlank(student.Email) && contactEmailMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())){
                             learningAssignment.redwing__Contact__c = contactEmailMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;
                         } else {
                             learningAssignment.redwing__Contact__r = fetchContact(student, true);// Create new contact or use existing method called
                         }
-                        
+
                         if (String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                             learningAssignment.RCO_Order_Id__c = studentvoucherMap.get((student.voucherid)).RCO_Order_Id__c;
                             if (!onlineCourse) {
@@ -817,20 +820,20 @@ public without sharing class ILTInstructorCommunity{
                             } else {
                                 learningAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c+learningRecordType;
                             }
-                        } else {                            
+                        } else {
                             learningAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+classId+learningRecordType; //Can be chaged if needed
                             System.debug('learning event id'+tpsiRecordTypeMap.get(learningRecordType).redwing__Learning__r.id);
                         }
                         System.debug('planAssignment='+planAssignment);
                         System.debug('redwing__User__c '+ planAssignment.redwing__User__c);
-                        
+
                         if(userMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())){
                             learningAssignment.redwing__User__c = planAssignment.redwing__User__c;// Converting to lower case since map seems to be case sensitive
                         } else {
-                            learningAssignment.redwing__User__r = fetchUser(student, true);// Create new user or use exisitng method called                                         
+                            learningAssignment.redwing__User__r = fetchUser(student, true);// Create new user or use exisitng method called
                             //learningAssignment.redwing__User__r = new User(DM_External_Id__c = student.FirstName+student.lastName+student.Email);// Create new user or use exisitng method called
                         }
-                        
+
                         String lpsAssignmentExternalId = '';
                         if (String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                             if (!onlineCourse) {
@@ -838,37 +841,37 @@ public without sharing class ILTInstructorCommunity{
                             } else {
                                 lpsAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c+String.valueOf(tpsiRecordTypeMap.get(learningRecordType).redwing__Training_Plan_Section__r.redwing__Order__c);
                             }
-                        } else { 
+                        } else {
                             lpsAssignmentExternalId = student.Email+student.LastName+student.FirstName+classId+String.valueOf(tpsiRecordTypeMap.get(learningRecordType).redwing__Training_Plan_Section__r.redwing__Order__c);
-                        }                       
-                                                
+                        }
+
                         learningAssignment.RCO_Order_Id__c = onlineOrderNumber;
                         learningAssignment.redwing__Progress__c = 'Not Started';
-                        learningAssignment.redwing__Progress_Percentage__c = 0;                          
+                        learningAssignment.redwing__Progress_Percentage__c = 0;
                         learningAssignment.redwing__Learning__c = tpsiRecordTypeMap.get(learningRecordType).redwing__Learning__c;
                         learningAssignment.redwing__Training_Plan__c = learningPlanId;
                         learningAssignment.redwing__Training_Plan_Section__c = tpsiRecordTypeMap.get(learningRecordType).redwing__Training_Plan_Section__c;
-                        learningAssignment.redwing__Training_Plan_Section_Item__c =  tpsiRecordTypeMap.get(learningRecordType).Id;  
-                        learningAssignment.redwing__Training_Plan_Section_Assignment__r = new redwing__Training_Plan_Section_Assignment__c(External_Id__c = lpsAssignmentExternalId);                      
+                        learningAssignment.redwing__Training_Plan_Section_Item__c =  tpsiRecordTypeMap.get(learningRecordType).Id;
+                        learningAssignment.redwing__Training_Plan_Section_Assignment__r = new redwing__Training_Plan_Section_Assignment__c(External_Id__c = lpsAssignmentExternalId);
                         learningAssignment.redwing__Learning_Version__c = tpsiRecordTypeMap.get(learningRecordType).redwing__Learning__r.redwing__Current_Published_Version__c;
 
                         learningAssignmentList.add(learningAssignment);
                         System.debug('learning assignment record creation');
                     }
-                    
+
                     /******************Create learning plan section assignments***********/
-                    
+
                     for(redwing__Training_Plan_Section__c trpsec:trpseclst) {
                         //if (trpsec.containskey(learningPlanId)) {
                             redwing__Training_Plan_Section_Assignment__c lpsAssignment = new redwing__Training_Plan_Section_Assignment__c();
-                            
+
                             if (userMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())) {
                                 lpsAssignment.redwing__User__c = userMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;// Converting to lower case since map seems to be case sensitive
                             } else {
-                                lpsAssignment.redwing__User__r = fetchUser(student, true);// Create new user or use exisitng method called          
+                                lpsAssignment.redwing__User__r = fetchUser(student, true);// Create new user or use exisitng method called
                                 //lpsAssignment.redwing__User__r = new User(DM_External_Id__c = student.FirstName+student.lastName+student.Email);// Create new user or use exisitng method called
                             }
-                            
+
                             if(String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                                 if (!onlineCourse) {
                                     lpsAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c+String.valueOf(trpsec.redwing__Order__c);
@@ -878,9 +881,9 @@ public without sharing class ILTInstructorCommunity{
                             } else {
                                 lpsAssignment.External_Id__c = student.Email+student.lastName+student.FirstName+classId+String.valueOf(trpsec.redwing__Order__c);
                             }
-                            
+
                             lpsAssignment.redwing__Training_Plan_Section__c = trpsec.Id; // get(learningPlanId);
-                            
+
                             String lpAssignmentExternalId = '';
                             if (String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                                 if (!onlineCourse) {
@@ -888,11 +891,11 @@ public without sharing class ILTInstructorCommunity{
                                 } else {
                                     lpAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c;
                                 }
-                            } else { 
+                            } else {
                                 lpAssignmentExternalId = student.Email+student.lastName+student.FirstName+classId;
-                            }                        
+                            }
                             lpsAssignment.redwing__Training_Plan_Assignment__r = new redwing__Training_Plan_Assignment__c(External_Id__c = lpAssignmentExternalId);
-                            
+
                             lpsAssignmentList.add(lpsAssignment);
                             System.debug('lp section assignment record creation');
                             System.debug('lpsAssignmentList values:'+lpsAssignment.redwing__User__c+','+lpsAssignment.redwing__Training_Plan_Section__c+','+lpsAssignment.redwing__Training_Plan_Assignment__c);
@@ -991,7 +994,7 @@ public without sharing class ILTInstructorCommunity{
                     }
                 }
 
-                /**************Creating Roster Record******************************/   
+                /**************Creating Roster Record******************************/
                 if (!onlineCourse && (blend == true || other == true)) {
                     System.debug('Roster record creation');
                     // Create roster records base on the request
@@ -1003,12 +1006,12 @@ public without sharing class ILTInstructorCommunity{
                         sessionlist.addall(vILTClassSessionMap.get(studentvoucherMap.get(student.voucherid).ILT_Class__c));
                         }
                     }
-                    */ 
+                    */
                     //System.debug('Sessionlistvaluesss' +se);
                     //for(redwing__ILT_Session__c ris:sessionlist)
                     //{
                     redwing__ILT_Roster__c objRoster = new redwing__ILT_Roster__c();
-                    
+
                     if (String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                         System.debug('Inside session creation with voucher ');
                         // Need to record RCO Order Id and Voucher Id for eCommerce audit purposes and to support cancellation
@@ -1022,29 +1025,29 @@ public without sharing class ILTInstructorCommunity{
                         objRoster.redwing__ILT_Class__c = classId;
                         //objRoster.redwing__ILT_Session__c = sessionId;
                     }
-                    
+
                     // Populate voucher id of
-                    
-                    
+
+
                     if (userMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())) {
                         objRoster.redwing__User__c = userMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;// Converting to lower case since map seems to be case sensitive
                     } else {
                         objRoster.redwing__User__r = fetchUser(student, true);// Create new user or use exisitng method called
                     }
-                    
+
                     // objRoster.redwing__User__r = planAssignment.redwing__User__r;
                     if (String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                         objRoster.redwing__Learning_Assignment__r = new redwing__Learning_Assignment__c(External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c+studentvoucherMap.get((student.voucherid)).ILT_Class__r.redwing__Learning__c); //Can be chaged if needed);
                     } else {
                         objRoster.redwing__Learning_Assignment__r = new redwing__Learning_Assignment__c(External_Id__c = student.Email+student.LastName+student.FirstName+classId+classLearningId);
                     }
-                    
+
                     System.debug('Roster added');
-                    rosterList.add(objRoster);         
+                    rosterList.add(objRoster);
                     System.debug('Roster session ids'+rosterList[0].redwing__ILT_Session__c);
                     //}
                 }
-                
+
                 if (blend == true || other == true) {
                     /************Update voucher if its claimed***************/
                     if (String.IsNotBlank(student.voucherid) && studentvoucherMap.containskey(student.voucherid)||voucheridsrbc!=null) {
@@ -1053,17 +1056,17 @@ public without sharing class ILTInstructorCommunity{
                             System.debug('Studentvouchermapcontainsvalues'+studentvoucherMap.get(student.Voucherid).id);
                             voucheridsrbc.add(studentvoucherMap.get(student.Voucherid).id);
                         }
-                        
+
                         voucher__c claimvoucher = new voucher__c();
                         if (String.IsNotBlank(student.voucherid)) {
                             claimvoucher.id=studentvoucherMap.get(student.Voucherid).id;
                         } else {
                             claimvoucher.id=voucheridsrbc[countValue];
                         }
-                        
+
                         if (claimVoucher.User__c == null) {
                             if (userMap.containsKey((student.LastName+student.FirstName+student.Email).toLowerCase())) {
-                                claimvoucher.user__c = userMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;            
+                                claimvoucher.user__c = userMap.get((student.LastName+student.FirstName+student.Email).toLowerCase()).Id;
                             } else {
                                 claimvoucher.user__r = new User(DM_External_Id__c = (student.LastName+student.FirstName+student.Email).toLowerCase());
                             }
@@ -1073,23 +1076,23 @@ public without sharing class ILTInstructorCommunity{
                     }
                 }
                 system.debug('accList++++++++++++++++++++++++'+accList);
-                system.debug('inserted user'+lstUser); 
+                system.debug('inserted user'+lstUser);
             }
-            
-            
-            // Insert Records for User contact and Account if it does not exist and learning assignment list and roster records   
+
+
+            // Insert Records for User contact and Account if it does not exist and learning assignment list and roster records
             try {
                 if (accList.size() > 0) {
                     system.debug('accList++++++++++++++++++++++++'+accList);
                     insert accList;
                     system.debug('conList++++++++++++'+conList);
-                    insert conList;      
+                    insert conList;
                 }
             }
             catch (Exception e) {
                 errmsgvc=true;
                 if (e.getMessage().contains('Insert failed. First exception on row 0; first error: FIELD_CUSTOM_VALIDATION_EXCEPTION, US Mobile numbers should be in this format: (999) 999-9999: [MobilePhone]'))
-                {        
+                {
                     System.debug('phone number exception');
                     if (auraException) throw new AuraHandledException('Please provide a valid mobile number format-(999) 999-9999'); else throw new enrollException('Please provide a valid mobile number format-(999) 999-9999');
                 }
@@ -1104,13 +1107,13 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-            
+
             try {
                 if(lstUser.size() > 0 && errmsgvc!=true ){
                     uidlist = new list<id>();
                     System.debug('PROFILE id'+lstUser);
                     insert lstUser;
-                    system.debug('inserted user'+lstUser);  
+                    system.debug('inserted user'+lstUser);
                     for(user u:lstuser)
                     {
                         uidlist.add(u.id);
@@ -1130,17 +1133,17 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-            
+
             try {
                 if(assignmentList.size() > 0 && errmsgvc!=true){
-                    insert assignmentList;  
-                    System.debug('Value of Contact and user'+assignmentList);      
-                }  
+                    insert assignmentList;
+                    System.debug('Value of Contact and user'+assignmentList);
+                }
             }
             catch(Exception e){
                 errmsgvc=true;
                 if(e.getMessage().contains('Insert failed. First exception on row 0; first error: DUPLICATE_VALUE, duplicate value found: External_Id__c duplicates value on record with id:'))
-                { 
+                {
                     System.debug('this exception');
                     if (auraException) throw new AuraHandledException('You are already assigned to this class'); else throw new enrollException('You are already assigned to this class');
                 }
@@ -1149,8 +1152,8 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-            
-            try{  
+
+            try{
                 if(lpsAssignmentList.size() > 0 && errmsgvc!=true){
                     //System.debug('lpsAssignmentList outside'+lpsAssignmentList);
                     System.debug('Going to insert lal');
@@ -1168,16 +1171,16 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-                        
-            try {  
+
+            try {
                 if(learningAssignmentList.size() > 0 && errmsgvc!=true){
                     System.debug('Going to insert lal');
-                    
+
                     // DE822 - Allow reinstatement of cancelled registration - Learning Assignment is retained on cancel
                     Schema.SObjectField f = redwing__Learning_Assignment__c.Fields.External_Id__c;
-                    Database.UpsertResult[] results = Database.upsert(learningAssignmentList, f, false);                    
+                    Database.UpsertResult[] results = Database.upsert(learningAssignmentList, f, false);
                     //insert learningAssignmentList;
-                    
+
                     //System.debug('Inserted learning assignment list' +learningAssignmentList);
                     System.debug('Inserted learning assignment list' +results);
                 }
@@ -1192,10 +1195,10 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-            
-            try{  
+
+            try{
                 if(AchievementAssignmentList.size() > 0 && errmsgvc!=true){
-                    
+
                     System.debug('AchievementAssignmentListvaluee 1'+AchievementAssignmentList);
                     insert AchievementAssignmentList;
                     System.debug('Inserted Achievement list' +AchievementAssignmentList);
@@ -1212,10 +1215,10 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-            
+
             try{
                 System.debug('Trying to create rosters>>>> ');
-                if(rosterList.size() > 0 && errmsgvc!=true){                
+                if(rosterList.size() > 0 && errmsgvc!=true){
                     insert rosterList;
                     System.debug('Inserted roster' +rosterList);
                 }
@@ -1232,7 +1235,7 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-            
+
             try {
                 if(voucherclaimset.size() > 0 && errmsgvc!=true)
                 {
@@ -1253,9 +1256,9 @@ public without sharing class ILTInstructorCommunity{
                     if (auraException) throw new AuraHandledException(e.getMessage()); else throw new enrollException(e.getMessage());
                 }
             }
-            
+
         }
-        auraException = true; 
+        auraException = true;
         onlineCourse = false;
     }
     
@@ -1277,8 +1280,8 @@ public without sharing class ILTInstructorCommunity{
         List<redwing__Training_Plan_Section__c> Learningplansectionlist;
         List<redwing__Achievement_Assignment__c> statusAchAsslist;
 
-        Set<Id> updatedOrderItemIds = new Set<Id>();
-        Set<Id> updatedOrderIds = new Set<Id>();
+        //Set<Id> updatedOrderItemIds = new Set<Id>();
+        //Set<Id> updatedOrderIds = new Set<Id>();
         List<ccrz__E_OrderItem__c> updatedOrderItems = new List<ccrz__E_OrderItem__c>();
         List<ccrz__E_Order__c> updatedOrders = new List<ccrz__E_Order__c>();
 
@@ -1347,14 +1350,13 @@ public without sharing class ILTInstructorCommunity{
             mapUserWithAchievementAssignmentList.put(aa.redwing__User__c,lstAAID);
         }
         
-            System.debug('rostermapusers'+rostermapusers);
-            System.debug('Learnignassignmentmapids'+Learnignassignmentmapids);
-            System.debug('mapUserWithAchievementAssignmentList'+mapUserWithAchievementAssignmentList);
-            System.debug('rtpsamap'+rtpsamap);
-            System.debug('rtpamap'+rtpamap);
-            System.debug('rosterMap='+rosterMap);            
+        System.debug('rostermapusers'+rostermapusers);
+        System.debug('Learnignassignmentmapids'+Learnignassignmentmapids);
+        System.debug('mapUserWithAchievementAssignmentList'+mapUserWithAchievementAssignmentList);
+        System.debug('rtpsamap'+rtpsamap);
+        System.debug('rtpamap'+rtpamap);
+        System.debug('rosterMap='+rosterMap);
 
-            
         // Update ILTClass with SuppInfo and Close Date
         if (String.isNotEmpty(iltClassid)) {
             redwing__ILT_Class__c iltclassupinfo = new redwing__ILT_Class__c(); 
@@ -1476,51 +1478,50 @@ public without sharing class ILTInstructorCommunity{
                     }
                 }
             }
-            System.debug('**** Close Class:'+closeClass);
-            System.debug('**** rosterILTClass.Opp:'+rosterILTClass.Opportunity__c);
+        }
 
-            if (closeClass) {
-                // US1521 - Populate CC Cart Item Record(s) with ILT Class Id (if applicable)
-                Id orderId;
-                if (rosterILTClass != null && rosterILTCLass.Opportunity__c != null) {
-                    // US1521 - For close class, Order Lines should already be created
-                    // In this case, we need to write ILT Class Id on Order Item record(s)
-                    // Skip for FS classes; assignment of ILT Class Id was performed when class was originally created
-                    if (rosterILTCLass.Request_Type__c != 'Full Service') {
-                        for (ccrz__E_OrderItem__c theOrderItem : [
-                                Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c
-                                From ccrz__E_OrderItem__c
-                                Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :rosterILTClass.Opportunity__c
-                        ]) {
-                            System.debug('*** non-FS orderItem:' + theOrderItem);
-                            if (!updatedOrderItemIds.contains(theOrderItem.Id)) {
-                                ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                                newOrderItem.Id = theOrderItem.Id;
-                                newOrderItem.ILT_Class__c = rosterILTClass.Id;
-                                updatedOrderItems.add(newOrderItem);
-                                updatedOrderItemIds.add(theOrderItem.Id);
-                                orderId = theOrderItem.ccrz__Order__c;
-                                System.debug('*** non-FS updatedOrderItems:' + updatedOrderItems);
-                            }
-                        }
+        System.debug('**** Close Class:'+closeClass);
+        System.debug('**** rosterILTClass.Opp:'+rosterILTClass.Opportunity__c);
 
-                        // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
-                        // boolean on order header record
-                        if (!updatedOrderItems.isEmpty() && orderId != null) {
-                            if (!updatedOrderIds.contains(orderId)) {
-                                ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
-                                newOrder.Id = orderId;
-                                newOrder.CRE_Request_Processed__c = true;
-                                updatedOrders.add(newOrder);
-                                updatedOrderIds.add(orderId);
-                                System.debug('*** non-FS updatedOrders:' + updatedOrders);
-                            }
-                        }
+        if (closeClass) {
+            // US1521 - Populate CC Cart Item Record(s) with ILT Class Id (if applicable)
+            if (rosterILTClass != null && rosterILTClass.Opportunity__c != null) {
+
+                // US1521 - For close class, Order Lines should already be created
+                // In this case, we need to write ILT Class Id on Order Item record(s)
+                List <ccrz__E_OrderItem__c> orderItemList = new List<ccrz__E_OrderItem__c>();
+                orderItemList = [
+                        SELECT Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c
+                        FROM ccrz__E_OrderItem__c
+                        WHERE ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :rosterILTClass.Opportunity__c
+                ];
+
+                // Skip for FS classes; assignment of ILT Class Id was performed when class was originally created
+                // Need to skip for FS orders may have multiple classes (therefore multiple unrelated order items)
+                if (rosterILTClass.Request_Type__c != 'Full Service') {
+                    for (ccrz__E_OrderItem__c theOrderItem : orderItemList) {
+                        System.debug('*** non-FS orderItem:' + theOrderItem);
+                        ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
+                        newOrderItem.Id = theOrderItem.Id;
+                        newOrderItem.ILT_Class__c = rosterILTClass.Id;
+                        updatedOrderItems.add(newOrderItem);
                     }
+                    System.debug('*** non-FS updatedOrderItems:' + updatedOrderItems);
                 }
+
+                // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
+                // boolean on order header record
+                // DE1987 - Open this up for Full Service (update the header to allow CRE flag to be set)
+                if (!orderItemList.isEmpty() && orderItemList[0].ccrz__Order__c != null) {
+                //if (!updatedOrderItems.isEmpty() && updatedOrderItems[0].ccrz__Order__c != null) {
+                        ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                        newOrder.Id = orderItemList[0].ccrz__Order__c;
+                        newOrder.CRE_Request_Processed__c = true;
+                        updatedOrders.add(newOrder);
+                }
+                System.debug('*** updatedOrders:' + updatedOrders);
             }
         }
-        
         // *** US1517 - Deactivate all remaining (unused) vouchers for this class
         
         // Generate list of unused vouchers for this class
@@ -2208,24 +2209,25 @@ public without sharing class ILTInstructorCommunity{
                     // In this case, we need to write ILT Class Id on Order Item record(s)
                     // Note: it is assumed that CRE/RBC orders are one-to-one opportunity-to-product(class)
 
-                    for (ccrz__E_OrderItem__c theOrderItem : [Select Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c From ccrz__E_OrderItem__c
-                        Where ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :clsRecord.Opportunity__c]) {
-                        if (!updatedOrderItemIds.contains(theOrderItem.Id)) {
-                            ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
-                            newOrderItem.Id = theOrderItem.Id;
-                            newOrderItem.ILT_Class__c = classId;
-                            updatedOrderItems.add(newOrderItem);
-                            updatedOrderItemIds.add(theOrderItem.Id);
-                        }
-                        // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
-                        // boolean on order header record
-                        if (!updatedOrderIds.contains(theOrderItem.ccrz__Order__c)) {
-                            ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
-                            newOrder.Id = theOrderItem.ccrz__Order__c;
-                            newOrder.CRE_Request_Processed__c = true;
-                            updatedOrders.add(newOrder);
-                            updatedOrderIds.add(theOrderItem.ccrz__Order__c);
-                        }
+                    List <ccrz__E_OrderItem__c> theOrderItemList = [
+                        SELECT Id, ccrz__Product__c, ILT_Class__c, ccrz__Order__c
+                        FROM ccrz__E_OrderItem__c
+                        WHERE ccrz__Order__r.ccrz__OriginatedCart__r.Opportunity__c = :clsRecord.Opportunity__c];
+
+                    for (ccrz__E_OrderItem__c theOrderItem : theOrderItemList) {
+                        ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
+                        newOrderItem.Id = theOrderItem.Id;
+                        newOrderItem.ILT_Class__c = classId;
+                        updatedOrderItems.add(newOrderItem);
+                    }
+
+                    // Extension - provide linkage to external flows that order items were updated with ILT Class Id by updating
+                    // boolean on order header record
+                    if (!theOrderItemList.isEmpty() && theOrderItemList[0].ccrz__Order__c != null) {
+                        ccrz__E_Order__c newOrder = new ccrz__E_Order__c();
+                        newOrder.Id = theOrderItemList[0].ccrz__Order__c;
+                        newOrder.CRE_Request_Processed__c = true;
+                        updatedOrders.add(newOrder);
                     }
                 }                
                 
