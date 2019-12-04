@@ -396,7 +396,7 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         theClassQuery += 'CPS_Registration_URL__c, Skedulo_Account__r.Name, Learning_Plan__r.Classroom_Setting__c, ';
         theClassQuery += 'redwing__Start_Date__c, redwing__Start_Time__c, redwing__End_Time__c, redwing__Timezone__c, ';
         // DE2044/DE1949 - Query simplification for price override lookup and inventory level
-        theClassQuery += 'redwing__Location__r.redwing__Postal_Code__c, Available_Seats__c ';
+        theClassQuery += 'redwing__Location__r.redwing__Postal_Code__c, Price_Override__c, Available_Seats__c ';
         theClassQuery += 'From redwing__ILT_Class__c ';
         theClassQuery += 'Where ((Request_Type__c = \'Community\' And Skedulo_Job_Active__c = true) ';
         theClassQuery += 'OR (Request_Type__c = \'Nurse Assistant Testing\' And Skedulo_Job_Active__c = true And ((Is_Stacked_Class__c = false) OR (Is_Stacked_Class__c = true And Is_Master_Class__c = true))) ';
@@ -698,8 +698,29 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         generateCPSXmlFile(CPSXMLList);
     }
 
-    private Map<Id, Double> getPriceOverrides(Set <Id> communityCourseSet, List <redwing__ILT_Class__c> communityClassList) {
+    // DE2026 - Take the price override data directly from the ILT Class record rather than performing a lookup to
+    // pricelist data
 
+    private Map<Id, Double> getPriceOverrides(Set <Id> communityCourseSet, List <redwing__ILT_Class__c> communityClassList) {
+        // Get zip code specific pricing (if defined in ILT class record(s))
+        // Zip code pricing is published to ILT Class records via one of two processes:
+        // (1) When a price list item with a zip code price override is created or updated
+        // via the PriceListItemTrigger/PHSS_PriceListItemTriggerHandler
+        // (2) When an ILT Class record is created or updated via the Skedulo integration class PHSS_skedJobToILTClass
+
+        Map<Id, Double> communityPrices = new Map<Id, Double>();
+
+        for (redwing__ILT_Class__c theClass : communityClassList) {
+            if (theClass.Price_Override__c != Null) {
+                communityPrices.put(theClass.Id, theClass.Price_Override__c);
+            }
+        }
+
+        return communityPrices;
+    }
+
+    /*
+    private Map<Id, Double> getPriceOverrides(Set <Id> communityCourseSet, List <redwing__ILT_Class__c> communityClassList) {
         // Get zip code specific pricing (if defined)
 
         String storeFront = 'GeneralStore';
@@ -719,24 +740,26 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         Map<String, List<ccrz__E_PriceListItem__c>> activePriceListMap = new Map<String, List<ccrz__E_PriceListItem__c>>();
 
         ccProductList = [Select Id, LMS_Learning_Plan__c From ccrz__E_Product__c Where LMS_Learning_Plan__c IN :communityCourseSet];
+
+        // Note: this query incorrectly assumes that there is a 1-to-1 relationship between products and learning plans
+        // In fact multiple products can be related to the same learning plan (for example, FS, Community, AP products can
+        // each be related to the same learning plan
         for (ccrz__E_Product__c theCCProduct : ccProductList) {
             //ccProducts.add(theCCProduct.Id);
             if (theCCProduct.LMS_Learning_Plan__c != null) ccProductMap.put(theCCProduct.LMS_Learning_Plan__c, theCCProduct.Id);
         }
 
         // DE2044/DE1949 - No longer needed (query eliminated below)
-        /*
-        for (redwing__ILT_Class__c theClass : communityClassList) {
-            communityClasses.add(theClass.Id);
-        }
-        */
+
+        //for (redwing__ILT_Class__c theClass : communityClassList) {
+        //    communityClasses.add(theClass.Id);
+        //}
 
         // DE2044/DE1949 - Eliminate query (Location is now stored at class level)
-        /*
-        classSessionList = [Select Id, redwing__Location__r.redwing__Postal_Code__c, redwing__ILT_Class__c
-            From redwing__ILT_Session__c
-            Where redwing__ILT_Class__c In :communityClasses];
-        */
+
+        //classSessionList = [Select Id, redwing__Location__r.redwing__Postal_Code__c, redwing__ILT_Class__c
+        //    From redwing__ILT_Session__c
+        //    Where redwing__ILT_Class__c In :communityClasses];
 
         //for (redwing__ILT_Session__c theSession : classSessionList) {
         for (redwing__ILT_Class__c theClass : communityClassList) {
@@ -806,8 +829,10 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
                 }
             }
         }
+
         return communityPrices;
     }
+    */
 
     private void generateCourseClassXmlFileHeader() {
         List<Integration_Files__c> exportedXMLRecords = new List<Integration_Files__c>();
@@ -899,7 +924,7 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         String targetSystem = 'RCO';
         Integer theSequenceNumber = 0;
 
-        String serializedCPSXMLList = '';
+        //String serializedCPSXMLList = '';
 
         // Write header line to integration file custom object
         Integration_Files__c integrationFileHeader = new Integration_Files__c();
@@ -910,7 +935,7 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         exportedXMLRecords.add(integrationFileHeader);
 
         for (String theCPSXML : CPSXMLList) {
-            serializedCPSXMLList += theCPSXML;
+            //serializedCPSXMLList += theCPSXML;
             // Write line to integration file custom object
             Integration_Files__c integrationFileRecord = new Integration_Files__c();
             integrationFileRecord.Record_Data__c = theCPSXML;
@@ -929,11 +954,13 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         exportedXMLRecords.add(integrationFileTrailer);
 
         // Comment out the following block to disable writing file as internal Salesforce file
+        /*
         ContentVersion v = new ContentVersion();
         v.versionData = Blob.valueOf(getCourseXmlHeader(true)+serializedCPSXMLList+getCourseXmlTrailer());
         v.title = 'Active LTP CPS Classes '+String.valueOf(Date.today());
         v.PathOnClient = '/ActiveLTPCPSClasses.xml';
         insert v;
+        */
 
         // Write export records to Integration Files object
         try {

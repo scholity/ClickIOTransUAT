@@ -578,7 +578,8 @@ public without sharing class ILTInstructorCommunity{
                 for (Voucher__c v : [
                         Select Id, Name, ILT_Class__c, Online_Class__c, Voucher_Claim__c, RCO_Order_Id__c,
                                 Learning_Plan__c, ILT_Class__r.redwing__Learning__c, ILT_Class__r.redwing__End_Date__c,
-                                ILT_Class__r.redwing__Learning__r.redwing__Current_Published_Version__c, ILT_Class__r.Request_Type__c
+                                ILT_Class__r.redwing__Learning__r.redwing__Current_Published_Version__c,
+                                ILT_Class__r.Request_Type__c, Learning_Plan__r.Classroom_Setting__c
                         From Voucher__c
                         Where Voucher_Claim__c IN :voucherids
                     ]) {
@@ -604,10 +605,26 @@ public without sharing class ILTInstructorCommunity{
             //Get learning planid by differentiating from claim voucher and (RBC or CRE) Componenet
             for (JSONWrapper.Students student : studentList){
                 if (studentvoucherMap.containskey(student.voucherid)) {
-                    // Needs rework - this assumes same learning plan/class for each student!!
-                    learningPlanId = studentvoucherMap.get((student.voucherid)).Learning_Plan__c;
-                    classLearningId = studentvoucherMap.get((student.voucherid)).ILT_Class__r.redwing__Learning__c;
-                    classId = studentvoucherMap.get((student.voucherid)).ILT_Class__c;
+                    // Note: This logic assumes same learning plan/class for each student!!
+                    // Why bother recursing through the entire set of vouchers?
+
+                    // DE2057 - Online class Learning Ids are different from ILT class Learning Ids
+                    Voucher__c theStudentVoucher = studentvoucherMap.get(student.voucherid);
+                    learningPlanId = theStudentVoucher.Learning_Plan__c;
+
+                    // DE2057 - onlineCourse was never set when entry point is addStudents
+                    if (theStudentVoucher.Learning_Plan__r.Classroom_Setting__c != Null
+                            && theStudentVoucher.Learning_Plan__r.Classroom_Setting__c == 'Online') onlineCourse = true;
+
+                    if (theStudentVoucher.ILT_Class__c != Null)  {
+                        classLearningId = theStudentVoucher.ILT_Class__r.redwing__Learning__c;
+                        classId = theStudentVoucher.ILT_Class__c;
+                    } else {
+                        if (theStudentVoucher.Online_Class__c != Null) {
+                            classLearningId = theStudentVoucher.Online_Class__c;
+                            classId = theStudentVoucher.Online_Class__c;
+                        }
+                    }
 
                     System.debug('students voucher lp' + learningPlanId);
                     System.debug('students voucher learning' + classLearningId);
@@ -616,6 +633,10 @@ public without sharing class ILTInstructorCommunity{
                     If (learningPlanId==null)
                     {
                         if (auraException) throw new AuraHandledException('Learning Plan is Empty'); else throw new enrollException('Learning Plan is Empty');
+                    }
+                    If (classLearningId==null)
+                    {
+                        if (auraException) throw new AuraHandledException('Class Id is Empty'); else throw new enrollException('Class Id is Empty');
                     }
                 } else {
 
@@ -654,7 +675,7 @@ public without sharing class ILTInstructorCommunity{
                                                                                  And redwing__Learning__r.redwing__Current_Published_Version__c != null];
 
             for (redwing__Training_Plan_Section_Item__c tpsi: learningPlanILTEventItem ){
-                tpsiRecordTypeMap.put(tpsi.redwing__Learning__r.recordtype.Name,tpsi ); // Used while creating learning assignments with leaprnign plan section
+                tpsiRecordTypeMap.put(tpsi.redwing__Learning__r.recordtype.Name,tpsi ); // Used while creating learning assignments with learning plan section
             }
 
             profileId = [SELECT Id, Name FROM Profile WHERE Name = 'Learner Community Profile' LIMIT 1];//Can be changed based
@@ -719,7 +740,7 @@ public without sharing class ILTInstructorCommunity{
                         if (!onlineCourse) {
                             planAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c;
                         } else {
-                            planAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c;
+                            planAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Id;
                         }
                     } else {
                         planAssignment.External_Id__c = student.Email+student.lastName+student.FirstName+classId;
@@ -816,9 +837,9 @@ public without sharing class ILTInstructorCommunity{
                         if (String.IsNotBlank(student.Voucherid) && studentvoucherMap.containskey(student.voucherid)) {
                             learningAssignment.RCO_Order_Id__c = studentvoucherMap.get((student.voucherid)).RCO_Order_Id__c;
                             if (!onlineCourse) {
-                                learningAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c+learningRecordType; //Can be chaged if needed
+                                learningAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c+learningRecordType; //Can be changed if needed
                             } else {
-                                learningAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c+learningRecordType;
+                                learningAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Id+learningRecordType;
                             }
                         } else {
                             learningAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+classId+learningRecordType; //Can be chaged if needed
@@ -839,7 +860,7 @@ public without sharing class ILTInstructorCommunity{
                             if (!onlineCourse) {
                                 lpsAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c+String.valueOf(tpsiRecordTypeMap.get(learningRecordType).redwing__Training_Plan_Section__r.redwing__Order__c);
                             } else {
-                                lpsAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c+String.valueOf(tpsiRecordTypeMap.get(learningRecordType).redwing__Training_Plan_Section__r.redwing__Order__c);
+                                lpsAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Id+String.valueOf(tpsiRecordTypeMap.get(learningRecordType).redwing__Training_Plan_Section__r.redwing__Order__c);
                             }
                         } else {
                             lpsAssignmentExternalId = student.Email+student.LastName+student.FirstName+classId+String.valueOf(tpsiRecordTypeMap.get(learningRecordType).redwing__Training_Plan_Section__r.redwing__Order__c);
@@ -876,7 +897,7 @@ public without sharing class ILTInstructorCommunity{
                                 if (!onlineCourse) {
                                     lpsAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c+String.valueOf(trpsec.redwing__Order__c);
                                 } else {
-                                    lpsAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c+String.valueOf(trpsec.redwing__Order__c);
+                                    lpsAssignment.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Id+String.valueOf(trpsec.redwing__Order__c);
                                 }
                             } else {
                                 lpsAssignment.External_Id__c = student.Email+student.lastName+student.FirstName+classId+String.valueOf(trpsec.redwing__Order__c);
@@ -889,7 +910,7 @@ public without sharing class ILTInstructorCommunity{
                                 if (!onlineCourse) {
                                     lpAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c;
                                 } else {
-                                    lpAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c;
+                                    lpAssignmentExternalId = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Id;
                                 }
                             } else {
                                 lpAssignmentExternalId = student.Email+student.lastName+student.FirstName+classId;
@@ -975,7 +996,7 @@ public without sharing class ILTInstructorCommunity{
                                         rac.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).ILT_Class__c;
                                     } else {
                                         rac.Online_Class__c = studentvoucherMap.get((student.voucherid)).Online_Class__c;
-                                        rac.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Online_Class__c;
+                                        rac.External_Id__c = student.Email+student.LastName+student.FirstName+studentvoucherMap.get((student.voucherid)).Id;
                                     }
                                 } else {
                                     rac.ILT_Class__c = classId;
@@ -1380,10 +1401,11 @@ public without sharing class ILTInstructorCommunity{
                 grade = student.Grade;
                 learningAssignment.Grade_Additional_Info__c = student.AdditionalInfo; //Can be chaged if needed
                 
-                if (grade == 'Successful') {
+                // DE2034 - Mark a student as having completed a class even if they are assigned a grade other than Successful
+                //if (grade == 'Successful') {
                     learningAssignment.redwing__Progress__c = 'Completed';
                     learningAssignment.redwing__Progress_Percentage__c = 100;
-                }
+                //}
                 
                 // DE851 - Completed On Date should be class end date, not system date                
                 if (rosterMap.containskey(student.Roster)) {
@@ -1401,11 +1423,12 @@ public without sharing class ILTInstructorCommunity{
                 { 
                     redwing__Training_Plan_Assignment__c lpa = new redwing__Training_Plan_Assignment__c();
                     lpa.id=rtpamap.get(rostermapusers.get(student.Roster));
-                    if(grade == 'Successful')
-                    {
+
+                    // DE2034 - Mark a student as having completed a class even if they are assigned a grade other than Successful
+                    //if(grade == 'Successful') {
                         lpa.redwing__Progress_Percentage__c = 100;
-                        lpa.redwing__Status__c='completed';
-                    }
+                        lpa.redwing__Status__c='Completed';
+                    //}
                     
                     // DE851 - Completed On Date should be class end date, not system date
                     if (rosterMap.containskey(student.Roster)) {
@@ -1424,10 +1447,11 @@ public without sharing class ILTInstructorCommunity{
                     for (Id theRTPSAid : rtpsamap.get(rostermapusers.get(student.Roster))) {
                         redwing__Training_Plan_Section_Assignment__c rt = new redwing__Training_Plan_Section_Assignment__c();
                         rt.id = theRTPSAid;
-                    
-                        if(grade == 'Successful'){
-                            rt.redwing__Status__c='completed';
-                        }
+
+                        // DE2034 - Mark a student as having completed a class even if they are assigned a grade other than Successful
+                        //if(grade == 'Successful'){
+                            rt.redwing__Status__c='Completed';
+                        //}
                     
                         // DE851 - Completed On Date should be class end date, not system date
                         if (rosterMap.containskey(student.Roster)) {
@@ -1498,7 +1522,8 @@ public without sharing class ILTInstructorCommunity{
 
                 // Skip for FS classes; assignment of ILT Class Id was performed when class was originally created
                 // Need to skip for FS orders may have multiple classes (therefore multiple unrelated order items)
-                if (rosterILTClass.Request_Type__c != 'Full Service') {
+                if (!rosterILTClass.Request_Type__c.contains('Full Service')) {
+                //if (rosterILTClass.Request_Type__c != 'Full Service') {
                     for (ccrz__E_OrderItem__c theOrderItem : orderItemList) {
                         System.debug('*** non-FS orderItem:' + theOrderItem);
                         ccrz__E_OrderItem__c newOrderItem = new ccrz__E_OrderItem__c();
