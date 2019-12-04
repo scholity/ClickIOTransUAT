@@ -345,6 +345,14 @@
         <relatedList>ccrz__E_PriceGroupAccount__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>ccrz__GroupName__c</fields>
+        <fields>ccrz__EffectiveStart__c</fields>
+        <fields>ccrz__EffectiveEnd__c</fields>
+        <fields>ccrz__Enabled__c</fields>
+        <relatedList>ccrz__E_PriceGroup__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>

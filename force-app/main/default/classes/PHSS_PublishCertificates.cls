@@ -9,8 +9,8 @@ public class PHSS_PublishCertificates {
     
     public void getCertificates() {
         String csvHeader;
-        List<String> csvRowValues; 
-        csvRowValues = new List<String>();    
+        //List<String> csvRowValues;
+        //csvRowValues = new List<String>();
    
         csvHeader = 'offer_id|'
                            +'reg_num|'
@@ -62,7 +62,7 @@ public class PHSS_PublishCertificates {
         String theAssignmentQuery = 'SELECT Id, Name, Firstname__c, Lastname__c, Email__c, Account__c, ';
         	theAssignmentQuery += 'ILT_Class__c, Evaluation_Result__c,redwing__Acquisition_Date__c,redwing__status__c, redwing__Achievement__c, QR_Code_Identifier__c ';
         	theAssignmentQuery += 'FROM redwing__Achievement_Assignment__c WHERE Achievement_Type__c = \'Certifications\' AND redwing__status__c = \'Acquired\' ';
-        	theAssignmentQuery += 'AND Firstname__c != null AND Lastname__c != null AND ILT_Class__c != null ';
+        	theAssignmentQuery += 'AND Firstname__c != null AND Lastname__c != null ';
         	theAssignmentQuery += incrementalExport;
         	theAssignmentQuery += 'ORDER BY Name';
         	
@@ -108,6 +108,8 @@ public class PHSS_PublishCertificates {
         }
                 
         List<Integration_Files__c> integFiles = new List<Integration_Files__c>();
+        List<redwing__Achievement_Assignment__c> exportedAchievementAssignments = new List<redwing__Achievement_Assignment__c>();
+
         String exportFileName = 'aws_cert_view_' + DateTime.Now().format('yyyyMMddhhmmss') + '_1.csv';
         Integer theSequenceNumber = 0;
         
@@ -438,22 +440,35 @@ public class PHSS_PublishCertificates {
             integrationFileRecord.File_Name__c = exportFileName;
             integrationFileRecord.Sequence_Number__c = ++theSequenceNumber;
             integrationFileRecord.Target_System__c = 'AWS';
-            integFiles.add(integrationFileRecord);    
-            
-            String concatenatedValues = String.join(dataList,'|');
-            if (concatenatedValues != null) csvRowValues.add(concatenatedValues);
+            integFiles.add(integrationFileRecord);
+
+            // DE2051 - Update Export Date field in Achievement Assignment record for all records written
+            // to Integration Files object
+            redwing__Achievement_Assignment__c exportedAssignment = new redwing__Achievement_Assignment__c();
+            exportedAssignment.Id = a.Id;
+            exportedAssignment.Export_Date__c = RunTime;
+            exportedAchievementAssignments.add(exportedAssignment);
+
+            // DE2051 - Disable the creation of a local copy of integration file (primarily used for testing)
+            //String concatenatedValues = String.join(dataList,'|');
+            //if (concatenatedValues != null) csvRowValues.add(concatenatedValues);
         }
                 
         // Write export records to Integration Files object
+        // DE2051 - Upodate achievement assignment records with date exported to integration files object
         
         try {               
             insert(integFiles);
+            update(exportedAchievementAssignments);
+
         } catch (exception e) {
         	
         }
         
         // Create local file (not needed in production)
 
+        // DE2051 - Disable the creation of a local copy of integration file (primarily used for testing)
+        /*
         String csvFileString = csvHeader + '\n' + String.join(csvRowValues,'\n');        
         
         ContentVersion v = new ContentVersion();
@@ -461,6 +476,7 @@ public class PHSS_PublishCertificates {
         v.title = 'Acquired Certificates '+String.valueOf(Date.today());
         v.PathOnClient = '/AcquiredCertificates.csv';
         insert v;
+        */
     }
 
     //commented out on 26th JUne 2019 - no longer needed - private method and not referenced in the class

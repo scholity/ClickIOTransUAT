@@ -74,7 +74,7 @@
         <description>Workflow sent to contact when they&#39;re signed up/registered for an Online Class via a Voucher.</description>
         <formula>AND( Online_Class__c  != &#39;&#39;,
        ISPICKVAL(Status__c, &#39;Claimed&#39;) , 
-       User__r.Contact.CreatedDate = DATETIMEVALUE(TODAY())  )</formula>
+       DATEVALUE(User__r.Contact.CreatedDate) = TODAY())</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

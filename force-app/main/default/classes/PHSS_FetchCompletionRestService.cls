@@ -170,7 +170,10 @@ global without sharing class PHSS_FetchCompletionRestService {
                                 if (obj_MediaLA.redwing__Evaluation_Result__c != null) {
                                     completionStatus = obj_MediaLA.redwing__Evaluation_Result__c;
                                 } else {
-                                    completionStatus = 'Not Evaluated';
+                                    // DE2041 - Force completion status of online course to 'Successful' if Evaluation Result
+                                    // for completed online course is not defined - workaround for Appinium defect
+                                    // completionStatus = 'Not Evaluated';
+                                    completionStatus = 'Successful';
                                 }
                             }
                             completionDate = obj_MediaLA.redwing__Completed_On__c != null ? obj_MediaLA.redwing__Completed_On__c.format() : '';

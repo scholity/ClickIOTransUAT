@@ -1623,8 +1623,9 @@ public without sharing class PHSS_skedJobtoILTClass {
         // US1356 - Determine if class-specific (geography-specific) pricing is defined for any job
         // *****
 
-        Map<Id, String> MapLocationToPriceList = new Map<Id, String>();
-        Map<Id, Decimal> jobPriceOverrIdeMap = new Map<Id, Decimal>();
+        Map<Id, String> locationToPriceListMap = new Map<Id, String>();
+        Map<Id, Decimal> jobPriceOverrideMap = new Map<Id, Decimal>();
+        Set<Id> priceListProducts = new Set<Id>();
 
         // Get zip code from location record referenced in Job
         for (String theLocation : locationToILTLocationZip.keySet()) {
@@ -1635,7 +1636,7 @@ public without sharing class PHSS_skedJobtoILTClass {
                 }
                 if (theZipCode != null && theZipCode.length()==5) {
                     String priceListName = 'ZIP-'+theZipCode;
-                    MapLocationToPriceList.put(theLocation, priceListName);
+                    locationToPriceListMap.put(theLocation, priceListName);
                 }
             }
         }
@@ -1650,51 +1651,57 @@ public without sharing class PHSS_skedJobtoILTClass {
 
         List<ccrz__E_PriceListItem__c> priceListItems = [SELECT ccrz__Product__c, ccrz__PriceList__r.ccrz__StartDate__c, ccrz__PriceList__r.ccrz__EndDate__c,
                 ccrz__PriceList__r.Name, ccrz__StartDate__c, ccrz__EndDate__c, ccrz__Price__c
-        FROM ccrz__E_PriceListItem__c WHERE ccrz__Product__c IN :ccProducts AND ccrz__PriceList__r.Name IN :MapLocationToPriceList.values()
+        FROM ccrz__E_PriceListItem__c WHERE ccrz__Product__c IN :ccProducts AND ccrz__PriceList__r.Name IN :locationToPriceListMap.values()
         AND ccrz__PriceList__r.ccrz__Enabled__c = True AND ccrz__PriceList__r.ccrz__Storefront__c = :storeFront];
 
         System.Debug('priceListItems='+priceListItems);
 
+        for (ccrz__E_PriceListItem__c thePriceListItem : priceListItems) {
+            priceListProducts.add(thePriceListItem.ccrz__Product__c);
+        }
+
         if (priceListItems != null && priceListItems.size() > 0) { // At least one price overrIde for location and product in job record(s)
             for (sked__Job__c curJobRecord : newRecords) {
                 if (curJobRecord.sked__Location__c != null) {
-                    String priceListName = MapLocationToPriceList.get(curJobRecord.sked__Location__c);
+                    String priceListName = locationToPriceListMap.get(curJobRecord.sked__Location__c);
                     Id courseCatalogId = jobCatalogMap.get(curJobRecord.Id);
                     if (priceListName != null && courseCatalogId != null) {
                         Id ccProductId = catalogIds.get(courseCatalogId).Id;
-                        if (ccProductId != null && curJobRecord.sked__Start__c != null) {
+                        if (ccProductId != null && curJobRecord.sked__Start__c != null && priceListProducts.contains(ccProductId)) {
                             for (ccrz__E_PriceListItem__c thePriceListItem : priceListItems) {
-                                System.debug('thePriceListItem='+thePriceListItem);
-                                System.debug('curJobRecord='+curJobRecord);
-
-                                Boolean itemStartDate = true;
-                                Boolean itemEndDate = true;
-                                Boolean ListStartDate = true;
-                                Boolean ListEndDate = true;
-                                Date classDate = curJobRecord.sked__Start__c.date();
-
-                                if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c != null) {
-                                    if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c > classDate) ListStartDate = false;
-                                }
-                                if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c != null) {
-                                    if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c < classDate) ListEndDate = false;
-                                }
-                                if (thePriceListItem.ccrz__StartDate__c != null) {
-                                    if (thePriceListItem.ccrz__StartDate__c > classDate) itemStartDate = false;
-                                }
-                                if (thePriceListItem.ccrz__EndDate__c != null) {
-                                    if (thePriceListItem.ccrz__EndDate__c < classDate) itemEndDate = false;
-                                }
-
-                                System.debug('priceListName='+priceListName);
-                                System.debug('ccProductId='+ccProductId);
-
                                 if ((thePriceListItem.ccrz__Product__c != null && thePriceListItem.ccrz__Product__c == ccProductId) &&
-                                        (thePriceListItem.ccrz__PriceList__r.Name == priceListName) &&
-                                        (itemStartDate && itemEndDate && ListStartDate && ListEndDate)) {
-                                    // Add price override to Map
-                                    System.debug('Added price overrIde');
-                                    jobPriceOverrIdeMap.put(curJobRecord.Id, thePriceListItem.ccrz__Price__c);
+                                        (thePriceListItem.ccrz__PriceList__r.Name == priceListName)) {
+                                    System.debug('thePriceListItem=' + thePriceListItem);
+                                    System.debug('curJobRecord=' + curJobRecord);
+
+                                    Boolean itemStartDate = true;
+                                    Boolean itemEndDate = true;
+                                    Boolean ListStartDate = true;
+                                    Boolean ListEndDate = true;
+                                    Date classDate = curJobRecord.sked__Start__c.date();
+
+                                    if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c != null) {
+                                        if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c > classDate) ListStartDate = false;
+                                    }
+                                    if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c != null) {
+                                        if (thePriceListItem.ccrz__PriceList__r.ccrz__EndDate__c < classDate) ListEndDate = false;
+                                    }
+                                    if (thePriceListItem.ccrz__StartDate__c != null) {
+                                        if (thePriceListItem.ccrz__StartDate__c > classDate) itemStartDate = false;
+                                    }
+                                    if (thePriceListItem.ccrz__EndDate__c != null) {
+                                        if (thePriceListItem.ccrz__EndDate__c < classDate) itemEndDate = false;
+                                    }
+
+                                    System.debug('priceListName=' + priceListName);
+                                    System.debug('ccProductId=' + ccProductId);
+
+                                    if (itemStartDate && itemEndDate && ListStartDate && ListEndDate) {
+                                        // Add price override to Map
+                                        System.debug('Added price overrIde');
+                                        jobPriceOverrIdeMap.put(curJobRecord.Id, thePriceListItem.ccrz__Price__c);
+                                        break;
+                                    }
                                 }
                             }
                         }
