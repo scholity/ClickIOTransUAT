@@ -153,9 +153,16 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>sOrderItem.ccrz__OrderItemStatus__c</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Order Submitted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>sOrderItem.ccrz__OrderItemStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Process</stringValue>
                 </rightValue>
             </conditions>
             <connector>

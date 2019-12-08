@@ -26,6 +26,27 @@ public class SubmitOrderCreditController
         return isCreditOnAccount;
     }
     
+    @AuraEnabled 
+    public static boolean isSubmittedBefore(String orderId)
+    {
+		boolean isSubmitted = false;
+        
+        ccrz__E_Order__c ccOrder = [SELECT  Id,
+											(SELECT Id
+												    FROM ccrz__TransactionPayments__r),
+                                    		ccrz__Order__c
+                                       FROM ccrz__E_Order__c
+                                   	  WHERE Id =: orderId];
+
+		if(ccOrder.ccrz__TransactionPayments__r.size() > 0)
+		{
+			isSubmitted = true;
+		}
+
+		return isSubmitted;
+
+	}
+    
 	@AuraEnabled   
     public  static void submitOrderCredit(String orderId, Boolean hasCreditOnAccount)
     {
@@ -65,7 +86,7 @@ public class SubmitOrderCreditController
 												   FROM ccrz__E_Orders__r),
 												(SELECT Id
 												   FROM ccrz__TransactionPayments__r
-                                                  WHERE ccrz__TransactionType__c = 'CAPTURE') /*DE1935*/
+                                                  WHERE ccrz__TransactionType__c IN ('CAPTURE', null)) /*DE1935 - DE2058 added null*/
 												   
 										   FROM ccrz__E_Order__c
 										  WHERE Id =: ccCreditOrder.ccrz__Order__c];
@@ -137,6 +158,7 @@ public class SubmitOrderCreditController
 			newTransPayment.ccrz__PaymentType__c				= tPayment.ccrz__PaymentType__c;
             newTransPayment.ccrz__Amount__c 					= ccCreditOrder.ccrz__SubtotalAmount__c;
             newTransPayment.ccrz__TransactionPaymentId__c		= '';
+            newTransPayment.ccrz__CurrencyISOCode__c	 		= 'USD';
             newTransPayment.ccrz__SourceTransactionPayment__c 	= tPayment.Id;			/*DE1935*/
             newTransPayment.ccrz__TransactionType__c			= 'CREDIT';				/*DE1935*/
 

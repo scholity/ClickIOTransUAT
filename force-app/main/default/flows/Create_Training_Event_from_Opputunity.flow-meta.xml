@@ -197,9 +197,9 @@
             </conditions>
             <conditions>
                 <leftValueReference>sOppty.Training_Events_Created__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -211,8 +211,8 @@
     <decisions>
         <name>Created_Training_Events</name>
         <label>Created Training Events</label>
-        <locationX>589</locationX>
-        <locationY>304</locationY>
+        <locationX>591</locationX>
+        <locationY>309</locationY>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
             <name>Any_Training_Events_Created</name>

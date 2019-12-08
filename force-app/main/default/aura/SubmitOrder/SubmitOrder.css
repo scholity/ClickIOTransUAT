@@ -5,3 +5,7 @@
   z-index: 10000;
   position: fixed;   
 }
+.THIS.afterSubmitted{
+  width: 100% !important;
+  background-color: grey !important;
+}

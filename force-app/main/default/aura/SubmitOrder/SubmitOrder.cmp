@@ -77,4 +77,11 @@
         </div>
         
     </aura:if>
+    <aura:if isTrue="{!v.stepNumber == 'Two'}" >
+        
+        <lightning:button label		= "Submit Order Credit"
+                          title		= "Submit Order Credit"
+                          class		= "slds-button_brand afterSubmitted"/>
+        
+    </aura:if>
 </aura:component>

@@ -2,15 +2,8 @@
 <Skill xmlns="http://soap.sforce.com/2006/04/metadata">
     <assignments>
         <users>
-            <user>amie.wilson@redcross.org</user>
-            <user>chelsi.carr@redcross.org</user>
             <user>christa.angelo@redcross.org</user>
-            <user>gregory.fulton@redcross.org</user>
-            <user>heather.ware@redcross.org</user>
             <user>mark.pyles@redcross.org</user>
-            <user>stephanie.bigley@redcross.org</user>
-            <user>tanya.franklin@redcross.org</user>
-            <user>trina.levy@redcross.org</user>
         </users>
     </assignments>
     <label>TSC Chat Agent Skill</label>

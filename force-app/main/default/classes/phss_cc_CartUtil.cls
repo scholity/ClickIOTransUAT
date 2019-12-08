@@ -31,6 +31,10 @@ public with sharing class phss_cc_CartUtil {
     private static final String ADDRESS_TYPE_BILLING = 'Billing';
     private static final String ADDRESS_TYPE_SHIPPING = 'Shipping';
     private static final String ADDRESS_TYPE_KEY = 'AddressType';
+    private static final String CLASS_ID_KEY = 'classId';
+    private static final String COUNT_KEY = 'count';
+    private static final String COURSE_ID_KEY = 'courseId';
+    private static final String ILT_CLASS_FIELD = 'ILT_Class__c';
 
     @TestVisible private static final String CART_ENCRYPTED_ID_KEY = 'encryptedCartId';
     @TestVisible private static final String PRODUCT_LIST_KEY = 'productList';
@@ -344,6 +348,55 @@ public with sharing class phss_cc_CartUtil {
             throw new phss_cc_Exception(e.getMessage());
         }
     }
+
+
+    public static Map<String, Object> addCoursesToCart(String opportunityId, List<Map<String, Object>> quantities) {
+
+        Map<String, Object> cartData;
+
+        try {
+            phss_cc_Context.setContext(opportunityId);
+
+            String encryptedCartId;
+            if (phss_cc_Context.currCart == null) {
+                encryptedCartId = createNewCart();
+            } else {
+                encryptedCartId = phss_cc_Context.currCart.ccrz__EncryptedId__c;
+                delete [
+                        SELECT Id
+                        FROM ccrz__E_CartItem__c
+                        WHERE ccrz__Cart__c = :phss_cc_Context.currCart.Id
+                ];
+            }
+
+            List<Map<String, Object>> lineData = createLineItemsFromQuantities(quantities);
+            Map<String, Object> addToResult = cartAddTo(lineData, encryptedCartId);
+            cartData = retrieveLineItemsAndTotalAmountFromCart(addToResult, false);
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(e.getMessage());
+        }
+
+        return cartData;
+    }
+
+
+    public static List<Map<String, Object>> createLineItemsFromQuantities(List<Map<String, Object>> quantities) {
+
+        List<Map<String, Object>> lineItems = new List<Map<String, Object>>();
+        for (Map<String, Object> quantity : quantities) {
+            Map<String, Object> lineItem = new Map<String, Object>();
+            lineItem.put(ccrz.ccApiCart.LINE_DATA_PRODUCT_SFID, quantity.get(COURSE_ID_KEY));
+            lineItem.put(ccrz.ccApiCart.LINE_DATA_QUANTITY, quantity.get(COUNT_KEY));
+            if (quantity.containsKey(CLASS_ID_KEY)) {
+                lineItem.put(ILT_CLASS_FIELD, quantity.get(CLASS_ID_KEY));
+            }
+            lineItems.add(lineItem);
+        }
+
+        return lineItems;
+    }
+
 
     /**
      * @description Updates the quantity of the cart items
