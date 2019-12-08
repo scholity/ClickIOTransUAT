@@ -303,6 +303,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Discount not on account</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Donations</fullName>
             <default>false</default>
         </values>
@@ -495,6 +499,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>No Issue found</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>No Show Instructor</fullName>
             <default>false</default>
         </values>
@@ -540,6 +548,10 @@
         </values>
         <values>
             <fullName>Presentation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pricing not on account</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3361,6 +3373,10 @@
         </values>
         <values>
             <fullName>Pro Bono Requests</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RCLC Account Inquiry</fullName>
             <default>false</default>
         </values>
         <values>

@@ -278,6 +278,11 @@
                 <label>Disaster</label>
             </value>
             <value>
+                <fullName>Discount not on account</fullName>
+                <default>false</default>
+                <label>Discount not on account</label>
+            </value>
+            <value>
                 <fullName>Donations</fullName>
                 <default>false</default>
                 <label>Donations</label>
@@ -573,6 +578,11 @@
                 <label>No Coupon Created</label>
             </value>
             <value>
+                <fullName>No Issue found</fullName>
+                <default>false</default>
+                <label>No Issue found</label>
+            </value>
+            <value>
                 <fullName>No Show Instructor</fullName>
                 <default>false</default>
                 <label>No Show Instructor</label>
@@ -626,6 +636,11 @@
                 <fullName>Presentation</fullName>
                 <default>false</default>
                 <label>Presentation</label>
+            </value>
+            <value>
+                <fullName>Pricing not on account</fullName>
+                <default>false</default>
+                <label>Pricing not on account</label>
             </value>
             <value>
                 <fullName>Product complaint</fullName>
@@ -1028,6 +1043,18 @@
         <valueSettings>
             <controllingFieldValue>Coupons</controllingFieldValue>
             <valueName>No Coupon Created</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RCLC Account Inquiry</controllingFieldValue>
+            <valueName>Discount not on account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RCLC Account Inquiry</controllingFieldValue>
+            <valueName>No Issue found</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RCLC Account Inquiry</controllingFieldValue>
+            <valueName>Pricing not on account</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Special Processes</controllingFieldValue>

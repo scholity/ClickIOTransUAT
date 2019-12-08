@@ -651,7 +651,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Order_Status_Controller-39</fullName>
+            <fullName>Order_Status_Controller-47</fullName>
         </flows>
         <fullName>Order_Status_Controller</fullName>
     </flowDefinitions>
@@ -708,7 +708,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Transaction_Payment_Controller-22</fullName>
+            <fullName>Transaction_Payment_Controller-24</fullName>
         </flows>
         <fullName>Transaction_Payment_Controller</fullName>
     </flowDefinitions>
@@ -717,6 +717,12 @@
             <fullName>Contract_Controller-1</fullName>
         </flows>
         <fullName>Contract_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Migrate_Opportunity_and_Training_Events-1</fullName>
+        </flows>
+        <fullName>Migrate_Opportunity_and_Training_Events</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -866,7 +872,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Create_Training_Event_from_Opputunity-19</fullName>
+            <fullName>Create_Training_Event_from_Opputunity-20</fullName>
         </flows>
         <fullName>Create_Training_Event_from_Opputunity</fullName>
     </flowDefinitions>
@@ -1137,6 +1143,12 @@
             </screens>
         </flows>
         <fullName>Training_Event_Migration</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Manage_B2C_Fulfillment-10</fullName>
+        </flows>
+        <fullName>Manage_B2C_Fulfillment</fullName>
     </flowDefinitions>
     <flowDefinitions>
         <flows>
@@ -1567,6 +1579,18 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
+            <fullName>Open_Order_Controller-1</fullName>
+        </flows>
+        <fullName>Open_Order_Controller</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
+            <fullName>Process_Open_Order_from_Invoice-1</fullName>
+        </flows>
+        <fullName>Process_Open_Order_from_Invoice</fullName>
+    </flowDefinitions>
+    <flowDefinitions>
+        <flows>
             <fullName>Credit_Balance_Return-7</fullName>
         </flows>
         <fullName>Credit_Balance_Return</fullName>
@@ -1694,7 +1718,7 @@
     </flowDefinitions>
     <flowDefinitions>
         <flows>
-            <fullName>Assign_Vouchers_for_Online_Class-13</fullName>
+            <fullName>Assign_Vouchers_for_Online_Class-14</fullName>
         </flows>
         <fullName>Assign_Vouchers_for_Online_Class</fullName>
     </flowDefinitions>

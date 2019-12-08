@@ -35,10 +35,14 @@
 
             if (state === 'SUCCESS') {
                 var returnValue = response.getReturnValue();
-
                 if (returnValue != null && returnValue.Error == null) {
                     component.set('v.encryptedCartId', returnValue.encryptedCartId);
                     component.set('v.productQuantityMap', returnValue.productQuantityMap);
+
+                    if (returnValue.hasOwnProperty('cartItemMap')) {
+                        var cartItemMap = returnValue.cartItemMap;
+                        this.resetQuantities(component, cartItemMap);
+                    }
                 } else if (returnValue != null && returnValue.Error != null) {
                     this.showToastMessage('Error Fetching Active Cart', returnValue.Error, 'Error')
                 }
@@ -112,12 +116,13 @@
      * @param helper
      */
     addToCartRequest: function (component, event, helper) {
-        var opportunitySfid = component.get('v.recordId');
-        var productQuantityMap = component.get('v.productQuantityMap');
-        var action = component.get('c.addProductsToCart');
+
+        var opportunityId = component.get('v.recordId');
+        var quantities = component.get('v.quantities');
+        var action = component.get('c.addCoursesToCart');
         action.setParams({
-            opportunitySfid: opportunitySfid,
-            productQuantityMap: productQuantityMap
+            opportunityId: opportunityId,
+            quantities: quantities
         });
 
         action.setCallback(this, function (response) {
@@ -127,7 +132,6 @@
                 var returnValue = response.getReturnValue();
                 if (returnValue != null && returnValue.Error == null) {
                     component.set('v.encryptedCartId', returnValue.encryptedCartId);
-                    component.set('v.productQuantityMap', returnValue.productQuantityMap);
                     this.showToastMessage('Success', 'Successfully added products to the cart.', 'Success');
                     component.set('v.searchQuery', '');
                     var updateEvent = $A.get('e.c:phss_cc_RefreshComponentEvent');
@@ -176,6 +180,86 @@
             }
         }
         component.set('v.availableProductSpecs', options.sort());
+    },
+
+    /**
+     * @description Resets the quantities for cart items
+     * @param component
+     * @param cartItemMap
+     */
+    resetQuantities: function (component, cartItemMap) {
+
+        var quantities = [];
+        var cartItemIds = Object.keys(cartItemMap);
+        for (var i = 0; i < cartItemIds.length; i++) {
+            var cartItemId = cartItemIds[i];
+            var cartItem = cartItemMap[cartItemId];
+            var quantityInfo = {};
+            quantityInfo['courseId'] = cartItem['ccrz__Product__c'];
+            quantityInfo['count'] = cartItem['ccrz__Quantity__c'];
+            if (cartItem.hasOwnProperty('ILT_Class__c')) {
+                quantityInfo['classId'] = cartItem['ILT_Class__c'];
+            }
+            quantities.push(quantityInfo);
+        }
+        component.set('v.quantities', quantities);
+        console.log('JASON: resetQuantities(): ' + JSON.stringify(quantities));
+    },
+
+    /**
+     * @description Decrements the count for a course specified by a product ID
+     * @param quantities
+     * @param productId
+     */
+    decrementProductQuantity: function (quantities, productId) {
+
+        var index = -1;
+        var quantity = null;
+
+        for (var i = 0; i < quantities.length; i++) {
+            var q = quantities[i];
+            if (q['courseId'] == productId && !q.hasOwnProperty('classId')) {
+                index = i;
+                quantity = quantities[i];
+                break;
+            }
+        }
+
+        if (quantity !== null) {
+            var count = quantity['count'];
+            if (count > 1) {
+                quantity['count'] = quantity['count'] - 1;
+            } else {
+                quantities.splice(index, 1);
+            }
+        }
+    },
+
+    /**
+     * @description Increments the count for a course specified by a product ID
+     * @param quantities
+     * @param productId
+     */
+    incrementProductQuantity: function (quantities, productId) {
+
+        var quantity = null;
+
+        for (var i = 0; i < quantities.length; i++) {
+            var q = quantities[i];
+            if (q['courseId'] == productId && !q.hasOwnProperty('classId')) {
+                quantity = quantities[i];
+                break;
+            }
+        }
+
+        if (quantity !== null) {
+            quantity['count'] = quantity['count'] + 1;
+        } else {
+            quantity = {};
+            quantity['courseId'] = productId;
+            quantity['count'] = 1;
+            quantities.push(quantity);
+        }
     },
 
     /**

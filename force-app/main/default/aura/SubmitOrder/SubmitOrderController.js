@@ -2,6 +2,7 @@
     doInit : function(component,event,helper)
     {
         helper.checkOnAccount(component,event,helper);
+        helper.checkBeforeSubmitted(component,event,helper);
     },
     
     showStep1 : function(component,event,helper)
@@ -53,9 +54,9 @@
                         "message" : "Order Credit on Account Submitted Successfully.",
                         "type"    : "success"
                     });
-                    toastEvent.fire();
-                    $A.get("e.force:refreshView").fire();
-                    component.set("v.stepNumber", "Zero");
+                    //toastEvent.fire();
+                    //$A.get("e.force:refreshView").fire();
+                    component.set("v.stepNumber", "Two");
                 }
                 
             });
@@ -78,9 +79,9 @@
                         "message" : "Order Credit Submitted Successfully.",
                         "type"    : "success"
                     });
-                    toastEvent.fire();
-                    $A.get("e.force:refreshView").fire();
-                    component.set("v.stepNumber", "Zero");
+                    //toastEvent.fire();
+                    //$A.get("e.force:refreshView").fire();
+                    component.set("v.stepNumber", "Two");
                 }
                 
             });

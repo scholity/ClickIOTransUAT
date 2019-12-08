@@ -78,8 +78,13 @@ private class PHSS_eCommerceIntegrationFilesTest {
         
 
         Test.startTest();
-        PHSS_eCommerceIntegrationFiles inst = new PHSS_eCommerceIntegrationFiles();
-        inst.getAllCommunityClasses();
+        //PHSS_eCommerceIntegrationFilesBatch bp = new PHSS_eCommerceIntegrationFilesBatch();
+        //Database.executeBatch(bp, 500);
+        PHSS_eCommerceIntegFilesSchedulable scheduleJob = new PHSS_eCommerceIntegFilesSchedulable();
+        String scheduleExpr = '0 0 5 * * ?';
+        System.schedule('Test eCommerce Export', scheduleExpr, scheduleJob);
+        //PHSS_eCommerceIntegrationFiles inst = new PHSS_eCommerceIntegrationFiles();
+        //inst.getAllCommunityClasses();
         Test.stopTest();
     }    
 }

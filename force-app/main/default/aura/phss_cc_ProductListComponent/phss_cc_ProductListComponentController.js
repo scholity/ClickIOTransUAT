@@ -60,6 +60,9 @@
         }
 
         component.set('v.productQuantityMap', productQuantityMap);
+
+        var quantities = component.get('v.quantities');
+        helper.incrementProductQuantity(quantities, productSfid);
     },
 
     /**
@@ -78,6 +81,9 @@
             productQuantityMap[productSfid] = Number(productQuantityMap[productSfid]) - 1;
         }
         component.set('v.productQuantityMap', productQuantityMap);
+
+        var quantities = component.get('v.quantities');
+        helper.decrementProductQuantity(quantities, productSfid);
     },
 
     /**

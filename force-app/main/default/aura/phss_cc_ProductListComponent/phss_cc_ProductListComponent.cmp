@@ -11,6 +11,7 @@
     <!--Variables to maintain a cart on the front end-->
     <aura:attribute name="encryptedCartId" type="String" default=""/>
     <aura:attribute name="productQuantityMap" type="Map" default="{}"/>
+    <aura:attribute name="quantities" type="List" default="[]"/>
 
     <!--Booleans for changing component visibility-->
     <aura:attribute name="renderComplete" type="Boolean" default="false"/>
@@ -119,7 +120,7 @@
 
         <aura:set attribute="else">
             <div class="slds-border--top slds-border--bottom">
-                <lightning:formattedText class="slds-align_absolute-center slds-text-heading--small"
+                <lightning:formattedText class="slds-align_absolute-center slds-text-heading--small slds-p-vertical_large"
                                          value="{!$Label.c.ProductSearch_OnLoad_Message}"/>
             </div>
         </aura:set>

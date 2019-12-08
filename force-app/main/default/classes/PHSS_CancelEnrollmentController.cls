@@ -157,7 +157,7 @@ public without sharing class PHSS_CancelEnrollmentController {
         else if(recId.startsWith(keyPrefixlrnas)) {
 	
 	        // Remove Learning Assignment
-	        List<redwing__Learning_Assignment__c> LearningAssignmentList = [Select Id,redwing__User__c,redwing__Training_Plan__c 
+	        List<redwing__Learning_Assignment__c> LearningAssignmentList = [Select Id,redwing__User__c,redwing__Training_Plan__c, redwing__Learning__c
 	                                                            From redwing__Learning_Assignment__c 
 	                                                            Where Id = :recId and Learning_Record_Type__c = 'Media'];
 	        
@@ -185,7 +185,29 @@ public without sharing class PHSS_CancelEnrollmentController {
 	                                                                          From redwing__Achievement_Assignment__c 
 	                                                                          Where redwing__User__c = :LearningAssignmentList[0].redwing__User__c AND 
 	                                                                          redwing__Training_Plan_Achievement__c IN :LearningPlanAchivementList];
-	            
+
+				// Release voucher -
+				List<Voucher__c> voucherList = [Select Id From Voucher__c Where User__c = :LearningAssignmentList[0].redwing__User__c AND
+						Learning_Plan__c = :LearningAssignmentList[0].redwing__Training_Plan__c AND
+						Online_Class__c = :LearningAssignmentList[0].redwing__Learning__c];
+
+				if(!voucherList.isEmpty()) {
+					// Keep voucher on cancel to retain financial information
+					Voucher__c updatedVoucher = new Voucher__c();
+					updatedVoucher.Id = voucherList[0].Id;
+					updatedVoucher.Status__c = 'Void';
+
+					update updatedVoucher;
+
+					// Generate replacement voucher for seat that has just opened in class - this will keep inventory valid
+					Voucher__c newVoucher = new Voucher__c();
+					newVoucher.Status__c = 'Issued';
+					newVoucher.Learning_Plan__c = LearningAssignmentList[0].redwing__Training_Plan__c;
+					newVoucher.Online_Class__c = LearningAssignmentList[0].redwing__Learning__c;
+
+					insert newVoucher;
+				}
+
 	            delete LearningAssignmentList;        
 	            delete LearningPlanAssignmentList; 
 	        	// Deleting the Learning Plan Assignment also results in the deletion of all Learning Plan Section Assignments 	            

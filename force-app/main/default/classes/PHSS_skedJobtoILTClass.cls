@@ -376,12 +376,19 @@ public without sharing class PHSS_skedJobtoILTClass {
         Set<Id> resourceIds = new Set<Id>();
         
         Set<Id> jobIds = new Set<Id>();
-        Set<Id> masterJobIds = new Set<Id>();              
+        Set<Id> masterJobIds = new Set<Id>();
+        Set<String> courseCodes = new Set<String>();
 
         // Build a Map of Skedulo Course Catalog Id to Job Id, and all Locations and Jobs in Scope
-        
+        for (sked__Job__c theJob : newRecords) {
+            if (String.isNotBlank(theJob.Course_Code__c)) {
+                courseCodes.add(theJob.Course_Code__c);
+            }
+        }
+
         // Get a Map of all course catalog available to match it with course code in Stacked class
-        for(Course_Catalog__c cc:[SELECT Name, Id, Number_of_Instructors__c FROM Course_Catalog__c WHERE Type__c!=NULL LIMIT 10000])
+        for (Course_Catalog__c cc:[SELECT Name, Id, Number_of_Instructors__c FROM Course_Catalog__c
+            WHERE Name IN :courseCodes])
         {
             CCwithIds.put(cc.name, cc.Id);
         }
@@ -1660,12 +1667,12 @@ public without sharing class PHSS_skedJobtoILTClass {
             priceListProducts.add(thePriceListItem.ccrz__Product__c);
         }
 
-        if (priceListItems != null && priceListItems.size() > 0) { // At least one price overrIde for location and product in job record(s)
+        if (priceListItems != null && priceListItems.size() > 0) { // At least one price override for location and product in job record(s)
             for (sked__Job__c curJobRecord : newRecords) {
                 if (curJobRecord.sked__Location__c != null) {
                     String priceListName = locationToPriceListMap.get(curJobRecord.sked__Location__c);
                     Id courseCatalogId = jobCatalogMap.get(curJobRecord.Id);
-                    if (priceListName != null && courseCatalogId != null) {
+                    if (priceListName != null && courseCatalogId != null && catalogIds.get(courseCatalogId) != null) {
                         Id ccProductId = catalogIds.get(courseCatalogId).Id;
                         if (ccProductId != null && curJobRecord.sked__Start__c != null && priceListProducts.contains(ccProductId)) {
                             for (ccrz__E_PriceListItem__c thePriceListItem : priceListItems) {
