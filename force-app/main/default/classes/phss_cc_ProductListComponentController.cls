@@ -67,10 +67,6 @@ public with sharing class phss_cc_ProductListComponentController {
     @AuraEnabled
     public static Map<String, Object> addCoursesToCart(String opportunityId, List<Map<String, Object>> quantities) {
 
-        System.debug('JASON: phss_cc_ProductListComponentController.addCoursesToCart()');
-        System.debug('opportunityId=' + opportunityId);
-        System.debug('quantities=' + JSON.serialize(quantities));
-
         Map<String, Object> result;
         try {
             result = phss_cc_CartUtil.addCoursesToCart(opportunityId, quantities);

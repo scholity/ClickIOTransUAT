@@ -33,7 +33,7 @@
             <assignToReference>sOrderItem.ccrz__OrderItemStatus__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Process</stringValue>
+                <stringValue>Shipped</stringValue>
             </value>
         </assignmentItems>
         <connector>

@@ -23,8 +23,8 @@ public class PHSS_VoucherTriggerHandler {
     ** It uses a floor and ceiling of 5 and 10 by default (insure that there are at least 10 open vouchers when the total drops below 5)
     ************************************************************************************************************************************/
     public void CheckTotalAvailableOnlineVouchers(list<Voucher__c> newVouchers, List<Voucher__c> oldVouchers, Map<ID,Voucher__c> newVoucherMap , Map<ID,Voucher__c> oldVoucherMap){
-        Integer voucherFloor = 5;
-        Integer voucherCeiling = 10;
+        Integer voucherFloor = 25;
+        Integer voucherCeiling = 75;
         
         Set<id> onlineClasses = new Set<id>();
         Map<Id, Id> classLearningPlan = new Map<Id,Id>();

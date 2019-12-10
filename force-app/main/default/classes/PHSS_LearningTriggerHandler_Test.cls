@@ -34,18 +34,11 @@ public without sharing class PHSS_LearningTriggerHandler_Test {
     }
     
     @isTest
-    static void test1() {
-        
-        // Create Learning record (Media)
-        redwing__Learning__c learning = new redwing__Learning__c();
-        learning.Name = 'Test Learning 123';
-        learning.redwing__Published__c = true;
-        learning.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('Media').getRecordTypeId();
-		insert learning;
-        
+    static void test1() {        
         // training plan
         redwing__Training_Plan__c lplan = new redwing__Training_Plan__c();
         lplan.Name = 'Learning Plan 1';
+        lplan.Classroom_Setting__c='Online';
         insert lplan;
         
         // training plan section
@@ -53,6 +46,13 @@ public without sharing class PHSS_LearningTriggerHandler_Test {
         lplansection.Name = 'Learning Plan 1 Section 1';
         lplansection.redwing__Training_Plan__c = lplan.Id;
         insert lplansection;
+        
+        // Create Learning record (Media)
+        redwing__Learning__c learning = new redwing__Learning__c();
+        learning.Name = 'Test Learning 123';
+        learning.redwing__Published__c = true;
+        learning.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('Media').getRecordTypeId();
+		insert learning;
         
         // training plan section item
         redwing__Training_Plan_Section_Item__c lplansectionitem = new redwing__Training_Plan_Section_Item__c();
@@ -62,7 +62,7 @@ public without sharing class PHSS_LearningTriggerHandler_Test {
 
         Test.startTest();
         redwing__Learning__c learningUpdate = new redwing__Learning__c();
-        learningUpdate.Id = learning.Id;
+        learningUpdate.Id = learning.Id;     
         learningUpdate.Name = 'Test Learning 456'; // Change name to force update
         update learningUpdate;        
         Test.stopTest();
@@ -70,7 +70,8 @@ public without sharing class PHSS_LearningTriggerHandler_Test {
         //Validate
         List<Id> learningIds = new List<Id>{learning.Id};
         List<Voucher__c> vouchers = [SELECT Id FROM Voucher__c WHERE Online_Class__c IN :learningIds];
-        System.assertEquals(vouchers.size(), 10);
+        // Ceiling currently set to 75
+        System.assertEquals(75, vouchers.size());
 
 
     }

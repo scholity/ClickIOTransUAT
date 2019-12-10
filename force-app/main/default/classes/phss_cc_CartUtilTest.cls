@@ -88,6 +88,25 @@ public with sharing class phss_cc_CartUtilTest {
         System.assertEquals(productQuantityMap.size(), currCartItemsSOQL.size());
     }
 
+    @IsTest
+    static void testAddCoursesToCart() {
+
+        setupTestData();
+
+        Test.startTest();
+        ccrz__E_Product__c product = products[0];
+        List<Map<String, Object>> quantities = new List<Map<String, Object>>{
+                new Map<String, Object>{
+                        phss_cc_CartUtil.COURSE_ID_KEY => product.Id,
+                        phss_cc_CartUtil.COUNT_KEY => 1
+                }
+        };
+        Map<String, Object> result = phss_cc_CartUtil.addCoursesToCart(testOpportunity.Id, quantities);
+        Test.stopTest();
+
+        System.assert(result != null);
+    }
+
     /**
      * @description Tests if the active cart was correctly fetched.
      */

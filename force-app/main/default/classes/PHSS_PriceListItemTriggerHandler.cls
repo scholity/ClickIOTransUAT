@@ -14,13 +14,19 @@ public class PHSS_PriceListItemTriggerHandler {
 
 		// List of products with modified prices at the price item level
 		
-		Set <Id> pricelistItemIds = new Set <Id>();
+		Set <Id> priceListItemIds = new Set <Id>();
+        Set <Id> priceListProducts = new Set <Id>();
 		
 		for (ccrz__E_PriceListItem__c theNewPLItem : newPLItems) {
 			Decimal newPrice = theNewPLItem.ccrz__Price__c;
 			if (oldPLItemMap.get(theNewPLItem.Id) != null) {
+				// Presence of an old PriceListItemId indicates an existing PriceListItemId is being updated;
+				// process only if price field has been updated
 				Decimal oldPrice = oldPLItemMap.get(theNewPLItem.Id).ccrz__Price__c;
-				if (oldPrice != null && newPrice != oldPrice) pricelistItemIds.add(theNewPLItem.Id);
+				if (oldPrice != null && newPrice != oldPrice) priceListItemIds.add(theNewPLItem.Id);
+			} else {
+				// Lack of an old PriceListItemId indicates a new PriceListItemId is being inserted; force processing
+				priceListItemIds.add(theNewPLItem.Id);
 			}
 		}
 		
@@ -28,7 +34,7 @@ public class PHSS_PriceListItemTriggerHandler {
 		List <ccrz__E_PriceListItem__c> pricelistNames = [Select Id, ccrz__StartDate__c, ccrz__EndDate__c, ccrz__Product__c, ccrz__Price__c, 
 			ccrz__Pricelist__r.Name, ccrz__Pricelist__r.ccrz__StartDate__c, ccrz__Pricelist__r.ccrz__EndDate__c, 
 			ccrz__Pricelist__r.ccrz__StoreFront__c From ccrz__E_PriceListItem__c 
-			Where Id In :pricelistItemIds];
+			Where Id In :priceListItemIds];
 			
 		Set <String> zipCodes = new Set<String>();
 		Map <String, Set<ccrz__E_PriceListItem__c>> zipcodeItemMap = new Map <String, Set<ccrz__E_PriceListItem__c>>();
@@ -43,6 +49,7 @@ public class PHSS_PriceListItemTriggerHandler {
 						Set<ccrz__E_PriceListItem__c> priceOverrides = new Set<ccrz__E_PriceListItem__c>();
 						if (zipcodeItemMap.get(zipCode) != null) priceOverrides = zipcodeItemMap.get(zipCode);
 						priceOverrides.add(thePriceListItem);
+                        priceListProducts.add(thePriceListItem.ccrz__Product__c);
 						zipcodeItemMap.put(zipCode, priceOverrides);
 					}
 				}	
@@ -50,42 +57,38 @@ public class PHSS_PriceListItemTriggerHandler {
 		}
 		System.debug('zipCodes='+zipCodes);
 		System.debug('zipcodeItemMap='+zipcodeItemMap);
+        System.debug('priceListProducts='+priceListProducts);
 		
 		// Find all Community classes for these products being delivered to a location with these zip codes
 		
-		List<redwing__ILT_Session__c> communityClassSessions = [Select Id, redwing__ILT_Class__r.Id, redwing__ILT_Class__r.Price_Override__c,
-			redwing__Location__r.redwing__Postal_Code__c, redwing__ILT_Class__r.Request_Type__c,
-			redwing__ILT_Class__r.Cloud_Craze_Product__c, redwing__Date__c, Skedulo_Job_Id__c
-			From redwing__ILT_Session__c
-			Where redwing__Location__r.redwing__Postal_Code__c In :zipCodes AND redwing__ILT_Class__r.Request_Type__c = 'Community'
-				AND redwing__Date__c >= TODAY Order by Skedulo_Job_Id__c];
-		System.debug('Number of communityClassSession='+communityClassSessions.size());
+		List<redwing__ILT_Class__c> communityClasses = [Select Id, Price_Override__c, redwing__Location__r.redwing__Postal_Code__c,  
+			Request_Type__c, Cloud_Craze_Product__c, redwing__Start_Date__c, Skedulo_Job_Id__c
+			From redwing__ILT_Class__c
+			Where redwing__Location__c != null AND Cloud_Craze_Product__c != null 
+                AND redwing__Location__r.redwing__Postal_Code__c In :zipCodes 
+                AND Cloud_Craze_Product__c IN :priceListProducts                                        
+                AND Request_Type__c = 'Community'
+				AND redwing__Start_Date__c >= TODAY Order by Skedulo_Job_Id__c];
+		System.debug('Number of communityClasses='+communityClasses.size());
 				
         Set <Id> classIds = new Set<Id>();
         List <redwing__ILT_Class__c> updatedClasses = new List <redwing__ILT_Class__c>();
         
-        // Skip all but the first session for a class (arbitrary which one is processed first)
-        Id lastILTClass;
-        for (redwing__ILT_Session__c theSession : communityClassSessions) {
-			if (lastILTClass == null) {
-				lastILTClass = theSession.redwing__ILT_Class__r.Id;
-			} else {
-				if (lastILTClass != theSession.redwing__ILT_Class__r.Id) {
-					lastILTClass = theSession.redwing__ILT_Class__r.Id;
-				} else continue;
-			}
-        	if (theSession.redwing__ILT_Class__r.Price_Override__c != null) {
-        		Set<ccrz__E_PriceListItem__c> priceOverrides = zipcodeItemMap.get(theSession.redwing__Location__r.redwing__Postal_Code__c);
+        for (redwing__ILT_Class__c theClass : communityClasses) {
+			// DE2051 - 12-7-2019 (SJC) - Removed this constraint per Dalia 
+			// Update ILT Class (if override exists) regardless of whether there is an existing price override value in current ILT Class record
+        	//if (theSession.redwing__ILT_Class__r.Price_Override__c != null) {
+        		Set<ccrz__E_PriceListItem__c> priceOverrides = zipcodeItemMap.get(theClass.redwing__Location__r.redwing__Postal_Code__c);
         		
         		for (ccrz__E_PriceListItem__c thePriceListItem : priceOverrides) {
-	        		if (thePriceListItem != null && theSession.redwing__ILT_Class__r.Cloud_Craze_Product__c != null &&
-	        			thePriceListItem.ccrz__Product__c == theSession.redwing__ILT_Class__r.Cloud_Craze_Product__c) {
+	        		if (thePriceListItem != null && theClass.Cloud_Craze_Product__c != null &&
+	        			thePriceListItem.ccrz__Product__c == theClass.Cloud_Craze_Product__c) {
 	        			
 			        	Boolean itemStartDate = true;
 						Boolean itemEndDate = true;
 						Boolean listStartDate = true;
 						Boolean listEndDate = true;
-						Date classDate = theSession.redwing__Date__c;
+						Date classDate = theClass.redwing__Start_Date__c;
 							        				
 						if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c != null) {
 							if (thePriceListItem.ccrz__PriceList__r.ccrz__StartDate__c > classDate) listStartDate = false;
@@ -103,13 +106,13 @@ public class PHSS_PriceListItemTriggerHandler {
 						if (itemStartDate && itemEndDate && listStartDate && listEndDate) {
 							// Update price in ILT Class record
 							redwing__ILT_Class__c theUpdatedClass = new redwing__ILT_Class__c();
-							theUpdatedClass.Id = theSession.redwing__ILT_Class__r.Id;
+							theUpdatedClass.Id = theClass.Id;
 							theUpdatedClass.Price_Override__c = thePriceListItem.ccrz__Price__c;
 							updatedClasses.add(theUpdatedClass);
 						}
 	        		}
         		}
-        	}
+        	//}
         }
         try {
         	update(updatedClasses);

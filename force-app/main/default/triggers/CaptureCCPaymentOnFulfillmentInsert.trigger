@@ -11,7 +11,8 @@ trigger CaptureCCPaymentOnFulfillmentInsert on Fulfillment__c (after insert) {
                         SELECT
                                 Id,
                                 ccrz__AccountType__c,
-                                ccrz__Amount__c
+                                ccrz__Amount__c,
+                                ccrz__TransactionType__c
                         FROM
                                 ccrz__E_TransactionPayment__c
                         WHERE
@@ -19,7 +20,7 @@ trigger CaptureCCPaymentOnFulfillmentInsert on Fulfillment__c (after insert) {
                         LIMIT 1
                 ];
 
-                if (transactionPayment != null) {
+                if (transactionPayment != null && transactionPayment.ccrz__TransactionType__c != phss_cc_TransactionPaymentUtil.CAPTURE_TRANSACTION_TYPE) {
                     if (transactionPayment.ccrz__AccountType__c == 'cc') {
                         if (transactionPayment.ccrz__Amount__c < 0) {
 

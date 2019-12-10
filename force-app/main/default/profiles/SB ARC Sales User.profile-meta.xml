@@ -860,6 +860,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_PriceListItemTriggerHandlerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_ProcessCertProvisioning_BATCH</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1033,6 +1037,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_skedResourcetoInstructor</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_tickleJobRecords</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_tickleJobRecordsTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -13856,6 +13868,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Training_Events__c.Customer_Contact_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Customer_Contact__c</field>
         <readable>true</readable>
@@ -13973,6 +13990,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Last_Date_for_a_Site_Visit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Training_Events__c.Local_Customer_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16791,6 +16813,10 @@
     <tabVisibilities>
         <tab>redwing__ILT_Roster__c</tab>
         <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>redwing__Material_Item__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>redwing__Training_Plan_Achievement__c</tab>

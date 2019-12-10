@@ -517,7 +517,8 @@ Global without sharing class PHSS_CreateOrderRestService {
         obj_order.ccrz__OrderStatus__c = 'Shipped';
         obj_order.ccrz__Storefront__c = 'GeneralStore';
         if (OrderWrapper.order.Order_header.total_discount != null) {
-           obj_order.ccrz__AdjustmentAmount__c = OrderWrapper.order.Order_header.total_discount;
+           // obj_order.ccrz__AdjustmentAmount__c = OrderWrapper.order.Order_header.total_discount;
+           obj_order.ccrz__TotalDiscount__c = OrderWrapper.order.Order_header.total_discount;
            obj_order.ccrz__AdjustmentReason__c = OrderWrapper.order.Order_header.promotion_ids;
         }
         obj_order.Coupon_Codes__c = OrderWrapper.order.Order_header.coupon_codes;
@@ -622,6 +623,8 @@ Global without sharing class PHSS_CreateOrderRestService {
                 obj_orderitem.ccrz__OriginalQuantity__c = (product.quantity != null) ? product.quantity : 0;
                 obj_orderitem.ccrz__Price__c = (product.price != null) ? product.price : 0.00;
                 obj_orderitem.ccrz__AdjustmentAmount__c  =  (product.adjustment_amount != null) ? product.adjustment_amount : 0.00;
+                // Per SW based on Cloud Craze observations (assumes adjustment amt is per unit)
+                obj_orderitem.ccrz__Price__c = product.price - product.adjustment_amount;
                 obj_orderitem.ccrz__OriginalItemPrice__c = (product.original_price != null) ? product.original_price : 0.00;
                 obj_orderitem.ccrz__SubAmount__c = (obj_orderitem.ccrz__Price__c * obj_orderitem.ccrz__Quantity__c) - obj_orderitem.ccrz__AdjustmentAmount__c;
 
