@@ -64,4 +64,21 @@ public with sharing class phss_cc_StoredPaymentUtilTest {
         System.assertNotEquals(null, result);
     }
 
+    @IsTest
+    public static void testGetStoredPayments() {
+
+        setupTestData();
+        List<ccrz__E_StoredPayment__c> payments = [SELECT Id FROM ccrz__E_StoredPayment__c WHERE ccrz__Account__c = :testAccount.Id];
+        List<String> identifiers = new List<String>();
+        for (ccrz__E_StoredPayment__c payment : payments) {
+            identifiers.add(payment.Id);
+        }
+
+        Test.startTest();
+        List<ccrz__E_StoredPayment__c> result = phss_cc_StoredPaymentUtil.getStoredPayments(identifiers);
+        Test.stopTest();
+
+        System.assert(result != null);
+        System.assert(result.size() > 0);
+    }
 }

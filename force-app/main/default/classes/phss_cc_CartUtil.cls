@@ -31,10 +31,11 @@ public with sharing class phss_cc_CartUtil {
     private static final String ADDRESS_TYPE_BILLING = 'Billing';
     private static final String ADDRESS_TYPE_SHIPPING = 'Shipping';
     private static final String ADDRESS_TYPE_KEY = 'AddressType';
-    private static final String CLASS_ID_KEY = 'classId';
-    private static final String COUNT_KEY = 'count';
-    private static final String COURSE_ID_KEY = 'courseId';
-    private static final String ILT_CLASS_FIELD = 'ILT_Class__c';
+    
+    @TestVisible private static final String CLASS_ID_KEY = 'classId';
+    @TestVisible private static final String COUNT_KEY = 'count';
+    @TestVisible private static final String COURSE_ID_KEY = 'courseId';
+    @TestVisible private static final String ILT_CLASS_FIELD = 'ILT_Class__c';
 
     @TestVisible private static final String CART_ENCRYPTED_ID_KEY = 'encryptedCartId';
     @TestVisible private static final String PRODUCT_LIST_KEY = 'productList';

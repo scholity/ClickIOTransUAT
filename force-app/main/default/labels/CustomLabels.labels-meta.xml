@@ -742,7 +742,7 @@ Select a voucher(s) with a status of &#39;Issued&#39;. Copy and paste the self-r
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Sked Job trigger - eligible profiles - Enter names separated by semi-colons</shortDescription>
-        <value>ARC Service Delivery; SB ARC Service Delivery; ARC NAT Team; SB ARC NAT Team</value>
+        <value>ARC Service Delivery; SB ARC Service Delivery; ARC NAT Team; SB ARC NAT Team; System Administrator</value>
     </labels>
     <labels>
         <fullName>Search_by</fullName>

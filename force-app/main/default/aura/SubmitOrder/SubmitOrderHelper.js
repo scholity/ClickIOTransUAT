@@ -23,7 +23,7 @@
         });
         $A.enqueueAction(action);
     },
-    
+    /*
     checkBeforeSubmitted: function(component, event, helper)
     {
         var action = component.get('c.isSubmittedBefore');
@@ -41,19 +41,11 @@
                 console.log("storeResponse***"+storeResponse);
                 if (storeResponse != null)
                 {
-                    if(storeResponse === false)
-                    {
-                        component.set("v.stepNumber","Zero");
-                    }
-                    else
-                    {
-                        component.set("v.stepNumber","Two");
-                    }
-                    
+                    component.set("v.hideButton",storeResponse);
                 }
                            
             }
         });
         $A.enqueueAction(action);
-    }
+    }*/
 })

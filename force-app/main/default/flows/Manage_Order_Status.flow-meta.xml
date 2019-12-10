@@ -3,8 +3,8 @@
     <assignments>
         <name>Add_OrderFulfillment_Collection</name>
         <label>Add OrderFulfillment Collection</label>
-        <locationX>497</locationX>
-        <locationY>1255</locationY>
+        <locationX>539</locationX>
+        <locationY>1258</locationY>
         <assignmentItems>
             <assignToReference>colFulfillmentItems</assignToReference>
             <operator>Add</operator>
@@ -26,7 +26,7 @@
     <assignments>
         <name>Add_to_Output_Collection</name>
         <label>Add to Output Collection</label>
-        <locationX>800</locationX>
+        <locationX>809</locationX>
         <locationY>1070</locationY>
         <assignmentItems>
             <assignToReference>colOutOrderItems</assignToReference>
@@ -65,7 +65,7 @@
     <assignments>
         <name>Assign_Order_Fulfillment_Item</name>
         <label>Assign Order Fulfillment Item</label>
-        <locationX>353</locationX>
+        <locationX>363</locationX>
         <locationY>1254</locationY>
         <assignmentItems>
             <assignToReference>sFulfillmentItem.Quantity__c</assignToReference>
@@ -430,8 +430,8 @@
     <assignments>
         <name>Set_Order_Item_Status</name>
         <label>Set Order Item Status</label>
-        <locationX>576</locationX>
-        <locationY>1142</locationY>
+        <locationX>558</locationX>
+        <locationY>1134</locationY>
         <assignmentItems>
             <assignToReference>sOrderItem.ccrz__OrderItemStatus__c</assignToReference>
             <operator>Assign</operator>
@@ -1033,7 +1033,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assign_Order_Fulfillment_Item</targetReference>
+                <targetReference>Set_Order_Item_Status</targetReference>
             </connector>
             <label>Is Online Class</label>
         </rules>
@@ -1197,8 +1197,8 @@
     <decisions>
         <name>Is_Online_Class2</name>
         <label>Is Online Class2</label>
-        <locationX>666</locationX>
-        <locationY>1195</locationY>
+        <locationX>671</locationX>
+        <locationY>1188</locationY>
         <defaultConnector>
             <targetReference>Set_Shipped</targetReference>
         </defaultConnector>

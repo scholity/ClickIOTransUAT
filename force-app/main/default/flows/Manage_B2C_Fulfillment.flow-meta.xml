@@ -480,7 +480,7 @@
             <targetReference>Transaction_Payments_Not_Found</targetReference>
         </connector>
         <filters>
-            <field>ccrz__CCOrder__c</field>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
                 <elementReference>frmTransactionID</elementReference>

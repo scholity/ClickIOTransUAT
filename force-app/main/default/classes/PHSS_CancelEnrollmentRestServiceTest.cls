@@ -64,6 +64,8 @@ public class PHSS_CancelEnrollmentRestServiceTest {
         learningAssignment.redwing__Learning__c = learning.id; // 
         learningAssignment.External_Id__c = 'priyalakshmi.pp@gmail.com'; 
         learningAssignment.redwing__Training_Plan__c = lPlan.Id;
+        learningAssignment.RCO_Order_Id__c = '0000001305';
+        learningAssignment.redwing__Progress__c = 'Not Started';
         insert learningAssignment;
 		
         redwing__Learning_Assignment__c learningAssignmentupdate = new redwing__Learning_Assignment__c();
@@ -128,7 +130,7 @@ public class PHSS_CancelEnrollmentRestServiceTest {
 					  		 + '"action"  : "orderCancellationa311k0000009HFO"}';
         
         String validJson = '{ "orderID" : "0000001305",'
-				      	   + '"classID" : "a311k0000009HFO",'
+				      	   + '"classID" : "' + clsRecord.Id + '",'
 				      	   + '"cancelReason" : "Sample Reason",' 
 					  	   + '"action"  : "orderCancellationa311k0000009HFO"}';
         

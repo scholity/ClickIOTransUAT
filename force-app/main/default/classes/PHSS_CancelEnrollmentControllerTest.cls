@@ -35,9 +35,9 @@ public class PHSS_CancelEnrollmentControllerTest {
         Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
         clsRecord.Skedulo_Account__c = a.id;
         clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
-        clsRecord.redwing__End_Time__c= '13:00';
+        clsRecord.redwing__End_Time__c= '12:00';
         clsRecord.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
-        clsRecord.redwing__Start_Time__c = '12:00';
+        clsRecord.redwing__Start_Time__c = '08:00';
         clsRecord.Name = 'Test';
         clsRecord.redwing__Learning__c = learning.Id;
         insert clsRecord;
@@ -47,7 +47,7 @@ public class PHSS_CancelEnrollmentControllerTest {
         sessionRecord.redwing__ILT_Class__c = clsRecord.Id;
         sessionRecord.Skedulo_Account__c = a.id;
         sessionRecord.Skedulo_Address__c = objLocation.id;
-        sessionRecord.redwing__End_Time__c = '20:00';
+        sessionRecord.redwing__End_Time__c = '12:00';
         sessionRecord.redwing__Date__c = Date.Parse('12/19/2018');
         sessionRecord.redwing__Start_Time__c = '08:00';
         insert sessionRecord; 
@@ -172,9 +172,9 @@ public class PHSS_CancelEnrollmentControllerTest {
         Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
         clsRecord.Skedulo_Account__c = a.id;
         clsRecord.redwing__End_Date__c = Date.Parse('12/19/2018');
-        clsRecord.redwing__End_Time__c= '13:00';
+        clsRecord.redwing__End_Time__c= '12:00';
         clsRecord.redwing__Start_Date__c = Date.Parse('12/19/2018');// Assuming Start date = End date
-        clsRecord.redwing__Start_Time__c = '12:00';
+        clsRecord.redwing__Start_Time__c = '08:00';
         clsRecord.Name = 'Test';
         clsRecord.redwing__Learning__c = learning.Id;
         insert clsRecord;
@@ -184,7 +184,7 @@ public class PHSS_CancelEnrollmentControllerTest {
         sessionRecord.redwing__ILT_Class__c = clsRecord.Id;
         sessionRecord.Skedulo_Account__c = a.id;
         sessionRecord.Skedulo_Address__c = objLocation.id;
-        sessionRecord.redwing__End_Time__c = '20:00';
+        sessionRecord.redwing__End_Time__c = '12:00';
         sessionRecord.redwing__Date__c = Date.Parse('12/19/2018');
         sessionRecord.redwing__Start_Time__c = '08:00';
         insert sessionRecord; 

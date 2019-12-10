@@ -431,14 +431,20 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         // DE1816 - Support the population of the LTP/CPS registration phone in the location record
         Map<Id, String> locationCPSPhoneMap = new Map<Id, String>();
 
-        classXMLList = new List<String>(); // Reinitialize all maps and lists for each community class chunk
-        courseXMLMap = new Map<Id, String>();
-        locationXMLMap = new Map<Id, String>();
-        inventoryXMLList = new List<String>();
-        pricebookXMLList = new List<String>();
-        siteCatalogXMLMap = new Map<Id, String>();
-        classInventoryMap = new Map<Id, Integer>();
-        classPriceMap = new Map<Id, Double>();
+        classXMLList.clear();// = null;//new List<String>(); // Reinitialize all maps and lists for each community class chunk
+        courseXMLMap.clear();// = null;//new Map<Id, String>();
+        locationXMLMap.clear();// = null;//new Map<Id, String>();
+        inventoryXMLList.clear();// = null;//new List<String>();
+        pricebookXMLList.clear();// = null;//new List<String>();
+        siteCatalogXMLMap.clear();// = null;//new Map<Id, String>();
+        classInventoryMap.clear();// = null;//new Map<Id, Integer>();
+        classPriceMap.clear();// = null;//new Map<Id, Double>();
+
+        classSessionMap.clear();
+        classFirstSessionMap.clear();
+        trainingPlanMap.clear();
+        trainingPlanList.clear();
+        classMap.clear();
 
         List<redwing__ILT_Session__c> activeCommunitySessions = new List<redwing__ILT_Session__c>();
         List<redwing__ILT_Location__c> activeCommunityLocations = new List<redwing__ILT_Location__c>();        

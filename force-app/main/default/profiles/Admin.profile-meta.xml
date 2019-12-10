@@ -860,6 +860,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_PriceListItemTriggerHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_ProcessCertProvisioning_BATCH</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1033,6 +1037,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PHSS_skedResourcetoInstructor</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_tickleJobRecords</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_tickleJobRecordsTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -13855,6 +13867,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Training_Events__c.Customer_Contact_2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Customer_Contact__c</field>
         <readable>true</readable>
@@ -13972,6 +13989,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Training_Events__c.Last_Date_for_a_Site_Visit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Training_Events__c.Local_Customer_Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17767,6 +17789,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>redwing__ILT_Roster__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>redwing__Material_Item__c</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
