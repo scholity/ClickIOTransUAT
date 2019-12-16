@@ -694,7 +694,8 @@ Global without sharing class PHSS_CreateOrderRestService {
 
             // DE1935 - Define Amount as Requested Amount
             // Question - shouldn't this be Capture amount rather than Request amount to match pp below?
-            obj_paymentDetails.ccrz__Amount__c = obj_paymentDetails.ccrz__RequestAmount__c;
+            //obj_paymentDetails.ccrz__Amount__c = obj_paymentDetails.ccrz__RequestAmount__c;
+            obj_paymentDetails.ccrz__Amount__c = trd.auth_capture_amount;
 
             //obj_paymentDetails.ccrz__Storefront__c = trd.storefront;
             obj_paymentDetails.ccrz__PaymentType__c = trd.payment_type;

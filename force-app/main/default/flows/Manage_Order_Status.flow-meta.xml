@@ -3,8 +3,8 @@
     <assignments>
         <name>Add_OrderFulfillment_Collection</name>
         <label>Add OrderFulfillment Collection</label>
-        <locationX>539</locationX>
-        <locationY>1258</locationY>
+        <locationX>568</locationX>
+        <locationY>1259</locationY>
         <assignmentItems>
             <assignToReference>colFulfillmentItems</assignToReference>
             <operator>Add</operator>
@@ -20,7 +20,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Set_Shipped</targetReference>
+            <targetReference>Is_Online_Class2</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -194,8 +194,8 @@
     <assignments>
         <name>Output_Order_Fulfillment_Item</name>
         <label>Output Order Fulfillment Item</label>
-        <locationX>1476</locationX>
-        <locationY>681</locationY>
+        <locationX>1482</locationX>
+        <locationY>737</locationY>
         <assignmentItems>
             <assignToReference>colOFulfillmentItem</assignToReference>
             <operator>Add</operator>
@@ -865,8 +865,8 @@
     <decisions>
         <name>Count_Course_Records</name>
         <label>Count Course Records</label>
-        <locationX>346</locationX>
-        <locationY>1043</locationY>
+        <locationX>342</locationX>
+        <locationY>1048</locationY>
         <defaultConnector>
             <targetReference>Set_to_Submitted</targetReference>
         </defaultConnector>
@@ -1033,7 +1033,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Order_Item_Status</targetReference>
+                <targetReference>Assign_Order_Fulfillment_Item</targetReference>
             </connector>
             <label>Is Online Class</label>
         </rules>
@@ -1197,8 +1197,8 @@
     <decisions>
         <name>Is_Online_Class2</name>
         <label>Is Online Class2</label>
-        <locationX>671</locationX>
-        <locationY>1188</locationY>
+        <locationX>688</locationX>
+        <locationY>1183</locationY>
         <defaultConnector>
             <targetReference>Set_Shipped</targetReference>
         </defaultConnector>
@@ -1459,7 +1459,7 @@
             <label>IfReserved</label>
         </rules>
     </decisions>
-    <description>Added Individual Account Record Type Check - added additional fields to sOrder to allow for reducing SOQLs in On Hold Check</description>
+    <description>Added Individual Account Record Type Check - added additional fields to sOrder to allow for reducing SOQLs in On Hold Check - Changed Online Order Flow</description>
     <formulas>
         <name>AddtoCourse</name>
         <dataType>Number</dataType>

@@ -1289,11 +1289,15 @@
     <tabs>standard-Task</tabs>
     <tabs>ccrz__E_Order__c</tabs>
     <tabs>ccrz__E_TransactionPayment__c</tabs>
+    <tabs>Student_Bulk_Upload__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>ARC_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
             <tab>Long_Article__kav</tab>
+        </mappings>
+        <mappings>
+            <tab>Student_Bulk_Upload__c</tab>
         </mappings>
         <mappings>
             <tab>ccrz__E_Order__c</tab>

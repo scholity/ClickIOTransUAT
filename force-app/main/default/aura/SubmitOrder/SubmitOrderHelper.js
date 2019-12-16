@@ -23,7 +23,7 @@
         });
         $A.enqueueAction(action);
     },
-    /*
+    
     checkBeforeSubmitted: function(component, event, helper)
     {
         var action = component.get('c.isSubmittedBefore');
@@ -39,13 +39,13 @@
             {   
                 var storeResponse = response.getReturnValue();
                 console.log("storeResponse***"+storeResponse);
-                if (storeResponse != null)
+                if (storeResponse === true)
                 {
-                    component.set("v.hideButton",storeResponse);
+                    component.set("v.stepNumber","Two");
                 }
                            
             }
         });
         $A.enqueueAction(action);
-    }*/
+    }
 })

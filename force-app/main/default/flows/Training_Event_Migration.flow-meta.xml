@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>Add_to_Job_Collection_for_Output</name>
+        <label>Add to Job Collection for Output</label>
+        <locationX>797</locationX>
+        <locationY>528</locationY>
+        <assignmentItems>
+            <assignToReference>outJob</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>sJob</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_through_Jobs</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Job_Variables</name>
+        <label>Set Job Variables</label>
+        <locationX>657</locationX>
+        <locationY>612</locationY>
+        <assignmentItems>
+            <assignToReference>sJob.Training_Event__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>frmTrainingEvent</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_to_Job_Collection_for_Output</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_Job_Existance</name>
         <label>Check Job Existance</label>
@@ -13,7 +45,7 @@
             <name>isFound</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Job</leftValueReference>
+                <leftValueReference>colJob</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -25,8 +57,24 @@
             <label>isFound</label>
         </rules>
     </decisions>
+    <description>Changed to allow for multiple job migration</description>
     <interviewLabel>Training Event Migration {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Training Event Migration</label>
+    <loops>
+        <name>Loop_through_Jobs</name>
+        <label>Loop through Jobs</label>
+        <locationX>663</locationX>
+        <locationY>385</locationY>
+        <assignNextValueToReference>sJob</assignNextValueToReference>
+        <collectionReference>colJob</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Set_Job_Variables</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Update_Job</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -45,7 +93,7 @@
         <label>Get Job</label>
         <locationX>531</locationX>
         <locationY>52</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Job_Existance</targetReference>
         </connector>
@@ -57,6 +105,7 @@
             </value>
         </filters>
         <object>sked__Job__c</object>
+        <outputReference>colJob</outputReference>
         <queriedFields>Id</queriedFields>
         <queriedFields>Training_Event__c</queriedFields>
         <queriedFields>Name</queriedFields>
@@ -125,30 +174,17 @@
         <name>Update_Job</name>
         <label>Update Job</label>
         <locationX>851</locationX>
-        <locationY>386</locationY>
+        <locationY>383</locationY>
         <connector>
             <targetReference>Update_Training_Event</targetReference>
         </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Job.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Training_Event__c</field>
-            <value>
-                <elementReference>frmTrainingEvent</elementReference>
-            </value>
-        </inputAssignments>
-        <object>sked__Job__c</object>
+        <inputReference>outJob</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Original_Training_Event</name>
         <label>Update Original Training Event</label>
         <locationX>1012</locationX>
-        <locationY>190</locationY>
+        <locationY>189</locationY>
         <connector>
             <targetReference>Completed</targetReference>
         </connector>
@@ -157,6 +193,20 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Original_Training_Event.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Scheduling_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Scheduling_Status__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Canceled</stringValue>
             </value>
         </filters>
         <inputAssignments>
@@ -177,7 +227,7 @@
         <name>Update_Training_Event</name>
         <label>Update Training Event</label>
         <locationX>852</locationX>
-        <locationY>190</locationY>
+        <locationY>192</locationY>
         <connector>
             <targetReference>Update_Original_Training_Event</targetReference>
         </connector>
@@ -318,11 +368,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Update_Job</targetReference>
+            <targetReference>Loop_through_Jobs</targetReference>
         </connector>
         <fields>
             <name>Migration_Verification</name>
-            <fieldText>&lt;p&gt;You are about to migrate&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Original Training Event:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Get_Original_Training_Event.Name}&lt;/p&gt;&lt;p&gt;{!Get_Original_Training_Event.Account__r.Name}&lt;/p&gt;&lt;p&gt;{!Get_Original_Training_Event.Course_Name__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;New Training Event&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Training_Event.Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Get_Training_Event.Account__r.Name}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Training_Event.Course_Name__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Job {!Get_Job.Name} Exists&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;You are about to migrate&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Original Training Event:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;{!Get_Original_Training_Event.Name}&lt;/p&gt;&lt;p&gt;{!Get_Original_Training_Event.Account__r.Name}&lt;/p&gt;&lt;p&gt;{!Get_Original_Training_Event.Course_Name__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;New Training Event&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!Get_Training_Event.Name}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!Get_Training_Event.Account__r.Name}&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!Get_Training_Event.Course_Name__c}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Job  Exists&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -350,11 +400,35 @@
     <startElementReference>Get_Training_Event</startElementReference>
     <status>Active</status>
     <variables>
+        <name>colJob</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>sked__Job__c</objectType>
+    </variables>
+    <variables>
         <name>frmTrainingEvent</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>outJob</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>sked__Job__c</objectType>
+    </variables>
+    <variables>
+        <name>sJob</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>sked__Job__c</objectType>
     </variables>
     <variables>
         <name>vOriginalTE</name>

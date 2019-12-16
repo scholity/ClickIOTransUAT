@@ -343,7 +343,7 @@
             <name>Multi_Jurisdictional_Opp_needs_attention</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.Multi_Jurisdictional__c</field>
             <operation>equals</operation>

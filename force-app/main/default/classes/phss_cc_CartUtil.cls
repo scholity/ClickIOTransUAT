@@ -359,10 +359,20 @@ public with sharing class phss_cc_CartUtil {
             phss_cc_Context.setContext(opportunityId);
 
             String encryptedCartId;
+            List<ccrz__E_CartItem__c> cartItems;
+            List<Voucher__c> vouchers;
+
             if (phss_cc_Context.currCart == null) {
                 encryptedCartId = createNewCart();
             } else {
                 encryptedCartId = phss_cc_Context.currCart.ccrz__EncryptedId__c;
+
+                cartItems = phss_cc_CartItemUtil.cartItemsForCart(null, encryptedCartId);
+                if (cartItems != null && cartItems.size() > 0) {
+                    Set<Id> cartItemIds = (new Map<Id, ccrz__E_CartItem__c>(cartItems)).keySet();
+                    vouchers = phss_cc_VoucherUtil.vouchersForCartItems(cartItemIds);
+                }
+
                 delete [
                         SELECT Id
                         FROM ccrz__E_CartItem__c
@@ -372,6 +382,13 @@ public with sharing class phss_cc_CartUtil {
 
             List<Map<String, Object>> lineData = createLineItemsFromQuantities(quantities);
             Map<String, Object> addToResult = cartAddTo(lineData, encryptedCartId);
+
+            //  match up vouchers with new cart items
+            if (vouchers != null && vouchers.size() > 0) {
+                List<ccrz__E_CartItem__c> newCartItems = phss_cc_CartItemUtil.cartItemsForCart(null, encryptedCartId);
+                reassignVouchersToNewCartItems(vouchers, cartItems, newCartItems);
+            }
+
             cartData = retrieveLineItemsAndTotalAmountFromCart(addToResult, false);
 
         } catch (Exception e) {
@@ -435,6 +452,73 @@ public with sharing class phss_cc_CartUtil {
 
         return result;
     }
+
+
+    /**
+     * @description Reassigns the cart item Id for vouchers by attempting to map old cart item Ids to new Ids.
+     *
+     * @param vouchers
+     * @param oldCartItems
+     * @param newCartItems
+     */
+    public static void reassignVouchersToNewCartItems(List<Voucher__c> vouchers, List<ccrz__E_CartItem__c> oldCartItems, List<ccrz__E_CartItem__c> newCartItems) {
+        if (vouchers == null || vouchers.size() == 0) { return; }
+        if (oldCartItems == null || oldCartItems.size() == 0) { return; }
+        if (newCartItems == null || newCartItems.size() == 0) { return; }
+
+        List<ccrz__E_CartItem__c> cartItems = new List<ccrz__E_CartItem__c>(oldCartItems);
+        List<ccrz__E_CartItem__c> unmatchedCartItems = new List<ccrz__E_CartItem__c>();
+        Map<Id, Id> oldNewMap = new Map<Id, Id>();
+
+        for (ccrz__E_CartItem__c newCartItem : newCartItems) {
+            if (String.isNotBlank(newCartItem.ILT_Class__c)) {
+                Boolean didFindOldCartItem = false;
+
+                for (Integer i = 0; i < cartItems.size(); i++) {
+                    ccrz__E_CartItem__c oldCartItem = cartItems[i];
+                    if (String.isNotBlank(oldCartItem.ILT_Class__c)
+                            && oldCartItem.ILT_Class__c == newCartItem.ILT_Class__c
+                            && oldCartItem.ccrz__Product__c == newCartItem.ccrz__Product__c
+                            && oldCartItem.ccrz__Quantity__c == newCartItem.ccrz__Quantity__c)
+                    {
+                        didFindOldCartItem = true;
+                        oldNewMap.put(oldCartItem.Id, newCartItem.Id);
+                        cartItems.remove(i);
+                        break;
+                    }
+                }
+
+                if (!didFindOldCartItem) {
+                    unmatchedCartItems.add(newCartItem);
+                }
+            }
+        }
+
+        if (cartItems.size() == 1 && unmatchedCartItems.size() == 1) {
+            ccrz__E_CartItem__c oldCartItem = cartItems[0];
+            ccrz__E_CartItem__c newCartItem = unmatchedCartItems[0];
+
+            if (String.isNotBlank(oldCartItem.ILT_Class__c)
+                    && oldCartItem.ILT_Class__c == newCartItem.ILT_Class__c
+                    && oldCartItem.ccrz__Product__c == newCartItem.ccrz__Product__c) {
+                oldNewMap.put(oldCartItem.Id, newCartItem.Id);
+            }
+        }
+
+        List<Voucher__c> updatedVouchers = new List<Voucher__c>();
+        for (Voucher__c voucher : vouchers) {
+            Id cartItemId = voucher.CC_Cart_Item__c;
+            if (oldNewMap.containsKey(cartItemId)) {
+                voucher.CC_Cart_Item__c = oldNewMap.get(cartItemId);
+                updatedVouchers.add(voucher);
+            }
+        }
+
+        if (updatedVouchers.size() > 0) {
+            update updatedVouchers;
+        }
+    }
+
 
     private static List<Map<String, Object>> createLineItemsWithCartItemQuantityMap(Map<String, Object> cartItemQuantityMap) {
         List<Map<String, Object>> lineData = new List<Map<String, Object>>();

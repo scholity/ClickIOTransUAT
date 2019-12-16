@@ -16,6 +16,9 @@
                     this.showToast('success', 'Classes added to cart', 'The community classes have been successfully added to your cart.');
                     component.set('v.classes', {});
                     component.set('v.cart', {});
+
+                    var updateEvent = $A.get('e.c:phss_cc_RefreshComponentEvent');
+                    updateEvent.fire();
                 }
                 else {
                     this.showToast('error', 'Failed to add item(s) to cart', '');

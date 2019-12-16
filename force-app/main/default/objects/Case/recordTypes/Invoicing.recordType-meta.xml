@@ -5453,6 +5453,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>CRE or Community Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Change CFS Customer Class</fullName>
             <default>false</default>
         </values>
@@ -5650,6 +5654,10 @@
         </values>
         <values>
             <fullName>QA Issue</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RBC Order</fullName>
             <default>false</default>
         </values>
         <values>

@@ -133,10 +133,17 @@ public without sharing class PHSS_skedJobtoILTClass {
         // only updates the master (parent) class when a stacked class is canceled.  This code block forces the child (dependent) 
         // classes to be updated/canceled when the master class is updated, resulting in an assignment of an instructor to and/or 
         // the cancellation of these dependent classes when an updated job is received from Skedulo
+
+        // 12-11-2019 - SJC - This routine also adds dependent recurring classes to the updated job list (it is assumed
+        // that Skedulo will delete each job in a recurring series independently).  Adding the series of recurring
+        // classes to the job list permits maintaining the set as a whole, most importantly for maintaining the
+        // range of dates in the "parent" class if a new session is added after the original set has been created
             
         String objectName = 'sked__Job__c';
         String masterJobIds = '';
+        String recurringSchedules = '';
         String jobQuery = '';
+        String jobQueryFields = '';
         Set<Id> jobIds = new Set<Id>();
         //Set<Id> masterJobIds = new Set<Id>();
         
@@ -148,31 +155,55 @@ public without sharing class PHSS_skedJobtoILTClass {
                 }
                 masterJobIds += '\''+theJob.Id+'\'';
             }
+            if (!bCancel && String.isNotBlank(theJob.sked__Recurring_Schedule__c)) {
+                if (recurringSchedules.length() > 0) {
+                    recurringSchedules += ',';
+                }
+                recurringSchedules += '\''+theJob.sked__Recurring_Schedule__c+'\'';
+            }
         }
-        
-        if (String.isNotBlank(masterJobIds)) {            
+
+        if (String.isNotBlank(masterJobIds) || String.isNotBlank(recurringSchedules)) {
             Map<String, Schema.SObjectField> jobFields = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap();
-            
-            for(String theField : jobFields.keySet()) {
-                if (jobQuery.length() > 0) {
-                    jobQuery += ',';
+            for (String theField : jobFields.keySet()) {
+                if (jobQueryFields.length() > 0) {
+                    jobQueryFields += ',';
                 }
-                jobQuery += theField;
+                jobQueryFields += theField;
             }
-            // Build a query to return all of the dependent classes for each class contained in master job List
-            jobQuery = 'Select '+jobQuery+' From '+objectName+' Where Is_Stacked_Class__c = true And Is_Master_Class__c = false ';
-            jobQuery += ' And sked__Parent__c In ('+masterJobIds+')';
-            
-            List <sked__Job__c> dependentJobs = new List <sked__Job__c>();
-            dependentJobs = Database.query(jobQuery);
-            
-            if (!dependentJobs.isEmpty()) {
-                for (sked__Job__c theDependentJob : dependentJobs) {
-                    if (bCancel) theDependentJob.sked__Job_Status__c = 'Cancelled';
-                    if (!jobIds.contains(theDependentJob.Id)) jobList.add(theDependentJob);
+
+            if (String.isNotBlank(masterJobIds)) {
+                // Build a query to return all of the dependent classes for each class contained in master job List
+                jobQuery = 'Select ' + jobQueryFields + ' From ' + objectName + ' Where Is_Stacked_Class__c = true And Is_Master_Class__c = false ';
+                jobQuery += ' And sked__Parent__c In (' + masterJobIds + ')';
+
+                List <sked__Job__c> dependentJobs = new List <sked__Job__c>();
+                dependentJobs = Database.query(jobQuery);
+
+                if (!dependentJobs.isEmpty()) {
+                    for (sked__Job__c theDependentJob : dependentJobs) {
+                        if (bCancel) theDependentJob.sked__Job_Status__c = 'Cancelled';
+                        if (!jobIds.contains(theDependentJob.Id)) jobList.add(theDependentJob);
+                    }
                 }
             }
-        }  
+
+            // 12-11-2019 - SJC - Augmented to include all classes in a recurring series as well
+            if (!bCancel && String.isNotBlank(recurringSchedules)) {
+                // Build a query to return all of the related classes for each recurring class contained in master job List
+                jobQuery = 'Select ' + jobQueryFields + ' From ' + objectName + ' Where sked__Recurring_Schedule__c In (' + recurringSchedules + ')';
+
+                List <sked__Job__c> relatedJobs = new List <sked__Job__c>();
+                relatedJobs = Database.query(jobQuery);
+
+                if (!relatedJobs.isEmpty()) {
+                    for (sked__Job__c theRelatedJob : relatedJobs) {
+                        if (!jobIds.contains(theRelatedJob.Id)) jobList.add(theRelatedJob);
+                    }
+                }
+            }
+        }
+
         return jobList;               
     }
 
@@ -239,9 +270,11 @@ public without sharing class PHSS_skedJobtoILTClass {
 
         // Add allocations for the master (parent) class in a recurring series (only one - typically the first in the series -
         // will have an ILT Class defined)
+
         List<redwing__ILT_Class__c> recurringMasterClasses = [SELECT Id, Skedulo_Job_Id__c, Skedulo_Job_Id__r.sked__Recurring_Schedule__c
             FROM redwing__ILT_Class__c
             WHERE Skedulo_Job_Id__r.sked__Recurring_Schedule__c IN :scheduleAllocationMap.keySet()];
+
         for (redwing__ILT_Class__c theClass : recurringMasterClasses) {
             if (scheduleAllocationMap.containsKey(theClass.Skedulo_Job_Id__r.sked__Recurring_Schedule__c)) {
                 for (Id theResourceId : scheduleAllocationMap.get(theClass.Skedulo_Job_Id__r.sked__Recurring_Schedule__c)) {

@@ -14,6 +14,7 @@
 
     <!--Register events-->
     <aura:registerEvent name="productSearchEvent" type="c:phss_cc_ProductSearchEvent"/>
+    <aura:registerEvent name="refreshComponent" type="c:phss_cc_RefreshComponentEvent"/>
 
     <aura:if isTrue="{! v.showSpinner }">
         <lightning:spinner variant="brand" size="large" alternativeText="{! $Label.c.Spinner_Alternate_Text }"/>

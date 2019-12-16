@@ -77,10 +77,24 @@
                 <elementReference>sUser.ContactId</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>sCase.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Instructor_SupportId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Create_NEW_On_Hold_Case</targetReference>
         </connector>
     </assignments>
+    <constants>
+        <name>Instructor_SupportId</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>00Gd0000000SYUz</stringValue>
+        </value>
+    </constants>
     <constants>
         <name>ServiceRecordTypeID</name>
         <dataType>String</dataType>
@@ -145,8 +159,8 @@
         <description>Create a new on hold case record for On Hold order if Case has not been closed</description>
         <name>Create_NEW_On_Hold_Case</name>
         <label>Create NEW On Hold Case</label>
-        <locationX>676</locationX>
-        <locationY>360</locationY>
+        <locationX>677</locationX>
+        <locationY>363</locationY>
         <inputReference>sCase</inputReference>
     </recordCreates>
     <recordLookups>

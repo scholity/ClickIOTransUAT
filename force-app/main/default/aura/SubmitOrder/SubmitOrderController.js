@@ -2,6 +2,7 @@
     doInit : function(component,event,helper)
     {
         helper.checkOnAccount(component,event,helper);
+        helper.checkBeforeSubmitted(component,event,helper);
     },
     
     showStep1 : function(component,event,helper)
@@ -54,7 +55,7 @@
                         "type"    : "success"
                     });
                     toastEvent.fire();
-                    $A.get("e.force:refreshView").fire();
+                    //$A.get("e.force:refreshView").fire();
                     component.set("v.stepNumber", "Two");
                 }
                 
@@ -79,8 +80,8 @@
                         "type"    : "success"
                     });
                     toastEvent.fire();
-                    $A.get("e.force:refreshView").fire();
-                    component.set("v.stepNumber", "Zero");
+                    //$A.get("e.force:refreshView").fire();
+                    component.set("v.stepNumber", "Two");
                 }
                 
             });
