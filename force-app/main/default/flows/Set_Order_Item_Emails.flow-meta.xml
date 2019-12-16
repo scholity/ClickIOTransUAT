@@ -266,7 +266,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Instructor_Email_Addresses</targetReference>
+                <targetReference>DoNothingCommerceCloud_Order</targetReference>
             </connector>
             <label>isCommerce</label>
         </rules>

@@ -6,7 +6,7 @@
 public with sharing class PHSS_PublishCertificates_Test {
 
     @testSetup
-    static void createDate() {
+    static void createData() {
 
         // custom settings
         Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Bucket Account').getRecordTypeId();
@@ -58,6 +58,11 @@ public with sharing class PHSS_PublishCertificates_Test {
         learning0.RecordTypeId = Schema.SObjectType.redwing__Learning__c.getRecordTypeInfosByName().get('ILT Class').getRecordTypeId();
         insert learning0;
 
+        redwing__Training_Plan__c lPlan = new redwing__Training_Plan__c();
+        lPlan.Name = 'Test Learning Plan';
+        lPlan.Classroom_Setting__c = 'Online + Classroom';
+        insert lPlan;
+        
         // ILT class
         Redwing__ILT_Class__c clsRecord = new Redwing__ILT_Class__c();
         clsRecord.Skedulo_Account__c = a.id;
@@ -67,6 +72,8 @@ public with sharing class PHSS_PublishCertificates_Test {
         clsRecord.redwing__Start_Time__c = '12:00';
         clsRecord.Name = 'Test';
         clsRecord.redwing__Learning__c = learning0.Id;
+        clsRecord.Learning_Plan__c = lPlan.Id;
+        clsRecord.Classroom_Setting__c = 'Online + Classroom';
         insert clsRecord;
 
         // instructor
@@ -90,7 +97,6 @@ public with sharing class PHSS_PublishCertificates_Test {
         ra.redwing__Expiration_Term_Basis__c = 'Years';
         insert ra;
 
-
         // achievement assignment
         //Create Achievement Assignment
         redwing__Achievement_Assignment__c raa = new redwing__Achievement_Assignment__c();
@@ -101,24 +107,15 @@ public with sharing class PHSS_PublishCertificates_Test {
         raa.Firstname__c = 'John';
         raa.Lastname__c = 'Doe';
         raa.redwing__Achievement__c = ra.Id;
+        //raa.Achievement_Type__c = 'Certifications';
         insert raa;
-
-
-
     }
 
-    @isTest
-    static void test1() {
-
-        PHSS_PublishCertificates inst = new PHSS_PublishCertificates();
-        inst.getAllCertificates();
-
+    static testMethod void testPublishCertificates() {
+        Test.startTest();
+        PHSS_PublishCertificatesBatchSchedulable scheduleJob = new PHSS_PublishCertificatesBatchSchedulable();
+        String scheduleExpr = '0 0 5 * * ?';
+        System.schedule('Test Certificate Export', scheduleExpr, scheduleJob);
+        Test.stopTest();
     }
-
-    @isTest
-    static void test2() {
-        PHSS_PublishCertificates inst = new PHSS_PublishCertificates();
-        inst.getCertificates();
-    }
-
 }

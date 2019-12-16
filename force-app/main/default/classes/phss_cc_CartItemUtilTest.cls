@@ -99,4 +99,21 @@ public with sharing class phss_cc_CartItemUtilTest {
 
         System.assert(results.size() == 0);
     }
+
+    @IsTest
+    static void testCartItemsForCart() {
+
+        Boolean exceptionCaught = false;
+        try {
+            Test.startTest();
+            List<ccrz__E_CartItem__c> results = phss_cc_CartItemUtil.cartItemsForCart('123456789', null);
+            results = phss_cc_CartItemUtil.cartItemsForCart(null, '123456789');
+            Test.stopTest();
+
+        } catch (Exception e) {
+            exceptionCaught = true;
+        }
+
+        System.assert(exceptionCaught == false);
+    }
 }

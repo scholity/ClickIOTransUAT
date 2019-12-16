@@ -4,11 +4,12 @@
 
 public with sharing class phss_cc_VoucherUtil {
 
-    public static final String ISSUED_STATUS = 'Issued'; 
+    public static final String ISSUED_STATUS = 'Issued';
     public static final String TEMP_HOLD_STATUS = 'Temp Hold';
     public static final Integer RESERVATION_TIMESTAMP_OFFSET = -45;        // number of minutes to offset the reservation timestamp
 
     private static final String FAILED_TO_GET_REQUESTED_QUANTITY_OF_AVAILABLE_VOUCHERS = 'Failed to get the requested quantity of available vouchers.';
+    private static final String FAILED_TO_GET_VOUCHERS_FOR_CART_ITEMS = 'Failed to get the vouchers for the cart items.';
     private static final String FAILED_TO_MATCH_CART_ITEM_FOR_COURSE = 'Failed to match a cart item with a selected course.';
     private static final String FAILED_TO_MATCH_COURSE_FOR_CLASS = 'Failed to match course with selected class.';
     private static final String FAILED_TO_RESERVE_VOUCHERS = 'Failed to reserve vouchers.';
@@ -109,6 +110,7 @@ public with sharing class phss_cc_VoucherUtil {
      * @param opportunitySfid
      */
     public static Map<String, List<Voucher__c>> requestVouchersForOpportunity(Map<Id, Id> productClassIdMap, Map<String, Object> productQuantityMap, String opportunitySfid) {
+
         Map<String, List<Voucher__c>> voucherMap = new Map<String, List<Voucher__c>>();
         for (String productId : productClassIdMap.keySet()) {
             Integer quantity = Integer.valueOf(productQuantityMap.get(productId));
@@ -168,5 +170,38 @@ public with sharing class phss_cc_VoucherUtil {
                 }
             }
         }
+    }
+
+
+    /**
+     * @description Fetches the vouchers for the specified cart items
+     *
+     * @param cartItemIds
+     *
+     * @return
+     */
+    public static List<Voucher__c> vouchersForCartItems(Set<Id> cartItemIds) {
+        List<Voucher__c> vouchers;
+
+        try {
+            vouchers = [
+                    SELECT
+                            Id,
+                            CC_Cart_Item__c,
+                            ILT_Class__c,
+                            Name
+                    FROM
+                            Voucher__c
+                    WHERE
+                            CC_Cart_Item__c IN :cartItemIds
+                    ORDER BY
+                            ILT_Class__c
+            ];
+
+        } catch (Exception e) {
+            throw new phss_cc_Exception(FAILED_TO_GET_VOUCHERS_FOR_CART_ITEMS, e);
+        }
+
+        return vouchers;
     }
 }

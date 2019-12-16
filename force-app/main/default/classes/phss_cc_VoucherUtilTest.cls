@@ -108,4 +108,17 @@ public class phss_cc_VoucherUtilTest {
 
         System.assert(didReserveVoucher);
     }
+
+    @IsTest
+    public static void testVouchersForCartItems() {
+        setupTestData();
+
+        Set<Id> cartItemIds = new Set<Id>{ testCartItem.Id };
+
+        Test.startTest();
+        List<Voucher__c> vouchers = phss_cc_VoucherUtil.vouchersForCartItems(cartItemIds);
+        Test.stopTest();
+
+        System.assert(vouchers != null);
+    }
 }

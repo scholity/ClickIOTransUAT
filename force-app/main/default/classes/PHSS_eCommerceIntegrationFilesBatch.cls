@@ -1,5 +1,6 @@
 public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Database.Batchable<sObject>, Database.Stateful {
     public Boolean exportAllClasses = false;
+    public String processFlags = 'CLIPS';
     public DateTime RunTime = DateTime.Now();
     public DateTime lastRunDate = DateTime.Now();
     public String incrementalExport = '';
@@ -8,6 +9,11 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
     public Integer InventoryXMLSequenceNumber = 0;
     public Integer PricebookXMLSequenceNumber = 0;
     public Integer SiteCatalogXMLSequenceNumber = 0;
+
+    public PHSS_eCommerceIntegrationFilesBatch(Boolean exportOption, String flags) {
+        exportAllClasses = exportOption;
+        processFlags = flags;
+    }
 
     // Set up lists and maps for housekeeping and retrieval
 
@@ -239,7 +245,7 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
 
             customAttributeValueMap = new Map<String, String>{
                     'CourseID'=>String.valueOf(CourseID).subString(0,15),
-                    'FacilityID'=>String.valueOf(FacilityID).subString(0,15),
+                    'FacilityID'=>(FacilityId != null) ? String.valueOf(FacilityID).subString(0,15) : '',
                     'SabaOfferingId'=>String.valueOf(SabaOfferingId).subString(0,15),
                     'CourseFormat'=>CourseFormat,
                     'CourseLanguage'=>CourseLanguage,
@@ -294,6 +300,7 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
             String courseDateList = '';
             String attachmentCategoryList = '';
 
+            sessionEndEpoch = classOnlineToEpoch;
             sessionEndEpochMinusOneDay = classOnlineToEpoch - (24*60*60*1000); // Number of milliseconds in one day
 
             CourseID         = theLearningPlan.Id;
@@ -334,11 +341,6 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
                     'productType'=>productType
             };
         }
-    }
-
-    public void getAllCommunityClasses() {
-        exportAllClasses = true;
-        //getCommunityClasses();
     }
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
@@ -411,15 +413,15 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         //System.debug('# activeCommunityClasses=' + activeCommunityClasses.size());
 
         // Write course/class export file headers (this file will be generated in multiple batches)
-        generateCourseClassXmlFileHeader();
-        generateLocationXmlFileHeader();
-        generateInventoryXmlFileHeader();
-        generatePricebookXmlFileHeader();
-        generateSiteCatalogXmlFileHeader();
+        if (processFlags.contains('C')) generateCourseClassXmlFileHeader();
+        if (processFlags.contains('L')) generateLocationXmlFileHeader();
+        if (processFlags.contains('I')) generateInventoryXmlFileHeader();
+        if (processFlags.contains('P')) generatePricebookXmlFileHeader();
+        if (processFlags.contains('S')) generateSiteCatalogXmlFileHeader();
 
         // Generate and Upload class XML files to platform
-        generateCourseClassXmlFile(courseXMLMap.values(), classXMLList);
-        generateSiteCatalogXmlFile(siteCatalogXMLMap.values());
+        if (processFlags.contains('C')) generateCourseClassXmlFile(courseXMLMap.values(), classXMLList);
+        if (processFlags.contains('S')) generateSiteCatalogXmlFile(siteCatalogXMLMap.values());
 
         return Database.getQueryLocator(theClassQuery);
     }
@@ -595,11 +597,11 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
         }
 
         // Generate and Upload class and location XML files to platform
-        generateCourseClassXmlFile(courseXMLMap.values(), classXMLList);
-        generateLocationXmlFile(locationXMLMap.values());
-        generateInventoryXmlFile(inventoryXMLList);
-        generatePricebookXmlFile(pricebookXMLList);
-        generateSiteCatalogXmlFile(siteCatalogXMLMap.values());
+        if (processFlags.contains('C')) generateCourseClassXmlFile(courseXMLMap.values(), classXMLList);
+        if (processFlags.contains('L')) generateLocationXmlFile(locationXMLMap.values());
+        if (processFlags.contains('I')) generateInventoryXmlFile(inventoryXMLList);
+        if (processFlags.contains('P')) generatePricebookXmlFile(pricebookXMLList);
+        if (processFlags.contains('S')) generateSiteCatalogXmlFile(siteCatalogXMLMap.values());
 
         return;
     }
@@ -690,18 +692,18 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
             }
         }
 
-        generateCourseClassXmlFile(courseXMLMap.values(), onlineClassXMLList);
-        generateInventoryXmlFile(inventoryXMLList);
-        generatePricebookXmlFile(pricebookXMLList);
-        generateSiteCatalogXmlFile(siteCatalogXMLMap.values());
+        if (processFlags.contains('C')) generateCourseClassXmlFile(courseXMLMap.values(), onlineClassXMLList);
+        if (processFlags.contains('I')) generateInventoryXmlFile(inventoryXMLList);
+        if (processFlags.contains('P')) generatePricebookXmlFile(pricebookXMLList);
+        if (processFlags.contains('S')) generateSiteCatalogXmlFile(siteCatalogXMLMap.values());
 
-        generateCourseClassXmlFileTrailer();
-        generateLocationXmlFileTrailer();
-        generateInventoryXmlFileTrailer();
-        generatePricebookXmlFileTrailer();
-        generateSiteCatalogXmlFileTrailer();
+        if (processFlags.contains('C')) generateCourseClassXmlFileTrailer();
+        if (processFlags.contains('L')) generateLocationXmlFileTrailer();
+        if (processFlags.contains('I')) generateInventoryXmlFileTrailer();
+        if (processFlags.contains('P')) generatePricebookXmlFileTrailer();
+        if (processFlags.contains('S')) generateSiteCatalogXmlFileTrailer();
 
-        generateCPSXmlFile(CPSXMLList);
+        if (processFlags.contains('C')) generateCPSXmlFile(CPSXMLList);
     }
 
     // DE2026 - Take the price override data directly from the ILT Class record rather than performing a lookup to
@@ -1365,6 +1367,11 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
             if (theClass.Request_Type__c != 'CPS') theClassSet.add(theClass.Id);
         }
 
+        // Initialize inventory mapping to zero to allow for rows not returned in following query
+        for (redwing__ILT_Class__c theClass : communityClassList) {
+            classInventoryMap.put(theClass.Id, 0);
+        }
+
         // Determine number of available (unsold) seats in each class represented by 'Issued' vouchers
         List<AggregateResult> voucherCounts = [Select ILT_Class__c, Count(Id) voucherCount
             From Voucher__c Where Status__c = 'Issued' And ILT_Class__c IN :theClassSet
@@ -1384,7 +1391,7 @@ public without sharing class PHSS_eCommerceIntegrationFilesBatch implements Data
                 classInventoryMap.put(theClass.Id, 10000);
             }
         }
-
+        System.debug('classInventoryMap.size='+classInventoryMap.size());
         return;
     }
 

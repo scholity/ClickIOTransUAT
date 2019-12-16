@@ -144,6 +144,11 @@
                 <label>Credit Memo</label>
             </value>
             <value>
+                <fullName>CRE or Community Order</fullName>
+                <default>false</default>
+                <label>CRE or Community Order</label>
+            </value>
+            <value>
                 <fullName>Customer Already Paid</fullName>
                 <default>false</default>
                 <label>Customer Already Paid</label>
@@ -322,6 +327,11 @@
                 <fullName>QA Issue</fullName>
                 <default>false</default>
                 <label>QA Issue</label>
+            </value>
+            <value>
+                <fullName>RBC Order</fullName>
+                <default>false</default>
+                <label>RBC Order</label>
             </value>
             <value>
                 <fullName>Refund of Pre-paid Balance</fullName>
@@ -527,10 +537,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Price</controllingFieldValue>
-            <valueName>Product/Course Not Accurate</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Price</controllingFieldValue>
             <valueName>Return Freight Refund</valueName>
         </valueSettings>
         <valueSettings>
@@ -639,6 +645,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Wrong Organization</controllingFieldValue>
+            <valueName>CRE or Community Order</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Wrong Organization</controllingFieldValue>
             <valueName>Offering Closed</valueName>
         </valueSettings>
         <valueSettings>
@@ -646,8 +656,8 @@
             <valueName>Open Offering</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Bad Address</controllingFieldValue>
-            <valueName>Missing Address</valueName>
+            <controllingFieldValue>Wrong Organization</controllingFieldValue>
+            <valueName>RBC Order</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Bad Address</controllingFieldValue>
@@ -656,10 +666,6 @@
         <valueSettings>
             <controllingFieldValue>Bad Address</controllingFieldValue>
             <valueName>RTS (Invoice/Statement)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Bad Address</controllingFieldValue>
-            <valueName>RTS-NAT</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Bad Address</controllingFieldValue>

@@ -20,6 +20,9 @@ private class PHSS_tickleJobRecordsTest {
         region.sked__Timezone__c = 'Indian/Coscos';
         insert region;
 
+        sked__Recurring_Schedule__c schedule = new sked__Recurring_Schedule__c();
+        insert schedule;
+
         List<sked__Job__c> jobList = new List<sked__Job__c>();
         sked__Job__c job = new sked__Job__c();
         job.sked__Region__c = region.id;
@@ -62,7 +65,7 @@ private class PHSS_tickleJobRecordsTest {
         job2.Is_Stacked_Class__c = true;
         job2.Course_Code__c = 'C12345';
         job2.sked__Job_Status__c = 'Dispatched';
-        //job2.sked__Recurring_Schedule__c = schedule.Id;
+        job2.sked__Recurring_Schedule__c = schedule.Id;
         jobList.add(job2);
         insert jobList;
 

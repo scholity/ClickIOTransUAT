@@ -232,6 +232,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AssignVouchersToBulkStudentBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AssignVouchersToBulkStudentBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AssignmentRulesonCaseTrigger_TEST</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -257,6 +265,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>BudgetUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BulkStudentUpdateTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BulkStudentUpdateTriggerHandlerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -409,6 +425,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ConvertLearnerToInstructorController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ConvertLearnerToInstructorControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -888,6 +908,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PHSS_PublishCertificatesBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PHSS_PublishCertificatesBatchSchedulable</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PHSS_PublishCertificatesFullSchedulable</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -1062,6 +1090,14 @@
     <classAccesses>
         <apexClass>ProfileUpdate</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ProfileUpdateMock</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ProfileUpdateTest</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>RBCWrapper</apexClass>
@@ -13454,6 +13490,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Student_Bulk_Upload__c.Learning__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Student_Bulk_Upload__c.Saba_Class_ID__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -13485,6 +13526,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Student_Bulk_Upload__c.Voucher_Id__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Student_Bulk_Upload__c.Voucher_Status__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14500,6 +14546,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Voucher__c.ILT_Class__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Voucher__c.Is_Assigned__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16604,6 +16655,10 @@
     <tabVisibilities>
         <tab>Sales_Rep_Store</tab>
         <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Student_Bulk_Upload__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Survey__c</tab>

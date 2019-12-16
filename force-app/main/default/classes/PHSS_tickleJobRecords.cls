@@ -11,9 +11,10 @@ public without sharing class PHSS_tickleJobRecords implements Database.Batchable
         theJobQuery += 'Where Sked__Type__c IN (\'Community\',\'Nurse Assistant Testing\') ';
         theJobQuery += 'And sked__Start__c >= 2019-12-10T05:00:00Z ';
         theJobQuery += 'And (Location_Confirmed__c = true  Or Ready_To_Publish__c = true) ';
-        theJobQuery += 'And sked__Recurring_Schedule__c = null ';
+        theJobQuery += 'And sked__Recurring_Schedule__c != null ';
         theJobQuery += 'And sked__Job_Status__c != \'Cancelled\' ';
         theJobQuery += 'And (Is_Stacked_Class__c = false Or (Is_Stacked_Class__c = true And Is_Master_Class__c = true)) ';
+        theJobQuery += 'Order by sked__Recurring_Schedule__c ';
 
         return Database.getQueryLocator(theJobQuery);
     }

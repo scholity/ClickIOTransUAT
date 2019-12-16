@@ -272,4 +272,59 @@ public with sharing class phss_cc_CartUtilTest {
         System.assert(testCart != null);
         System.assertEquals(true, testCart.ccrz__ActiveCart__c);
     }
+
+
+    @IsTest
+    static void testReassignVouchersToNewCartItems() {
+        setupTestData();
+
+        Map<String, Object> testLearningData = phss_cc_TestDataFactory.createInsertTestLearningObjects();
+        redwing__ILT_Class__c trainingClass = (redwing__ILT_Class__c) testLearningData.get(phss_cc_TestDataFactory.TEST_ILT_CLASS);
+
+        ccrz__E_Cart__c cart = phss_cc_TestDataFactory.createInsertCartAndCartItems(1, testData, testOpportunity.Id)[0];
+        ccrz__E_CartItem__c oldCartItem = [
+                SELECT
+                        Id,
+                        ccrz__Product__c,
+                        ccrz__Quantity__c,
+                        ccrz__OriginalQuantity__c,
+                        ccrz__SubAmount__c,
+                        ccrz__Price__c,
+                        ccrz__OriginalItemPrice__c,
+                        ccrz__ItemStatus__c,
+                        ccrz__cartItemType__c,
+                        ccrz__Cart__c,
+                        ILT_Class__c
+                FROM
+                        ccrz__E_CartItem__c
+                WHERE
+                        ccrz__Cart__c = :cart.Id
+        ][0];
+
+        oldCartItem.ILT_Class__c = trainingClass.Id;
+        update oldCartItem;
+
+        ccrz__E_CartItem__c newCartItem = oldCartItem.clone(false, true);
+        insert newCartItem;
+
+        Voucher__c voucher = (Voucher__c) testLearningData.get(phss_cc_TestDataFactory.TEST_VOUCHER);
+        voucher.CC_Cart_Item__c = oldCartItem.Id;
+        voucher.ILT_Class__c = trainingClass.Id;
+        voucher.Opportunity__c = testOpportunity.Id;
+        voucher.Status__c = phss_cc_VoucherUtil.TEMP_HOLD_STATUS;
+        update voucher;
+
+        delete oldCartItem;
+
+        List<Voucher__c> vouchers = new List<Voucher__c>{ voucher };
+        List<ccrz__E_CartItem__c> oldCartItems = new List<ccrz__E_CartItem__c>{ oldCartItem };
+        List<ccrz__E_CartItem__c> newCartItems = new List<ccrz__E_CartItem__c>{ newCartItem };
+
+        Test.startTest();
+        phss_cc_CartUtil.reassignVouchersToNewCartItems(vouchers, oldCartItems, newCartItems);
+        Voucher__c newVoucher = [SELECT Id, CC_Cart_Item__c FROM Voucher__c WHERE Id = :voucher.Id];
+        Test.stopTest();
+
+        System.assert(newVoucher.CC_Cart_Item__c == newCartItem.Id);
+    }
 }

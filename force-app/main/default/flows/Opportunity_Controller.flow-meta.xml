@@ -955,38 +955,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_17</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>myVariable_current.RecordType.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Contract</stringValue>
-                </rightValue>
-            </conditions>
+            <conditionLogic>(1 and 2) or 3</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -1016,6 +985,68 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sales_Opportunity</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Order_Opportunity</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1382,7 +1413,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_10</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 and (2 or 3)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -1440,9 +1471,40 @@
                     </value>
                 </processMetadataValues>
                 <leftValueReference>myVariable_current.RecordType.DeveloperName</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Contract</stringValue>
+                    <stringValue>Sales_Opportunity</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Order_Opportunity</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1551,7 +1613,7 @@
                 <stringValue>DATETIMEVALUE (ADDMONTHS([Opportunity].Closed_Won_Date__c - 1, [Opportunity].Contract.ContractTerm))</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_13_myRule_12_A4_1438888991</name>
+        <name>formula_13_myRule_12_A4_2702399896</name>
         <dataType>DateTime</dataType>
         <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} - 1, {!myVariable_current.Contract.ContractTerm}))</expression>
     </formulas>
@@ -1563,7 +1625,7 @@
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_14_myRule_12_A2_7272977411</name>
+        <name>formula_14_myRule_12_A2_8440865835</name>
         <dataType>DateTime</dataType>
         <expression>DATETIMEVALUE (ADDMONTHS({!myVariable_current.Closed_Won_Date__c} -1, {!myVariable_current.Contract.ContractTerm}))</expression>
     </formulas>
@@ -1574,11 +1636,11 @@
                 <stringValue>DATETIMEVALUE ( [Opportunity].Closed_Won_Date__c )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_15_myRule_12_A1_1562969532</name>
+        <name>formula_15_myRule_12_A1_7382357233</name>
         <dataType>Date</dataType>
         <expression>DATETIMEVALUE ( {!myVariable_current.Closed_Won_Date__c} )</expression>
     </formulas>
-    <interviewLabel>Opportunity_Controller-31_InterviewLabel</interviewLabel>
+    <interviewLabel>Opportunity_Controller-34_InterviewLabel</interviewLabel>
     <label>Opportunity Controller</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -1683,7 +1745,7 @@
             </processMetadataValues>
             <field>StartDate</field>
             <value>
-                <elementReference>formula_15_myRule_12_A1_1562969532</elementReference>
+                <elementReference>formula_15_myRule_12_A1_7382357233</elementReference>
             </value>
         </inputAssignments>
         <object>Contract</object>
@@ -1766,7 +1828,7 @@
             </processMetadataValues>
             <field>ccrz__EffectiveEnd__c</field>
             <value>
-                <elementReference>formula_14_myRule_12_A2_7272977411</elementReference>
+                <elementReference>formula_14_myRule_12_A2_8440865835</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1882,7 +1944,7 @@
             </processMetadataValues>
             <field>ccrz__EffectiveEnd__c</field>
             <value>
-                <elementReference>formula_13_myRule_12_A4_1438888991</elementReference>
+                <elementReference>formula_13_myRule_12_A4_2702399896</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2004,7 +2066,7 @@
         <object>ccrz__E_Order__c</object>
     </recordUpdates>
     <startElementReference>isChangedDecision6_myRule_5_Highest_Product_Discount_c</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

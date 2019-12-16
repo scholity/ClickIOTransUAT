@@ -630,6 +630,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Discussion - Customer Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Discussion - Scheduling</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>On Hold</fullName>
             <default>false</default>
         </values>
